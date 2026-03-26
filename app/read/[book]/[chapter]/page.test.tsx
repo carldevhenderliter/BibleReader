@@ -22,8 +22,7 @@ describe("ReaderChapterPage", () => {
         params: Promise.resolve({
           book: "genesis",
           chapter: "0"
-        }),
-        searchParams: Promise.resolve({})
+        })
       })
     ).rejects.toThrow("NEXT_NOT_FOUND");
 
@@ -40,15 +39,12 @@ describe("ReaderChapterPage", () => {
         params: Promise.resolve({
           book: "missing",
           chapter: "1"
-        }),
-        searchParams: Promise.resolve({
-          version: "kjv"
         })
       })
     ).rejects.toThrow("NEXT_NOT_FOUND");
   });
 
-  it("renders a chapter when params resolves successfully for KJV", async () => {
+  it("renders a chapter when params resolves successfully", async () => {
     mockedGetBooks.mockResolvedValue([
       {
         slug: "genesis",
@@ -77,9 +73,6 @@ describe("ReaderChapterPage", () => {
       params: Promise.resolve({
         book: "genesis",
         chapter: "1"
-      }),
-      searchParams: Promise.resolve({
-        version: "kjv"
       })
     });
 
@@ -89,22 +82,9 @@ describe("ReaderChapterPage", () => {
     expect(
       screen.getByText("In the beginning, God created the heavens and the earth.")
     ).toBeInTheDocument();
-    expect(mockedGetBooks).toHaveBeenCalledWith("kjv");
-    expect(mockedGetBookBySlug).toHaveBeenCalledWith("genesis", "kjv");
-    expect(mockedGetChapter).toHaveBeenCalledWith("genesis", 1, "kjv");
-  });
-
-  it("calls notFound when ESV is requested without configuration", async () => {
-    await expect(
-      ReaderChapterPage({
-        params: Promise.resolve({
-          book: "genesis",
-          chapter: "1"
-        }),
-        searchParams: Promise.resolve({
-          version: "esv"
-        })
-      })
-    ).rejects.toThrow("NEXT_NOT_FOUND");
+    expect(mockedGetBooks).toHaveBeenCalledWith("web");
+    expect(mockedGetBookBySlug).toHaveBeenCalledWith("genesis", "web");
+    expect(mockedGetChapter).toHaveBeenNthCalledWith(1, "genesis", 1, "web");
+    expect(mockedGetChapter).toHaveBeenNthCalledWith(2, "genesis", 1, "kjv");
   });
 });

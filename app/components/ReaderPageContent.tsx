@@ -5,35 +5,28 @@ import { ChapterPagination } from "@/app/components/ChapterPagination";
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
 import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
+import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { VerseList } from "@/app/components/VerseList";
-import type { BibleVersion, BookMeta, Chapter } from "@/lib/bible/types";
+import type { BookMeta, BundledBibleVersion, Chapter } from "@/lib/bible/types";
 import { getChapterLinks } from "@/lib/bible/utils";
 import { getBibleVersionBadge, getBibleVersionLabel } from "@/lib/bible/version";
 
 type ReaderPageContentProps = {
   books: BookMeta[];
   book: BookMeta;
-  chapter: Chapter;
-  version: BibleVersion;
-  esvEnabled: boolean;
+  chaptersByVersion: Record<BundledBibleVersion, Chapter>;
 };
 
-export function ReaderPageContent({
-  books,
-  book,
-  chapter,
-  version,
-  esvEnabled
-}: ReaderPageContentProps) {
+export function ReaderPageContent({ books, book, chaptersByVersion }: ReaderPageContentProps) {
+  const { version } = useReaderVersion();
+  const chapter = chaptersByVersion[version];
   const chapterLinks = getChapterLinks(books, book, chapter.chapterNumber, version);
   const versionLabel = getBibleVersionLabel(version);
   const versionBadge = getBibleVersionBadge(version);
 
   return (
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
-      <ReadingSessionSync
-        location={{ book: book.slug, chapter: chapter.chapterNumber, view: "chapter", version }}
-      />
+      <ReadingSessionSync book={book.slug} chapter={chapter.chapterNumber} view="chapter" />
       <ReaderSettingsPanel />
       <section className="reader-card">
         <div className="reader-topline">
@@ -63,8 +56,6 @@ export function ReaderPageContent({
             books={books}
             currentChapter={chapter.chapterNumber}
             view="chapter"
-            version={version}
-            esvEnabled={esvEnabled}
           />
         </div>
         <div className="reading-surface">

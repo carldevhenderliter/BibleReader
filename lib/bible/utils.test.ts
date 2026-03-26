@@ -49,9 +49,9 @@ describe("bible utils", () => {
 
   it("creates chapter and book hrefs", () => {
     expect(getChapterHref("genesis", 1)).toBe("/read/genesis/1");
-    expect(getBookHref("genesis")).toBe("/read/genesis?view=book");
+    expect(getBookHref("genesis")).toBe("/read/genesis");
     expect(getChapterHref("genesis", 1, "kjv")).toBe("/read/genesis/1?version=kjv");
-    expect(getBookHref("genesis", "kjv")).toBe("/read/genesis?view=book&version=kjv");
+    expect(getBookHref("genesis", "kjv")).toBe("/read/genesis?version=kjv");
   });
 
   it("returns previous and next chapter links across books", () => {
@@ -104,7 +104,7 @@ describe("bible utils", () => {
       "/read/john/3"
     );
     expect(getReadingHref({ book: "john", chapter: 3, view: "book", version: "web" })).toBe(
-      "/read/john?view=book"
+      "/read/john"
     );
     expect(getReadingHref({ book: "john", chapter: 3, view: "chapter", version: "kjv" })).toBe(
       "/read/john/3?version=kjv"

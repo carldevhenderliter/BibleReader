@@ -1,23 +1,14 @@
 import { notFound } from "next/navigation";
 
 import { ReaderPageContent } from "@/app/components/ReaderPageContent";
-import { isEsvEnabled } from "@/lib/bible/esv";
 import { getBookBySlug, getBooks, getChapter } from "@/lib/bible/data";
 import { isValidChapter, parseChapterParam } from "@/lib/bible/utils";
-import { resolveBibleVersion } from "@/lib/bible/version";
 
 type ReaderChapterPageProps = {
   params: Promise<{
     book: string;
     chapter: string;
   }>;
-  searchParams?: Promise<{
-    version?: string | string[];
-  }>;
-};
-
-type ResolvedChapterSearchParams = {
-  version?: string | string[];
 };
 
 export const dynamicParams = false;
@@ -33,32 +24,22 @@ export async function generateStaticParams() {
   );
 }
 
-export default async function ReaderChapterPage({
-  params,
-  searchParams
-}: ReaderChapterPageProps) {
-  const esvEnabled = isEsvEnabled();
-  const [{ book: bookSlug, chapter: chapterParam }, resolvedSearchParams] = await Promise.all([
-    params,
-    searchParams ?? Promise.resolve<ResolvedChapterSearchParams>({})
-  ]);
+export default async function ReaderChapterPage({ params }: ReaderChapterPageProps) {
+  const { book: bookSlug, chapter: chapterParam } = await params;
   const chapterNumber = parseChapterParam(chapterParam);
-  const rawVersion = Array.isArray(resolvedSearchParams.version)
-    ? resolvedSearchParams.version[0]
-    : resolvedSearchParams.version;
-  const version = resolveBibleVersion(rawVersion, { esvEnabled });
 
-  if (!chapterNumber || !version) {
+  if (!chapterNumber) {
     notFound();
   }
 
-  const [books, book, chapter] = await Promise.all([
-    getBooks(version),
-    getBookBySlug(bookSlug, version),
-    getChapter(bookSlug, chapterNumber, version)
+  const [books, book, webChapter, kjvChapter] = await Promise.all([
+    getBooks("web"),
+    getBookBySlug(bookSlug, "web"),
+    getChapter(bookSlug, chapterNumber, "web"),
+    getChapter(bookSlug, chapterNumber, "kjv")
   ]);
 
-  if (!book || !isValidChapter(book, chapterNumber) || !chapter) {
+  if (!book || !isValidChapter(book, chapterNumber) || !webChapter || !kjvChapter) {
     notFound();
   }
 
@@ -66,9 +47,10 @@ export default async function ReaderChapterPage({
     <ReaderPageContent
       book={book}
       books={books}
-      chapter={chapter}
-      esvEnabled={esvEnabled}
-      version={version}
+      chaptersByVersion={{
+        web: webChapter,
+        kjv: kjvChapter
+      }}
     />
   );
 }

@@ -4,31 +4,26 @@ import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationSh
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
 import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
+import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { VerseList } from "@/app/components/VerseList";
-import type { BibleVersion, BookMeta, Chapter } from "@/lib/bible/types";
+import type { BookMeta, BundledBibleVersion, Chapter } from "@/lib/bible/types";
 import { getBibleVersionBadge, getBibleVersionLabel } from "@/lib/bible/version";
 
 type WholeBookContentProps = {
   books: BookMeta[];
   book: BookMeta;
-  chapters: Chapter[];
-  version: BibleVersion;
-  esvEnabled: boolean;
+  chaptersByVersion: Record<BundledBibleVersion, Chapter[]>;
 };
 
-export function WholeBookContent({
-  books,
-  book,
-  chapters,
-  version,
-  esvEnabled
-}: WholeBookContentProps) {
+export function WholeBookContent({ books, book, chaptersByVersion }: WholeBookContentProps) {
+  const { version } = useReaderVersion();
+  const chapters = chaptersByVersion[version];
   const versionLabel = getBibleVersionLabel(version);
   const versionBadge = getBibleVersionBadge(version);
 
   return (
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
-      <ReadingSessionSync location={{ book: book.slug, chapter: 1, view: "book", version }} />
+      <ReadingSessionSync book={book.slug} chapter={1} view="book" />
       <ReaderSettingsPanel />
       <section className="reader-card">
         <div className="reader-topline">
@@ -56,8 +51,6 @@ export function WholeBookContent({
             books={books}
             currentChapter={1}
             view="book"
-            version={version}
-            esvEnabled={esvEnabled}
           />
         </div>
         <div className="reading-surface chapter-stack">

@@ -3,7 +3,6 @@ import { fireEvent, screen } from "@testing-library/react";
 import { WholeBookContent } from "@/app/components/WholeBookContent";
 import type { BookMeta, Chapter } from "@/lib/bible/types";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
-import { mockRouter } from "@/test/mocks/next-navigation";
 
 const books: BookMeta[] = [
   {
@@ -27,9 +26,20 @@ const chapters: Chapter[] = [
   }
 ];
 
+const kjvChapters: Chapter[] = [
+  {
+    bookSlug: "jude",
+    chapterNumber: 1,
+    verses: [
+      { number: 1, text: "Jude, the servant of Jesus Christ..." },
+      { number: 2, text: "Mercy unto you, and peace, and love, be multiplied." }
+    ]
+  }
+];
+
 describe("WholeBookContent", () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    window.localStorage.clear();
   });
 
   it("renders a continuous book view", () => {
@@ -37,9 +47,7 @@ describe("WholeBookContent", () => {
       <WholeBookContent
         book={books[0]}
         books={books}
-        chapters={chapters}
-        esvEnabled={false}
-        version="web"
+        chaptersByVersion={{ web: chapters, kjv: kjvChapters }}
       />
     );
 
@@ -48,23 +56,23 @@ describe("WholeBookContent", () => {
     expect(screen.getByText("Mercy to you and peace and love be multiplied.")).toBeInTheDocument();
   });
 
-  it("switches ESV whole-book attempts back to chapter mode", () => {
+  it("switches whole-book content between bundled versions", () => {
     renderWithReaderCustomization(
       <WholeBookContent
         book={books[0]}
         books={books}
-        chapters={chapters}
-        esvEnabled={true}
-        version="web"
+        chaptersByVersion={{ web: chapters, kjv: kjvChapters }}
       />
     );
 
+    expect(screen.getByText("Mercy to you and peace and love be multiplied.")).toBeInTheDocument();
+
     fireEvent.change(screen.getByLabelText("Version"), {
       target: {
-        value: "esv"
+        value: "kjv"
       }
     });
 
-    expect(mockRouter.push).toHaveBeenCalledWith("/read/jude/1?version=esv");
+    expect(screen.getByText("Mercy unto you, and peace, and love, be multiplied.")).toBeInTheDocument();
   });
 });

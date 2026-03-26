@@ -3,7 +3,6 @@ import { fireEvent, screen } from "@testing-library/react";
 import { ReaderPageContent } from "@/app/components/ReaderPageContent";
 import type { BookMeta, Chapter } from "@/lib/bible/types";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
-import { mockRouter } from "@/test/mocks/next-navigation";
 
 const books: BookMeta[] = [
   {
@@ -33,6 +32,15 @@ const chapter: Chapter = {
   ]
 };
 
+const kjvChapter: Chapter = {
+  bookSlug: "genesis",
+  chapterNumber: 1,
+  verses: [
+    { number: 1, text: "In the beginning God created the heaven and the earth." },
+    { number: 2, text: "And the earth was without form, and void." }
+  ]
+};
+
 describe("ReaderPageContent", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -43,9 +51,7 @@ describe("ReaderPageContent", () => {
       <ReaderPageContent
         book={books[0]}
         books={books}
-        chapter={chapter}
-        esvEnabled={false}
-        version="web"
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
       />
     );
 
@@ -54,7 +60,7 @@ describe("ReaderPageContent", () => {
     expect(screen.getAllByText(/^WEB$/i).length).toBeGreaterThan(0);
     expect(screen.getByRole("link", { name: /Whole book view/i })).toHaveAttribute(
       "href",
-      "/read/genesis?view=book"
+      "/read/genesis"
     );
     expect(screen.getByRole("link", { name: "Next chapter: Genesis 2" })).toHaveAttribute(
       "href",
@@ -85,9 +91,7 @@ describe("ReaderPageContent", () => {
       <ReaderPageContent
         book={books[0]}
         books={books}
-        chapter={firstChapter}
-        esvEnabled={false}
-        version="web"
+        chaptersByVersion={{ web: firstChapter, kjv: { ...kjvChapter, chapterNumber: 1 } }}
       />
     );
 
@@ -97,9 +101,7 @@ describe("ReaderPageContent", () => {
       <ReaderPageContent
         book={lastBook}
         books={[...books, lastBook]}
-        chapter={lastChapter}
-        esvEnabled={false}
-        version="web"
+        chaptersByVersion={{ web: lastChapter, kjv: lastChapter }}
       />
     );
 
@@ -111,13 +113,12 @@ describe("ReaderPageContent", () => {
       <ReaderPageContent
         book={books[0]}
         books={books}
-        chapter={chapter}
-        esvEnabled={false}
-        version="web"
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
       />
     );
 
     expect(screen.getByRole("option", { name: "ESV (API key required)" })).toBeDisabled();
+    expect(screen.getByText("In the beginning, God created the heavens and the earth.")).toBeInTheDocument();
 
     fireEvent.change(screen.getByLabelText("Version"), {
       target: {
@@ -125,20 +126,10 @@ describe("ReaderPageContent", () => {
       }
     });
 
-    expect(mockRouter.push).toHaveBeenCalledWith("/read/genesis/1?version=kjv");
-  });
-
-  it("disables whole-book mode in chapter view for ESV", () => {
-    renderWithReaderCustomization(
-      <ReaderPageContent
-        book={books[0]}
-        books={books}
-        chapter={chapter}
-        esvEnabled={true}
-        version="esv"
-      />
+    expect(screen.getByText("In the beginning God created the heaven and the earth.")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Whole book view/i })).toHaveAttribute(
+      "href",
+      "/read/genesis?version=kjv"
     );
-
-    expect(screen.getByText("Whole book view is unavailable for ESV")).toBeInTheDocument();
   });
 });

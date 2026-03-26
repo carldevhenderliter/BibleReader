@@ -1,4 +1,4 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { screen } from "@testing-library/react";
 
 import BookPage from "@/app/read/[book]/page";
@@ -16,22 +16,7 @@ describe("BookPage", () => {
     jest.clearAllMocks();
   });
 
-  it("redirects to chapter one when whole-book mode is not requested", async () => {
-    await expect(
-      BookPage({
-        params: Promise.resolve({
-          book: "genesis"
-        }),
-        searchParams: Promise.resolve({
-          version: "kjv"
-        })
-      })
-    ).rejects.toThrow("NEXT_REDIRECT:/read/genesis/1?version=kjv");
-
-    expect(redirect).toHaveBeenCalledWith("/read/genesis/1?version=kjv");
-  });
-
-  it("renders the whole-book view when view=book for KJV", async () => {
+  it("renders the whole-book view with bundled versions", async () => {
     mockedGetBooks.mockResolvedValue([
       {
         slug: "genesis",
@@ -71,10 +56,6 @@ describe("BookPage", () => {
     const element = await BookPage({
       params: Promise.resolve({
         book: "genesis"
-      }),
-      searchParams: Promise.resolve({
-        view: "book",
-        version: "kjv"
       })
     });
 
@@ -82,9 +63,10 @@ describe("BookPage", () => {
 
     expect(screen.getByRole("heading", { name: "Genesis" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Chapter 1" })).toBeInTheDocument();
-    expect(mockedGetBooks).toHaveBeenCalledWith("kjv");
-    expect(mockedGetBookBySlug).toHaveBeenCalledWith("genesis", "kjv");
-    expect(mockedGetBookPayload).toHaveBeenCalledWith("genesis", "kjv");
+    expect(mockedGetBooks).toHaveBeenCalledWith("web");
+    expect(mockedGetBookBySlug).toHaveBeenCalledWith("genesis", "web");
+    expect(mockedGetBookPayload).toHaveBeenNthCalledWith(1, "genesis", "web");
+    expect(mockedGetBookPayload).toHaveBeenNthCalledWith(2, "genesis", "kjv");
   });
 
   it("calls notFound when whole-book data is missing", async () => {
@@ -96,28 +78,10 @@ describe("BookPage", () => {
       BookPage({
         params: Promise.resolve({
           book: "missing"
-        }),
-        searchParams: Promise.resolve({
-          view: "book",
-          version: "kjv"
         })
       })
     ).rejects.toThrow("NEXT_NOT_FOUND");
 
     expect(notFound).toHaveBeenCalled();
-  });
-
-  it("calls notFound for ESV whole-book requests when ESV is unavailable", async () => {
-    await expect(
-      BookPage({
-        params: Promise.resolve({
-          book: "genesis"
-        }),
-        searchParams: Promise.resolve({
-          view: "book",
-          version: "esv"
-        })
-      })
-    ).rejects.toThrow("NEXT_NOT_FOUND");
   });
 });

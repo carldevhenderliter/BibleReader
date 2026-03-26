@@ -33,15 +33,7 @@ export function getBookHref(
   bookSlug: string,
   version: BibleVersion = DEFAULT_BIBLE_VERSION
 ): string {
-  const searchParams = new URLSearchParams({
-    view: "book"
-  });
-
-  if (version !== DEFAULT_BIBLE_VERSION) {
-    searchParams.set("version", version);
-  }
-
-  return `/read/${bookSlug}?${searchParams.toString()}`;
+  return `/read/${bookSlug}${getVersionQueryParam(version)}`;
 }
 
 export function getReadingHref(location: ReadingLocation): string {

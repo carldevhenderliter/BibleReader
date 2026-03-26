@@ -4,12 +4,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
-import type { BibleVersion, BookMeta, ReadingView } from "@/lib/bible/types";
+import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
+import type { BookMeta, ReadingView } from "@/lib/bible/types";
 import { getBookHref, getChapterHref, getViewToggleHref } from "@/lib/bible/utils";
 import {
   BIBLE_VERSION_METADATA,
   getBibleVersionOptions,
-  isBibleVersion
+  isBundledBibleVersion
 } from "@/lib/bible/version";
 
 type ReaderControlsProps = {
@@ -17,21 +18,13 @@ type ReaderControlsProps = {
   book: BookMeta;
   currentChapter: number;
   view: ReadingView;
-  version: BibleVersion;
-  esvEnabled: boolean;
 };
 
-export function ReaderControls({
-  books,
-  book,
-  currentChapter,
-  view,
-  version,
-  esvEnabled
-}: ReaderControlsProps) {
+export function ReaderControls({ books, book, currentChapter, view }: ReaderControlsProps) {
   const router = useRouter();
   const { isPanelOpen, setIsPanelOpen } = useReaderCustomization();
-  const versionOptions = getBibleVersionOptions(esvEnabled);
+  const { version, setVersion } = useReaderVersion();
+  const versionOptions = getBibleVersionOptions(false);
   const versionMeta = BIBLE_VERSION_METADATA[version];
 
   const handleBookChange = (nextBookSlug: string) => {
@@ -54,16 +47,15 @@ export function ReaderControls({
   };
 
   const handleVersionChange = (nextVersion: string) => {
-    if (!isBibleVersion(nextVersion) || nextVersion === version) {
+    if (!isBundledBibleVersion(nextVersion)) {
       return;
     }
 
-    if (view === "book" && nextVersion !== "esv") {
-      router.push(getBookHref(book.slug, nextVersion));
+    if (nextVersion === version) {
       return;
     }
 
-    router.push(getChapterHref(book.slug, currentChapter, nextVersion));
+    setVersion(nextVersion);
   };
 
   return (
@@ -124,15 +116,9 @@ export function ReaderControls({
             ))}
           </select>
         </div>
-        {versionMeta.supportsWholeBook ? (
-          <Link className="toggle-link" href={getViewToggleHref(book.slug, currentChapter, view, version)}>
-            {view === "book" ? "Switch to chapter view" : "Switch to whole book view"}
-          </Link>
-        ) : (
-          <span aria-disabled="true" className="toggle-link toggle-link-disabled">
-            Whole book view is unavailable for ESV
-          </span>
-        )}
+        <Link className="toggle-link" href={getViewToggleHref(book.slug, currentChapter, view, version)}>
+          {view === "book" ? "Switch to chapter view" : "Switch to whole book view"}
+        </Link>
       </div>
     </section>
   );

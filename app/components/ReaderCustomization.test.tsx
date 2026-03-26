@@ -25,6 +25,11 @@ const chapter: Chapter = {
   ]
 };
 
+const chaptersByVersion = {
+  web: chapter,
+  kjv: chapter
+} as const;
+
 describe("Reader customization", () => {
   beforeEach(() => {
     window.localStorage.clear();
@@ -35,9 +40,7 @@ describe("Reader customization", () => {
       <ReaderPageContent
         book={books[0]}
         books={books}
-        chapter={chapter}
-        esvEnabled={false}
-        version="web"
+        chaptersByVersion={chaptersByVersion}
       />
     );
 
@@ -60,9 +63,7 @@ describe("Reader customization", () => {
       <ReaderPageContent
         book={books[0]}
         books={books}
-        chapter={chapter}
-        esvEnabled={false}
-        version="web"
+        chaptersByVersion={chaptersByVersion}
       />
     );
 
@@ -85,9 +86,7 @@ describe("Reader customization", () => {
       <ReaderPageContent
         book={books[0]}
         books={books}
-        chapter={chapter}
-        esvEnabled={false}
-        version="web"
+        chaptersByVersion={chaptersByVersion}
       />
     );
 
@@ -140,9 +139,7 @@ describe("Reader customization", () => {
       <ReaderPageContent
         book={books[0]}
         books={books}
-        chapter={chapter}
-        esvEnabled={false}
-        version="web"
+        chaptersByVersion={chaptersByVersion}
       />
     );
 
@@ -159,9 +156,7 @@ describe("Reader customization", () => {
       <ReaderPageContent
         book={books[0]}
         books={books}
-        chapter={chapter}
-        esvEnabled={false}
-        version="web"
+        chaptersByVersion={chaptersByVersion}
       />
     );
 
@@ -177,9 +172,7 @@ describe("Reader customization", () => {
       <ReaderPageContent
         book={books[0]}
         books={books}
-        chapter={chapter}
-        esvEnabled={false}
-        version="web"
+        chaptersByVersion={chaptersByVersion}
       />
     );
 
