@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -22,6 +23,7 @@ type ReaderControlsProps = {
 
 export function ReaderControls({ books, book, currentChapter, view }: ReaderControlsProps) {
   const router = useRouter();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { isPanelOpen, setIsPanelOpen } = useReaderCustomization();
   const { version, setVersion } = useReaderVersion();
   const versionOptions = getBibleVersionOptions(false);
@@ -35,14 +37,17 @@ export function ReaderControls({ books, book, currentChapter, view }: ReaderCont
     }
 
     if (view === "book" && versionMeta.supportsWholeBook) {
+      setIsMobileMenuOpen(false);
       router.push(getBookHref(nextBook.slug, version));
       return;
     }
 
+    setIsMobileMenuOpen(false);
     router.push(getChapterHref(nextBook.slug, Math.min(currentChapter, nextBook.chapterCount), version));
   };
 
   const handleChapterChange = (nextChapter: number) => {
+    setIsMobileMenuOpen(false);
     router.push(getChapterHref(book.slug, nextChapter, version));
   };
 
@@ -56,70 +61,99 @@ export function ReaderControls({ books, book, currentChapter, view }: ReaderCont
     }
 
     setVersion(nextVersion);
+    setIsMobileMenuOpen(false);
   };
 
   return (
-    <section className="reader-controls" aria-label="Reader controls">
-      <div className="reader-controls-header">
-        <span className="reader-controls-title">Navigation Grid</span>
-        <div className="reader-controls-actions">
-          <span className="reader-controls-status">
-            {versionMeta.label} · {view === "book" ? "Whole book" : "Chapter"}
-          </span>
-          <button
-            aria-controls="reader-settings-panel"
-            aria-expanded={isPanelOpen}
-            className="reader-settings-trigger"
-            onClick={() => setIsPanelOpen(!isPanelOpen)}
-            type="button"
-          >
-            Customize
-          </button>
-        </div>
+    <div className="reader-controls-shell">
+      <div className="reader-mobile-toolbar">
+        <button
+          aria-controls="reader-controls-panel"
+          aria-expanded={isMobileMenuOpen}
+          className="reader-mobile-toggle"
+          onClick={() => setIsMobileMenuOpen((current) => !current)}
+          type="button"
+        >
+          {isMobileMenuOpen ? "Close Menu" : "Open Menu"}
+        </button>
+        <span className="reader-controls-status reader-mobile-status">
+          {versionMeta.label} · {view === "book" ? "Whole book" : `Chapter ${currentChapter}`}
+        </span>
       </div>
-      <div className="control-grid">
-        <div className="control-group">
-          <label htmlFor="book-select">Book</label>
-          <select
-            id="book-select"
-            value={book.slug}
-            onChange={(event) => handleBookChange(event.target.value)}
+      <section
+        aria-label="Reader controls"
+        className={`reader-controls${isMobileMenuOpen ? " is-mobile-open" : ""}`}
+        id="reader-controls-panel"
+      >
+        <div className="reader-controls-header">
+          <span className="reader-controls-title">Navigation Grid</span>
+          <div className="reader-controls-actions">
+            <span className="reader-controls-status">
+              {versionMeta.label} · {view === "book" ? "Whole book" : "Chapter"}
+            </span>
+            <button
+              aria-controls="reader-settings-panel"
+              aria-expanded={isPanelOpen}
+              className="reader-settings-trigger"
+              onClick={() => setIsPanelOpen(!isPanelOpen)}
+              type="button"
+            >
+              Customize
+            </button>
+          </div>
+        </div>
+        <div className="control-grid">
+          <div className="control-group">
+            <label htmlFor="book-select">Book</label>
+            <select
+              id="book-select"
+              value={book.slug}
+              onChange={(event) => handleBookChange(event.target.value)}
+            >
+              {books.map((item) => (
+                <option key={item.slug} value={item.slug}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="control-group">
+            <label htmlFor="version-select">Version</label>
+            <select
+              id="version-select"
+              onChange={(event) => handleVersionChange(event.target.value)}
+              value={version}
+            >
+              {versionOptions.map((option) => (
+                <option disabled={option.disabled} key={option.id} value={option.id}>
+                  {option.disabled ? `${option.label} (API key required)` : option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="control-group">
+            <label htmlFor="chapter-select">Chapter</label>
+            <select
+              id="chapter-select"
+              value={String(currentChapter)}
+              onChange={(event) => handleChapterChange(Number(event.target.value))}
+            >
+              {Array.from({ length: book.chapterCount }, (_, index) => index + 1).map((chapter) => (
+                <option key={chapter} value={chapter}>
+                  {chapter}
+                </option>
+              ))}
+            </select>
+          </div>
+          <Link
+            className="toggle-link"
+            href={getViewToggleHref(book.slug, currentChapter, view, version)}
+            onClick={() => setIsMobileMenuOpen(false)}
           >
-            {books.map((item) => (
-              <option key={item.slug} value={item.slug}>
-                {item.name}
-              </option>
-            ))}
-          </select>
+            {view === "book" ? "Switch to chapter view" : "Switch to whole book view"}
+          </Link>
         </div>
-        <div className="control-group">
-          <label htmlFor="version-select">Version</label>
-          <select id="version-select" onChange={(event) => handleVersionChange(event.target.value)} value={version}>
-            {versionOptions.map((option) => (
-              <option disabled={option.disabled} key={option.id} value={option.id}>
-                {option.disabled ? `${option.label} (API key required)` : option.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="control-group">
-          <label htmlFor="chapter-select">Chapter</label>
-          <select
-            id="chapter-select"
-            value={String(currentChapter)}
-            onChange={(event) => handleChapterChange(Number(event.target.value))}
-          >
-            {Array.from({ length: book.chapterCount }, (_, index) => index + 1).map((chapter) => (
-              <option key={chapter} value={chapter}>
-                {chapter}
-              </option>
-            ))}
-          </select>
-        </div>
-        <Link className="toggle-link" href={getViewToggleHref(book.slug, currentChapter, view, version)}>
-          {view === "book" ? "Switch to chapter view" : "Switch to whole book view"}
-        </Link>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }
