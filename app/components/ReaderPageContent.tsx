@@ -28,35 +28,33 @@ export function ReaderPageContent({ books, book, chaptersByVersion }: ReaderPage
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
       <ReadingSessionSync book={book.slug} chapter={chapter.chapterNumber} view="chapter" />
       <ReaderSettingsPanel />
-      <section className="reader-card">
+      <section className="reader-card reader-reading-card">
         <div className="reader-topline">
-          <div className="reader-heading">
-            <p className="eyebrow">{book.testament} Testament</p>
+          <div className="reader-toolbar">
+            <div className="reader-toolbar-copy">
+              <p className="reader-toolbar-label">{book.testament} Testament</p>
+              <p className="reader-toolbar-summary">{versionLabel}</p>
+            </div>
+            <ReaderControls
+              book={book}
+              books={books}
+              currentChapter={chapter.chapterNumber}
+              view="chapter"
+            />
+          </div>
+          <header className="reader-heading">
+            <p className="reader-section-label">{versionBadge}</p>
             <h1>
               {book.name} {chapter.chapterNumber}
             </h1>
             <p className="reader-meta">
-              {versionLabel}
+              {chapter.verses.length} verses
               <span className="reader-meta-separator" aria-hidden="true">
-                •
+                ·
               </span>
-              {versionBadge}
-              <span className="reader-meta-separator" aria-hidden="true">
-                •
-              </span>
-              {chapter.verses.length} verses in this chapter
-              <span className="reader-meta-separator" aria-hidden="true">
-                •
-              </span>
-              Focused chapter view
+              Chapter view
             </p>
-          </div>
-          <ReaderControls
-            book={book}
-            books={books}
-            currentChapter={chapter.chapterNumber}
-            view="chapter"
-          />
+          </header>
         </div>
         <div className="reading-surface">
           <VerseList verses={chapter.verses} />

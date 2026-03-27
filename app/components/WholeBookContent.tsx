@@ -25,33 +25,31 @@ export function WholeBookContent({ books, book, chaptersByVersion }: WholeBookCo
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
       <ReadingSessionSync book={book.slug} chapter={1} view="book" />
       <ReaderSettingsPanel />
-      <section className="reader-card">
+      <section className="reader-card reader-reading-card">
         <div className="reader-topline">
-          <div className="reader-heading">
-            <p className="eyebrow">{book.testament} Testament</p>
+          <div className="reader-toolbar">
+            <div className="reader-toolbar-copy">
+              <p className="reader-toolbar-label">{book.testament} Testament</p>
+              <p className="reader-toolbar-summary">{versionLabel}</p>
+            </div>
+            <ReaderControls
+              book={book}
+              books={books}
+              currentChapter={1}
+              view="book"
+            />
+          </div>
+          <header className="reader-heading">
+            <p className="reader-section-label">{versionBadge}</p>
             <h1>{book.name}</h1>
             <p className="reader-meta">
-              {versionLabel}
+              {book.chapterCount} chapters
               <span className="reader-meta-separator" aria-hidden="true">
-                •
+                ·
               </span>
-              {versionBadge}
-              <span className="reader-meta-separator" aria-hidden="true">
-                •
-              </span>
-              {book.chapterCount} chapters in one continuous reading view
-              <span className="reader-meta-separator" aria-hidden="true">
-                •
-              </span>
-              Long-scroll mode
+              Continuous reading
             </p>
-          </div>
-          <ReaderControls
-            book={book}
-            books={books}
-            currentChapter={1}
-            view="book"
-          />
+          </header>
         </div>
         <div className="reading-surface chapter-stack">
           {chapters.map((chapter) => (

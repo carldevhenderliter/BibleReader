@@ -67,6 +67,9 @@ export function ReaderControls({ books, book, currentChapter, view }: ReaderCont
   return (
     <div className="reader-controls-shell">
       <div className="reader-mobile-toolbar">
+        <span className="reader-controls-status reader-mobile-status">
+          {versionMeta.label} · {view === "book" ? "Whole book" : `Chapter ${currentChapter}`}
+        </span>
         <button
           aria-controls="reader-controls-panel"
           aria-expanded={isMobileMenuOpen}
@@ -74,34 +77,14 @@ export function ReaderControls({ books, book, currentChapter, view }: ReaderCont
           onClick={() => setIsMobileMenuOpen((current) => !current)}
           type="button"
         >
-          {isMobileMenuOpen ? "Close Menu" : "Open Menu"}
+          {isMobileMenuOpen ? "Close controls" : "Reader controls"}
         </button>
-        <span className="reader-controls-status reader-mobile-status">
-          {versionMeta.label} · {view === "book" ? "Whole book" : `Chapter ${currentChapter}`}
-        </span>
       </div>
       <section
         aria-label="Reader controls"
         className={`reader-controls${isMobileMenuOpen ? " is-mobile-open" : ""}`}
         id="reader-controls-panel"
       >
-        <div className="reader-controls-header">
-          <span className="reader-controls-title">Navigation Grid</span>
-          <div className="reader-controls-actions">
-            <span className="reader-controls-status">
-              {versionMeta.label} · {view === "book" ? "Whole book" : "Chapter"}
-            </span>
-            <button
-              aria-controls="reader-settings-panel"
-              aria-expanded={isPanelOpen}
-              className="reader-settings-trigger"
-              onClick={() => setIsPanelOpen(!isPanelOpen)}
-              type="button"
-            >
-              Customize
-            </button>
-          </div>
-        </div>
         <div className="control-grid">
           <div className="control-group">
             <label htmlFor="book-select">Book</label>
@@ -152,6 +135,15 @@ export function ReaderControls({ books, book, currentChapter, view }: ReaderCont
           >
             {view === "book" ? "Switch to chapter view" : "Switch to whole book view"}
           </Link>
+          <button
+            aria-controls="reader-settings-panel"
+            aria-expanded={isPanelOpen}
+            className="reader-settings-trigger"
+            onClick={() => setIsPanelOpen(!isPanelOpen)}
+            type="button"
+          >
+            Customize
+          </button>
         </div>
       </section>
     </div>

@@ -132,4 +132,28 @@ describe("ReaderPageContent", () => {
       "/read/genesis?version=kjv"
     );
   });
+
+  it("opens and closes the compact reader controls menu", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+      />
+    );
+
+    const toggle = screen.getByRole("button", { name: "Reader controls" });
+    const controlsPanel = screen.getByRole("region", { name: "Reader controls" });
+
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+    expect(controlsPanel).not.toHaveClass("is-mobile-open");
+
+    fireEvent.click(toggle);
+
+    expect(screen.getByRole("button", { name: "Close controls" })).toHaveAttribute(
+      "aria-expanded",
+      "true"
+    );
+    expect(controlsPanel).toHaveClass("is-mobile-open");
+  });
 });
