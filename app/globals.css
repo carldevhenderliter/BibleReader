@@ -597,6 +597,7 @@ select {
   gap: 1rem;
   margin-bottom: 1.25rem;
   max-width: 100%;
+  padding-top: 6.25rem;
 }
 
 .reader-reading-card {
@@ -621,15 +622,17 @@ select {
 }
 
 .reader-toolbar {
-  position: sticky;
-  top: calc(env(safe-area-inset-top) + 0.7rem);
-  z-index: 12;
+  position: fixed;
+  top: max(0.65rem, env(safe-area-inset-top));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 40;
   display: grid;
   gap: 0.8rem;
-  width: 100%;
-  max-width: 100%;
+  width: min(calc(100vw - 2rem), 74rem);
+  max-width: calc(100vw - 2rem);
   padding: 0.8rem 0.9rem;
-  margin: -0.15rem -0.15rem 0;
+  margin: 0;
   border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: 1.35rem;
   background: linear-gradient(180deg, rgba(37, 40, 47, 0.86), rgba(24, 27, 33, 0.92));
@@ -1260,8 +1263,8 @@ select {
     align-items: start;
   }
 
-  .reader-toolbar {
-    top: calc(env(safe-area-inset-top) + 0.75rem);
+  .reader-topline {
+    padding-top: 6.3rem;
   }
 }
 
@@ -1384,21 +1387,18 @@ select {
 
   .reader-topline {
     gap: 0.9rem;
+    padding-top: 5.5rem;
   }
 
   .reader-toolbar {
-    position: fixed;
     top: max(0.45rem, env(safe-area-inset-top));
     left: max(0.75rem, env(safe-area-inset-left));
     right: max(0.75rem, env(safe-area-inset-right));
-    z-index: 40;
-    margin: 0;
+    transform: none;
+    width: auto;
+    max-width: none;
     padding: 0.78rem;
     border-radius: 1.15rem;
-  }
-
-  .reader-topline {
-    padding-top: 5.5rem;
   }
 
   .reader-controls-bar {
