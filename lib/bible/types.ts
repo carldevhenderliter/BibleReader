@@ -69,3 +69,13 @@ export type ReaderCustomizationSettings = {
   backgroundIntensity: number;
   surfaceDepth: number;
 };
+
+export type VerseNote = {
+  id: string;
+  version: BundledBibleVersion;
+  bookSlug: string;
+  chapterNumber: number;
+  verseNumber: number;
+  text: string;
+  updatedAt: string;
+};

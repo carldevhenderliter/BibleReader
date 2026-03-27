@@ -58,7 +58,12 @@ export function WholeBookContent({ books, book, chaptersByVersion }: WholeBookCo
                 <h2 className="book-section-title">Chapter {chapter.chapterNumber}</h2>
                 <p className="book-section-subtitle">{chapter.verses.length} verses</p>
               </div>
-              <VerseList verses={chapter.verses} />
+              <VerseList
+                bookSlug={book.slug}
+                chapterNumber={chapter.chapterNumber}
+                key={`${version}:${book.slug}:${chapter.chapterNumber}`}
+                verses={chapter.verses}
+              />
             </section>
           ))}
         </div>

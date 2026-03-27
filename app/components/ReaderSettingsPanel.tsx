@@ -4,11 +4,7 @@ import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
-import {
-  BODY_FONT_OPTIONS,
-  THEME_PRESETS,
-  UI_FONT_OPTIONS
-} from "@/lib/reader-customization";
+import { BODY_FONT_OPTIONS, UI_FONT_OPTIONS } from "@/lib/reader-customization";
 
 const TEXT_ALIGNMENT_OPTIONS = [
   {
@@ -86,9 +82,9 @@ export function ReaderSettingsPanel() {
       >
         <div className="reader-settings-header">
           <div>
-            <p className="eyebrow">Reader Settings</p>
+            <p className="eyebrow">Advanced Reader</p>
             <h2 className="reader-settings-title" id="reader-settings-title">
-              Customize your reading space
+              Fine-tune the reading space
             </h2>
           </div>
           <button
@@ -101,33 +97,10 @@ export function ReaderSettingsPanel() {
             Close
           </button>
         </div>
-
-        <section className="reader-settings-section">
-          <div className="reader-settings-section-header">
-            <h3>Theme</h3>
-            <p>Preset-led palettes with deeper control over glow, contrast, and atmosphere.</p>
-          </div>
-          <div className="settings-option-grid settings-option-grid-compact">
-            {THEME_PRESETS.map((preset) => (
-              <button
-                className={`settings-option-card${
-                  settings.themePreset === preset.id ? " is-active" : ""
-                }`}
-                key={preset.id}
-                onClick={() => updateSettings({ themePreset: preset.id })}
-                type="button"
-              >
-                <strong>{preset.name}</strong>
-                <span>{preset.description}</span>
-              </button>
-            ))}
-          </div>
-        </section>
-
         <section className="reader-settings-section">
           <div className="reader-settings-section-header">
             <h3>Typography</h3>
-            <p>Control the voice of the scripture text and the sharpness of the interface.</p>
+            <p>Adjust the character of the scripture text and the supporting interface.</p>
           </div>
           <div className="settings-option-grid settings-option-grid-compact">
             {BODY_FONT_OPTIONS.map((option) => (
@@ -222,22 +195,9 @@ export function ReaderSettingsPanel() {
         <section className="reader-settings-section">
           <div className="reader-settings-section-header">
             <h3>Layout</h3>
-            <p>Dial in reading density, line flow, and the size of the scripture surface.</p>
+            <p>Refine reading density, measure, and verse rhythm beyond the toolbar controls.</p>
           </div>
           <div className="settings-slider-group">
-            <label className="settings-slider">
-              <span>Text size</span>
-              <input
-                aria-label="Text size"
-                max="1.4"
-                min="0.92"
-                onChange={(event) => updateSettings({ textSize: Number(event.target.value) })}
-                step="0.02"
-                type="range"
-                value={settings.textSize}
-              />
-              <strong>{settings.textSize.toFixed(2)}rem</strong>
-            </label>
             <label className="settings-slider">
               <span>Line height</span>
               <input

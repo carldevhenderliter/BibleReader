@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizationProvider";
+import { ReaderNotesProvider } from "@/app/components/ReaderNotesProvider";
 import { ReaderVersionProvider } from "@/app/components/ReaderVersionProvider";
 
 type ReadLayoutProps = {
@@ -10,7 +11,9 @@ type ReadLayoutProps = {
 export default function ReadLayout({ children }: ReadLayoutProps) {
   return (
     <ReaderVersionProvider>
-      <ReaderCustomizationProvider>{children}</ReaderCustomizationProvider>
+      <ReaderCustomizationProvider>
+        <ReaderNotesProvider>{children}</ReaderNotesProvider>
+      </ReaderCustomizationProvider>
     </ReaderVersionProvider>
   );
 }

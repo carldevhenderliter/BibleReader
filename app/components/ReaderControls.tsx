@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import type { BookMeta, ReadingView } from "@/lib/bible/types";
+import { THEME_PRESETS } from "@/lib/reader-customization";
 import { getBookHref, getChapterHref, getViewToggleHref } from "@/lib/bible/utils";
 import {
   BIBLE_VERSION_METADATA,
@@ -23,8 +23,7 @@ type ReaderControlsProps = {
 
 export function ReaderControls({ books, book, currentChapter, view }: ReaderControlsProps) {
   const router = useRouter();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { isPanelOpen, setIsPanelOpen } = useReaderCustomization();
+  const { isPanelOpen, setIsPanelOpen, settings, updateSettings } = useReaderCustomization();
   const { version, setVersion } = useReaderVersion();
   const versionOptions = getBibleVersionOptions(false);
   const versionMeta = BIBLE_VERSION_METADATA[version];
@@ -37,115 +36,137 @@ export function ReaderControls({ books, book, currentChapter, view }: ReaderCont
     }
 
     if (view === "book" && versionMeta.supportsWholeBook) {
-      setIsMobileMenuOpen(false);
       router.push(getBookHref(nextBook.slug, version));
       return;
     }
 
-    setIsMobileMenuOpen(false);
     router.push(getChapterHref(nextBook.slug, Math.min(currentChapter, nextBook.chapterCount), version));
   };
 
   const handleChapterChange = (nextChapter: number) => {
-    setIsMobileMenuOpen(false);
     router.push(getChapterHref(book.slug, nextChapter, version));
   };
 
   const handleVersionChange = (nextVersion: string) => {
-    if (!isBundledBibleVersion(nextVersion)) {
-      return;
-    }
-
-    if (nextVersion === version) {
+    if (!isBundledBibleVersion(nextVersion) || nextVersion === version) {
       return;
     }
 
     setVersion(nextVersion);
-    setIsMobileMenuOpen(false);
+  };
+
+  const handleTextSizeShift = (delta: number) => {
+    updateSettings({
+      textSize: Number((settings.textSize + delta).toFixed(2))
+    });
   };
 
   return (
-    <div className="reader-controls-shell">
-      <div className="reader-mobile-toolbar">
-        <span className="reader-controls-status reader-mobile-status">
-          {versionMeta.label} · {view === "book" ? "Whole book" : `Chapter ${currentChapter}`}
-        </span>
-        <button
-          aria-controls="reader-controls-panel"
-          aria-expanded={isMobileMenuOpen}
-          className="reader-mobile-toggle"
-          onClick={() => setIsMobileMenuOpen((current) => !current)}
-          type="button"
-        >
-          {isMobileMenuOpen ? "Close controls" : "Reader controls"}
-        </button>
-      </div>
-      <section
-        aria-label="Reader controls"
-        className={`reader-controls${isMobileMenuOpen ? " is-mobile-open" : ""}`}
-        id="reader-controls-panel"
-      >
-        <div className="control-grid">
-          <div className="control-group">
-            <label htmlFor="book-select">Book</label>
-            <select
-              id="book-select"
-              value={book.slug}
-              onChange={(event) => handleBookChange(event.target.value)}
-            >
-              {books.map((item) => (
-                <option key={item.slug} value={item.slug}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="control-group">
-            <label htmlFor="version-select">Version</label>
-            <select
-              id="version-select"
-              onChange={(event) => handleVersionChange(event.target.value)}
-              value={version}
-            >
-              {versionOptions.map((option) => (
-                <option disabled={option.disabled} key={option.id} value={option.id}>
-                  {option.disabled ? `${option.label} (API key required)` : option.label}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="control-group">
-            <label htmlFor="chapter-select">Chapter</label>
-            <select
-              id="chapter-select"
-              value={String(currentChapter)}
-              onChange={(event) => handleChapterChange(Number(event.target.value))}
-            >
-              {Array.from({ length: book.chapterCount }, (_, index) => index + 1).map((chapter) => (
-                <option key={chapter} value={chapter}>
-                  {chapter}
-                </option>
-              ))}
-            </select>
-          </div>
-          <Link
-            className="toggle-link"
-            href={getViewToggleHref(book.slug, currentChapter, view, version)}
-            onClick={() => setIsMobileMenuOpen(false)}
+    <section className="reader-controls" aria-label="Reader controls">
+      <div className="reader-controls-scroller">
+        <div className="control-group control-group-compact">
+          <label className="sr-only" htmlFor="book-select">
+            Book
+          </label>
+          <select
+            aria-label="Book"
+            id="book-select"
+            value={book.slug}
+            onChange={(event) => handleBookChange(event.target.value)}
           >
-            {view === "book" ? "Switch to chapter view" : "Switch to whole book view"}
-          </Link>
+            {books.map((item) => (
+              <option key={item.slug} value={item.slug}>
+                {item.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="control-group control-group-compact">
+          <label className="sr-only" htmlFor="chapter-select">
+            Chapter
+          </label>
+          <select
+            aria-label="Chapter"
+            id="chapter-select"
+            value={String(currentChapter)}
+            onChange={(event) => handleChapterChange(Number(event.target.value))}
+          >
+            {Array.from({ length: book.chapterCount }, (_, index) => index + 1).map((chapter) => (
+              <option key={chapter} value={chapter}>
+                Chapter {chapter}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="control-group control-group-compact">
+          <label className="sr-only" htmlFor="version-select">
+            Version
+          </label>
+          <select
+            aria-label="Version"
+            id="version-select"
+            onChange={(event) => handleVersionChange(event.target.value)}
+            value={version}
+          >
+            {versionOptions.map((option) => (
+              <option disabled={option.disabled} key={option.id} value={option.id}>
+                {option.disabled ? `${option.label} (API key required)` : option.label}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="control-group control-group-compact">
+          <label className="sr-only" htmlFor="theme-select">
+            Theme
+          </label>
+          <select
+            aria-label="Theme"
+            id="theme-select"
+            onChange={(event) => updateSettings({ themePreset: event.target.value as (typeof settings)["themePreset"] })}
+            value={settings.themePreset}
+          >
+            {THEME_PRESETS.map((preset) => (
+              <option key={preset.id} value={preset.id}>
+                {preset.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="reader-size-controls" role="group" aria-label="Text size controls">
           <button
-            aria-controls="reader-settings-panel"
-            aria-expanded={isPanelOpen}
-            className="reader-settings-trigger"
-            onClick={() => setIsPanelOpen(!isPanelOpen)}
+            aria-label="Decrease text size"
+            className="reader-inline-button"
+            onClick={() => handleTextSizeShift(-0.04)}
             type="button"
           >
-            Customize
+            A-
+          </button>
+          <span className="reader-controls-status">{settings.textSize.toFixed(2)}rem</span>
+          <button
+            aria-label="Increase text size"
+            className="reader-inline-button"
+            onClick={() => handleTextSizeShift(0.04)}
+            type="button"
+          >
+            A+
           </button>
         </div>
-      </section>
-    </div>
+        <Link
+          className="toggle-link reader-inline-action"
+          href={getViewToggleHref(book.slug, currentChapter, view, version)}
+        >
+          {view === "book" ? "Chapter view" : "Whole book view"}
+        </Link>
+        <button
+          aria-controls="reader-settings-panel"
+          aria-expanded={isPanelOpen}
+          className="reader-inline-button"
+          onClick={() => setIsPanelOpen(!isPanelOpen)}
+          type="button"
+        >
+          Advanced
+        </button>
+      </div>
+    </section>
   );
 }

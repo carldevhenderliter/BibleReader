@@ -57,7 +57,12 @@ export function ReaderPageContent({ books, book, chaptersByVersion }: ReaderPage
           </header>
         </div>
         <div className="reading-surface">
-          <VerseList verses={chapter.verses} />
+          <VerseList
+            bookSlug={book.slug}
+            chapterNumber={chapter.chapterNumber}
+            key={`${version}:${book.slug}:${chapter.chapterNumber}`}
+            verses={chapter.verses}
+          />
         </div>
       </section>
       <ChapterPagination previous={chapterLinks.previous} next={chapterLinks.next} />

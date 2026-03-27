@@ -10,7 +10,7 @@ const books: BookMeta[] = [
     name: "Jude",
     abbreviation: "Jude",
     testament: "New",
-    chapterCount: 1,
+    chapterCount: 2,
     order: 65
   }
 ];
@@ -23,6 +23,11 @@ const chapters: Chapter[] = [
       { number: 1, text: "Jude, a servant of Jesus Christ..." },
       { number: 2, text: "Mercy to you and peace and love be multiplied." }
     ]
+  },
+  {
+    bookSlug: "jude",
+    chapterNumber: 2,
+    verses: [{ number: 1, text: "Beloved, while I was very eager to write to you..." }]
   }
 ];
 
@@ -34,6 +39,11 @@ const kjvChapters: Chapter[] = [
       { number: 1, text: "Jude, the servant of Jesus Christ..." },
       { number: 2, text: "Mercy unto you, and peace, and love, be multiplied." }
     ]
+  },
+  {
+    bookSlug: "jude",
+    chapterNumber: 2,
+    verses: [{ number: 1, text: "Beloved, when I gave all diligence to write unto you..." }]
   }
 ];
 
@@ -53,6 +63,7 @@ describe("WholeBookContent", () => {
 
     expect(screen.getByRole("heading", { name: "Jude" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Chapter 1" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Chapter 2" })).toBeInTheDocument();
     expect(screen.getByText("Mercy to you and peace and love be multiplied.")).toBeInTheDocument();
   });
 
@@ -74,5 +85,25 @@ describe("WholeBookContent", () => {
     });
 
     expect(screen.getByText("Mercy unto you, and peace, and love, be multiplied.")).toBeInTheDocument();
+  });
+
+  it("supports verse notes in later chapters of whole-book view", () => {
+    renderWithReaderCustomization(
+      <WholeBookContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapters, kjv: kjvChapters }}
+      />
+    );
+
+    fireEvent.click(screen.getAllByRole("button", { name: "Add note" })[2]);
+    fireEvent.change(screen.getByLabelText("Note for verse 1"), {
+      target: {
+        value: "Whole-book note in chapter two."
+      }
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Save note" }));
+
+    expect(screen.getByDisplayValue("Whole-book note in chapter two.")).toBeInTheDocument();
   });
 });

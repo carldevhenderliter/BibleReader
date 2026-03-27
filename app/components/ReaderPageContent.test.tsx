@@ -2,6 +2,7 @@ import { fireEvent, screen } from "@testing-library/react";
 
 import { ReaderPageContent } from "@/app/components/ReaderPageContent";
 import type { BookMeta, Chapter } from "@/lib/bible/types";
+import { VERSE_NOTES_STORAGE_KEY } from "@/lib/verse-notes";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
 
 const books: BookMeta[] = [
@@ -44,6 +45,7 @@ const kjvChapter: Chapter = {
 describe("ReaderPageContent", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    window.localStorage.clear();
   });
 
   it("renders chapter content and navigation", () => {
@@ -133,7 +135,30 @@ describe("ReaderPageContent", () => {
     );
   });
 
-  it("opens and closes the compact reader controls menu", () => {
+  it("saves notes inline and restores them when reopening the same passage", () => {
+    const { unmount } = renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+      />
+    );
+
+    fireEvent.click(screen.getAllByRole("button", { name: "Add note" })[0]);
+    fireEvent.change(screen.getByLabelText("Note for verse 1"), {
+      target: {
+        value: "Created light before the sun."
+      }
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Save note" }));
+
+    expect(window.localStorage.getItem(VERSE_NOTES_STORAGE_KEY)).toContain(
+      "Created light before the sun."
+    );
+    expect(screen.getByText("Saved note")).toBeInTheDocument();
+
+    unmount();
+
     renderWithReaderCustomization(
       <ReaderPageContent
         book={books[0]}
@@ -142,18 +167,32 @@ describe("ReaderPageContent", () => {
       />
     );
 
-    const toggle = screen.getByRole("button", { name: "Reader controls" });
-    const controlsPanel = screen.getByRole("region", { name: "Reader controls" });
-
-    expect(toggle).toHaveAttribute("aria-expanded", "false");
-    expect(controlsPanel).not.toHaveClass("is-mobile-open");
-
-    fireEvent.click(toggle);
-
-    expect(screen.getByRole("button", { name: "Close controls" })).toHaveAttribute(
-      "aria-expanded",
-      "true"
+    fireEvent.click(screen.getAllByRole("button", { name: "Edit note" })[0]);
+    expect(screen.getByLabelText("Note for verse 1")).toHaveValue(
+      "Created light before the sun."
     );
-    expect(controlsPanel).toHaveClass("is-mobile-open");
+  });
+
+  it("deletes saved verse notes", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+      />
+    );
+
+    fireEvent.click(screen.getAllByRole("button", { name: "Add note" })[0]);
+    fireEvent.change(screen.getByLabelText("Note for verse 1"), {
+      target: {
+        value: "A note to remove."
+      }
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Save note" }));
+    fireEvent.click(screen.getByRole("button", { name: "Delete" }));
+
+    expect(window.localStorage.getItem(VERSE_NOTES_STORAGE_KEY)).toBe("{}");
+    expect(screen.queryByText("Saved note")).not.toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: "Add note" })[0]).toBeInTheDocument();
   });
 });
