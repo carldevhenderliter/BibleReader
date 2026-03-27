@@ -47,6 +47,8 @@
 
 html {
   min-height: 100%;
+  width: 100%;
+  overflow-x: clip;
   -webkit-text-size-adjust: 100%;
   background:
     radial-gradient(circle at 15% 20%, rgba(85, 214, 255, 0.16), transparent 22rem),
@@ -56,8 +58,10 @@ html {
 
 body {
   margin: 0;
+  width: 100%;
+  max-width: 100%;
   min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: clip;
   color: var(--text);
   font-family: var(--reader-ui-font);
   background: transparent;
@@ -137,6 +141,8 @@ select {
 .site-shell {
   position: relative;
   z-index: 1;
+  width: 100%;
+  max-width: 100%;
   min-height: 100vh;
   padding:
     max(1rem, env(safe-area-inset-top))
@@ -232,6 +238,7 @@ select {
 }
 
 .site-main {
+  width: 100%;
   max-width: 78rem;
   margin: 0 auto;
 }
@@ -239,6 +246,8 @@ select {
 .page-stack,
 .reader-shell {
   display: grid;
+  width: 100%;
+  max-width: 100%;
   gap: 1.15rem;
 }
 
@@ -580,16 +589,19 @@ select {
 
 .reader-card {
   padding: 1.2rem;
+  max-width: 100%;
 }
 
 .reader-topline {
   display: grid;
   gap: 1rem;
   margin-bottom: 1.25rem;
+  max-width: 100%;
 }
 
 .reader-reading-card {
   overflow: visible;
+  max-width: 100%;
   background: linear-gradient(
     180deg,
     rgba(27, 30, 35, calc(0.82 + (var(--reader-surface-depth) - 0.8) * 0.08)),
@@ -614,6 +626,8 @@ select {
   z-index: 12;
   display: grid;
   gap: 0.8rem;
+  width: 100%;
+  max-width: 100%;
   padding: 0.8rem 0.9rem;
   margin: -0.15rem -0.15rem 0;
   border: 1px solid rgba(255, 255, 255, 0.09);
@@ -690,14 +704,18 @@ select {
 .reader-controls {
   position: relative;
   min-width: 0;
+  width: 100%;
+  max-width: 100%;
 }
 
 .reader-controls-scroller {
   display: flex;
   align-items: center;
   gap: 0.55rem;
+  width: 100%;
   min-width: 0;
   overflow-x: auto;
+  overscroll-behavior-x: contain;
   padding-bottom: 0.15rem;
   scrollbar-width: none;
 }
@@ -794,6 +812,7 @@ select {
 .reading-surface {
   padding: 1.3rem;
   width: min(100%, calc(var(--reader-content-width) + 4rem));
+  max-width: 100%;
   margin: 0 auto;
   border-radius: 1.7rem;
   background:
@@ -1292,7 +1311,12 @@ select {
   }
 
   .reader-toolbar {
-    top: calc(env(safe-area-inset-top) + 0.4rem);
+    position: fixed;
+    top: max(0.45rem, env(safe-area-inset-top));
+    left: max(0.75rem, env(safe-area-inset-left));
+    right: max(0.75rem, env(safe-area-inset-right));
+    z-index: 40;
+    margin: 0;
     padding: 0.78rem;
     border-radius: 1.15rem;
   }
@@ -1300,6 +1324,10 @@ select {
   .reader-controls-scroller {
     margin-right: -0.15rem;
     padding-right: 0.15rem;
+  }
+
+  .reader-topline {
+    padding-top: 5.5rem;
   }
 
   .control-group select,
