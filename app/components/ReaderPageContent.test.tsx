@@ -60,6 +60,7 @@ describe("ReaderPageContent", () => {
     expect(screen.getByRole("heading", { name: "Genesis 1" })).toBeInTheDocument();
     expect(screen.getByText("In the beginning, God created the heavens and the earth.")).toBeInTheDocument();
     expect(screen.getAllByText(/^WEB$/i).length).toBeGreaterThan(0);
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     expect(screen.getByRole("link", { name: /Whole book view/i })).toHaveAttribute(
       "href",
       "/read/genesis"
@@ -119,6 +120,7 @@ describe("ReaderPageContent", () => {
       />
     );
 
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     expect(screen.getByRole("option", { name: "ESV (API key required)" })).toBeDisabled();
     expect(screen.getByText("In the beginning, God created the heavens and the earth.")).toBeInTheDocument();
 

@@ -78,6 +78,7 @@ describe("WholeBookContent", () => {
 
     expect(screen.getByText("Mercy to you and peace and love be multiplied.")).toBeInTheDocument();
 
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.change(screen.getByLabelText("Version"), {
       target: {
         value: "kjv"

@@ -27,7 +27,7 @@ export function ReaderPageContent({ books, book, chaptersByVersion }: ReaderPage
   return (
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
       <ReadingSessionSync book={book.slug} chapter={chapter.chapterNumber} view="chapter" />
-      <ReaderSettingsPanel />
+      <ReaderSettingsPanel book={book} currentChapter={chapter.chapterNumber} view="chapter" />
       <section className="reader-card reader-reading-card">
         <div className="reader-topline">
           <div className="reader-toolbar">

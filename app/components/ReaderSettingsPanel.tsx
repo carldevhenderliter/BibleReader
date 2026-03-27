@@ -1,10 +1,16 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
+import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
+import type { BookMeta, ReadingView, ThemePreset } from "@/lib/bible/types";
 import { BODY_FONT_OPTIONS, UI_FONT_OPTIONS } from "@/lib/reader-customization";
+import { THEME_PRESETS } from "@/lib/reader-customization";
+import { getViewToggleHref } from "@/lib/bible/utils";
+import { getBibleVersionOptions, isBundledBibleVersion } from "@/lib/bible/version";
 
 const TEXT_ALIGNMENT_OPTIONS = [
   {
@@ -19,10 +25,36 @@ const TEXT_ALIGNMENT_OPTIONS = [
   }
 ] as const;
 
-export function ReaderSettingsPanel() {
+type ReaderSettingsPanelProps = {
+  book: BookMeta;
+  currentChapter: number;
+  view: ReadingView;
+};
+
+export function ReaderSettingsPanel({
+  book,
+  currentChapter,
+  view
+}: ReaderSettingsPanelProps) {
   const { isPanelOpen, resetSettings, setIsPanelOpen, settings, updateSettings } =
     useReaderCustomization();
+  const { version, setVersion } = useReaderVersion();
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const versionOptions = getBibleVersionOptions(false);
+
+  const handleVersionChange = (nextVersion: string) => {
+    if (!isBundledBibleVersion(nextVersion) || nextVersion === version) {
+      return;
+    }
+
+    setVersion(nextVersion);
+  };
+
+  const handleTextSizeShift = (delta: number) => {
+    updateSettings({
+      textSize: Number((settings.textSize + delta).toFixed(2))
+    });
+  };
 
   useEffect(() => {
     if (!isPanelOpen) {
@@ -82,9 +114,9 @@ export function ReaderSettingsPanel() {
       >
         <div className="reader-settings-header">
           <div>
-            <p className="eyebrow">Advanced Reader</p>
+            <p className="eyebrow">Reader Menu</p>
             <h2 className="reader-settings-title" id="reader-settings-title">
-              Fine-tune the reading space
+              Reader controls and settings
             </h2>
           </div>
           <button
@@ -97,6 +129,74 @@ export function ReaderSettingsPanel() {
             Close
           </button>
         </div>
+        <section className="reader-settings-section">
+          <div className="reader-settings-section-header">
+            <h3>Reading Controls</h3>
+            <p>Change the active version, theme, reading size, and view from one menu.</p>
+          </div>
+          <div className="reader-settings-field-grid">
+            <label className="reader-settings-field" htmlFor="reader-menu-version">
+              <span>Version</span>
+              <select
+                aria-label="Version"
+                id="reader-menu-version"
+                onChange={(event) => handleVersionChange(event.target.value)}
+                value={version}
+              >
+                {versionOptions.map((option) => (
+                  <option disabled={option.disabled} key={option.id} value={option.id}>
+                    {option.disabled ? `${option.label} (API key required)` : option.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="reader-settings-field" htmlFor="reader-menu-theme">
+              <span>Theme</span>
+              <select
+                aria-label="Theme"
+                id="reader-menu-theme"
+                onChange={(event) =>
+                  updateSettings({ themePreset: event.target.value as ThemePreset })
+                }
+                value={settings.themePreset}
+              >
+                {THEME_PRESETS.map((preset) => (
+                  <option key={preset.id} value={preset.id}>
+                    {preset.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+          <div className="reader-settings-shortcuts">
+            <div className="reader-size-controls" role="group" aria-label="Text size controls">
+              <button
+                aria-label="Decrease text size"
+                className="reader-inline-button"
+                onClick={() => handleTextSizeShift(-0.04)}
+                type="button"
+              >
+                A-
+              </button>
+              <span className="reader-controls-status">{settings.textSize.toFixed(2)}rem</span>
+              <button
+                aria-label="Increase text size"
+                className="reader-inline-button"
+                onClick={() => handleTextSizeShift(0.04)}
+                type="button"
+              >
+                A+
+              </button>
+            </div>
+            <Link
+              className="reader-inline-action reader-settings-link"
+              href={getViewToggleHref(book.slug, currentChapter, view, version)}
+              onClick={() => setIsPanelOpen(false)}
+            >
+              {view === "book" ? "Chapter view" : "Whole book view"}
+            </Link>
+          </div>
+        </section>
         <section className="reader-settings-section">
           <div className="reader-settings-section-header">
             <h3>Typography</h3>

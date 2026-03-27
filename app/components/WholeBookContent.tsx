@@ -24,7 +24,7 @@ export function WholeBookContent({ books, book, chaptersByVersion }: WholeBookCo
   return (
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
       <ReadingSessionSync book={book.slug} chapter={1} view="book" />
-      <ReaderSettingsPanel />
+      <ReaderSettingsPanel book={book} currentChapter={1} view="book" />
       <section className="reader-card reader-reading-card">
         <div className="reader-topline">
           <div className="reader-toolbar">

@@ -35,7 +35,7 @@ describe("Reader customization", () => {
     window.localStorage.clear();
   });
 
-  it("keeps common controls inline in the reader toolbar", () => {
+  it("keeps book and chapter controls pinned in the reader toolbar", () => {
     renderWithReaderCustomization(
       <ReaderPageContent
         book={books[0]}
@@ -46,13 +46,11 @@ describe("Reader customization", () => {
 
     expect(screen.getByLabelText("Book")).toBeInTheDocument();
     expect(screen.getByLabelText("Chapter")).toBeInTheDocument();
-    expect(screen.getByLabelText("Version")).toBeInTheDocument();
-    expect(screen.getByLabelText("Theme")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Increase text size" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Whole book view" })).toBeInTheDocument();
+    expect(screen.getAllByText("Genesis 1").length).toBeGreaterThan(0);
+    expect(screen.getByRole("button", { name: "Menu" })).toBeInTheDocument();
   });
 
-  it("updates inline theme and text size controls and persists them", () => {
+  it("updates menu theme and text size controls and persists them", () => {
     renderWithReaderCustomization(
       <ReaderPageContent
         book={books[0]}
@@ -61,6 +59,7 @@ describe("Reader customization", () => {
       />
     );
 
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.change(screen.getByLabelText("Theme"), {
       target: {
         value: "midnight"
@@ -83,14 +82,14 @@ describe("Reader customization", () => {
       />
     );
 
-    const trigger = screen.getByRole("button", { name: "Advanced" });
+    const trigger = screen.getByRole("button", { name: "Menu" });
 
-    expect(screen.queryByRole("dialog", { name: "Fine-tune the reading space" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("dialog", { name: "Reader controls and settings" })).not.toBeInTheDocument();
     expect(trigger).toHaveAttribute("aria-expanded", "false");
 
     fireEvent.click(trigger);
 
-    expect(screen.getByRole("dialog", { name: "Fine-tune the reading space" })).toBeVisible();
+    expect(screen.getByRole("dialog", { name: "Reader controls and settings" })).toBeVisible();
     expect(trigger).toHaveAttribute("aria-expanded", "true");
 
     fireEvent.click(screen.getByRole("button", { name: /Mono/i }));
@@ -145,9 +144,9 @@ describe("Reader customization", () => {
       />
     );
 
-    expect(screen.getByLabelText("Theme")).toHaveValue("ember");
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
 
-    fireEvent.click(screen.getByRole("button", { name: "Advanced" }));
+    expect(screen.getByLabelText("Theme")).toHaveValue("ember");
 
     expect(screen.getByRole("button", { name: /Mono/i })).toHaveClass("is-active");
     expect(screen.getByRole("button", { name: /Justified/i })).toHaveClass("is-active");
@@ -162,7 +161,7 @@ describe("Reader customization", () => {
       />
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "Advanced" }));
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: /Mono/i }));
     fireEvent.click(screen.getByRole("button", { name: "Reset to defaults" }));
 
@@ -178,17 +177,17 @@ describe("Reader customization", () => {
       />
     );
 
-    const trigger = screen.getByRole("button", { name: "Advanced" });
+    const trigger = screen.getByRole("button", { name: "Menu" });
 
     fireEvent.click(trigger);
     fireEvent.click(screen.getByRole("button", { name: "Close reader settings" }));
 
-    expect(screen.queryByRole("dialog", { name: "Fine-tune the reading space" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("dialog", { name: "Reader controls and settings" })).not.toBeInTheDocument();
     expect(trigger).toHaveAttribute("aria-expanded", "false");
 
     fireEvent.click(trigger);
     fireEvent.keyDown(window, { key: "Escape" });
 
-    expect(screen.queryByRole("dialog", { name: "Fine-tune the reading space" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("dialog", { name: "Reader controls and settings" })).not.toBeInTheDocument();
   });
 });
