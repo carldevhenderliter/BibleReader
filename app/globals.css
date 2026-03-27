@@ -47,6 +47,7 @@
 
 html {
   min-height: 100%;
+  -webkit-text-size-adjust: 100%;
   background:
     radial-gradient(circle at 15% 20%, rgba(85, 214, 255, 0.16), transparent 22rem),
     radial-gradient(circle at 85% 12%, rgba(123, 97, 255, 0.18), transparent 26rem),
@@ -56,6 +57,7 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
+  overflow-x: hidden;
   color: var(--text);
   font-family: var(--reader-ui-font);
   background: transparent;
@@ -81,6 +83,7 @@ a {
 button,
 select {
   font: inherit;
+  touch-action: manipulation;
 }
 
 .ambient-orb,
@@ -123,7 +126,11 @@ select {
   position: relative;
   z-index: 1;
   min-height: 100vh;
-  padding: 1rem;
+  padding:
+    max(1rem, env(safe-area-inset-top))
+    max(1rem, env(safe-area-inset-right))
+    max(1rem, env(safe-area-inset-bottom))
+    max(1rem, env(safe-area-inset-left));
 }
 
 .site-header,
@@ -924,7 +931,37 @@ select {
   text-align: center;
 }
 
-@media (min-width: 48rem) {
+@media (min-width: 48rem) and (max-width: 63.99rem) {
+  .site-shell {
+    padding:
+      max(1.1rem, env(safe-area-inset-top))
+      max(1.1rem, env(safe-area-inset-right))
+      max(1.2rem, env(safe-area-inset-bottom))
+      max(1.1rem, env(safe-area-inset-left));
+  }
+
+  .hero-card,
+  .content-card,
+  .reader-card {
+    padding: 1.35rem;
+  }
+
+  .hero-grid {
+    grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.95fr);
+    align-items: start;
+  }
+
+  .control-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: end;
+  }
+
+  .toggle-link {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 64rem) {
   .site-shell {
     padding: 1.35rem;
   }
@@ -952,8 +989,21 @@ select {
 }
 
 @media (max-width: 47.99rem) {
+  .site-shell {
+    padding:
+      max(0.75rem, env(safe-area-inset-top))
+      max(0.75rem, env(safe-area-inset-right))
+      max(1rem, env(safe-area-inset-bottom))
+      max(0.75rem, env(safe-area-inset-left));
+  }
+
   .site-header {
+    position: sticky;
+    top: max(0.4rem, env(safe-area-inset-top));
+    z-index: 20;
     align-items: start;
+    padding: 0.9rem 1rem;
+    border-radius: 1.2rem;
   }
 
   .site-header,
@@ -969,7 +1019,118 @@ select {
     text-align: left;
   }
 
+  .site-brand {
+    font-size: 1.3rem;
+  }
+
+  .hero-card,
+  .content-card,
+  .reader-card {
+    padding: 1rem;
+    border-radius: 1.4rem;
+  }
+
+  .hero-title {
+    max-width: none;
+    font-size: clamp(2.1rem, 12vw, 3.5rem);
+  }
+
+  .hero-copy {
+    font-size: 0.98rem;
+  }
+
+  .hero-actions {
+    display: grid;
+    width: 100%;
+  }
+
+  .hero-actions > * {
+    width: 100%;
+  }
+
+  .continue-pill,
+  .primary-link,
+  .secondary-link,
+  .toggle-link {
+    width: 100%;
+  }
+
+  .hero-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .hero-stat {
+    padding: 0.8rem;
+  }
+
+  .hero-stat strong {
+    font-size: 1.25rem;
+  }
+
+  .book-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .book-link {
+    padding: 0.95rem;
+  }
+
+  .reader-topline {
+    gap: 0.9rem;
+  }
+
+  .reader-controls {
+    padding: 0.9rem;
+    border-radius: 1.1rem;
+  }
+
+  .control-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: end;
+  }
+
+  .control-grid .control-group:first-child,
+  .control-grid .toggle-link {
+    grid-column: 1 / -1;
+  }
+
+  .control-group select {
+    min-height: 3.15rem;
+    font-size: 1rem;
+  }
+
+  .reading-surface {
+    width: 100%;
+    padding: 0.9rem;
+    border-radius: 1.2rem;
+  }
+
+  .verse-row {
+    grid-template-columns: 1.5rem 1fr;
+    gap: 0.65rem;
+  }
+
+  .verse-number {
+    min-width: 1.5rem;
+    padding-top: 0.1rem;
+  }
+
+  .reader-meta-separator {
+    margin: 0 0.35rem;
+  }
+
   .pagination {
+    grid-template-columns: 1fr;
+  }
+
+  .pagination-link,
+  .pagination-empty {
+    min-height: 0;
+    padding: 0.95rem 1rem;
+  }
+
+  .settings-option-grid-compact,
+  .settings-slider-group {
     grid-template-columns: 1fr;
   }
 
