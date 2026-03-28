@@ -151,6 +151,10 @@ select {
     max(1rem, env(safe-area-inset-left));
 }
 
+.app-layout {
+  width: 100%;
+}
+
 .site-header,
 .hero-card,
 .content-card,
@@ -1283,6 +1287,10 @@ select {
   box-shadow: 0 18px 46px rgba(0, 0, 0, 0.24);
 }
 
+.lookup-pane {
+  display: none;
+}
+
 .search-bar {
   display: flex;
   align-items: center;
@@ -1480,6 +1488,78 @@ select {
 
   .reader-controls-primary {
     justify-content: flex-end;
+  }
+}
+
+@media (min-width: 80rem) {
+  .site-header {
+    max-width: 103.25rem;
+  }
+
+  .app-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 78rem) minmax(20rem, 24rem);
+    gap: 1.25rem;
+    align-items: start;
+    justify-content: center;
+    max-width: 103.25rem;
+    margin: 0 auto;
+  }
+
+  .site-main {
+    max-width: none;
+    margin: 0;
+    min-width: 0;
+    padding-bottom: calc(6.9rem + env(safe-area-inset-bottom));
+  }
+
+  .lookup-pane {
+    position: sticky;
+    top: calc(max(1.35rem, env(safe-area-inset-top)) + 0.1rem);
+    display: grid;
+    gap: 1rem;
+    max-height: calc(100vh - max(2.7rem, env(safe-area-inset-top)) - env(safe-area-inset-bottom));
+    padding: 1.1rem;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    border-radius: 1.5rem;
+    background: linear-gradient(180deg, rgba(24, 28, 34, 0.92), rgba(15, 18, 23, 0.96));
+    backdrop-filter: blur(20px);
+    box-shadow: 0 18px 46px rgba(0, 0, 0, 0.24);
+  }
+
+  .lookup-pane-header {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 0.8rem;
+  }
+
+  .lookup-pane .search-results {
+    overflow-y: auto;
+    padding-right: 0.2rem;
+  }
+
+  .lookup-pane-reset {
+    min-height: 2.5rem;
+    padding: 0.68rem 0.9rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.86);
+    cursor: pointer;
+  }
+
+  .search-shell {
+    right: auto;
+    left: 50%;
+    width: min(calc(100vw - 2.7rem), 103.25rem);
+    padding-right: 25.25rem;
+    transform: translateX(-50%);
+  }
+
+  .search-bar {
+    width: 100%;
   }
 }
 

@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 
 import { AppProviders } from "@/app/components/AppProviders";
 import { BottomSearchBar } from "@/app/components/BottomSearchBar";
+import { LookupPane } from "@/app/components/LookupPane";
 import { SiteHeader } from "@/app/components/SiteHeader";
 
 import "./globals.css";
@@ -32,7 +33,10 @@ export default function RootLayout({
           <div className="ambient-grid" aria-hidden="true" />
           <div className="site-shell">
             <SiteHeader />
-            <main className="site-main">{children}</main>
+            <div className="app-layout">
+              <main className="site-main">{children}</main>
+              <LookupPane />
+            </div>
             <BottomSearchBar />
           </div>
         </AppProviders>

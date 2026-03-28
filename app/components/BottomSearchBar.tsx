@@ -1,39 +1,37 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useId, useRef } from "react";
 
+import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
-import { searchBible } from "@/lib/bible/search";
-import type { BibleSearchResult } from "@/lib/bible/types";
 import { getBibleVersionLabel } from "@/lib/bible/version";
 
 export function BottomSearchBar() {
-  const router = useRouter();
-  const pathname = usePathname();
   const { version } = useReaderVersion();
+  const {
+    clearSearch,
+    closeSearch,
+    isDesktop,
+    isOpen,
+    isSearching,
+    openSearch,
+    query,
+    results,
+    selectResult,
+    setQuery
+  } = useLookup();
   const inputId = useId();
   const trayId = useId();
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [query, setQuery] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-  const [results, setResults] = useState<BibleSearchResult[]>([]);
-  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
-    setIsOpen(false);
-    setQuery("");
-    setResults([]);
-  }, [pathname]);
-
-  useEffect(() => {
-    if (!isOpen) {
+    if (!isOpen || isDesktop) {
       return;
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
-        setIsOpen(false);
+        closeSearch();
       }
     };
 
@@ -42,67 +40,20 @@ export function BottomSearchBar() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen]);
-
-  useEffect(() => {
-    if (!isOpen) {
-      return;
-    }
-
-    const trimmedQuery = query.trim();
-
-    if (!trimmedQuery) {
-      setResults([]);
-      setIsSearching(false);
-      return;
-    }
-
-    let isCancelled = false;
-    setIsSearching(true);
-
-    void searchBible(trimmedQuery, version).then((nextResults) => {
-      if (isCancelled) {
-        return;
-      }
-
-      setResults(nextResults);
-      setIsSearching(false);
-    });
-
-    return () => {
-      isCancelled = true;
-    };
-  }, [isOpen, query, version]);
-
-  const handleClose = () => {
-    setIsOpen(false);
-  };
-
-  const handleClear = () => {
-    setQuery("");
-    setResults([]);
-    inputRef.current?.focus();
-  };
-
-  const handleSelect = (href: string) => {
-    setIsOpen(false);
-    setQuery("");
-    setResults([]);
-    router.push(href);
-  };
+  }, [closeSearch, isDesktop, isOpen]);
 
   return (
     <>
-      {isOpen ? (
+      {isOpen && !isDesktop ? (
         <button
           aria-label="Close search"
           className="search-backdrop"
-          onClick={handleClose}
+          onClick={closeSearch}
           type="button"
         />
       ) : null}
       <div className="search-shell">
-        {isOpen ? (
+        {isOpen && !isDesktop ? (
           <section
             aria-label="Bible search results"
             className="search-tray"
@@ -113,7 +64,7 @@ export function BottomSearchBar() {
                 <p className="search-tray-kicker">Bible Search</p>
                 <h2 className="search-tray-title">{getBibleVersionLabel(version)} results</h2>
               </div>
-              <button className="search-close-button" onClick={handleClose} type="button">
+              <button className="search-close-button" onClick={closeSearch} type="button">
                 Close
               </button>
             </div>
@@ -131,7 +82,7 @@ export function BottomSearchBar() {
                   <button
                     className="search-result"
                     key={result.id}
-                    onClick={() => handleSelect(result.href)}
+                    onClick={() => selectResult(result.href)}
                     type="button"
                   >
                     <div className="search-result-header">
@@ -160,15 +111,14 @@ export function BottomSearchBar() {
           </label>
           <input
             aria-controls={trayId}
-            aria-expanded={isOpen}
+            aria-expanded={isDesktop ? true : isOpen}
             autoComplete="off"
             className="search-input"
             id={inputId}
             onChange={(event) => {
               setQuery(event.target.value);
-              setIsOpen(true);
             }}
-            onFocus={() => setIsOpen(true)}
+            onFocus={openSearch}
             placeholder="Search books, words, or phrases"
             ref={inputRef}
             type="search"
@@ -178,7 +128,10 @@ export function BottomSearchBar() {
             <button
               aria-label="Clear search"
               className="search-action-button"
-              onClick={handleClear}
+              onClick={() => {
+                clearSearch();
+                inputRef.current?.focus();
+              }}
               type="button"
             >
               Clear
