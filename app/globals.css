@@ -1393,9 +1393,19 @@ select {
 }
 
 .search-result-groups-panes {
+  --search-pane-count: 1;
+  --search-pane-gap: 1rem;
+  --search-pane-max-width: 18rem;
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(16rem, 18rem);
+  gap: var(--search-pane-gap);
+  grid-auto-columns: minmax(
+    16rem,
+    min(
+      var(--search-pane-max-width),
+      calc((100% - (var(--search-pane-gap) * (var(--search-pane-count) - 1))) / var(--search-pane-count))
+    )
+  );
   align-items: stretch;
   overflow-x: auto;
   overflow-y: hidden;
@@ -1606,6 +1616,31 @@ select {
     align-items: start;
     justify-content: space-between;
     gap: 0.8rem;
+  }
+
+  .lookup-pane-width-control {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .lookup-pane-width-label,
+  .lookup-pane-width-value {
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .lookup-pane-width-value {
+    text-align: right;
+  }
+
+  .lookup-pane-width-input {
+    width: 100%;
+    accent-color: rgba(138, 255, 193, 0.9);
   }
 
   .lookup-pane .search-result-groups {

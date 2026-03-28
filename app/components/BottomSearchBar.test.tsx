@@ -194,4 +194,25 @@ describe("BottomSearchBar", () => {
     expect(container.querySelector(".search-result-groups-panes")).toBeTruthy();
     expect(container.querySelectorAll(".search-result-group-pane")).toHaveLength(2);
   });
+
+  it("lets desktop users adjust split pane width", async () => {
+    setDesktopMode(true);
+    const { container } = renderSearchUi();
+
+    fireEvent.focus(screen.getByLabelText("Search books, words, or phrases"));
+    fireEvent.change(screen.getByLabelText("Search books, words, or phrases"), {
+      target: { value: "John 1:1, light" }
+    });
+
+    await screen.findByRole("button", { name: /Verse John 1:1/i });
+
+    fireEvent.change(screen.getByLabelText("Result width"), {
+      target: { value: "22" }
+    });
+
+    expect(screen.getByText("22rem")).toBeInTheDocument();
+    expect(container.querySelector(".search-result-groups-panes")).toHaveStyle(
+      "--search-pane-max-width: 22rem"
+    );
+  });
 });
