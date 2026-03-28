@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 
+import { AppSplitLayout } from "@/app/components/AppSplitLayout";
 import { AppProviders } from "@/app/components/AppProviders";
 import { BottomSearchBar } from "@/app/components/BottomSearchBar";
-import { LookupPane } from "@/app/components/LookupPane";
 import { SiteHeader } from "@/app/components/SiteHeader";
 
 import "./globals.css";
@@ -33,10 +33,7 @@ export default function RootLayout({
           <div className="ambient-grid" aria-hidden="true" />
           <div className="site-shell">
             <SiteHeader />
-            <div className="app-layout">
-              <main className="site-main">{children}</main>
-              <LookupPane />
-            </div>
+            <AppSplitLayout>{children}</AppSplitLayout>
             <BottomSearchBar />
           </div>
         </AppProviders>

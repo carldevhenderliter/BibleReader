@@ -1,7 +1,5 @@
 "use client";
 
-import type { CSSProperties } from "react";
-
 import type { BibleSearchResultGroup } from "@/lib/bible/types";
 
 type SearchResultGroupsProps = {
@@ -9,7 +7,6 @@ type SearchResultGroupsProps = {
   onSelectResult: (href: string) => void;
   variant?: "stack" | "panes";
   isSearching?: boolean;
-  paneWidthRem?: number;
 };
 
 function getResultTypeLabel(type: BibleSearchResultGroup["results"][number]["type"]) {
@@ -32,23 +29,20 @@ export function SearchResultGroups({
   groups,
   onSelectResult,
   variant = "stack",
-  isSearching = false,
-  paneWidthRem = 18
+  isSearching = false
 }: SearchResultGroupsProps) {
-  const paneStyles =
-    variant === "panes"
-      ? ({
-          ["--search-pane-count" as string]: String(Math.max(groups.length, 1)),
-          ["--search-pane-max-width" as string]: `${paneWidthRem}rem`
-        } as CSSProperties)
-      : undefined;
-
   return (
     <div
       className={`search-result-groups${
         variant === "panes" ? " search-result-groups-panes" : ""
       }`}
-      style={paneStyles}
+      style={
+        variant === "panes"
+          ? {
+              ["--search-pane-count" as string]: String(Math.max(groups.length, 1))
+            }
+          : undefined
+      }
     >
       {groups.map((group) => (
         <section

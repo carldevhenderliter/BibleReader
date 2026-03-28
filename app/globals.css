@@ -155,6 +155,14 @@ select {
   width: 100%;
 }
 
+.app-layout-main {
+  min-width: 0;
+}
+
+.app-layout-divider {
+  display: none;
+}
+
 .site-header,
 .hero-card,
 .content-card,
@@ -1395,16 +1403,12 @@ select {
 .search-result-groups-panes {
   --search-pane-count: 1;
   --search-pane-gap: 1rem;
-  --search-pane-max-width: 18rem;
   display: grid;
   grid-auto-flow: column;
   gap: var(--search-pane-gap);
-  grid-auto-columns: minmax(
+  grid-auto-columns: max(
     16rem,
-    min(
-      var(--search-pane-max-width),
-      calc((100% - (var(--search-pane-gap) * (var(--search-pane-count) - 1))) / var(--search-pane-count))
-    )
+    calc((100% - (var(--search-pane-gap) * (var(--search-pane-count) - 1))) / var(--search-pane-count))
   );
   align-items: stretch;
   overflow-x: auto;
@@ -1580,11 +1584,15 @@ select {
   }
 
   .app-layout {
+    --app-layout-gap: 0.875rem;
+    --app-layout-lookup-width: 24rem;
     display: grid;
-    grid-template-columns: minmax(0, 78rem) minmax(20rem, 24rem);
-    gap: 1.25rem;
+    grid-template-columns:
+      minmax(0, 1fr)
+      0.875rem
+      minmax(22rem, var(--app-layout-lookup-width));
+    column-gap: var(--app-layout-gap);
     align-items: start;
-    justify-content: center;
     max-width: 103.25rem;
     margin: 0 auto;
   }
@@ -1594,6 +1602,36 @@ select {
     margin: 0;
     min-width: 0;
     padding-bottom: calc(6.9rem + env(safe-area-inset-bottom));
+  }
+
+  .app-layout-divider {
+    display: block;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.06),
+        rgba(255, 255, 255, 0.18),
+        rgba(255, 255, 255, 0.06)
+      );
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    cursor: col-resize;
+  }
+
+  .app-layout-divider:hover,
+  .app-layout-divider:focus-visible {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(138, 255, 193, 0.18),
+        rgba(138, 255, 193, 0.42),
+        rgba(138, 255, 193, 0.18)
+      );
+    outline: none;
   }
 
   .lookup-pane {
@@ -1616,31 +1654,6 @@ select {
     align-items: start;
     justify-content: space-between;
     gap: 0.8rem;
-  }
-
-  .lookup-pane-width-control {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .lookup-pane-width-label,
-  .lookup-pane-width-value {
-    color: rgba(255, 255, 255, 0.72);
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .lookup-pane-width-value {
-    text-align: right;
-  }
-
-  .lookup-pane-width-input {
-    width: 100%;
-    accent-color: rgba(138, 255, 193, 0.9);
   }
 
   .lookup-pane .search-result-groups {
