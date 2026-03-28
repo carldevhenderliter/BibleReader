@@ -1,6 +1,30 @@
 import { searchBible } from "@/lib/bible/search";
 
 describe("Bible search", () => {
+  it("resolves direct chapter references", async () => {
+    const results = await searchBible("John 1", "web");
+
+    expect(results[0]).toMatchObject({
+      type: "chapter",
+      bookSlug: "john",
+      chapterNumber: 1,
+      label: "John 1",
+      href: "/read/john/1"
+    });
+  });
+
+  it("resolves direct verse references", async () => {
+    const results = await searchBible("John 1:1", "web");
+
+    expect(results[0]).toMatchObject({
+      type: "verse",
+      bookSlug: "john",
+      chapterNumber: 1,
+      verseNumber: 1,
+      href: "/read/john/1?highlight=1"
+    });
+  });
+
   it("prioritizes book matches before verse matches", async () => {
     const results = await searchBible("john", "web");
 

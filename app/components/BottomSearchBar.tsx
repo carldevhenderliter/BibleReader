@@ -136,7 +136,11 @@ export function BottomSearchBar() {
                   >
                     <div className="search-result-header">
                       <span className={`search-result-type search-result-type-${result.type}`}>
-                        {result.type === "book" ? "Book" : "Verse"}
+                        {result.type === "book"
+                          ? "Book"
+                          : result.type === "chapter"
+                            ? "Chapter"
+                            : "Verse"}
                       </span>
                       <strong>{result.label}</strong>
                     </div>

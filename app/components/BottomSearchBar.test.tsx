@@ -84,6 +84,28 @@ describe("BottomSearchBar", () => {
     expect(mockRouter.push).toHaveBeenCalledWith("/read/genesis/1?highlight=1");
   });
 
+  it("navigates from direct chapter and verse references", async () => {
+    render(
+      <ReaderVersionProvider>
+        <BottomSearchBar />
+      </ReaderVersionProvider>
+    );
+
+    fireEvent.change(screen.getByLabelText("Search books, words, or phrases"), {
+      target: { value: "John 1" }
+    });
+
+    fireEvent.click(await screen.findByRole("button", { name: /Chapter John 1/i }));
+    expect(mockRouter.push).toHaveBeenCalledWith("/read/john/1");
+
+    fireEvent.change(screen.getByLabelText("Search books, words, or phrases"), {
+      target: { value: "John 1:1" }
+    });
+
+    fireEvent.click(await screen.findByRole("button", { name: /Verse John 1:1/i }));
+    expect(mockRouter.push).toHaveBeenCalledWith("/read/john/1?highlight=1");
+  });
+
   it("updates verse results when the active version changes", async () => {
     render(
       <ReaderVersionProvider>

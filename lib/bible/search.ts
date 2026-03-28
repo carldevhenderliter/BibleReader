@@ -17,6 +17,12 @@ type SearchableVerseEntry = BibleSearchVerseEntry & {
   normalizedText: string;
 };
 
+type ParsedReference = {
+  book: SearchableBook;
+  chapterNumber: number;
+  verseNumber: number | null;
+};
+
 const MIN_VERSE_QUERY_LENGTH = 2;
 const MAX_BOOK_RESULTS = 6;
 const MAX_VERSE_RESULTS = 24;
@@ -74,6 +80,58 @@ function getVersePreview(text: string, query: string) {
   const snippet = text.slice(start, end).trim();
 
   return `${start > 0 ? "…" : ""}${snippet}${end < text.length ? "…" : ""}`;
+}
+
+function findReferenceBook(bookQuery: string, books: SearchableBook[]) {
+  const exactMatch =
+    books.find(
+      (book) =>
+        book.normalizedName === bookQuery ||
+        book.normalizedAbbreviation === bookQuery ||
+        book.normalizedSlug === bookQuery
+    ) ?? null;
+
+  if (exactMatch) {
+    return exactMatch;
+  }
+
+  const prefixMatches = books.filter(
+    (book) =>
+      book.normalizedName.startsWith(bookQuery) ||
+      book.normalizedAbbreviation.startsWith(bookQuery) ||
+      book.normalizedSlug.startsWith(bookQuery)
+  );
+
+  return prefixMatches.length === 1 ? prefixMatches[0] : null;
+}
+
+function parseReferenceQuery(query: string, books: SearchableBook[]): ParsedReference | null {
+  const referenceMatch = query.match(/^(.+?)\s+(\d+)(?::(\d+))?$/);
+
+  if (!referenceMatch) {
+    return null;
+  }
+
+  const [, rawBookQuery, chapterValue, verseValue] = referenceMatch;
+  const bookQuery = normalizeBookValue(rawBookQuery);
+  const chapterNumber = Number(chapterValue);
+  const verseNumber = verseValue ? Number(verseValue) : null;
+
+  if (!bookQuery || chapterNumber < 1) {
+    return null;
+  }
+
+  const book = findReferenceBook(bookQuery, books);
+
+  if (!book || chapterNumber > book.chapterCount) {
+    return null;
+  }
+
+  return {
+    book,
+    chapterNumber,
+    verseNumber
+  };
 }
 
 async function loadBooks() {
@@ -144,6 +202,54 @@ export async function searchBible(
   }
 
   const books = await loadBooks();
+  const parsedReference = parseReferenceQuery(query, books);
+
+  let directReferenceResults: BibleSearchResult[] = [];
+
+  if (parsedReference) {
+    if (parsedReference.verseNumber === null) {
+      directReferenceResults = [
+        {
+          type: "chapter",
+          id: `chapter:${parsedReference.book.slug}:${parsedReference.chapterNumber}:${version}`,
+          bookSlug: parsedReference.book.slug,
+          chapterNumber: parsedReference.chapterNumber,
+          label: `${parsedReference.book.name} ${parsedReference.chapterNumber}`,
+          description: "Chapter reference",
+          href: getChapterHref(parsedReference.book.slug, parsedReference.chapterNumber, version)
+        }
+      ];
+    } else {
+      const verseIndex = await loadVerseIndex(version);
+      const verseEntry = verseIndex.find(
+        (entry) =>
+          entry.bookSlug === parsedReference.book.slug &&
+          entry.chapterNumber === parsedReference.chapterNumber &&
+          entry.verseNumber === parsedReference.verseNumber
+      );
+
+      if (verseEntry) {
+        directReferenceResults = [
+          {
+            type: "verse",
+            id: `verse:${verseEntry.bookSlug}:${verseEntry.chapterNumber}:${verseEntry.verseNumber}:${version}`,
+            bookSlug: verseEntry.bookSlug,
+            chapterNumber: verseEntry.chapterNumber,
+            verseNumber: verseEntry.verseNumber,
+            label: `${verseEntry.bookName} ${verseEntry.chapterNumber}:${verseEntry.verseNumber}`,
+            description: `${version.toUpperCase()} reference`,
+            href: getHighlightedVerseHref(
+              verseEntry.bookSlug,
+              verseEntry.chapterNumber,
+              verseEntry.verseNumber,
+              version
+            ),
+            preview: verseEntry.text
+          }
+        ];
+      }
+    }
+  }
 
   const bookResults = books
     .map((book) => ({
@@ -167,7 +273,7 @@ export async function searchBible(
     }));
 
   if (normalizedVerseQuery.length < MIN_VERSE_QUERY_LENGTH) {
-    return bookResults;
+    return [...directReferenceResults, ...bookResults];
   }
 
   const verseIndex = await loadVerseIndex(version);
@@ -191,5 +297,5 @@ export async function searchBible(
       preview: getVersePreview(entry.text, normalizedVerseQuery)
     }));
 
-  return [...bookResults, ...verseResults];
+  return [...directReferenceResults, ...bookResults, ...verseResults];
 }

@@ -1408,6 +1408,11 @@ select {
   color: var(--reader-accent);
 }
 
+.search-result-type-chapter {
+  background: rgba(138, 255, 193, 0.12);
+  color: var(--accent-warm);
+}
+
 .search-result-type-verse {
   background: rgba(255, 255, 255, 0.09);
   color: rgba(255, 255, 255, 0.76);

@@ -99,6 +99,15 @@ export type BibleSearchResult =
       href: string;
     }
   | {
+      type: "chapter";
+      id: string;
+      bookSlug: string;
+      chapterNumber: number;
+      label: string;
+      description: string;
+      href: string;
+    }
+  | {
       type: "verse";
       id: string;
       bookSlug: string;
