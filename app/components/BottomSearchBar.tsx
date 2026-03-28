@@ -4,6 +4,7 @@ import { useEffect, useId, useRef } from "react";
 
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
+import { SearchResultGroups } from "@/app/components/SearchResultGroups";
 import { getBibleVersionLabel } from "@/lib/bible/version";
 
 export function BottomSearchBar() {
@@ -16,7 +17,7 @@ export function BottomSearchBar() {
     isSearching,
     openSearch,
     query,
-    results,
+    resultGroups,
     selectResult,
     setQuery
   } = useLookup();
@@ -70,38 +71,14 @@ export function BottomSearchBar() {
             </div>
             {!query.trim() ? (
               <p className="search-empty-copy">
-                Search for a book, word, or phrase to jump anywhere in scripture.
+                Search for a book, reference, word, phrase, or comma-separated list to jump anywhere in scripture.
               </p>
             ) : isSearching ? (
               <p className="search-empty-copy">Searching scripture…</p>
-            ) : results.length === 0 ? (
+            ) : resultGroups.length === 0 ? (
               <p className="search-empty-copy">No matches found in the active translation.</p>
             ) : (
-              <div className="search-results">
-                {results.map((result) => (
-                  <button
-                    className="search-result"
-                    key={result.id}
-                    onClick={() => selectResult(result.href)}
-                    type="button"
-                  >
-                    <div className="search-result-header">
-                      <span className={`search-result-type search-result-type-${result.type}`}>
-                        {result.type === "book"
-                          ? "Book"
-                          : result.type === "chapter"
-                            ? "Chapter"
-                            : "Verse"}
-                      </span>
-                      <strong>{result.label}</strong>
-                    </div>
-                    <p className="search-result-description">{result.description}</p>
-                    {"preview" in result ? (
-                      <p className="search-result-preview">{result.preview}</p>
-                    ) : null}
-                  </button>
-                ))}
-              </div>
+              <SearchResultGroups groups={resultGroups} onSelectResult={selectResult} />
             )}
           </section>
         ) : null}
@@ -119,7 +96,7 @@ export function BottomSearchBar() {
               setQuery(event.target.value);
             }}
             onFocus={openSearch}
-            placeholder="Search books, words, or phrases"
+            placeholder="Search books, references, words, or phrases"
             ref={inputRef}
             type="search"
             value={query}

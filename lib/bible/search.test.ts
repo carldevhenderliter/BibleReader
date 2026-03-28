@@ -1,4 +1,4 @@
-import { searchBible } from "@/lib/bible/search";
+import { searchBible, searchBibleGroups } from "@/lib/bible/search";
 
 describe("Bible search", () => {
   it("resolves direct chapter references", async () => {
@@ -53,5 +53,40 @@ describe("Bible search", () => {
 
     expect(webResults.some((result) => result.type === "verse")).toBe(false);
     expect(kjvResults.some((result) => result.type === "verse")).toBe(true);
+  });
+
+  it("groups comma-separated queries in typed order", async () => {
+    const groups = await searchBibleGroups("Matthew 1:1, repent, forgiveness", "web");
+
+    expect(groups).toHaveLength(3);
+    expect(groups.map((group) => group.query)).toEqual(["Matthew 1:1", "repent", "forgiveness"]);
+    expect(groups[0]?.results[0]).toMatchObject({
+      type: "verse",
+      bookSlug: "matthew",
+      chapterNumber: 1,
+      verseNumber: 1
+    });
+  });
+
+  it("trims empty comma-separated query parts and limits groups to five", async () => {
+    const groups = await searchBibleGroups("John 1:1, , faith, hope, love, grace, mercy", "web");
+
+    expect(groups.map((group) => group.query)).toEqual([
+      "John 1:1",
+      "faith",
+      "hope",
+      "love",
+      "grace"
+    ]);
+  });
+
+  it("keeps book matches before verse matches inside each group", async () => {
+    const groups = await searchBibleGroups("john, light", "web");
+
+    expect(groups[0]?.results[0]).toMatchObject({
+      type: "book",
+      bookSlug: "john"
+    });
+    expect(groups[1]?.query).toBe("light");
   });
 });

@@ -11,15 +11,15 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
-import { searchBible } from "@/lib/bible/search";
-import type { BibleSearchResult } from "@/lib/bible/types";
+import { searchBibleGroups } from "@/lib/bible/search";
+import type { BibleSearchResultGroup } from "@/lib/bible/types";
 
 const DESKTOP_LOOKUP_MEDIA_QUERY = "(min-width: 80rem)";
 
 type LookupContextValue = {
   query: string;
   setQuery: (value: string) => void;
-  results: BibleSearchResult[];
+  resultGroups: BibleSearchResultGroup[];
   isDesktop: boolean;
   isOpen: boolean;
   isSearching: boolean;
@@ -42,7 +42,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
   const pathname = usePathname();
   const { version } = useReaderVersion();
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<BibleSearchResult[]>([]);
+  const [resultGroups, setResultGroups] = useState<BibleSearchResultGroup[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [isDesktop, setIsDesktop] = useState(() => getDesktopMediaMatch());
@@ -72,7 +72,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
 
     setIsOpen(false);
     setQuery("");
-    setResults([]);
+    setResultGroups([]);
   }, [isDesktop, pathname]);
 
   useEffect(() => {
@@ -83,7 +83,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
     }
 
     if (!trimmedQuery) {
-      setResults([]);
+      setResultGroups([]);
       setIsSearching(false);
       return;
     }
@@ -91,12 +91,12 @@ export function LookupProvider({ children }: PropsWithChildren) {
     let isCancelled = false;
     setIsSearching(true);
 
-    void searchBible(trimmedQuery, version).then((nextResults) => {
+    void searchBibleGroups(trimmedQuery, version).then((nextResults) => {
       if (isCancelled) {
         return;
       }
 
-      setResults(nextResults);
+      setResultGroups(nextResults);
       setIsSearching(false);
     });
 
@@ -115,13 +115,13 @@ export function LookupProvider({ children }: PropsWithChildren) {
           setIsOpen(true);
         }
       },
-      results,
+      resultGroups,
       isDesktop,
       isOpen,
       isSearching,
       clearSearch: () => {
         setQuery("");
-        setResults([]);
+        setResultGroups([]);
 
         if (!isDesktop) {
           setIsOpen(false);
@@ -130,7 +130,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
       closeSearch: () => {
         if (isDesktop) {
           setQuery("");
-          setResults([]);
+          setResultGroups([]);
           setIsSearching(false);
         }
 
@@ -145,13 +145,13 @@ export function LookupProvider({ children }: PropsWithChildren) {
         if (!isDesktop) {
           setIsOpen(false);
           setQuery("");
-          setResults([]);
+          setResultGroups([]);
         } else {
           setIsOpen(true);
         }
       }
     }),
-    [isDesktop, isOpen, isSearching, query, results, router]
+    [isDesktop, isOpen, isSearching, query, resultGroups, router]
   );
 
   return <LookupContext.Provider value={value}>{children}</LookupContext.Provider>;

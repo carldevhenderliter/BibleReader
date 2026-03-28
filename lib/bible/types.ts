@@ -118,3 +118,10 @@ export type BibleSearchResult =
       href: string;
       preview: string;
     };
+
+export type BibleSearchResultGroup = {
+  id: string;
+  query: string;
+  results: BibleSearchResult[];
+  emptyMessage?: string;
+};

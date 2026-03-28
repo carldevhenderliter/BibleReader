@@ -1,6 +1,7 @@
 import { DEFAULT_BIBLE_VERSION } from "@/lib/bible/constants";
 import type {
   BibleSearchResult,
+  BibleSearchResultGroup,
   BibleSearchVerseEntry,
   BookMeta,
   BundledBibleVersion
@@ -26,6 +27,7 @@ type ParsedReference = {
 const MIN_VERSE_QUERY_LENGTH = 2;
 const MAX_BOOK_RESULTS = 6;
 const MAX_VERSE_RESULTS = 24;
+const MAX_MULTI_QUERY_PARTS = 5;
 
 const verseIndexLoaders: Record<BundledBibleVersion, () => Promise<unknown>> = {
   web: () => import("@/data/bible/search/web.json"),
@@ -189,7 +191,28 @@ function getBookScore(book: SearchableBook, query: string) {
   return null;
 }
 
-export async function searchBible(
+function parseMultiQuery(rawQuery: string) {
+  return rawQuery
+    .split(",")
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .slice(0, MAX_MULTI_QUERY_PARTS);
+}
+
+function dedupeSearchResults(results: BibleSearchResult[]) {
+  const seen = new Set<string>();
+
+  return results.filter((result) => {
+    if (seen.has(result.href)) {
+      return false;
+    }
+
+    seen.add(result.href);
+    return true;
+  });
+}
+
+async function searchSingleBibleQuery(
   rawQuery: string,
   version: BundledBibleVersion = DEFAULT_BIBLE_VERSION
 ): Promise<BibleSearchResult[]> {
@@ -297,5 +320,34 @@ export async function searchBible(
       preview: getVersePreview(entry.text, normalizedVerseQuery)
     }));
 
-  return [...directReferenceResults, ...bookResults, ...verseResults];
+  return dedupeSearchResults([...directReferenceResults, ...bookResults, ...verseResults]);
+}
+
+export async function searchBible(
+  rawQuery: string,
+  version: BundledBibleVersion = DEFAULT_BIBLE_VERSION
+): Promise<BibleSearchResult[]> {
+  return searchSingleBibleQuery(rawQuery, version);
+}
+
+export async function searchBibleGroups(
+  rawQuery: string,
+  version: BundledBibleVersion = DEFAULT_BIBLE_VERSION
+): Promise<BibleSearchResultGroup[]> {
+  const queries = parseMultiQuery(rawQuery);
+
+  if (queries.length === 0) {
+    return [];
+  }
+
+  const groups = await Promise.all(
+    queries.map(async (query, index) => ({
+      id: `group:${index}:${normalizeValue(query)}`,
+      query,
+      results: await searchSingleBibleQuery(query, version),
+      emptyMessage: "No matches found in the active translation."
+    }))
+  );
+
+  return groups;
 }

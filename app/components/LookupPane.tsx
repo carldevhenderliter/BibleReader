@@ -2,11 +2,20 @@
 
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
+import { SearchResultGroups } from "@/app/components/SearchResultGroups";
 import { getBibleVersionLabel } from "@/lib/bible/version";
 
 export function LookupPane() {
-  const { clearSearch, closeSearch, isDesktop, isOpen, isSearching, query, results, selectResult } =
-    useLookup();
+  const {
+    clearSearch,
+    closeSearch,
+    isDesktop,
+    isOpen,
+    isSearching,
+    query,
+    resultGroups,
+    selectResult
+  } = useLookup();
   const { version } = useReaderVersion();
 
   if (!isDesktop) {
@@ -28,36 +37,14 @@ export function LookupPane() {
       </div>
       {!isOpen || !query.trim() ? (
         <p className="search-empty-copy">
-          Search from the bottom bar to open books, chapters, verses, words, and phrases here.
+          Search from the bottom bar to open books, chapters, verses, words, phrases, or comma-separated groups here.
         </p>
       ) : isSearching ? (
         <p className="search-empty-copy">Searching scripture…</p>
-      ) : results.length === 0 ? (
+      ) : resultGroups.length === 0 ? (
         <p className="search-empty-copy">No matches found in the active translation.</p>
       ) : (
-        <div className="search-results">
-          {results.map((result) => (
-            <button
-              className="search-result"
-              key={result.id}
-              onClick={() => selectResult(result.href)}
-              type="button"
-            >
-              <div className="search-result-header">
-                <span className={`search-result-type search-result-type-${result.type}`}>
-                  {result.type === "book"
-                    ? "Book"
-                    : result.type === "chapter"
-                      ? "Chapter"
-                      : "Verse"}
-                </span>
-                <strong>{result.label}</strong>
-              </div>
-              <p className="search-result-description">{result.description}</p>
-              {"preview" in result ? <p className="search-result-preview">{result.preview}</p> : null}
-            </button>
-          ))}
-        </div>
+        <SearchResultGroups groups={resultGroups} onSelectResult={selectResult} />
       )}
       {query ? (
         <button className="lookup-pane-reset" onClick={clearSearch} type="button">

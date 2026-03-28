@@ -135,6 +135,19 @@ describe("BottomSearchBar", () => {
     });
   });
 
+  it("renders grouped results for comma-separated searches on mobile", async () => {
+    renderSearchUi();
+
+    fireEvent.change(screen.getByLabelText("Search books, words, or phrases"), {
+      target: { value: "Matthew 1:1, repent, forgiveness" }
+    });
+
+    expect(await screen.findByRole("heading", { name: "Matthew 1:1" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "repent" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "forgiveness" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Verse Matthew 1:1/i })).toBeInTheDocument();
+  });
+
   it("renders a persistent lookup pane on desktop and keeps it open after selecting a result", async () => {
     setDesktopMode(true);
     renderSearchUi();
@@ -153,5 +166,19 @@ describe("BottomSearchBar", () => {
     expect(mockRouter.push).toHaveBeenCalledWith("/read/john/1?highlight=1");
     expect(screen.getByLabelText("Lookup pane")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Verse John 1:1/i })).toBeInTheDocument();
+  });
+
+  it("renders grouped sections in the desktop lookup pane", async () => {
+    setDesktopMode(true);
+    renderSearchUi();
+
+    fireEvent.focus(screen.getByLabelText("Search books, words, or phrases"));
+    fireEvent.change(screen.getByLabelText("Search books, words, or phrases"), {
+      target: { value: "Matthew 1:1, repent" }
+    });
+
+    expect(await screen.findByRole("heading", { name: "Matthew 1:1" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "repent" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Verse Matthew 1:1/i })).toBeInTheDocument();
   });
 });
