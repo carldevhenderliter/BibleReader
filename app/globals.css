@@ -1337,8 +1337,12 @@ select {
 }
 
 .search-tray {
+  display: grid;
+  align-content: start;
   max-height: min(60vh, 36rem);
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   padding: 1rem;
   border-radius: 1.5rem;
 }
@@ -1385,6 +1389,7 @@ select {
 .search-result-groups {
   display: grid;
   gap: 1rem;
+  min-height: 0;
 }
 
 .search-result-group {
@@ -1552,10 +1557,10 @@ select {
     position: sticky;
     top: calc(max(1.35rem, env(safe-area-inset-top)) + 0.1rem);
     display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
     gap: 1rem;
     max-height: calc(100vh - max(2.7rem, env(safe-area-inset-top)) - env(safe-area-inset-bottom));
     padding: 1.1rem;
-    overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.11);
     border-radius: 1.5rem;
     background: linear-gradient(180deg, rgba(24, 28, 34, 0.92), rgba(15, 18, 23, 0.96));
@@ -1570,9 +1575,15 @@ select {
     gap: 0.8rem;
   }
 
+  .lookup-pane .search-result-groups {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding-right: 0.2rem;
+  }
+
   .lookup-pane .search-results {
     overflow-y: auto;
-    padding-right: 0.2rem;
   }
 
   .lookup-pane-reset {
