@@ -15,9 +15,15 @@ type ReaderPageContentProps = {
   books: BookMeta[];
   book: BookMeta;
   chaptersByVersion: Record<BundledBibleVersion, Chapter>;
+  highlightedVerseNumber?: number | null;
 };
 
-export function ReaderPageContent({ books, book, chaptersByVersion }: ReaderPageContentProps) {
+export function ReaderPageContent({
+  books,
+  book,
+  chaptersByVersion,
+  highlightedVerseNumber = null
+}: ReaderPageContentProps) {
   const { version } = useReaderVersion();
   const chapter = chaptersByVersion[version];
   const chapterLinks = getChapterLinks(books, book, chapter.chapterNumber, version);
@@ -60,6 +66,7 @@ export function ReaderPageContent({ books, book, chaptersByVersion }: ReaderPage
           <VerseList
             bookSlug={book.slug}
             chapterNumber={chapter.chapterNumber}
+            highlightedVerseNumber={highlightedVerseNumber}
             key={`${version}:${book.slug}:${chapter.chapterNumber}`}
             verses={chapter.verses}
           />

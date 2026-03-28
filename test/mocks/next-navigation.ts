@@ -6,7 +6,14 @@ export const mockRouter = {
   refresh: jest.fn()
 };
 
+let mockPathname = "/";
+
 export const useRouter = () => mockRouter;
+export const usePathname = () => mockPathname;
+export const setMockPathname = (nextPathname: string) => {
+  mockPathname = nextPathname;
+};
+export const useSearchParams = () => new URLSearchParams();
 
 export const notFound = jest.fn(() => {
   throw new Error("NEXT_NOT_FOUND");

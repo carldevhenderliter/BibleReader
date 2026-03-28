@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 
+import { AppProviders } from "@/app/components/AppProviders";
+import { BottomSearchBar } from "@/app/components/BottomSearchBar";
 import { SiteHeader } from "@/app/components/SiteHeader";
 
 import "./globals.css";
@@ -24,13 +26,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="ambient-orb ambient-orb-left" aria-hidden="true" />
-        <div className="ambient-orb ambient-orb-right" aria-hidden="true" />
-        <div className="ambient-grid" aria-hidden="true" />
-        <div className="site-shell">
-          <SiteHeader />
-          <main className="site-main">{children}</main>
-        </div>
+        <AppProviders>
+          <div className="ambient-orb ambient-orb-left" aria-hidden="true" />
+          <div className="ambient-orb ambient-orb-right" aria-hidden="true" />
+          <div className="ambient-grid" aria-hidden="true" />
+          <div className="site-shell">
+            <SiteHeader />
+            <main className="site-main">{children}</main>
+            <BottomSearchBar />
+          </div>
+        </AppProviders>
       </body>
     </html>
   );

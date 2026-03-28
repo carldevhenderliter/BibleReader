@@ -8,6 +8,7 @@ const bibleDir = path.join(repoRoot, "data", "bible");
 const legacyBooksPath = path.join(bibleDir, "books.json");
 const legacyBooksDir = path.join(bibleDir, "books");
 const versionsDir = path.join(bibleDir, "versions");
+const searchDir = path.join(bibleDir, "search");
 const sourceBooksPath = path.join(repoRoot, "data", "source", "books.json");
 const kjvVersesPath = path.join(repoRoot, "node_modules", "kjv", "json", "verses-1769.json");
 
@@ -56,6 +57,9 @@ async function main() {
 
   const kjvPayloadBySlug = await importKjvVersion(sourceBooks);
   validateOutput("kjv", sourceBooks, kjvPayloadBySlug);
+
+  await buildSearchIndex("web", webPayloadBySlug);
+  await buildSearchIndex("kjv", kjvPayloadBySlug);
 
   console.log(`Imported bundled versions into ${path.relative(repoRoot, versionsDir)}.`);
 }
@@ -259,6 +263,29 @@ function validateOutput(version, sourceBooks, payloadBySlug) {
       throw new Error(`${version} contains an empty chapter in ${sourceBook.name}.`);
     }
   }
+}
+
+/**
+ * @param {"web" | "kjv"} version
+ * @param {Map<string, BookPayload>} payloadBySlug
+ */
+async function buildSearchIndex(version, payloadBySlug) {
+  await mkdir(searchDir, { recursive: true });
+
+  const entries = Array.from(payloadBySlug.values()).flatMap((payload) =>
+    payload.chapters.flatMap((chapter) =>
+      chapter.verses.map((verse) => ({
+        version,
+        bookSlug: payload.book.slug,
+        bookName: payload.book.name,
+        chapterNumber: chapter.chapterNumber,
+        verseNumber: verse.number,
+        text: verse.text
+      }))
+    )
+  );
+
+  await writeFile(path.join(searchDir, `${version}.json`), `${JSON.stringify(entries, null, 2)}\n`);
 }
 
 main().catch((error) => {

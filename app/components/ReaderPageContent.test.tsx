@@ -197,4 +197,19 @@ describe("ReaderPageContent", () => {
     expect(screen.queryByText("Saved note")).not.toBeInTheDocument();
     expect(screen.getAllByRole("button", { name: "Add note" })[0]).toBeInTheDocument();
   });
+
+  it("highlights the verse opened from search", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+        highlightedVerseNumber={2}
+      />
+    );
+
+    expect(screen.getByText("The earth was formless and empty.").closest(".verse-row")).toHaveClass(
+      "is-highlighted"
+    );
+  });
 });

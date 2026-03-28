@@ -79,3 +79,33 @@ export type VerseNote = {
   text: string;
   updatedAt: string;
 };
+
+export type BibleSearchVerseEntry = {
+  version: BundledBibleVersion;
+  bookSlug: string;
+  bookName: string;
+  chapterNumber: number;
+  verseNumber: number;
+  text: string;
+};
+
+export type BibleSearchResult =
+  | {
+      type: "book";
+      id: string;
+      bookSlug: string;
+      label: string;
+      description: string;
+      href: string;
+    }
+  | {
+      type: "verse";
+      id: string;
+      bookSlug: string;
+      chapterNumber: number;
+      verseNumber: number;
+      label: string;
+      description: string;
+      href: string;
+      preview: string;
+    };

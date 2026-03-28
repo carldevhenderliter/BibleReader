@@ -8,6 +8,7 @@ import type { Verse } from "@/lib/bible/types";
 type VerseListProps = {
   bookSlug: string;
   chapterNumber: number;
+  highlightedVerseNumber?: number | null;
   verses: Verse[];
 };
 
@@ -79,8 +80,43 @@ function VerseNoteEditor({ noteId, bookSlug, chapterNumber, verse }: VerseNoteEd
   );
 }
 
-export function VerseList({ bookSlug, chapterNumber, verses }: VerseListProps) {
+export function VerseList({
+  bookSlug,
+  chapterNumber,
+  highlightedVerseNumber = null,
+  verses
+}: VerseListProps) {
   const { expandedNoteId, getNote, getNoteId, toggleNoteEditor } = useReaderNotes();
+  const [urlHighlightedVerseNumber, setUrlHighlightedVerseNumber] = useState<number | null>(null);
+  const activeHighlightedVerseNumber = highlightedVerseNumber ?? urlHighlightedVerseNumber;
+
+  useEffect(() => {
+    if (highlightedVerseNumber !== null) {
+      return;
+    }
+
+    const value = new URLSearchParams(window.location.search).get("highlight");
+
+    if (!value || !/^\d+$/.test(value)) {
+      setUrlHighlightedVerseNumber(null);
+      return;
+    }
+
+    const verseNumber = Number(value);
+    setUrlHighlightedVerseNumber(verseNumber > 0 ? verseNumber : null);
+  }, [highlightedVerseNumber]);
+
+  useEffect(() => {
+    if (!activeHighlightedVerseNumber) {
+      return;
+    }
+
+    const element = document.getElementById(
+      `verse-${bookSlug}-${chapterNumber}-${activeHighlightedVerseNumber}`
+    );
+
+    element?.scrollIntoView?.({ block: "center" });
+  }, [activeHighlightedVerseNumber, bookSlug, chapterNumber]);
 
   return (
     <div className="verse-stack">
@@ -88,9 +124,14 @@ export function VerseList({ bookSlug, chapterNumber, verses }: VerseListProps) {
         const noteId = getNoteId(bookSlug, chapterNumber, verse.number);
         const note = getNote(noteId);
         const isExpanded = expandedNoteId === noteId;
+        const isHighlighted = activeHighlightedVerseNumber === verse.number;
 
         return (
-          <div className="verse-row" key={verse.number}>
+          <div
+            className={`verse-row${isHighlighted ? " is-highlighted" : ""}`}
+            id={`verse-${bookSlug}-${chapterNumber}-${verse.number}`}
+            key={verse.number}
+          >
             <span className="verse-number" aria-hidden="true">
               {verse.number}
             </span>

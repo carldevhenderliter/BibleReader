@@ -8,6 +8,7 @@ import {
   useMemo,
   useState
 } from "react";
+import { usePathname } from "next/navigation";
 
 import { DEFAULT_BIBLE_VERSION, READER_VERSION_STORAGE_KEY } from "@/lib/bible/constants";
 import type { BundledBibleVersion } from "@/lib/bible/types";
@@ -40,23 +41,32 @@ function syncVersionToUrl(version: BundledBibleVersion) {
 }
 
 export function ReaderVersionProvider({ children }: PropsWithChildren) {
+  const pathname = usePathname();
   const [version, setVersionState] = useState<BundledBibleVersion>(DEFAULT_BIBLE_VERSION);
+  const isReaderRoute = pathname.includes("/read");
 
   useEffect(() => {
-    const urlVersion = getVersionFromUrl();
     const storedVersion = window.localStorage.getItem(READER_VERSION_STORAGE_KEY);
+    const fallbackVersion = isBundledBibleVersion(storedVersion)
+      ? storedVersion
+      : DEFAULT_BIBLE_VERSION;
 
-    if (urlVersion) {
-      setVersionState(urlVersion);
-      window.localStorage.setItem(READER_VERSION_STORAGE_KEY, urlVersion);
+    if (isReaderRoute) {
+      const urlVersion = getVersionFromUrl();
+
+      if (urlVersion) {
+        setVersionState(urlVersion);
+        window.localStorage.setItem(READER_VERSION_STORAGE_KEY, urlVersion);
+        return;
+      }
+
+      setVersionState(fallbackVersion);
+      syncVersionToUrl(fallbackVersion);
       return;
     }
 
-    if (isBundledBibleVersion(storedVersion)) {
-      setVersionState(storedVersion);
-      syncVersionToUrl(storedVersion);
-    }
-  }, []);
+    setVersionState(fallbackVersion);
+  }, [isReaderRoute, pathname]);
 
   const value = useMemo<ReaderVersionContextValue>(
     () => ({
@@ -64,10 +74,13 @@ export function ReaderVersionProvider({ children }: PropsWithChildren) {
       setVersion: (nextVersion) => {
         setVersionState(nextVersion);
         window.localStorage.setItem(READER_VERSION_STORAGE_KEY, nextVersion);
-        syncVersionToUrl(nextVersion);
+
+        if (isReaderRoute) {
+          syncVersionToUrl(nextVersion);
+        }
       }
     }),
-    [version]
+    [isReaderRoute, version]
   );
 
   return <ReaderVersionContext.Provider value={value}>{children}</ReaderVersionContext.Provider>;
