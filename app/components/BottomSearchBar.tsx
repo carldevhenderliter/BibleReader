@@ -17,6 +17,7 @@ export function BottomSearchBar() {
     isSearching,
     openSearch,
     query,
+    queryParts,
     resultGroups,
     selectResult,
     setQuery
@@ -73,12 +74,20 @@ export function BottomSearchBar() {
               <p className="search-empty-copy">
                 Search for a book, reference, word, phrase, or comma-separated list to jump anywhere in scripture.
               </p>
-            ) : isSearching ? (
-              <p className="search-empty-copy">Searching scripture…</p>
-            ) : resultGroups.length === 0 ? (
-              <p className="search-empty-copy">No matches found in the active translation.</p>
             ) : (
-              <SearchResultGroups groups={resultGroups} onSelectResult={selectResult} />
+              <SearchResultGroups
+                groups={
+                  isSearching && resultGroups.length === 0
+                    ? queryParts.map((queryPart, index) => ({
+                        id: `pending:${index}:${queryPart}`,
+                        query: queryPart,
+                        results: []
+                      }))
+                    : resultGroups
+                }
+                isSearching={isSearching}
+                onSelectResult={selectResult}
+              />
             )}
           </section>
         ) : null}

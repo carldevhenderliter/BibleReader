@@ -117,6 +117,18 @@ export type BibleSearchResult =
       description: string;
       href: string;
       preview: string;
+    }
+  | {
+      type: "range";
+      id: string;
+      bookSlug: string;
+      chapterNumber: number;
+      startVerseNumber: number;
+      endVerseNumber: number;
+      label: string;
+      description: string;
+      href: string;
+      preview: string;
     };
 
 export type BibleSearchResultGroup = {

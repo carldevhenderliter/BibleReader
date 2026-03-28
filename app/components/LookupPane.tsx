@@ -13,6 +13,7 @@ export function LookupPane() {
     isOpen,
     isSearching,
     query,
+    queryParts,
     resultGroups,
     selectResult
   } = useLookup();
@@ -39,12 +40,21 @@ export function LookupPane() {
         <p className="search-empty-copy">
           Search from the bottom bar to open books, chapters, verses, words, phrases, or comma-separated groups here.
         </p>
-      ) : isSearching ? (
-        <p className="search-empty-copy">Searching scripture…</p>
-      ) : resultGroups.length === 0 ? (
-        <p className="search-empty-copy">No matches found in the active translation.</p>
       ) : (
-        <SearchResultGroups groups={resultGroups} onSelectResult={selectResult} />
+        <SearchResultGroups
+          groups={
+            isSearching && resultGroups.length === 0
+              ? queryParts.map((queryPart, index) => ({
+                  id: `pending:${index}:${queryPart}`,
+                  query: queryPart,
+                  results: []
+                }))
+              : resultGroups
+          }
+          isSearching={isSearching}
+          onSelectResult={selectResult}
+          variant="panes"
+        />
       )}
       {query ? (
         <button className="lookup-pane-reset" onClick={clearSearch} type="button">

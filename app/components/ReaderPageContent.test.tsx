@@ -1,4 +1,4 @@
-import { fireEvent, screen } from "@testing-library/react";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
 
 import { ReaderPageContent } from "@/app/components/ReaderPageContent";
 import type { BookMeta, Chapter } from "@/lib/bible/types";
@@ -207,6 +207,50 @@ describe("ReaderPageContent", () => {
         highlightedVerseNumber={2}
       />
     );
+
+    expect(screen.getByText("The earth was formless and empty.").closest(".verse-row")).toHaveClass(
+      "is-highlighted"
+    );
+  });
+
+  it("highlights a verse range opened from search", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+        highlightedVerseRange={{ start: 1, end: 2 }}
+      />
+    );
+
+    expect(
+      screen
+        .getByText("In the beginning, God created the heavens and the earth.")
+        .closest(".verse-row")
+    ).toHaveClass("is-highlighted");
+    expect(screen.getByText("The earth was formless and empty.").closest(".verse-row")).toHaveClass(
+      "is-highlighted"
+    );
+  });
+
+  it("reads verse range highlights from the search URL params", async () => {
+    window.history.replaceState({}, "", "/read/genesis/1?highlightStart=1&highlightEnd=2");
+
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+      />
+    );
+
+    await waitFor(() => {
+      expect(
+        screen
+          .getByText("In the beginning, God created the heavens and the earth.")
+          .closest(".verse-row")
+      ).toHaveClass("is-highlighted");
+    });
 
     expect(screen.getByText("The earth was formless and empty.").closest(".verse-row")).toHaveClass(
       "is-highlighted"

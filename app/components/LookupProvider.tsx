@@ -11,13 +11,14 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
-import { searchBibleGroups } from "@/lib/bible/search";
+import { parseBibleSearchQueries, searchBibleGroups } from "@/lib/bible/search";
 import type { BibleSearchResultGroup } from "@/lib/bible/types";
 
 const DESKTOP_LOOKUP_MEDIA_QUERY = "(min-width: 80rem)";
 
 type LookupContextValue = {
   query: string;
+  queryParts: string[];
   setQuery: (value: string) => void;
   resultGroups: BibleSearchResultGroup[];
   isDesktop: boolean;
@@ -46,6 +47,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
   const [isOpen, setIsOpen] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [isDesktop, setIsDesktop] = useState(() => getDesktopMediaMatch());
+  const queryParts = useMemo(() => parseBibleSearchQueries(query), [query]);
 
   useEffect(() => {
     if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
@@ -90,6 +92,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
 
     let isCancelled = false;
     setIsSearching(true);
+    setResultGroups([]);
 
     void searchBibleGroups(trimmedQuery, version).then((nextResults) => {
       if (isCancelled) {
@@ -108,6 +111,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
   const value = useMemo<LookupContextValue>(
     () => ({
       query,
+      queryParts,
       setQuery: (value) => {
         setQuery(value);
 
@@ -151,7 +155,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
         }
       }
     }),
-    [isDesktop, isOpen, isSearching, query, resultGroups, router]
+    [isDesktop, isOpen, isSearching, query, queryParts, resultGroups, router]
   );
 
   return <LookupContext.Provider value={value}>{children}</LookupContext.Provider>;

@@ -5,6 +5,8 @@ import type { BibleSearchResultGroup } from "@/lib/bible/types";
 type SearchResultGroupsProps = {
   groups: BibleSearchResultGroup[];
   onSelectResult: (href: string) => void;
+  variant?: "stack" | "panes";
+  isSearching?: boolean;
 };
 
 function getResultTypeLabel(type: BibleSearchResultGroup["results"][number]["type"]) {
@@ -16,19 +18,39 @@ function getResultTypeLabel(type: BibleSearchResultGroup["results"][number]["typ
     return "Chapter";
   }
 
+  if (type === "range") {
+    return "Range";
+  }
+
   return "Verse";
 }
 
-export function SearchResultGroups({ groups, onSelectResult }: SearchResultGroupsProps) {
+export function SearchResultGroups({
+  groups,
+  onSelectResult,
+  variant = "stack",
+  isSearching = false
+}: SearchResultGroupsProps) {
   return (
-    <div className="search-result-groups">
+    <div
+      className={`search-result-groups${
+        variant === "panes" ? " search-result-groups-panes" : ""
+      }`}
+    >
       {groups.map((group) => (
-        <section className="search-result-group" key={group.id}>
+        <section
+          className={`search-result-group${
+            variant === "panes" ? " search-result-group-pane" : ""
+          }`}
+          key={group.id}
+        >
           <header className="search-result-group-header">
             <p className="search-result-group-label">Query</p>
             <h3 className="search-result-group-query">{group.query}</h3>
           </header>
-          {group.results.length === 0 ? (
+          {isSearching ? (
+            <p className="search-result-group-empty">Searching scripture…</p>
+          ) : group.results.length === 0 ? (
             <p className="search-result-group-empty">
               {group.emptyMessage ?? "No matches found in the active translation."}
             </p>

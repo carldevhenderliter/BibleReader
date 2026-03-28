@@ -9,6 +9,10 @@ type VerseListProps = {
   bookSlug: string;
   chapterNumber: number;
   highlightedVerseNumber?: number | null;
+  highlightedVerseRange?: {
+    start: number;
+    end: number;
+  } | null;
   verses: Verse[];
 };
 
@@ -84,18 +88,49 @@ export function VerseList({
   bookSlug,
   chapterNumber,
   highlightedVerseNumber = null,
+  highlightedVerseRange = null,
   verses
 }: VerseListProps) {
   const { expandedNoteId, getNote, getNoteId, toggleNoteEditor } = useReaderNotes();
   const [urlHighlightedVerseNumber, setUrlHighlightedVerseNumber] = useState<number | null>(null);
+  const [urlHighlightedVerseRange, setUrlHighlightedVerseRange] = useState<{
+    start: number;
+    end: number;
+  } | null>(null);
   const activeHighlightedVerseNumber = highlightedVerseNumber ?? urlHighlightedVerseNumber;
+  const activeHighlightedVerseRange = highlightedVerseRange ?? urlHighlightedVerseRange;
 
   useEffect(() => {
-    if (highlightedVerseNumber !== null) {
+    if (highlightedVerseNumber !== null || highlightedVerseRange !== null) {
       return;
     }
 
-    const value = new URLSearchParams(window.location.search).get("highlight");
+    const searchParams = new URLSearchParams(window.location.search);
+    const rangeStartValue = searchParams.get("highlightStart");
+    const rangeEndValue = searchParams.get("highlightEnd");
+
+    if (
+      rangeStartValue &&
+      rangeEndValue &&
+      /^\d+$/.test(rangeStartValue) &&
+      /^\d+$/.test(rangeEndValue)
+    ) {
+      const startVerseNumber = Number(rangeStartValue);
+      const endVerseNumber = Number(rangeEndValue);
+
+      if (startVerseNumber > 0 && endVerseNumber >= startVerseNumber) {
+        setUrlHighlightedVerseRange({
+          start: startVerseNumber,
+          end: endVerseNumber
+        });
+        setUrlHighlightedVerseNumber(null);
+        return;
+      }
+    }
+
+    setUrlHighlightedVerseRange(null);
+
+    const value = searchParams.get("highlight");
 
     if (!value || !/^\d+$/.test(value)) {
       setUrlHighlightedVerseNumber(null);
@@ -104,19 +139,22 @@ export function VerseList({
 
     const verseNumber = Number(value);
     setUrlHighlightedVerseNumber(verseNumber > 0 ? verseNumber : null);
-  }, [highlightedVerseNumber]);
+  }, [highlightedVerseNumber, highlightedVerseRange]);
 
   useEffect(() => {
-    if (!activeHighlightedVerseNumber) {
+    const scrollTargetVerseNumber =
+      activeHighlightedVerseRange?.start ?? activeHighlightedVerseNumber ?? null;
+
+    if (!scrollTargetVerseNumber) {
       return;
     }
 
     const element = document.getElementById(
-      `verse-${bookSlug}-${chapterNumber}-${activeHighlightedVerseNumber}`
+      `verse-${bookSlug}-${chapterNumber}-${scrollTargetVerseNumber}`
     );
 
     element?.scrollIntoView?.({ block: "center" });
-  }, [activeHighlightedVerseNumber, bookSlug, chapterNumber]);
+  }, [activeHighlightedVerseNumber, activeHighlightedVerseRange, bookSlug, chapterNumber]);
 
   return (
     <div className="verse-stack">
@@ -124,7 +162,11 @@ export function VerseList({
         const noteId = getNoteId(bookSlug, chapterNumber, verse.number);
         const note = getNote(noteId);
         const isExpanded = expandedNoteId === noteId;
-        const isHighlighted = activeHighlightedVerseNumber === verse.number;
+        const isHighlighted =
+          activeHighlightedVerseRange !== null
+            ? verse.number >= activeHighlightedVerseRange.start &&
+              verse.number <= activeHighlightedVerseRange.end
+            : activeHighlightedVerseNumber === verse.number;
 
         return (
           <div

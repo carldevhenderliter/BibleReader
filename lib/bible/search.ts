@@ -22,6 +22,7 @@ type ParsedReference = {
   book: SearchableBook;
   chapterNumber: number;
   verseNumber: number | null;
+  endVerseNumber: number | null;
 };
 
 const MIN_VERSE_QUERY_LENGTH = 2;
@@ -68,6 +69,23 @@ function getHighlightedVerseHref(
   return serialized ? `${pathname}?${serialized}` : pathname;
 }
 
+function getHighlightedVerseRangeHref(
+  bookSlug: string,
+  chapterNumber: number,
+  startVerseNumber: number,
+  endVerseNumber: number,
+  version: BundledBibleVersion
+) {
+  const href = getChapterHref(bookSlug, chapterNumber, version);
+  const [pathname, searchValue] = href.split("?");
+  const searchParams = new URLSearchParams(searchValue ?? "");
+  searchParams.set("highlightStart", String(startVerseNumber));
+  searchParams.set("highlightEnd", String(endVerseNumber));
+  const serialized = searchParams.toString();
+
+  return serialized ? `${pathname}?${serialized}` : pathname;
+}
+
 function getVersePreview(text: string, query: string) {
   const normalizedQuery = normalizeVerseValue(query);
   const normalizedText = normalizeVerseValue(text);
@@ -82,6 +100,16 @@ function getVersePreview(text: string, query: string) {
   const snippet = text.slice(start, end).trim();
 
   return `${start > 0 ? "…" : ""}${snippet}${end < text.length ? "…" : ""}`;
+}
+
+function getRangePreview(texts: string[]) {
+  const combined = texts.join(" ").trim();
+
+  if (combined.length <= 220) {
+    return combined;
+  }
+
+  return `${combined.slice(0, 220).trim()}…`;
 }
 
 function findReferenceBook(bookQuery: string, books: SearchableBook[]) {
@@ -108,6 +136,33 @@ function findReferenceBook(bookQuery: string, books: SearchableBook[]) {
 }
 
 function parseReferenceQuery(query: string, books: SearchableBook[]): ParsedReference | null {
+  const rangeMatch = query.match(/^(.+?)\s+(\d+):(\d+)-(\d+)$/);
+
+  if (rangeMatch) {
+    const [, rawBookQuery, chapterValue, startVerseValue, endVerseValue] = rangeMatch;
+    const bookQuery = normalizeBookValue(rawBookQuery);
+    const chapterNumber = Number(chapterValue);
+    const verseNumber = Number(startVerseValue);
+    const endVerseNumber = Number(endVerseValue);
+
+    if (!bookQuery || chapterNumber < 1 || verseNumber < 1 || endVerseNumber < verseNumber) {
+      return null;
+    }
+
+    const book = findReferenceBook(bookQuery, books);
+
+    if (!book || chapterNumber > book.chapterCount) {
+      return null;
+    }
+
+    return {
+      book,
+      chapterNumber,
+      verseNumber,
+      endVerseNumber
+    };
+  }
+
   const referenceMatch = query.match(/^(.+?)\s+(\d+)(?::(\d+))?$/);
 
   if (!referenceMatch) {
@@ -132,7 +187,8 @@ function parseReferenceQuery(query: string, books: SearchableBook[]): ParsedRefe
   return {
     book,
     chapterNumber,
-    verseNumber
+    verseNumber,
+    endVerseNumber: null
   };
 }
 
@@ -191,7 +247,7 @@ function getBookScore(book: SearchableBook, query: string) {
   return null;
 }
 
-function parseMultiQuery(rawQuery: string) {
+export function parseBibleSearchQueries(rawQuery: string) {
   return rawQuery
     .split(",")
     .map((part) => part.trim())
@@ -242,6 +298,48 @@ async function searchSingleBibleQuery(
           href: getChapterHref(parsedReference.book.slug, parsedReference.chapterNumber, version)
         }
       ];
+    } else if (parsedReference.endVerseNumber !== null) {
+      const startVerseNumber = parsedReference.verseNumber;
+      const endVerseNumber = parsedReference.endVerseNumber;
+
+      if (startVerseNumber !== null) {
+        const verseIndex = await loadVerseIndex(version);
+        const rangeEntries = verseIndex.filter(
+          (entry) =>
+            entry.bookSlug === parsedReference.book.slug &&
+            entry.chapterNumber === parsedReference.chapterNumber &&
+            entry.verseNumber >= startVerseNumber &&
+            entry.verseNumber <= endVerseNumber
+        );
+
+        const hasFullRange =
+          rangeEntries.length === endVerseNumber - startVerseNumber + 1 &&
+          rangeEntries[0]?.verseNumber === startVerseNumber &&
+          rangeEntries.at(-1)?.verseNumber === endVerseNumber;
+
+        if (hasFullRange) {
+          directReferenceResults = [
+            {
+              type: "range",
+              id: `range:${parsedReference.book.slug}:${parsedReference.chapterNumber}:${startVerseNumber}-${endVerseNumber}:${version}`,
+              bookSlug: parsedReference.book.slug,
+              chapterNumber: parsedReference.chapterNumber,
+              startVerseNumber,
+              endVerseNumber,
+              label: `${parsedReference.book.name} ${parsedReference.chapterNumber}:${startVerseNumber}-${endVerseNumber}`,
+              description: `${version.toUpperCase()} range`,
+              href: getHighlightedVerseRangeHref(
+                parsedReference.book.slug,
+                parsedReference.chapterNumber,
+                startVerseNumber,
+                endVerseNumber,
+                version
+              ),
+              preview: getRangePreview(rangeEntries.map((entry) => entry.text))
+            }
+          ];
+        }
+      }
     } else {
       const verseIndex = await loadVerseIndex(version);
       const verseEntry = verseIndex.find(
@@ -334,7 +432,7 @@ export async function searchBibleGroups(
   rawQuery: string,
   version: BundledBibleVersion = DEFAULT_BIBLE_VERSION
 ): Promise<BibleSearchResultGroup[]> {
-  const queries = parseMultiQuery(rawQuery);
+  const queries = parseBibleSearchQueries(rawQuery);
 
   if (queries.length === 0) {
     return [];

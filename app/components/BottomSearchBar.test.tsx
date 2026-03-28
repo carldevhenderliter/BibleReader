@@ -120,6 +120,17 @@ describe("BottomSearchBar", () => {
     expect(mockRouter.push).toHaveBeenCalledWith("/read/john/1?highlight=1");
   });
 
+  it("navigates from direct verse range references", async () => {
+    renderSearchUi();
+
+    fireEvent.change(screen.getByLabelText("Search books, words, or phrases"), {
+      target: { value: "John 1:1-12" }
+    });
+
+    fireEvent.click(await screen.findByRole("button", { name: /Range John 1:1-12/i }));
+    expect(mockRouter.push).toHaveBeenCalledWith("/read/john/1?highlightStart=1&highlightEnd=12");
+  });
+
   it("updates verse results when the active version changes", async () => {
     renderSearchUi(<SearchHarness />);
 
@@ -145,7 +156,7 @@ describe("BottomSearchBar", () => {
     expect(await screen.findByRole("heading", { name: "Matthew 1:1" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "repent" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "forgiveness" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Verse Matthew 1:1/i })).toBeInTheDocument();
+    expect(await screen.findByRole("button", { name: /Verse Matthew 1:1/i })).toBeInTheDocument();
   });
 
   it("renders a persistent lookup pane on desktop and keeps it open after selecting a result", async () => {
@@ -170,7 +181,7 @@ describe("BottomSearchBar", () => {
 
   it("renders grouped sections in the desktop lookup pane", async () => {
     setDesktopMode(true);
-    renderSearchUi();
+    const { container } = renderSearchUi();
 
     fireEvent.focus(screen.getByLabelText("Search books, words, or phrases"));
     fireEvent.change(screen.getByLabelText("Search books, words, or phrases"), {
@@ -179,6 +190,8 @@ describe("BottomSearchBar", () => {
 
     expect(await screen.findByRole("heading", { name: "Matthew 1:1" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "repent" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Verse Matthew 1:1/i })).toBeInTheDocument();
+    expect(await screen.findByRole("button", { name: /Verse Matthew 1:1/i })).toBeInTheDocument();
+    expect(container.querySelector(".search-result-groups-panes")).toBeTruthy();
+    expect(container.querySelectorAll(".search-result-group-pane")).toHaveLength(2);
   });
 });

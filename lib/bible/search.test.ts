@@ -25,6 +25,25 @@ describe("Bible search", () => {
     });
   });
 
+  it("resolves same-chapter verse range references", async () => {
+    const results = await searchBible("John 1:1-12", "web");
+
+    expect(results[0]).toMatchObject({
+      type: "range",
+      bookSlug: "john",
+      chapterNumber: 1,
+      startVerseNumber: 1,
+      endVerseNumber: 12,
+      href: "/read/john/1?highlightStart=1&highlightEnd=12"
+    });
+  });
+
+  it("rejects reversed same-chapter verse ranges", async () => {
+    const results = await searchBible("John 1:12-1", "web");
+
+    expect(results.some((result) => result.type === "range")).toBe(false);
+  });
+
   it("prioritizes book matches before verse matches", async () => {
     const results = await searchBible("john", "web");
 
