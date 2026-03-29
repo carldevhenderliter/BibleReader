@@ -14,7 +14,7 @@ import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { parseBibleSearchQueries, searchBibleGroups } from "@/lib/bible/search";
 import type { BibleSearchResultGroup } from "@/lib/bible/types";
 
-const DESKTOP_LOOKUP_MEDIA_QUERY = "(min-width: 80rem)";
+const DESKTOP_LOOKUP_MEDIA_QUERY = "(min-width: 64rem)";
 
 type LookupContextValue = {
   query: string;

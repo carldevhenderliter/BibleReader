@@ -1669,7 +1669,7 @@ select {
   }
 }
 
-@media (min-width: 80rem) {
+@media (min-width: 64rem) {
   .site-header {
     max-width: 103.25rem;
   }

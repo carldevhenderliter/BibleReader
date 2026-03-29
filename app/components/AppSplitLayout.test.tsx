@@ -29,7 +29,7 @@ function setDesktopMode(isDesktop: boolean) {
     writable: true,
     value: jest.fn().mockImplementation(() => ({
       matches: isDesktop,
-      media: "(min-width: 80rem)",
+      media: "(min-width: 64rem)",
       onchange: null,
       addEventListener: jest.fn(),
       removeEventListener: jest.fn(),
