@@ -23,6 +23,10 @@ describe("Bible search", () => {
       verseNumber: 1,
       href: "/read/john/1?highlight=1"
     });
+    expect(results[0]).toHaveProperty(
+      "preview",
+      "In the beginning was the Word, and the Word was with God, and the Word was God."
+    );
   });
 
   it("resolves same-chapter verse range references", async () => {
@@ -36,6 +40,13 @@ describe("Bible search", () => {
       endVerseNumber: 12,
       href: "/read/john/1?highlightStart=1&highlightEnd=12"
     });
+    expect(results[0]).toHaveProperty("preview");
+    expect((results[0] as { preview: string }).preview).toContain(
+      "In the beginning was the Word, and the Word was with God, and the Word was God."
+    );
+    expect((results[0] as { preview: string }).preview).toContain(
+      "But as many as received him, to them he gave the right to become God’s children"
+    );
   });
 
   it("rejects reversed same-chapter verse ranges", async () => {
@@ -64,6 +75,10 @@ describe("Bible search", () => {
       chapterNumber: 1,
       verseNumber: 1
     });
+    expect(verseResult).toHaveProperty(
+      "preview",
+      "In the beginning, God created the heavens and the earth."
+    );
   });
 
   it("filters verse search to the active bundled version", async () => {

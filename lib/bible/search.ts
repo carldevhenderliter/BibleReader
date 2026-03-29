@@ -86,30 +86,8 @@ function getHighlightedVerseRangeHref(
   return serialized ? `${pathname}?${serialized}` : pathname;
 }
 
-function getVersePreview(text: string, query: string) {
-  const normalizedQuery = normalizeVerseValue(query);
-  const normalizedText = normalizeVerseValue(text);
-  const matchIndex = normalizedText.indexOf(normalizedQuery);
-
-  if (matchIndex === -1 || text.length <= 160) {
-    return text;
-  }
-
-  const start = Math.max(0, matchIndex - 48);
-  const end = Math.min(text.length, start + 160);
-  const snippet = text.slice(start, end).trim();
-
-  return `${start > 0 ? "…" : ""}${snippet}${end < text.length ? "…" : ""}`;
-}
-
 function getRangePreview(texts: string[]) {
-  const combined = texts.join(" ").trim();
-
-  if (combined.length <= 220) {
-    return combined;
-  }
-
-  return `${combined.slice(0, 220).trim()}…`;
+  return texts.join(" ").trim();
 }
 
 function findReferenceBook(bookQuery: string, books: SearchableBook[]) {
@@ -415,7 +393,7 @@ async function searchSingleBibleQuery(
         entry.verseNumber,
         version
       ),
-      preview: getVersePreview(entry.text, normalizedVerseQuery)
+      preview: entry.text
     }));
 
   return dedupeSearchResults([...directReferenceResults, ...bookResults, ...verseResults]);

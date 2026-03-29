@@ -130,6 +130,12 @@ describe("BottomSearchBar", () => {
       target: { value: "John 1:1-12" }
     });
 
+    expect(
+      await screen.findByText(
+        /In the beginning was the Word, and the Word was with God, and the Word was God\./i
+      )
+    ).toBeInTheDocument();
+
     fireEvent.click(await screen.findByRole("button", { name: /Range John 1:1-12/i }));
     expect(mockRouter.push).toHaveBeenCalledWith("/read/john/1?highlightStart=1&highlightEnd=12");
   });
@@ -147,6 +153,11 @@ describe("BottomSearchBar", () => {
         screen.getByRole("button", { name: /Verse Genesis 1:2 KJV/i })
       ).toBeInTheDocument();
     });
+    expect(
+      screen.getByText(
+        "And the earth was without form, and void; and darkness [was] upon the face of the deep. And the Spirit of God moved upon the face of the waters."
+      )
+    ).toBeInTheDocument();
   });
 
   it("renders grouped results for comma-separated searches on mobile", async () => {

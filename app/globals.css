@@ -1225,7 +1225,8 @@ select {
 
 .lookup-pane-body {
   min-height: 0;
-  overflow: hidden;
+  overflow: auto;
+  overscroll-behavior: contain;
 }
 
 .search-bar {
@@ -1752,17 +1753,17 @@ select {
     min-height: 0;
   }
 
+  .lookup-pane-body > [role="tabpanel"] {
+    min-height: 100%;
+  }
+
   .lookup-pane .search-result-groups-panes {
     padding-right: 0.2rem;
   }
 
-  .lookup-pane .reader-notebook {
-    height: 100%;
-  }
-
-  .lookup-pane .reader-notebook-blocks,
+  .lookup-pane .search-result-groups-panes,
   .lookup-pane .search-results {
-    overflow-y: auto;
+    min-height: 0;
   }
 
   .lookup-pane-reset {
