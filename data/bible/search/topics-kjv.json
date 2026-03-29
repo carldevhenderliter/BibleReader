@@ -1,0 +1,6042 @@
+[
+  {
+    "id": "end-times",
+    "label": "End Times",
+    "aliases": [
+      "end times",
+      "end time",
+      "last days",
+      "second coming"
+    ],
+    "subtopics": [
+      {
+        "id": "return-of-christ",
+        "label": "Return of Christ",
+        "verses": [
+          {
+            "version": "kjv",
+            "bookSlug": "matthew",
+            "bookName": "Matthew",
+            "chapterNumber": 24,
+            "verseNumber": 30,
+            "text": "And then shall appear the sign of the Son of man in heaven: and then shall all the tribes of the earth mourn, and they shall see the Son of man coming in the clouds of heaven with power and great glory.",
+            "tokens": [
+              {
+                "text": "And",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " then",
+                "strongsNumbers": [
+                  "G5119"
+                ]
+              },
+              {
+                "text": " shall appear",
+                "strongsNumbers": [
+                  "G5316"
+                ]
+              },
+              {
+                "text": " the sign",
+                "strongsNumbers": [
+                  "G4592"
+                ]
+              },
+              {
+                "text": " of the Son",
+                "strongsNumbers": [
+                  "G5207"
+                ]
+              },
+              {
+                "text": " of man",
+                "strongsNumbers": [
+                  "G444"
+                ]
+              },
+              {
+                "text": " in",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " heaven: ",
+                "strongsNumbers": [
+                  "G3772"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " then",
+                "strongsNumbers": [
+                  "G5119"
+                ]
+              },
+              {
+                "text": " shall",
+                "strongsNumbers": [
+                  "G2875"
+                ]
+              },
+              {
+                "text": " all",
+                "strongsNumbers": [
+                  "G3956"
+                ]
+              },
+              {
+                "text": " the tribes",
+                "strongsNumbers": [
+                  "G5443"
+                ]
+              },
+              {
+                "text": " of the earth",
+                "strongsNumbers": [
+                  "G1093"
+                ]
+              },
+              {
+                "text": " mourn, ",
+                "strongsNumbers": [
+                  "G2875"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " they shall see",
+                "strongsNumbers": [
+                  "G3700"
+                ]
+              },
+              {
+                "text": " the Son",
+                "strongsNumbers": [
+                  "G5207"
+                ]
+              },
+              {
+                "text": " of man",
+                "strongsNumbers": [
+                  "G444"
+                ]
+              },
+              {
+                "text": " coming",
+                "strongsNumbers": [
+                  "G2064"
+                ]
+              },
+              {
+                "text": " in",
+                "strongsNumbers": [
+                  "G1909"
+                ]
+              },
+              {
+                "text": " the clouds",
+                "strongsNumbers": [
+                  "G3507"
+                ]
+              },
+              {
+                "text": " of heaven",
+                "strongsNumbers": [
+                  "G3772"
+                ]
+              },
+              {
+                "text": " with",
+                "strongsNumbers": [
+                  "G3326"
+                ]
+              },
+              {
+                "text": " power",
+                "strongsNumbers": [
+                  "G1411"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " great",
+                "strongsNumbers": [
+                  "G4183"
+                ]
+              },
+              {
+                "text": " glory."
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "acts",
+            "bookName": "Acts",
+            "chapterNumber": 1,
+            "verseNumber": 11,
+            "text": "Which also said, Ye men of Galilee, why stand ye gazing up into heaven? this same Jesus, which is taken up from you into heaven, shall so come in like manner as ye have seen him go into heaven.",
+            "tokens": [
+              {
+                "text": "Which",
+                "strongsNumbers": [
+                  "G3739"
+                ]
+              },
+              {
+                "text": " also",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " said, ",
+                "strongsNumbers": [
+                  "G2036"
+                ]
+              },
+              {
+                "text": " Ye men",
+                "strongsNumbers": [
+                  "G435"
+                ]
+              },
+              {
+                "text": " of Galilee, ",
+                "strongsNumbers": [
+                  "G1057"
+                ]
+              },
+              {
+                "text": " why",
+                "strongsNumbers": [
+                  "G5101"
+                ]
+              },
+              {
+                "text": " stand ye",
+                "strongsNumbers": [
+                  "G2476"
+                ]
+              },
+              {
+                "text": " gazing up",
+                "strongsNumbers": [
+                  "G1689"
+                ]
+              },
+              {
+                "text": " into",
+                "strongsNumbers": [
+                  "G1519"
+                ]
+              },
+              {
+                "text": " heaven? ",
+                "strongsNumbers": [
+                  "G3772"
+                ]
+              },
+              {
+                "text": " this same",
+                "strongsNumbers": [
+                  "G3778"
+                ]
+              },
+              {
+                "text": " Jesus, ",
+                "strongsNumbers": [
+                  "G2424"
+                ]
+              },
+              {
+                "text": " which",
+                "strongsNumbers": [
+                  "G3588"
+                ]
+              },
+              {
+                "text": " is taken up",
+                "strongsNumbers": [
+                  "G353"
+                ]
+              },
+              {
+                "text": " from",
+                "strongsNumbers": [
+                  "G575"
+                ]
+              },
+              {
+                "text": " you",
+                "strongsNumbers": [
+                  "G5216"
+                ]
+              },
+              {
+                "text": " into",
+                "strongsNumbers": [
+                  "G1519"
+                ]
+              },
+              {
+                "text": " heaven, ",
+                "strongsNumbers": [
+                  "G3772"
+                ]
+              },
+              {
+                "text": " shall",
+                "strongsNumbers": [
+                  "G2064"
+                ]
+              },
+              {
+                "text": " so",
+                "strongsNumbers": [
+                  "G3779"
+                ]
+              },
+              {
+                "text": " come",
+                "strongsNumbers": [
+                  "G2064"
+                ]
+              },
+              {
+                "text": " in like manner as",
+                "strongsNumbers": [
+                  "G3739",
+                  "G5158"
+                ]
+              },
+              {
+                "text": " ye have seen",
+                "strongsNumbers": [
+                  "G2300"
+                ]
+              },
+              {
+                "text": " him",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " go",
+                "strongsNumbers": [
+                  "G4198"
+                ]
+              },
+              {
+                "text": " into",
+                "strongsNumbers": [
+                  "G1519"
+                ]
+              },
+              {
+                "text": " heaven."
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "1-thessalonians",
+            "bookName": "1 Thessalonians",
+            "chapterNumber": 4,
+            "verseNumber": 16,
+            "text": "For the Lord himself shall descend from heaven with a shout, with the voice of the archangel, and with the trump of God: and the dead in Christ shall rise first:",
+            "tokens": [
+              {
+                "text": "For",
+                "strongsNumbers": [
+                  "G3754"
+                ]
+              },
+              {
+                "text": " the Lord",
+                "strongsNumbers": [
+                  "G2962"
+                ]
+              },
+              {
+                "text": " himself",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " shall descend",
+                "strongsNumbers": [
+                  "G2597"
+                ]
+              },
+              {
+                "text": " from",
+                "strongsNumbers": [
+                  "G575"
+                ]
+              },
+              {
+                "text": " heaven",
+                "strongsNumbers": [
+                  "G3772"
+                ]
+              },
+              {
+                "text": " with",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " a shout, ",
+                "strongsNumbers": [
+                  "G2752"
+                ]
+              },
+              {
+                "text": " with",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " the voice",
+                "strongsNumbers": [
+                  "G5456"
+                ]
+              },
+              {
+                "text": " of the archangel, ",
+                "strongsNumbers": [
+                  "G743"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " with",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " the trump",
+                "strongsNumbers": [
+                  "G4536"
+                ]
+              },
+              {
+                "text": " of God: ",
+                "strongsNumbers": [
+                  "G2316"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " the dead",
+                "strongsNumbers": [
+                  "G3498"
+                ]
+              },
+              {
+                "text": " in",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " Christ",
+                "strongsNumbers": [
+                  "G5547"
+                ]
+              },
+              {
+                "text": " shall rise",
+                "strongsNumbers": [
+                  "G450"
+                ]
+              },
+              {
+                "text": " first: ",
+                "strongsNumbers": [
+                  "G4412"
+                ]
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "revelation",
+            "bookName": "Revelation",
+            "chapterNumber": 1,
+            "verseNumber": 7,
+            "text": "Behold, he cometh with clouds; and every eye shall see him, and they also which pierced him: and all kindreds of the earth shall wail because of him. Even so, Amen.",
+            "tokens": [
+              {
+                "text": "Behold, ",
+                "strongsNumbers": [
+                  "G2400"
+                ]
+              },
+              {
+                "text": " he cometh",
+                "strongsNumbers": [
+                  "G2064"
+                ]
+              },
+              {
+                "text": " with",
+                "strongsNumbers": [
+                  "G3326"
+                ]
+              },
+              {
+                "text": " clouds; ",
+                "strongsNumbers": [
+                  "G3507"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " every",
+                "strongsNumbers": [
+                  "G3956"
+                ]
+              },
+              {
+                "text": " eye",
+                "strongsNumbers": [
+                  "G3788"
+                ]
+              },
+              {
+                "text": " shall see",
+                "strongsNumbers": [
+                  "G3700"
+                ]
+              },
+              {
+                "text": " him, ",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " they also which",
+                "strongsNumbers": [
+                  "G3748"
+                ]
+              },
+              {
+                "text": " pierced",
+                "strongsNumbers": [
+                  "G1574"
+                ]
+              },
+              {
+                "text": " him: ",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " all",
+                "strongsNumbers": [
+                  "G3956"
+                ]
+              },
+              {
+                "text": " kindreds",
+                "strongsNumbers": [
+                  "G5443"
+                ]
+              },
+              {
+                "text": " of the earth",
+                "strongsNumbers": [
+                  "G1093"
+                ]
+              },
+              {
+                "text": " shall wail",
+                "strongsNumbers": [
+                  "G2875"
+                ]
+              },
+              {
+                "text": " because",
+                "strongsNumbers": [
+                  "G1909"
+                ]
+              },
+              {
+                "text": " of him. ",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " Even so, ",
+                "strongsNumbers": [
+                  "G3483"
+                ]
+              },
+              {
+                "text": " Amen."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "last-days-signs",
+        "label": "Last Days Signs",
+        "verses": [
+          {
+            "version": "kjv",
+            "bookSlug": "matthew",
+            "bookName": "Matthew",
+            "chapterNumber": 24,
+            "verseNumber": 6,
+            "text": "And ye shall hear of wars and rumours of wars: see that ye be not troubled: for all these things must come to pass, but the end is not yet.",
+            "tokens": [
+              {
+                "text": "And",
+                "strongsNumbers": [
+                  "G1161"
+                ]
+              },
+              {
+                "text": " ye shall",
+                "strongsNumbers": [
+                  "G3195"
+                ]
+              },
+              {
+                "text": " hear",
+                "strongsNumbers": [
+                  "G191"
+                ]
+              },
+              {
+                "text": " of wars",
+                "strongsNumbers": [
+                  "G4171"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " rumours",
+                "strongsNumbers": [
+                  "G189"
+                ]
+              },
+              {
+                "text": " of wars: ",
+                "strongsNumbers": [
+                  "G4171"
+                ]
+              },
+              {
+                "text": " see",
+                "strongsNumbers": [
+                  "G3708"
+                ]
+              },
+              {
+                "text": " that ye be",
+                "strongsNumbers": [
+                  "G2360"
+                ]
+              },
+              {
+                "text": " not",
+                "strongsNumbers": [
+                  "G3361"
+                ]
+              },
+              {
+                "text": " troubled: ",
+                "strongsNumbers": [
+                  "G2360"
+                ]
+              },
+              {
+                "text": " for",
+                "strongsNumbers": [
+                  "G1063"
+                ]
+              },
+              {
+                "text": " all",
+                "strongsNumbers": [
+                  "G3956"
+                ]
+              },
+              {
+                "text": " these things must",
+                "strongsNumbers": [
+                  "G1163"
+                ]
+              },
+              {
+                "text": " come to pass, ",
+                "strongsNumbers": [
+                  "G1096"
+                ]
+              },
+              {
+                "text": " but",
+                "strongsNumbers": [
+                  "G235"
+                ]
+              },
+              {
+                "text": " the end",
+                "strongsNumbers": [
+                  "G5056"
+                ]
+              },
+              {
+                "text": " is",
+                "strongsNumbers": [
+                  "G2076"
+                ]
+              },
+              {
+                "text": " not yet."
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "matthew",
+            "bookName": "Matthew",
+            "chapterNumber": 24,
+            "verseNumber": 7,
+            "text": "For nation shall rise against nation, and kingdom against kingdom: and there shall be famines, and pestilences, and earthquakes, in divers places.",
+            "tokens": [
+              {
+                "text": "For",
+                "strongsNumbers": [
+                  "G1063"
+                ]
+              },
+              {
+                "text": " nation",
+                "strongsNumbers": [
+                  "G1484"
+                ]
+              },
+              {
+                "text": " shall rise",
+                "strongsNumbers": [
+                  "G1453"
+                ]
+              },
+              {
+                "text": " against",
+                "strongsNumbers": [
+                  "G1909"
+                ]
+              },
+              {
+                "text": " nation, ",
+                "strongsNumbers": [
+                  "G1484"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " kingdom",
+                "strongsNumbers": [
+                  "G932"
+                ]
+              },
+              {
+                "text": " against",
+                "strongsNumbers": [
+                  "G1909"
+                ]
+              },
+              {
+                "text": " kingdom: ",
+                "strongsNumbers": [
+                  "G932"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " there shall be",
+                "strongsNumbers": [
+                  "G2071"
+                ]
+              },
+              {
+                "text": " famines, ",
+                "strongsNumbers": [
+                  "G3042"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " pestilences, ",
+                "strongsNumbers": [
+                  "G3061"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " earthquakes, ",
+                "strongsNumbers": [
+                  "G4578"
+                ]
+              },
+              {
+                "text": " in divers",
+                "strongsNumbers": [
+                  "G2596"
+                ]
+              },
+              {
+                "text": " places."
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "2-timothy",
+            "bookName": "2 Timothy",
+            "chapterNumber": 3,
+            "verseNumber": 1,
+            "text": "This know also, that in the last days perilous times shall come.",
+            "tokens": [
+              {
+                "text": "This",
+                "strongsNumbers": [
+                  "G5124"
+                ]
+              },
+              {
+                "text": " know",
+                "strongsNumbers": [
+                  "G1097"
+                ]
+              },
+              {
+                "text": " also, ",
+                "strongsNumbers": [
+                  "G1161"
+                ]
+              },
+              {
+                "text": " that",
+                "strongsNumbers": [
+                  "G3754"
+                ]
+              },
+              {
+                "text": " in",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " the last",
+                "strongsNumbers": [
+                  "G2078"
+                ]
+              },
+              {
+                "text": " days",
+                "strongsNumbers": [
+                  "G2250"
+                ]
+              },
+              {
+                "text": " perilous",
+                "strongsNumbers": [
+                  "G5467"
+                ]
+              },
+              {
+                "text": " times",
+                "strongsNumbers": [
+                  "G2540"
+                ]
+              },
+              {
+                "text": " shall come. ",
+                "strongsNumbers": [
+                  "G1764"
+                ]
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "2-peter",
+            "bookName": "2 Peter",
+            "chapterNumber": 3,
+            "verseNumber": 3,
+            "text": "Knowing this first, that there shall come in the last days scoffers, walking after their own lusts,",
+            "tokens": [
+              {
+                "text": "Knowing",
+                "strongsNumbers": [
+                  "G1097"
+                ]
+              },
+              {
+                "text": " this",
+                "strongsNumbers": [
+                  "G5124"
+                ]
+              },
+              {
+                "text": " first, ",
+                "strongsNumbers": [
+                  "G4412"
+                ]
+              },
+              {
+                "text": " that",
+                "strongsNumbers": [
+                  "G3754"
+                ]
+              },
+              {
+                "text": " there shall come",
+                "strongsNumbers": [
+                  "G2064"
+                ]
+              },
+              {
+                "text": " in",
+                "strongsNumbers": [
+                  "G1909"
+                ]
+              },
+              {
+                "text": " the last",
+                "strongsNumbers": [
+                  "G2078"
+                ]
+              },
+              {
+                "text": " days",
+                "strongsNumbers": [
+                  "G2250"
+                ]
+              },
+              {
+                "text": " scoffers, ",
+                "strongsNumbers": [
+                  "G1703"
+                ]
+              },
+              {
+                "text": " walking",
+                "strongsNumbers": [
+                  "G4198"
+                ]
+              },
+              {
+                "text": " after",
+                "strongsNumbers": [
+                  "G2596"
+                ]
+              },
+              {
+                "text": " their",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " own",
+                "strongsNumbers": [
+                  "G2398"
+                ]
+              },
+              {
+                "text": " lusts, ",
+                "strongsNumbers": [
+                  "G1939"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "judgment",
+        "label": "Judgment",
+        "verses": [
+          {
+            "version": "kjv",
+            "bookSlug": "matthew",
+            "bookName": "Matthew",
+            "chapterNumber": 25,
+            "verseNumber": 31,
+            "text": "When the Son of man shall come in his glory, and all the holy angels with him, then shall he sit upon the throne of his glory:",
+            "tokens": [
+              {
+                "text": "When",
+                "strongsNumbers": [
+                  "G1161",
+                  "G3752"
+                ]
+              },
+              {
+                "text": " the Son",
+                "strongsNumbers": [
+                  "G5207"
+                ]
+              },
+              {
+                "text": " of man",
+                "strongsNumbers": [
+                  "G444"
+                ]
+              },
+              {
+                "text": " shall come",
+                "strongsNumbers": [
+                  "G2064"
+                ]
+              },
+              {
+                "text": " in",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " his",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " glory, ",
+                "strongsNumbers": [
+                  "G1391"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " all",
+                "strongsNumbers": [
+                  "G3956"
+                ]
+              },
+              {
+                "text": " the holy",
+                "strongsNumbers": [
+                  "G40"
+                ]
+              },
+              {
+                "text": " angels",
+                "strongsNumbers": [
+                  "G32"
+                ]
+              },
+              {
+                "text": " with",
+                "strongsNumbers": [
+                  "G3326"
+                ]
+              },
+              {
+                "text": " him, ",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " then",
+                "strongsNumbers": [
+                  "G5119"
+                ]
+              },
+              {
+                "text": " shall he sit",
+                "strongsNumbers": [
+                  "G2523"
+                ]
+              },
+              {
+                "text": " upon",
+                "strongsNumbers": [
+                  "G1909"
+                ]
+              },
+              {
+                "text": " the throne",
+                "strongsNumbers": [
+                  "G2362"
+                ]
+              },
+              {
+                "text": " of his",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " glory:"
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "matthew",
+            "bookName": "Matthew",
+            "chapterNumber": 25,
+            "verseNumber": 32,
+            "text": "And before him shall be gathered all nations: and he shall separate them one from another, as a shepherd divideth his sheep from the goats:",
+            "tokens": [
+              {
+                "text": "And",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " before",
+                "strongsNumbers": [
+                  "G1715"
+                ]
+              },
+              {
+                "text": " him",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " shall be gathered",
+                "strongsNumbers": [
+                  "G4863"
+                ]
+              },
+              {
+                "text": " all",
+                "strongsNumbers": [
+                  "G3956"
+                ]
+              },
+              {
+                "text": " nations: ",
+                "strongsNumbers": [
+                  "G1484"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " he shall separate",
+                "strongsNumbers": [
+                  "G873"
+                ]
+              },
+              {
+                "text": " them",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " one",
+                "strongsNumbers": [
+                  "G240"
+                ]
+              },
+              {
+                "text": " from",
+                "strongsNumbers": [
+                  "G575"
+                ]
+              },
+              {
+                "text": " another, ",
+                "strongsNumbers": [
+                  "G240"
+                ]
+              },
+              {
+                "text": " as",
+                "strongsNumbers": [
+                  "G5618"
+                ]
+              },
+              {
+                "text": " a shepherd",
+                "strongsNumbers": [
+                  "G4166"
+                ]
+              },
+              {
+                "text": " divideth",
+                "strongsNumbers": [
+                  "G873"
+                ]
+              },
+              {
+                "text": " his sheep",
+                "strongsNumbers": [
+                  "G4263"
+                ]
+              },
+              {
+                "text": " from",
+                "strongsNumbers": [
+                  "G575"
+                ]
+              },
+              {
+                "text": " the goats:"
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "2-corinthians",
+            "bookName": "2 Corinthians",
+            "chapterNumber": 5,
+            "verseNumber": 10,
+            "text": "For we must all appear before the judgment seat of Christ; that every one may receive the things done in his body, according to that he hath done, whether it be good or bad.",
+            "tokens": [
+              {
+                "text": "For",
+                "strongsNumbers": [
+                  "G1063"
+                ]
+              },
+              {
+                "text": " we",
+                "strongsNumbers": [
+                  "G2248"
+                ]
+              },
+              {
+                "text": " must",
+                "strongsNumbers": [
+                  "G1163"
+                ]
+              },
+              {
+                "text": " all",
+                "strongsNumbers": [
+                  "G3956"
+                ]
+              },
+              {
+                "text": " appear",
+                "strongsNumbers": [
+                  "G5319"
+                ]
+              },
+              {
+                "text": " before",
+                "strongsNumbers": [
+                  "G1715"
+                ]
+              },
+              {
+                "text": " the judgment seat",
+                "strongsNumbers": [
+                  "G968"
+                ]
+              },
+              {
+                "text": " of Christ; ",
+                "strongsNumbers": [
+                  "G5547"
+                ]
+              },
+              {
+                "text": " that",
+                "strongsNumbers": [
+                  "G2443"
+                ]
+              },
+              {
+                "text": " every one",
+                "strongsNumbers": [
+                  "G1538"
+                ]
+              },
+              {
+                "text": " may receive",
+                "strongsNumbers": [
+                  "G2865"
+                ]
+              },
+              {
+                "text": " the things done in",
+                "strongsNumbers": [
+                  "G1223"
+                ]
+              },
+              {
+                "text": " his body, ",
+                "strongsNumbers": [
+                  "G4983"
+                ]
+              },
+              {
+                "text": " according",
+                "strongsNumbers": [
+                  "G4314"
+                ]
+              },
+              {
+                "text": " to that",
+                "strongsNumbers": [
+                  "G3739"
+                ]
+              },
+              {
+                "text": " he hath done, ",
+                "strongsNumbers": [
+                  "G4238"
+                ]
+              },
+              {
+                "text": " whether",
+                "strongsNumbers": [
+                  "G1535"
+                ]
+              },
+              {
+                "text": " it be good",
+                "strongsNumbers": [
+                  "G18"
+                ]
+              },
+              {
+                "text": " or",
+                "strongsNumbers": [
+                  "G1535"
+                ]
+              },
+              {
+                "text": " bad. ",
+                "strongsNumbers": [
+                  "G2556"
+                ]
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "revelation",
+            "bookName": "Revelation",
+            "chapterNumber": 20,
+            "verseNumber": 12,
+            "text": "And I saw the dead, small and great, stand before God; and the books were opened: and another book was opened, which is the book of life: and the dead were judged out of those things which were written in the books, according to their works.",
+            "tokens": [
+              {
+                "text": "And",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " I saw",
+                "strongsNumbers": [
+                  "G1492"
+                ]
+              },
+              {
+                "text": " the dead, ",
+                "strongsNumbers": [
+                  "G3498"
+                ]
+              },
+              {
+                "text": " small",
+                "strongsNumbers": [
+                  "G3398"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " great, ",
+                "strongsNumbers": [
+                  "G3173"
+                ]
+              },
+              {
+                "text": " stand",
+                "strongsNumbers": [
+                  "G2476"
+                ]
+              },
+              {
+                "text": " before",
+                "strongsNumbers": [
+                  "G1799"
+                ]
+              },
+              {
+                "text": " God; ",
+                "strongsNumbers": [
+                  "G2316"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " the books",
+                "strongsNumbers": [
+                  "G975"
+                ]
+              },
+              {
+                "text": " were opened: ",
+                "strongsNumbers": [
+                  "G455"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " another",
+                "strongsNumbers": [
+                  "G243"
+                ]
+              },
+              {
+                "text": " book",
+                "strongsNumbers": [
+                  "G975"
+                ]
+              },
+              {
+                "text": " was opened, ",
+                "strongsNumbers": [
+                  "G455"
+                ]
+              },
+              {
+                "text": " which",
+                "strongsNumbers": [
+                  "G3739"
+                ]
+              },
+              {
+                "text": " is",
+                "strongsNumbers": [
+                  "G2076"
+                ]
+              },
+              {
+                "text": " the book of life: ",
+                "strongsNumbers": [
+                  "G2222"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " the dead",
+                "strongsNumbers": [
+                  "G3498"
+                ]
+              },
+              {
+                "text": " were judged",
+                "strongsNumbers": [
+                  "G2919"
+                ]
+              },
+              {
+                "text": " out of",
+                "strongsNumbers": [
+                  "G1537"
+                ]
+              },
+              {
+                "text": " those things which were written",
+                "strongsNumbers": [
+                  "G1125"
+                ]
+              },
+              {
+                "text": " in",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " the books, ",
+                "strongsNumbers": [
+                  "G975"
+                ]
+              },
+              {
+                "text": " according to",
+                "strongsNumbers": [
+                  "G2596"
+                ]
+              },
+              {
+                "text": " their",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " works."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "resurrection-hope",
+        "label": "Resurrection Hope",
+        "verses": [
+          {
+            "version": "kjv",
+            "bookSlug": "john",
+            "bookName": "John",
+            "chapterNumber": 5,
+            "verseNumber": 28,
+            "text": "Marvel not at this: for the hour is coming, in the which all that are in the graves shall hear his voice,",
+            "tokens": [
+              {
+                "text": "Marvel",
+                "strongsNumbers": [
+                  "G2296"
+                ]
+              },
+              {
+                "text": " not",
+                "strongsNumbers": [
+                  "G3361"
+                ]
+              },
+              {
+                "text": " at this: ",
+                "strongsNumbers": [
+                  "G5124"
+                ]
+              },
+              {
+                "text": " for",
+                "strongsNumbers": [
+                  "G3754"
+                ]
+              },
+              {
+                "text": " the hour",
+                "strongsNumbers": [
+                  "G5610"
+                ]
+              },
+              {
+                "text": " is coming, ",
+                "strongsNumbers": [
+                  "G2064"
+                ]
+              },
+              {
+                "text": " in",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " the which",
+                "strongsNumbers": [
+                  "G3739"
+                ]
+              },
+              {
+                "text": " all",
+                "strongsNumbers": [
+                  "G3956"
+                ]
+              },
+              {
+                "text": " that are in",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " the graves",
+                "strongsNumbers": [
+                  "G3419"
+                ]
+              },
+              {
+                "text": " shall hear",
+                "strongsNumbers": [
+                  "G191"
+                ]
+              },
+              {
+                "text": " his",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " voice,"
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "john",
+            "bookName": "John",
+            "chapterNumber": 5,
+            "verseNumber": 29,
+            "text": "And shall come forth; they that have done good, unto the resurrection of life; and they that have done evil, unto the resurrection of damnation.",
+            "tokens": [
+              {
+                "text": "And",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " shall come forth; ",
+                "strongsNumbers": [
+                  "G1607"
+                ]
+              },
+              {
+                "text": " they that have done",
+                "strongsNumbers": [
+                  "G4160"
+                ]
+              },
+              {
+                "text": " good, ",
+                "strongsNumbers": [
+                  "G18"
+                ]
+              },
+              {
+                "text": " unto",
+                "strongsNumbers": [
+                  "G1519"
+                ]
+              },
+              {
+                "text": " the resurrection",
+                "strongsNumbers": [
+                  "G386"
+                ]
+              },
+              {
+                "text": " of life; ",
+                "strongsNumbers": [
+                  "G2222"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G1161"
+                ]
+              },
+              {
+                "text": " they that have done",
+                "strongsNumbers": [
+                  "G4238"
+                ]
+              },
+              {
+                "text": " evil, ",
+                "strongsNumbers": [
+                  "G5337"
+                ]
+              },
+              {
+                "text": " unto",
+                "strongsNumbers": [
+                  "G1519"
+                ]
+              },
+              {
+                "text": " the resurrection",
+                "strongsNumbers": [
+                  "G386"
+                ]
+              },
+              {
+                "text": " of damnation."
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "1-corinthians",
+            "bookName": "1 Corinthians",
+            "chapterNumber": 15,
+            "verseNumber": 51,
+            "text": "Behold, I shew you a mystery; We shall ➔ not all sleep, but we shall ➔ all be changed,",
+            "tokens": [
+              {
+                "text": "Behold, ",
+                "strongsNumbers": [
+                  "G2400"
+                ]
+              },
+              {
+                "text": " I shew",
+                "strongsNumbers": [
+                  "G3004"
+                ]
+              },
+              {
+                "text": " you",
+                "strongsNumbers": [
+                  "G5213"
+                ]
+              },
+              {
+                "text": " a mystery; ",
+                "strongsNumbers": [
+                  "G3466"
+                ]
+              },
+              {
+                "text": " We shall",
+                "strongsNumbers": [
+                  "G2837"
+                ]
+              },
+              {
+                "text": " ➔ not",
+                "strongsNumbers": [
+                  "G3756"
+                ]
+              },
+              {
+                "text": " all",
+                "strongsNumbers": [
+                  "G3956",
+                  "G3303"
+                ]
+              },
+              {
+                "text": " sleep, ",
+                "strongsNumbers": [
+                  "G2837"
+                ]
+              },
+              {
+                "text": " but",
+                "strongsNumbers": [
+                  "G1161"
+                ]
+              },
+              {
+                "text": " we shall",
+                "strongsNumbers": [
+                  "G236"
+                ]
+              },
+              {
+                "text": " ➔ all",
+                "strongsNumbers": [
+                  "G3956"
+                ]
+              },
+              {
+                "text": " be changed, ",
+                "strongsNumbers": [
+                  "G236"
+                ]
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "1-corinthians",
+            "bookName": "1 Corinthians",
+            "chapterNumber": 15,
+            "verseNumber": 52,
+            "text": "In a moment, in the twinkling of an eye, at the last trump: for the trumpet shall sound, and the dead shall be raised incorruptible, and we shall be changed.",
+            "tokens": [
+              {
+                "text": "In",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " a moment, ",
+                "strongsNumbers": [
+                  "G823"
+                ]
+              },
+              {
+                "text": " in",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " the twinkling",
+                "strongsNumbers": [
+                  "G4493"
+                ]
+              },
+              {
+                "text": " of an eye, ",
+                "strongsNumbers": [
+                  "G3788"
+                ]
+              },
+              {
+                "text": " at",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " the last",
+                "strongsNumbers": [
+                  "G2078"
+                ]
+              },
+              {
+                "text": " trump: ",
+                "strongsNumbers": [
+                  "G4536"
+                ]
+              },
+              {
+                "text": " for",
+                "strongsNumbers": [
+                  "G1063"
+                ]
+              },
+              {
+                "text": " the trumpet shall sound, ",
+                "strongsNumbers": [
+                  "G4537"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " the dead",
+                "strongsNumbers": [
+                  "G3498"
+                ]
+              },
+              {
+                "text": " shall be raised",
+                "strongsNumbers": [
+                  "G1453"
+                ]
+              },
+              {
+                "text": " incorruptible, ",
+                "strongsNumbers": [
+                  "G862"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " we",
+                "strongsNumbers": [
+                  "G2249"
+                ]
+              },
+              {
+                "text": " shall be changed. ",
+                "strongsNumbers": [
+                  "G236"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "salvation",
+    "label": "Salvation",
+    "aliases": [
+      "salvation",
+      "saved",
+      "eternal life"
+    ],
+    "subtopics": [
+      {
+        "id": "by-grace",
+        "label": "By Grace",
+        "verses": [
+          {
+            "version": "kjv",
+            "bookSlug": "ephesians",
+            "bookName": "Ephesians",
+            "chapterNumber": 2,
+            "verseNumber": 8,
+            "text": "For by grace are ye saved through faith; and that not of yourselves: it is the gift of God:",
+            "tokens": [
+              {
+                "text": "For",
+                "strongsNumbers": [
+                  "G1063"
+                ]
+              },
+              {
+                "text": " by grace",
+                "strongsNumbers": [
+                  "G5485"
+                ]
+              },
+              {
+                "text": " are ye",
+                "strongsNumbers": [
+                  "G2075"
+                ]
+              },
+              {
+                "text": " saved",
+                "strongsNumbers": [
+                  "G4982"
+                ]
+              },
+              {
+                "text": " through",
+                "strongsNumbers": [
+                  "G1223"
+                ]
+              },
+              {
+                "text": " faith; ",
+                "strongsNumbers": [
+                  "G4102"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " that",
+                "strongsNumbers": [
+                  "G5124"
+                ]
+              },
+              {
+                "text": " not",
+                "strongsNumbers": [
+                  "G3756"
+                ]
+              },
+              {
+                "text": " of",
+                "strongsNumbers": [
+                  "G1537"
+                ]
+              },
+              {
+                "text": " yourselves: ",
+                "strongsNumbers": [
+                  "G5216"
+                ]
+              },
+              {
+                "text": " it is the gift",
+                "strongsNumbers": [
+                  "G1435"
+                ]
+              },
+              {
+                "text": " of God:"
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "ephesians",
+            "bookName": "Ephesians",
+            "chapterNumber": 2,
+            "verseNumber": 9,
+            "text": "Not of works, lest any man should boast.",
+            "tokens": [
+              {
+                "text": "Not",
+                "strongsNumbers": [
+                  "G3756"
+                ]
+              },
+              {
+                "text": " of",
+                "strongsNumbers": [
+                  "G1537"
+                ]
+              },
+              {
+                "text": " works, ",
+                "strongsNumbers": [
+                  "G2041"
+                ]
+              },
+              {
+                "text": " lest",
+                "strongsNumbers": [
+                  "G3363"
+                ]
+              },
+              {
+                "text": " any man",
+                "strongsNumbers": [
+                  "G5100"
+                ]
+              },
+              {
+                "text": " should boast."
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "titus",
+            "bookName": "Titus",
+            "chapterNumber": 3,
+            "verseNumber": 5,
+            "text": "Not by works of righteousness which we have done, but according to his mercy he saved us, by the washing of regeneration, and renewing of the Holy Ghost;",
+            "tokens": [
+              {
+                "text": "Not",
+                "strongsNumbers": [
+                  "G3756"
+                ]
+              },
+              {
+                "text": " by",
+                "strongsNumbers": [
+                  "G1537"
+                ]
+              },
+              {
+                "text": " works",
+                "strongsNumbers": [
+                  "G2041"
+                ]
+              },
+              {
+                "text": " of",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " righteousness",
+                "strongsNumbers": [
+                  "G1343"
+                ]
+              },
+              {
+                "text": " which",
+                "strongsNumbers": [
+                  "G3739"
+                ]
+              },
+              {
+                "text": " we",
+                "strongsNumbers": [
+                  "G2249"
+                ]
+              },
+              {
+                "text": " have done, ",
+                "strongsNumbers": [
+                  "G4160"
+                ]
+              },
+              {
+                "text": " but",
+                "strongsNumbers": [
+                  "G235"
+                ]
+              },
+              {
+                "text": " according to",
+                "strongsNumbers": [
+                  "G2596"
+                ]
+              },
+              {
+                "text": " his",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " mercy",
+                "strongsNumbers": [
+                  "G1656"
+                ]
+              },
+              {
+                "text": " he saved",
+                "strongsNumbers": [
+                  "G4982"
+                ]
+              },
+              {
+                "text": " us, ",
+                "strongsNumbers": [
+                  "G2248"
+                ]
+              },
+              {
+                "text": " by",
+                "strongsNumbers": [
+                  "G1223"
+                ]
+              },
+              {
+                "text": " the washing",
+                "strongsNumbers": [
+                  "G3067"
+                ]
+              },
+              {
+                "text": " of regeneration, ",
+                "strongsNumbers": [
+                  "G3824"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " renewing",
+                "strongsNumbers": [
+                  "G342"
+                ]
+              },
+              {
+                "text": " of the Holy",
+                "strongsNumbers": [
+                  "G40"
+                ]
+              },
+              {
+                "text": " Ghost;"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "through-christ",
+        "label": "Through Christ",
+        "verses": [
+          {
+            "version": "kjv",
+            "bookSlug": "john",
+            "bookName": "John",
+            "chapterNumber": 14,
+            "verseNumber": 6,
+            "text": "Jesus saith unto him, I am the way, the truth, and the life: no man cometh unto the Father, but by me.",
+            "tokens": [
+              {
+                "text": "Jesus",
+                "strongsNumbers": [
+                  "G2424"
+                ]
+              },
+              {
+                "text": " saith",
+                "strongsNumbers": [
+                  "G3004"
+                ]
+              },
+              {
+                "text": " unto him, ",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " I",
+                "strongsNumbers": [
+                  "G1473"
+                ]
+              },
+              {
+                "text": " am",
+                "strongsNumbers": [
+                  "G1510"
+                ]
+              },
+              {
+                "text": " the way, ",
+                "strongsNumbers": [
+                  "G3598",
+                  "G2532"
+                ]
+              },
+              {
+                "text": " the truth, ",
+                "strongsNumbers": [
+                  "G225"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " the life: ",
+                "strongsNumbers": [
+                  "G2222"
+                ]
+              },
+              {
+                "text": " no man",
+                "strongsNumbers": [
+                  "G3762"
+                ]
+              },
+              {
+                "text": " cometh",
+                "strongsNumbers": [
+                  "G2064"
+                ]
+              },
+              {
+                "text": " unto",
+                "strongsNumbers": [
+                  "G4314"
+                ]
+              },
+              {
+                "text": " the Father, ",
+                "strongsNumbers": [
+                  "G3962"
+                ]
+              },
+              {
+                "text": " but",
+                "strongsNumbers": [
+                  "G1508"
+                ]
+              },
+              {
+                "text": " by",
+                "strongsNumbers": [
+                  "G1223"
+                ]
+              },
+              {
+                "text": " me."
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "acts",
+            "bookName": "Acts",
+            "chapterNumber": 4,
+            "verseNumber": 12,
+            "text": "Neither is there salvation in any other: for there is none other name under heaven given among men, whereby we must be saved.",
+            "tokens": [
+              {
+                "text": "Neither",
+                "strongsNumbers": [
+                  "G2532",
+                  "G3756"
+                ]
+              },
+              {
+                "text": " is there",
+                "strongsNumbers": [
+                  "G2076"
+                ]
+              },
+              {
+                "text": " salvation",
+                "strongsNumbers": [
+                  "G4991"
+                ]
+              },
+              {
+                "text": " in",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " any",
+                "strongsNumbers": [
+                  "G3762"
+                ]
+              },
+              {
+                "text": " other: ",
+                "strongsNumbers": [
+                  "G243"
+                ]
+              },
+              {
+                "text": " for",
+                "strongsNumbers": [
+                  "G1063"
+                ]
+              },
+              {
+                "text": " there is",
+                "strongsNumbers": [
+                  "G2076"
+                ]
+              },
+              {
+                "text": " none",
+                "strongsNumbers": [
+                  "G3777"
+                ]
+              },
+              {
+                "text": " other",
+                "strongsNumbers": [
+                  "G2087"
+                ]
+              },
+              {
+                "text": " name",
+                "strongsNumbers": [
+                  "G3686"
+                ]
+              },
+              {
+                "text": " under",
+                "strongsNumbers": [
+                  "G5259"
+                ]
+              },
+              {
+                "text": " heaven",
+                "strongsNumbers": [
+                  "G3772"
+                ]
+              },
+              {
+                "text": " given",
+                "strongsNumbers": [
+                  "G1325"
+                ]
+              },
+              {
+                "text": " among",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " men, ",
+                "strongsNumbers": [
+                  "G444"
+                ]
+              },
+              {
+                "text": " whereby",
+                "strongsNumbers": [
+                  "G1722",
+                  "G3739"
+                ]
+              },
+              {
+                "text": " we",
+                "strongsNumbers": [
+                  "G2248"
+                ]
+              },
+              {
+                "text": " must",
+                "strongsNumbers": [
+                  "G1163"
+                ]
+              },
+              {
+                "text": " be saved."
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "1-timothy",
+            "bookName": "1 Timothy",
+            "chapterNumber": 2,
+            "verseNumber": 5,
+            "text": "For there is one God, and one mediator between God and men, the man Christ Jesus;",
+            "tokens": [
+              {
+                "text": "For",
+                "strongsNumbers": [
+                  "G1063"
+                ]
+              },
+              {
+                "text": " there is one",
+                "strongsNumbers": [
+                  "G1520"
+                ]
+              },
+              {
+                "text": " God, ",
+                "strongsNumbers": [
+                  "G2316"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " one",
+                "strongsNumbers": [
+                  "G1520"
+                ]
+              },
+              {
+                "text": " mediator",
+                "strongsNumbers": [
+                  "G3316"
+                ]
+              },
+              {
+                "text": " between God",
+                "strongsNumbers": [
+                  "G2316"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " men, ",
+                "strongsNumbers": [
+                  "G444"
+                ]
+              },
+              {
+                "text": " the man",
+                "strongsNumbers": [
+                  "G444"
+                ]
+              },
+              {
+                "text": " Christ",
+                "strongsNumbers": [
+                  "G5547"
+                ]
+              },
+              {
+                "text": " Jesus; ",
+                "strongsNumbers": [
+                  "G2424"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "confession-and-faith",
+        "label": "Confession and Faith",
+        "verses": [
+          {
+            "version": "kjv",
+            "bookSlug": "john",
+            "bookName": "John",
+            "chapterNumber": 3,
+            "verseNumber": 16,
+            "text": "For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.",
+            "tokens": [
+              {
+                "text": "For",
+                "strongsNumbers": [
+                  "G1063"
+                ]
+              },
+              {
+                "text": " God",
+                "strongsNumbers": [
+                  "G2316"
+                ]
+              },
+              {
+                "text": " so",
+                "strongsNumbers": [
+                  "G3779"
+                ]
+              },
+              {
+                "text": " loved",
+                "strongsNumbers": [
+                  "G25"
+                ]
+              },
+              {
+                "text": " the world, ",
+                "strongsNumbers": [
+                  "G2889"
+                ]
+              },
+              {
+                "text": " that",
+                "strongsNumbers": [
+                  "G5620"
+                ]
+              },
+              {
+                "text": " he gave",
+                "strongsNumbers": [
+                  "G1325"
+                ]
+              },
+              {
+                "text": " his",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " only begotten",
+                "strongsNumbers": [
+                  "G3439"
+                ]
+              },
+              {
+                "text": " Son, ",
+                "strongsNumbers": [
+                  "G5207"
+                ]
+              },
+              {
+                "text": " that",
+                "strongsNumbers": [
+                  "G2443"
+                ]
+              },
+              {
+                "text": " whosoever",
+                "strongsNumbers": [
+                  "G3956"
+                ]
+              },
+              {
+                "text": " believeth",
+                "strongsNumbers": [
+                  "G4100"
+                ]
+              },
+              {
+                "text": " in",
+                "strongsNumbers": [
+                  "G1519"
+                ]
+              },
+              {
+                "text": " him",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " should",
+                "strongsNumbers": [
+                  "G622"
+                ]
+              },
+              {
+                "text": " not",
+                "strongsNumbers": [
+                  "G3361"
+                ]
+              },
+              {
+                "text": " perish, ",
+                "strongsNumbers": [
+                  "G622"
+                ]
+              },
+              {
+                "text": " but",
+                "strongsNumbers": [
+                  "G235"
+                ]
+              },
+              {
+                "text": " have",
+                "strongsNumbers": [
+                  "G2192"
+                ]
+              },
+              {
+                "text": " everlasting",
+                "strongsNumbers": [
+                  "G166"
+                ]
+              },
+              {
+                "text": " life."
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "romans",
+            "bookName": "Romans",
+            "chapterNumber": 10,
+            "verseNumber": 9,
+            "text": "That if thou shalt confess with thy mouth the Lord Jesus, and shalt believe in thine heart that God hath raised him from the dead, thou shalt be saved.",
+            "tokens": [
+              {
+                "text": "That",
+                "strongsNumbers": [
+                  "G3754"
+                ]
+              },
+              {
+                "text": " if",
+                "strongsNumbers": [
+                  "G1437"
+                ]
+              },
+              {
+                "text": " thou shalt confess",
+                "strongsNumbers": [
+                  "G3670"
+                ]
+              },
+              {
+                "text": " with",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " thy",
+                "strongsNumbers": [
+                  "G4675"
+                ]
+              },
+              {
+                "text": " mouth",
+                "strongsNumbers": [
+                  "G4750"
+                ]
+              },
+              {
+                "text": " the Lord",
+                "strongsNumbers": [
+                  "G2962"
+                ]
+              },
+              {
+                "text": " Jesus, ",
+                "strongsNumbers": [
+                  "G2424"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " shalt believe",
+                "strongsNumbers": [
+                  "G4100"
+                ]
+              },
+              {
+                "text": " in",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " thine",
+                "strongsNumbers": [
+                  "G4675"
+                ]
+              },
+              {
+                "text": " heart",
+                "strongsNumbers": [
+                  "G2588"
+                ]
+              },
+              {
+                "text": " that",
+                "strongsNumbers": [
+                  "G3754"
+                ]
+              },
+              {
+                "text": " God",
+                "strongsNumbers": [
+                  "G2316"
+                ]
+              },
+              {
+                "text": " hath raised",
+                "strongsNumbers": [
+                  "G1453"
+                ]
+              },
+              {
+                "text": " him",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " from",
+                "strongsNumbers": [
+                  "G1537"
+                ]
+              },
+              {
+                "text": " the dead, ",
+                "strongsNumbers": [
+                  "G3498"
+                ]
+              },
+              {
+                "text": " thou shalt be saved."
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "romans",
+            "bookName": "Romans",
+            "chapterNumber": 10,
+            "verseNumber": 10,
+            "text": "For with the heart man believeth unto righteousness; and with the mouth confession is made unto salvation.",
+            "tokens": [
+              {
+                "text": "For",
+                "strongsNumbers": [
+                  "G1063"
+                ]
+              },
+              {
+                "text": " with the heart",
+                "strongsNumbers": [
+                  "G2588"
+                ]
+              },
+              {
+                "text": " man believeth",
+                "strongsNumbers": [
+                  "G4100"
+                ]
+              },
+              {
+                "text": " unto",
+                "strongsNumbers": [
+                  "G1519"
+                ]
+              },
+              {
+                "text": " righteousness; ",
+                "strongsNumbers": [
+                  "G1343"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G1161"
+                ]
+              },
+              {
+                "text": " with the mouth",
+                "strongsNumbers": [
+                  "G4750"
+                ]
+              },
+              {
+                "text": " confession is made",
+                "strongsNumbers": [
+                  "G3670"
+                ]
+              },
+              {
+                "text": " unto",
+                "strongsNumbers": [
+                  "G1519"
+                ]
+              },
+              {
+                "text": " salvation."
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "faith",
+    "label": "Faith",
+    "aliases": [
+      "faith",
+      "trust god",
+      "trust in god"
+    ],
+    "subtopics": [
+      {
+        "id": "what-faith-is",
+        "label": "What Faith Is",
+        "verses": [
+          {
+            "version": "kjv",
+            "bookSlug": "romans",
+            "bookName": "Romans",
+            "chapterNumber": 10,
+            "verseNumber": 17,
+            "text": "So then faith cometh by hearing, and hearing by the word of God.",
+            "tokens": [
+              {
+                "text": "So then",
+                "strongsNumbers": [
+                  "G686"
+                ]
+              },
+              {
+                "text": " faith",
+                "strongsNumbers": [
+                  "G4102"
+                ]
+              },
+              {
+                "text": " cometh by",
+                "strongsNumbers": [
+                  "G1537"
+                ]
+              },
+              {
+                "text": " hearing, ",
+                "strongsNumbers": [
+                  "G189"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G1161"
+                ]
+              },
+              {
+                "text": " hearing",
+                "strongsNumbers": [
+                  "G189"
+                ]
+              },
+              {
+                "text": " by",
+                "strongsNumbers": [
+                  "G1223"
+                ]
+              },
+              {
+                "text": " the word",
+                "strongsNumbers": [
+                  "G4487"
+                ]
+              },
+              {
+                "text": " of God."
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "2-corinthians",
+            "bookName": "2 Corinthians",
+            "chapterNumber": 5,
+            "verseNumber": 7,
+            "text": "(For we walk by faith, not by sight:)",
+            "tokens": [
+              {
+                "text": "(For",
+                "strongsNumbers": [
+                  "G1063"
+                ]
+              },
+              {
+                "text": " we walk",
+                "strongsNumbers": [
+                  "G4043"
+                ]
+              },
+              {
+                "text": " by",
+                "strongsNumbers": [
+                  "G1223"
+                ]
+              },
+              {
+                "text": " faith, ",
+                "strongsNumbers": [
+                  "G4102"
+                ]
+              },
+              {
+                "text": " not",
+                "strongsNumbers": [
+                  "G3756"
+                ]
+              },
+              {
+                "text": " by",
+                "strongsNumbers": [
+                  "G1223"
+                ]
+              },
+              {
+                "text": " sight:)",
+                "strongsNumbers": [
+                  "G1491"
+                ]
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "hebrews",
+            "bookName": "Hebrews",
+            "chapterNumber": 11,
+            "verseNumber": 1,
+            "text": "Now faith is the substance of things hoped for, the evidence of things not seen.",
+            "tokens": [
+              {
+                "text": "Now",
+                "strongsNumbers": [
+                  "G1161"
+                ]
+              },
+              {
+                "text": " faith",
+                "strongsNumbers": [
+                  "G4102"
+                ]
+              },
+              {
+                "text": " is",
+                "strongsNumbers": [
+                  "G2076"
+                ]
+              },
+              {
+                "text": " the substance",
+                "strongsNumbers": [
+                  "G5287"
+                ]
+              },
+              {
+                "text": " of things hoped for, ",
+                "strongsNumbers": [
+                  "G1679"
+                ]
+              },
+              {
+                "text": " the evidence",
+                "strongsNumbers": [
+                  "G1650"
+                ]
+              },
+              {
+                "text": " of things",
+                "strongsNumbers": [
+                  "G4229"
+                ]
+              },
+              {
+                "text": " not",
+                "strongsNumbers": [
+                  "G3756"
+                ]
+              },
+              {
+                "text": " seen."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "trusting-god",
+        "label": "Trusting God",
+        "verses": [
+          {
+            "version": "kjv",
+            "bookSlug": "proverbs",
+            "bookName": "Proverbs",
+            "chapterNumber": 3,
+            "verseNumber": 5,
+            "text": "Trust in the LORD with all thine heart; and lean not unto thine own understanding.",
+            "tokens": [
+              {
+                "text": "Trust",
+                "strongsNumbers": [
+                  "H982"
+                ]
+              },
+              {
+                "text": " in the LORD",
+                "strongsNumbers": [
+                  "H3068"
+                ]
+              },
+              {
+                "text": " with all thine heart; ",
+                "strongsNumbers": [
+                  "H3820"
+                ]
+              },
+              {
+                "text": " and lean",
+                "strongsNumbers": [
+                  "H8172"
+                ]
+              },
+              {
+                "text": " not unto thine own understanding."
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "proverbs",
+            "bookName": "Proverbs",
+            "chapterNumber": 3,
+            "verseNumber": 6,
+            "text": "In all thy ways acknowledge him, and he shall direct thy paths.",
+            "tokens": [
+              {
+                "text": "In all thy ways",
+                "strongsNumbers": [
+                  "H1870"
+                ]
+              },
+              {
+                "text": " acknowledge",
+                "strongsNumbers": [
+                  "H3045"
+                ]
+              },
+              {
+                "text": " him, and he shall direct",
+                "strongsNumbers": [
+                  "H3474"
+                ]
+              },
+              {
+                "text": " thy paths."
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "mark",
+            "bookName": "Mark",
+            "chapterNumber": 11,
+            "verseNumber": 22,
+            "text": "And Jesus answering saith unto them, Have faith in God.",
+            "tokens": [
+              {
+                "text": "And",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " Jesus",
+                "strongsNumbers": [
+                  "G2424"
+                ]
+              },
+              {
+                "text": " answering",
+                "strongsNumbers": [
+                  "G611"
+                ]
+              },
+              {
+                "text": " saith",
+                "strongsNumbers": [
+                  "G3004"
+                ]
+              },
+              {
+                "text": " unto them, ",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " Have",
+                "strongsNumbers": [
+                  "G2192"
+                ]
+              },
+              {
+                "text": " faith",
+                "strongsNumbers": [
+                  "G4102"
+                ]
+              },
+              {
+                "text": " in God."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "steadfast-faith",
+        "label": "Steadfast Faith",
+        "verses": [
+          {
+            "version": "kjv",
+            "bookSlug": "galatians",
+            "bookName": "Galatians",
+            "chapterNumber": 2,
+            "verseNumber": 20,
+            "text": "I am crucified with Christ: nevertheless I live; yet not I, but Christ liveth in me: and the life which I now live in the flesh I live by the faith of the Son of God, who loved me, and gave himself for me.",
+            "tokens": [
+              {
+                "text": "I am crucified",
+                "strongsNumbers": [
+                  "G4957"
+                ]
+              },
+              {
+                "text": " with Christ: ",
+                "strongsNumbers": [
+                  "G5547"
+                ]
+              },
+              {
+                "text": " nevertheless",
+                "strongsNumbers": [
+                  "G1161"
+                ]
+              },
+              {
+                "text": " I live; ",
+                "strongsNumbers": [
+                  "G2198"
+                ]
+              },
+              {
+                "text": " yet not",
+                "strongsNumbers": [
+                  "G3765"
+                ]
+              },
+              {
+                "text": " I, ",
+                "strongsNumbers": [
+                  "G1473"
+                ]
+              },
+              {
+                "text": " but",
+                "strongsNumbers": [
+                  "G1161"
+                ]
+              },
+              {
+                "text": " Christ",
+                "strongsNumbers": [
+                  "G5547"
+                ]
+              },
+              {
+                "text": " liveth",
+                "strongsNumbers": [
+                  "G2198"
+                ]
+              },
+              {
+                "text": " in",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " me: ",
+                "strongsNumbers": [
+                  "G1698"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G1161"
+                ]
+              },
+              {
+                "text": " the life which",
+                "strongsNumbers": [
+                  "G3739"
+                ]
+              },
+              {
+                "text": " I",
+                "strongsNumbers": [
+                  "G2198"
+                ]
+              },
+              {
+                "text": " now",
+                "strongsNumbers": [
+                  "G3568"
+                ]
+              },
+              {
+                "text": " live",
+                "strongsNumbers": [
+                  "G2198"
+                ]
+              },
+              {
+                "text": " in",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " the flesh",
+                "strongsNumbers": [
+                  "G4561"
+                ]
+              },
+              {
+                "text": " I live",
+                "strongsNumbers": [
+                  "G2198"
+                ]
+              },
+              {
+                "text": " by",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " the faith",
+                "strongsNumbers": [
+                  "G4102"
+                ]
+              },
+              {
+                "text": " of the Son",
+                "strongsNumbers": [
+                  "G5207"
+                ]
+              },
+              {
+                "text": " of God, ",
+                "strongsNumbers": [
+                  "G2316"
+                ]
+              },
+              {
+                "text": " who",
+                "strongsNumbers": [
+                  "G3588"
+                ]
+              },
+              {
+                "text": " loved",
+                "strongsNumbers": [
+                  "G25"
+                ]
+              },
+              {
+                "text": " me, ",
+                "strongsNumbers": [
+                  "G3165"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " gave",
+                "strongsNumbers": [
+                  "G3860"
+                ]
+              },
+              {
+                "text": " himself",
+                "strongsNumbers": [
+                  "G1438"
+                ]
+              },
+              {
+                "text": " for",
+                "strongsNumbers": [
+                  "G5228"
+                ]
+              },
+              {
+                "text": " me."
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "james",
+            "bookName": "James",
+            "chapterNumber": 1,
+            "verseNumber": 3,
+            "text": "Knowing this, that the trying of your faith worketh patience.",
+            "tokens": [
+              {
+                "text": "Knowing",
+                "strongsNumbers": [
+                  "G1097"
+                ]
+              },
+              {
+                "text": " this, that",
+                "strongsNumbers": [
+                  "G3754"
+                ]
+              },
+              {
+                "text": " the trying",
+                "strongsNumbers": [
+                  "G1383"
+                ]
+              },
+              {
+                "text": " of your",
+                "strongsNumbers": [
+                  "G5216"
+                ]
+              },
+              {
+                "text": " faith",
+                "strongsNumbers": [
+                  "G4102"
+                ]
+              },
+              {
+                "text": " worketh",
+                "strongsNumbers": [
+                  "G2716"
+                ]
+              },
+              {
+                "text": " patience."
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "1-peter",
+            "bookName": "1 Peter",
+            "chapterNumber": 1,
+            "verseNumber": 7,
+            "text": "That the trial of your faith, being much more precious than of gold that perisheth, though it be tried with fire, might be found unto praise and honour and glory at the appearing of Jesus Christ:",
+            "tokens": [
+              {
+                "text": "That",
+                "strongsNumbers": [
+                  "G2443"
+                ]
+              },
+              {
+                "text": " the trial",
+                "strongsNumbers": [
+                  "G1383"
+                ]
+              },
+              {
+                "text": " of your",
+                "strongsNumbers": [
+                  "G5216"
+                ]
+              },
+              {
+                "text": " faith, ",
+                "strongsNumbers": [
+                  "G4102"
+                ]
+              },
+              {
+                "text": " being much",
+                "strongsNumbers": [
+                  "G4183"
+                ]
+              },
+              {
+                "text": " more precious",
+                "strongsNumbers": [
+                  "G5093"
+                ]
+              },
+              {
+                "text": " than of gold",
+                "strongsNumbers": [
+                  "G5553"
+                ]
+              },
+              {
+                "text": " that perisheth, ",
+                "strongsNumbers": [
+                  "G622"
+                ]
+              },
+              {
+                "text": " though",
+                "strongsNumbers": [
+                  "G1223",
+                  "G1161"
+                ]
+              },
+              {
+                "text": " it be tried",
+                "strongsNumbers": [
+                  "G1381"
+                ]
+              },
+              {
+                "text": " with fire, ",
+                "strongsNumbers": [
+                  "G4442"
+                ]
+              },
+              {
+                "text": " might be found",
+                "strongsNumbers": [
+                  "G2147"
+                ]
+              },
+              {
+                "text": " unto",
+                "strongsNumbers": [
+                  "G1519"
+                ]
+              },
+              {
+                "text": " praise",
+                "strongsNumbers": [
+                  "G1868"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " honour",
+                "strongsNumbers": [
+                  "G5092"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " glory",
+                "strongsNumbers": [
+                  "G1391"
+                ]
+              },
+              {
+                "text": " at",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " the appearing",
+                "strongsNumbers": [
+                  "G602"
+                ]
+              },
+              {
+                "text": " of Jesus",
+                "strongsNumbers": [
+                  "G2424"
+                ]
+              },
+              {
+                "text": " Christ: ",
+                "strongsNumbers": [
+                  "G5547"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "prayer",
+    "label": "Prayer",
+    "aliases": [
+      "prayer",
+      "pray",
+      "praying"
+    ],
+    "subtopics": [
+      {
+        "id": "ask-and-seek",
+        "label": "Ask and Seek",
+        "verses": [
+          {
+            "version": "kjv",
+            "bookSlug": "matthew",
+            "bookName": "Matthew",
+            "chapterNumber": 7,
+            "verseNumber": 7,
+            "text": "Ask, and it shall be given you; seek, and ye shall find; knock, and it shall be opened unto you:",
+            "tokens": [
+              {
+                "text": "Ask, ",
+                "strongsNumbers": [
+                  "G154"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " it shall be given",
+                "strongsNumbers": [
+                  "G1325"
+                ]
+              },
+              {
+                "text": " you; ",
+                "strongsNumbers": [
+                  "G5213"
+                ]
+              },
+              {
+                "text": " seek, ",
+                "strongsNumbers": [
+                  "G2212"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " ye shall find; ",
+                "strongsNumbers": [
+                  "G2147"
+                ]
+              },
+              {
+                "text": " knock, ",
+                "strongsNumbers": [
+                  "G2925"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " it shall be opened",
+                "strongsNumbers": [
+                  "G455"
+                ]
+              },
+              {
+                "text": " unto you:"
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "matthew",
+            "bookName": "Matthew",
+            "chapterNumber": 7,
+            "verseNumber": 8,
+            "text": "For every one that asketh receiveth; and he that seeketh findeth; and to him that knocketh it shall be opened.",
+            "tokens": [
+              {
+                "text": "For",
+                "strongsNumbers": [
+                  "G1063"
+                ]
+              },
+              {
+                "text": " every one",
+                "strongsNumbers": [
+                  "G3956"
+                ]
+              },
+              {
+                "text": " that asketh",
+                "strongsNumbers": [
+                  "G154"
+                ]
+              },
+              {
+                "text": " receiveth; ",
+                "strongsNumbers": [
+                  "G2983"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " he that seeketh",
+                "strongsNumbers": [
+                  "G2212"
+                ]
+              },
+              {
+                "text": " findeth; ",
+                "strongsNumbers": [
+                  "G2147"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " to him that knocketh",
+                "strongsNumbers": [
+                  "G2925"
+                ]
+              },
+              {
+                "text": " it shall be opened."
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "philippians",
+            "bookName": "Philippians",
+            "chapterNumber": 4,
+            "verseNumber": 6,
+            "text": "Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God.",
+            "tokens": [
+              {
+                "text": "Be careful",
+                "strongsNumbers": [
+                  "G3309"
+                ]
+              },
+              {
+                "text": " for nothing; ",
+                "strongsNumbers": [
+                  "G3367"
+                ]
+              },
+              {
+                "text": " but",
+                "strongsNumbers": [
+                  "G235"
+                ]
+              },
+              {
+                "text": " in",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " every thing",
+                "strongsNumbers": [
+                  "G3956"
+                ]
+              },
+              {
+                "text": " by prayer",
+                "strongsNumbers": [
+                  "G4335"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " supplication",
+                "strongsNumbers": [
+                  "G1162"
+                ]
+              },
+              {
+                "text": " with",
+                "strongsNumbers": [
+                  "G3326"
+                ]
+              },
+              {
+                "text": " thanksgiving",
+                "strongsNumbers": [
+                  "G2169"
+                ]
+              },
+              {
+                "text": " let",
+                "strongsNumbers": [
+                  "G1107"
+                ]
+              },
+              {
+                "text": " your",
+                "strongsNumbers": [
+                  "G5216"
+                ]
+              },
+              {
+                "text": " requests",
+                "strongsNumbers": [
+                  "G155"
+                ]
+              },
+              {
+                "text": " be made known",
+                "strongsNumbers": [
+                  "G1107"
+                ]
+              },
+              {
+                "text": " unto",
+                "strongsNumbers": [
+                  "G4314"
+                ]
+              },
+              {
+                "text": " God."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "persistence",
+        "label": "Persistence",
+        "verses": [
+          {
+            "version": "kjv",
+            "bookSlug": "luke",
+            "bookName": "Luke",
+            "chapterNumber": 18,
+            "verseNumber": 1,
+            "text": "And he spake a parable unto them to this end, that men ought always to pray, and not to faint;",
+            "tokens": [
+              {
+                "text": "And",
+                "strongsNumbers": [
+                  "G1161"
+                ]
+              },
+              {
+                "text": " he spake",
+                "strongsNumbers": [
+                  "G3004",
+                  "G2532"
+                ]
+              },
+              {
+                "text": " a parable",
+                "strongsNumbers": [
+                  "G3850"
+                ]
+              },
+              {
+                "text": " unto them",
+                "strongsNumbers": [
+                  "G846",
+                  "G4314"
+                ]
+              },
+              {
+                "text": " to this end, that men ought",
+                "strongsNumbers": [
+                  "G1163"
+                ]
+              },
+              {
+                "text": " always",
+                "strongsNumbers": [
+                  "G3842"
+                ]
+              },
+              {
+                "text": " to pray, ",
+                "strongsNumbers": [
+                  "G4336"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " not",
+                "strongsNumbers": [
+                  "G3361"
+                ]
+              },
+              {
+                "text": " to faint;"
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "colossians",
+            "bookName": "Colossians",
+            "chapterNumber": 4,
+            "verseNumber": 2,
+            "text": "Continue in prayer, and watch in the same with thanksgiving;",
+            "tokens": [
+              {
+                "text": "Continue",
+                "strongsNumbers": [
+                  "G4342"
+                ]
+              },
+              {
+                "text": " in prayer, ",
+                "strongsNumbers": [
+                  "G4335"
+                ]
+              },
+              {
+                "text": " and watch",
+                "strongsNumbers": [
+                  "G1127"
+                ]
+              },
+              {
+                "text": " in",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " the same",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " with",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " thanksgiving;"
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "1-thessalonians",
+            "bookName": "1 Thessalonians",
+            "chapterNumber": 5,
+            "verseNumber": 17,
+            "text": "Pray without ceasing.",
+            "tokens": [
+              {
+                "text": "Pray",
+                "strongsNumbers": [
+                  "G4336"
+                ]
+              },
+              {
+                "text": " without ceasing. ",
+                "strongsNumbers": [
+                  "G89"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "confidence-before-god",
+        "label": "Confidence Before God",
+        "verses": [
+          {
+            "version": "kjv",
+            "bookSlug": "hebrews",
+            "bookName": "Hebrews",
+            "chapterNumber": 4,
+            "verseNumber": 16,
+            "text": "Let us therefore come boldly unto the throne of grace, that we may obtain mercy, and find grace to help in time of need.",
+            "tokens": [
+              {
+                "text": "Let us",
+                "strongsNumbers": [
+                  "G4334"
+                ]
+              },
+              {
+                "text": " therefore",
+                "strongsNumbers": [
+                  "G3767"
+                ]
+              },
+              {
+                "text": " come",
+                "strongsNumbers": [
+                  "G4334"
+                ]
+              },
+              {
+                "text": " boldly",
+                "strongsNumbers": [
+                  "G3326",
+                  "G3954"
+                ]
+              },
+              {
+                "text": " unto the throne",
+                "strongsNumbers": [
+                  "G2362"
+                ]
+              },
+              {
+                "text": " of grace, ",
+                "strongsNumbers": [
+                  "G5485"
+                ]
+              },
+              {
+                "text": " that",
+                "strongsNumbers": [
+                  "G2443"
+                ]
+              },
+              {
+                "text": " we may obtain",
+                "strongsNumbers": [
+                  "G2983"
+                ]
+              },
+              {
+                "text": " mercy, ",
+                "strongsNumbers": [
+                  "G1656"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " find",
+                "strongsNumbers": [
+                  "G2147"
+                ]
+              },
+              {
+                "text": " grace",
+                "strongsNumbers": [
+                  "G5485"
+                ]
+              },
+              {
+                "text": " to help",
+                "strongsNumbers": [
+                  "G996"
+                ]
+              },
+              {
+                "text": " in",
+                "strongsNumbers": [
+                  "G1519"
+                ]
+              },
+              {
+                "text": " time of need."
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "1-john",
+            "bookName": "1 John",
+            "chapterNumber": 5,
+            "verseNumber": 14,
+            "text": "And this is the confidence that we have in him, that, if we ask any thing according to his will, he heareth us:",
+            "tokens": [
+              {
+                "text": "And",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " this",
+                "strongsNumbers": [
+                  "G3778"
+                ]
+              },
+              {
+                "text": " is",
+                "strongsNumbers": [
+                  "G2076"
+                ]
+              },
+              {
+                "text": " the confidence",
+                "strongsNumbers": [
+                  "G3954"
+                ]
+              },
+              {
+                "text": " that",
+                "strongsNumbers": [
+                  "G3739"
+                ]
+              },
+              {
+                "text": " we have",
+                "strongsNumbers": [
+                  "G2192"
+                ]
+              },
+              {
+                "text": " in",
+                "strongsNumbers": [
+                  "G4314"
+                ]
+              },
+              {
+                "text": " him, ",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " that, ",
+                "strongsNumbers": [
+                  "G3754"
+                ]
+              },
+              {
+                "text": " if",
+                "strongsNumbers": [
+                  "G1437"
+                ]
+              },
+              {
+                "text": " we ask",
+                "strongsNumbers": [
+                  "G154"
+                ]
+              },
+              {
+                "text": " any thing",
+                "strongsNumbers": [
+                  "G5100"
+                ]
+              },
+              {
+                "text": " according",
+                "strongsNumbers": [
+                  "G2596"
+                ]
+              },
+              {
+                "text": " to his",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " will, ",
+                "strongsNumbers": [
+                  "G2307"
+                ]
+              },
+              {
+                "text": " he heareth",
+                "strongsNumbers": [
+                  "G191"
+                ]
+              },
+              {
+                "text": " us: ",
+                "strongsNumbers": [
+                  "G2257"
+                ]
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "1-john",
+            "bookName": "1 John",
+            "chapterNumber": 5,
+            "verseNumber": 15,
+            "text": "And if we know that he hear us, whatsoever we ask, we know that we have the petitions that we desired of him.",
+            "tokens": [
+              {
+                "text": "And",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " if",
+                "strongsNumbers": [
+                  "G1437"
+                ]
+              },
+              {
+                "text": " we know",
+                "strongsNumbers": [
+                  "G1492"
+                ]
+              },
+              {
+                "text": " that",
+                "strongsNumbers": [
+                  "G3754"
+                ]
+              },
+              {
+                "text": " he hear",
+                "strongsNumbers": [
+                  "G191"
+                ]
+              },
+              {
+                "text": " us, ",
+                "strongsNumbers": [
+                  "G2257"
+                ]
+              },
+              {
+                "text": " whatsoever",
+                "strongsNumbers": [
+                  "G3739",
+                  "G302"
+                ]
+              },
+              {
+                "text": " we ask, ",
+                "strongsNumbers": [
+                  "G154"
+                ]
+              },
+              {
+                "text": " we know",
+                "strongsNumbers": [
+                  "G1492"
+                ]
+              },
+              {
+                "text": " that",
+                "strongsNumbers": [
+                  "G3754"
+                ]
+              },
+              {
+                "text": " we have",
+                "strongsNumbers": [
+                  "G2192"
+                ]
+              },
+              {
+                "text": " the petitions",
+                "strongsNumbers": [
+                  "G155"
+                ]
+              },
+              {
+                "text": " that",
+                "strongsNumbers": [
+                  "G3739"
+                ]
+              },
+              {
+                "text": " we desired",
+                "strongsNumbers": [
+                  "G154"
+                ]
+              },
+              {
+                "text": " of",
+                "strongsNumbers": [
+                  "G3844"
+                ]
+              },
+              {
+                "text": " him. ",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "grace",
+    "label": "Grace",
+    "aliases": [
+      "grace",
+      "god's grace",
+      "grace of god"
+    ],
+    "subtopics": [
+      {
+        "id": "saving-grace",
+        "label": "Saving Grace",
+        "verses": [
+          {
+            "version": "kjv",
+            "bookSlug": "romans",
+            "bookName": "Romans",
+            "chapterNumber": 3,
+            "verseNumber": 24,
+            "text": "Being justified freely by his grace through the redemption that is in Christ Jesus:",
+            "tokens": [
+              {
+                "text": "Being justified",
+                "strongsNumbers": [
+                  "G1344"
+                ]
+              },
+              {
+                "text": " freely",
+                "strongsNumbers": [
+                  "G1432"
+                ]
+              },
+              {
+                "text": " by his",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " grace",
+                "strongsNumbers": [
+                  "G5485"
+                ]
+              },
+              {
+                "text": " through",
+                "strongsNumbers": [
+                  "G1223"
+                ]
+              },
+              {
+                "text": " the redemption",
+                "strongsNumbers": [
+                  "G629"
+                ]
+              },
+              {
+                "text": " that is in",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " Christ",
+                "strongsNumbers": [
+                  "G5547"
+                ]
+              },
+              {
+                "text": " Jesus:"
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "ephesians",
+            "bookName": "Ephesians",
+            "chapterNumber": 2,
+            "verseNumber": 8,
+            "text": "For by grace are ye saved through faith; and that not of yourselves: it is the gift of God:",
+            "tokens": [
+              {
+                "text": "For",
+                "strongsNumbers": [
+                  "G1063"
+                ]
+              },
+              {
+                "text": " by grace",
+                "strongsNumbers": [
+                  "G5485"
+                ]
+              },
+              {
+                "text": " are ye",
+                "strongsNumbers": [
+                  "G2075"
+                ]
+              },
+              {
+                "text": " saved",
+                "strongsNumbers": [
+                  "G4982"
+                ]
+              },
+              {
+                "text": " through",
+                "strongsNumbers": [
+                  "G1223"
+                ]
+              },
+              {
+                "text": " faith; ",
+                "strongsNumbers": [
+                  "G4102"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " that",
+                "strongsNumbers": [
+                  "G5124"
+                ]
+              },
+              {
+                "text": " not",
+                "strongsNumbers": [
+                  "G3756"
+                ]
+              },
+              {
+                "text": " of",
+                "strongsNumbers": [
+                  "G1537"
+                ]
+              },
+              {
+                "text": " yourselves: ",
+                "strongsNumbers": [
+                  "G5216"
+                ]
+              },
+              {
+                "text": " it is the gift",
+                "strongsNumbers": [
+                  "G1435"
+                ]
+              },
+              {
+                "text": " of God:"
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "ephesians",
+            "bookName": "Ephesians",
+            "chapterNumber": 2,
+            "verseNumber": 9,
+            "text": "Not of works, lest any man should boast.",
+            "tokens": [
+              {
+                "text": "Not",
+                "strongsNumbers": [
+                  "G3756"
+                ]
+              },
+              {
+                "text": " of",
+                "strongsNumbers": [
+                  "G1537"
+                ]
+              },
+              {
+                "text": " works, ",
+                "strongsNumbers": [
+                  "G2041"
+                ]
+              },
+              {
+                "text": " lest",
+                "strongsNumbers": [
+                  "G3363"
+                ]
+              },
+              {
+                "text": " any man",
+                "strongsNumbers": [
+                  "G5100"
+                ]
+              },
+              {
+                "text": " should boast."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "grace-for-strength",
+        "label": "Grace for Strength",
+        "verses": [
+          {
+            "version": "kjv",
+            "bookSlug": "2-corinthians",
+            "bookName": "2 Corinthians",
+            "chapterNumber": 12,
+            "verseNumber": 9,
+            "text": "And he said unto me, My grace is sufficient for thee: for my strength is made perfect in weakness. Most gladly therefore will I ➔ rather glory in my infirmities, that the power of Christ may rest upon me.",
+            "tokens": [
+              {
+                "text": "And",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " he said",
+                "strongsNumbers": [
+                  "G2046"
+                ]
+              },
+              {
+                "text": " unto me, ",
+                "strongsNumbers": [
+                  "G3427"
+                ]
+              },
+              {
+                "text": " My",
+                "strongsNumbers": [
+                  "G3450"
+                ]
+              },
+              {
+                "text": " grace",
+                "strongsNumbers": [
+                  "G5485"
+                ]
+              },
+              {
+                "text": " is sufficient",
+                "strongsNumbers": [
+                  "G714"
+                ]
+              },
+              {
+                "text": " for thee: ",
+                "strongsNumbers": [
+                  "G4671"
+                ]
+              },
+              {
+                "text": " for",
+                "strongsNumbers": [
+                  "G1063"
+                ]
+              },
+              {
+                "text": " my",
+                "strongsNumbers": [
+                  "G3450"
+                ]
+              },
+              {
+                "text": " strength",
+                "strongsNumbers": [
+                  "G1411"
+                ]
+              },
+              {
+                "text": " is made perfect",
+                "strongsNumbers": [
+                  "G5048"
+                ]
+              },
+              {
+                "text": " in",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " weakness. ",
+                "strongsNumbers": [
+                  "G769"
+                ]
+              },
+              {
+                "text": " Most gladly",
+                "strongsNumbers": [
+                  "G2236"
+                ]
+              },
+              {
+                "text": " therefore",
+                "strongsNumbers": [
+                  "G3767"
+                ]
+              },
+              {
+                "text": " will I",
+                "strongsNumbers": [
+                  "G2744"
+                ]
+              },
+              {
+                "text": " ➔ rather",
+                "strongsNumbers": [
+                  "G3123"
+                ]
+              },
+              {
+                "text": " glory",
+                "strongsNumbers": [
+                  "G2744"
+                ]
+              },
+              {
+                "text": " in",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " my",
+                "strongsNumbers": [
+                  "G3450"
+                ]
+              },
+              {
+                "text": " infirmities, ",
+                "strongsNumbers": [
+                  "G769"
+                ]
+              },
+              {
+                "text": " that",
+                "strongsNumbers": [
+                  "G2443"
+                ]
+              },
+              {
+                "text": " the power",
+                "strongsNumbers": [
+                  "G1411"
+                ]
+              },
+              {
+                "text": " of Christ",
+                "strongsNumbers": [
+                  "G5547"
+                ]
+              },
+              {
+                "text": " may rest",
+                "strongsNumbers": [
+                  "G1981"
+                ]
+              },
+              {
+                "text": " upon",
+                "strongsNumbers": [
+                  "G1909"
+                ]
+              },
+              {
+                "text": " me. ",
+                "strongsNumbers": [
+                  "G1691"
+                ]
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "2-timothy",
+            "bookName": "2 Timothy",
+            "chapterNumber": 2,
+            "verseNumber": 1,
+            "text": "Thou therefore, my son, be strong in the grace that is in Christ Jesus.",
+            "tokens": [
+              {
+                "text": "Thou",
+                "strongsNumbers": [
+                  "G4771"
+                ]
+              },
+              {
+                "text": " therefore, ",
+                "strongsNumbers": [
+                  "G3767"
+                ]
+              },
+              {
+                "text": " my",
+                "strongsNumbers": [
+                  "G3450"
+                ]
+              },
+              {
+                "text": " son, ",
+                "strongsNumbers": [
+                  "G5043"
+                ]
+              },
+              {
+                "text": " be strong",
+                "strongsNumbers": [
+                  "G1743"
+                ]
+              },
+              {
+                "text": " in",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " the grace",
+                "strongsNumbers": [
+                  "G5485"
+                ]
+              },
+              {
+                "text": " that is in",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " Christ",
+                "strongsNumbers": [
+                  "G5547"
+                ]
+              },
+              {
+                "text": " Jesus. ",
+                "strongsNumbers": [
+                  "G2424"
+                ]
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "hebrews",
+            "bookName": "Hebrews",
+            "chapterNumber": 4,
+            "verseNumber": 16,
+            "text": "Let us therefore come boldly unto the throne of grace, that we may obtain mercy, and find grace to help in time of need.",
+            "tokens": [
+              {
+                "text": "Let us",
+                "strongsNumbers": [
+                  "G4334"
+                ]
+              },
+              {
+                "text": " therefore",
+                "strongsNumbers": [
+                  "G3767"
+                ]
+              },
+              {
+                "text": " come",
+                "strongsNumbers": [
+                  "G4334"
+                ]
+              },
+              {
+                "text": " boldly",
+                "strongsNumbers": [
+                  "G3326",
+                  "G3954"
+                ]
+              },
+              {
+                "text": " unto the throne",
+                "strongsNumbers": [
+                  "G2362"
+                ]
+              },
+              {
+                "text": " of grace, ",
+                "strongsNumbers": [
+                  "G5485"
+                ]
+              },
+              {
+                "text": " that",
+                "strongsNumbers": [
+                  "G2443"
+                ]
+              },
+              {
+                "text": " we may obtain",
+                "strongsNumbers": [
+                  "G2983"
+                ]
+              },
+              {
+                "text": " mercy, ",
+                "strongsNumbers": [
+                  "G1656"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " find",
+                "strongsNumbers": [
+                  "G2147"
+                ]
+              },
+              {
+                "text": " grace",
+                "strongsNumbers": [
+                  "G5485"
+                ]
+              },
+              {
+                "text": " to help",
+                "strongsNumbers": [
+                  "G996"
+                ]
+              },
+              {
+                "text": " in",
+                "strongsNumbers": [
+                  "G1519"
+                ]
+              },
+              {
+                "text": " time of need."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "growing-in-grace",
+        "label": "Growing in Grace",
+        "verses": [
+          {
+            "version": "kjv",
+            "bookSlug": "john",
+            "bookName": "John",
+            "chapterNumber": 1,
+            "verseNumber": 16,
+            "text": "And of his fulness have all we received, and grace for grace.",
+            "tokens": [
+              {
+                "text": "And",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " of",
+                "strongsNumbers": [
+                  "G1537"
+                ]
+              },
+              {
+                "text": " his",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " fulness",
+                "strongsNumbers": [
+                  "G4138"
+                ]
+              },
+              {
+                "text": " have",
+                "strongsNumbers": [
+                  "G2983"
+                ]
+              },
+              {
+                "text": " all",
+                "strongsNumbers": [
+                  "G3956"
+                ]
+              },
+              {
+                "text": " we",
+                "strongsNumbers": [
+                  "G2249"
+                ]
+              },
+              {
+                "text": " received, ",
+                "strongsNumbers": [
+                  "G2983"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " grace",
+                "strongsNumbers": [
+                  "G5485"
+                ]
+              },
+              {
+                "text": " for",
+                "strongsNumbers": [
+                  "G473"
+                ]
+              },
+              {
+                "text": " grace."
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "acts",
+            "bookName": "Acts",
+            "chapterNumber": 20,
+            "verseNumber": 32,
+            "text": "And now, brethren, I commend you to God, and to the word of his grace, which is able to build you up, and to give you an inheritance among all them which are sanctified.",
+            "tokens": [
+              {
+                "text": "And",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " now, ",
+                "strongsNumbers": [
+                  "G3569"
+                ]
+              },
+              {
+                "text": " brethren, ",
+                "strongsNumbers": [
+                  "G80"
+                ]
+              },
+              {
+                "text": " I commend",
+                "strongsNumbers": [
+                  "G3908"
+                ]
+              },
+              {
+                "text": " you",
+                "strongsNumbers": [
+                  "G5209"
+                ]
+              },
+              {
+                "text": " to God, ",
+                "strongsNumbers": [
+                  "G2316"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " to the word",
+                "strongsNumbers": [
+                  "G3056"
+                ]
+              },
+              {
+                "text": " of his",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " grace, ",
+                "strongsNumbers": [
+                  "G5485"
+                ]
+              },
+              {
+                "text": " which",
+                "strongsNumbers": [
+                  "G3588"
+                ]
+              },
+              {
+                "text": " is able",
+                "strongsNumbers": [
+                  "G1410"
+                ]
+              },
+              {
+                "text": " to build you up, ",
+                "strongsNumbers": [
+                  "G2026"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " to give",
+                "strongsNumbers": [
+                  "G1325"
+                ]
+              },
+              {
+                "text": " you",
+                "strongsNumbers": [
+                  "G5213"
+                ]
+              },
+              {
+                "text": " an inheritance",
+                "strongsNumbers": [
+                  "G2817"
+                ]
+              },
+              {
+                "text": " among",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " all",
+                "strongsNumbers": [
+                  "G3956"
+                ]
+              },
+              {
+                "text": " them which are sanctified."
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "2-peter",
+            "bookName": "2 Peter",
+            "chapterNumber": 3,
+            "verseNumber": 18,
+            "text": "But grow in grace, and in the knowledge of our Lord and Saviour Jesus Christ. To him be glory both now and for ever. Amen.",
+            "tokens": [
+              {
+                "text": "But",
+                "strongsNumbers": [
+                  "G1161"
+                ]
+              },
+              {
+                "text": " grow",
+                "strongsNumbers": [
+                  "G837"
+                ]
+              },
+              {
+                "text": " in",
+                "strongsNumbers": [
+                  "G1722"
+                ]
+              },
+              {
+                "text": " grace, ",
+                "strongsNumbers": [
+                  "G5485"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " in the knowledge",
+                "strongsNumbers": [
+                  "G1108"
+                ]
+              },
+              {
+                "text": " of our",
+                "strongsNumbers": [
+                  "G2257"
+                ]
+              },
+              {
+                "text": " Lord",
+                "strongsNumbers": [
+                  "G2962"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " Saviour",
+                "strongsNumbers": [
+                  "G4990"
+                ]
+              },
+              {
+                "text": " Jesus",
+                "strongsNumbers": [
+                  "G2424"
+                ]
+              },
+              {
+                "text": " Christ. ",
+                "strongsNumbers": [
+                  "G5547"
+                ]
+              },
+              {
+                "text": " To him",
+                "strongsNumbers": [
+                  "G846"
+                ]
+              },
+              {
+                "text": " be glory",
+                "strongsNumbers": [
+                  "G1391"
+                ]
+              },
+              {
+                "text": " both",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " now",
+                "strongsNumbers": [
+                  "G3568"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " for",
+                "strongsNumbers": [
+                  "G1519"
+                ]
+              },
+              {
+                "text": " ever. ",
+                "strongsNumbers": [
+                  "G165",
+                  "G2250"
+                ]
+              },
+              {
+                "text": " Amen. ",
+                "strongsNumbers": [
+                  "G281"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "repentance",
+    "label": "Repentance",
+    "aliases": [
+      "repentance",
+      "repent",
+      "turn back"
+    ],
+    "subtopics": [
+      {
+        "id": "call-to-repent",
+        "label": "Call to Repent",
+        "verses": [
+          {
+            "version": "kjv",
+            "bookSlug": "mark",
+            "bookName": "Mark",
+            "chapterNumber": 1,
+            "verseNumber": 15,
+            "text": "And saying, The time is fulfilled, and the kingdom of God is at hand: repent ye, and believe the gospel.",
+            "tokens": [
+              {
+                "text": "And",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " saying, ",
+                "strongsNumbers": [
+                  "G3004",
+                  "G3754"
+                ]
+              },
+              {
+                "text": " The time",
+                "strongsNumbers": [
+                  "G2540"
+                ]
+              },
+              {
+                "text": " is fulfilled, ",
+                "strongsNumbers": [
+                  "G4137"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " the kingdom",
+                "strongsNumbers": [
+                  "G932"
+                ]
+              },
+              {
+                "text": " of God",
+                "strongsNumbers": [
+                  "G2316"
+                ]
+              },
+              {
+                "text": " is at hand: ",
+                "strongsNumbers": [
+                  "G1448"
+                ]
+              },
+              {
+                "text": " repent ye, ",
+                "strongsNumbers": [
+                  "G3340"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " believe",
+                "strongsNumbers": [
+                  "G4100",
+                  "G1722"
+                ]
+              },
+              {
+                "text": " the gospel."
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "luke",
+            "bookName": "Luke",
+            "chapterNumber": 13,
+            "verseNumber": 3,
+            "text": "I tell you, Nay: but, except ye repent, ye shall all likewise perish.",
+            "tokens": [
+              {
+                "text": "I tell",
+                "strongsNumbers": [
+                  "G3004"
+                ]
+              },
+              {
+                "text": " you, ",
+                "strongsNumbers": [
+                  "G5213"
+                ]
+              },
+              {
+                "text": " Nay: ",
+                "strongsNumbers": [
+                  "G3780"
+                ]
+              },
+              {
+                "text": " but, ",
+                "strongsNumbers": [
+                  "G235"
+                ]
+              },
+              {
+                "text": " except",
+                "strongsNumbers": [
+                  "G3362"
+                ]
+              },
+              {
+                "text": " ye repent, ",
+                "strongsNumbers": [
+                  "G3340"
+                ]
+              },
+              {
+                "text": " ye shall",
+                "strongsNumbers": [
+                  "G622"
+                ]
+              },
+              {
+                "text": " all",
+                "strongsNumbers": [
+                  "G3956"
+                ]
+              },
+              {
+                "text": " likewise",
+                "strongsNumbers": [
+                  "G5615"
+                ]
+              },
+              {
+                "text": " perish."
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "acts",
+            "bookName": "Acts",
+            "chapterNumber": 3,
+            "verseNumber": 19,
+            "text": "Repent ye therefore, and be converted, that your sins may be blotted out, when the times of refreshing shall come from the presence of the Lord;",
+            "tokens": [
+              {
+                "text": "Repent ye",
+                "strongsNumbers": [
+                  "G3340"
+                ]
+              },
+              {
+                "text": " therefore, ",
+                "strongsNumbers": [
+                  "G3767"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " be converted, ",
+                "strongsNumbers": [
+                  "G1994"
+                ]
+              },
+              {
+                "text": " that",
+                "strongsNumbers": [
+                  "G1519"
+                ]
+              },
+              {
+                "text": " your",
+                "strongsNumbers": [
+                  "G5216"
+                ]
+              },
+              {
+                "text": " sins",
+                "strongsNumbers": [
+                  "G266"
+                ]
+              },
+              {
+                "text": " may be blotted out, ",
+                "strongsNumbers": [
+                  "G1813"
+                ]
+              },
+              {
+                "text": " when",
+                "strongsNumbers": [
+                  "G3704"
+                ]
+              },
+              {
+                "text": " the times",
+                "strongsNumbers": [
+                  "G2540"
+                ]
+              },
+              {
+                "text": " of refreshing",
+                "strongsNumbers": [
+                  "G403"
+                ]
+              },
+              {
+                "text": " shall come",
+                "strongsNumbers": [
+                  "G302",
+                  "G2064"
+                ]
+              },
+              {
+                "text": " from",
+                "strongsNumbers": [
+                  "G575"
+                ]
+              },
+              {
+                "text": " the presence",
+                "strongsNumbers": [
+                  "G4383"
+                ]
+              },
+              {
+                "text": " of the Lord;"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "godly-sorrow",
+        "label": "Godly Sorrow",
+        "verses": [
+          {
+            "version": "kjv",
+            "bookSlug": "psalms",
+            "bookName": "Psalms",
+            "chapterNumber": 51,
+            "verseNumber": 17,
+            "text": "The sacrifices of God are a broken spirit: a broken and a contrite heart, O God, thou wilt not despise.",
+            "tokens": [
+              {
+                "text": "The sacrifices",
+                "strongsNumbers": [
+                  "H2077"
+                ]
+              },
+              {
+                "text": " of God",
+                "strongsNumbers": [
+                  "H430"
+                ]
+              },
+              {
+                "text": " are a broken",
+                "strongsNumbers": [
+                  "H7665"
+                ]
+              },
+              {
+                "text": " spirit: ",
+                "strongsNumbers": [
+                  "H7307"
+                ]
+              },
+              {
+                "text": " a broken",
+                "strongsNumbers": [
+                  "H7665"
+                ]
+              },
+              {
+                "text": " and a contrite",
+                "strongsNumbers": [
+                  "H1794"
+                ]
+              },
+              {
+                "text": " heart, ",
+                "strongsNumbers": [
+                  "H3820"
+                ]
+              },
+              {
+                "text": " O God, ",
+                "strongsNumbers": [
+                  "H430"
+                ]
+              },
+              {
+                "text": " thou wilt not despise."
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "joel",
+            "bookName": "Joel",
+            "chapterNumber": 2,
+            "verseNumber": 13,
+            "text": "And rend your heart, and not your garments, and turn unto the LORD your God: for he is gracious and merciful, slow to anger, and of great kindness, and repenteth him of the evil.",
+            "tokens": [
+              {
+                "text": "And rend",
+                "strongsNumbers": [
+                  "H7167"
+                ]
+              },
+              {
+                "text": " your heart, ",
+                "strongsNumbers": [
+                  "H3824"
+                ]
+              },
+              {
+                "text": " and not your garments, ",
+                "strongsNumbers": [
+                  "H899"
+                ]
+              },
+              {
+                "text": " and turn",
+                "strongsNumbers": [
+                  "H7725"
+                ]
+              },
+              {
+                "text": " unto the LORD",
+                "strongsNumbers": [
+                  "H3068"
+                ]
+              },
+              {
+                "text": " your God: ",
+                "strongsNumbers": [
+                  "H430"
+                ]
+              },
+              {
+                "text": " for he is gracious",
+                "strongsNumbers": [
+                  "H2587"
+                ]
+              },
+              {
+                "text": " and merciful, ",
+                "strongsNumbers": [
+                  "H7349"
+                ]
+              },
+              {
+                "text": " slow",
+                "strongsNumbers": [
+                  "H750"
+                ]
+              },
+              {
+                "text": " to anger, ",
+                "strongsNumbers": [
+                  "H639"
+                ]
+              },
+              {
+                "text": " and of great",
+                "strongsNumbers": [
+                  "H7227"
+                ]
+              },
+              {
+                "text": " kindness, ",
+                "strongsNumbers": [
+                  "H2617"
+                ]
+              },
+              {
+                "text": " and repenteth",
+                "strongsNumbers": [
+                  "H5162"
+                ]
+              },
+              {
+                "text": " him of the evil."
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "2-corinthians",
+            "bookName": "2 Corinthians",
+            "chapterNumber": 7,
+            "verseNumber": 10,
+            "text": "For godly sorrow worketh repentance to salvation not to be repented of: but the sorrow of the world worketh death.",
+            "tokens": [
+              {
+                "text": "For",
+                "strongsNumbers": [
+                  "G1063"
+                ]
+              },
+              {
+                "text": " godly",
+                "strongsNumbers": [
+                  "G2316",
+                  "G2596"
+                ]
+              },
+              {
+                "text": " sorrow",
+                "strongsNumbers": [
+                  "G3077"
+                ]
+              },
+              {
+                "text": " worketh",
+                "strongsNumbers": [
+                  "G2716"
+                ]
+              },
+              {
+                "text": " repentance",
+                "strongsNumbers": [
+                  "G3341"
+                ]
+              },
+              {
+                "text": " to",
+                "strongsNumbers": [
+                  "G1519"
+                ]
+              },
+              {
+                "text": " salvation",
+                "strongsNumbers": [
+                  "G4991"
+                ]
+              },
+              {
+                "text": " not to be repented of: ",
+                "strongsNumbers": [
+                  "G278"
+                ]
+              },
+              {
+                "text": " but",
+                "strongsNumbers": [
+                  "G1161"
+                ]
+              },
+              {
+                "text": " the sorrow",
+                "strongsNumbers": [
+                  "G3077"
+                ]
+              },
+              {
+                "text": " of the world",
+                "strongsNumbers": [
+                  "G2889"
+                ]
+              },
+              {
+                "text": " worketh",
+                "strongsNumbers": [
+                  "G2716"
+                ]
+              },
+              {
+                "text": " death. ",
+                "strongsNumbers": [
+                  "G2288"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "mercy-and-cleansing",
+        "label": "Mercy and Cleansing",
+        "verses": [
+          {
+            "version": "kjv",
+            "bookSlug": "ezekiel",
+            "bookName": "Ezekiel",
+            "chapterNumber": 18,
+            "verseNumber": 30,
+            "text": "Therefore I will judge you, O house of Israel, every one according to his ways, saith the Lord GOD. Repent, and turn yourselves from all your transgressions; so iniquity shall not be your ruin.",
+            "tokens": [
+              {
+                "text": "Therefore I will judge",
+                "strongsNumbers": [
+                  "H8199"
+                ]
+              },
+              {
+                "text": " you, O house",
+                "strongsNumbers": [
+                  "H1004"
+                ]
+              },
+              {
+                "text": " of Israel, ",
+                "strongsNumbers": [
+                  "H3478"
+                ]
+              },
+              {
+                "text": " every one",
+                "strongsNumbers": [
+                  "H376"
+                ]
+              },
+              {
+                "text": " according to his ways, ",
+                "strongsNumbers": [
+                  "H1870"
+                ]
+              },
+              {
+                "text": " saith",
+                "strongsNumbers": [
+                  "H5002"
+                ]
+              },
+              {
+                "text": " the Lord",
+                "strongsNumbers": [
+                  "H136"
+                ]
+              },
+              {
+                "text": " GOD. ",
+                "strongsNumbers": [
+                  "H3069"
+                ]
+              },
+              {
+                "text": " Repent, ",
+                "strongsNumbers": [
+                  "H7725"
+                ]
+              },
+              {
+                "text": " and turn",
+                "strongsNumbers": [
+                  "H7725"
+                ]
+              },
+              {
+                "text": " yourselves from all your transgressions; ",
+                "strongsNumbers": [
+                  "H6588"
+                ]
+              },
+              {
+                "text": " so iniquity",
+                "strongsNumbers": [
+                  "H5771"
+                ]
+              },
+              {
+                "text": " shall not be your ruin."
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "ezekiel",
+            "bookName": "Ezekiel",
+            "chapterNumber": 18,
+            "verseNumber": 31,
+            "text": "Cast away from you all your transgressions, whereby ye have transgressed; and make you a new heart and a new spirit: for why will ye die, O house of Israel?",
+            "tokens": [
+              {
+                "text": "Cast away",
+                "strongsNumbers": [
+                  "H7993"
+                ]
+              },
+              {
+                "text": " from you all your transgressions, ",
+                "strongsNumbers": [
+                  "H6588"
+                ]
+              },
+              {
+                "text": " whereby ye have transgressed; ",
+                "strongsNumbers": [
+                  "H6586"
+                ]
+              },
+              {
+                "text": " and make",
+                "strongsNumbers": [
+                  "H6213"
+                ]
+              },
+              {
+                "text": " you a new",
+                "strongsNumbers": [
+                  "H2319"
+                ]
+              },
+              {
+                "text": " heart",
+                "strongsNumbers": [
+                  "H3820"
+                ]
+              },
+              {
+                "text": " and a new",
+                "strongsNumbers": [
+                  "H2319"
+                ]
+              },
+              {
+                "text": " spirit: ",
+                "strongsNumbers": [
+                  "H7307"
+                ]
+              },
+              {
+                "text": " for why will ye die, ",
+                "strongsNumbers": [
+                  "H4191"
+                ]
+              },
+              {
+                "text": " O house",
+                "strongsNumbers": [
+                  "H1004"
+                ]
+              },
+              {
+                "text": " of Israel?"
+              }
+            ]
+          },
+          {
+            "version": "kjv",
+            "bookSlug": "1-john",
+            "bookName": "1 John",
+            "chapterNumber": 1,
+            "verseNumber": 9,
+            "text": "If we confess our sins, he is faithful and just to forgive us our sins, and to cleanse us from all unrighteousness.",
+            "tokens": [
+              {
+                "text": "If",
+                "strongsNumbers": [
+                  "G1437"
+                ]
+              },
+              {
+                "text": " we confess",
+                "strongsNumbers": [
+                  "G3670"
+                ]
+              },
+              {
+                "text": " our",
+                "strongsNumbers": [
+                  "G2257"
+                ]
+              },
+              {
+                "text": " sins, ",
+                "strongsNumbers": [
+                  "G266"
+                ]
+              },
+              {
+                "text": " he is",
+                "strongsNumbers": [
+                  "G2076"
+                ]
+              },
+              {
+                "text": " faithful",
+                "strongsNumbers": [
+                  "G4103"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " just",
+                "strongsNumbers": [
+                  "G1342"
+                ]
+              },
+              {
+                "text": " to",
+                "strongsNumbers": [
+                  "G2443"
+                ]
+              },
+              {
+                "text": " forgive",
+                "strongsNumbers": [
+                  "G863"
+                ]
+              },
+              {
+                "text": " us",
+                "strongsNumbers": [
+                  "G2254"
+                ]
+              },
+              {
+                "text": " our sins, ",
+                "strongsNumbers": [
+                  "G266"
+                ]
+              },
+              {
+                "text": " and",
+                "strongsNumbers": [
+                  "G2532"
+                ]
+              },
+              {
+                "text": " to cleanse",
+                "strongsNumbers": [
+                  "G2511"
+                ]
+              },
+              {
+                "text": " us",
+                "strongsNumbers": [
+                  "G2248"
+                ]
+              },
+              {
+                "text": " from",
+                "strongsNumbers": [
+                  "G575"
+                ]
+              },
+              {
+                "text": " all",
+                "strongsNumbers": [
+                  "G3956"
+                ]
+              },
+              {
+                "text": " unrighteousness. ",
+                "strongsNumbers": [
+                  "G93"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

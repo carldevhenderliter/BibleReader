@@ -11,6 +11,7 @@ const versionsDir = path.join(bibleDir, "versions");
 const searchDir = path.join(bibleDir, "search");
 const strongsDir = path.join(bibleDir, "strongs");
 const sourceBooksPath = path.join(repoRoot, "data", "source", "books.json");
+const topicsSourcePath = path.join(repoRoot, "data", "source", "topics.json");
 const strongsSourceDir = path.join(repoRoot, "data", "source", "strongs-kjv");
 const strongsBooksPath = path.join(strongsSourceDir, "books.json");
 const strongsLexiconPath = path.join(strongsSourceDir, "lexicon.json");
@@ -47,6 +48,10 @@ const STRONGS_BOOK_NAME_BY_SLUG = {
  * @typedef {{ text: string, strongsNumbers?: string[] }} VerseToken
  * @typedef {{ bookSlug: string; chapterNumber: number; verses: Verse[] }} Chapter
  * @typedef {{ book: BookMeta; chapters: Chapter[] }} BookPayload
+ * @typedef {{ bookSlug: string, chapterNumber: number, verseNumber: number }} TopicReference
+ * @typedef {{ id: string, label: string, references: TopicReference[] }} TopicSourceSubtopic
+ * @typedef {{ id: string, label: string, aliases: string[], subtopics: TopicSourceSubtopic[] }} TopicSourceEntry
+ * @typedef {{ id: string, label: string, aliases: string[], subtopics: { id: string, label: string, verses: Array<{ version: "web" | "kjv", bookSlug: string, bookName: string, chapterNumber: number, verseNumber: number, text: string, tokens?: VerseToken[] }> }[] }} TopicSearchEntry
  * @typedef {{ id: string, language: "hebrew" | "greek", lemma: string, transliteration: string, definition: string, partOfSpeech: string, rootWord: string, outlineUsage: string }} StrongsEntry
  * @typedef {{ strongsNumber: string, bookSlug: string, bookName: string, chapterNumber: number, verseNumber: number, text: string }} StrongsSearchVerseEntry
  */
@@ -54,6 +59,9 @@ const STRONGS_BOOK_NAME_BY_SLUG = {
 async function main() {
   const sourceBooks = /** @type {SourceBook[]} */ (
     JSON.parse(await readFile(sourceBooksPath, "utf8"))
+  );
+  const topicsSource = /** @type {TopicSourceEntry[]} */ (
+    JSON.parse(await readFile(topicsSourcePath, "utf8"))
   );
 
   await mkdir(versionsDir, { recursive: true });
@@ -67,6 +75,8 @@ async function main() {
   await buildSearchIndex("web", webPayloadBySlug);
   await buildSearchIndex("kjv", kjvPayloadBySlug);
   await buildStrongsSearchIndex(kjvPayloadBySlug);
+  await buildTopicSearchIndex("web", topicsSource, sourceBooks, webPayloadBySlug);
+  await buildTopicSearchIndex("kjv", topicsSource, sourceBooks, kjvPayloadBySlug);
 
   console.log(`Imported bundled versions into ${path.relative(repoRoot, versionsDir)}.`);
 }
@@ -472,6 +482,70 @@ async function buildStrongsSearchIndex(payloadBySlug) {
 
   await writeFile(
     path.join(searchDir, "strongs-kjv.json"),
+    `${JSON.stringify(entries, null, 2)}\n`
+  );
+}
+
+/**
+ * @param {"web" | "kjv"} version
+ * @param {TopicSourceEntry[]} topicsSource
+ * @param {SourceBook[]} sourceBooks
+ * @param {Map<string, BookPayload>} payloadBySlug
+ */
+async function buildTopicSearchIndex(version, topicsSource, sourceBooks, payloadBySlug) {
+  await mkdir(searchDir, { recursive: true });
+
+  const bookOrderBySlug = new Map(sourceBooks.map((book) => [book.slug, book.order]));
+
+  /** @type {TopicSearchEntry[]} */
+  const entries = topicsSource.map((topic) => ({
+    id: topic.id,
+    label: topic.label,
+    aliases: topic.aliases,
+    subtopics: topic.subtopics.map((subtopic) => ({
+      id: subtopic.id,
+      label: subtopic.label,
+      verses: [...subtopic.references]
+        .sort((left, right) => {
+          const leftBookOrder = bookOrderBySlug.get(left.bookSlug) ?? Number.MAX_SAFE_INTEGER;
+          const rightBookOrder = bookOrderBySlug.get(right.bookSlug) ?? Number.MAX_SAFE_INTEGER;
+
+          if (leftBookOrder !== rightBookOrder) {
+            return leftBookOrder - rightBookOrder;
+          }
+
+          if (left.chapterNumber !== right.chapterNumber) {
+            return left.chapterNumber - right.chapterNumber;
+          }
+
+          return left.verseNumber - right.verseNumber;
+        })
+        .map((reference) => {
+          const payload = payloadBySlug.get(reference.bookSlug);
+          const chapter = payload?.chapters[reference.chapterNumber - 1];
+          const verse = chapter?.verses.find((entry) => entry.number === reference.verseNumber);
+
+          if (!payload || !chapter || !verse) {
+            throw new Error(
+              `Topic ${topic.id}/${subtopic.id} references missing ${reference.bookSlug} ${reference.chapterNumber}:${reference.verseNumber} in ${version}.`
+            );
+          }
+
+          return {
+            version,
+            bookSlug: payload.book.slug,
+            bookName: payload.book.name,
+            chapterNumber: chapter.chapterNumber,
+            verseNumber: verse.number,
+            text: verse.text,
+            ...(version === "kjv" && verse.tokens ? { tokens: verse.tokens } : {})
+          };
+        })
+    }))
+  }));
+
+  await writeFile(
+    path.join(searchDir, `topics-${version}.json`),
     `${JSON.stringify(entries, null, 2)}\n`
   );
 }

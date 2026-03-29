@@ -109,36 +109,89 @@ export type BibleSearchStrongsVerseEntry = {
   text: string;
 };
 
+export type BibleTopicReference = {
+  bookSlug: string;
+  chapterNumber: number;
+  verseNumber: number;
+};
+
+export type BibleTopicAlias = string;
+
+export type BibleTopicSourceSubtopic = {
+  id: string;
+  label: string;
+  references: BibleTopicReference[];
+};
+
+export type BibleTopic = {
+  id: string;
+  label: string;
+  aliases: BibleTopicAlias[];
+  subtopics: BibleTopicSourceSubtopic[];
+};
+
+export type BibleTopicSearchSubtopic = {
+  id: string;
+  label: string;
+  verses: BibleSearchVerseEntry[];
+};
+
+export type BibleTopicSearchEntry = {
+  id: string;
+  label: string;
+  aliases: BibleTopicAlias[];
+  subtopics: BibleTopicSearchSubtopic[];
+};
+
+export type BibleSearchBookResult = {
+  type: "book";
+  id: string;
+  bookSlug: string;
+  label: string;
+  description: string;
+  href: string;
+};
+
+export type BibleSearchChapterResult = {
+  type: "chapter";
+  id: string;
+  bookSlug: string;
+  chapterNumber: number;
+  label: string;
+  description: string;
+  href: string;
+};
+
+export type BibleSearchVerseResult = {
+  type: "verse";
+  id: string;
+  bookSlug: string;
+  chapterNumber: number;
+  verseNumber: number;
+  label: string;
+  description: string;
+  href: string;
+  preview: string;
+  tokens?: VerseToken[];
+};
+
+export type BibleSearchTopicResult = {
+  type: "topic";
+  id: string;
+  topicId: string;
+  label: string;
+  description: string;
+  subtopics: Array<{
+    id: string;
+    label: string;
+    verses: BibleSearchVerseResult[];
+  }>;
+};
+
 export type BibleSearchResult =
-  | {
-      type: "book";
-      id: string;
-      bookSlug: string;
-      label: string;
-      description: string;
-      href: string;
-    }
-  | {
-      type: "chapter";
-      id: string;
-      bookSlug: string;
-      chapterNumber: number;
-      label: string;
-      description: string;
-      href: string;
-    }
-  | {
-      type: "verse";
-      id: string;
-      bookSlug: string;
-      chapterNumber: number;
-      verseNumber: number;
-      label: string;
-      description: string;
-      href: string;
-      preview: string;
-      tokens?: VerseToken[];
-    }
+  | BibleSearchBookResult
+  | BibleSearchChapterResult
+  | BibleSearchVerseResult
   | {
       type: "strongs";
       id: string;
@@ -164,7 +217,8 @@ export type BibleSearchResult =
         preview: string;
         tokens?: VerseToken[];
       }>;
-    };
+    }
+  | BibleSearchTopicResult;
 
 export type BibleSearchResultGroup = {
   id: string;

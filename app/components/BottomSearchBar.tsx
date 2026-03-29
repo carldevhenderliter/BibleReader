@@ -78,7 +78,7 @@ export function BottomSearchBar() {
             </div>
             {!query.trim() ? (
               <p className="search-empty-copy">
-                Search for a book, reference, Strongs number, word, phrase, or comma-separated list to jump anywhere in scripture.
+                Search for a book, topic, reference, Strongs number, word, phrase, or comma-separated list to jump anywhere in scripture.
               </p>
             ) : (
               <SearchResultGroups
@@ -99,7 +99,7 @@ export function BottomSearchBar() {
         ) : null}
         <div className="search-bar" role="search">
           <label className="sr-only" htmlFor={inputId}>
-            Search books, words, phrases, or Strongs numbers
+            Search books, topics, words, phrases, or Strongs numbers
           </label>
           <input
             aria-controls={trayId}
@@ -111,7 +111,7 @@ export function BottomSearchBar() {
               setQuery(event.target.value);
             }}
             onFocus={openSearch}
-            placeholder="Search books, references, Strongs numbers, words, or phrases"
+            placeholder="Search books, topics, references, Strongs numbers, words, or phrases"
             ref={inputRef}
             type="search"
             value={query}

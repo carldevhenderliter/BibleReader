@@ -27,6 +27,10 @@ function getResultTypeLabel(type: BibleSearchResultGroup["results"][number]["typ
     return "Strongs";
   }
 
+  if (type === "topic") {
+    return "Topic";
+  }
+
   return "Verse";
 }
 
@@ -54,11 +58,13 @@ function tokenMatchesQuery(tokenText: string, queryWords: string[]) {
 function SearchVersePreview({
   preview,
   query,
-  tokens
+  tokens,
+  mode = "query"
 }: {
   preview: string;
   query: string;
   tokens?: VerseToken[];
+  mode?: "query" | "allStrongs";
 }) {
   if (!tokens?.length) {
     return <span className="search-result-preview">{preview}</span>;
@@ -67,7 +73,9 @@ function SearchVersePreview({
   const strongsQuery = parseStrongsQuery(query);
   const queryWords = strongsQuery ? [] : normalizeQueryValue(query).split(" ").filter(Boolean);
   const hasAnnotatedMatch = tokens.some((token) =>
-    strongsQuery
+    mode === "allStrongs"
+      ? (token.strongsNumbers ?? []).length > 0
+      : strongsQuery
       ? (token.strongsNumbers ?? []).some((value) => normalizeStrongsNumber(value) === strongsQuery)
       : tokenMatchesQuery(token.text, queryWords)
   );
@@ -79,13 +87,16 @@ function SearchVersePreview({
   return (
     <span className="search-result-preview search-result-preview-rich">
       {tokens.map((token, index) => {
-        const matchingStrongs = strongsQuery
-          ? (token.strongsNumbers ?? []).filter(
-              (value) => normalizeStrongsNumber(value) === strongsQuery
-            )
-          : tokenMatchesQuery(token.text, queryWords)
+        const matchingStrongs =
+          mode === "allStrongs"
             ? token.strongsNumbers ?? []
-            : [];
+            : strongsQuery
+              ? (token.strongsNumbers ?? []).filter(
+                  (value) => normalizeStrongsNumber(value) === strongsQuery
+                )
+              : tokenMatchesQuery(token.text, queryWords)
+                ? token.strongsNumbers ?? []
+                : [];
 
         return (
           <span className="search-preview-token" key={`${index}:${token.text}`}>
@@ -101,6 +112,35 @@ function SearchVersePreview({
         );
       })}
     </span>
+  );
+}
+
+function SearchTopicVerseButton({
+  query,
+  verse,
+  onSelectResult
+}: {
+  query: string;
+  verse: Extract<BibleSearchResult, { type: "verse" }>;
+  onSelectResult: (result: BibleSearchResult) => void;
+}) {
+  return (
+    <button
+      aria-label={verse.label}
+      className="search-range-line search-topic-verse"
+      onClick={() => onSelectResult(verse)}
+      type="button"
+    >
+      <span className="search-range-line-number">{verse.verseNumber}</span>
+      <span className="search-range-line-copy">
+        <SearchVersePreview
+          mode={verse.tokens?.length ? "allStrongs" : "query"}
+          preview={verse.preview}
+          query={query}
+          tokens={verse.tokens}
+        />
+      </span>
+    </button>
   );
 }
 
@@ -143,7 +183,38 @@ export function SearchResultGroups({
           ) : (
             <div className="search-results">
               {group.results.map((result) => (
-                result.type === "range" ? (
+                result.type === "topic" ? (
+                  <article
+                    aria-label={result.label}
+                    className="search-result search-result-topic search-result-static"
+                    key={result.id}
+                  >
+                    <div className="search-result-header">
+                      <span className={`search-result-type search-result-type-${result.type}`}>
+                        {getResultTypeLabel(result.type)}
+                      </span>
+                      <strong>{result.label}</strong>
+                    </div>
+                    <p className="search-result-description">{result.description}</p>
+                    <div className="search-topic-subtopics">
+                      {result.subtopics.map((subtopic) => (
+                        <section className="search-topic-subtopic" key={subtopic.id}>
+                          <h4 className="search-topic-subtopic-title">{subtopic.label}</h4>
+                          <div className="search-range-lines">
+                            {subtopic.verses.map((verse) => (
+                              <SearchTopicVerseButton
+                                key={verse.id}
+                                onSelectResult={onSelectResult}
+                                query={group.query}
+                                verse={verse}
+                              />
+                            ))}
+                          </div>
+                        </section>
+                      ))}
+                    </div>
+                  </article>
+                ) : result.type === "range" ? (
                   <article
                     aria-label={result.label}
                     className="search-result search-result-range"

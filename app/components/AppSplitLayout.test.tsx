@@ -8,7 +8,7 @@ import { ReaderVersionProvider } from "@/app/components/ReaderVersionProvider";
 import { setMockPathname } from "@/test/mocks/next-navigation";
 
 const SPLIT_LAYOUT_WIDTH_STORAGE_KEY = "bible-reader.split-layout-width-rem";
-const SEARCH_INPUT_LABEL = "Search books, words, phrases, or Strongs numbers";
+const SEARCH_INPUT_LABEL = "Search books, topics, words, phrases, or Strongs numbers";
 
 function renderSplitLayout() {
   return render(

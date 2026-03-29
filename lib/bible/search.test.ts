@@ -1,4 +1,5 @@
 import { searchBible, searchBibleGroups } from "@/lib/bible/search";
+import type { VerseToken } from "@/lib/bible/types";
 
 describe("Bible search", () => {
   it("resolves direct chapter references", async () => {
@@ -161,6 +162,38 @@ describe("Bible search", () => {
     });
   });
 
+  it("resolves curated topic aliases into grouped subtopic results", async () => {
+    const results = await searchBible("end times", "web");
+
+    expect(results).toHaveLength(1);
+    expect(results[0]).toMatchObject({
+      type: "topic",
+      topicId: "end-times",
+      label: "End Times"
+    });
+    expect((results[0] as { subtopics: Array<{ label: string; verses: Array<{ label: string }> }> }).subtopics.map((entry) => entry.label)).toContain(
+      "Return of Christ"
+    );
+    expect((results[0] as { subtopics: Array<{ verses: Array<{ label: string }> }> }).subtopics[0]?.verses[0]?.label).toMatch(
+      /Matthew 24:30|Acts 1:11|1 Thessalonians 4:16|Revelation 1:7/
+    );
+  });
+
+  it("uses the active translation for topic verse text", async () => {
+    const webResults = await searchBible("last days", "web");
+    const kjvResults = await searchBible("last days", "kjv");
+    const webVerse = (webResults[0] as { subtopics: Array<{ verses: Array<{ preview: string }> }> }).subtopics
+      .flatMap((subtopic) => subtopic.verses)
+      .find((verse) => verse.preview.includes("grievous times"));
+    const kjvVerse = (kjvResults[0] as { subtopics: Array<{ verses: Array<{ preview: string; tokens?: VerseToken[] }> }> }).subtopics
+      .flatMap((subtopic) => subtopic.verses)
+      .find((verse) => verse.preview.includes("perilous times"));
+
+    expect(webVerse?.preview).toContain("grievous times will come");
+    expect(kjvVerse?.preview).toContain("perilous times shall come");
+    expect(kjvVerse?.tokens?.length).toBeGreaterThan(0);
+  });
+
   it("groups comma-separated queries in typed order", async () => {
     const groups = await searchBibleGroups("Matthew 1:1, repent, forgiveness", "web");
 
@@ -188,6 +221,20 @@ describe("Bible search", () => {
     expect((groups[0]?.results[0] as { verses: Array<{ verseNumber: number }> }).verses[0]?.verseNumber).toBe(1);
     expect((groups[0]?.results[0] as { verses: Array<{ verseNumber: number }> }).verses.at(-1)?.verseNumber).toBe(10);
     expect(groups[1]?.query).toBe("repent");
+  });
+
+  it("supports mixed topic and non-topic grouped searches", async () => {
+    const groups = await searchBibleGroups("faith, end times", "web");
+
+    expect(groups).toHaveLength(2);
+    expect(groups[0]?.results[0]).toMatchObject({
+      type: "topic",
+      topicId: "faith"
+    });
+    expect(groups[1]?.results[0]).toMatchObject({
+      type: "topic",
+      topicId: "end-times"
+    });
   });
 
   it("trims empty comma-separated query parts and limits groups to five", async () => {

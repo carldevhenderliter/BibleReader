@@ -20,7 +20,7 @@ function SearchHarness() {
   );
 }
 
-const SEARCH_INPUT_LABEL = "Search books, words, phrases, or Strongs numbers";
+const SEARCH_INPUT_LABEL = "Search books, topics, words, phrases, or Strongs numbers";
 
 function renderSearchUi(ui?: React.ReactNode) {
   return render(
@@ -226,6 +226,21 @@ describe("BottomSearchBar", () => {
     expect(await screen.findByRole("button", { name: /Verse Matthew 1:1/i })).toBeInTheDocument();
   });
 
+  it("renders topical subtopics on mobile and navigates from a topic verse", async () => {
+    renderSearchUi();
+
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
+      target: { value: "end times" }
+    });
+
+    expect(await screen.findByText("Return of Christ")).toBeInTheDocument();
+
+    const result = await screen.findByRole("button", { name: /Matthew 24:30/i });
+    fireEvent.click(result);
+
+    expect(mockRouter.push).toHaveBeenCalledWith("/read/matthew/24?highlight=30");
+  });
+
   it("renders a persistent lookup pane on desktop and keeps it open after selecting a result", async () => {
     setDesktopMode(true);
     renderSearchUi();
@@ -260,6 +275,27 @@ describe("BottomSearchBar", () => {
     expect(await screen.findByRole("button", { name: /Verse Matthew 1:1/i })).toBeInTheDocument();
     expect(container.querySelector(".search-result-groups-panes")).toBeTruthy();
     expect(container.querySelectorAll(".search-result-group-pane")).toHaveLength(2);
+  });
+
+  it("renders topical subtopics in the desktop lookup pane", async () => {
+    setDesktopMode(true);
+    renderSearchUi(
+      <>
+        <SearchHarness />
+        <LookupPane />
+      </>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Use KJV" }));
+    fireEvent.focus(screen.getByLabelText(SEARCH_INPUT_LABEL));
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
+      target: { value: "last days" }
+    });
+
+    expect(await screen.findByText("Last Days Signs")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /2 Timothy 3:1/i })).toHaveTextContent(/perilous/);
+    expect(screen.getByRole("button", { name: /2 Timothy 3:1/i })).toHaveTextContent(/times/);
+    expect(screen.getAllByText(/^G\d+$/).length).toBeGreaterThan(0);
   });
 
   it("renders a match-mode toggle in the desktop lookup pane", () => {

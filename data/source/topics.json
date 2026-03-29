@@ -1,0 +1,219 @@
+[
+  {
+    "id": "end-times",
+    "label": "End Times",
+    "aliases": ["end times", "end time", "last days", "second coming"],
+    "subtopics": [
+      {
+        "id": "return-of-christ",
+        "label": "Return of Christ",
+        "references": [
+          { "bookSlug": "matthew", "chapterNumber": 24, "verseNumber": 30 },
+          { "bookSlug": "acts", "chapterNumber": 1, "verseNumber": 11 },
+          { "bookSlug": "1-thessalonians", "chapterNumber": 4, "verseNumber": 16 },
+          { "bookSlug": "revelation", "chapterNumber": 1, "verseNumber": 7 }
+        ]
+      },
+      {
+        "id": "last-days-signs",
+        "label": "Last Days Signs",
+        "references": [
+          { "bookSlug": "matthew", "chapterNumber": 24, "verseNumber": 6 },
+          { "bookSlug": "matthew", "chapterNumber": 24, "verseNumber": 7 },
+          { "bookSlug": "2-timothy", "chapterNumber": 3, "verseNumber": 1 },
+          { "bookSlug": "2-peter", "chapterNumber": 3, "verseNumber": 3 }
+        ]
+      },
+      {
+        "id": "judgment",
+        "label": "Judgment",
+        "references": [
+          { "bookSlug": "matthew", "chapterNumber": 25, "verseNumber": 31 },
+          { "bookSlug": "matthew", "chapterNumber": 25, "verseNumber": 32 },
+          { "bookSlug": "2-corinthians", "chapterNumber": 5, "verseNumber": 10 },
+          { "bookSlug": "revelation", "chapterNumber": 20, "verseNumber": 12 }
+        ]
+      },
+      {
+        "id": "resurrection-hope",
+        "label": "Resurrection Hope",
+        "references": [
+          { "bookSlug": "john", "chapterNumber": 5, "verseNumber": 28 },
+          { "bookSlug": "john", "chapterNumber": 5, "verseNumber": 29 },
+          { "bookSlug": "1-corinthians", "chapterNumber": 15, "verseNumber": 51 },
+          { "bookSlug": "1-corinthians", "chapterNumber": 15, "verseNumber": 52 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "salvation",
+    "label": "Salvation",
+    "aliases": ["salvation", "saved", "eternal life"],
+    "subtopics": [
+      {
+        "id": "by-grace",
+        "label": "By Grace",
+        "references": [
+          { "bookSlug": "ephesians", "chapterNumber": 2, "verseNumber": 8 },
+          { "bookSlug": "ephesians", "chapterNumber": 2, "verseNumber": 9 },
+          { "bookSlug": "titus", "chapterNumber": 3, "verseNumber": 5 }
+        ]
+      },
+      {
+        "id": "through-christ",
+        "label": "Through Christ",
+        "references": [
+          { "bookSlug": "john", "chapterNumber": 14, "verseNumber": 6 },
+          { "bookSlug": "acts", "chapterNumber": 4, "verseNumber": 12 },
+          { "bookSlug": "1-timothy", "chapterNumber": 2, "verseNumber": 5 }
+        ]
+      },
+      {
+        "id": "confession-and-faith",
+        "label": "Confession and Faith",
+        "references": [
+          { "bookSlug": "romans", "chapterNumber": 10, "verseNumber": 9 },
+          { "bookSlug": "romans", "chapterNumber": 10, "verseNumber": 10 },
+          { "bookSlug": "john", "chapterNumber": 3, "verseNumber": 16 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "faith",
+    "label": "Faith",
+    "aliases": ["faith", "trust god", "trust in god"],
+    "subtopics": [
+      {
+        "id": "what-faith-is",
+        "label": "What Faith Is",
+        "references": [
+          { "bookSlug": "hebrews", "chapterNumber": 11, "verseNumber": 1 },
+          { "bookSlug": "romans", "chapterNumber": 10, "verseNumber": 17 },
+          { "bookSlug": "2-corinthians", "chapterNumber": 5, "verseNumber": 7 }
+        ]
+      },
+      {
+        "id": "trusting-god",
+        "label": "Trusting God",
+        "references": [
+          { "bookSlug": "proverbs", "chapterNumber": 3, "verseNumber": 5 },
+          { "bookSlug": "proverbs", "chapterNumber": 3, "verseNumber": 6 },
+          { "bookSlug": "mark", "chapterNumber": 11, "verseNumber": 22 }
+        ]
+      },
+      {
+        "id": "steadfast-faith",
+        "label": "Steadfast Faith",
+        "references": [
+          { "bookSlug": "james", "chapterNumber": 1, "verseNumber": 3 },
+          { "bookSlug": "1-peter", "chapterNumber": 1, "verseNumber": 7 },
+          { "bookSlug": "galatians", "chapterNumber": 2, "verseNumber": 20 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "prayer",
+    "label": "Prayer",
+    "aliases": ["prayer", "pray", "praying"],
+    "subtopics": [
+      {
+        "id": "ask-and-seek",
+        "label": "Ask and Seek",
+        "references": [
+          { "bookSlug": "matthew", "chapterNumber": 7, "verseNumber": 7 },
+          { "bookSlug": "matthew", "chapterNumber": 7, "verseNumber": 8 },
+          { "bookSlug": "philippians", "chapterNumber": 4, "verseNumber": 6 }
+        ]
+      },
+      {
+        "id": "persistence",
+        "label": "Persistence",
+        "references": [
+          { "bookSlug": "luke", "chapterNumber": 18, "verseNumber": 1 },
+          { "bookSlug": "1-thessalonians", "chapterNumber": 5, "verseNumber": 17 },
+          { "bookSlug": "colossians", "chapterNumber": 4, "verseNumber": 2 }
+        ]
+      },
+      {
+        "id": "confidence-before-god",
+        "label": "Confidence Before God",
+        "references": [
+          { "bookSlug": "1-john", "chapterNumber": 5, "verseNumber": 14 },
+          { "bookSlug": "1-john", "chapterNumber": 5, "verseNumber": 15 },
+          { "bookSlug": "hebrews", "chapterNumber": 4, "verseNumber": 16 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "grace",
+    "label": "Grace",
+    "aliases": ["grace", "god's grace", "grace of god"],
+    "subtopics": [
+      {
+        "id": "saving-grace",
+        "label": "Saving Grace",
+        "references": [
+          { "bookSlug": "ephesians", "chapterNumber": 2, "verseNumber": 8 },
+          { "bookSlug": "ephesians", "chapterNumber": 2, "verseNumber": 9 },
+          { "bookSlug": "romans", "chapterNumber": 3, "verseNumber": 24 }
+        ]
+      },
+      {
+        "id": "grace-for-strength",
+        "label": "Grace for Strength",
+        "references": [
+          { "bookSlug": "2-corinthians", "chapterNumber": 12, "verseNumber": 9 },
+          { "bookSlug": "hebrews", "chapterNumber": 4, "verseNumber": 16 },
+          { "bookSlug": "2-timothy", "chapterNumber": 2, "verseNumber": 1 }
+        ]
+      },
+      {
+        "id": "growing-in-grace",
+        "label": "Growing in Grace",
+        "references": [
+          { "bookSlug": "2-peter", "chapterNumber": 3, "verseNumber": 18 },
+          { "bookSlug": "john", "chapterNumber": 1, "verseNumber": 16 },
+          { "bookSlug": "acts", "chapterNumber": 20, "verseNumber": 32 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "repentance",
+    "label": "Repentance",
+    "aliases": ["repentance", "repent", "turn back"],
+    "subtopics": [
+      {
+        "id": "call-to-repent",
+        "label": "Call to Repent",
+        "references": [
+          { "bookSlug": "acts", "chapterNumber": 3, "verseNumber": 19 },
+          { "bookSlug": "luke", "chapterNumber": 13, "verseNumber": 3 },
+          { "bookSlug": "mark", "chapterNumber": 1, "verseNumber": 15 }
+        ]
+      },
+      {
+        "id": "godly-sorrow",
+        "label": "Godly Sorrow",
+        "references": [
+          { "bookSlug": "2-corinthians", "chapterNumber": 7, "verseNumber": 10 },
+          { "bookSlug": "psalms", "chapterNumber": 51, "verseNumber": 17 },
+          { "bookSlug": "joel", "chapterNumber": 2, "verseNumber": 13 }
+        ]
+      },
+      {
+        "id": "mercy-and-cleansing",
+        "label": "Mercy and Cleansing",
+        "references": [
+          { "bookSlug": "1-john", "chapterNumber": 1, "verseNumber": 9 },
+          { "bookSlug": "ezekiel", "chapterNumber": 18, "verseNumber": 30 },
+          { "bookSlug": "ezekiel", "chapterNumber": 18, "verseNumber": 31 }
+        ]
+      }
+    ]
+  }
+]

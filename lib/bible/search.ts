@@ -4,6 +4,9 @@ import type {
   BibleSearchResult,
   BibleSearchResultGroup,
   BibleSearchStrongsVerseEntry,
+  BibleSearchTopicResult,
+  BibleSearchVerseResult,
+  BibleTopicSearchEntry,
   BibleSearchVerseEntry,
   BookMeta,
   BundledBibleVersion,
@@ -22,6 +25,10 @@ type SearchableVerseEntry = BibleSearchVerseEntry & {
   normalizedText: string;
 };
 
+type SearchableTopicEntry = BibleTopicSearchEntry & {
+  normalizedAliases: string[];
+};
+
 type ParsedReference = {
   book: SearchableBook;
   chapterNumber: number;
@@ -38,9 +45,14 @@ const verseIndexLoaders: Record<BundledBibleVersion, () => Promise<unknown>> = {
   web: () => import("@/data/bible/search/web.json"),
   kjv: () => import("@/data/bible/search/kjv.json")
 };
+const topicIndexLoaders: Record<BundledBibleVersion, () => Promise<unknown>> = {
+  web: () => import("@/data/bible/search/topics-web.json"),
+  kjv: () => import("@/data/bible/search/topics-kjv.json")
+};
 
 let booksPromise: Promise<SearchableBook[]> | null = null;
 const verseIndexCache = new Map<BundledBibleVersion, Promise<SearchableVerseEntry[]>>();
+const topicIndexCache = new Map<BundledBibleVersion, Promise<SearchableTopicEntry[]>>();
 let strongsVerseIndexPromise: Promise<BibleSearchStrongsVerseEntry[]> | null = null;
 
 function normalizeValue(value: string) {
@@ -49,6 +61,10 @@ function normalizeValue(value: string) {
 
 function normalizeBookValue(value: string) {
   return normalizeValue(value).replace(/[^a-z0-9]+/g, " ").trim();
+}
+
+function normalizeTopicValue(value: string) {
+  return normalizeBookValue(value);
 }
 
 function normalizeVerseValue(value: string) {
@@ -217,6 +233,24 @@ async function loadVerseIndex(version: BundledBibleVersion) {
   return promise;
 }
 
+async function loadTopicIndex(version: BundledBibleVersion) {
+  const existing = topicIndexCache.get(version);
+
+  if (existing) {
+    return existing;
+  }
+
+  const promise = topicIndexLoaders[version]().then((module) =>
+    ((module as { default: BibleTopicSearchEntry[] }).default ?? []).map((entry) => ({
+      ...entry,
+      normalizedAliases: [entry.label, ...entry.aliases].map((value) => normalizeTopicValue(value))
+    }))
+  );
+
+  topicIndexCache.set(version, promise);
+  return promise;
+}
+
 async function loadStrongsVerseIndex() {
   if (!strongsVerseIndexPromise) {
     strongsVerseIndexPromise = import("@/data/bible/search/strongs-kjv.json").then(
@@ -297,7 +331,7 @@ function getVerseResult(
   entry: BibleSearchVerseEntry,
   version: BundledBibleVersion,
   description: string
-): BibleSearchResult {
+): BibleSearchVerseResult {
   return {
     type: "verse",
     id: getVerseResultId(entry.bookSlug, entry.chapterNumber, entry.verseNumber, version),
@@ -309,6 +343,25 @@ function getVerseResult(
     href: getHighlightedVerseHref(entry.bookSlug, entry.chapterNumber, entry.verseNumber, version),
     preview: entry.text,
     tokens: entry.tokens
+  };
+}
+
+function getTopicResult(topic: SearchableTopicEntry, version: BundledBibleVersion): BibleSearchTopicResult {
+  const verseCount = topic.subtopics.reduce((count, subtopic) => count + subtopic.verses.length, 0);
+
+  return {
+    type: "topic",
+    id: `topic:${topic.id}:${version}`,
+    topicId: topic.id,
+    label: topic.label,
+    description: `${topic.subtopics.length} subtopic${topic.subtopics.length === 1 ? "" : "s"} • ${verseCount} verse${verseCount === 1 ? "" : "s"}`,
+    subtopics: topic.subtopics.map((subtopic) => ({
+      id: `${topic.id}:${subtopic.id}:${version}`,
+      label: subtopic.label,
+      verses: subtopic.verses.map((entry) =>
+        getVerseResult(entry, version, `${topic.label} • ${subtopic.label}`)
+      )
+    }))
   };
 }
 
@@ -333,6 +386,7 @@ async function searchSingleBibleQuery(
 ): Promise<BibleSearchResult[]> {
   const query = normalizeValue(rawQuery);
   const normalizedBookQuery = normalizeBookValue(query);
+  const normalizedTopicQuery = normalizeTopicValue(query);
   const normalizedVerseQuery = normalizeVerseValue(query);
   const strongsNumber = parseStrongsQuery(query);
 
@@ -486,6 +540,14 @@ async function searchSingleBibleQuery(
       : [];
 
     return dedupeSearchResults([...strongsResults, ...strongsVerseResults, ...bookResults]);
+  }
+
+  const topics = await loadTopicIndex(version);
+  const topicMatch =
+    topics.find((topic) => topic.normalizedAliases.includes(normalizedTopicQuery)) ?? null;
+
+  if (topicMatch) {
+    return [getTopicResult(topicMatch, version)];
   }
 
   if (normalizedVerseQuery.length < MIN_VERSE_QUERY_LENGTH) {
