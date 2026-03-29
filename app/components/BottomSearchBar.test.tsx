@@ -198,16 +198,13 @@ describe("BottomSearchBar", () => {
     expect(container.querySelectorAll(".search-result-group-pane")).toHaveLength(2);
   });
 
-  it("switches the desktop reader utility pane between search and notebook tabs", () => {
+  it("keeps the desktop lookup pane focused on search on reader routes", () => {
     setDesktopMode(true);
     setMockPathname("/read/genesis/1");
     renderSearchUi();
 
-    expect(screen.getByRole("tab", { name: "Search" })).toHaveAttribute("aria-selected", "true");
-    fireEvent.click(screen.getByRole("tab", { name: "Notebook" }));
-
-    expect(screen.getByRole("tab", { name: "Notebook" })).toHaveAttribute("aria-selected", "true");
-    expect(screen.getByRole("heading", { name: "Genesis 1" })).toBeInTheDocument();
-    expect(screen.getByLabelText("Notebook title")).toBeInTheDocument();
+    expect(screen.getByLabelText("Lookup pane")).toBeInTheDocument();
+    expect(screen.queryByRole("tab", { name: "Notebook" })).not.toBeInTheDocument();
+    expect(screen.getByText(/Search from the bottom bar/i)).toBeInTheDocument();
   });
 });

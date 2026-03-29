@@ -1,9 +1,11 @@
 "use client";
 
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
+import { ReaderContentTabs } from "@/app/components/ReaderContentTabs";
 import { ReaderControls } from "@/app/components/ReaderControls";
-import { ReaderNotebookSheet } from "@/app/components/ReaderNotebookSheet";
+import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
+import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { VerseList } from "@/app/components/VerseList";
@@ -18,6 +20,7 @@ type WholeBookContentProps = {
 
 export function WholeBookContent({ books, book, chaptersByVersion }: WholeBookContentProps) {
   const { version } = useReaderVersion();
+  const { activeReaderPane } = useReaderWorkspace();
   const chapters = chaptersByVersion[version];
   const versionLabel = getBibleVersionLabel(version);
   const versionBadge = getBibleVersionBadge(version);
@@ -26,7 +29,6 @@ export function WholeBookContent({ books, book, chaptersByVersion }: WholeBookCo
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
       <ReadingSessionSync book={book.slug} chapter={1} view="book" />
       <ReaderSettingsPanel book={book} currentChapter={1} view="book" />
-      <ReaderNotebookSheet bookSlug={book.slug} chapterNumber={1} />
       <section className="reader-card reader-reading-card">
         <div className="reader-topline">
           <div className="reader-toolbar">
@@ -53,22 +55,29 @@ export function WholeBookContent({ books, book, chaptersByVersion }: WholeBookCo
             </p>
           </header>
         </div>
-        <div className="reading-surface chapter-stack">
-          {chapters.map((chapter) => (
-            <section className="book-section" key={chapter.chapterNumber}>
-              <div className="book-section-header">
-                <h2 className="book-section-title">Chapter {chapter.chapterNumber}</h2>
-                <p className="book-section-subtitle">{chapter.verses.length} verses</p>
-              </div>
-              <VerseList
-                bookSlug={book.slug}
-                chapterNumber={chapter.chapterNumber}
-                key={`${version}:${book.slug}:${chapter.chapterNumber}`}
-                verses={chapter.verses}
-              />
-            </section>
-          ))}
-        </div>
+        <ReaderContentTabs />
+        {activeReaderPane === "notebook" ? (
+          <div className="reading-surface reader-notebook-surface">
+            <ReaderNotebookEditor bookSlug={book.slug} chapterNumber={1} />
+          </div>
+        ) : (
+          <div className="reading-surface chapter-stack">
+            {chapters.map((chapter) => (
+              <section className="book-section" key={chapter.chapterNumber}>
+                <div className="book-section-header">
+                  <h2 className="book-section-title">Chapter {chapter.chapterNumber}</h2>
+                  <p className="book-section-subtitle">{chapter.verses.length} verses</p>
+                </div>
+                <VerseList
+                  bookSlug={book.slug}
+                  chapterNumber={chapter.chapterNumber}
+                  key={`${version}:${book.slug}:${chapter.chapterNumber}`}
+                  verses={chapter.verses}
+                />
+              </section>
+            ))}
+          </div>
+        )}
       </section>
     </ReaderCustomizationShell>
   );

@@ -1222,42 +1222,6 @@ select {
   display: none;
 }
 
-.lookup-pane-tabs {
-  display: flex;
-  gap: 0.55rem;
-  flex-wrap: wrap;
-}
-
-.lookup-pane-tab {
-  min-height: 2.4rem;
-  padding: 0.55rem 0.8rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.04);
-  color: rgba(255, 255, 255, 0.72);
-  font-weight: 650;
-  cursor: pointer;
-  transition:
-    border-color 180ms ease,
-    background-color 180ms ease,
-    color 180ms ease,
-    transform 180ms ease;
-}
-
-.lookup-pane-tab:hover,
-.lookup-pane-tab:focus-visible {
-  transform: translateY(-1px);
-  border-color: rgba(255, 255, 255, 0.16);
-  color: rgba(255, 255, 255, 0.92);
-  outline: none;
-}
-
-.lookup-pane-tab.is-active {
-  border-color: rgba(var(--reader-accent-rgb), 0.42);
-  background: rgba(var(--reader-accent-rgb), 0.14);
-  color: rgba(255, 255, 255, 0.96);
-}
-
 .lookup-pane-body {
   min-height: 0;
   overflow: hidden;
@@ -1448,6 +1412,45 @@ select {
   align-content: start;
 }
 
+.reader-content-tabs {
+  display: flex;
+  gap: 0.55rem;
+  width: min(100%, calc(var(--reader-content-width) + 4rem));
+  max-width: 100%;
+  margin: 0 auto 0.95rem;
+  padding: 0 0.2rem;
+}
+
+.reader-content-tab {
+  min-height: 2.4rem;
+  padding: 0.55rem 0.84rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.72);
+  font-weight: 650;
+  cursor: pointer;
+  transition:
+    border-color 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease,
+    transform 180ms ease;
+}
+
+.reader-content-tab:hover,
+.reader-content-tab:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.92);
+  outline: none;
+}
+
+.reader-content-tab.is-active {
+  border-color: rgba(var(--reader-accent-rgb), 0.42);
+  background: rgba(var(--reader-accent-rgb), 0.14);
+  color: rgba(255, 255, 255, 0.96);
+}
+
 .reader-notebook-header {
   display: flex;
   align-items: start;
@@ -1557,6 +1560,10 @@ select {
 .reader-notebook-textarea:focus {
   border-color: var(--border-strong);
   box-shadow: 0 0 0 0.22rem rgba(85, 214, 255, 0.16);
+}
+
+.reader-notebook-surface {
+  align-content: start;
 }
 
 .search-result-header {

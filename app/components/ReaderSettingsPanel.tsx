@@ -6,7 +6,6 @@ import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
-import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import type { BookMeta, ReadingView, ThemePreset } from "@/lib/bible/types";
@@ -41,8 +40,7 @@ export function ReaderSettingsPanel({
 }: ReaderSettingsPanelProps) {
   const { isPanelOpen, resetSettings, setIsPanelOpen, settings, updateSettings } =
     useReaderCustomization();
-  const { isDesktop } = useLookup();
-  const { openMobileNotebook, setActiveUtilityTab } = useReaderWorkspace();
+  const { setActiveReaderPane } = useReaderWorkspace();
   const { version, setVersion } = useReaderVersion();
   const pathname = usePathname();
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -64,13 +62,7 @@ export function ReaderSettingsPanel({
   };
 
   const handleNotebookOpen = () => {
-    if (isDesktop) {
-      setActiveUtilityTab("notebook");
-      setIsPanelOpen(false);
-      return;
-    }
-
-    openMobileNotebook();
+    setActiveReaderPane("notebook");
     setIsPanelOpen(false);
   };
 

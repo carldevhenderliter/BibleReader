@@ -21,14 +21,11 @@ import {
   type PassageNotebookStorage
 } from "@/lib/passage-notebooks";
 
-type ReaderUtilityTab = "search" | "notebook";
+type ReaderPane = "reading" | "notebook";
 
 type ReaderWorkspaceContextValue = {
-  activeUtilityTab: ReaderUtilityTab;
-  setActiveUtilityTab: (tab: ReaderUtilityTab) => void;
-  isMobileNotebookOpen: boolean;
-  openMobileNotebook: () => void;
-  closeMobileNotebook: () => void;
+  activeReaderPane: ReaderPane;
+  setActiveReaderPane: (tab: ReaderPane) => void;
   getNotebook: (bookSlug: string, chapterNumber: number) => PassageNotebook;
   updateNotebookTitle: (bookSlug: string, chapterNumber: number, title: string) => void;
   addNotebookBlock: (
@@ -60,8 +57,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   const { version } = useReaderVersion();
   const [notebooks, setNotebooks] = useState<PassageNotebookStorage>({});
   const [hasLoadedNotebooks, setHasLoadedNotebooks] = useState(false);
-  const [activeUtilityTab, setActiveUtilityTab] = useState<ReaderUtilityTab>("search");
-  const [isMobileNotebookOpen, setIsMobileNotebookOpen] = useState(false);
+  const [activeReaderPane, setActiveReaderPane] = useState<ReaderPane>("reading");
   const isReaderRoute = pathname.startsWith("/read");
 
   useEffect(() => {
@@ -91,21 +87,14 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     if (!isReaderRoute) {
-      setActiveUtilityTab("search");
-      setIsMobileNotebookOpen(false);
+      setActiveReaderPane("reading");
     }
   }, [isReaderRoute, pathname]);
 
   const value = useMemo<ReaderWorkspaceContextValue>(
     () => ({
-      activeUtilityTab,
-      setActiveUtilityTab,
-      isMobileNotebookOpen,
-      openMobileNotebook: () => {
-        setActiveUtilityTab("notebook");
-        setIsMobileNotebookOpen(true);
-      },
-      closeMobileNotebook: () => setIsMobileNotebookOpen(false),
+      activeReaderPane,
+      setActiveReaderPane,
       getNotebook: (bookSlug, chapterNumber) => {
         const notebookId = getPassageNotebookId({ version, bookSlug, chapterNumber });
 
@@ -226,7 +215,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
         });
       }
     }),
-    [activeUtilityTab, isMobileNotebookOpen, notebooks, version]
+    [activeReaderPane, notebooks, version]
   );
 
   return <ReaderWorkspaceContext.Provider value={value}>{children}</ReaderWorkspaceContext.Provider>;

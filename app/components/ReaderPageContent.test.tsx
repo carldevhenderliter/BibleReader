@@ -169,7 +169,7 @@ describe("ReaderPageContent", () => {
     expect(window.localStorage.getItem(PASSAGE_NOTEBOOK_STORAGE_KEY)).toContain(
       "Created light before the sun."
     );
-    fireEvent.click(screen.getByRole("button", { name: "Close notebook" }));
+    fireEvent.click(screen.getByRole("tab", { name: "Scripture" }));
 
     unmount();
 
@@ -231,6 +231,25 @@ describe("ReaderPageContent", () => {
     expect(screen.getByText("The earth was formless and empty.").closest(".verse-row")).toHaveClass(
       "is-highlighted"
     );
+  });
+
+  it("renders the notebook inline in the reader column", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
+
+    expect(screen.getByRole("tab", { name: "Notebook" })).toHaveAttribute("aria-selected", "true");
+    expect(screen.getByLabelText("Notebook title")).toBeInTheDocument();
+    expect(
+      screen.queryByText("In the beginning, God created the heavens and the earth.")
+    ).not.toBeInTheDocument();
   });
 
   it("highlights a verse range opened from search", () => {

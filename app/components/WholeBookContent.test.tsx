@@ -103,7 +103,8 @@ describe("WholeBookContent", () => {
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
 
-    expect(screen.getByRole("dialog", { name: "Passage notebook" })).toBeInTheDocument();
+    expect(screen.getByRole("tab", { name: "Notebook" })).toHaveAttribute("aria-selected", "true");
     expect(screen.getByLabelText("Notebook title")).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Chapter 1" })).not.toBeInTheDocument();
   });
 });
