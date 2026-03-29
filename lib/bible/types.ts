@@ -70,13 +70,21 @@ export type ReaderCustomizationSettings = {
   surfaceDepth: number;
 };
 
-export type VerseNote = {
+export type PassageNotebookBlockType = "paragraph" | "list";
+
+export type PassageNotebookBlock = {
+  id: string;
+  type: PassageNotebookBlockType;
+  text: string;
+};
+
+export type PassageNotebook = {
   id: string;
   version: BundledBibleVersion;
   bookSlug: string;
   chapterNumber: number;
-  verseNumber: number;
-  text: string;
+  title: string;
+  blocks: PassageNotebookBlock[];
   updatedAt: string;
 };
 

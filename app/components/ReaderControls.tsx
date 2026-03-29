@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import type { BookMeta, ReadingView } from "@/lib/bible/types";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
+import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { getBookHref, getChapterHref } from "@/lib/bible/utils";
 import { BIBLE_VERSION_METADATA } from "@/lib/bible/version";
 
@@ -18,6 +19,7 @@ type ReaderControlsProps = {
 export function ReaderControls({ books, book, currentChapter, view }: ReaderControlsProps) {
   const router = useRouter();
   const { isPanelOpen, setIsPanelOpen } = useReaderCustomization();
+  const { setActiveUtilityTab } = useReaderWorkspace();
   const { version } = useReaderVersion();
   const versionMeta = BIBLE_VERSION_METADATA[version];
 
@@ -91,7 +93,10 @@ export function ReaderControls({ books, book, currentChapter, view }: ReaderCont
             aria-controls="reader-settings-panel"
             aria-expanded={isPanelOpen}
             className="reader-inline-button reader-menu-button"
-            onClick={() => setIsPanelOpen(!isPanelOpen)}
+            onClick={() => {
+              setActiveUtilityTab("search");
+              setIsPanelOpen(!isPanelOpen);
+            }}
             type="button"
           >
             Menu

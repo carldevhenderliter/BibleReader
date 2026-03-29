@@ -8,31 +8,58 @@ import { useLookup } from "@/app/components/LookupProvider";
 
 const SPLIT_LAYOUT_WIDTH_STORAGE_KEY = "bible-reader.split-layout-width-rem";
 const MIN_LOOKUP_WIDTH_REM = 22;
-const MAX_LOOKUP_WIDTH_REM = 52;
 const DEFAULT_LOOKUP_WIDTH_REM = 24;
 const LOOKUP_WIDTH_PER_EXTRA_QUERY_REM = 14;
-
-function clampLookupWidthRem(value: number) {
-  return Math.min(MAX_LOOKUP_WIDTH_REM, Math.max(MIN_LOOKUP_WIDTH_REM, value));
-}
+const LOOKUP_WIDTH_MAX_VIEWPORT_RATIO = 0.75;
 
 function getRootFontSize() {
   return Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
 }
 
+function getMaximumLookupWidthRem() {
+  return Math.max(
+    MIN_LOOKUP_WIDTH_REM,
+    (window.innerWidth * LOOKUP_WIDTH_MAX_VIEWPORT_RATIO) / getRootFontSize()
+  );
+}
+
+function clampLookupWidthRem(value: number, maximumLookupWidthRem: number) {
+  return Math.min(maximumLookupWidthRem, Math.max(MIN_LOOKUP_WIDTH_REM, value));
+}
+
 export function AppSplitLayout({ children }: PropsWithChildren) {
   const { isDesktop, queryParts } = useLookup();
   const [manualLookupWidthRem, setManualLookupWidthRem] = useState<number | null>(null);
+  const [maximumLookupWidthRem, setMaximumLookupWidthRem] = useState(() =>
+    typeof window === "undefined" ? DEFAULT_LOOKUP_WIDTH_REM : getMaximumLookupWidthRem()
+  );
 
   const queryCount = Math.max(queryParts.length, 1);
   const automaticLookupWidthRem = useMemo(
     () =>
       clampLookupWidthRem(
-        DEFAULT_LOOKUP_WIDTH_REM + (queryCount - 1) * LOOKUP_WIDTH_PER_EXTRA_QUERY_REM
+        DEFAULT_LOOKUP_WIDTH_REM + (queryCount - 1) * LOOKUP_WIDTH_PER_EXTRA_QUERY_REM,
+        maximumLookupWidthRem
       ),
-    [queryCount]
+    [maximumLookupWidthRem, queryCount]
   );
-  const effectiveLookupWidthRem = manualLookupWidthRem ?? automaticLookupWidthRem;
+  const effectiveLookupWidthRem = clampLookupWidthRem(
+    manualLookupWidthRem ?? automaticLookupWidthRem,
+    maximumLookupWidthRem
+  );
+
+  useEffect(() => {
+    const syncMaximumWidth = () => {
+      setMaximumLookupWidthRem(getMaximumLookupWidthRem());
+    };
+
+    syncMaximumWidth();
+    window.addEventListener("resize", syncMaximumWidth);
+
+    return () => {
+      window.removeEventListener("resize", syncMaximumWidth);
+    };
+  }, []);
 
   useEffect(() => {
     const storedValue = window.localStorage.getItem(SPLIT_LAYOUT_WIDTH_STORAGE_KEY);
@@ -48,8 +75,20 @@ export function AppSplitLayout({ children }: PropsWithChildren) {
       return;
     }
 
-    setManualLookupWidthRem(clampLookupWidthRem(parsedValue));
-  }, []);
+    setManualLookupWidthRem(clampLookupWidthRem(parsedValue, maximumLookupWidthRem));
+  }, [maximumLookupWidthRem]);
+
+  useEffect(() => {
+    if (manualLookupWidthRem === null) {
+      return;
+    }
+
+    const clampedWidth = clampLookupWidthRem(manualLookupWidthRem, maximumLookupWidthRem);
+
+    if (clampedWidth !== manualLookupWidthRem) {
+      setManualLookupWidthRem(clampedWidth);
+    }
+  }, [manualLookupWidthRem, maximumLookupWidthRem]);
 
   useEffect(() => {
     if (manualLookupWidthRem === null) {
@@ -60,13 +99,23 @@ export function AppSplitLayout({ children }: PropsWithChildren) {
     window.localStorage.setItem(SPLIT_LAYOUT_WIDTH_STORAGE_KEY, String(manualLookupWidthRem));
   }, [manualLookupWidthRem]);
 
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      "--app-layout-lookup-width",
+      `${effectiveLookupWidthRem}rem`
+    );
+  }, [effectiveLookupWidthRem]);
+
   const beginResize = (startClientX: number) => {
     const startingWidthRem = effectiveLookupWidthRem;
     const rootFontSize = getRootFontSize();
 
     const handlePointerMove = (event: PointerEvent) => {
       const deltaX = startClientX - event.clientX;
-      const nextWidthRem = clampLookupWidthRem(startingWidthRem + deltaX / rootFontSize);
+      const nextWidthRem = clampLookupWidthRem(
+        startingWidthRem + deltaX / rootFontSize,
+        getMaximumLookupWidthRem()
+      );
       setManualLookupWidthRem(nextWidthRem);
     };
 

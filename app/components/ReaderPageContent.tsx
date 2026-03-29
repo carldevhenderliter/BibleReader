@@ -3,6 +3,7 @@
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
 import { ChapterPagination } from "@/app/components/ChapterPagination";
 import { ReaderControls } from "@/app/components/ReaderControls";
+import { ReaderNotebookSheet } from "@/app/components/ReaderNotebookSheet";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
 import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
@@ -39,6 +40,7 @@ export function ReaderPageContent({
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
       <ReadingSessionSync book={book.slug} chapter={chapter.chapterNumber} view="chapter" />
       <ReaderSettingsPanel book={book} currentChapter={chapter.chapterNumber} view="chapter" />
+      <ReaderNotebookSheet bookSlug={book.slug} chapterNumber={chapter.chapterNumber} />
       <section className="reader-card reader-reading-card">
         <div className="reader-topline">
           <div className="reader-toolbar">

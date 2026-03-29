@@ -2,7 +2,8 @@ import { fireEvent, screen, waitFor } from "@testing-library/react";
 
 import { ReaderPageContent } from "@/app/components/ReaderPageContent";
 import type { BookMeta, Chapter } from "@/lib/bible/types";
-import { VERSE_NOTES_STORAGE_KEY } from "@/lib/verse-notes";
+import { PASSAGE_NOTEBOOK_STORAGE_KEY } from "@/lib/passage-notebooks";
+import { setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
 
 const books: BookMeta[] = [
@@ -46,6 +47,8 @@ describe("ReaderPageContent", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     window.localStorage.clear();
+    setMockPathname("/read/genesis/1");
+    window.history.replaceState({}, "", "/read/genesis/1");
   });
 
   it("renders chapter content and navigation", () => {
@@ -137,7 +140,7 @@ describe("ReaderPageContent", () => {
     );
   });
 
-  it("saves notes inline and restores them when reopening the same passage", () => {
+  it("opens the passage notebook from the reader menu and restores saved content", () => {
     const { unmount } = renderWithReaderCustomization(
       <ReaderPageContent
         book={books[0]}
@@ -146,18 +149,27 @@ describe("ReaderPageContent", () => {
       />
     );
 
-    fireEvent.click(screen.getAllByRole("button", { name: "Add note" })[0]);
-    fireEvent.change(screen.getByLabelText("Note for verse 1"), {
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
+    fireEvent.change(screen.getByLabelText("Notebook title"), {
+      target: {
+        value: "Genesis opening"
+      }
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Add paragraph" }));
+    fireEvent.change(screen.getByLabelText("Notebook block 1"), {
       target: {
         value: "Created light before the sun."
       }
     });
-    fireEvent.click(screen.getByRole("button", { name: "Save note" }));
 
-    expect(window.localStorage.getItem(VERSE_NOTES_STORAGE_KEY)).toContain(
+    expect(window.localStorage.getItem(PASSAGE_NOTEBOOK_STORAGE_KEY)).toContain(
+      "Genesis opening"
+    );
+    expect(window.localStorage.getItem(PASSAGE_NOTEBOOK_STORAGE_KEY)).toContain(
       "Created light before the sun."
     );
-    expect(screen.getByText("Saved note")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Close notebook" }));
 
     unmount();
 
@@ -169,13 +181,13 @@ describe("ReaderPageContent", () => {
       />
     );
 
-    fireEvent.click(screen.getAllByRole("button", { name: "Edit note" })[0]);
-    expect(screen.getByLabelText("Note for verse 1")).toHaveValue(
-      "Created light before the sun."
-    );
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
+    expect(screen.getByLabelText("Notebook title")).toHaveValue("Genesis opening");
+    expect(screen.getByLabelText("Notebook block 1")).toHaveValue("Created light before the sun.");
   });
 
-  it("deletes saved verse notes", () => {
+  it("clears saved passage notebooks", () => {
     renderWithReaderCustomization(
       <ReaderPageContent
         book={books[0]}
@@ -184,18 +196,26 @@ describe("ReaderPageContent", () => {
       />
     );
 
-    fireEvent.click(screen.getAllByRole("button", { name: "Add note" })[0]);
-    fireEvent.change(screen.getByLabelText("Note for verse 1"), {
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
+    fireEvent.change(screen.getByLabelText("Notebook title"), {
+      target: {
+        value: "Disposable notebook"
+      }
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Add paragraph" }));
+    fireEvent.change(screen.getByLabelText("Notebook block 1"), {
       target: {
         value: "A note to remove."
       }
     });
-    fireEvent.click(screen.getByRole("button", { name: "Save note" }));
-    fireEvent.click(screen.getByRole("button", { name: "Delete" }));
+    fireEvent.click(screen.getByRole("button", { name: "Clear notebook" }));
 
-    expect(window.localStorage.getItem(VERSE_NOTES_STORAGE_KEY)).toBe("{}");
-    expect(screen.queryByText("Saved note")).not.toBeInTheDocument();
-    expect(screen.getAllByRole("button", { name: "Add note" })[0]).toBeInTheDocument();
+    expect(window.localStorage.getItem(PASSAGE_NOTEBOOK_STORAGE_KEY)).toBe("{}");
+    expect(screen.queryByDisplayValue("Disposable notebook")).not.toBeInTheDocument();
+    expect(
+      screen.getByText("Add paragraphs or list blocks to build a notebook for this passage.")
+    ).toBeInTheDocument();
   });
 
   it("highlights the verse opened from search", () => {

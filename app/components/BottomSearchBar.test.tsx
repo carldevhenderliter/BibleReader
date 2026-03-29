@@ -3,6 +3,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { BottomSearchBar } from "@/app/components/BottomSearchBar";
 import { LookupPane } from "@/app/components/LookupPane";
 import { LookupProvider } from "@/app/components/LookupProvider";
+import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
 import { ReaderVersionProvider, useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { mockRouter, setMockPathname } from "@/test/mocks/next-navigation";
 
@@ -22,14 +23,16 @@ function SearchHarness() {
 function renderSearchUi(ui?: React.ReactNode) {
   return render(
     <ReaderVersionProvider>
-      <LookupProvider>
-        {ui ?? (
-          <>
-            <BottomSearchBar />
-            <LookupPane />
-          </>
-        )}
-      </LookupProvider>
+      <ReaderWorkspaceProvider>
+        <LookupProvider>
+          {ui ?? (
+            <>
+              <BottomSearchBar />
+              <LookupPane />
+            </>
+          )}
+        </LookupProvider>
+      </ReaderWorkspaceProvider>
     </ReaderVersionProvider>
   );
 }
@@ -193,5 +196,18 @@ describe("BottomSearchBar", () => {
     expect(await screen.findByRole("button", { name: /Verse Matthew 1:1/i })).toBeInTheDocument();
     expect(container.querySelector(".search-result-groups-panes")).toBeTruthy();
     expect(container.querySelectorAll(".search-result-group-pane")).toHaveLength(2);
+  });
+
+  it("switches the desktop reader utility pane between search and notebook tabs", () => {
+    setDesktopMode(true);
+    setMockPathname("/read/genesis/1");
+    renderSearchUi();
+
+    expect(screen.getByRole("tab", { name: "Search" })).toHaveAttribute("aria-selected", "true");
+    fireEvent.click(screen.getByRole("tab", { name: "Notebook" }));
+
+    expect(screen.getByRole("tab", { name: "Notebook" })).toHaveAttribute("aria-selected", "true");
+    expect(screen.getByRole("heading", { name: "Genesis 1" })).toBeInTheDocument();
+    expect(screen.getByLabelText("Notebook title")).toBeInTheDocument();
   });
 });

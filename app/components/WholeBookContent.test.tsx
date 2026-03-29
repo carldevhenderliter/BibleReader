@@ -2,6 +2,7 @@ import { fireEvent, screen } from "@testing-library/react";
 
 import { WholeBookContent } from "@/app/components/WholeBookContent";
 import type { BookMeta, Chapter } from "@/lib/bible/types";
+import { setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
 
 const books: BookMeta[] = [
@@ -50,6 +51,8 @@ const kjvChapters: Chapter[] = [
 describe("WholeBookContent", () => {
   beforeEach(() => {
     window.localStorage.clear();
+    setMockPathname("/read/jude");
+    window.history.replaceState({}, "", "/read/jude");
   });
 
   it("renders a continuous book view", () => {
@@ -88,7 +91,7 @@ describe("WholeBookContent", () => {
     expect(screen.getByText("Mercy unto you, and peace, and love, be multiplied.")).toBeInTheDocument();
   });
 
-  it("supports verse notes in later chapters of whole-book view", () => {
+  it("opens the notebook from whole-book view", () => {
     renderWithReaderCustomization(
       <WholeBookContent
         book={books[0]}
@@ -97,14 +100,10 @@ describe("WholeBookContent", () => {
       />
     );
 
-    fireEvent.click(screen.getAllByRole("button", { name: "Add note" })[2]);
-    fireEvent.change(screen.getByLabelText("Note for verse 1"), {
-      target: {
-        value: "Whole-book note in chapter two."
-      }
-    });
-    fireEvent.click(screen.getByRole("button", { name: "Save note" }));
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
 
-    expect(screen.getByDisplayValue("Whole-book note in chapter two.")).toBeInTheDocument();
+    expect(screen.getByRole("dialog", { name: "Passage notebook" })).toBeInTheDocument();
+    expect(screen.getByLabelText("Notebook title")).toBeInTheDocument();
   });
 });

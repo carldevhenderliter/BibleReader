@@ -2,6 +2,7 @@
 
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
 import { ReaderControls } from "@/app/components/ReaderControls";
+import { ReaderNotebookSheet } from "@/app/components/ReaderNotebookSheet";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
 import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
@@ -25,6 +26,7 @@ export function WholeBookContent({ books, book, chaptersByVersion }: WholeBookCo
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
       <ReadingSessionSync book={book.slug} chapter={1} view="book" />
       <ReaderSettingsPanel book={book} currentChapter={1} view="book" />
+      <ReaderNotebookSheet bookSlug={book.slug} chapterNumber={1} />
       <section className="reader-card reader-reading-card">
         <div className="reader-topline">
           <div className="reader-toolbar">

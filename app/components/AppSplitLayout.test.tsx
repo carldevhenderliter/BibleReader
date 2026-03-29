@@ -3,6 +3,7 @@ import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { AppSplitLayout } from "@/app/components/AppSplitLayout";
 import { BottomSearchBar } from "@/app/components/BottomSearchBar";
 import { LookupProvider } from "@/app/components/LookupProvider";
+import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
 import { ReaderVersionProvider } from "@/app/components/ReaderVersionProvider";
 import { setMockPathname } from "@/test/mocks/next-navigation";
 
@@ -11,12 +12,14 @@ const SPLIT_LAYOUT_WIDTH_STORAGE_KEY = "bible-reader.split-layout-width-rem";
 function renderSplitLayout() {
   return render(
     <ReaderVersionProvider>
-      <LookupProvider>
-        <AppSplitLayout>
-          <div>Reader content</div>
-        </AppSplitLayout>
-        <BottomSearchBar />
-      </LookupProvider>
+      <ReaderWorkspaceProvider>
+        <LookupProvider>
+          <AppSplitLayout>
+            <div>Reader content</div>
+          </AppSplitLayout>
+          <BottomSearchBar />
+        </LookupProvider>
+      </ReaderWorkspaceProvider>
     </ReaderVersionProvider>
   );
 }
@@ -37,6 +40,14 @@ function setDesktopMode(isDesktop: boolean) {
   });
 }
 
+function setViewportWidth(width: number) {
+  Object.defineProperty(window, "innerWidth", {
+    configurable: true,
+    writable: true,
+    value: width
+  });
+}
+
 describe("AppSplitLayout", () => {
   beforeEach(() => {
     if (!("PointerEvent" in window)) {
@@ -51,6 +62,7 @@ describe("AppSplitLayout", () => {
     jest.clearAllMocks();
     setMockPathname("/");
     setDesktopMode(true);
+    setViewportWidth(1600);
   });
 
   it("renders a draggable desktop divider", () => {
@@ -78,21 +90,34 @@ describe("AppSplitLayout", () => {
     window.localStorage.setItem(SPLIT_LAYOUT_WIDTH_STORAGE_KEY, "40");
     const { container } = renderSplitLayout();
 
-    expect(container.querySelector(".app-layout")).toHaveStyle("--app-layout-lookup-width: 40rem");
+    return waitFor(() => {
+      expect(container.querySelector(".app-layout")).toHaveStyle("--app-layout-lookup-width: 40rem");
+    });
   });
 
-  it("grows the lookup side automatically from the number of query columns", async () => {
+  it("clamps a saved split width to 75 percent of the viewport", () => {
+    setViewportWidth(800);
+    window.localStorage.setItem(SPLIT_LAYOUT_WIDTH_STORAGE_KEY, "80");
+    const { container } = renderSplitLayout();
+
+    return waitFor(() => {
+      expect(container.querySelector(".app-layout")).toHaveStyle("--app-layout-lookup-width: 37.5rem");
+    });
+  });
+
+  it("grows the lookup side automatically from the number of query columns without exceeding the cap", async () => {
+    setViewportWidth(800);
     const { container } = renderSplitLayout();
 
     fireEvent.focus(screen.getByLabelText("Search books, words, or phrases"));
     fireEvent.change(screen.getByLabelText("Search books, words, or phrases"), {
-      target: { value: "John 1:1, light, faith" }
+      target: { value: "John 1:1, light, faith, grace" }
     });
 
     await screen.findByRole("button", { name: /Verse John 1:1/i });
 
     await waitFor(() => {
-      expect(container.querySelector(".app-layout")).toHaveStyle("--app-layout-lookup-width: 52rem");
+      expect(container.querySelector(".app-layout")).toHaveStyle("--app-layout-lookup-width: 37.5rem");
     });
   });
 

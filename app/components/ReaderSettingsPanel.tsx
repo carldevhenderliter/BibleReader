@@ -1,11 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
+import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
+import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import type { BookMeta, ReadingView, ThemePreset } from "@/lib/bible/types";
 import { BODY_FONT_OPTIONS, UI_FONT_OPTIONS } from "@/lib/reader-customization";
 import { THEME_PRESETS } from "@/lib/reader-customization";
@@ -38,9 +41,13 @@ export function ReaderSettingsPanel({
 }: ReaderSettingsPanelProps) {
   const { isPanelOpen, resetSettings, setIsPanelOpen, settings, updateSettings } =
     useReaderCustomization();
+  const { isDesktop } = useLookup();
+  const { openMobileNotebook, setActiveUtilityTab } = useReaderWorkspace();
   const { version, setVersion } = useReaderVersion();
+  const pathname = usePathname();
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   const versionOptions = getBibleVersionOptions(false);
+  const isReaderRoute = pathname.startsWith("/read");
 
   const handleVersionChange = (nextVersion: string) => {
     if (!isBundledBibleVersion(nextVersion) || nextVersion === version) {
@@ -54,6 +61,17 @@ export function ReaderSettingsPanel({
     updateSettings({
       textSize: Number((settings.textSize + delta).toFixed(2))
     });
+  };
+
+  const handleNotebookOpen = () => {
+    if (isDesktop) {
+      setActiveUtilityTab("notebook");
+      setIsPanelOpen(false);
+      return;
+    }
+
+    openMobileNotebook();
+    setIsPanelOpen(false);
   };
 
   useEffect(() => {
@@ -195,6 +213,11 @@ export function ReaderSettingsPanel({
             >
               {view === "book" ? "Chapter view" : "Whole book view"}
             </Link>
+            {isReaderRoute ? (
+              <button className="reader-inline-button reader-settings-link" onClick={handleNotebookOpen} type="button">
+                Notebook
+              </button>
+            ) : null}
           </div>
         </section>
         <section className="reader-settings-section">
