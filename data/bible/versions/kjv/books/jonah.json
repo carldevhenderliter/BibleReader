@@ -14,71 +14,1144 @@
       "verses": [
         {
           "number": 1,
-          "text": "Now the word of the LORD came unto Jonah the son of Amittai, saying,"
+          "text": "Now the word of the LORD came unto Jonah the son of Amittai, saying,",
+          "tokens": [
+            {
+              "text": "Now the word",
+              "strongsNumbers": [
+                "H1697"
+              ]
+            },
+            {
+              "text": " of the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " came unto Jonah",
+              "strongsNumbers": [
+                "H3124"
+              ]
+            },
+            {
+              "text": " the son",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " of Amittai,",
+              "strongsNumbers": [
+                "H573"
+              ]
+            },
+            {
+              "text": " saying,"
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "Arise, go to Nineveh, that great city, and cry against it; for their wickedness is come up before me."
+          "text": "Arise, go to Nineveh, that great city, and cry against it; for their wickedness is come up before",
+          "tokens": [
+            {
+              "text": "Arise,",
+              "strongsNumbers": [
+                "H6965"
+              ]
+            },
+            {
+              "text": " go",
+              "strongsNumbers": [
+                "H3212"
+              ]
+            },
+            {
+              "text": " to Nineveh,",
+              "strongsNumbers": [
+                "H5210"
+              ]
+            },
+            {
+              "text": " that great",
+              "strongsNumbers": [
+                "H1419"
+              ]
+            },
+            {
+              "text": " city,",
+              "strongsNumbers": [
+                "H5892"
+              ]
+            },
+            {
+              "text": " and cry",
+              "strongsNumbers": [
+                "H7121"
+              ]
+            },
+            {
+              "text": " against it; for their wickedness",
+              "strongsNumbers": [
+                "H7451"
+              ]
+            },
+            {
+              "text": " is come up",
+              "strongsNumbers": [
+                "H5927"
+              ]
+            },
+            {
+              "text": " before"
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "But Jonah rose up to flee unto Tarshish from the presence of the LORD, and went down to Joppa; and he found a ship going to Tarshish: so he paid the fare thereof, and went down into it, to go with them unto Tarshish from the presence of the LORD."
+          "text": "But Jonah rose up to flee unto Tarshish from the presence of the LORD, and went down to Joppa; and he found a ship going to Tarshish: so he paid the fare thereof, and went down into it, to go with them unto Tarshish from the presence of the LORD.",
+          "tokens": [
+            {
+              "text": "But Jonah",
+              "strongsNumbers": [
+                "H3124"
+              ]
+            },
+            {
+              "text": " rose up",
+              "strongsNumbers": [
+                "H6965"
+              ]
+            },
+            {
+              "text": " to flee",
+              "strongsNumbers": [
+                "H1272"
+              ]
+            },
+            {
+              "text": " unto Tarshish",
+              "strongsNumbers": [
+                "H8659"
+              ]
+            },
+            {
+              "text": " from the presence",
+              "strongsNumbers": [
+                "H6440"
+              ]
+            },
+            {
+              "text": " of the LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " and went down",
+              "strongsNumbers": [
+                "H3381"
+              ]
+            },
+            {
+              "text": " to Joppa;",
+              "strongsNumbers": [
+                "H3305"
+              ]
+            },
+            {
+              "text": " and he found",
+              "strongsNumbers": [
+                "H4672"
+              ]
+            },
+            {
+              "text": " a ship",
+              "strongsNumbers": [
+                "H591"
+              ]
+            },
+            {
+              "text": " going",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " to Tarshish:",
+              "strongsNumbers": [
+                "H8659"
+              ]
+            },
+            {
+              "text": " so he paid",
+              "strongsNumbers": [
+                "H5414"
+              ]
+            },
+            {
+              "text": " the fare",
+              "strongsNumbers": [
+                "H7939"
+              ]
+            },
+            {
+              "text": " thereof, and went down",
+              "strongsNumbers": [
+                "H3381"
+              ]
+            },
+            {
+              "text": " into it, to go",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " with them unto Tarshish",
+              "strongsNumbers": [
+                "H8659"
+              ]
+            },
+            {
+              "text": " from the presence",
+              "strongsNumbers": [
+                "H6440"
+              ]
+            },
+            {
+              "text": " of the LORD."
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "But the LORD sent out a great wind into the sea, and there was a mighty tempest in the sea, so that the ship was like to be broken."
+          "text": "But the LORD sent out a great wind into the sea, and there was a mighty tempest in the sea, so that the ship was like to be broken.",
+          "tokens": [
+            {
+              "text": "But the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " sent out",
+              "strongsNumbers": [
+                "H2904"
+              ]
+            },
+            {
+              "text": " a great",
+              "strongsNumbers": [
+                "H1419"
+              ]
+            },
+            {
+              "text": " wind",
+              "strongsNumbers": [
+                "H7307"
+              ]
+            },
+            {
+              "text": " into the sea,",
+              "strongsNumbers": [
+                "H3220"
+              ]
+            },
+            {
+              "text": " and there was a mighty",
+              "strongsNumbers": [
+                "H1419"
+              ]
+            },
+            {
+              "text": " tempest",
+              "strongsNumbers": [
+                "H5591"
+              ]
+            },
+            {
+              "text": " in the sea,",
+              "strongsNumbers": [
+                "H3220"
+              ]
+            },
+            {
+              "text": " so that the ship",
+              "strongsNumbers": [
+                "H591"
+              ]
+            },
+            {
+              "text": " was like",
+              "strongsNumbers": [
+                "H2803"
+              ]
+            },
+            {
+              "text": " to be broken."
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "Then the mariners were afraid, and cried every man unto his god, and cast forth the wares that [were] in the ship into the sea, to lighten [it] of them. But Jonah was gone down into the sides of the ship; and he lay, and was fast asleep."
+          "text": "Then the mariners were afraid, and cried every man unto his god, and cast forth the wares that were in the ship into the sea, to lighten it of them. But Jonah was gone down into the sides of the ship; and he lay, and was fast asleep.",
+          "tokens": [
+            {
+              "text": "Then the mariners",
+              "strongsNumbers": [
+                "H4419"
+              ]
+            },
+            {
+              "text": " were afraid,",
+              "strongsNumbers": [
+                "H3372"
+              ]
+            },
+            {
+              "text": " and cried",
+              "strongsNumbers": [
+                "H2199"
+              ]
+            },
+            {
+              "text": " every man",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " unto his god,",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " and cast forth",
+              "strongsNumbers": [
+                "H2904"
+              ]
+            },
+            {
+              "text": " the wares",
+              "strongsNumbers": [
+                "H3627"
+              ]
+            },
+            {
+              "text": " that were in the ship",
+              "strongsNumbers": [
+                "H591"
+              ]
+            },
+            {
+              "text": " into the sea,",
+              "strongsNumbers": [
+                "H3220"
+              ]
+            },
+            {
+              "text": " to lighten",
+              "strongsNumbers": [
+                "H7043"
+              ]
+            },
+            {
+              "text": " it of them. But Jonah",
+              "strongsNumbers": [
+                "H3124"
+              ]
+            },
+            {
+              "text": " was gone down",
+              "strongsNumbers": [
+                "H3381"
+              ]
+            },
+            {
+              "text": " into the sides",
+              "strongsNumbers": [
+                "H3411"
+              ]
+            },
+            {
+              "text": " of the ship;",
+              "strongsNumbers": [
+                "H5600"
+              ]
+            },
+            {
+              "text": " and he lay,",
+              "strongsNumbers": [
+                "H7901"
+              ]
+            },
+            {
+              "text": " and was fast asleep."
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "So the shipmaster came to him, and said unto him, What meanest thou, O sleeper? arise, call upon thy God, if so be that God will think upon us, that we perish not."
+          "text": "So the shipmaster came to him, and said unto him, What meanest thou, O sleeper? arise, call upon thy God, if so be that God will think upon us, that we perish",
+          "tokens": [
+            {
+              "text": "So the shipmaster",
+              "strongsNumbers": [
+                "H7227",
+                "H2259"
+              ]
+            },
+            {
+              "text": " came",
+              "strongsNumbers": [
+                "H7126"
+              ]
+            },
+            {
+              "text": " to him, and said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto him, What meanest thou, O sleeper?",
+              "strongsNumbers": [
+                "H7290"
+              ]
+            },
+            {
+              "text": " arise,",
+              "strongsNumbers": [
+                "H6965"
+              ]
+            },
+            {
+              "text": " call",
+              "strongsNumbers": [
+                "H7121"
+              ]
+            },
+            {
+              "text": " upon thy God,",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " if so be that God",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " will think",
+              "strongsNumbers": [
+                "H6245"
+              ]
+            },
+            {
+              "text": " upon us, that we perish"
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "And they said every one to his fellow, Come, and let us cast lots, that we may know for whose cause this evil [is] upon us. So they cast lots, and the lot fell upon Jonah."
+          "text": "And they said every one to his fellow, Come, and let us cast lots, that we may know for whose cause this evil is upon us. So they cast lots, and the lot fell upon Jonah.",
+          "tokens": [
+            {
+              "text": "And they said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " every one",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " to his fellow,",
+              "strongsNumbers": [
+                "H7453"
+              ]
+            },
+            {
+              "text": " Come,",
+              "strongsNumbers": [
+                "H3212"
+              ]
+            },
+            {
+              "text": " and let us cast",
+              "strongsNumbers": [
+                "H5307"
+              ]
+            },
+            {
+              "text": " lots,",
+              "strongsNumbers": [
+                "H1486"
+              ]
+            },
+            {
+              "text": " that we may know",
+              "strongsNumbers": [
+                "H3045"
+              ]
+            },
+            {
+              "text": " for whose cause",
+              "strongsNumbers": [
+                "H7945"
+              ]
+            },
+            {
+              "text": " this evil",
+              "strongsNumbers": [
+                "H7451"
+              ]
+            },
+            {
+              "text": " is upon us. So they cast",
+              "strongsNumbers": [
+                "H5307"
+              ]
+            },
+            {
+              "text": " lots,",
+              "strongsNumbers": [
+                "H1486"
+              ]
+            },
+            {
+              "text": " and the lot",
+              "strongsNumbers": [
+                "H1486"
+              ]
+            },
+            {
+              "text": " fell",
+              "strongsNumbers": [
+                "H5307"
+              ]
+            },
+            {
+              "text": " upon Jonah."
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "Then said they unto him, Tell us, we pray thee, for whose cause this evil [is] upon us; What [is] thine occupation? and whence comest thou? what [is] thy country? and of what people [art] thou?"
+          "text": "Then said they unto him, Tell us, we pray thee, for whose cause this evil is upon us; What is thine occupation? and whence comest thou? what is thy country? and of what people",
+          "tokens": [
+            {
+              "text": "Then said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " they unto him, Tell",
+              "strongsNumbers": [
+                "H5046"
+              ]
+            },
+            {
+              "text": " us, we pray thee, for whose cause this evil",
+              "strongsNumbers": [
+                "H7451"
+              ]
+            },
+            {
+              "text": " is upon us; What is thine occupation?",
+              "strongsNumbers": [
+                "H4399"
+              ]
+            },
+            {
+              "text": " and whence",
+              "strongsNumbers": [
+                "H370"
+              ]
+            },
+            {
+              "text": " comest",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " thou? what is thy country?",
+              "strongsNumbers": [
+                "H776"
+              ]
+            },
+            {
+              "text": " and of what people"
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "And he said unto them, I [am] an Hebrew; and I fear the LORD, the God of heaven, which hath made the sea and the dry [land]."
+          "text": "And he said unto them, I am an Hebrew; and I fear the LORD, the God of heaven, which hath made the sea and the dry",
+          "tokens": [
+            {
+              "text": "And he said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto them, I am an Hebrew;",
+              "strongsNumbers": [
+                "H5680"
+              ]
+            },
+            {
+              "text": " and I fear",
+              "strongsNumbers": [
+                "H3373"
+              ]
+            },
+            {
+              "text": " the LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " the God",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " of heaven,",
+              "strongsNumbers": [
+                "H8064"
+              ]
+            },
+            {
+              "text": " which hath made",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " the sea",
+              "strongsNumbers": [
+                "H3220"
+              ]
+            },
+            {
+              "text": " and the dry"
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "Then were the men exceedingly afraid, and said unto him, Why hast thou done this? For the men knew that he fled from the presence of the LORD, because he had told them."
+          "text": "Then were the men exceedingly afraid, and said unto him, Why hast thou done this? For the men knew that he fled from the presence of the LORD, because he had told",
+          "tokens": [
+            {
+              "text": "Then were the men",
+              "strongsNumbers": [
+                "H582"
+              ]
+            },
+            {
+              "text": " exceedingly",
+              "strongsNumbers": [
+                "H1419",
+                "H3374"
+              ]
+            },
+            {
+              "text": " afraid,",
+              "strongsNumbers": [
+                "H3372"
+              ]
+            },
+            {
+              "text": " and said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto him, Why hast thou done",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " this? For the men",
+              "strongsNumbers": [
+                "H582"
+              ]
+            },
+            {
+              "text": " knew",
+              "strongsNumbers": [
+                "H3045"
+              ]
+            },
+            {
+              "text": " that he fled",
+              "strongsNumbers": [
+                "H1272"
+              ]
+            },
+            {
+              "text": " from the presence",
+              "strongsNumbers": [
+                "H6440"
+              ]
+            },
+            {
+              "text": " of the LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " because he had told"
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "Then said they unto him, What shall we do unto thee, that the sea may be calm unto us? for the sea wrought, and was tempestuous."
+          "text": "Then said they unto him, What shall we do unto thee, that the sea may be calm unto us? for the sea wrought, and was tempestuous.",
+          "tokens": [
+            {
+              "text": "Then said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " they unto him, What shall we do",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " unto thee, that the sea",
+              "strongsNumbers": [
+                "H3220"
+              ]
+            },
+            {
+              "text": " may be calm",
+              "strongsNumbers": [
+                "H8367"
+              ]
+            },
+            {
+              "text": " unto us? for the sea",
+              "strongsNumbers": [
+                "H3220"
+              ]
+            },
+            {
+              "text": " wrought,",
+              "strongsNumbers": [
+                "H1980"
+              ]
+            },
+            {
+              "text": " and was tempestuous."
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "And he said unto them, Take me up, and cast me forth into the sea; so shall the sea be calm unto you: for I know that for my sake this great tempest [is] upon you."
+          "text": "And he said unto them, Take me up, and cast me forth into the sea; so shall the sea be calm unto you: for I know that for my sake this great tempest",
+          "tokens": [
+            {
+              "text": "And he said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto them, Take me up,",
+              "strongsNumbers": [
+                "H5375"
+              ]
+            },
+            {
+              "text": " and cast me forth",
+              "strongsNumbers": [
+                "H2904"
+              ]
+            },
+            {
+              "text": " into the sea;",
+              "strongsNumbers": [
+                "H3220"
+              ]
+            },
+            {
+              "text": " so shall the sea",
+              "strongsNumbers": [
+                "H3220"
+              ]
+            },
+            {
+              "text": " be calm",
+              "strongsNumbers": [
+                "H8367"
+              ]
+            },
+            {
+              "text": " unto you: for I know",
+              "strongsNumbers": [
+                "H3045"
+              ]
+            },
+            {
+              "text": " that for my sake",
+              "strongsNumbers": [
+                "H7945"
+              ]
+            },
+            {
+              "text": " this great",
+              "strongsNumbers": [
+                "H1419"
+              ]
+            },
+            {
+              "text": " tempest"
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "Nevertheless the men rowed hard to bring [it] to the land; but they could not: for the sea wrought, and was tempestuous against them."
+          "text": "Nevertheless the men rowed hard to bring it to the land; but they could not: for the sea wrought, and was tempestuous",
+          "tokens": [
+            {
+              "text": "Nevertheless the men",
+              "strongsNumbers": [
+                "H582"
+              ]
+            },
+            {
+              "text": " rowed hard",
+              "strongsNumbers": [
+                "H2864"
+              ]
+            },
+            {
+              "text": " to bring",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " it to the land;",
+              "strongsNumbers": [
+                "H3004"
+              ]
+            },
+            {
+              "text": " but they could",
+              "strongsNumbers": [
+                "H3201"
+              ]
+            },
+            {
+              "text": " not: for the sea",
+              "strongsNumbers": [
+                "H3220"
+              ]
+            },
+            {
+              "text": " wrought,",
+              "strongsNumbers": [
+                "H1980"
+              ]
+            },
+            {
+              "text": " and was tempestuous"
+            }
+          ]
         },
         {
           "number": 14,
-          "text": "Wherefore they cried unto the LORD, and said, We beseech thee, O LORD, we beseech thee, let us not perish for this man's life, and lay not upon us innocent blood: for thou, O LORD, hast done as it pleased thee."
+          "text": "Wherefore they cried unto the LORD, and said, We beseech thee, O LORD, we beseech thee, let us not perish for this man's life, and lay not upon us innocent blood: for thou, O LORD, hast done as it pleased",
+          "tokens": [
+            {
+              "text": "Wherefore they cried",
+              "strongsNumbers": [
+                "H7121"
+              ]
+            },
+            {
+              "text": " unto the LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " and said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " We beseech thee,",
+              "strongsNumbers": [
+                "H577"
+              ]
+            },
+            {
+              "text": " O LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " we beseech thee, let us not perish",
+              "strongsNumbers": [
+                "H6"
+              ]
+            },
+            {
+              "text": " for this man's",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " life,",
+              "strongsNumbers": [
+                "H5315"
+              ]
+            },
+            {
+              "text": " and lay",
+              "strongsNumbers": [
+                "H5414"
+              ]
+            },
+            {
+              "text": " not upon us innocent",
+              "strongsNumbers": [
+                "H5355",
+                "H5355"
+              ]
+            },
+            {
+              "text": " blood:",
+              "strongsNumbers": [
+                "H1818"
+              ]
+            },
+            {
+              "text": " for thou, O LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " hast done",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " as it pleased"
+            }
+          ]
         },
         {
           "number": 15,
-          "text": "So they took up Jonah, and cast him forth into the sea: and the sea ceased from her raging."
+          "text": "So they took up Jonah, and cast him forth into the sea: and the sea ceased from her raging.",
+          "tokens": [
+            {
+              "text": "So they took up",
+              "strongsNumbers": [
+                "H5375"
+              ]
+            },
+            {
+              "text": " Jonah,",
+              "strongsNumbers": [
+                "H3124"
+              ]
+            },
+            {
+              "text": " and cast him forth",
+              "strongsNumbers": [
+                "H2904"
+              ]
+            },
+            {
+              "text": " into the sea:",
+              "strongsNumbers": [
+                "H3220"
+              ]
+            },
+            {
+              "text": " and the sea",
+              "strongsNumbers": [
+                "H3220"
+              ]
+            },
+            {
+              "text": " ceased",
+              "strongsNumbers": [
+                "H5975"
+              ]
+            },
+            {
+              "text": " from her raging."
+            }
+          ]
         },
         {
           "number": 16,
-          "text": "Then the men feared the LORD exceedingly, and offered a sacrifice unto the LORD, and made vows."
+          "text": "Then the men feared the LORD exceedingly, and offered a sacrifice unto the LORD, and made vows.",
+          "tokens": [
+            {
+              "text": "Then the men",
+              "strongsNumbers": [
+                "H582"
+              ]
+            },
+            {
+              "text": " feared",
+              "strongsNumbers": [
+                "H3372"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " exceedingly,",
+              "strongsNumbers": [
+                "H1419",
+                "H3374"
+              ]
+            },
+            {
+              "text": " and offered",
+              "strongsNumbers": [
+                "H2076"
+              ]
+            },
+            {
+              "text": " a sacrifice",
+              "strongsNumbers": [
+                "H2077"
+              ]
+            },
+            {
+              "text": " unto the LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " and made",
+              "strongsNumbers": [
+                "H5087"
+              ]
+            },
+            {
+              "text": " vows."
+            }
+          ]
         },
         {
           "number": 17,
-          "text": "Now the LORD had prepared a great fish to swallow up Jonah. And Jonah was in the belly of the fish three days and three nights."
+          "text": "Now the LORD had prepared a great fish to swallow up Jonah. And Jonah was in the belly of the fish three days and three nights.",
+          "tokens": [
+            {
+              "text": "Now the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " had prepared",
+              "strongsNumbers": [
+                "H4487"
+              ]
+            },
+            {
+              "text": " a great",
+              "strongsNumbers": [
+                "H1419"
+              ]
+            },
+            {
+              "text": " fish",
+              "strongsNumbers": [
+                "H1709"
+              ]
+            },
+            {
+              "text": " to swallow up",
+              "strongsNumbers": [
+                "H1104"
+              ]
+            },
+            {
+              "text": " Jonah.",
+              "strongsNumbers": [
+                "H3124"
+              ]
+            },
+            {
+              "text": " And Jonah",
+              "strongsNumbers": [
+                "H3124"
+              ]
+            },
+            {
+              "text": " was in the belly",
+              "strongsNumbers": [
+                "H4578"
+              ]
+            },
+            {
+              "text": " of the fish",
+              "strongsNumbers": [
+                "H1709"
+              ]
+            },
+            {
+              "text": " three",
+              "strongsNumbers": [
+                "H7969"
+              ]
+            },
+            {
+              "text": " days",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " and three",
+              "strongsNumbers": [
+                "H7969"
+              ]
+            },
+            {
+              "text": " nights."
+            }
+          ]
         }
       ]
     },
@@ -88,43 +1161,495 @@
       "verses": [
         {
           "number": 1,
-          "text": "Then Jonah prayed unto the LORD his God out of the fish's belly,"
+          "text": "Then Jonah prayed unto the LORD his God out of the fish's belly,",
+          "tokens": [
+            {
+              "text": "Then Jonah",
+              "strongsNumbers": [
+                "H3124"
+              ]
+            },
+            {
+              "text": " prayed",
+              "strongsNumbers": [
+                "H6419"
+              ]
+            },
+            {
+              "text": " unto the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " his God",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " out of the fish's",
+              "strongsNumbers": [
+                "H1710"
+              ]
+            },
+            {
+              "text": " belly,"
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "And said, I cried by reason of mine affliction unto the LORD, and he heard me; out of the belly of hell cried I, [and] thou heardest my voice."
+          "text": "And said, I cried by reason of mine affliction unto the LORD, and he heard me; out of the belly of hell cried I, and thou heardest my voice.",
+          "tokens": [
+            {
+              "text": "And said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " I cried",
+              "strongsNumbers": [
+                "H7121"
+              ]
+            },
+            {
+              "text": " by reason of mine affliction",
+              "strongsNumbers": [
+                "H6869"
+              ]
+            },
+            {
+              "text": " unto the LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " and he heard",
+              "strongsNumbers": [
+                "H6030"
+              ]
+            },
+            {
+              "text": " me; out of the belly",
+              "strongsNumbers": [
+                "H990"
+              ]
+            },
+            {
+              "text": " of hell",
+              "strongsNumbers": [
+                "H7585"
+              ]
+            },
+            {
+              "text": " cried",
+              "strongsNumbers": [
+                "H7768"
+              ]
+            },
+            {
+              "text": " I, and thou heardest",
+              "strongsNumbers": [
+                "H8085"
+              ]
+            },
+            {
+              "text": " my voice."
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "For thou hadst cast me into the deep, in the midst of the seas; and the floods compassed me about: all thy billows and thy waves passed over me."
+          "text": "For thou hadst cast me into the deep, in the midst of the seas; and the floods compassed me about: all thy billows and thy waves passed over",
+          "tokens": [
+            {
+              "text": "For thou hadst cast",
+              "strongsNumbers": [
+                "H7993"
+              ]
+            },
+            {
+              "text": " me into the deep,",
+              "strongsNumbers": [
+                "H4688"
+              ]
+            },
+            {
+              "text": " in the midst",
+              "strongsNumbers": [
+                "H3824"
+              ]
+            },
+            {
+              "text": " of the seas;",
+              "strongsNumbers": [
+                "H3220"
+              ]
+            },
+            {
+              "text": " and the floods",
+              "strongsNumbers": [
+                "H5104"
+              ]
+            },
+            {
+              "text": " compassed",
+              "strongsNumbers": [
+                "H5437"
+              ]
+            },
+            {
+              "text": " me about: all thy billows",
+              "strongsNumbers": [
+                "H4867"
+              ]
+            },
+            {
+              "text": " and thy waves",
+              "strongsNumbers": [
+                "H1530"
+              ]
+            },
+            {
+              "text": " passed over"
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "Then I said, I am cast out of thy sight; yet I will look again toward thy holy temple."
+          "text": "Then I said, I am cast out of thy sight; yet I will look again toward thy holy temple.",
+          "tokens": [
+            {
+              "text": "Then I said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " I am cast out",
+              "strongsNumbers": [
+                "H1644"
+              ]
+            },
+            {
+              "text": " of thy sight;",
+              "strongsNumbers": [
+                "H5869"
+              ]
+            },
+            {
+              "text": " yet I will look",
+              "strongsNumbers": [
+                "H5027"
+              ]
+            },
+            {
+              "text": " again",
+              "strongsNumbers": [
+                "H3254"
+              ]
+            },
+            {
+              "text": " toward thy holy",
+              "strongsNumbers": [
+                "H6944"
+              ]
+            },
+            {
+              "text": " temple."
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "The waters compassed me about, [even] to the soul: the depth closed me round about, the weeds were wrapped about my head."
+          "text": "The waters compassed me about, even to the soul: the depth closed me round about, the weeds were wrapped about my head.",
+          "tokens": [
+            {
+              "text": "The waters",
+              "strongsNumbers": [
+                "H4325"
+              ]
+            },
+            {
+              "text": " compassed me about,",
+              "strongsNumbers": [
+                "H661"
+              ]
+            },
+            {
+              "text": " even to the soul:",
+              "strongsNumbers": [
+                "H5315"
+              ]
+            },
+            {
+              "text": " the depth",
+              "strongsNumbers": [
+                "H8415"
+              ]
+            },
+            {
+              "text": " closed me round about,",
+              "strongsNumbers": [
+                "H5437"
+              ]
+            },
+            {
+              "text": " the weeds",
+              "strongsNumbers": [
+                "H5488"
+              ]
+            },
+            {
+              "text": " were wrapped about",
+              "strongsNumbers": [
+                "H2280"
+              ]
+            },
+            {
+              "text": " my head."
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "I went down to the bottoms of the mountains; the earth with her bars [was] about me for ever: yet hast thou brought up my life from corruption, O LORD my God."
+          "text": "I went down to the bottoms of the mountains; the earth with her bars was about me for ever: yet hast thou brought up my life from corruption, O LORD my God.",
+          "tokens": [
+            {
+              "text": "I went down",
+              "strongsNumbers": [
+                "H3381"
+              ]
+            },
+            {
+              "text": " to the bottoms",
+              "strongsNumbers": [
+                "H7095"
+              ]
+            },
+            {
+              "text": " of the mountains;",
+              "strongsNumbers": [
+                "H2022"
+              ]
+            },
+            {
+              "text": " the earth",
+              "strongsNumbers": [
+                "H776"
+              ]
+            },
+            {
+              "text": " with her bars",
+              "strongsNumbers": [
+                "H1280"
+              ]
+            },
+            {
+              "text": " was about me for ever:",
+              "strongsNumbers": [
+                "H5769"
+              ]
+            },
+            {
+              "text": " yet hast thou brought up",
+              "strongsNumbers": [
+                "H5927"
+              ]
+            },
+            {
+              "text": " my life",
+              "strongsNumbers": [
+                "H2416"
+              ]
+            },
+            {
+              "text": " from corruption,",
+              "strongsNumbers": [
+                "H7845"
+              ]
+            },
+            {
+              "text": " O LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " my God."
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "When my soul fainted within me I remembered the LORD: and my prayer came in unto thee, into thine holy temple."
+          "text": "When my soul fainted within me I remembered the LORD: and my prayer came in unto thee, into thine holy temple.",
+          "tokens": [
+            {
+              "text": "When my soul",
+              "strongsNumbers": [
+                "H5315"
+              ]
+            },
+            {
+              "text": " fainted",
+              "strongsNumbers": [
+                "H5848"
+              ]
+            },
+            {
+              "text": " within me I remembered",
+              "strongsNumbers": [
+                "H2142"
+              ]
+            },
+            {
+              "text": " the LORD:",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " and my prayer",
+              "strongsNumbers": [
+                "H8605"
+              ]
+            },
+            {
+              "text": " came in",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " unto thee, into thine holy",
+              "strongsNumbers": [
+                "H6944"
+              ]
+            },
+            {
+              "text": " temple."
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "They that observe lying vanities forsake their own mercy."
+          "text": "They that observe lying vanities forsake their own mercy.",
+          "tokens": [
+            {
+              "text": "They that observe",
+              "strongsNumbers": [
+                "H8104"
+              ]
+            },
+            {
+              "text": " lying",
+              "strongsNumbers": [
+                "H7723"
+              ]
+            },
+            {
+              "text": " vanities",
+              "strongsNumbers": [
+                "H1892"
+              ]
+            },
+            {
+              "text": " forsake",
+              "strongsNumbers": [
+                "H5800"
+              ]
+            },
+            {
+              "text": " their own mercy."
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "But I will sacrifice unto thee with the voice of thanksgiving; I will pay [that] that I have vowed. Salvation [is] of the LORD."
+          "text": "But I will sacrifice unto thee with the voice of thanksgiving; I will pay that that I have vowed. Salvation is of the LORD.",
+          "tokens": [
+            {
+              "text": "But I will sacrifice",
+              "strongsNumbers": [
+                "H2076"
+              ]
+            },
+            {
+              "text": " unto thee with the voice",
+              "strongsNumbers": [
+                "H6963"
+              ]
+            },
+            {
+              "text": " of thanksgiving;",
+              "strongsNumbers": [
+                "H8426"
+              ]
+            },
+            {
+              "text": " I will pay",
+              "strongsNumbers": [
+                "H7999"
+              ]
+            },
+            {
+              "text": " that that I have vowed.",
+              "strongsNumbers": [
+                "H5087"
+              ]
+            },
+            {
+              "text": " Salvation",
+              "strongsNumbers": [
+                "H3444"
+              ]
+            },
+            {
+              "text": " is of the LORD."
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "And the LORD spake unto the fish, and it vomited out Jonah upon the dry [land]."
+          "text": "And the LORD spake unto the fish, and it vomited out Jonah upon the dry",
+          "tokens": [
+            {
+              "text": "And the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " spake",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto the fish,",
+              "strongsNumbers": [
+                "H1709"
+              ]
+            },
+            {
+              "text": " and it vomited out",
+              "strongsNumbers": [
+                "H6958"
+              ]
+            },
+            {
+              "text": " Jonah",
+              "strongsNumbers": [
+                "H3124"
+              ]
+            },
+            {
+              "text": " upon the dry"
+            }
+          ]
         }
       ]
     },
@@ -134,43 +1659,693 @@
       "verses": [
         {
           "number": 1,
-          "text": "And the word of the LORD came unto Jonah the second time, saying,"
+          "text": "And the word of the LORD came unto Jonah the second time, saying,",
+          "tokens": [
+            {
+              "text": "And the word",
+              "strongsNumbers": [
+                "H1697"
+              ]
+            },
+            {
+              "text": " of the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " came unto Jonah",
+              "strongsNumbers": [
+                "H3124"
+              ]
+            },
+            {
+              "text": " the second",
+              "strongsNumbers": [
+                "H8145"
+              ]
+            },
+            {
+              "text": " time, saying,"
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "Arise, go unto Nineveh, that great city, and preach unto it the preaching that I bid thee."
+          "text": "Arise, go unto Nineveh, that great city, and preach unto it the preaching that I bid",
+          "tokens": [
+            {
+              "text": "Arise,",
+              "strongsNumbers": [
+                "H6965"
+              ]
+            },
+            {
+              "text": " go",
+              "strongsNumbers": [
+                "H3212"
+              ]
+            },
+            {
+              "text": " unto Nineveh,",
+              "strongsNumbers": [
+                "H5210"
+              ]
+            },
+            {
+              "text": " that great",
+              "strongsNumbers": [
+                "H1419"
+              ]
+            },
+            {
+              "text": " city,",
+              "strongsNumbers": [
+                "H5892"
+              ]
+            },
+            {
+              "text": " and preach",
+              "strongsNumbers": [
+                "H7121"
+              ]
+            },
+            {
+              "text": " unto it the preaching",
+              "strongsNumbers": [
+                "H7150"
+              ]
+            },
+            {
+              "text": " that I bid"
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "So Jonah arose, and went unto Nineveh, according to the word of the LORD. Now Nineveh was an exceeding great city of three days' journey."
+          "text": "So Jonah arose, and went unto Nineveh, according to the word of the LORD. Now Nineveh was an exceeding great city of three days' journey.",
+          "tokens": [
+            {
+              "text": "So Jonah",
+              "strongsNumbers": [
+                "H3124"
+              ]
+            },
+            {
+              "text": " arose,",
+              "strongsNumbers": [
+                "H6965"
+              ]
+            },
+            {
+              "text": " and went",
+              "strongsNumbers": [
+                "H3212"
+              ]
+            },
+            {
+              "text": " unto Nineveh,",
+              "strongsNumbers": [
+                "H5210"
+              ]
+            },
+            {
+              "text": " according to the word",
+              "strongsNumbers": [
+                "H1697"
+              ]
+            },
+            {
+              "text": " of the LORD.",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " Now Nineveh",
+              "strongsNumbers": [
+                "H5210"
+              ]
+            },
+            {
+              "text": " was an exceeding",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " great",
+              "strongsNumbers": [
+                "H1419"
+              ]
+            },
+            {
+              "text": " city",
+              "strongsNumbers": [
+                "H5892"
+              ]
+            },
+            {
+              "text": " of three",
+              "strongsNumbers": [
+                "H7969"
+              ]
+            },
+            {
+              "text": " days'",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " journey."
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "And Jonah began to enter into the city a day's journey, and he cried, and said, Yet forty days, and Nineveh shall be overthrown."
+          "text": "And Jonah began to enter into the city a day's journey, and he cried, and said, Yet forty days, and Nineveh shall be overthrown.",
+          "tokens": [
+            {
+              "text": "And Jonah",
+              "strongsNumbers": [
+                "H3124"
+              ]
+            },
+            {
+              "text": " began",
+              "strongsNumbers": [
+                "H2490"
+              ]
+            },
+            {
+              "text": " to enter",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " into the city",
+              "strongsNumbers": [
+                "H5892"
+              ]
+            },
+            {
+              "text": " a",
+              "strongsNumbers": [
+                "H259"
+              ]
+            },
+            {
+              "text": " day's",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " journey,",
+              "strongsNumbers": [
+                "H4109"
+              ]
+            },
+            {
+              "text": " and he cried,",
+              "strongsNumbers": [
+                "H7121"
+              ]
+            },
+            {
+              "text": " and said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Yet forty",
+              "strongsNumbers": [
+                "H705"
+              ]
+            },
+            {
+              "text": " days,",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " and Nineveh",
+              "strongsNumbers": [
+                "H5210"
+              ]
+            },
+            {
+              "text": " shall be overthrown."
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "So the people of Nineveh believed God, and proclaimed a fast, and put on sackcloth, from the greatest of them even to the least of them."
+          "text": "So the people of Nineveh believed God, and proclaimed a fast, and put on sackcloth, from the greatest of them even to the least",
+          "tokens": [
+            {
+              "text": "So the people",
+              "strongsNumbers": [
+                "H582"
+              ]
+            },
+            {
+              "text": " of Nineveh",
+              "strongsNumbers": [
+                "H5210"
+              ]
+            },
+            {
+              "text": " believed",
+              "strongsNumbers": [
+                "H539"
+              ]
+            },
+            {
+              "text": " God,",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " and proclaimed",
+              "strongsNumbers": [
+                "H7121"
+              ]
+            },
+            {
+              "text": " a fast,",
+              "strongsNumbers": [
+                "H6685"
+              ]
+            },
+            {
+              "text": " and put",
+              "strongsNumbers": [
+                "H3847"
+              ]
+            },
+            {
+              "text": " on sackcloth,",
+              "strongsNumbers": [
+                "H8242"
+              ]
+            },
+            {
+              "text": " from the greatest",
+              "strongsNumbers": [
+                "H1419"
+              ]
+            },
+            {
+              "text": " of them even to the least"
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "For word came unto the king of Nineveh, and he arose from his throne, and he laid his robe from him, and covered [him] with sackcloth, and sat in ashes."
+          "text": "For word came unto the king of Nineveh, and he arose from his throne, and he laid his robe from him, and covered him with sackcloth, and sat in ashes.",
+          "tokens": [
+            {
+              "text": "For word",
+              "strongsNumbers": [
+                "H1697"
+              ]
+            },
+            {
+              "text": " came",
+              "strongsNumbers": [
+                "H5060"
+              ]
+            },
+            {
+              "text": " unto the king",
+              "strongsNumbers": [
+                "H4428"
+              ]
+            },
+            {
+              "text": " of Nineveh,",
+              "strongsNumbers": [
+                "H5210"
+              ]
+            },
+            {
+              "text": " and he arose",
+              "strongsNumbers": [
+                "H6965"
+              ]
+            },
+            {
+              "text": " from his throne,",
+              "strongsNumbers": [
+                "H3678"
+              ]
+            },
+            {
+              "text": " and he laid",
+              "strongsNumbers": [
+                "H5674"
+              ]
+            },
+            {
+              "text": " his robe",
+              "strongsNumbers": [
+                "H155"
+              ]
+            },
+            {
+              "text": " from him, and covered",
+              "strongsNumbers": [
+                "H3680"
+              ]
+            },
+            {
+              "text": " him with sackcloth,",
+              "strongsNumbers": [
+                "H8242"
+              ]
+            },
+            {
+              "text": " and sat",
+              "strongsNumbers": [
+                "H3427"
+              ]
+            },
+            {
+              "text": " in ashes."
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "And he caused [it] to be proclaimed and published through Nineveh by the decree of the king and his nobles, saying, Let neither man nor beast, herd nor flock, taste any thing: let them not feed, nor drink water:"
+          "text": "And he caused it to be proclaimed and published through Nineveh by the decree of the king and his nobles, saying, Let neither man nor beast, herd nor flock, taste any thing: let them not feed, nor drink water:",
+          "tokens": [
+            {
+              "text": "And he caused it to be proclaimed",
+              "strongsNumbers": [
+                "H2199"
+              ]
+            },
+            {
+              "text": " and published",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " through Nineveh",
+              "strongsNumbers": [
+                "H5210"
+              ]
+            },
+            {
+              "text": " by the decree",
+              "strongsNumbers": [
+                "H2940"
+              ]
+            },
+            {
+              "text": " of the king",
+              "strongsNumbers": [
+                "H4428"
+              ]
+            },
+            {
+              "text": " and his nobles,",
+              "strongsNumbers": [
+                "H1419"
+              ]
+            },
+            {
+              "text": " saying,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Let neither man",
+              "strongsNumbers": [
+                "H120"
+              ]
+            },
+            {
+              "text": " nor beast,",
+              "strongsNumbers": [
+                "H929"
+              ]
+            },
+            {
+              "text": " herd",
+              "strongsNumbers": [
+                "H1241"
+              ]
+            },
+            {
+              "text": " nor flock,",
+              "strongsNumbers": [
+                "H6629"
+              ]
+            },
+            {
+              "text": " taste",
+              "strongsNumbers": [
+                "H2938"
+              ]
+            },
+            {
+              "text": " any thing:",
+              "strongsNumbers": [
+                "H3972"
+              ]
+            },
+            {
+              "text": " let them not feed,",
+              "strongsNumbers": [
+                "H7462"
+              ]
+            },
+            {
+              "text": " nor drink",
+              "strongsNumbers": [
+                "H8354"
+              ]
+            },
+            {
+              "text": " water:"
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "But let man and beast be covered with sackcloth, and cry mightily unto God: yea, let them turn every one from his evil way, and from the violence that [is] in their hands."
+          "text": "But let man and beast be covered with sackcloth, and cry mightily unto God: yea, let them turn every one from his evil way, and from the violence that is in their hands.",
+          "tokens": [
+            {
+              "text": "But let man",
+              "strongsNumbers": [
+                "H120"
+              ]
+            },
+            {
+              "text": " and beast",
+              "strongsNumbers": [
+                "H929"
+              ]
+            },
+            {
+              "text": " be covered",
+              "strongsNumbers": [
+                "H3680"
+              ]
+            },
+            {
+              "text": " with sackcloth,",
+              "strongsNumbers": [
+                "H8242"
+              ]
+            },
+            {
+              "text": " and cry",
+              "strongsNumbers": [
+                "H7121"
+              ]
+            },
+            {
+              "text": " mightily",
+              "strongsNumbers": [
+                "H2394"
+              ]
+            },
+            {
+              "text": " unto God:",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " yea, let them turn",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " every one",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " from his evil",
+              "strongsNumbers": [
+                "H7451"
+              ]
+            },
+            {
+              "text": " way,",
+              "strongsNumbers": [
+                "H1870"
+              ]
+            },
+            {
+              "text": " and from the violence",
+              "strongsNumbers": [
+                "H2555"
+              ]
+            },
+            {
+              "text": " that is in their hands."
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "Who can tell [if] God will turn and repent, and turn away from his fierce anger, that we perish not?"
+          "text": "Who can tell if God will turn and repent, and turn away from his fierce anger, that we perish",
+          "tokens": [
+            {
+              "text": "Who can tell",
+              "strongsNumbers": [
+                "H3045"
+              ]
+            },
+            {
+              "text": " if God",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " will turn",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " and repent,",
+              "strongsNumbers": [
+                "H5162"
+              ]
+            },
+            {
+              "text": " and turn away",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " from his fierce",
+              "strongsNumbers": [
+                "H2740"
+              ]
+            },
+            {
+              "text": " anger,",
+              "strongsNumbers": [
+                "H639"
+              ]
+            },
+            {
+              "text": " that we perish"
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "And God saw their works, that they turned from their evil way; and God repented of the evil, that he had said that he would do unto them; and he did [it] not."
+          "text": "And God saw their works, that they turned from their evil way; and God repented of the evil, that he had said that he would do unto them; and he did",
+          "tokens": [
+            {
+              "text": "And God",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " saw",
+              "strongsNumbers": [
+                "H7200"
+              ]
+            },
+            {
+              "text": " their works,",
+              "strongsNumbers": [
+                "H4639"
+              ]
+            },
+            {
+              "text": " that they turned",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " from their evil",
+              "strongsNumbers": [
+                "H7451"
+              ]
+            },
+            {
+              "text": " way;",
+              "strongsNumbers": [
+                "H1870"
+              ]
+            },
+            {
+              "text": " and God",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " repented",
+              "strongsNumbers": [
+                "H5162"
+              ]
+            },
+            {
+              "text": " of the evil,",
+              "strongsNumbers": [
+                "H7451"
+              ]
+            },
+            {
+              "text": " that he had said",
+              "strongsNumbers": [
+                "H1696"
+              ]
+            },
+            {
+              "text": " that he would do",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " unto them; and he did"
+            }
+          ]
         }
       ]
     },
@@ -180,47 +2355,769 @@
       "verses": [
         {
           "number": 1,
-          "text": "But it displeased Jonah exceedingly, and he was very angry."
+          "text": "But it displeased Jonah exceedingly, and he was very angry.",
+          "tokens": [
+            {
+              "text": "But it displeased",
+              "strongsNumbers": [
+                "H3415"
+              ]
+            },
+            {
+              "text": " Jonah",
+              "strongsNumbers": [
+                "H3124"
+              ]
+            },
+            {
+              "text": " exceedingly,",
+              "strongsNumbers": [
+                "H1419",
+                "H7451"
+              ]
+            },
+            {
+              "text": " and he was very angry."
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "And he prayed unto the LORD, and said, I pray thee, O LORD, [was] not this my saying, when I was yet in my country? Therefore I fled before unto Tarshish: for I knew that thou [art] a gracious God, and merciful, slow to anger, and of great kindness, and repentest thee of the evil."
+          "text": "And he prayed unto the LORD, and said, I pray thee, O LORD, was not this my saying, when I was yet in my country? Therefore I fled before unto Tarshish: for I knew that thou art a gracious God, and merciful, slow to anger, and of great kindness, and repentest thee of the evil.",
+          "tokens": [
+            {
+              "text": "And he prayed",
+              "strongsNumbers": [
+                "H6419"
+              ]
+            },
+            {
+              "text": " unto the LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " and said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " I pray",
+              "strongsNumbers": [
+                "H577"
+              ]
+            },
+            {
+              "text": " thee, O LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " was not this my saying,",
+              "strongsNumbers": [
+                "H1697"
+              ]
+            },
+            {
+              "text": " when I was yet in my country?",
+              "strongsNumbers": [
+                "H127"
+              ]
+            },
+            {
+              "text": " Therefore I fled",
+              "strongsNumbers": [
+                "H1272"
+              ]
+            },
+            {
+              "text": " before",
+              "strongsNumbers": [
+                "H6923"
+              ]
+            },
+            {
+              "text": " unto Tarshish:",
+              "strongsNumbers": [
+                "H8659"
+              ]
+            },
+            {
+              "text": " for I knew",
+              "strongsNumbers": [
+                "H3045"
+              ]
+            },
+            {
+              "text": " that thou art a gracious",
+              "strongsNumbers": [
+                "H2587"
+              ]
+            },
+            {
+              "text": " God,",
+              "strongsNumbers": [
+                "H410"
+              ]
+            },
+            {
+              "text": " and merciful,",
+              "strongsNumbers": [
+                "H7349"
+              ]
+            },
+            {
+              "text": " slow",
+              "strongsNumbers": [
+                "H750"
+              ]
+            },
+            {
+              "text": " to anger,",
+              "strongsNumbers": [
+                "H639"
+              ]
+            },
+            {
+              "text": " and of great",
+              "strongsNumbers": [
+                "H7227"
+              ]
+            },
+            {
+              "text": " kindness,",
+              "strongsNumbers": [
+                "H2617"
+              ]
+            },
+            {
+              "text": " and repentest",
+              "strongsNumbers": [
+                "H5162"
+              ]
+            },
+            {
+              "text": " thee of the evil."
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "Therefore now, O LORD, take, I beseech thee, my life from me; for [it is] better for me to die than to live."
+          "text": "Therefore now, O LORD, take, I beseech thee, my life from me; for it is better for me to die than to live.",
+          "tokens": [
+            {
+              "text": "Therefore now, O LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " take,",
+              "strongsNumbers": [
+                "H3947"
+              ]
+            },
+            {
+              "text": " I beseech thee, my life",
+              "strongsNumbers": [
+                "H5315"
+              ]
+            },
+            {
+              "text": " from me; for it is better",
+              "strongsNumbers": [
+                "H2896"
+              ]
+            },
+            {
+              "text": " for me to die",
+              "strongsNumbers": [
+                "H4194"
+              ]
+            },
+            {
+              "text": " than to live."
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "Then said the LORD, Doest thou well to be angry?"
+          "text": "Then said the LORD, Doest thou well to be angry?",
+          "tokens": [
+            {
+              "text": "Then said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " Doest thou well",
+              "strongsNumbers": [
+                "H3190"
+              ]
+            },
+            {
+              "text": " to be angry?"
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "So Jonah went out of the city, and sat on the east side of the city, and there made him a booth, and sat under it in the shadow, till he might see what would become of the city."
+          "text": "So Jonah went out of the city, and sat on the east side of the city, and there made him a booth, and sat under it in the shadow, till he might see what would become of the city.",
+          "tokens": [
+            {
+              "text": "So Jonah",
+              "strongsNumbers": [
+                "H3124"
+              ]
+            },
+            {
+              "text": " went out",
+              "strongsNumbers": [
+                "H3318"
+              ]
+            },
+            {
+              "text": " of the city,",
+              "strongsNumbers": [
+                "H5892"
+              ]
+            },
+            {
+              "text": " and sat",
+              "strongsNumbers": [
+                "H3427"
+              ]
+            },
+            {
+              "text": " on the east side",
+              "strongsNumbers": [
+                "H6924"
+              ]
+            },
+            {
+              "text": " of the city,",
+              "strongsNumbers": [
+                "H5892"
+              ]
+            },
+            {
+              "text": " and there made",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " him a booth,",
+              "strongsNumbers": [
+                "H5521"
+              ]
+            },
+            {
+              "text": " and sat",
+              "strongsNumbers": [
+                "H3427"
+              ]
+            },
+            {
+              "text": " under it in the shadow,",
+              "strongsNumbers": [
+                "H6738"
+              ]
+            },
+            {
+              "text": " till he might see",
+              "strongsNumbers": [
+                "H7200"
+              ]
+            },
+            {
+              "text": " what would become of the city."
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "And the LORD God prepared a gourd, and made [it] to come up over Jonah, that it might be a shadow over his head, to deliver him from his grief. So Jonah was exceeding glad of the gourd."
+          "text": "And the LORD God prepared a gourd, and made it to come up over Jonah, that it might be a shadow over his head, to deliver him from his grief. So Jonah was exceeding glad of the gourd.",
+          "tokens": [
+            {
+              "text": "And the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " God",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " prepared",
+              "strongsNumbers": [
+                "H4487"
+              ]
+            },
+            {
+              "text": " a gourd,",
+              "strongsNumbers": [
+                "H7021"
+              ]
+            },
+            {
+              "text": " and made it to come up",
+              "strongsNumbers": [
+                "H5927"
+              ]
+            },
+            {
+              "text": " over Jonah,",
+              "strongsNumbers": [
+                "H3124"
+              ]
+            },
+            {
+              "text": " that it might be a shadow",
+              "strongsNumbers": [
+                "H6738"
+              ]
+            },
+            {
+              "text": " over his head,",
+              "strongsNumbers": [
+                "H7218"
+              ]
+            },
+            {
+              "text": " to deliver",
+              "strongsNumbers": [
+                "H5337"
+              ]
+            },
+            {
+              "text": " him from his grief.",
+              "strongsNumbers": [
+                "H7451"
+              ]
+            },
+            {
+              "text": " So Jonah",
+              "strongsNumbers": [
+                "H3124"
+              ]
+            },
+            {
+              "text": " was exceeding",
+              "strongsNumbers": [
+                "H1419",
+                "H8057"
+              ]
+            },
+            {
+              "text": " glad",
+              "strongsNumbers": [
+                "H8055"
+              ]
+            },
+            {
+              "text": " of the gourd."
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "But God prepared a worm when the morning rose the next day, and it smote the gourd that it withered."
+          "text": "But God prepared a worm when the morning rose the next day, and it smote the gourd that it withered.",
+          "tokens": [
+            {
+              "text": "But God",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " prepared",
+              "strongsNumbers": [
+                "H4487"
+              ]
+            },
+            {
+              "text": " a worm",
+              "strongsNumbers": [
+                "H8438"
+              ]
+            },
+            {
+              "text": " when the morning",
+              "strongsNumbers": [
+                "H7837"
+              ]
+            },
+            {
+              "text": " rose",
+              "strongsNumbers": [
+                "H5927"
+              ]
+            },
+            {
+              "text": " the next day,",
+              "strongsNumbers": [
+                "H4283"
+              ]
+            },
+            {
+              "text": " and it smote",
+              "strongsNumbers": [
+                "H5221"
+              ]
+            },
+            {
+              "text": " the gourd",
+              "strongsNumbers": [
+                "H7021"
+              ]
+            },
+            {
+              "text": " that it withered."
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "And it came to pass, when the sun did arise, that God prepared a vehement east wind; and the sun beat upon the head of Jonah, that he fainted, and wished in himself to die, and said, [It is] better for me to die than to live."
+          "text": "And it came to pass, when the sun did arise, that God prepared a vehement east wind; and the sun beat upon the head of Jonah, that he fainted, and wished in himself to die, and said, It is better for me to die than to live.",
+          "tokens": [
+            {
+              "text": "And it came to pass, when the sun",
+              "strongsNumbers": [
+                "H8121"
+              ]
+            },
+            {
+              "text": " did arise,",
+              "strongsNumbers": [
+                "H2224"
+              ]
+            },
+            {
+              "text": " that God",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " prepared",
+              "strongsNumbers": [
+                "H4487"
+              ]
+            },
+            {
+              "text": " a vehement",
+              "strongsNumbers": [
+                "H2759"
+              ]
+            },
+            {
+              "text": " east",
+              "strongsNumbers": [
+                "H6921"
+              ]
+            },
+            {
+              "text": " wind;",
+              "strongsNumbers": [
+                "H7307"
+              ]
+            },
+            {
+              "text": " and the sun",
+              "strongsNumbers": [
+                "H8121"
+              ]
+            },
+            {
+              "text": " beat",
+              "strongsNumbers": [
+                "H5221"
+              ]
+            },
+            {
+              "text": " upon the head",
+              "strongsNumbers": [
+                "H7218"
+              ]
+            },
+            {
+              "text": " of Jonah,",
+              "strongsNumbers": [
+                "H3124"
+              ]
+            },
+            {
+              "text": " that he fainted,",
+              "strongsNumbers": [
+                "H5968"
+              ]
+            },
+            {
+              "text": " and wished",
+              "strongsNumbers": [
+                "H7592"
+              ]
+            },
+            {
+              "text": " in himself",
+              "strongsNumbers": [
+                "H5315"
+              ]
+            },
+            {
+              "text": " to die,",
+              "strongsNumbers": [
+                "H4191"
+              ]
+            },
+            {
+              "text": " and said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " It is better",
+              "strongsNumbers": [
+                "H2896"
+              ]
+            },
+            {
+              "text": " for me to die",
+              "strongsNumbers": [
+                "H4194"
+              ]
+            },
+            {
+              "text": " than to live."
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "And God said to Jonah, Doest thou well to be angry for the gourd? And he said, I do well to be angry, [even] unto death."
+          "text": "And God said to Jonah, Doest thou well to be angry for the gourd? And he said, I do well to be angry, even unto death.",
+          "tokens": [
+            {
+              "text": "And God",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " to Jonah,",
+              "strongsNumbers": [
+                "H3124"
+              ]
+            },
+            {
+              "text": " Doest thou well",
+              "strongsNumbers": [
+                "H3190"
+              ]
+            },
+            {
+              "text": " to be angry",
+              "strongsNumbers": [
+                "H2734"
+              ]
+            },
+            {
+              "text": " for the gourd?",
+              "strongsNumbers": [
+                "H7021"
+              ]
+            },
+            {
+              "text": " And he said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " I do well",
+              "strongsNumbers": [
+                "H3190"
+              ]
+            },
+            {
+              "text": " to be angry,",
+              "strongsNumbers": [
+                "H2734"
+              ]
+            },
+            {
+              "text": " even unto death."
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "Then said the LORD, Thou hast had pity on the gourd, for the which thou hast not laboured, neither madest it grow; which came up in a night, and perished in a night:"
+          "text": "Then said the LORD, Thou hast had pity on the gourd, for the which thou hast not laboured, neither madest it grow; which came up in a night, and perished in a night:",
+          "tokens": [
+            {
+              "text": "Then said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " Thou hast had pity",
+              "strongsNumbers": [
+                "H2347"
+              ]
+            },
+            {
+              "text": " on the gourd,",
+              "strongsNumbers": [
+                "H7021"
+              ]
+            },
+            {
+              "text": " for the which thou hast not laboured,",
+              "strongsNumbers": [
+                "H5998"
+              ]
+            },
+            {
+              "text": " neither madest it grow;",
+              "strongsNumbers": [
+                "H1431"
+              ]
+            },
+            {
+              "text": " which came up in a night,",
+              "strongsNumbers": [
+                "H1121",
+                "H3915"
+              ]
+            },
+            {
+              "text": " and perished",
+              "strongsNumbers": [
+                "H6"
+              ]
+            },
+            {
+              "text": " in a night:",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "And should not I spare Nineveh, that great city, wherein are more than sixscore thousand persons that cannot discern between their right hand and their left hand; and [also] much cattle?"
+          "text": "And should not I spare Nineveh, that great city, wherein are more than sixscore thousand persons that cannot discern between their right hand and their left hand; and also much cattle?",
+          "tokens": [
+            {
+              "text": "And should not I spare",
+              "strongsNumbers": [
+                "H2347"
+              ]
+            },
+            {
+              "text": " Nineveh,",
+              "strongsNumbers": [
+                "H5210"
+              ]
+            },
+            {
+              "text": " that great",
+              "strongsNumbers": [
+                "H1419"
+              ]
+            },
+            {
+              "text": " city,",
+              "strongsNumbers": [
+                "H5892"
+              ]
+            },
+            {
+              "text": " wherein are",
+              "strongsNumbers": [
+                "H3426"
+              ]
+            },
+            {
+              "text": " more",
+              "strongsNumbers": [
+                "H7235"
+              ]
+            },
+            {
+              "text": " than sixscore",
+              "strongsNumbers": [
+                "H8147",
+                "H6240"
+              ]
+            },
+            {
+              "text": " thousand",
+              "strongsNumbers": [
+                "H7239"
+              ]
+            },
+            {
+              "text": " persons",
+              "strongsNumbers": [
+                "H120"
+              ]
+            },
+            {
+              "text": " that cannot discern",
+              "strongsNumbers": [
+                "H3045"
+              ]
+            },
+            {
+              "text": " between their right hand",
+              "strongsNumbers": [
+                "H3225"
+              ]
+            },
+            {
+              "text": " and their left hand;",
+              "strongsNumbers": [
+                "H8040"
+              ]
+            },
+            {
+              "text": " and also much",
+              "strongsNumbers": [
+                "H7227"
+              ]
+            },
+            {
+              "text": " cattle?"
+            }
+          ]
         }
       ]
     }

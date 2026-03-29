@@ -19,6 +19,7 @@ describe("bible data", () => {
     expect(book?.name).toBe("Genesis");
     expect(chapter?.chapterNumber).toBe(1);
     expect(chapter?.verses[0]?.text).toContain("In the beginning God created");
+    expect(chapter?.verses[0]?.tokens?.[0]?.strongsNumbers).toContain("H7225");
   });
 
   it("loads Revelation 22 from WEB", async () => {

@@ -71,6 +71,7 @@ describe("Reader customization", () => {
 
     expect(stored).toContain('"themePreset":"midnight"');
     expect(stored).toContain('"textSize":1.12');
+    expect(stored).toContain('"showStrongs":false');
   });
 
   it("opens advanced settings and updates power-user controls", () => {
@@ -120,6 +121,7 @@ describe("Reader customization", () => {
         themePreset: "ember",
         bodyFont: "mono",
         uiFont: "technical",
+        showStrongs: false,
         textSize: 1.18,
         lineHeight: 2.1,
         contentWidth: 52,
@@ -150,6 +152,28 @@ describe("Reader customization", () => {
 
     expect(screen.getByRole("button", { name: /Mono/i })).toHaveClass("is-active");
     expect(screen.getByRole("button", { name: /Justified/i })).toHaveClass("is-active");
+  });
+
+  it("persists the KJV Strongs toggle from the reader menu", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={chaptersByVersion}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: {
+        value: "kjv"
+      }
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Show Strongs" }));
+
+    const stored = window.localStorage.getItem(READER_CUSTOMIZATION_STORAGE_KEY) ?? "";
+
+    expect(stored).toContain('"showStrongs":true');
   });
 
   it("resets advanced settings to defaults", () => {

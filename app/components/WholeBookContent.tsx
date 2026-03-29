@@ -1,6 +1,7 @@
 "use client";
 
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
+import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderContentTabs } from "@/app/components/ReaderContentTabs";
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
@@ -20,8 +21,10 @@ type WholeBookContentProps = {
 
 export function WholeBookContent({ books, book, chaptersByVersion }: WholeBookContentProps) {
   const { version } = useReaderVersion();
+  const { settings } = useReaderCustomization();
   const { activeReaderPane } = useReaderWorkspace();
   const chapters = chaptersByVersion[version];
+  const showStrongs = version === "kjv" && settings.showStrongs;
   const versionLabel = getBibleVersionLabel(version);
   const versionBadge = getBibleVersionBadge(version);
 
@@ -72,6 +75,7 @@ export function WholeBookContent({ books, book, chaptersByVersion }: WholeBookCo
                   bookSlug={book.slug}
                   chapterNumber={chapter.chapterNumber}
                   key={`${version}:${book.slug}:${chapter.chapterNumber}`}
+                  showStrongs={showStrongs}
                   verses={chapter.verses}
                 />
               </section>

@@ -14,75 +14,1871 @@
       "verses": [
         {
           "number": 1,
-          "text": "Paul, an apostle of Jesus Christ by the will of God, according to the promise of life which is in Christ Jesus,"
+          "text": "Paul, an apostle of Jesus Christ by the will of God, according to the promise of life which is in Christ Jesus,",
+          "tokens": [
+            {
+              "text": "Paul,",
+              "strongsNumbers": [
+                "G3972"
+              ]
+            },
+            {
+              "text": " an apostle",
+              "strongsNumbers": [
+                "G652"
+              ]
+            },
+            {
+              "text": " of Jesus",
+              "strongsNumbers": [
+                "G2424"
+              ]
+            },
+            {
+              "text": " Christ",
+              "strongsNumbers": [
+                "G5547"
+              ]
+            },
+            {
+              "text": " by",
+              "strongsNumbers": [
+                "G1223"
+              ]
+            },
+            {
+              "text": " the will",
+              "strongsNumbers": [
+                "G2307"
+              ]
+            },
+            {
+              "text": " of God,",
+              "strongsNumbers": [
+                "G2316"
+              ]
+            },
+            {
+              "text": " according to",
+              "strongsNumbers": [
+                "G2596"
+              ]
+            },
+            {
+              "text": " the promise",
+              "strongsNumbers": [
+                "G1860"
+              ]
+            },
+            {
+              "text": " of life",
+              "strongsNumbers": [
+                "G2222"
+              ]
+            },
+            {
+              "text": " which",
+              "strongsNumbers": [
+                "G3588"
+              ]
+            },
+            {
+              "text": " is in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " Christ",
+              "strongsNumbers": [
+                "G5547"
+              ]
+            },
+            {
+              "text": " Jesus,",
+              "strongsNumbers": [
+                "G2424"
+              ]
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "To Timothy, [my] dearly beloved son: Grace, mercy, [and] peace, from God the Father and Christ Jesus our Lord."
+          "text": "To Timothy, my dearly beloved son: Grace, mercy, and peace, from God the Father and Christ Jesus our Lord.",
+          "tokens": [
+            {
+              "text": "To Timothy,",
+              "strongsNumbers": [
+                "G5095"
+              ]
+            },
+            {
+              "text": " my dearly beloved",
+              "strongsNumbers": [
+                "G27"
+              ]
+            },
+            {
+              "text": " son:",
+              "strongsNumbers": [
+                "G5043"
+              ]
+            },
+            {
+              "text": " Grace,",
+              "strongsNumbers": [
+                "G5485"
+              ]
+            },
+            {
+              "text": " mercy,",
+              "strongsNumbers": [
+                "G1656"
+              ]
+            },
+            {
+              "text": " and peace,",
+              "strongsNumbers": [
+                "G1515"
+              ]
+            },
+            {
+              "text": " from",
+              "strongsNumbers": [
+                "G575"
+              ]
+            },
+            {
+              "text": " God",
+              "strongsNumbers": [
+                "G2316"
+              ]
+            },
+            {
+              "text": " the Father",
+              "strongsNumbers": [
+                "G3962"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " Christ",
+              "strongsNumbers": [
+                "G5547"
+              ]
+            },
+            {
+              "text": " Jesus",
+              "strongsNumbers": [
+                "G2424"
+              ]
+            },
+            {
+              "text": " our",
+              "strongsNumbers": [
+                "G2257"
+              ]
+            },
+            {
+              "text": " Lord.",
+              "strongsNumbers": [
+                "G2962"
+              ]
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "I thank God, whom I serve from [my] forefathers with pure conscience, that without ceasing I have remembrance of thee in my prayers night and day;"
+          "text": "I thank God, whom I serve from my forefathers with pure conscience, that without ceasing I have remembrance of thee in my prayers night and day;",
+          "tokens": [
+            {
+              "text": "I thank",
+              "strongsNumbers": [
+                "G2192",
+                "G5485"
+              ]
+            },
+            {
+              "text": " God,",
+              "strongsNumbers": [
+                "G2316"
+              ]
+            },
+            {
+              "text": " whom",
+              "strongsNumbers": [
+                "G3739"
+              ]
+            },
+            {
+              "text": " I serve",
+              "strongsNumbers": [
+                "G3000"
+              ]
+            },
+            {
+              "text": " from",
+              "strongsNumbers": [
+                "G575"
+              ]
+            },
+            {
+              "text": " my forefathers",
+              "strongsNumbers": [
+                "G4269"
+              ]
+            },
+            {
+              "text": " with",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " pure",
+              "strongsNumbers": [
+                "G2513"
+              ]
+            },
+            {
+              "text": " conscience,",
+              "strongsNumbers": [
+                "G4893"
+              ]
+            },
+            {
+              "text": " that",
+              "strongsNumbers": [
+                "G5613"
+              ]
+            },
+            {
+              "text": " without ceasing",
+              "strongsNumbers": [
+                "G88"
+              ]
+            },
+            {
+              "text": " I have",
+              "strongsNumbers": [
+                "G2192"
+              ]
+            },
+            {
+              "text": " remembrance",
+              "strongsNumbers": [
+                "G3417"
+              ]
+            },
+            {
+              "text": " of",
+              "strongsNumbers": [
+                "G4012"
+              ]
+            },
+            {
+              "text": " thee",
+              "strongsNumbers": [
+                "G4675"
+              ]
+            },
+            {
+              "text": " in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " my",
+              "strongsNumbers": [
+                "G3450"
+              ]
+            },
+            {
+              "text": " prayers",
+              "strongsNumbers": [
+                "G1162"
+              ]
+            },
+            {
+              "text": " night",
+              "strongsNumbers": [
+                "G3571"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " day;",
+              "strongsNumbers": [
+                "G2250"
+              ]
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "Greatly desiring to see thee, being mindful of thy tears, that I may be filled with joy;"
+          "text": "Greatly desiring to see thee, being mindful of thy tears, that I may be filled with joy;",
+          "tokens": [
+            {
+              "text": "Greatly desiring",
+              "strongsNumbers": [
+                "G1971"
+              ]
+            },
+            {
+              "text": " to see",
+              "strongsNumbers": [
+                "G1492"
+              ]
+            },
+            {
+              "text": " thee,",
+              "strongsNumbers": [
+                "G4571"
+              ]
+            },
+            {
+              "text": " being mindful",
+              "strongsNumbers": [
+                "G3415"
+              ]
+            },
+            {
+              "text": " of thy",
+              "strongsNumbers": [
+                "G4675"
+              ]
+            },
+            {
+              "text": " tears,",
+              "strongsNumbers": [
+                "G1144"
+              ]
+            },
+            {
+              "text": " that",
+              "strongsNumbers": [
+                "G2443"
+              ]
+            },
+            {
+              "text": " I may be filled",
+              "strongsNumbers": [
+                "G4137"
+              ]
+            },
+            {
+              "text": " with joy;",
+              "strongsNumbers": [
+                "G5479"
+              ]
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "When I call to remembrance the unfeigned faith that is in thee, which dwelt first in thy grandmother Lois, and thy mother Eunice; and I am persuaded that in thee also."
+          "text": "When I call to remembrance the unfeigned faith that is in thee, which dwelt first in thy grandmother Lois, and thy mother Eunice; and I am persuaded that in thee also.",
+          "tokens": [
+            {
+              "text": "When I call",
+              "strongsNumbers": [
+                "G2983"
+              ]
+            },
+            {
+              "text": " to remembrance",
+              "strongsNumbers": [
+                "G5280"
+              ]
+            },
+            {
+              "text": " the unfeigned",
+              "strongsNumbers": [
+                "G505"
+              ]
+            },
+            {
+              "text": " faith",
+              "strongsNumbers": [
+                "G4102"
+              ]
+            },
+            {
+              "text": " that is in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " thee,",
+              "strongsNumbers": [
+                "G4671"
+              ]
+            },
+            {
+              "text": " which",
+              "strongsNumbers": [
+                "G3748"
+              ]
+            },
+            {
+              "text": " dwelt",
+              "strongsNumbers": [
+                "G1774"
+              ]
+            },
+            {
+              "text": " first",
+              "strongsNumbers": [
+                "G4412"
+              ]
+            },
+            {
+              "text": " in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " thy",
+              "strongsNumbers": [
+                "G4675"
+              ]
+            },
+            {
+              "text": " grandmother",
+              "strongsNumbers": [
+                "G3125"
+              ]
+            },
+            {
+              "text": " Lois,",
+              "strongsNumbers": [
+                "G3090"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " thy",
+              "strongsNumbers": [
+                "G4675"
+              ]
+            },
+            {
+              "text": " mother",
+              "strongsNumbers": [
+                "G3384"
+              ]
+            },
+            {
+              "text": " Eunice;",
+              "strongsNumbers": [
+                "G2131"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " I am persuaded",
+              "strongsNumbers": [
+                "G3982"
+              ]
+            },
+            {
+              "text": " that",
+              "strongsNumbers": [
+                "G3754"
+              ]
+            },
+            {
+              "text": " in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " thee",
+              "strongsNumbers": [
+                "G4671"
+              ]
+            },
+            {
+              "text": " also.",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "Wherefore I put thee in remembrance that thou stir up the gift of God, which is in thee by the putting on of my hands."
+          "text": "Wherefore I put ➔ thee in remembrance that thou stir up the gift of God, which is in thee by the putting on of my hands.",
+          "tokens": [
+            {
+              "text": "Wherefore",
+              "strongsNumbers": [
+                "G1223",
+                "G3739",
+                "G156"
+              ]
+            },
+            {
+              "text": " I put",
+              "strongsNumbers": [
+                "G363"
+              ]
+            },
+            {
+              "text": " ➔ thee",
+              "strongsNumbers": [
+                "G4571"
+              ]
+            },
+            {
+              "text": " in remembrance",
+              "strongsNumbers": [
+                "G363"
+              ]
+            },
+            {
+              "text": " that thou stir up",
+              "strongsNumbers": [
+                "G329"
+              ]
+            },
+            {
+              "text": " the gift",
+              "strongsNumbers": [
+                "G5486"
+              ]
+            },
+            {
+              "text": " of God,",
+              "strongsNumbers": [
+                "G2316"
+              ]
+            },
+            {
+              "text": " which",
+              "strongsNumbers": [
+                "G3739"
+              ]
+            },
+            {
+              "text": " is",
+              "strongsNumbers": [
+                "G2076"
+              ]
+            },
+            {
+              "text": " in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " thee",
+              "strongsNumbers": [
+                "G4671"
+              ]
+            },
+            {
+              "text": " by",
+              "strongsNumbers": [
+                "G1223"
+              ]
+            },
+            {
+              "text": " the putting on",
+              "strongsNumbers": [
+                "G1936"
+              ]
+            },
+            {
+              "text": " of my",
+              "strongsNumbers": [
+                "G3450"
+              ]
+            },
+            {
+              "text": " hands.",
+              "strongsNumbers": [
+                "G5495"
+              ]
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind."
+          "text": "For God hath ➔ not given us the spirit of fear; but of power, and of love, and of a sound mind.",
+          "tokens": [
+            {
+              "text": "For",
+              "strongsNumbers": [
+                "G1063"
+              ]
+            },
+            {
+              "text": " God",
+              "strongsNumbers": [
+                "G2316"
+              ]
+            },
+            {
+              "text": " hath",
+              "strongsNumbers": [
+                "G1325"
+              ]
+            },
+            {
+              "text": " ➔ not",
+              "strongsNumbers": [
+                "G3756"
+              ]
+            },
+            {
+              "text": " given",
+              "strongsNumbers": [
+                "G1325"
+              ]
+            },
+            {
+              "text": " us",
+              "strongsNumbers": [
+                "G2254"
+              ]
+            },
+            {
+              "text": " the spirit",
+              "strongsNumbers": [
+                "G4151"
+              ]
+            },
+            {
+              "text": " of fear;",
+              "strongsNumbers": [
+                "G1167"
+              ]
+            },
+            {
+              "text": " but",
+              "strongsNumbers": [
+                "G235"
+              ]
+            },
+            {
+              "text": " of power,",
+              "strongsNumbers": [
+                "G1411"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " of love,",
+              "strongsNumbers": [
+                "G26"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " of a sound mind.",
+              "strongsNumbers": [
+                "G4995"
+              ]
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "Be not thou therefore ashamed of the testimony of our Lord, nor of me his prisoner: but be thou partaker of the afflictions of the gospel according to the power of God;"
+          "text": "Be ➔ not thou ➔ therefore ashamed of the testimony of our Lord, nor of me his prisoner: but be thou partaker of the afflictions of the gospel according to the power of God;",
+          "tokens": [
+            {
+              "text": "Be",
+              "strongsNumbers": [
+                "G1870"
+              ]
+            },
+            {
+              "text": " ➔ not",
+              "strongsNumbers": [
+                "G3361"
+              ]
+            },
+            {
+              "text": " thou",
+              "strongsNumbers": [
+                "G1870"
+              ]
+            },
+            {
+              "text": " ➔ therefore",
+              "strongsNumbers": [
+                "G3767"
+              ]
+            },
+            {
+              "text": " ashamed",
+              "strongsNumbers": [
+                "G1870"
+              ]
+            },
+            {
+              "text": " of the testimony",
+              "strongsNumbers": [
+                "G3142"
+              ]
+            },
+            {
+              "text": " of our",
+              "strongsNumbers": [
+                "G2257"
+              ]
+            },
+            {
+              "text": " Lord,",
+              "strongsNumbers": [
+                "G2962"
+              ]
+            },
+            {
+              "text": " nor",
+              "strongsNumbers": [
+                "G3366"
+              ]
+            },
+            {
+              "text": " of me",
+              "strongsNumbers": [
+                "G1691"
+              ]
+            },
+            {
+              "text": " his",
+              "strongsNumbers": [
+                "G846"
+              ]
+            },
+            {
+              "text": " prisoner:",
+              "strongsNumbers": [
+                "G1198"
+              ]
+            },
+            {
+              "text": " but",
+              "strongsNumbers": [
+                "G235"
+              ]
+            },
+            {
+              "text": " be thou partaker of the afflictions",
+              "strongsNumbers": [
+                "G4777"
+              ]
+            },
+            {
+              "text": " of the gospel",
+              "strongsNumbers": [
+                "G2098"
+              ]
+            },
+            {
+              "text": " according to",
+              "strongsNumbers": [
+                "G2596"
+              ]
+            },
+            {
+              "text": " the power",
+              "strongsNumbers": [
+                "G1411"
+              ]
+            },
+            {
+              "text": " of God;",
+              "strongsNumbers": [
+                "G2316"
+              ]
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "Who hath saved us, and called [us] with an holy calling, not according to our works, but according to his own purpose and grace, which was given us in Christ Jesus before the world began,"
+          "text": "Who hath saved us, and called us with an holy calling, not according to our works, but according to his own purpose and grace, which was given us in Christ Jesus before the world began,",
+          "tokens": [
+            {
+              "text": "Who",
+              "strongsNumbers": [
+                "G3588"
+              ]
+            },
+            {
+              "text": " hath saved",
+              "strongsNumbers": [
+                "G4982"
+              ]
+            },
+            {
+              "text": " us,",
+              "strongsNumbers": [
+                "G2248"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " called",
+              "strongsNumbers": [
+                "G2564"
+              ]
+            },
+            {
+              "text": " us with an holy",
+              "strongsNumbers": [
+                "G40"
+              ]
+            },
+            {
+              "text": " calling,",
+              "strongsNumbers": [
+                "G2821"
+              ]
+            },
+            {
+              "text": " not",
+              "strongsNumbers": [
+                "G3756"
+              ]
+            },
+            {
+              "text": " according to",
+              "strongsNumbers": [
+                "G2596"
+              ]
+            },
+            {
+              "text": " our",
+              "strongsNumbers": [
+                "G2257"
+              ]
+            },
+            {
+              "text": " works,",
+              "strongsNumbers": [
+                "G2041"
+              ]
+            },
+            {
+              "text": " but",
+              "strongsNumbers": [
+                "G235"
+              ]
+            },
+            {
+              "text": " according to",
+              "strongsNumbers": [
+                "G2596"
+              ]
+            },
+            {
+              "text": " his own",
+              "strongsNumbers": [
+                "G2398"
+              ]
+            },
+            {
+              "text": " purpose",
+              "strongsNumbers": [
+                "G4286"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " grace,",
+              "strongsNumbers": [
+                "G5485"
+              ]
+            },
+            {
+              "text": " which",
+              "strongsNumbers": [
+                "G3588"
+              ]
+            },
+            {
+              "text": " was given",
+              "strongsNumbers": [
+                "G1325"
+              ]
+            },
+            {
+              "text": " us",
+              "strongsNumbers": [
+                "G2254"
+              ]
+            },
+            {
+              "text": " in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " Christ",
+              "strongsNumbers": [
+                "G5547"
+              ]
+            },
+            {
+              "text": " Jesus",
+              "strongsNumbers": [
+                "G2424"
+              ]
+            },
+            {
+              "text": " before",
+              "strongsNumbers": [
+                "G4253"
+              ]
+            },
+            {
+              "text": " the world began,",
+              "strongsNumbers": [
+                "G5550",
+                "G166"
+              ]
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "But is now made manifest by the appearing of our Saviour Jesus Christ, who hath abolished death, and hath brought life and immortality to light through the gospel:"
+          "text": "But is ➔ now made manifest by the appearing of our Saviour Jesus Christ, who hath abolished death, and hath brought ➔ life and immortality to light through the gospel:",
+          "tokens": [
+            {
+              "text": "But",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " is",
+              "strongsNumbers": [
+                "G5319"
+              ]
+            },
+            {
+              "text": " ➔ now",
+              "strongsNumbers": [
+                "G3568"
+              ]
+            },
+            {
+              "text": " made manifest",
+              "strongsNumbers": [
+                "G5319"
+              ]
+            },
+            {
+              "text": " by",
+              "strongsNumbers": [
+                "G1223"
+              ]
+            },
+            {
+              "text": " the appearing",
+              "strongsNumbers": [
+                "G2015"
+              ]
+            },
+            {
+              "text": " of our",
+              "strongsNumbers": [
+                "G2257"
+              ]
+            },
+            {
+              "text": " Saviour",
+              "strongsNumbers": [
+                "G4990"
+              ]
+            },
+            {
+              "text": " Jesus",
+              "strongsNumbers": [
+                "G2424"
+              ]
+            },
+            {
+              "text": " Christ,",
+              "strongsNumbers": [
+                "G5547"
+              ]
+            },
+            {
+              "text": " who",
+              "strongsNumbers": [
+                "G3303"
+              ]
+            },
+            {
+              "text": " hath abolished",
+              "strongsNumbers": [
+                "G2673"
+              ]
+            },
+            {
+              "text": " death,",
+              "strongsNumbers": [
+                "G2288"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " hath brought",
+              "strongsNumbers": [
+                "G5461"
+              ]
+            },
+            {
+              "text": " ➔ life",
+              "strongsNumbers": [
+                "G2222"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " immortality",
+              "strongsNumbers": [
+                "G861"
+              ]
+            },
+            {
+              "text": " to light",
+              "strongsNumbers": [
+                "G5461"
+              ]
+            },
+            {
+              "text": " through",
+              "strongsNumbers": [
+                "G1223"
+              ]
+            },
+            {
+              "text": " the gospel:",
+              "strongsNumbers": [
+                "G2098"
+              ]
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "Whereunto I am appointed a preacher, and an apostle, and a teacher of the Gentiles."
+          "text": "Whereunto I am appointed a preacher, and an apostle, and a teacher of the Gentiles.",
+          "tokens": [
+            {
+              "text": "Whereunto",
+              "strongsNumbers": [
+                "G1519",
+                "G3739"
+              ]
+            },
+            {
+              "text": " I",
+              "strongsNumbers": [
+                "G1473"
+              ]
+            },
+            {
+              "text": " am appointed",
+              "strongsNumbers": [
+                "G5087"
+              ]
+            },
+            {
+              "text": " a preacher,",
+              "strongsNumbers": [
+                "G2783"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " an apostle,",
+              "strongsNumbers": [
+                "G652"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " a teacher",
+              "strongsNumbers": [
+                "G1320"
+              ]
+            },
+            {
+              "text": " of the Gentiles.",
+              "strongsNumbers": [
+                "G1484"
+              ]
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "For the which cause I also suffer these things: nevertheless I am not ashamed: for I know whom I have believed, and am persuaded that he is able to keep that which I have committed unto him against that day."
+          "text": "For the which cause I ➔ also suffer these things: nevertheless I am ➔ not ashamed: for I know whom I have believed, and am persuaded that he is able to keep that which I have committed unto him against that day.",
+          "tokens": [
+            {
+              "text": "For",
+              "strongsNumbers": [
+                "G1223"
+              ]
+            },
+            {
+              "text": " the which",
+              "strongsNumbers": [
+                "G3739"
+              ]
+            },
+            {
+              "text": " cause",
+              "strongsNumbers": [
+                "G156"
+              ]
+            },
+            {
+              "text": " I",
+              "strongsNumbers": [
+                "G3958"
+              ]
+            },
+            {
+              "text": " ➔ also",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " suffer",
+              "strongsNumbers": [
+                "G3958"
+              ]
+            },
+            {
+              "text": " these things:",
+              "strongsNumbers": [
+                "G5023"
+              ]
+            },
+            {
+              "text": " nevertheless",
+              "strongsNumbers": [
+                "G235"
+              ]
+            },
+            {
+              "text": " I am",
+              "strongsNumbers": [
+                "G1870"
+              ]
+            },
+            {
+              "text": " ➔ not",
+              "strongsNumbers": [
+                "G3756"
+              ]
+            },
+            {
+              "text": " ashamed:",
+              "strongsNumbers": [
+                "G1870"
+              ]
+            },
+            {
+              "text": " for",
+              "strongsNumbers": [
+                "G1063"
+              ]
+            },
+            {
+              "text": " I know",
+              "strongsNumbers": [
+                "G1492"
+              ]
+            },
+            {
+              "text": " whom",
+              "strongsNumbers": [
+                "G3739"
+              ]
+            },
+            {
+              "text": " I have believed,",
+              "strongsNumbers": [
+                "G4100"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " am persuaded",
+              "strongsNumbers": [
+                "G3982"
+              ]
+            },
+            {
+              "text": " that",
+              "strongsNumbers": [
+                "G3754"
+              ]
+            },
+            {
+              "text": " he is",
+              "strongsNumbers": [
+                "G2076"
+              ]
+            },
+            {
+              "text": " able",
+              "strongsNumbers": [
+                "G1415"
+              ]
+            },
+            {
+              "text": " to keep",
+              "strongsNumbers": [
+                "G5442"
+              ]
+            },
+            {
+              "text": " that which I",
+              "strongsNumbers": [
+                "G3450"
+              ]
+            },
+            {
+              "text": " have committed unto him",
+              "strongsNumbers": [
+                "G3866"
+              ]
+            },
+            {
+              "text": " against",
+              "strongsNumbers": [
+                "G1519"
+              ]
+            },
+            {
+              "text": " that",
+              "strongsNumbers": [
+                "G1565"
+              ]
+            },
+            {
+              "text": " day.",
+              "strongsNumbers": [
+                "G2250"
+              ]
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "Hold fast the form of sound words, which thou hast heard of me, in faith and love which is in Christ Jesus."
+          "text": "Hold fast the form of sound words, which thou hast heard of me, in faith and love which is in Christ Jesus.",
+          "tokens": [
+            {
+              "text": "Hold fast",
+              "strongsNumbers": [
+                "G2192"
+              ]
+            },
+            {
+              "text": " the form",
+              "strongsNumbers": [
+                "G5296"
+              ]
+            },
+            {
+              "text": " of sound",
+              "strongsNumbers": [
+                "G5198"
+              ]
+            },
+            {
+              "text": " words,",
+              "strongsNumbers": [
+                "G3056"
+              ]
+            },
+            {
+              "text": " which",
+              "strongsNumbers": [
+                "G3739"
+              ]
+            },
+            {
+              "text": " thou hast heard",
+              "strongsNumbers": [
+                "G191"
+              ]
+            },
+            {
+              "text": " of",
+              "strongsNumbers": [
+                "G3844"
+              ]
+            },
+            {
+              "text": " me,",
+              "strongsNumbers": [
+                "G1700"
+              ]
+            },
+            {
+              "text": " in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " faith",
+              "strongsNumbers": [
+                "G4102"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " love",
+              "strongsNumbers": [
+                "G26"
+              ]
+            },
+            {
+              "text": " which",
+              "strongsNumbers": [
+                "G3588"
+              ]
+            },
+            {
+              "text": " is in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " Christ",
+              "strongsNumbers": [
+                "G5547"
+              ]
+            },
+            {
+              "text": " Jesus.",
+              "strongsNumbers": [
+                "G2424"
+              ]
+            }
+          ]
         },
         {
           "number": 14,
-          "text": "That good thing which was committed unto thee keep by the Holy Ghost which dwelleth in us."
+          "text": "That good thing which was committed unto thee keep by the Holy Ghost which dwelleth in us.",
+          "tokens": [
+            {
+              "text": "That good thing",
+              "strongsNumbers": [
+                "G2570"
+              ]
+            },
+            {
+              "text": " which was committed unto thee",
+              "strongsNumbers": [
+                "G3872"
+              ]
+            },
+            {
+              "text": " keep",
+              "strongsNumbers": [
+                "G5442"
+              ]
+            },
+            {
+              "text": " by",
+              "strongsNumbers": [
+                "G1223"
+              ]
+            },
+            {
+              "text": " the Holy",
+              "strongsNumbers": [
+                "G40"
+              ]
+            },
+            {
+              "text": " Ghost",
+              "strongsNumbers": [
+                "G4151"
+              ]
+            },
+            {
+              "text": " which",
+              "strongsNumbers": [
+                "G3588"
+              ]
+            },
+            {
+              "text": " dwelleth",
+              "strongsNumbers": [
+                "G1774"
+              ]
+            },
+            {
+              "text": " in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " us.",
+              "strongsNumbers": [
+                "G2254"
+              ]
+            }
+          ]
         },
         {
           "number": 15,
-          "text": "This thou knowest, that all they which are in Asia be turned away from me; of whom are Phygellus and Hermogenes."
+          "text": "This thou knowest, that all they which are in Asia be turned away from me; of whom are Phygellus and Hermogenes.",
+          "tokens": [
+            {
+              "text": "This",
+              "strongsNumbers": [
+                "G5124"
+              ]
+            },
+            {
+              "text": " thou knowest,",
+              "strongsNumbers": [
+                "G1492"
+              ]
+            },
+            {
+              "text": " that",
+              "strongsNumbers": [
+                "G3754"
+              ]
+            },
+            {
+              "text": " all",
+              "strongsNumbers": [
+                "G3956"
+              ]
+            },
+            {
+              "text": " they which are in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " Asia",
+              "strongsNumbers": [
+                "G773"
+              ]
+            },
+            {
+              "text": " be turned away from",
+              "strongsNumbers": [
+                "G654"
+              ]
+            },
+            {
+              "text": " me;",
+              "strongsNumbers": [
+                "G3165"
+              ]
+            },
+            {
+              "text": " of whom",
+              "strongsNumbers": [
+                "G3739"
+              ]
+            },
+            {
+              "text": " are",
+              "strongsNumbers": [
+                "G2076"
+              ]
+            },
+            {
+              "text": " Phygellus",
+              "strongsNumbers": [
+                "G5436"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " Hermogenes.",
+              "strongsNumbers": [
+                "G2061"
+              ]
+            }
+          ]
         },
         {
           "number": 16,
-          "text": "The Lord give mercy unto the house of Onesiphorus; for he oft refreshed me, and was not ashamed of my chain:"
+          "text": "The Lord give mercy unto the house of Onesiphorus; for he ➔ oft refreshed me, and was ➔ not ashamed of my chain:",
+          "tokens": [
+            {
+              "text": "The Lord",
+              "strongsNumbers": [
+                "G2962"
+              ]
+            },
+            {
+              "text": " give",
+              "strongsNumbers": [
+                "G1325"
+              ]
+            },
+            {
+              "text": " mercy",
+              "strongsNumbers": [
+                "G1656"
+              ]
+            },
+            {
+              "text": " unto the house",
+              "strongsNumbers": [
+                "G3624"
+              ]
+            },
+            {
+              "text": " of Onesiphorus;",
+              "strongsNumbers": [
+                "G3683"
+              ]
+            },
+            {
+              "text": " for",
+              "strongsNumbers": [
+                "G3754"
+              ]
+            },
+            {
+              "text": " he",
+              "strongsNumbers": [
+                "G404"
+              ]
+            },
+            {
+              "text": " ➔ oft",
+              "strongsNumbers": [
+                "G4178"
+              ]
+            },
+            {
+              "text": " refreshed",
+              "strongsNumbers": [
+                "G404"
+              ]
+            },
+            {
+              "text": " me,",
+              "strongsNumbers": [
+                "G3165"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " was",
+              "strongsNumbers": [
+                "G1870"
+              ]
+            },
+            {
+              "text": " ➔ not",
+              "strongsNumbers": [
+                "G3756"
+              ]
+            },
+            {
+              "text": " ashamed",
+              "strongsNumbers": [
+                "G1870"
+              ]
+            },
+            {
+              "text": " of my",
+              "strongsNumbers": [
+                "G3450"
+              ]
+            },
+            {
+              "text": " chain:",
+              "strongsNumbers": [
+                "G254"
+              ]
+            }
+          ]
         },
         {
           "number": 17,
-          "text": "But, when he was in Rome, he sought me out very diligently, and found [me]."
+          "text": "But, when he was in Rome, he sought ➔ me out very diligently, and found me.",
+          "tokens": [
+            {
+              "text": "But,",
+              "strongsNumbers": [
+                "G235"
+              ]
+            },
+            {
+              "text": " when he was",
+              "strongsNumbers": [
+                "G1096"
+              ]
+            },
+            {
+              "text": " in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " Rome,",
+              "strongsNumbers": [
+                "G4516"
+              ]
+            },
+            {
+              "text": " he sought",
+              "strongsNumbers": [
+                "G2212"
+              ]
+            },
+            {
+              "text": " ➔ me",
+              "strongsNumbers": [
+                "G3165"
+              ]
+            },
+            {
+              "text": " out",
+              "strongsNumbers": [
+                "G2212"
+              ]
+            },
+            {
+              "text": " very diligently,",
+              "strongsNumbers": [
+                "G4706"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " found",
+              "strongsNumbers": [
+                "G2147"
+              ]
+            },
+            {
+              "text": " me."
+            }
+          ]
         },
         {
           "number": 18,
-          "text": "The Lord grant unto him that he may find mercy of the Lord in that day: and in how many things he ministered unto me at Ephesus, thou knowest very well."
+          "text": "The Lord grant unto him that he may find mercy of the Lord in that day: and in how many things he ministered unto me at Ephesus, thou knowest very well.",
+          "tokens": [
+            {
+              "text": "The Lord",
+              "strongsNumbers": [
+                "G2962"
+              ]
+            },
+            {
+              "text": " grant",
+              "strongsNumbers": [
+                "G1325"
+              ]
+            },
+            {
+              "text": " unto him",
+              "strongsNumbers": [
+                "G846"
+              ]
+            },
+            {
+              "text": " that he may find",
+              "strongsNumbers": [
+                "G2147"
+              ]
+            },
+            {
+              "text": " mercy",
+              "strongsNumbers": [
+                "G1656"
+              ]
+            },
+            {
+              "text": " of",
+              "strongsNumbers": [
+                "G3844"
+              ]
+            },
+            {
+              "text": " the Lord",
+              "strongsNumbers": [
+                "G2962"
+              ]
+            },
+            {
+              "text": " in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " that",
+              "strongsNumbers": [
+                "G1565"
+              ]
+            },
+            {
+              "text": " day:",
+              "strongsNumbers": [
+                "G2250"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " in how many things",
+              "strongsNumbers": [
+                "G3745"
+              ]
+            },
+            {
+              "text": " he ministered unto me",
+              "strongsNumbers": [
+                "G1247"
+              ]
+            },
+            {
+              "text": " at",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " Ephesus,",
+              "strongsNumbers": [
+                "G2181"
+              ]
+            },
+            {
+              "text": " thou",
+              "strongsNumbers": [
+                "G4771"
+              ]
+            },
+            {
+              "text": " knowest",
+              "strongsNumbers": [
+                "G1097"
+              ]
+            },
+            {
+              "text": " very well.",
+              "strongsNumbers": [
+                "G957"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -92,107 +1888,2111 @@
       "verses": [
         {
           "number": 1,
-          "text": "Thou therefore, my son, be strong in the grace that is in Christ Jesus."
+          "text": "Thou therefore, my son, be strong in the grace that is in Christ Jesus.",
+          "tokens": [
+            {
+              "text": "Thou",
+              "strongsNumbers": [
+                "G4771"
+              ]
+            },
+            {
+              "text": " therefore,",
+              "strongsNumbers": [
+                "G3767"
+              ]
+            },
+            {
+              "text": " my",
+              "strongsNumbers": [
+                "G3450"
+              ]
+            },
+            {
+              "text": " son,",
+              "strongsNumbers": [
+                "G5043"
+              ]
+            },
+            {
+              "text": " be strong",
+              "strongsNumbers": [
+                "G1743"
+              ]
+            },
+            {
+              "text": " in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " the grace",
+              "strongsNumbers": [
+                "G5485"
+              ]
+            },
+            {
+              "text": " that is in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " Christ",
+              "strongsNumbers": [
+                "G5547"
+              ]
+            },
+            {
+              "text": " Jesus.",
+              "strongsNumbers": [
+                "G2424"
+              ]
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "And the things that thou hast heard of me among many witnesses, the same commit thou to faithful men, who shall be able to teach others also."
+          "text": "And the things that thou hast heard of me among many witnesses, the same commit thou to faithful men, who shall be able to teach others also.",
+          "tokens": [
+            {
+              "text": "And",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " the things",
+              "strongsNumbers": [
+                "G3739"
+              ]
+            },
+            {
+              "text": " that thou hast heard",
+              "strongsNumbers": [
+                "G191"
+              ]
+            },
+            {
+              "text": " of",
+              "strongsNumbers": [
+                "G3844"
+              ]
+            },
+            {
+              "text": " me",
+              "strongsNumbers": [
+                "G1700"
+              ]
+            },
+            {
+              "text": " among",
+              "strongsNumbers": [
+                "G1223"
+              ]
+            },
+            {
+              "text": " many",
+              "strongsNumbers": [
+                "G4183"
+              ]
+            },
+            {
+              "text": " witnesses,",
+              "strongsNumbers": [
+                "G3144"
+              ]
+            },
+            {
+              "text": " the same",
+              "strongsNumbers": [
+                "G5023"
+              ]
+            },
+            {
+              "text": " commit thou",
+              "strongsNumbers": [
+                "G3908"
+              ]
+            },
+            {
+              "text": " to faithful",
+              "strongsNumbers": [
+                "G4103"
+              ]
+            },
+            {
+              "text": " men,",
+              "strongsNumbers": [
+                "G444"
+              ]
+            },
+            {
+              "text": " who",
+              "strongsNumbers": [
+                "G3748"
+              ]
+            },
+            {
+              "text": " shall be",
+              "strongsNumbers": [
+                "G2071"
+              ]
+            },
+            {
+              "text": " able",
+              "strongsNumbers": [
+                "G2425"
+              ]
+            },
+            {
+              "text": " to teach",
+              "strongsNumbers": [
+                "G1321"
+              ]
+            },
+            {
+              "text": " others",
+              "strongsNumbers": [
+                "G2087"
+              ]
+            },
+            {
+              "text": " also.",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "Thou therefore endure hardness, as a good soldier of Jesus Christ."
+          "text": "Thou therefore endure hardness, as a good soldier of Jesus Christ.",
+          "tokens": [
+            {
+              "text": "Thou",
+              "strongsNumbers": [
+                "G4771"
+              ]
+            },
+            {
+              "text": " therefore",
+              "strongsNumbers": [
+                "G3767"
+              ]
+            },
+            {
+              "text": " endure hardness,",
+              "strongsNumbers": [
+                "G2553"
+              ]
+            },
+            {
+              "text": " as",
+              "strongsNumbers": [
+                "G5613"
+              ]
+            },
+            {
+              "text": " a good",
+              "strongsNumbers": [
+                "G2570"
+              ]
+            },
+            {
+              "text": " soldier",
+              "strongsNumbers": [
+                "G4757"
+              ]
+            },
+            {
+              "text": " of Jesus",
+              "strongsNumbers": [
+                "G2424"
+              ]
+            },
+            {
+              "text": " Christ.",
+              "strongsNumbers": [
+                "G5547"
+              ]
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "No man that warreth entangleth himself with the affairs of [this] life; that he may please him who hath chosen him to be a soldier."
+          "text": "No man that warreth entangleth himself with the affairs of this life; that he may please him who hath chosen him to be a soldier.",
+          "tokens": [
+            {
+              "text": "No man",
+              "strongsNumbers": [
+                "G3762"
+              ]
+            },
+            {
+              "text": " that warreth",
+              "strongsNumbers": [
+                "G4754"
+              ]
+            },
+            {
+              "text": " entangleth himself",
+              "strongsNumbers": [
+                "G1707"
+              ]
+            },
+            {
+              "text": " with the affairs",
+              "strongsNumbers": [
+                "G4230"
+              ]
+            },
+            {
+              "text": " of this life;",
+              "strongsNumbers": [
+                "G979"
+              ]
+            },
+            {
+              "text": " that",
+              "strongsNumbers": [
+                "G2443"
+              ]
+            },
+            {
+              "text": " he may please",
+              "strongsNumbers": [
+                "G700"
+              ]
+            },
+            {
+              "text": " him who hath chosen him to be a soldier.",
+              "strongsNumbers": [
+                "G4758"
+              ]
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "And if a man also strive for masteries, [yet] is he not crowned, except he strive lawfully."
+          "text": "And if a man also strive for masteries, yet is he ➔ not crowned, except he strive lawfully.",
+          "tokens": [
+            {
+              "text": "And",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " if",
+              "strongsNumbers": [
+                "G1437"
+              ]
+            },
+            {
+              "text": " a man",
+              "strongsNumbers": [
+                "G5100"
+              ]
+            },
+            {
+              "text": " also",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " strive",
+              "strongsNumbers": [
+                "G118"
+              ]
+            },
+            {
+              "text": " for masteries, yet is he",
+              "strongsNumbers": [
+                "G4737"
+              ]
+            },
+            {
+              "text": " ➔ not",
+              "strongsNumbers": [
+                "G3756"
+              ]
+            },
+            {
+              "text": " crowned,",
+              "strongsNumbers": [
+                "G4737"
+              ]
+            },
+            {
+              "text": " except",
+              "strongsNumbers": [
+                "G3362"
+              ]
+            },
+            {
+              "text": " he strive",
+              "strongsNumbers": [
+                "G118"
+              ]
+            },
+            {
+              "text": " lawfully.",
+              "strongsNumbers": [
+                "G3545"
+              ]
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "The husbandman that laboureth must be first partaker of the fruits."
+          "text": "The husbandman that laboureth must be first partaker of the fruits.",
+          "tokens": [
+            {
+              "text": "The husbandman",
+              "strongsNumbers": [
+                "G1092"
+              ]
+            },
+            {
+              "text": " that laboureth",
+              "strongsNumbers": [
+                "G2872"
+              ]
+            },
+            {
+              "text": " must be",
+              "strongsNumbers": [
+                "G1163"
+              ]
+            },
+            {
+              "text": " first",
+              "strongsNumbers": [
+                "G4413"
+              ]
+            },
+            {
+              "text": " partaker",
+              "strongsNumbers": [
+                "G3335"
+              ]
+            },
+            {
+              "text": " of the fruits.",
+              "strongsNumbers": [
+                "G2590"
+              ]
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "Consider what I say; and the Lord give thee understanding in all things."
+          "text": "Consider what I say; and the Lord give thee understanding in all things.",
+          "tokens": [
+            {
+              "text": "Consider",
+              "strongsNumbers": [
+                "G3539"
+              ]
+            },
+            {
+              "text": " what",
+              "strongsNumbers": [
+                "G3739"
+              ]
+            },
+            {
+              "text": " I say;",
+              "strongsNumbers": [
+                "G3004"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G1063"
+              ]
+            },
+            {
+              "text": " the Lord",
+              "strongsNumbers": [
+                "G2962"
+              ]
+            },
+            {
+              "text": " give",
+              "strongsNumbers": [
+                "G1325"
+              ]
+            },
+            {
+              "text": " thee",
+              "strongsNumbers": [
+                "G4671"
+              ]
+            },
+            {
+              "text": " understanding",
+              "strongsNumbers": [
+                "G4907"
+              ]
+            },
+            {
+              "text": " in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " all things.",
+              "strongsNumbers": [
+                "G3956"
+              ]
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "Remember that Jesus Christ of the seed of David was raised from the dead according to my gospel:"
+          "text": "Remember that Jesus Christ of the seed of David was raised from the dead according to my gospel:",
+          "tokens": [
+            {
+              "text": "Remember",
+              "strongsNumbers": [
+                "G3421"
+              ]
+            },
+            {
+              "text": " that Jesus",
+              "strongsNumbers": [
+                "G2424"
+              ]
+            },
+            {
+              "text": " Christ",
+              "strongsNumbers": [
+                "G5547"
+              ]
+            },
+            {
+              "text": " of",
+              "strongsNumbers": [
+                "G1537"
+              ]
+            },
+            {
+              "text": " the seed",
+              "strongsNumbers": [
+                "G4690"
+              ]
+            },
+            {
+              "text": " of David",
+              "strongsNumbers": [
+                "G1138"
+              ]
+            },
+            {
+              "text": " was raised",
+              "strongsNumbers": [
+                "G1453"
+              ]
+            },
+            {
+              "text": " from",
+              "strongsNumbers": [
+                "G1537"
+              ]
+            },
+            {
+              "text": " the dead",
+              "strongsNumbers": [
+                "G3498"
+              ]
+            },
+            {
+              "text": " according to",
+              "strongsNumbers": [
+                "G2596"
+              ]
+            },
+            {
+              "text": " my",
+              "strongsNumbers": [
+                "G3450"
+              ]
+            },
+            {
+              "text": " gospel:",
+              "strongsNumbers": [
+                "G2098"
+              ]
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "Wherein I suffer trouble, as an evil doer, [even] unto bonds; but the word of God is not bound."
+          "text": "Wherein I suffer trouble, as an evil doer, even unto bonds; but the word of God is ➔ not bound.",
+          "tokens": [
+            {
+              "text": "Wherein",
+              "strongsNumbers": [
+                "G1722",
+                "G3739"
+              ]
+            },
+            {
+              "text": " I suffer trouble,",
+              "strongsNumbers": [
+                "G2553"
+              ]
+            },
+            {
+              "text": " as",
+              "strongsNumbers": [
+                "G5613"
+              ]
+            },
+            {
+              "text": " an evil doer,",
+              "strongsNumbers": [
+                "G2557"
+              ]
+            },
+            {
+              "text": " even unto",
+              "strongsNumbers": [
+                "G3360"
+              ]
+            },
+            {
+              "text": " bonds;",
+              "strongsNumbers": [
+                "G1199"
+              ]
+            },
+            {
+              "text": " but",
+              "strongsNumbers": [
+                "G235"
+              ]
+            },
+            {
+              "text": " the word",
+              "strongsNumbers": [
+                "G3056"
+              ]
+            },
+            {
+              "text": " of God",
+              "strongsNumbers": [
+                "G2316"
+              ]
+            },
+            {
+              "text": " is",
+              "strongsNumbers": [
+                "G1210"
+              ]
+            },
+            {
+              "text": " ➔ not",
+              "strongsNumbers": [
+                "G3756"
+              ]
+            },
+            {
+              "text": " bound.",
+              "strongsNumbers": [
+                "G1210"
+              ]
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "Therefore I endure all things for the elect's sakes, that they may also obtain the salvation which is in Christ Jesus with eternal glory."
+          "text": "Therefore I endure all things for ➔ the elect's sakes, that they may ➔ also obtain the salvation which is in Christ Jesus with eternal glory.",
+          "tokens": [
+            {
+              "text": "Therefore",
+              "strongsNumbers": [
+                "G1223",
+                "G5124"
+              ]
+            },
+            {
+              "text": " I endure",
+              "strongsNumbers": [
+                "G5278"
+              ]
+            },
+            {
+              "text": " all things",
+              "strongsNumbers": [
+                "G3956"
+              ]
+            },
+            {
+              "text": " for",
+              "strongsNumbers": [
+                "G1588"
+              ]
+            },
+            {
+              "text": " ➔ the elect's",
+              "strongsNumbers": [
+                "G1588"
+              ]
+            },
+            {
+              "text": " sakes,",
+              "strongsNumbers": [
+                "G1223"
+              ]
+            },
+            {
+              "text": " that",
+              "strongsNumbers": [
+                "G2443"
+              ]
+            },
+            {
+              "text": " they",
+              "strongsNumbers": [
+                "G846"
+              ]
+            },
+            {
+              "text": " may",
+              "strongsNumbers": [
+                "G5177"
+              ]
+            },
+            {
+              "text": " ➔ also",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " obtain",
+              "strongsNumbers": [
+                "G5177"
+              ]
+            },
+            {
+              "text": " the salvation",
+              "strongsNumbers": [
+                "G4991"
+              ]
+            },
+            {
+              "text": " which",
+              "strongsNumbers": [
+                "G3588"
+              ]
+            },
+            {
+              "text": " is in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " Christ",
+              "strongsNumbers": [
+                "G5547"
+              ]
+            },
+            {
+              "text": " Jesus",
+              "strongsNumbers": [
+                "G2424"
+              ]
+            },
+            {
+              "text": " with",
+              "strongsNumbers": [
+                "G3326"
+              ]
+            },
+            {
+              "text": " eternal",
+              "strongsNumbers": [
+                "G166"
+              ]
+            },
+            {
+              "text": " glory.",
+              "strongsNumbers": [
+                "G1391"
+              ]
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "[It is] a faithful saying: For if we be dead with [him], we shall also live with [him]:"
+          "text": "It is a faithful saying: For if we be dead with him, we shall ➔ also live with him:",
+          "tokens": [
+            {
+              "text": "It is a faithful",
+              "strongsNumbers": [
+                "G4103"
+              ]
+            },
+            {
+              "text": " saying:",
+              "strongsNumbers": [
+                "G3056"
+              ]
+            },
+            {
+              "text": " For",
+              "strongsNumbers": [
+                "G1063"
+              ]
+            },
+            {
+              "text": " if",
+              "strongsNumbers": [
+                "G1487"
+              ]
+            },
+            {
+              "text": " we be dead with",
+              "strongsNumbers": [
+                "G4880"
+              ]
+            },
+            {
+              "text": " him, we shall",
+              "strongsNumbers": [
+                "G4800"
+              ]
+            },
+            {
+              "text": " ➔ also",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " live with",
+              "strongsNumbers": [
+                "G4800"
+              ]
+            },
+            {
+              "text": " him:"
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "If we suffer, we shall also reign with [him]: if we deny [him], he also will deny us:"
+          "text": "If we suffer, we shall ➔ also reign with him: if we deny him, he also will deny us:",
+          "tokens": [
+            {
+              "text": "If",
+              "strongsNumbers": [
+                "G1487"
+              ]
+            },
+            {
+              "text": " we suffer,",
+              "strongsNumbers": [
+                "G5278"
+              ]
+            },
+            {
+              "text": " we shall",
+              "strongsNumbers": [
+                "G4821"
+              ]
+            },
+            {
+              "text": " ➔ also",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " reign with",
+              "strongsNumbers": [
+                "G4821"
+              ]
+            },
+            {
+              "text": " him: if",
+              "strongsNumbers": [
+                "G1487"
+              ]
+            },
+            {
+              "text": " we deny",
+              "strongsNumbers": [
+                "G720"
+              ]
+            },
+            {
+              "text": " him, he also",
+              "strongsNumbers": [
+                "G2548"
+              ]
+            },
+            {
+              "text": " will deny",
+              "strongsNumbers": [
+                "G720"
+              ]
+            },
+            {
+              "text": " us:",
+              "strongsNumbers": [
+                "G2248"
+              ]
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "If we believe not, [yet] he abideth faithful: he cannot deny himself."
+          "text": "If we believe not, yet he abideth faithful: he cannot deny himself.",
+          "tokens": [
+            {
+              "text": "If",
+              "strongsNumbers": [
+                "G1487"
+              ]
+            },
+            {
+              "text": " we believe not,",
+              "strongsNumbers": [
+                "G569"
+              ]
+            },
+            {
+              "text": " yet he",
+              "strongsNumbers": [
+                "G1565"
+              ]
+            },
+            {
+              "text": " abideth",
+              "strongsNumbers": [
+                "G3306"
+              ]
+            },
+            {
+              "text": " faithful:",
+              "strongsNumbers": [
+                "G4103"
+              ]
+            },
+            {
+              "text": " he cannot",
+              "strongsNumbers": [
+                "G3756",
+                "G1410"
+              ]
+            },
+            {
+              "text": " deny",
+              "strongsNumbers": [
+                "G720"
+              ]
+            },
+            {
+              "text": " himself.",
+              "strongsNumbers": [
+                "G1438"
+              ]
+            }
+          ]
         },
         {
           "number": 14,
-          "text": "Of these things put [them] in remembrance, charging [them] before the Lord that they strive not about words to no profit, [but] to the subverting of the hearers."
+          "text": "Of these things put them in remembrance, charging them before the Lord that they strive ➔ not about words to no profit, but to the subverting of the hearers.",
+          "tokens": [
+            {
+              "text": "Of these things",
+              "strongsNumbers": [
+                "G5023"
+              ]
+            },
+            {
+              "text": " put them in remembrance,",
+              "strongsNumbers": [
+                "G5279"
+              ]
+            },
+            {
+              "text": " charging",
+              "strongsNumbers": [
+                "G1263"
+              ]
+            },
+            {
+              "text": " them before",
+              "strongsNumbers": [
+                "G1799"
+              ]
+            },
+            {
+              "text": " the Lord",
+              "strongsNumbers": [
+                "G2962"
+              ]
+            },
+            {
+              "text": " that they strive",
+              "strongsNumbers": [
+                "G3054"
+              ]
+            },
+            {
+              "text": " ➔ not",
+              "strongsNumbers": [
+                "G3361"
+              ]
+            },
+            {
+              "text": " about words",
+              "strongsNumbers": [
+                "G3054"
+              ]
+            },
+            {
+              "text": " to",
+              "strongsNumbers": [
+                "G1519"
+              ]
+            },
+            {
+              "text": " no",
+              "strongsNumbers": [
+                "G3762"
+              ]
+            },
+            {
+              "text": " profit,",
+              "strongsNumbers": [
+                "G5539"
+              ]
+            },
+            {
+              "text": " but to",
+              "strongsNumbers": [
+                "G1909"
+              ]
+            },
+            {
+              "text": " the subverting",
+              "strongsNumbers": [
+                "G2692"
+              ]
+            },
+            {
+              "text": " of the hearers.",
+              "strongsNumbers": [
+                "G191"
+              ]
+            }
+          ]
         },
         {
           "number": 15,
-          "text": "Study to shew thyself approved unto God, a workman that needeth not to be ashamed, rightly dividing the word of truth."
+          "text": "Study to shew thyself approved unto God, a workman that needeth not to be ashamed, rightly dividing the word of truth.",
+          "tokens": [
+            {
+              "text": "Study",
+              "strongsNumbers": [
+                "G4704"
+              ]
+            },
+            {
+              "text": " to shew",
+              "strongsNumbers": [
+                "G3936"
+              ]
+            },
+            {
+              "text": " thyself",
+              "strongsNumbers": [
+                "G4572"
+              ]
+            },
+            {
+              "text": " approved",
+              "strongsNumbers": [
+                "G1384"
+              ]
+            },
+            {
+              "text": " unto God,",
+              "strongsNumbers": [
+                "G2316"
+              ]
+            },
+            {
+              "text": " a workman",
+              "strongsNumbers": [
+                "G2040"
+              ]
+            },
+            {
+              "text": " that needeth not to be ashamed,",
+              "strongsNumbers": [
+                "G422"
+              ]
+            },
+            {
+              "text": " rightly dividing",
+              "strongsNumbers": [
+                "G3718"
+              ]
+            },
+            {
+              "text": " the word",
+              "strongsNumbers": [
+                "G3056"
+              ]
+            },
+            {
+              "text": " of truth.",
+              "strongsNumbers": [
+                "G225"
+              ]
+            }
+          ]
         },
         {
           "number": 16,
-          "text": "But shun profane [and] vain babblings: for they will increase unto more ungodliness."
+          "text": "But shun profane and vain babblings: for they will increase unto more ungodliness.",
+          "tokens": [
+            {
+              "text": "But",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " shun",
+              "strongsNumbers": [
+                "G4026"
+              ]
+            },
+            {
+              "text": " profane",
+              "strongsNumbers": [
+                "G952"
+              ]
+            },
+            {
+              "text": " and vain babblings:",
+              "strongsNumbers": [
+                "G2757"
+              ]
+            },
+            {
+              "text": " for",
+              "strongsNumbers": [
+                "G1063"
+              ]
+            },
+            {
+              "text": " they will increase",
+              "strongsNumbers": [
+                "G4298"
+              ]
+            },
+            {
+              "text": " unto",
+              "strongsNumbers": [
+                "G1909"
+              ]
+            },
+            {
+              "text": " more",
+              "strongsNumbers": [
+                "G4119"
+              ]
+            },
+            {
+              "text": " ungodliness.",
+              "strongsNumbers": [
+                "G763"
+              ]
+            }
+          ]
         },
         {
           "number": 17,
-          "text": "And their word will eat as doth a canker: of whom is Hymenaeus and Philetus;"
+          "text": "And their word will eat as doth a canker: of whom is Hymenaeus and Philetus;",
+          "tokens": [
+            {
+              "text": "And",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " their",
+              "strongsNumbers": [
+                "G846"
+              ]
+            },
+            {
+              "text": " word",
+              "strongsNumbers": [
+                "G3056"
+              ]
+            },
+            {
+              "text": " will eat",
+              "strongsNumbers": [
+                "G2192",
+                "G3542"
+              ]
+            },
+            {
+              "text": " as",
+              "strongsNumbers": [
+                "G5613"
+              ]
+            },
+            {
+              "text": " doth a canker:",
+              "strongsNumbers": [
+                "G1044"
+              ]
+            },
+            {
+              "text": " of whom",
+              "strongsNumbers": [
+                "G3739"
+              ]
+            },
+            {
+              "text": " is",
+              "strongsNumbers": [
+                "G2076"
+              ]
+            },
+            {
+              "text": " Hymenaeus",
+              "strongsNumbers": [
+                "G5211"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " Philetus;",
+              "strongsNumbers": [
+                "G5372"
+              ]
+            }
+          ]
         },
         {
           "number": 18,
-          "text": "Who concerning the truth have erred, saying that the resurrection is past already; and overthrow the faith of some."
+          "text": "Who concerning the truth have erred, saying that the resurrection is past already; and overthrow the faith of some.",
+          "tokens": [
+            {
+              "text": "Who",
+              "strongsNumbers": [
+                "G3748"
+              ]
+            },
+            {
+              "text": " concerning",
+              "strongsNumbers": [
+                "G4012"
+              ]
+            },
+            {
+              "text": " the truth",
+              "strongsNumbers": [
+                "G225"
+              ]
+            },
+            {
+              "text": " have erred,",
+              "strongsNumbers": [
+                "G795"
+              ]
+            },
+            {
+              "text": " saying",
+              "strongsNumbers": [
+                "G3004"
+              ]
+            },
+            {
+              "text": " that the resurrection",
+              "strongsNumbers": [
+                "G386"
+              ]
+            },
+            {
+              "text": " is past",
+              "strongsNumbers": [
+                "G1096"
+              ]
+            },
+            {
+              "text": " already;",
+              "strongsNumbers": [
+                "G2235"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " overthrow",
+              "strongsNumbers": [
+                "G396"
+              ]
+            },
+            {
+              "text": " the faith",
+              "strongsNumbers": [
+                "G4102"
+              ]
+            },
+            {
+              "text": " of some.",
+              "strongsNumbers": [
+                "G5100"
+              ]
+            }
+          ]
         },
         {
           "number": 19,
-          "text": "Nevertheless the foundation of God standeth sure, having this seal, The Lord knoweth them that are his. And, Let every one that nameth the name of Christ depart from iniquity."
+          "text": "Nevertheless the foundation of God standeth sure, having this seal, The Lord knoweth them that are his. And, Let ➔ every one that nameth the name of Christ depart from iniquity.",
+          "tokens": [
+            {
+              "text": "Nevertheless",
+              "strongsNumbers": [
+                "G3305"
+              ]
+            },
+            {
+              "text": " the foundation",
+              "strongsNumbers": [
+                "G2310"
+              ]
+            },
+            {
+              "text": " of God",
+              "strongsNumbers": [
+                "G2316"
+              ]
+            },
+            {
+              "text": " standeth",
+              "strongsNumbers": [
+                "G2476"
+              ]
+            },
+            {
+              "text": " sure,",
+              "strongsNumbers": [
+                "G4731"
+              ]
+            },
+            {
+              "text": " having",
+              "strongsNumbers": [
+                "G2192"
+              ]
+            },
+            {
+              "text": " this",
+              "strongsNumbers": [
+                "G5026"
+              ]
+            },
+            {
+              "text": " seal,",
+              "strongsNumbers": [
+                "G4973"
+              ]
+            },
+            {
+              "text": " The Lord",
+              "strongsNumbers": [
+                "G2962"
+              ]
+            },
+            {
+              "text": " knoweth",
+              "strongsNumbers": [
+                "G1097"
+              ]
+            },
+            {
+              "text": " them that are",
+              "strongsNumbers": [
+                "G5607"
+              ]
+            },
+            {
+              "text": " his.",
+              "strongsNumbers": [
+                "G846"
+              ]
+            },
+            {
+              "text": " And,",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " Let",
+              "strongsNumbers": [
+                "G868"
+              ]
+            },
+            {
+              "text": " ➔ every one",
+              "strongsNumbers": [
+                "G3956"
+              ]
+            },
+            {
+              "text": " that nameth",
+              "strongsNumbers": [
+                "G3687"
+              ]
+            },
+            {
+              "text": " the name",
+              "strongsNumbers": [
+                "G3686"
+              ]
+            },
+            {
+              "text": " of Christ",
+              "strongsNumbers": [
+                "G5547"
+              ]
+            },
+            {
+              "text": " depart",
+              "strongsNumbers": [
+                "G868"
+              ]
+            },
+            {
+              "text": " from",
+              "strongsNumbers": [
+                "G575"
+              ]
+            },
+            {
+              "text": " iniquity.",
+              "strongsNumbers": [
+                "G93"
+              ]
+            }
+          ]
         },
         {
           "number": 20,
-          "text": "But in a great house there are not only vessels of gold and of silver, but also of wood and of earth; and some to honour, and some to dishonour."
+          "text": "But in a great house there are not only vessels of gold and of silver, but also of wood and of earth; and some to honour, and some to dishonour.",
+          "tokens": [
+            {
+              "text": "But",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " a great",
+              "strongsNumbers": [
+                "G3173"
+              ]
+            },
+            {
+              "text": " house",
+              "strongsNumbers": [
+                "G3614"
+              ]
+            },
+            {
+              "text": " there are",
+              "strongsNumbers": [
+                "G2076"
+              ]
+            },
+            {
+              "text": " not",
+              "strongsNumbers": [
+                "G3756"
+              ]
+            },
+            {
+              "text": " only",
+              "strongsNumbers": [
+                "G3440"
+              ]
+            },
+            {
+              "text": " vessels",
+              "strongsNumbers": [
+                "G4632"
+              ]
+            },
+            {
+              "text": " of gold",
+              "strongsNumbers": [
+                "G5552"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " of silver,",
+              "strongsNumbers": [
+                "G693"
+              ]
+            },
+            {
+              "text": " but",
+              "strongsNumbers": [
+                "G235"
+              ]
+            },
+            {
+              "text": " also",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " of wood",
+              "strongsNumbers": [
+                "G3585"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " of earth;",
+              "strongsNumbers": [
+                "G3749"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " some",
+              "strongsNumbers": [
+                "G3739",
+                "G3303"
+              ]
+            },
+            {
+              "text": " to",
+              "strongsNumbers": [
+                "G1519"
+              ]
+            },
+            {
+              "text": " honour,",
+              "strongsNumbers": [
+                "G5092"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " some",
+              "strongsNumbers": [
+                "G3739"
+              ]
+            },
+            {
+              "text": " to",
+              "strongsNumbers": [
+                "G1519"
+              ]
+            },
+            {
+              "text": " dishonour.",
+              "strongsNumbers": [
+                "G819"
+              ]
+            }
+          ]
         },
         {
           "number": 21,
-          "text": "If a man therefore purge himself from these, he shall be a vessel unto honour, sanctified, and meet for the master's use, [and] prepared unto every good work."
+          "text": "If a man therefore purge himself from these, he shall be a vessel unto honour, sanctified, and meet for the master's use, and prepared unto every good work.",
+          "tokens": [
+            {
+              "text": "If",
+              "strongsNumbers": [
+                "G1437"
+              ]
+            },
+            {
+              "text": " a man",
+              "strongsNumbers": [
+                "G5100"
+              ]
+            },
+            {
+              "text": " therefore",
+              "strongsNumbers": [
+                "G3767"
+              ]
+            },
+            {
+              "text": " purge",
+              "strongsNumbers": [
+                "G1571"
+              ]
+            },
+            {
+              "text": " himself",
+              "strongsNumbers": [
+                "G1438"
+              ]
+            },
+            {
+              "text": " from",
+              "strongsNumbers": [
+                "G575"
+              ]
+            },
+            {
+              "text": " these,",
+              "strongsNumbers": [
+                "G5130"
+              ]
+            },
+            {
+              "text": " he shall be",
+              "strongsNumbers": [
+                "G2071"
+              ]
+            },
+            {
+              "text": " a vessel",
+              "strongsNumbers": [
+                "G4632"
+              ]
+            },
+            {
+              "text": " unto",
+              "strongsNumbers": [
+                "G1519"
+              ]
+            },
+            {
+              "text": " honour,",
+              "strongsNumbers": [
+                "G5092"
+              ]
+            },
+            {
+              "text": " sanctified,",
+              "strongsNumbers": [
+                "G37"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " meet",
+              "strongsNumbers": [
+                "G2173"
+              ]
+            },
+            {
+              "text": " for the master's use,",
+              "strongsNumbers": [
+                "G1203"
+              ]
+            },
+            {
+              "text": " and prepared",
+              "strongsNumbers": [
+                "G2090"
+              ]
+            },
+            {
+              "text": " unto",
+              "strongsNumbers": [
+                "G1519"
+              ]
+            },
+            {
+              "text": " every",
+              "strongsNumbers": [
+                "G3956"
+              ]
+            },
+            {
+              "text": " good",
+              "strongsNumbers": [
+                "G18"
+              ]
+            },
+            {
+              "text": " work.",
+              "strongsNumbers": [
+                "G2041"
+              ]
+            }
+          ]
         },
         {
           "number": 22,
-          "text": "Flee also youthful lusts: but follow righteousness, faith, charity, peace, with them that call on the Lord out of a pure heart."
+          "text": "Flee also youthful lusts: but follow righteousness, faith, charity, peace, with them that call on the Lord out of a pure heart.",
+          "tokens": [
+            {
+              "text": "Flee",
+              "strongsNumbers": [
+                "G5343"
+              ]
+            },
+            {
+              "text": " also",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " youthful",
+              "strongsNumbers": [
+                "G3512"
+              ]
+            },
+            {
+              "text": " lusts:",
+              "strongsNumbers": [
+                "G1939"
+              ]
+            },
+            {
+              "text": " but",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " follow",
+              "strongsNumbers": [
+                "G1377"
+              ]
+            },
+            {
+              "text": " righteousness,",
+              "strongsNumbers": [
+                "G1343"
+              ]
+            },
+            {
+              "text": " faith,",
+              "strongsNumbers": [
+                "G4102"
+              ]
+            },
+            {
+              "text": " charity,",
+              "strongsNumbers": [
+                "G26"
+              ]
+            },
+            {
+              "text": " peace,",
+              "strongsNumbers": [
+                "G1515"
+              ]
+            },
+            {
+              "text": " with",
+              "strongsNumbers": [
+                "G3326"
+              ]
+            },
+            {
+              "text": " them that call on",
+              "strongsNumbers": [
+                "G1941"
+              ]
+            },
+            {
+              "text": " the Lord",
+              "strongsNumbers": [
+                "G2962"
+              ]
+            },
+            {
+              "text": " out of",
+              "strongsNumbers": [
+                "G1537"
+              ]
+            },
+            {
+              "text": " a pure",
+              "strongsNumbers": [
+                "G2513"
+              ]
+            },
+            {
+              "text": " heart.",
+              "strongsNumbers": [
+                "G2588"
+              ]
+            }
+          ]
         },
         {
           "number": 23,
-          "text": "But foolish and unlearned questions avoid, knowing that they do gender strifes."
+          "text": "But foolish and unlearned questions avoid, knowing that they do gender strifes.",
+          "tokens": [
+            {
+              "text": "But",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " foolish",
+              "strongsNumbers": [
+                "G3474"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " unlearned",
+              "strongsNumbers": [
+                "G521"
+              ]
+            },
+            {
+              "text": " questions",
+              "strongsNumbers": [
+                "G2214"
+              ]
+            },
+            {
+              "text": " avoid,",
+              "strongsNumbers": [
+                "G3868"
+              ]
+            },
+            {
+              "text": " knowing",
+              "strongsNumbers": [
+                "G1492"
+              ]
+            },
+            {
+              "text": " that",
+              "strongsNumbers": [
+                "G3754"
+              ]
+            },
+            {
+              "text": " they do gender",
+              "strongsNumbers": [
+                "G1080"
+              ]
+            },
+            {
+              "text": " strifes.",
+              "strongsNumbers": [
+                "G3163"
+              ]
+            }
+          ]
         },
         {
           "number": 24,
-          "text": "And the servant of the Lord must not strive; but be gentle unto all [men], apt to teach, patient,"
+          "text": "And the servant of the Lord must not strive; but be gentle unto all men, apt to teach, patient,",
+          "tokens": [
+            {
+              "text": "And",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " the servant",
+              "strongsNumbers": [
+                "G1401"
+              ]
+            },
+            {
+              "text": " of the Lord",
+              "strongsNumbers": [
+                "G2962"
+              ]
+            },
+            {
+              "text": " must",
+              "strongsNumbers": [
+                "G1163"
+              ]
+            },
+            {
+              "text": " not",
+              "strongsNumbers": [
+                "G3756"
+              ]
+            },
+            {
+              "text": " strive;",
+              "strongsNumbers": [
+                "G3164"
+              ]
+            },
+            {
+              "text": " but",
+              "strongsNumbers": [
+                "G235"
+              ]
+            },
+            {
+              "text": " be",
+              "strongsNumbers": [
+                "G1511"
+              ]
+            },
+            {
+              "text": " gentle",
+              "strongsNumbers": [
+                "G2261"
+              ]
+            },
+            {
+              "text": " unto",
+              "strongsNumbers": [
+                "G4314"
+              ]
+            },
+            {
+              "text": " all",
+              "strongsNumbers": [
+                "G3956"
+              ]
+            },
+            {
+              "text": " men, apt to teach,",
+              "strongsNumbers": [
+                "G1317"
+              ]
+            },
+            {
+              "text": " patient,",
+              "strongsNumbers": [
+                "G420"
+              ]
+            }
+          ]
         },
         {
           "number": 25,
-          "text": "In meekness instructing those that oppose themselves; if God peradventure will give them repentance to the acknowledging of the truth;"
+          "text": "In meekness instructing those that oppose themselves; if ➔ God peradventure will give them repentance to the acknowledging of the truth;",
+          "tokens": [
+            {
+              "text": "In",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " meekness",
+              "strongsNumbers": [
+                "G4236"
+              ]
+            },
+            {
+              "text": " instructing",
+              "strongsNumbers": [
+                "G3811"
+              ]
+            },
+            {
+              "text": " those that oppose themselves;",
+              "strongsNumbers": [
+                "G475"
+              ]
+            },
+            {
+              "text": " if",
+              "strongsNumbers": [
+                "G3379"
+              ]
+            },
+            {
+              "text": " ➔ God",
+              "strongsNumbers": [
+                "G2316"
+              ]
+            },
+            {
+              "text": " peradventure",
+              "strongsNumbers": [
+                "G3379"
+              ]
+            },
+            {
+              "text": " will give",
+              "strongsNumbers": [
+                "G1325"
+              ]
+            },
+            {
+              "text": " them",
+              "strongsNumbers": [
+                "G846"
+              ]
+            },
+            {
+              "text": " repentance",
+              "strongsNumbers": [
+                "G3341"
+              ]
+            },
+            {
+              "text": " to",
+              "strongsNumbers": [
+                "G1519"
+              ]
+            },
+            {
+              "text": " the acknowledging",
+              "strongsNumbers": [
+                "G1922"
+              ]
+            },
+            {
+              "text": " of the truth;",
+              "strongsNumbers": [
+                "G225"
+              ]
+            }
+          ]
         },
         {
           "number": 26,
-          "text": "And [that] they may recover themselves out of the snare of the devil, who are taken captive by him at his will."
+          "text": "And that they may recover themselves out of the snare of the devil, who are taken captive by him at his will.",
+          "tokens": [
+            {
+              "text": "And",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " that they may recover themselves",
+              "strongsNumbers": [
+                "G366"
+              ]
+            },
+            {
+              "text": " out of",
+              "strongsNumbers": [
+                "G1537"
+              ]
+            },
+            {
+              "text": " the snare",
+              "strongsNumbers": [
+                "G3803"
+              ]
+            },
+            {
+              "text": " of the devil,",
+              "strongsNumbers": [
+                "G1228"
+              ]
+            },
+            {
+              "text": " who are taken captive",
+              "strongsNumbers": [
+                "G2221"
+              ]
+            },
+            {
+              "text": " by",
+              "strongsNumbers": [
+                "G5259"
+              ]
+            },
+            {
+              "text": " him",
+              "strongsNumbers": [
+                "G846"
+              ]
+            },
+            {
+              "text": " at",
+              "strongsNumbers": [
+                "G1519"
+              ]
+            },
+            {
+              "text": " his",
+              "strongsNumbers": [
+                "G1565"
+              ]
+            },
+            {
+              "text": " will.",
+              "strongsNumbers": [
+                "G2307"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -202,71 +4002,1370 @@
       "verses": [
         {
           "number": 1,
-          "text": "This know also, that in the last days perilous times shall come."
+          "text": "This know also, that in the last days perilous times shall come.",
+          "tokens": [
+            {
+              "text": "This",
+              "strongsNumbers": [
+                "G5124"
+              ]
+            },
+            {
+              "text": " know",
+              "strongsNumbers": [
+                "G1097"
+              ]
+            },
+            {
+              "text": " also,",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " that",
+              "strongsNumbers": [
+                "G3754"
+              ]
+            },
+            {
+              "text": " in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " the last",
+              "strongsNumbers": [
+                "G2078"
+              ]
+            },
+            {
+              "text": " days",
+              "strongsNumbers": [
+                "G2250"
+              ]
+            },
+            {
+              "text": " perilous",
+              "strongsNumbers": [
+                "G5467"
+              ]
+            },
+            {
+              "text": " times",
+              "strongsNumbers": [
+                "G2540"
+              ]
+            },
+            {
+              "text": " shall come.",
+              "strongsNumbers": [
+                "G1764"
+              ]
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "For men shall be lovers of their own selves, covetous, boasters, proud, blasphemers, disobedient to parents, unthankful, unholy,"
+          "text": "For men shall be lovers of their own selves, covetous, boasters, proud, blasphemers, disobedient to parents, unthankful, unholy,",
+          "tokens": [
+            {
+              "text": "For",
+              "strongsNumbers": [
+                "G1063"
+              ]
+            },
+            {
+              "text": " men",
+              "strongsNumbers": [
+                "G444"
+              ]
+            },
+            {
+              "text": " shall be",
+              "strongsNumbers": [
+                "G2071"
+              ]
+            },
+            {
+              "text": " lovers of their own selves,",
+              "strongsNumbers": [
+                "G5367"
+              ]
+            },
+            {
+              "text": " covetous,",
+              "strongsNumbers": [
+                "G5366"
+              ]
+            },
+            {
+              "text": " boasters,",
+              "strongsNumbers": [
+                "G213"
+              ]
+            },
+            {
+              "text": " proud,",
+              "strongsNumbers": [
+                "G5244"
+              ]
+            },
+            {
+              "text": " blasphemers,",
+              "strongsNumbers": [
+                "G989"
+              ]
+            },
+            {
+              "text": " disobedient",
+              "strongsNumbers": [
+                "G545"
+              ]
+            },
+            {
+              "text": " to parents,",
+              "strongsNumbers": [
+                "G1118"
+              ]
+            },
+            {
+              "text": " unthankful,",
+              "strongsNumbers": [
+                "G884"
+              ]
+            },
+            {
+              "text": " unholy,",
+              "strongsNumbers": [
+                "G462"
+              ]
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "Without natural affection, trucebreakers, false accusers, incontinent, fierce, despisers of those that are good,"
+          "text": "Without natural affection, trucebreakers, false accusers, incontinent, fierce, despisers of those that are good,",
+          "tokens": [
+            {
+              "text": "Without natural affection,",
+              "strongsNumbers": [
+                "G794"
+              ]
+            },
+            {
+              "text": " trucebreakers,",
+              "strongsNumbers": [
+                "G786"
+              ]
+            },
+            {
+              "text": " false accusers,",
+              "strongsNumbers": [
+                "G1228"
+              ]
+            },
+            {
+              "text": " incontinent,",
+              "strongsNumbers": [
+                "G193"
+              ]
+            },
+            {
+              "text": " fierce,",
+              "strongsNumbers": [
+                "G434"
+              ]
+            },
+            {
+              "text": " despisers of those that are good,",
+              "strongsNumbers": [
+                "G865"
+              ]
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "Traitors, heady, highminded, lovers of pleasures more than lovers of God;"
+          "text": "Traitors, heady, highminded, lovers of pleasures more than lovers of God;",
+          "tokens": [
+            {
+              "text": "Traitors,",
+              "strongsNumbers": [
+                "G4273"
+              ]
+            },
+            {
+              "text": " heady,",
+              "strongsNumbers": [
+                "G4312"
+              ]
+            },
+            {
+              "text": " highminded,",
+              "strongsNumbers": [
+                "G5187"
+              ]
+            },
+            {
+              "text": " lovers of pleasures",
+              "strongsNumbers": [
+                "G5369"
+              ]
+            },
+            {
+              "text": " more",
+              "strongsNumbers": [
+                "G3123"
+              ]
+            },
+            {
+              "text": " than",
+              "strongsNumbers": [
+                "G2228"
+              ]
+            },
+            {
+              "text": " lovers of God;",
+              "strongsNumbers": [
+                "G5377"
+              ]
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "Having a form of godliness, but denying the power thereof: from such turn away."
+          "text": "Having a form of godliness, but denying the power thereof: from such turn away.",
+          "tokens": [
+            {
+              "text": "Having",
+              "strongsNumbers": [
+                "G2192"
+              ]
+            },
+            {
+              "text": " a form",
+              "strongsNumbers": [
+                "G3446"
+              ]
+            },
+            {
+              "text": " of godliness,",
+              "strongsNumbers": [
+                "G2150"
+              ]
+            },
+            {
+              "text": " but",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " denying",
+              "strongsNumbers": [
+                "G720"
+              ]
+            },
+            {
+              "text": " the power",
+              "strongsNumbers": [
+                "G1411"
+              ]
+            },
+            {
+              "text": " thereof:",
+              "strongsNumbers": [
+                "G846"
+              ]
+            },
+            {
+              "text": " from",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " such",
+              "strongsNumbers": [
+                "G5128"
+              ]
+            },
+            {
+              "text": " turn away.",
+              "strongsNumbers": [
+                "G665"
+              ]
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "For of this sort are they which creep into houses, and lead captive silly women laden with sins, led away with divers lusts,"
+          "text": "For of this sort are they which creep into houses, and lead captive silly women laden with sins, led away with divers lusts,",
+          "tokens": [
+            {
+              "text": "For",
+              "strongsNumbers": [
+                "G1063"
+              ]
+            },
+            {
+              "text": " of",
+              "strongsNumbers": [
+                "G1537"
+              ]
+            },
+            {
+              "text": " this sort",
+              "strongsNumbers": [
+                "G5130"
+              ]
+            },
+            {
+              "text": " are they",
+              "strongsNumbers": [
+                "G1526"
+              ]
+            },
+            {
+              "text": " which creep",
+              "strongsNumbers": [
+                "G1744"
+              ]
+            },
+            {
+              "text": " into",
+              "strongsNumbers": [
+                "G1519"
+              ]
+            },
+            {
+              "text": " houses,",
+              "strongsNumbers": [
+                "G3614"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " lead captive",
+              "strongsNumbers": [
+                "G162"
+              ]
+            },
+            {
+              "text": " silly women",
+              "strongsNumbers": [
+                "G1133"
+              ]
+            },
+            {
+              "text": " laden",
+              "strongsNumbers": [
+                "G4987"
+              ]
+            },
+            {
+              "text": " with sins,",
+              "strongsNumbers": [
+                "G266"
+              ]
+            },
+            {
+              "text": " led away",
+              "strongsNumbers": [
+                "G71"
+              ]
+            },
+            {
+              "text": " with divers",
+              "strongsNumbers": [
+                "G4164"
+              ]
+            },
+            {
+              "text": " lusts,",
+              "strongsNumbers": [
+                "G1939"
+              ]
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "Ever learning, and never able to come to the knowledge of the truth."
+          "text": "Ever learning, and never able to come to the knowledge of the truth.",
+          "tokens": [
+            {
+              "text": "Ever",
+              "strongsNumbers": [
+                "G3842"
+              ]
+            },
+            {
+              "text": " learning,",
+              "strongsNumbers": [
+                "G3129"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " never",
+              "strongsNumbers": [
+                "G3368"
+              ]
+            },
+            {
+              "text": " able",
+              "strongsNumbers": [
+                "G1410"
+              ]
+            },
+            {
+              "text": " to come",
+              "strongsNumbers": [
+                "G2064"
+              ]
+            },
+            {
+              "text": " to",
+              "strongsNumbers": [
+                "G1519"
+              ]
+            },
+            {
+              "text": " the knowledge",
+              "strongsNumbers": [
+                "G1922"
+              ]
+            },
+            {
+              "text": " of the truth.",
+              "strongsNumbers": [
+                "G225"
+              ]
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "Now as Jannes and Jambres withstood Moses, so do these also resist the truth: men of corrupt minds, reprobate concerning the faith."
+          "text": "Now as Jannes and Jambres withstood Moses, so do ➔ these also resist the truth: men of corrupt minds, reprobate concerning the faith.",
+          "tokens": [
+            {
+              "text": " Now",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " as",
+              "strongsNumbers": [
+                "G5158"
+              ]
+            },
+            {
+              "text": " Jannes",
+              "strongsNumbers": [
+                "G2389"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " Jambres",
+              "strongsNumbers": [
+                "G2387"
+              ]
+            },
+            {
+              "text": " withstood",
+              "strongsNumbers": [
+                "G436"
+              ]
+            },
+            {
+              "text": " Moses,",
+              "strongsNumbers": [
+                "G3475"
+              ]
+            },
+            {
+              "text": " so",
+              "strongsNumbers": [
+                "G3779"
+              ]
+            },
+            {
+              "text": " do",
+              "strongsNumbers": [
+                "G436"
+              ]
+            },
+            {
+              "text": " ➔ these",
+              "strongsNumbers": [
+                "G3778"
+              ]
+            },
+            {
+              "text": " also",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " resist",
+              "strongsNumbers": [
+                "G436"
+              ]
+            },
+            {
+              "text": " the truth:",
+              "strongsNumbers": [
+                "G225"
+              ]
+            },
+            {
+              "text": " men",
+              "strongsNumbers": [
+                "G444"
+              ]
+            },
+            {
+              "text": " of corrupt",
+              "strongsNumbers": [
+                "G2704"
+              ]
+            },
+            {
+              "text": " minds,",
+              "strongsNumbers": [
+                "G3563"
+              ]
+            },
+            {
+              "text": " reprobate",
+              "strongsNumbers": [
+                "G96"
+              ]
+            },
+            {
+              "text": " concerning",
+              "strongsNumbers": [
+                "G4012"
+              ]
+            },
+            {
+              "text": " the faith.",
+              "strongsNumbers": [
+                "G4102"
+              ]
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "But they shall proceed no further: for their folly shall be manifest unto all [men], as their's also was."
+          "text": "But they shall proceed no further: for their folly shall be manifest unto all men, as theirs also was.",
+          "tokens": [
+            {
+              "text": "But",
+              "strongsNumbers": [
+                "G235"
+              ]
+            },
+            {
+              "text": " they shall proceed",
+              "strongsNumbers": [
+                "G4298"
+              ]
+            },
+            {
+              "text": " no",
+              "strongsNumbers": [
+                "G3756"
+              ]
+            },
+            {
+              "text": " further:",
+              "strongsNumbers": [
+                "G1909",
+                "G4119"
+              ]
+            },
+            {
+              "text": " for",
+              "strongsNumbers": [
+                "G1063"
+              ]
+            },
+            {
+              "text": " their",
+              "strongsNumbers": [
+                "G846"
+              ]
+            },
+            {
+              "text": " folly",
+              "strongsNumbers": [
+                "G454"
+              ]
+            },
+            {
+              "text": " shall be",
+              "strongsNumbers": [
+                "G2071"
+              ]
+            },
+            {
+              "text": " manifest",
+              "strongsNumbers": [
+                "G1552"
+              ]
+            },
+            {
+              "text": " unto all",
+              "strongsNumbers": [
+                "G3956"
+              ]
+            },
+            {
+              "text": " men, as",
+              "strongsNumbers": [
+                "G5613"
+              ]
+            },
+            {
+              "text": " theirs",
+              "strongsNumbers": [
+                "G1565"
+              ]
+            },
+            {
+              "text": " also",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " was.",
+              "strongsNumbers": [
+                "G1096"
+              ]
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "But thou hast fully known my doctrine, manner of life, purpose, faith, longsuffering, charity, patience,"
+          "text": "But thou hast fully known my doctrine, manner of life, purpose, faith, longsuffering, charity, patience,",
+          "tokens": [
+            {
+              "text": "But",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " thou",
+              "strongsNumbers": [
+                "G4771"
+              ]
+            },
+            {
+              "text": " hast fully known",
+              "strongsNumbers": [
+                "G3877"
+              ]
+            },
+            {
+              "text": " my",
+              "strongsNumbers": [
+                "G3450"
+              ]
+            },
+            {
+              "text": " doctrine,",
+              "strongsNumbers": [
+                "G1319"
+              ]
+            },
+            {
+              "text": " manner of life,",
+              "strongsNumbers": [
+                "G72"
+              ]
+            },
+            {
+              "text": " purpose,",
+              "strongsNumbers": [
+                "G4286"
+              ]
+            },
+            {
+              "text": " faith,",
+              "strongsNumbers": [
+                "G4102"
+              ]
+            },
+            {
+              "text": " longsuffering,",
+              "strongsNumbers": [
+                "G3115"
+              ]
+            },
+            {
+              "text": " charity,",
+              "strongsNumbers": [
+                "G26"
+              ]
+            },
+            {
+              "text": " patience,",
+              "strongsNumbers": [
+                "G5281"
+              ]
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "Persecutions, afflictions, which came unto me at Antioch, at Iconium, at Lystra; what persecutions I endured: but out of [them] all the Lord delivered me."
+          "text": "Persecutions, afflictions, which came unto me at Antioch, at Iconium, at Lystra; what persecutions I endured: but out of them all the Lord delivered me.",
+          "tokens": [
+            {
+              "text": "Persecutions,",
+              "strongsNumbers": [
+                "G1375"
+              ]
+            },
+            {
+              "text": " afflictions,",
+              "strongsNumbers": [
+                "G3804"
+              ]
+            },
+            {
+              "text": " which",
+              "strongsNumbers": [
+                "G3634"
+              ]
+            },
+            {
+              "text": " came",
+              "strongsNumbers": [
+                "G1096"
+              ]
+            },
+            {
+              "text": " unto me",
+              "strongsNumbers": [
+                "G3427"
+              ]
+            },
+            {
+              "text": " at",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " Antioch,",
+              "strongsNumbers": [
+                "G490"
+              ]
+            },
+            {
+              "text": " at",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " Iconium,",
+              "strongsNumbers": [
+                "G2430"
+              ]
+            },
+            {
+              "text": " at",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " Lystra;",
+              "strongsNumbers": [
+                "G3082"
+              ]
+            },
+            {
+              "text": " what",
+              "strongsNumbers": [
+                "G3634"
+              ]
+            },
+            {
+              "text": " persecutions",
+              "strongsNumbers": [
+                "G1375"
+              ]
+            },
+            {
+              "text": " I endured:",
+              "strongsNumbers": [
+                "G5297"
+              ]
+            },
+            {
+              "text": " but",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " out of",
+              "strongsNumbers": [
+                "G1537"
+              ]
+            },
+            {
+              "text": " them all",
+              "strongsNumbers": [
+                "G3956"
+              ]
+            },
+            {
+              "text": " the Lord",
+              "strongsNumbers": [
+                "G2962"
+              ]
+            },
+            {
+              "text": " delivered",
+              "strongsNumbers": [
+                "G4506"
+              ]
+            },
+            {
+              "text": " me.",
+              "strongsNumbers": [
+                "G3165"
+              ]
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "Yea, and all that will live godly in Christ Jesus shall suffer persecution."
+          "text": "Yea, and all that will live godly in Christ Jesus shall suffer persecution.",
+          "tokens": [
+            {
+              "text": "Yea,",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " all",
+              "strongsNumbers": [
+                "G3956"
+              ]
+            },
+            {
+              "text": " that will",
+              "strongsNumbers": [
+                "G2309"
+              ]
+            },
+            {
+              "text": " live",
+              "strongsNumbers": [
+                "G2198"
+              ]
+            },
+            {
+              "text": " godly",
+              "strongsNumbers": [
+                "G2153"
+              ]
+            },
+            {
+              "text": " in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " Christ",
+              "strongsNumbers": [
+                "G5547"
+              ]
+            },
+            {
+              "text": " Jesus",
+              "strongsNumbers": [
+                "G2424"
+              ]
+            },
+            {
+              "text": " shall suffer persecution.",
+              "strongsNumbers": [
+                "G1377"
+              ]
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "But evil men and seducers shall wax worse and worse, deceiving, and being deceived."
+          "text": "But evil men and seducers shall wax worse and worse, deceiving, and being deceived.",
+          "tokens": [
+            {
+              "text": "But",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " evil",
+              "strongsNumbers": [
+                "G4190"
+              ]
+            },
+            {
+              "text": " men",
+              "strongsNumbers": [
+                "G444"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " seducers",
+              "strongsNumbers": [
+                "G1114"
+              ]
+            },
+            {
+              "text": " shall wax",
+              "strongsNumbers": [
+                "G4298"
+              ]
+            },
+            {
+              "text": " worse and worse,",
+              "strongsNumbers": [
+                "G1909",
+                "G5501"
+              ]
+            },
+            {
+              "text": " deceiving,",
+              "strongsNumbers": [
+                "G4105"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " being deceived.",
+              "strongsNumbers": [
+                "G4105"
+              ]
+            }
+          ]
         },
         {
           "number": 14,
-          "text": "But continue thou in the things which thou hast learned and hast been assured of, knowing of whom thou hast learned [them];"
+          "text": "But continue thou in the things which thou hast learned and hast been assured of, knowing of whom thou hast learned them;",
+          "tokens": [
+            {
+              "text": "But",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " continue",
+              "strongsNumbers": [
+                "G3306"
+              ]
+            },
+            {
+              "text": " thou",
+              "strongsNumbers": [
+                "G4771"
+              ]
+            },
+            {
+              "text": " in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " the things which",
+              "strongsNumbers": [
+                "G3739"
+              ]
+            },
+            {
+              "text": " thou hast learned",
+              "strongsNumbers": [
+                "G3129"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " hast been assured of,",
+              "strongsNumbers": [
+                "G4104"
+              ]
+            },
+            {
+              "text": " knowing",
+              "strongsNumbers": [
+                "G1492"
+              ]
+            },
+            {
+              "text": " of",
+              "strongsNumbers": [
+                "G3844"
+              ]
+            },
+            {
+              "text": " whom",
+              "strongsNumbers": [
+                "G5101"
+              ]
+            },
+            {
+              "text": " thou hast learned",
+              "strongsNumbers": [
+                "G3129"
+              ]
+            },
+            {
+              "text": " them;"
+            }
+          ]
         },
         {
           "number": 15,
-          "text": "And that from a child thou hast known the holy scriptures, which are able to make thee wise unto salvation through faith which is in Christ Jesus."
+          "text": "And that from a child thou hast known the holy scriptures, which are able to make ➔ thee wise unto salvation through faith which is in Christ Jesus.",
+          "tokens": [
+            {
+              "text": "And",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " that",
+              "strongsNumbers": [
+                "G3754"
+              ]
+            },
+            {
+              "text": " from",
+              "strongsNumbers": [
+                "G575"
+              ]
+            },
+            {
+              "text": " a child",
+              "strongsNumbers": [
+                "G1025"
+              ]
+            },
+            {
+              "text": " thou hast known",
+              "strongsNumbers": [
+                "G1492"
+              ]
+            },
+            {
+              "text": " the holy",
+              "strongsNumbers": [
+                "G2413"
+              ]
+            },
+            {
+              "text": " scriptures,",
+              "strongsNumbers": [
+                "G1121"
+              ]
+            },
+            {
+              "text": " which",
+              "strongsNumbers": [
+                "G3588"
+              ]
+            },
+            {
+              "text": " are able",
+              "strongsNumbers": [
+                "G1410"
+              ]
+            },
+            {
+              "text": " to make",
+              "strongsNumbers": [
+                "G4679"
+              ]
+            },
+            {
+              "text": " ➔ thee",
+              "strongsNumbers": [
+                "G4571"
+              ]
+            },
+            {
+              "text": " wise",
+              "strongsNumbers": [
+                "G4679"
+              ]
+            },
+            {
+              "text": " unto",
+              "strongsNumbers": [
+                "G1519"
+              ]
+            },
+            {
+              "text": " salvation",
+              "strongsNumbers": [
+                "G4991"
+              ]
+            },
+            {
+              "text": " through",
+              "strongsNumbers": [
+                "G1223"
+              ]
+            },
+            {
+              "text": " faith",
+              "strongsNumbers": [
+                "G4102"
+              ]
+            },
+            {
+              "text": " which",
+              "strongsNumbers": [
+                "G3588"
+              ]
+            },
+            {
+              "text": " is in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " Christ",
+              "strongsNumbers": [
+                "G5547"
+              ]
+            },
+            {
+              "text": " Jesus.",
+              "strongsNumbers": [
+                "G2424"
+              ]
+            }
+          ]
         },
         {
           "number": 16,
-          "text": "All scripture [is] given by inspiration of God, and [is] profitable for doctrine, for reproof, for correction, for instruction in righteousness:"
+          "text": "All scripture is given by inspiration of God, and is profitable for doctrine, for reproof, for correction, for instruction in righteousness:",
+          "tokens": [
+            {
+              "text": "All",
+              "strongsNumbers": [
+                "G3956"
+              ]
+            },
+            {
+              "text": " scripture",
+              "strongsNumbers": [
+                "G1124"
+              ]
+            },
+            {
+              "text": " is given by inspiration of God,",
+              "strongsNumbers": [
+                "G2315"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " is profitable",
+              "strongsNumbers": [
+                "G5624"
+              ]
+            },
+            {
+              "text": " for",
+              "strongsNumbers": [
+                "G4314"
+              ]
+            },
+            {
+              "text": " doctrine,",
+              "strongsNumbers": [
+                "G1319"
+              ]
+            },
+            {
+              "text": " for",
+              "strongsNumbers": [
+                "G4314"
+              ]
+            },
+            {
+              "text": " reproof,",
+              "strongsNumbers": [
+                "G1650"
+              ]
+            },
+            {
+              "text": " for",
+              "strongsNumbers": [
+                "G4314"
+              ]
+            },
+            {
+              "text": " correction,",
+              "strongsNumbers": [
+                "G1882"
+              ]
+            },
+            {
+              "text": " for",
+              "strongsNumbers": [
+                "G4314"
+              ]
+            },
+            {
+              "text": " instruction",
+              "strongsNumbers": [
+                "G3809"
+              ]
+            },
+            {
+              "text": " in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " righteousness:",
+              "strongsNumbers": [
+                "G1343"
+              ]
+            }
+          ]
         },
         {
           "number": 17,
-          "text": "That the man of God may be perfect, throughly furnished unto all good works."
+          "text": "That the man of God may be perfect, throughly furnished unto all good works.",
+          "tokens": [
+            {
+              "text": "That",
+              "strongsNumbers": [
+                "G2443"
+              ]
+            },
+            {
+              "text": " the man",
+              "strongsNumbers": [
+                "G444"
+              ]
+            },
+            {
+              "text": " of God",
+              "strongsNumbers": [
+                "G2316"
+              ]
+            },
+            {
+              "text": " may be",
+              "strongsNumbers": [
+                "G5600"
+              ]
+            },
+            {
+              "text": " perfect,",
+              "strongsNumbers": [
+                "G739"
+              ]
+            },
+            {
+              "text": " throughly furnished",
+              "strongsNumbers": [
+                "G1822"
+              ]
+            },
+            {
+              "text": " unto",
+              "strongsNumbers": [
+                "G4314"
+              ]
+            },
+            {
+              "text": " all",
+              "strongsNumbers": [
+                "G3956"
+              ]
+            },
+            {
+              "text": " good",
+              "strongsNumbers": [
+                "G18"
+              ]
+            },
+            {
+              "text": " works.",
+              "strongsNumbers": [
+                "G2041"
+              ]
+            }
+          ]
         }
       ]
     },
@@ -276,91 +5375,1885 @@
       "verses": [
         {
           "number": 1,
-          "text": "I charge [thee] therefore before God, and the Lord Jesus Christ, who shall judge the quick and the dead at his appearing and his kingdom;"
+          "text": "I charge thee therefore before God, and the Lord Jesus Christ, who shall judge the quick and the dead at his appearing and his kingdom;",
+          "tokens": [
+            {
+              "text": "I",
+              "strongsNumbers": [
+                "G1473"
+              ]
+            },
+            {
+              "text": " charge",
+              "strongsNumbers": [
+                "G1263"
+              ]
+            },
+            {
+              "text": " thee therefore",
+              "strongsNumbers": [
+                "G3767"
+              ]
+            },
+            {
+              "text": " before",
+              "strongsNumbers": [
+                "G1799"
+              ]
+            },
+            {
+              "text": " God,",
+              "strongsNumbers": [
+                "G2316"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " the Lord",
+              "strongsNumbers": [
+                "G2962"
+              ]
+            },
+            {
+              "text": " Jesus",
+              "strongsNumbers": [
+                "G2424"
+              ]
+            },
+            {
+              "text": " Christ,",
+              "strongsNumbers": [
+                "G5547"
+              ]
+            },
+            {
+              "text": " who",
+              "strongsNumbers": [
+                "G3588"
+              ]
+            },
+            {
+              "text": " shall",
+              "strongsNumbers": [
+                "G3195"
+              ]
+            },
+            {
+              "text": " judge",
+              "strongsNumbers": [
+                "G2919"
+              ]
+            },
+            {
+              "text": " the quick",
+              "strongsNumbers": [
+                "G2198"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " the dead",
+              "strongsNumbers": [
+                "G3498"
+              ]
+            },
+            {
+              "text": " at",
+              "strongsNumbers": [
+                "G2596"
+              ]
+            },
+            {
+              "text": " his",
+              "strongsNumbers": [
+                "G846"
+              ]
+            },
+            {
+              "text": " appearing",
+              "strongsNumbers": [
+                "G2015"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " his",
+              "strongsNumbers": [
+                "G846"
+              ]
+            },
+            {
+              "text": " kingdom;",
+              "strongsNumbers": [
+                "G932"
+              ]
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "Preach the word; be instant in season, out of season; reprove, rebuke, exhort with all longsuffering and doctrine."
+          "text": "Preach the word; be instant in season, out of season; reprove, rebuke, exhort with all longsuffering and doctrine.",
+          "tokens": [
+            {
+              "text": "Preach",
+              "strongsNumbers": [
+                "G2784"
+              ]
+            },
+            {
+              "text": " the word;",
+              "strongsNumbers": [
+                "G3056"
+              ]
+            },
+            {
+              "text": " be instant",
+              "strongsNumbers": [
+                "G2186"
+              ]
+            },
+            {
+              "text": " in season,",
+              "strongsNumbers": [
+                "G2122"
+              ]
+            },
+            {
+              "text": " out of season;",
+              "strongsNumbers": [
+                "G171"
+              ]
+            },
+            {
+              "text": " reprove,",
+              "strongsNumbers": [
+                "G1651"
+              ]
+            },
+            {
+              "text": " rebuke,",
+              "strongsNumbers": [
+                "G2008"
+              ]
+            },
+            {
+              "text": " exhort",
+              "strongsNumbers": [
+                "G3870"
+              ]
+            },
+            {
+              "text": " with",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " all",
+              "strongsNumbers": [
+                "G3956"
+              ]
+            },
+            {
+              "text": " longsuffering",
+              "strongsNumbers": [
+                "G3115"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " doctrine.",
+              "strongsNumbers": [
+                "G1322"
+              ]
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "For the time will come when they will not endure sound doctrine; but after their own lusts shall they heap to themselves teachers, having itching ears;"
+          "text": "For the time will come when they will ➔ not endure sound doctrine; but after their own lusts shall they heap to themselves teachers, having itching ears;",
+          "tokens": [
+            {
+              "text": "For",
+              "strongsNumbers": [
+                "G1063"
+              ]
+            },
+            {
+              "text": " the time",
+              "strongsNumbers": [
+                "G2540"
+              ]
+            },
+            {
+              "text": " will come",
+              "strongsNumbers": [
+                "G2071"
+              ]
+            },
+            {
+              "text": " when",
+              "strongsNumbers": [
+                "G3753"
+              ]
+            },
+            {
+              "text": " they will",
+              "strongsNumbers": [
+                "G430"
+              ]
+            },
+            {
+              "text": " ➔ not",
+              "strongsNumbers": [
+                "G3756"
+              ]
+            },
+            {
+              "text": " endure",
+              "strongsNumbers": [
+                "G430"
+              ]
+            },
+            {
+              "text": " sound",
+              "strongsNumbers": [
+                "G5198"
+              ]
+            },
+            {
+              "text": " doctrine;",
+              "strongsNumbers": [
+                "G1319"
+              ]
+            },
+            {
+              "text": " but",
+              "strongsNumbers": [
+                "G235"
+              ]
+            },
+            {
+              "text": " after",
+              "strongsNumbers": [
+                "G2596"
+              ]
+            },
+            {
+              "text": " their own",
+              "strongsNumbers": [
+                "G2398"
+              ]
+            },
+            {
+              "text": " lusts",
+              "strongsNumbers": [
+                "G1939"
+              ]
+            },
+            {
+              "text": " shall they heap",
+              "strongsNumbers": [
+                "G2002"
+              ]
+            },
+            {
+              "text": " to themselves",
+              "strongsNumbers": [
+                "G1438"
+              ]
+            },
+            {
+              "text": " teachers,",
+              "strongsNumbers": [
+                "G1320"
+              ]
+            },
+            {
+              "text": " having itching",
+              "strongsNumbers": [
+                "G2833"
+              ]
+            },
+            {
+              "text": " ears;",
+              "strongsNumbers": [
+                "G189"
+              ]
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "And they shall turn away [their] ears from the truth, and shall be turned unto fables."
+          "text": "And they shall turn away their ears from the truth, and shall be turned unto fables.",
+          "tokens": [
+            {
+              "text": "And",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " they shall turn away",
+              "strongsNumbers": [
+                "G3303",
+                "G654"
+              ]
+            },
+            {
+              "text": " their ears",
+              "strongsNumbers": [
+                "G189"
+              ]
+            },
+            {
+              "text": " from",
+              "strongsNumbers": [
+                "G575"
+              ]
+            },
+            {
+              "text": " the truth,",
+              "strongsNumbers": [
+                "G225"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " shall be turned",
+              "strongsNumbers": [
+                "G1624"
+              ]
+            },
+            {
+              "text": " unto",
+              "strongsNumbers": [
+                "G1909"
+              ]
+            },
+            {
+              "text": " fables.",
+              "strongsNumbers": [
+                "G3454"
+              ]
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "But watch thou in all things, endure afflictions, do the work of an evangelist, make full proof of thy ministry."
+          "text": "But watch thou in all things, endure afflictions, do the work of an evangelist, make full proof of thy ministry.",
+          "tokens": [
+            {
+              "text": "But",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " watch",
+              "strongsNumbers": [
+                "G3525"
+              ]
+            },
+            {
+              "text": " thou",
+              "strongsNumbers": [
+                "G4771"
+              ]
+            },
+            {
+              "text": " in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " all things,",
+              "strongsNumbers": [
+                "G3956"
+              ]
+            },
+            {
+              "text": " endure afflictions,",
+              "strongsNumbers": [
+                "G2553"
+              ]
+            },
+            {
+              "text": " do",
+              "strongsNumbers": [
+                "G4160"
+              ]
+            },
+            {
+              "text": " the work",
+              "strongsNumbers": [
+                "G2041"
+              ]
+            },
+            {
+              "text": " of an evangelist,",
+              "strongsNumbers": [
+                "G2099"
+              ]
+            },
+            {
+              "text": " make full proof",
+              "strongsNumbers": [
+                "G4135"
+              ]
+            },
+            {
+              "text": " of thy",
+              "strongsNumbers": [
+                "G4675"
+              ]
+            },
+            {
+              "text": " ministry.",
+              "strongsNumbers": [
+                "G1248"
+              ]
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "For I am now ready to be offered, and the time of my departure is at hand."
+          "text": "For I am ➔ now ready to be offered, and the time of my departure is at hand.",
+          "tokens": [
+            {
+              "text": "For",
+              "strongsNumbers": [
+                "G1063"
+              ]
+            },
+            {
+              "text": " I",
+              "strongsNumbers": [
+                "G1473"
+              ]
+            },
+            {
+              "text": " am",
+              "strongsNumbers": [
+                "G4689"
+              ]
+            },
+            {
+              "text": " ➔ now",
+              "strongsNumbers": [
+                "G2235"
+              ]
+            },
+            {
+              "text": " ready to be offered,",
+              "strongsNumbers": [
+                "G4689"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " the time",
+              "strongsNumbers": [
+                "G2540"
+              ]
+            },
+            {
+              "text": " of my",
+              "strongsNumbers": [
+                "G1699"
+              ]
+            },
+            {
+              "text": " departure",
+              "strongsNumbers": [
+                "G359"
+              ]
+            },
+            {
+              "text": " is at hand.",
+              "strongsNumbers": [
+                "G2186"
+              ]
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "I have fought a good fight, I have finished [my] course, I have kept the faith:"
+          "text": "I have fought a good fight, I have finished my course, I have kept the faith:",
+          "tokens": [
+            {
+              "text": "I have fought",
+              "strongsNumbers": [
+                "G75"
+              ]
+            },
+            {
+              "text": " a good",
+              "strongsNumbers": [
+                "G2570"
+              ]
+            },
+            {
+              "text": " fight,",
+              "strongsNumbers": [
+                "G73"
+              ]
+            },
+            {
+              "text": " I have finished",
+              "strongsNumbers": [
+                "G5055"
+              ]
+            },
+            {
+              "text": " my course,",
+              "strongsNumbers": [
+                "G1408"
+              ]
+            },
+            {
+              "text": " I have kept",
+              "strongsNumbers": [
+                "G5083"
+              ]
+            },
+            {
+              "text": " the faith:",
+              "strongsNumbers": [
+                "G4102"
+              ]
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "Henceforth there is laid up for me a crown of righteousness, which the Lord, the righteous judge, shall give me at that day: and not to me only, but unto all them also that love his appearing."
+          "text": "Henceforth there is laid up for me a crown of righteousness, which the Lord, the righteous judge, shall give me at that day: and not to me only, but unto all them also that love his appearing.",
+          "tokens": [
+            {
+              "text": "Henceforth",
+              "strongsNumbers": [
+                "G3063"
+              ]
+            },
+            {
+              "text": " there is laid up",
+              "strongsNumbers": [
+                "G606"
+              ]
+            },
+            {
+              "text": " for me",
+              "strongsNumbers": [
+                "G3427"
+              ]
+            },
+            {
+              "text": " a crown",
+              "strongsNumbers": [
+                "G4735"
+              ]
+            },
+            {
+              "text": " of righteousness,",
+              "strongsNumbers": [
+                "G1343"
+              ]
+            },
+            {
+              "text": " which",
+              "strongsNumbers": [
+                "G3739"
+              ]
+            },
+            {
+              "text": " the Lord,",
+              "strongsNumbers": [
+                "G2962"
+              ]
+            },
+            {
+              "text": " the righteous",
+              "strongsNumbers": [
+                "G1342"
+              ]
+            },
+            {
+              "text": " judge,",
+              "strongsNumbers": [
+                "G2923"
+              ]
+            },
+            {
+              "text": " shall give",
+              "strongsNumbers": [
+                "G591"
+              ]
+            },
+            {
+              "text": " me",
+              "strongsNumbers": [
+                "G3427"
+              ]
+            },
+            {
+              "text": " at",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " that",
+              "strongsNumbers": [
+                "G1565"
+              ]
+            },
+            {
+              "text": " day:",
+              "strongsNumbers": [
+                "G2250"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " not",
+              "strongsNumbers": [
+                "G3756"
+              ]
+            },
+            {
+              "text": " to me",
+              "strongsNumbers": [
+                "G1698"
+              ]
+            },
+            {
+              "text": " only,",
+              "strongsNumbers": [
+                "G3440"
+              ]
+            },
+            {
+              "text": " but",
+              "strongsNumbers": [
+                "G235"
+              ]
+            },
+            {
+              "text": " unto all them",
+              "strongsNumbers": [
+                "G3956"
+              ]
+            },
+            {
+              "text": " also",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " that love",
+              "strongsNumbers": [
+                "G25"
+              ]
+            },
+            {
+              "text": " his",
+              "strongsNumbers": [
+                "G846"
+              ]
+            },
+            {
+              "text": " appearing.",
+              "strongsNumbers": [
+                "G2015"
+              ]
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "Do thy diligence to come shortly unto me:"
+          "text": "Do thy diligence to come shortly unto me:",
+          "tokens": [
+            {
+              "text": "Do thy diligence",
+              "strongsNumbers": [
+                "G4704"
+              ]
+            },
+            {
+              "text": " to come",
+              "strongsNumbers": [
+                "G2064"
+              ]
+            },
+            {
+              "text": " shortly",
+              "strongsNumbers": [
+                "G5030"
+              ]
+            },
+            {
+              "text": " unto",
+              "strongsNumbers": [
+                "G4314"
+              ]
+            },
+            {
+              "text": " me:",
+              "strongsNumbers": [
+                "G3165"
+              ]
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "For Demas hath forsaken me, having loved this present world, and is departed unto Thessalonica; Crescens to Galatia, Titus unto Dalmatia."
+          "text": "For Demas hath forsaken me, having loved this present world, and is departed unto Thessalonica; Crescens to Galatia, Titus unto Dalmatia.",
+          "tokens": [
+            {
+              "text": "For",
+              "strongsNumbers": [
+                "G1063"
+              ]
+            },
+            {
+              "text": " Demas",
+              "strongsNumbers": [
+                "G1214"
+              ]
+            },
+            {
+              "text": " hath forsaken",
+              "strongsNumbers": [
+                "G1459"
+              ]
+            },
+            {
+              "text": " me, having loved",
+              "strongsNumbers": [
+                "G25"
+              ]
+            },
+            {
+              "text": " this present",
+              "strongsNumbers": [
+                "G3568"
+              ]
+            },
+            {
+              "text": " world,",
+              "strongsNumbers": [
+                "G165"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " is departed",
+              "strongsNumbers": [
+                "G4198"
+              ]
+            },
+            {
+              "text": " unto",
+              "strongsNumbers": [
+                "G1519"
+              ]
+            },
+            {
+              "text": " Thessalonica;",
+              "strongsNumbers": [
+                "G2332"
+              ]
+            },
+            {
+              "text": " Crescens",
+              "strongsNumbers": [
+                "G2913"
+              ]
+            },
+            {
+              "text": " to",
+              "strongsNumbers": [
+                "G1519"
+              ]
+            },
+            {
+              "text": " Galatia,",
+              "strongsNumbers": [
+                "G1053"
+              ]
+            },
+            {
+              "text": " Titus",
+              "strongsNumbers": [
+                "G5103"
+              ]
+            },
+            {
+              "text": " unto",
+              "strongsNumbers": [
+                "G1519"
+              ]
+            },
+            {
+              "text": " Dalmatia.",
+              "strongsNumbers": [
+                "G1149"
+              ]
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "Only Luke is with me. Take Mark, and bring him with thee: for he is profitable to me for the ministry."
+          "text": "Only Luke is with me. Take Mark, and bring him with thee: for he is profitable to me for the ministry.",
+          "tokens": [
+            {
+              "text": "Only",
+              "strongsNumbers": [
+                "G3441"
+              ]
+            },
+            {
+              "text": " Luke",
+              "strongsNumbers": [
+                "G3065"
+              ]
+            },
+            {
+              "text": " is",
+              "strongsNumbers": [
+                "G2076"
+              ]
+            },
+            {
+              "text": " with",
+              "strongsNumbers": [
+                "G3326"
+              ]
+            },
+            {
+              "text": " me.",
+              "strongsNumbers": [
+                "G1700"
+              ]
+            },
+            {
+              "text": " Take",
+              "strongsNumbers": [
+                "G353"
+              ]
+            },
+            {
+              "text": " Mark,",
+              "strongsNumbers": [
+                "G3138"
+              ]
+            },
+            {
+              "text": " and bring him",
+              "strongsNumbers": [
+                "G71"
+              ]
+            },
+            {
+              "text": " with",
+              "strongsNumbers": [
+                "G3326"
+              ]
+            },
+            {
+              "text": " thee:",
+              "strongsNumbers": [
+                "G4572"
+              ]
+            },
+            {
+              "text": " for",
+              "strongsNumbers": [
+                "G1063"
+              ]
+            },
+            {
+              "text": " he is",
+              "strongsNumbers": [
+                "G2076"
+              ]
+            },
+            {
+              "text": " profitable",
+              "strongsNumbers": [
+                "G2173"
+              ]
+            },
+            {
+              "text": " to me",
+              "strongsNumbers": [
+                "G3427"
+              ]
+            },
+            {
+              "text": " for",
+              "strongsNumbers": [
+                "G1519"
+              ]
+            },
+            {
+              "text": " the ministry.",
+              "strongsNumbers": [
+                "G1248"
+              ]
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "And Tychicus have I sent to Ephesus."
+          "text": "And Tychicus have I sent to Ephesus.",
+          "tokens": [
+            {
+              "text": "And",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " Tychicus",
+              "strongsNumbers": [
+                "G5190"
+              ]
+            },
+            {
+              "text": " have I sent",
+              "strongsNumbers": [
+                "G649"
+              ]
+            },
+            {
+              "text": " to",
+              "strongsNumbers": [
+                "G1519"
+              ]
+            },
+            {
+              "text": " Ephesus.",
+              "strongsNumbers": [
+                "G2181"
+              ]
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "The cloke that I left at Troas with Carpus, when thou comest, bring [with thee], and the books, [but] especially the parchments."
+          "text": "The cloke that I left at Troas with Carpus, when thou comest, bring with thee, and the books, but especially the parchments.",
+          "tokens": [
+            {
+              "text": "The cloke",
+              "strongsNumbers": [
+                "G5341"
+              ]
+            },
+            {
+              "text": " that",
+              "strongsNumbers": [
+                "G3739"
+              ]
+            },
+            {
+              "text": " I left",
+              "strongsNumbers": [
+                "G620"
+              ]
+            },
+            {
+              "text": " at",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " Troas",
+              "strongsNumbers": [
+                "G5174"
+              ]
+            },
+            {
+              "text": " with",
+              "strongsNumbers": [
+                "G3844"
+              ]
+            },
+            {
+              "text": " Carpus,",
+              "strongsNumbers": [
+                "G2591"
+              ]
+            },
+            {
+              "text": " when thou comest,",
+              "strongsNumbers": [
+                "G2064"
+              ]
+            },
+            {
+              "text": " bring",
+              "strongsNumbers": [
+                "G5342"
+              ]
+            },
+            {
+              "text": " with thee, and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " the books,",
+              "strongsNumbers": [
+                "G975"
+              ]
+            },
+            {
+              "text": " but especially",
+              "strongsNumbers": [
+                "G3122"
+              ]
+            },
+            {
+              "text": " the parchments.",
+              "strongsNumbers": [
+                "G3200"
+              ]
+            }
+          ]
         },
         {
           "number": 14,
-          "text": "Alexander the coppersmith did me much evil: the Lord reward him according to his works:"
+          "text": "Alexander the coppersmith did me much evil: the Lord reward him according to his works:",
+          "tokens": [
+            {
+              "text": "Alexander",
+              "strongsNumbers": [
+                "G223"
+              ]
+            },
+            {
+              "text": " the coppersmith",
+              "strongsNumbers": [
+                "G5471"
+              ]
+            },
+            {
+              "text": " did",
+              "strongsNumbers": [
+                "G1731"
+              ]
+            },
+            {
+              "text": " me",
+              "strongsNumbers": [
+                "G3427"
+              ]
+            },
+            {
+              "text": " much",
+              "strongsNumbers": [
+                "G4183"
+              ]
+            },
+            {
+              "text": " evil:",
+              "strongsNumbers": [
+                "G2556"
+              ]
+            },
+            {
+              "text": " the Lord",
+              "strongsNumbers": [
+                "G2962"
+              ]
+            },
+            {
+              "text": " reward",
+              "strongsNumbers": [
+                "G591"
+              ]
+            },
+            {
+              "text": " him",
+              "strongsNumbers": [
+                "G846"
+              ]
+            },
+            {
+              "text": " according to",
+              "strongsNumbers": [
+                "G2596"
+              ]
+            },
+            {
+              "text": " his",
+              "strongsNumbers": [
+                "G846"
+              ]
+            },
+            {
+              "text": " works:",
+              "strongsNumbers": [
+                "G2041"
+              ]
+            }
+          ]
         },
         {
           "number": 15,
-          "text": "Of whom be thou ware also; for he hath greatly withstood our words."
+          "text": "Of whom be ➔ thou ware also; for he hath ➔ greatly withstood our words.",
+          "tokens": [
+            {
+              "text": "Of whom",
+              "strongsNumbers": [
+                "G3739"
+              ]
+            },
+            {
+              "text": " be",
+              "strongsNumbers": [
+                "G5442"
+              ]
+            },
+            {
+              "text": " ➔ thou",
+              "strongsNumbers": [
+                "G4771"
+              ]
+            },
+            {
+              "text": " ware",
+              "strongsNumbers": [
+                "G5442"
+              ]
+            },
+            {
+              "text": " also;",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " for",
+              "strongsNumbers": [
+                "G1063"
+              ]
+            },
+            {
+              "text": " he hath",
+              "strongsNumbers": [
+                "G436"
+              ]
+            },
+            {
+              "text": " ➔ greatly",
+              "strongsNumbers": [
+                "G3029"
+              ]
+            },
+            {
+              "text": " withstood",
+              "strongsNumbers": [
+                "G436"
+              ]
+            },
+            {
+              "text": " our",
+              "strongsNumbers": [
+                "G2251"
+              ]
+            },
+            {
+              "text": " words.",
+              "strongsNumbers": [
+                "G3056"
+              ]
+            }
+          ]
         },
         {
           "number": 16,
-          "text": "At my first answer no man stood with me, but all [men] forsook me: [I pray God] that it may not be laid to their charge."
+          "text": "At my first answer no man stood with me, but all men forsook me: I pray God that it may ➔ not be laid to their charge.",
+          "tokens": [
+            {
+              "text": "At",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " my",
+              "strongsNumbers": [
+                "G3450"
+              ]
+            },
+            {
+              "text": " first",
+              "strongsNumbers": [
+                "G4413"
+              ]
+            },
+            {
+              "text": " answer",
+              "strongsNumbers": [
+                "G627"
+              ]
+            },
+            {
+              "text": " no man",
+              "strongsNumbers": [
+                "G3762"
+              ]
+            },
+            {
+              "text": " stood",
+              "strongsNumbers": [
+                "G4836"
+              ]
+            },
+            {
+              "text": " with me,",
+              "strongsNumbers": [
+                "G3427"
+              ]
+            },
+            {
+              "text": " but",
+              "strongsNumbers": [
+                "G235"
+              ]
+            },
+            {
+              "text": " all",
+              "strongsNumbers": [
+                "G3956"
+              ]
+            },
+            {
+              "text": " men forsook",
+              "strongsNumbers": [
+                "G1459"
+              ]
+            },
+            {
+              "text": " me:",
+              "strongsNumbers": [
+                "G3165"
+              ]
+            },
+            {
+              "text": " I pray God that it may",
+              "strongsNumbers": [
+                "G3049"
+              ]
+            },
+            {
+              "text": " ➔ not",
+              "strongsNumbers": [
+                "G3361"
+              ]
+            },
+            {
+              "text": " be laid",
+              "strongsNumbers": [
+                "G3049"
+              ]
+            },
+            {
+              "text": " to their charge.",
+              "strongsNumbers": [
+                "G846"
+              ]
+            }
+          ]
         },
         {
           "number": 17,
-          "text": "Notwithstanding the Lord stood with me, and strengthened me; that by me the preaching might be fully known, and [that] all the Gentiles might hear: and I was delivered out of the mouth of the lion."
+          "text": "Notwithstanding the Lord stood with me, and strengthened me; that by me the preaching might be fully known, and that all the Gentiles might hear: and I was delivered out of the mouth of the lion.",
+          "tokens": [
+            {
+              "text": "Notwithstanding",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " the Lord",
+              "strongsNumbers": [
+                "G2962"
+              ]
+            },
+            {
+              "text": " stood",
+              "strongsNumbers": [
+                "G3936"
+              ]
+            },
+            {
+              "text": " with me,",
+              "strongsNumbers": [
+                "G3427"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " strengthened",
+              "strongsNumbers": [
+                "G1743"
+              ]
+            },
+            {
+              "text": " me;",
+              "strongsNumbers": [
+                "G3165"
+              ]
+            },
+            {
+              "text": " that",
+              "strongsNumbers": [
+                "G2443"
+              ]
+            },
+            {
+              "text": " by",
+              "strongsNumbers": [
+                "G1223"
+              ]
+            },
+            {
+              "text": " me",
+              "strongsNumbers": [
+                "G1700"
+              ]
+            },
+            {
+              "text": " the preaching",
+              "strongsNumbers": [
+                "G2782"
+              ]
+            },
+            {
+              "text": " might be fully known,",
+              "strongsNumbers": [
+                "G4135"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " that all",
+              "strongsNumbers": [
+                "G3956"
+              ]
+            },
+            {
+              "text": " the Gentiles",
+              "strongsNumbers": [
+                "G1484"
+              ]
+            },
+            {
+              "text": " might hear:",
+              "strongsNumbers": [
+                "G191"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " I was delivered",
+              "strongsNumbers": [
+                "G4506"
+              ]
+            },
+            {
+              "text": " out of",
+              "strongsNumbers": [
+                "G1537"
+              ]
+            },
+            {
+              "text": " the mouth",
+              "strongsNumbers": [
+                "G4750"
+              ]
+            },
+            {
+              "text": " of the lion.",
+              "strongsNumbers": [
+                "G3023"
+              ]
+            }
+          ]
         },
         {
           "number": 18,
-          "text": "And the Lord shall deliver me from every evil work, and will preserve [me] unto his heavenly kingdom: to whom [be] glory for ever and ever. Amen."
+          "text": "And the Lord shall deliver me from every evil work, and will preserve me unto his heavenly kingdom: to whom be glory for ever and ever. Amen.",
+          "tokens": [
+            {
+              "text": "And",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " the Lord",
+              "strongsNumbers": [
+                "G2962"
+              ]
+            },
+            {
+              "text": " shall deliver",
+              "strongsNumbers": [
+                "G4506"
+              ]
+            },
+            {
+              "text": " me",
+              "strongsNumbers": [
+                "G3165"
+              ]
+            },
+            {
+              "text": " from",
+              "strongsNumbers": [
+                "G575"
+              ]
+            },
+            {
+              "text": " every",
+              "strongsNumbers": [
+                "G3956"
+              ]
+            },
+            {
+              "text": " evil",
+              "strongsNumbers": [
+                "G4190"
+              ]
+            },
+            {
+              "text": " work,",
+              "strongsNumbers": [
+                "G2041"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " will preserve",
+              "strongsNumbers": [
+                "G4982"
+              ]
+            },
+            {
+              "text": " me unto",
+              "strongsNumbers": [
+                "G1519"
+              ]
+            },
+            {
+              "text": " his",
+              "strongsNumbers": [
+                "G846"
+              ]
+            },
+            {
+              "text": " heavenly",
+              "strongsNumbers": [
+                "G2032"
+              ]
+            },
+            {
+              "text": " kingdom:",
+              "strongsNumbers": [
+                "G932"
+              ]
+            },
+            {
+              "text": " to whom",
+              "strongsNumbers": [
+                "G3739"
+              ]
+            },
+            {
+              "text": " be glory",
+              "strongsNumbers": [
+                "G1391"
+              ]
+            },
+            {
+              "text": " for",
+              "strongsNumbers": [
+                "G1519"
+              ]
+            },
+            {
+              "text": " ever",
+              "strongsNumbers": [
+                "G165"
+              ]
+            },
+            {
+              "text": " and ever.",
+              "strongsNumbers": [
+                "G165"
+              ]
+            },
+            {
+              "text": " Amen.",
+              "strongsNumbers": [
+                "G281"
+              ]
+            }
+          ]
         },
         {
           "number": 19,
-          "text": "Salute Prisca and Aquila, and the household of Onesiphorus."
+          "text": "Salute Prisca and Aquila, and the household of Onesiphorus.",
+          "tokens": [
+            {
+              "text": "Salute",
+              "strongsNumbers": [
+                "G782"
+              ]
+            },
+            {
+              "text": " Prisca",
+              "strongsNumbers": [
+                "G4251"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " Aquila,",
+              "strongsNumbers": [
+                "G207"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " the household",
+              "strongsNumbers": [
+                "G3624"
+              ]
+            },
+            {
+              "text": " of Onesiphorus.",
+              "strongsNumbers": [
+                "G3683"
+              ]
+            }
+          ]
         },
         {
           "number": 20,
-          "text": "Erastus abode at Corinth: but Trophimus have I left at Miletum sick."
+          "text": "Erastus abode at Corinth: but Trophimus have I left at Miletum sick.",
+          "tokens": [
+            {
+              "text": "Erastus",
+              "strongsNumbers": [
+                "G2037"
+              ]
+            },
+            {
+              "text": " abode",
+              "strongsNumbers": [
+                "G3306"
+              ]
+            },
+            {
+              "text": " at",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " Corinth:",
+              "strongsNumbers": [
+                "G2882"
+              ]
+            },
+            {
+              "text": " but",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " Trophimus",
+              "strongsNumbers": [
+                "G5161"
+              ]
+            },
+            {
+              "text": " have I left",
+              "strongsNumbers": [
+                "G620"
+              ]
+            },
+            {
+              "text": " at",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " Miletum",
+              "strongsNumbers": [
+                "G3399"
+              ]
+            },
+            {
+              "text": " sick.",
+              "strongsNumbers": [
+                "G770"
+              ]
+            }
+          ]
         },
         {
           "number": 21,
-          "text": "Do thy diligence to come before winter. Eubulus greeteth thee, and Pudens, and Linus, and Claudia, and all the brethren."
+          "text": "Do thy diligence to come before winter. Eubulus greeteth thee, and Pudens, and Linus, and Claudia, and all the brethren.",
+          "tokens": [
+            {
+              "text": "Do thy diligence",
+              "strongsNumbers": [
+                "G4704"
+              ]
+            },
+            {
+              "text": " to come",
+              "strongsNumbers": [
+                "G2064"
+              ]
+            },
+            {
+              "text": " before",
+              "strongsNumbers": [
+                "G4253"
+              ]
+            },
+            {
+              "text": " winter.",
+              "strongsNumbers": [
+                "G5494"
+              ]
+            },
+            {
+              "text": " Eubulus",
+              "strongsNumbers": [
+                "G2103"
+              ]
+            },
+            {
+              "text": " greeteth",
+              "strongsNumbers": [
+                "G782"
+              ]
+            },
+            {
+              "text": " thee,",
+              "strongsNumbers": [
+                "G4571"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " Pudens,",
+              "strongsNumbers": [
+                "G4227"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " Linus,",
+              "strongsNumbers": [
+                "G3044"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " Claudia,",
+              "strongsNumbers": [
+                "G2803"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " all",
+              "strongsNumbers": [
+                "G3956"
+              ]
+            },
+            {
+              "text": " the brethren.",
+              "strongsNumbers": [
+                "G80"
+              ]
+            }
+          ]
         },
         {
           "number": 22,
-          "text": "The Lord Jesus Christ [be] with thy spirit. Grace [be] with you. Amen."
+          "text": "The Lord Jesus Christ be with thy spirit. Grace be with you. Amen.[fn]",
+          "tokens": [
+            {
+              "text": "The Lord",
+              "strongsNumbers": [
+                "G2962"
+              ]
+            },
+            {
+              "text": " Jesus",
+              "strongsNumbers": [
+                "G2424"
+              ]
+            },
+            {
+              "text": " Christ",
+              "strongsNumbers": [
+                "G5547"
+              ]
+            },
+            {
+              "text": " be with",
+              "strongsNumbers": [
+                "G3326"
+              ]
+            },
+            {
+              "text": " thy",
+              "strongsNumbers": [
+                "G4675"
+              ]
+            },
+            {
+              "text": " spirit.",
+              "strongsNumbers": [
+                "G4151"
+              ]
+            },
+            {
+              "text": " Grace",
+              "strongsNumbers": [
+                "G5485"
+              ]
+            },
+            {
+              "text": " be with",
+              "strongsNumbers": [
+                "G3326"
+              ]
+            },
+            {
+              "text": " you.",
+              "strongsNumbers": [
+                "G5216"
+              ]
+            },
+            {
+              "text": " Amen.",
+              "strongsNumbers": [
+                "G281"
+              ]
+            },
+            {
+              "text": "[fn]"
+            }
+          ]
         }
       ]
     }

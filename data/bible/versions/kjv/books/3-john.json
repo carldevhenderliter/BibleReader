@@ -14,59 +14,1243 @@
       "verses": [
         {
           "number": 1,
-          "text": "The elder unto the wellbeloved Gaius, whom I love in the truth."
+          "text": "The elder unto the wellbeloved Gaius, whom I love in the truth.",
+          "tokens": [
+            {
+              "text": "The elder",
+              "strongsNumbers": [
+                "G4245"
+              ]
+            },
+            {
+              "text": " unto the wellbeloved",
+              "strongsNumbers": [
+                "G27"
+              ]
+            },
+            {
+              "text": " Gaius,",
+              "strongsNumbers": [
+                "G1050"
+              ]
+            },
+            {
+              "text": " whom",
+              "strongsNumbers": [
+                "G3739"
+              ]
+            },
+            {
+              "text": " I",
+              "strongsNumbers": [
+                "G1473"
+              ]
+            },
+            {
+              "text": " love",
+              "strongsNumbers": [
+                "G25"
+              ]
+            },
+            {
+              "text": " in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " the truth.",
+              "strongsNumbers": [
+                "G225"
+              ]
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "Beloved, I wish above all things that thou mayest prosper and be in health, even as thy soul prospereth."
+          "text": "Beloved, I wish above all things that thou mayest prosper and be in health, even as thy soul prospereth.",
+          "tokens": [
+            {
+              "text": "Beloved,",
+              "strongsNumbers": [
+                "G27"
+              ]
+            },
+            {
+              "text": " I wish",
+              "strongsNumbers": [
+                "G2172"
+              ]
+            },
+            {
+              "text": " above",
+              "strongsNumbers": [
+                "G4012"
+              ]
+            },
+            {
+              "text": " all things",
+              "strongsNumbers": [
+                "G3956"
+              ]
+            },
+            {
+              "text": " that thou",
+              "strongsNumbers": [
+                "G4571"
+              ]
+            },
+            {
+              "text": " mayest prosper",
+              "strongsNumbers": [
+                "G2137"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " be in health,",
+              "strongsNumbers": [
+                "G5198"
+              ]
+            },
+            {
+              "text": " even as",
+              "strongsNumbers": [
+                "G2531"
+              ]
+            },
+            {
+              "text": " thy",
+              "strongsNumbers": [
+                "G4675"
+              ]
+            },
+            {
+              "text": " soul",
+              "strongsNumbers": [
+                "G5590"
+              ]
+            },
+            {
+              "text": " prospereth.",
+              "strongsNumbers": [
+                "G2137"
+              ]
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "For I rejoiced greatly, when the brethren came and testified of the truth that is in thee, even as thou walkest in the truth."
+          "text": "For I rejoiced greatly, when the brethren came and testified of the truth that is in thee, even as thou walkest in the truth.",
+          "tokens": [
+            {
+              "text": "For",
+              "strongsNumbers": [
+                "G1063"
+              ]
+            },
+            {
+              "text": " I rejoiced",
+              "strongsNumbers": [
+                "G5463"
+              ]
+            },
+            {
+              "text": " greatly,",
+              "strongsNumbers": [
+                "G3029"
+              ]
+            },
+            {
+              "text": " when the brethren",
+              "strongsNumbers": [
+                "G80"
+              ]
+            },
+            {
+              "text": " came",
+              "strongsNumbers": [
+                "G2064"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " testified",
+              "strongsNumbers": [
+                "G3140"
+              ]
+            },
+            {
+              "text": " of the truth",
+              "strongsNumbers": [
+                "G225"
+              ]
+            },
+            {
+              "text": " that is in thee,",
+              "strongsNumbers": [
+                "G4675"
+              ]
+            },
+            {
+              "text": " even as",
+              "strongsNumbers": [
+                "G2531"
+              ]
+            },
+            {
+              "text": " thou",
+              "strongsNumbers": [
+                "G4771"
+              ]
+            },
+            {
+              "text": " walkest",
+              "strongsNumbers": [
+                "G4043"
+              ]
+            },
+            {
+              "text": " in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " the truth.",
+              "strongsNumbers": [
+                "G225"
+              ]
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "I have no greater joy than to hear that my children walk in truth."
+          "text": "I have no greater joy than to hear that my children walk in truth.",
+          "tokens": [
+            {
+              "text": "I have",
+              "strongsNumbers": [
+                "G2192"
+              ]
+            },
+            {
+              "text": " no",
+              "strongsNumbers": [
+                "G3756"
+              ]
+            },
+            {
+              "text": " greater",
+              "strongsNumbers": [
+                "G3186",
+                "G5130"
+              ]
+            },
+            {
+              "text": " joy",
+              "strongsNumbers": [
+                "G5479"
+              ]
+            },
+            {
+              "text": " than to",
+              "strongsNumbers": [
+                "G2443"
+              ]
+            },
+            {
+              "text": " hear",
+              "strongsNumbers": [
+                "G191"
+              ]
+            },
+            {
+              "text": " that my",
+              "strongsNumbers": [
+                "G1699"
+              ]
+            },
+            {
+              "text": " children",
+              "strongsNumbers": [
+                "G5043"
+              ]
+            },
+            {
+              "text": " walk",
+              "strongsNumbers": [
+                "G4043"
+              ]
+            },
+            {
+              "text": " in",
+              "strongsNumbers": [
+                "G1722"
+              ]
+            },
+            {
+              "text": " truth.",
+              "strongsNumbers": [
+                "G225"
+              ]
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "Beloved, thou doest faithfully whatsoever thou doest to the brethren, and to strangers;"
+          "text": "Beloved, thou doest faithfully whatsoever thou doest to the brethren, and to strangers;",
+          "tokens": [
+            {
+              "text": "Beloved,",
+              "strongsNumbers": [
+                "G27"
+              ]
+            },
+            {
+              "text": " thou doest",
+              "strongsNumbers": [
+                "G4160"
+              ]
+            },
+            {
+              "text": " faithfully",
+              "strongsNumbers": [
+                "G4103"
+              ]
+            },
+            {
+              "text": " whatsoever",
+              "strongsNumbers": [
+                "G3739",
+                "G1437"
+              ]
+            },
+            {
+              "text": " thou doest",
+              "strongsNumbers": [
+                "G2038"
+              ]
+            },
+            {
+              "text": " to",
+              "strongsNumbers": [
+                "G1519"
+              ]
+            },
+            {
+              "text": " the brethren,",
+              "strongsNumbers": [
+                "G80"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " to",
+              "strongsNumbers": [
+                "G1519"
+              ]
+            },
+            {
+              "text": " strangers;",
+              "strongsNumbers": [
+                "G3581"
+              ]
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "Which have borne witness of thy charity before the church: whom if thou bring forward on their journey after a godly sort, thou shalt do well:"
+          "text": "Which have borne witness of thy charity before the church: whom if thou bring forward on their journey after ➔ a godly sort, thou shalt do well:",
+          "tokens": [
+            {
+              "text": "Which",
+              "strongsNumbers": [
+                "G3739"
+              ]
+            },
+            {
+              "text": " have borne witness",
+              "strongsNumbers": [
+                "G3140"
+              ]
+            },
+            {
+              "text": " of thy",
+              "strongsNumbers": [
+                "G4675"
+              ]
+            },
+            {
+              "text": " charity",
+              "strongsNumbers": [
+                "G26"
+              ]
+            },
+            {
+              "text": " before",
+              "strongsNumbers": [
+                "G1799"
+              ]
+            },
+            {
+              "text": " the church:",
+              "strongsNumbers": [
+                "G1577"
+              ]
+            },
+            {
+              "text": " whom",
+              "strongsNumbers": [
+                "G3739"
+              ]
+            },
+            {
+              "text": " if thou bring forward on their journey",
+              "strongsNumbers": [
+                "G4311"
+              ]
+            },
+            {
+              "text": " after",
+              "strongsNumbers": [
+                "G516"
+              ]
+            },
+            {
+              "text": " ➔ a godly",
+              "strongsNumbers": [
+                "G2316"
+              ]
+            },
+            {
+              "text": " sort,",
+              "strongsNumbers": [
+                "G516"
+              ]
+            },
+            {
+              "text": " thou shalt do",
+              "strongsNumbers": [
+                "G4160"
+              ]
+            },
+            {
+              "text": " well:",
+              "strongsNumbers": [
+                "G2573"
+              ]
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "Because that for his name's sake they went forth, taking nothing of the Gentiles."
+          "text": "Because that for ➔ his name's sake they went forth, taking nothing of the Gentiles.",
+          "tokens": [
+            {
+              "text": "Because that",
+              "strongsNumbers": [
+                "G1063"
+              ]
+            },
+            {
+              "text": " for",
+              "strongsNumbers": [
+                "G5228"
+              ]
+            },
+            {
+              "text": " ➔ his",
+              "strongsNumbers": [
+                "G846"
+              ]
+            },
+            {
+              "text": " name's",
+              "strongsNumbers": [
+                "G3686"
+              ]
+            },
+            {
+              "text": " sake",
+              "strongsNumbers": [
+                "G5228"
+              ]
+            },
+            {
+              "text": " they went forth,",
+              "strongsNumbers": [
+                "G1831"
+              ]
+            },
+            {
+              "text": " taking",
+              "strongsNumbers": [
+                "G2983"
+              ]
+            },
+            {
+              "text": " nothing",
+              "strongsNumbers": [
+                "G3367"
+              ]
+            },
+            {
+              "text": " of",
+              "strongsNumbers": [
+                "G575"
+              ]
+            },
+            {
+              "text": " the Gentiles.",
+              "strongsNumbers": [
+                "G1484"
+              ]
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "We therefore ought to receive such, that we might be fellowhelpers to the truth."
+          "text": "We therefore ought to receive such, that we might be fellowhelpers to the truth.",
+          "tokens": [
+            {
+              "text": "We",
+              "strongsNumbers": [
+                "G2249"
+              ]
+            },
+            {
+              "text": " therefore",
+              "strongsNumbers": [
+                "G3767"
+              ]
+            },
+            {
+              "text": " ought",
+              "strongsNumbers": [
+                "G3784"
+              ]
+            },
+            {
+              "text": " to receive",
+              "strongsNumbers": [
+                "G618"
+              ]
+            },
+            {
+              "text": " such,",
+              "strongsNumbers": [
+                "G5108"
+              ]
+            },
+            {
+              "text": " that",
+              "strongsNumbers": [
+                "G2443"
+              ]
+            },
+            {
+              "text": " we might be",
+              "strongsNumbers": [
+                "G1096"
+              ]
+            },
+            {
+              "text": " fellowhelpers",
+              "strongsNumbers": [
+                "G4904"
+              ]
+            },
+            {
+              "text": " to the truth.",
+              "strongsNumbers": [
+                "G225"
+              ]
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "I wrote unto the church: but Diotrephes, who loveth to have the preeminence among them, receiveth us not."
+          "text": "I wrote unto the church: but Diotrephes, who loveth to have the preeminence among them, receiveth us not.",
+          "tokens": [
+            {
+              "text": "I wrote",
+              "strongsNumbers": [
+                "G1125"
+              ]
+            },
+            {
+              "text": " unto the church:",
+              "strongsNumbers": [
+                "G1577"
+              ]
+            },
+            {
+              "text": " but",
+              "strongsNumbers": [
+                "G235"
+              ]
+            },
+            {
+              "text": " Diotrephes,",
+              "strongsNumbers": [
+                "G1361"
+              ]
+            },
+            {
+              "text": " who",
+              "strongsNumbers": [
+                "G3588"
+              ]
+            },
+            {
+              "text": " loveth to have the preeminence",
+              "strongsNumbers": [
+                "G5383"
+              ]
+            },
+            {
+              "text": " among them,",
+              "strongsNumbers": [
+                "G846"
+              ]
+            },
+            {
+              "text": " receiveth",
+              "strongsNumbers": [
+                "G1926"
+              ]
+            },
+            {
+              "text": " us",
+              "strongsNumbers": [
+                "G2248"
+              ]
+            },
+            {
+              "text": " not.",
+              "strongsNumbers": [
+                "G3756"
+              ]
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "Wherefore, if I come, I will remember his deeds which he doeth, prating against us with malicious words: and not content therewith, neither doth he himself receive the brethren, and forbiddeth them that would, and casteth [them] out of the church."
+          "text": "Wherefore, if I come, I will remember his deeds which he doeth, prating against us with malicious words: and not content therewith, neither doth ➔ he himself receive the brethren, and forbiddeth them that would, and casteth them out of the church.",
+          "tokens": [
+            {
+              "text": "Wherefore,",
+              "strongsNumbers": [
+                "G1223",
+                "G5124"
+              ]
+            },
+            {
+              "text": " if",
+              "strongsNumbers": [
+                "G1437"
+              ]
+            },
+            {
+              "text": " I come,",
+              "strongsNumbers": [
+                "G2064"
+              ]
+            },
+            {
+              "text": " I will remember",
+              "strongsNumbers": [
+                "G5279"
+              ]
+            },
+            {
+              "text": " his",
+              "strongsNumbers": [
+                "G846"
+              ]
+            },
+            {
+              "text": " deeds",
+              "strongsNumbers": [
+                "G2041"
+              ]
+            },
+            {
+              "text": " which",
+              "strongsNumbers": [
+                "G3739"
+              ]
+            },
+            {
+              "text": " he doeth,",
+              "strongsNumbers": [
+                "G4160"
+              ]
+            },
+            {
+              "text": " prating against",
+              "strongsNumbers": [
+                "G5396"
+              ]
+            },
+            {
+              "text": " us",
+              "strongsNumbers": [
+                "G2248"
+              ]
+            },
+            {
+              "text": " with",
+              "strongsNumbers": [
+                "G3056"
+              ]
+            },
+            {
+              "text": " malicious words:",
+              "strongsNumbers": [
+                "G4190"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " not",
+              "strongsNumbers": [
+                "G3361"
+              ]
+            },
+            {
+              "text": " content",
+              "strongsNumbers": [
+                "G714"
+              ]
+            },
+            {
+              "text": " therewith,",
+              "strongsNumbers": [
+                "G1909",
+                "G5125"
+              ]
+            },
+            {
+              "text": " neither",
+              "strongsNumbers": [
+                "G3777"
+              ]
+            },
+            {
+              "text": " doth",
+              "strongsNumbers": [
+                "G1926"
+              ]
+            },
+            {
+              "text": " ➔ he himself",
+              "strongsNumbers": [
+                "G846"
+              ]
+            },
+            {
+              "text": " receive",
+              "strongsNumbers": [
+                "G1926"
+              ]
+            },
+            {
+              "text": " the brethren,",
+              "strongsNumbers": [
+                "G80"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " forbiddeth",
+              "strongsNumbers": [
+                "G2967"
+              ]
+            },
+            {
+              "text": " them that would,",
+              "strongsNumbers": [
+                "G1014"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " casteth",
+              "strongsNumbers": [
+                "G1544"
+              ]
+            },
+            {
+              "text": " them out of",
+              "strongsNumbers": [
+                "G1537"
+              ]
+            },
+            {
+              "text": " the church.",
+              "strongsNumbers": [
+                "G1577"
+              ]
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "Beloved, follow not that which is evil, but that which is good. He that doeth good is of God: but he that doeth evil hath not seen God."
+          "text": "Beloved, follow not that which is evil, but that which is good. He that doeth good is of God: but he that doeth evil hath ➔ not seen God.",
+          "tokens": [
+            {
+              "text": "Beloved,",
+              "strongsNumbers": [
+                "G27"
+              ]
+            },
+            {
+              "text": " follow",
+              "strongsNumbers": [
+                "G3401"
+              ]
+            },
+            {
+              "text": " not",
+              "strongsNumbers": [
+                "G3361"
+              ]
+            },
+            {
+              "text": " that which is evil,",
+              "strongsNumbers": [
+                "G2556"
+              ]
+            },
+            {
+              "text": " but",
+              "strongsNumbers": [
+                "G235"
+              ]
+            },
+            {
+              "text": " that which is good.",
+              "strongsNumbers": [
+                "G18"
+              ]
+            },
+            {
+              "text": " He that doeth good",
+              "strongsNumbers": [
+                "G15"
+              ]
+            },
+            {
+              "text": " is",
+              "strongsNumbers": [
+                "G2076"
+              ]
+            },
+            {
+              "text": " of",
+              "strongsNumbers": [
+                "G1537"
+              ]
+            },
+            {
+              "text": " God:",
+              "strongsNumbers": [
+                "G2316"
+              ]
+            },
+            {
+              "text": " but",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " he that doeth evil",
+              "strongsNumbers": [
+                "G2554"
+              ]
+            },
+            {
+              "text": " hath",
+              "strongsNumbers": [
+                "G3708"
+              ]
+            },
+            {
+              "text": " ➔ not",
+              "strongsNumbers": [
+                "G3756"
+              ]
+            },
+            {
+              "text": " seen",
+              "strongsNumbers": [
+                "G3708"
+              ]
+            },
+            {
+              "text": " God.",
+              "strongsNumbers": [
+                "G2316"
+              ]
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "Demetrius hath good report of all [men], and of the truth itself: yea, and we [also] bear record; and ye know that our record is true."
+          "text": "Demetrius hath good report of all men, and of the truth itself: yea, and we also bear record; and ye know that our record is true.",
+          "tokens": [
+            {
+              "text": "Demetrius",
+              "strongsNumbers": [
+                "G1216"
+              ]
+            },
+            {
+              "text": " hath good report",
+              "strongsNumbers": [
+                "G3140"
+              ]
+            },
+            {
+              "text": " of",
+              "strongsNumbers": [
+                "G5259"
+              ]
+            },
+            {
+              "text": " all",
+              "strongsNumbers": [
+                "G3956"
+              ]
+            },
+            {
+              "text": " men, and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " of",
+              "strongsNumbers": [
+                "G5259"
+              ]
+            },
+            {
+              "text": " the truth",
+              "strongsNumbers": [
+                "G225"
+              ]
+            },
+            {
+              "text": " itself:",
+              "strongsNumbers": [
+                "G846"
+              ]
+            },
+            {
+              "text": " yea,",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " we",
+              "strongsNumbers": [
+                "G2249"
+              ]
+            },
+            {
+              "text": " also bear record;",
+              "strongsNumbers": [
+                "G3140"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " ye know",
+              "strongsNumbers": [
+                "G1492"
+              ]
+            },
+            {
+              "text": " that",
+              "strongsNumbers": [
+                "G3754"
+              ]
+            },
+            {
+              "text": " our",
+              "strongsNumbers": [
+                "G2257"
+              ]
+            },
+            {
+              "text": " record",
+              "strongsNumbers": [
+                "G3141"
+              ]
+            },
+            {
+              "text": " is",
+              "strongsNumbers": [
+                "G2076"
+              ]
+            },
+            {
+              "text": " true.",
+              "strongsNumbers": [
+                "G227"
+              ]
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "I had many things to write, but I will not with ink and pen write unto thee:"
+          "text": "I had many things to write, but I will not with ink and pen write unto thee:",
+          "tokens": [
+            {
+              "text": "I had",
+              "strongsNumbers": [
+                "G2192"
+              ]
+            },
+            {
+              "text": " many things",
+              "strongsNumbers": [
+                "G4183"
+              ]
+            },
+            {
+              "text": " to write,",
+              "strongsNumbers": [
+                "G1125"
+              ]
+            },
+            {
+              "text": " but",
+              "strongsNumbers": [
+                "G235"
+              ]
+            },
+            {
+              "text": " I will",
+              "strongsNumbers": [
+                "G2309"
+              ]
+            },
+            {
+              "text": " not",
+              "strongsNumbers": [
+                "G3756"
+              ]
+            },
+            {
+              "text": " with",
+              "strongsNumbers": [
+                "G1223"
+              ]
+            },
+            {
+              "text": " ink",
+              "strongsNumbers": [
+                "G3188"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " pen",
+              "strongsNumbers": [
+                "G2563"
+              ]
+            },
+            {
+              "text": " write",
+              "strongsNumbers": [
+                "G1125"
+              ]
+            },
+            {
+              "text": " unto thee:",
+              "strongsNumbers": [
+                "G4671"
+              ]
+            }
+          ]
         },
         {
           "number": 14,
-          "text": "But I trust I shall shortly see thee, and we shall speak face to face. Peace [be] to thee. [Our] friends salute thee. Greet the friends by name."
+          "text": "But I trust I shall ➔ shortly see thee, and we shall speak face to face. Peace be to thee. Our friends salute thee. Greet the friends by name.",
+          "tokens": [
+            {
+              "text": "But",
+              "strongsNumbers": [
+                "G1161"
+              ]
+            },
+            {
+              "text": " I trust",
+              "strongsNumbers": [
+                "G1679"
+              ]
+            },
+            {
+              "text": " I shall",
+              "strongsNumbers": [
+                "G1492"
+              ]
+            },
+            {
+              "text": " ➔ shortly",
+              "strongsNumbers": [
+                "G2112"
+              ]
+            },
+            {
+              "text": " see",
+              "strongsNumbers": [
+                "G1492"
+              ]
+            },
+            {
+              "text": " thee,",
+              "strongsNumbers": [
+                "G4571"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "G2532"
+              ]
+            },
+            {
+              "text": " we shall speak",
+              "strongsNumbers": [
+                "G2980"
+              ]
+            },
+            {
+              "text": " face",
+              "strongsNumbers": [
+                "G4750"
+              ]
+            },
+            {
+              "text": " to",
+              "strongsNumbers": [
+                "G4314"
+              ]
+            },
+            {
+              "text": " face.",
+              "strongsNumbers": [
+                "G4750"
+              ]
+            },
+            {
+              "text": " Peace",
+              "strongsNumbers": [
+                "G1515"
+              ]
+            },
+            {
+              "text": " be to thee.",
+              "strongsNumbers": [
+                "G4671"
+              ]
+            },
+            {
+              "text": " Our friends",
+              "strongsNumbers": [
+                "G5384"
+              ]
+            },
+            {
+              "text": " salute",
+              "strongsNumbers": [
+                "G782"
+              ]
+            },
+            {
+              "text": " thee.",
+              "strongsNumbers": [
+                "G4571"
+              ]
+            },
+            {
+              "text": " Greet",
+              "strongsNumbers": [
+                "G782"
+              ]
+            },
+            {
+              "text": " the friends",
+              "strongsNumbers": [
+                "G5384"
+              ]
+            },
+            {
+              "text": " by",
+              "strongsNumbers": [
+                "G2596"
+              ]
+            },
+            {
+              "text": " name.",
+              "strongsNumbers": [
+                "G3686"
+              ]
+            }
+          ]
         }
       ]
     }

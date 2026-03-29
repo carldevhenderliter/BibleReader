@@ -14,63 +14,1154 @@
       "verses": [
         {
           "number": 1,
-          "text": "In the second year of Darius the king, in the sixth month, in the first day of the month, came the word of the LORD by Haggai the prophet unto Zerubbabel the son of Shealtiel, governor of Judah, and to Joshua the son of Josedech, the high priest, saying,"
+          "text": "In the second year of Darius the king, in the sixth month, in the first day of the month, came the word of the LORD by Haggai the prophet unto Zerubbabel the son of Shealtiel, governor of Judah, and to Joshua the son of Josedech, the high priest, saying,",
+          "tokens": [
+            {
+              "text": "In the second",
+              "strongsNumbers": [
+                "H8147"
+              ]
+            },
+            {
+              "text": " year",
+              "strongsNumbers": [
+                "H8141"
+              ]
+            },
+            {
+              "text": " of Darius",
+              "strongsNumbers": [
+                "H1867"
+              ]
+            },
+            {
+              "text": " the king,",
+              "strongsNumbers": [
+                "H4428"
+              ]
+            },
+            {
+              "text": " in the sixth",
+              "strongsNumbers": [
+                "H8345"
+              ]
+            },
+            {
+              "text": " month,",
+              "strongsNumbers": [
+                "H2320"
+              ]
+            },
+            {
+              "text": " in the first",
+              "strongsNumbers": [
+                "H259"
+              ]
+            },
+            {
+              "text": " day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " of the month,",
+              "strongsNumbers": [
+                "H2320"
+              ]
+            },
+            {
+              "text": " came the word",
+              "strongsNumbers": [
+                "H1697"
+              ]
+            },
+            {
+              "text": " of the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " by",
+              "strongsNumbers": [
+                "H3027"
+              ]
+            },
+            {
+              "text": " Haggai",
+              "strongsNumbers": [
+                "H2292"
+              ]
+            },
+            {
+              "text": " the prophet",
+              "strongsNumbers": [
+                "H5030"
+              ]
+            },
+            {
+              "text": " unto Zerubbabel",
+              "strongsNumbers": [
+                "H2216"
+              ]
+            },
+            {
+              "text": " the son",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " of Shealtiel,",
+              "strongsNumbers": [
+                "H7597"
+              ]
+            },
+            {
+              "text": " governor",
+              "strongsNumbers": [
+                "H6346"
+              ]
+            },
+            {
+              "text": " of Judah,",
+              "strongsNumbers": [
+                "H3063"
+              ]
+            },
+            {
+              "text": " and to Joshua",
+              "strongsNumbers": [
+                "H3091"
+              ]
+            },
+            {
+              "text": " the son",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " of Josedech,",
+              "strongsNumbers": [
+                "H3087"
+              ]
+            },
+            {
+              "text": " the high",
+              "strongsNumbers": [
+                "H1419"
+              ]
+            },
+            {
+              "text": " priest,",
+              "strongsNumbers": [
+                "H3548"
+              ]
+            },
+            {
+              "text": " saying,"
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "Thus speaketh the LORD of hosts, saying, This people say, The time is not come, the time that the LORD'S house should be built."
+          "text": "Thus speaketh the LORD of hosts, saying, This people say, The time is not come, the time that the LORD'S house should be built.",
+          "tokens": [
+            {
+              "text": "Thus speaketh",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts,",
+              "strongsNumbers": [
+                "H6635"
+              ]
+            },
+            {
+              "text": " saying,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " This people",
+              "strongsNumbers": [
+                "H5971"
+              ]
+            },
+            {
+              "text": " say,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " The time",
+              "strongsNumbers": [
+                "H6256"
+              ]
+            },
+            {
+              "text": " is not come,",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " the time",
+              "strongsNumbers": [
+                "H6256"
+              ]
+            },
+            {
+              "text": " that the LORD'S",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " house",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " should be built."
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "Then came the word of the LORD by Haggai the prophet, saying,"
+          "text": "Then came the word of the LORD by Haggai the prophet, saying,",
+          "tokens": [
+            {
+              "text": "Then came the word",
+              "strongsNumbers": [
+                "H1697"
+              ]
+            },
+            {
+              "text": " of the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " by",
+              "strongsNumbers": [
+                "H3027"
+              ]
+            },
+            {
+              "text": " Haggai",
+              "strongsNumbers": [
+                "H2292"
+              ]
+            },
+            {
+              "text": " the prophet,",
+              "strongsNumbers": [
+                "H5030"
+              ]
+            },
+            {
+              "text": " saying,"
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "[Is it] time for you, O ye, to dwell in your cieled houses, and this house [lie] waste?"
+          "text": "Is it time for you, O ye, to dwell in your cieled houses, and this house lie waste?",
+          "tokens": [
+            {
+              "text": "Is it time",
+              "strongsNumbers": [
+                "H6256"
+              ]
+            },
+            {
+              "text": " for you, O ye, to dwell",
+              "strongsNumbers": [
+                "H3427"
+              ]
+            },
+            {
+              "text": " in your cieled",
+              "strongsNumbers": [
+                "H5603"
+              ]
+            },
+            {
+              "text": " houses,",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " and this house",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " lie waste?"
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "Now therefore thus saith the LORD of hosts; Consider your ways."
+          "text": "Now therefore thus saith the LORD of hosts; Consider your ways.",
+          "tokens": [
+            {
+              "text": "Now therefore thus saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts;",
+              "strongsNumbers": [
+                "H6635"
+              ]
+            },
+            {
+              "text": " Consider",
+              "strongsNumbers": [
+                "H7760",
+                "H3824"
+              ]
+            },
+            {
+              "text": " your ways."
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "Ye have sown much, and bring in little; ye eat, but ye have not enough; ye drink, but ye are not filled with drink; ye clothe you, but there is none warm; and he that earneth wages earneth wages [to put it] into a bag with holes."
+          "text": "Ye have sown much, and bring in little; ye eat, but ye have not enough; ye drink, but ye are not filled with drink; ye clothe you, but there is none warm; and he that earneth wages earneth wages to put it into a bag with holes.",
+          "tokens": [
+            {
+              "text": "Ye have sown",
+              "strongsNumbers": [
+                "H2232"
+              ]
+            },
+            {
+              "text": " much,",
+              "strongsNumbers": [
+                "H7235"
+              ]
+            },
+            {
+              "text": " and bring",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " in little;",
+              "strongsNumbers": [
+                "H4592"
+              ]
+            },
+            {
+              "text": " ye eat,",
+              "strongsNumbers": [
+                "H398"
+              ]
+            },
+            {
+              "text": " but ye have not enough;",
+              "strongsNumbers": [
+                "H7654"
+              ]
+            },
+            {
+              "text": " ye drink,",
+              "strongsNumbers": [
+                "H8354"
+              ]
+            },
+            {
+              "text": " but ye are not filled with drink;",
+              "strongsNumbers": [
+                "H7937"
+              ]
+            },
+            {
+              "text": " ye clothe",
+              "strongsNumbers": [
+                "H3847"
+              ]
+            },
+            {
+              "text": " you, but there is none warm;",
+              "strongsNumbers": [
+                "H2527"
+              ]
+            },
+            {
+              "text": " and he that earneth wages",
+              "strongsNumbers": [
+                "H7936"
+              ]
+            },
+            {
+              "text": " earneth wages",
+              "strongsNumbers": [
+                "H7936"
+              ]
+            },
+            {
+              "text": " to put it into a bag",
+              "strongsNumbers": [
+                "H6872"
+              ]
+            },
+            {
+              "text": " with holes."
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "Thus saith the LORD of hosts; Consider your ways."
+          "text": "Thus saith the LORD of hosts; Consider your ways.",
+          "tokens": [
+            {
+              "text": "Thus saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts;",
+              "strongsNumbers": [
+                "H6635"
+              ]
+            },
+            {
+              "text": " Consider",
+              "strongsNumbers": [
+                "H7760",
+                "H3824"
+              ]
+            },
+            {
+              "text": " your ways."
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "Go up to the mountain, and bring wood, and build the house; and I will take pleasure in it, and I will be glorified, saith the LORD."
+          "text": "Go up to the mountain, and bring wood, and build the house; and I will take pleasure in it, and I will be glorified, saith the LORD.",
+          "tokens": [
+            {
+              "text": "Go up",
+              "strongsNumbers": [
+                "H5927"
+              ]
+            },
+            {
+              "text": " to the mountain,",
+              "strongsNumbers": [
+                "H2022"
+              ]
+            },
+            {
+              "text": " and bring",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " wood,",
+              "strongsNumbers": [
+                "H6086"
+              ]
+            },
+            {
+              "text": " and build",
+              "strongsNumbers": [
+                "H1129"
+              ]
+            },
+            {
+              "text": " the house;",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " and I will take pleasure",
+              "strongsNumbers": [
+                "H7521"
+              ]
+            },
+            {
+              "text": " in it, and I will be glorified,",
+              "strongsNumbers": [
+                "H3513"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD."
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "Ye looked for much, and, lo, [it came] to little; and when ye brought [it] home, I did blow upon it. Why? saith the LORD of hosts. Because of mine house that [is] waste, and ye run every man unto his own house."
+          "text": "Ye looked for much, and, lo, it came to little; and when ye brought it home, I did blow upon it. Why? saith the LORD of hosts. Because of mine house that is waste, and ye run every man unto his own house.",
+          "tokens": [
+            {
+              "text": "Ye looked",
+              "strongsNumbers": [
+                "H6437"
+              ]
+            },
+            {
+              "text": " for much,",
+              "strongsNumbers": [
+                "H7235"
+              ]
+            },
+            {
+              "text": " and, lo, it came to little;",
+              "strongsNumbers": [
+                "H4592"
+              ]
+            },
+            {
+              "text": " and when ye brought",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " it home,",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " I did blow",
+              "strongsNumbers": [
+                "H5301"
+              ]
+            },
+            {
+              "text": " upon it. Why? saith",
+              "strongsNumbers": [
+                "H5002"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts.",
+              "strongsNumbers": [
+                "H6635"
+              ]
+            },
+            {
+              "text": " Because",
+              "strongsNumbers": [
+                "H3282"
+              ]
+            },
+            {
+              "text": " of mine house",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " that is waste,",
+              "strongsNumbers": [
+                "H2720"
+              ]
+            },
+            {
+              "text": " and ye run",
+              "strongsNumbers": [
+                "H7323"
+              ]
+            },
+            {
+              "text": " every man",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " unto his own house."
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "Therefore the heaven over you is stayed from dew, and the earth is stayed [from] her fruit."
+          "text": "Therefore the heaven over you is stayed from dew, and the earth is stayed from her fruit.",
+          "tokens": [
+            {
+              "text": "Therefore the heaven",
+              "strongsNumbers": [
+                "H8064"
+              ]
+            },
+            {
+              "text": " over you is stayed",
+              "strongsNumbers": [
+                "H3607"
+              ]
+            },
+            {
+              "text": " from dew,",
+              "strongsNumbers": [
+                "H2919"
+              ]
+            },
+            {
+              "text": " and the earth",
+              "strongsNumbers": [
+                "H776"
+              ]
+            },
+            {
+              "text": " is stayed",
+              "strongsNumbers": [
+                "H3607"
+              ]
+            },
+            {
+              "text": " from her fruit."
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "And I called for a drought upon the land, and upon the mountains, and upon the corn, and upon the new wine, and upon the oil, and upon [that] which the ground bringeth forth, and upon men, and upon cattle, and upon all the labour of the hands."
+          "text": "And I called for a drought upon the land, and upon the mountains, and upon the corn, and upon the new wine, and upon the oil, and upon that which the ground bringeth forth, and upon men, and upon cattle, and upon all the labour of the hands.",
+          "tokens": [
+            {
+              "text": "And I called",
+              "strongsNumbers": [
+                "H7121"
+              ]
+            },
+            {
+              "text": " for a drought",
+              "strongsNumbers": [
+                "H2721"
+              ]
+            },
+            {
+              "text": " upon the land,",
+              "strongsNumbers": [
+                "H776"
+              ]
+            },
+            {
+              "text": " and upon the mountains,",
+              "strongsNumbers": [
+                "H2022"
+              ]
+            },
+            {
+              "text": " and upon the corn,",
+              "strongsNumbers": [
+                "H1715"
+              ]
+            },
+            {
+              "text": " and upon the new wine,",
+              "strongsNumbers": [
+                "H8492"
+              ]
+            },
+            {
+              "text": " and upon the oil,",
+              "strongsNumbers": [
+                "H3323"
+              ]
+            },
+            {
+              "text": " and upon that which the ground",
+              "strongsNumbers": [
+                "H127"
+              ]
+            },
+            {
+              "text": " bringeth forth,",
+              "strongsNumbers": [
+                "H3318"
+              ]
+            },
+            {
+              "text": " and upon men,",
+              "strongsNumbers": [
+                "H120"
+              ]
+            },
+            {
+              "text": " and upon cattle,",
+              "strongsNumbers": [
+                "H929"
+              ]
+            },
+            {
+              "text": " and upon all the labour",
+              "strongsNumbers": [
+                "H3018"
+              ]
+            },
+            {
+              "text": " of the hands."
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "Then Zerubbabel the son of Shealtiel, and Joshua the son of Josedech, the high priest, with all the remnant of the people, obeyed the voice of the LORD their God, and the words of Haggai the prophet, as the LORD their God had sent him, and the people did fear before the LORD."
+          "text": "Then Zerubbabel the son of Shealtiel, and Joshua the son of Josedech, the high priest, with all the remnant of the people, obeyed the voice of the LORD their God, and the words of Haggai the prophet, as the LORD their God had sent him, and the people did fear before the LORD.",
+          "tokens": [
+            {
+              "text": "Then Zerubbabel",
+              "strongsNumbers": [
+                "H2216"
+              ]
+            },
+            {
+              "text": " the son",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " of Shealtiel,",
+              "strongsNumbers": [
+                "H7597"
+              ]
+            },
+            {
+              "text": " and Joshua",
+              "strongsNumbers": [
+                "H3091"
+              ]
+            },
+            {
+              "text": " the son",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " of Josedech,",
+              "strongsNumbers": [
+                "H3087"
+              ]
+            },
+            {
+              "text": " the high",
+              "strongsNumbers": [
+                "H1419"
+              ]
+            },
+            {
+              "text": " priest,",
+              "strongsNumbers": [
+                "H3548"
+              ]
+            },
+            {
+              "text": " with all the remnant",
+              "strongsNumbers": [
+                "H7611"
+              ]
+            },
+            {
+              "text": " of the people,",
+              "strongsNumbers": [
+                "H5971"
+              ]
+            },
+            {
+              "text": " obeyed",
+              "strongsNumbers": [
+                "H8085"
+              ]
+            },
+            {
+              "text": " the voice",
+              "strongsNumbers": [
+                "H6963"
+              ]
+            },
+            {
+              "text": " of the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " their God,",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " and the words",
+              "strongsNumbers": [
+                "H1697"
+              ]
+            },
+            {
+              "text": " of Haggai",
+              "strongsNumbers": [
+                "H2292"
+              ]
+            },
+            {
+              "text": " the prophet,",
+              "strongsNumbers": [
+                "H5030"
+              ]
+            },
+            {
+              "text": " as the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " their God",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " had sent",
+              "strongsNumbers": [
+                "H7971"
+              ]
+            },
+            {
+              "text": " him, and the people",
+              "strongsNumbers": [
+                "H5971"
+              ]
+            },
+            {
+              "text": " did fear",
+              "strongsNumbers": [
+                "H3372"
+              ]
+            },
+            {
+              "text": " before",
+              "strongsNumbers": [
+                "H6440"
+              ]
+            },
+            {
+              "text": " the LORD."
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "Then spake Haggai the LORD'S messenger in the LORD'S message unto the people, saying, I [am] with you, saith the LORD."
+          "text": "Then spake Haggai the LORD'S messenger in the LORD'S message unto the people, saying, I am with you, saith the LORD.",
+          "tokens": [
+            {
+              "text": "Then spake",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Haggai",
+              "strongsNumbers": [
+                "H2292"
+              ]
+            },
+            {
+              "text": " the LORD'S",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " messenger",
+              "strongsNumbers": [
+                "H4397"
+              ]
+            },
+            {
+              "text": " in the LORD'S",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " message",
+              "strongsNumbers": [
+                "H4400"
+              ]
+            },
+            {
+              "text": " unto the people,",
+              "strongsNumbers": [
+                "H5971"
+              ]
+            },
+            {
+              "text": " saying,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " I am with you, saith",
+              "strongsNumbers": [
+                "H5002"
+              ]
+            },
+            {
+              "text": " the LORD."
+            }
+          ]
         },
         {
           "number": 14,
-          "text": "And the LORD stirred up the spirit of Zerubbabel the son of Shealtiel, governor of Judah, and the spirit of Joshua the son of Josedech, the high priest, and the spirit of all the remnant of the people; and they came and did work in the house of the LORD of hosts, their God,"
+          "text": "And the LORD stirred up the spirit of Zerubbabel the son of Shealtiel, governor of Judah, and the spirit of Joshua the son of Josedech, the high priest, and the spirit of all the remnant of the people; and they came and did work in the house of the LORD of hosts, their God,",
+          "tokens": [
+            {
+              "text": "And the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " stirred up",
+              "strongsNumbers": [
+                "H5782"
+              ]
+            },
+            {
+              "text": " the spirit",
+              "strongsNumbers": [
+                "H7307"
+              ]
+            },
+            {
+              "text": " of Zerubbabel",
+              "strongsNumbers": [
+                "H2216"
+              ]
+            },
+            {
+              "text": " the son",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " of Shealtiel,",
+              "strongsNumbers": [
+                "H7597"
+              ]
+            },
+            {
+              "text": " governor",
+              "strongsNumbers": [
+                "H6346"
+              ]
+            },
+            {
+              "text": " of Judah,",
+              "strongsNumbers": [
+                "H3063"
+              ]
+            },
+            {
+              "text": " and the spirit",
+              "strongsNumbers": [
+                "H7307"
+              ]
+            },
+            {
+              "text": " of Joshua",
+              "strongsNumbers": [
+                "H3091"
+              ]
+            },
+            {
+              "text": " the son",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " of Josedech,",
+              "strongsNumbers": [
+                "H3087"
+              ]
+            },
+            {
+              "text": " the high",
+              "strongsNumbers": [
+                "H1419"
+              ]
+            },
+            {
+              "text": " priest,",
+              "strongsNumbers": [
+                "H3548"
+              ]
+            },
+            {
+              "text": " and the spirit",
+              "strongsNumbers": [
+                "H7307"
+              ]
+            },
+            {
+              "text": " of all the remnant",
+              "strongsNumbers": [
+                "H7611"
+              ]
+            },
+            {
+              "text": " of the people;",
+              "strongsNumbers": [
+                "H5971"
+              ]
+            },
+            {
+              "text": " and they came",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " and did",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " work",
+              "strongsNumbers": [
+                "H4399"
+              ]
+            },
+            {
+              "text": " in the house",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " of the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts,",
+              "strongsNumbers": [
+                "H6635"
+              ]
+            },
+            {
+              "text": " their God,"
+            }
+          ]
         },
         {
           "number": 15,
-          "text": "In the four and twentieth day of the sixth month, in the second year of Darius the king."
+          "text": "In the four and twentieth day of the sixth month, in the second year of Darius the king.",
+          "tokens": [
+            {
+              "text": "In the four",
+              "strongsNumbers": [
+                "H702"
+              ]
+            },
+            {
+              "text": " and twentieth",
+              "strongsNumbers": [
+                "H6242"
+              ]
+            },
+            {
+              "text": " day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " of the sixth",
+              "strongsNumbers": [
+                "H8345"
+              ]
+            },
+            {
+              "text": " month,",
+              "strongsNumbers": [
+                "H2320"
+              ]
+            },
+            {
+              "text": " in the second",
+              "strongsNumbers": [
+                "H8147"
+              ]
+            },
+            {
+              "text": " year",
+              "strongsNumbers": [
+                "H8141"
+              ]
+            },
+            {
+              "text": " of Darius",
+              "strongsNumbers": [
+                "H1867"
+              ]
+            },
+            {
+              "text": " the king."
+            }
+          ]
         }
       ]
     },
@@ -80,95 +1171,1607 @@
       "verses": [
         {
           "number": 1,
-          "text": "In the seventh [month], in the one and twentieth [day] of the month, came the word of the LORD by the prophet Haggai, saying,"
+          "text": "In the seventh month, in the one and twentieth day of the month, came the word of the LORD by the prophet Haggai, saying,",
+          "tokens": [
+            {
+              "text": "In the seventh",
+              "strongsNumbers": [
+                "H7637"
+              ]
+            },
+            {
+              "text": " month, in the one",
+              "strongsNumbers": [
+                "H259"
+              ]
+            },
+            {
+              "text": " and twentieth",
+              "strongsNumbers": [
+                "H6242"
+              ]
+            },
+            {
+              "text": " day of the month,",
+              "strongsNumbers": [
+                "H2320"
+              ]
+            },
+            {
+              "text": " came the word",
+              "strongsNumbers": [
+                "H1697"
+              ]
+            },
+            {
+              "text": " of the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " by",
+              "strongsNumbers": [
+                "H3027"
+              ]
+            },
+            {
+              "text": " the prophet",
+              "strongsNumbers": [
+                "H5030"
+              ]
+            },
+            {
+              "text": " Haggai,",
+              "strongsNumbers": [
+                "H2292"
+              ]
+            },
+            {
+              "text": " saying,"
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "Speak now to Zerubbabel the son of Shealtiel, governor of Judah, and to Joshua the son of Josedech, the high priest, and to the residue of the people, saying,"
+          "text": "Speak now to Zerubbabel the son of Shealtiel, governor of Judah, and to Joshua the son of Josedech, the high priest, and to the residue of the people, saying,",
+          "tokens": [
+            {
+              "text": "Speak",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " now to Zerubbabel",
+              "strongsNumbers": [
+                "H2216"
+              ]
+            },
+            {
+              "text": " the son",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " of Shealtiel,",
+              "strongsNumbers": [
+                "H7597"
+              ]
+            },
+            {
+              "text": " governor",
+              "strongsNumbers": [
+                "H6346"
+              ]
+            },
+            {
+              "text": " of Judah,",
+              "strongsNumbers": [
+                "H3063"
+              ]
+            },
+            {
+              "text": " and to Joshua",
+              "strongsNumbers": [
+                "H3091"
+              ]
+            },
+            {
+              "text": " the son",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " of Josedech,",
+              "strongsNumbers": [
+                "H3087"
+              ]
+            },
+            {
+              "text": " the high",
+              "strongsNumbers": [
+                "H1419"
+              ]
+            },
+            {
+              "text": " priest,",
+              "strongsNumbers": [
+                "H3548"
+              ]
+            },
+            {
+              "text": " and to the residue",
+              "strongsNumbers": [
+                "H7611"
+              ]
+            },
+            {
+              "text": " of the people,",
+              "strongsNumbers": [
+                "H5971"
+              ]
+            },
+            {
+              "text": " saying,"
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "Who [is] left among you that saw this house in her first glory? and how do ye see it now? [is it] not in your eyes in comparison of it as nothing?"
+          "text": "Who is left among you that saw this house in her first glory? and how do ye see it now? is it not in your eyes in comparison",
+          "tokens": [
+            {
+              "text": "Who is left",
+              "strongsNumbers": [
+                "H7604"
+              ]
+            },
+            {
+              "text": " among you that saw",
+              "strongsNumbers": [
+                "H7200"
+              ]
+            },
+            {
+              "text": " this house",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " in her first",
+              "strongsNumbers": [
+                "H7223"
+              ]
+            },
+            {
+              "text": " glory?",
+              "strongsNumbers": [
+                "H3519"
+              ]
+            },
+            {
+              "text": " and how do ye see",
+              "strongsNumbers": [
+                "H7200"
+              ]
+            },
+            {
+              "text": " it now? is it not in your eyes",
+              "strongsNumbers": [
+                "H5869"
+              ]
+            },
+            {
+              "text": " in comparison"
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "Yet now be strong, O Zerubbabel, saith the LORD; and be strong, O Joshua, son of Josedech, the high priest; and be strong, all ye people of the land, saith the LORD, and work: for I [am] with you, saith the LORD of hosts:"
+          "text": "Yet now be strong, O Zerubbabel, saith the LORD; and be strong, O Joshua, son of Josedech, the high priest; and be strong, all ye people of the land, saith the LORD, and work: for I am with you, saith the LORD of hosts:",
+          "tokens": [
+            {
+              "text": "Yet now be strong,",
+              "strongsNumbers": [
+                "H2388"
+              ]
+            },
+            {
+              "text": " O Zerubbabel,",
+              "strongsNumbers": [
+                "H2216"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H5002"
+              ]
+            },
+            {
+              "text": " the LORD;",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " and be strong,",
+              "strongsNumbers": [
+                "H2388"
+              ]
+            },
+            {
+              "text": " O Joshua,",
+              "strongsNumbers": [
+                "H3091"
+              ]
+            },
+            {
+              "text": " son",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " of Josedech,",
+              "strongsNumbers": [
+                "H3087"
+              ]
+            },
+            {
+              "text": " the high",
+              "strongsNumbers": [
+                "H1419"
+              ]
+            },
+            {
+              "text": " priest;",
+              "strongsNumbers": [
+                "H3548"
+              ]
+            },
+            {
+              "text": " and be strong,",
+              "strongsNumbers": [
+                "H2388"
+              ]
+            },
+            {
+              "text": " all ye people",
+              "strongsNumbers": [
+                "H5971"
+              ]
+            },
+            {
+              "text": " of the land,",
+              "strongsNumbers": [
+                "H776"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H5002"
+              ]
+            },
+            {
+              "text": " the LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " and work:",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " for I am with you, saith",
+              "strongsNumbers": [
+                "H5002"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts:"
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "[According to] the word that I covenanted with you when ye came out of Egypt, so my spirit remaineth among you: fear ye not."
+          "text": "According to the word that I covenanted with you when ye came out of Egypt, so my spirit remaineth among you: fear",
+          "tokens": [
+            {
+              "text": "According to the word",
+              "strongsNumbers": [
+                "H1697"
+              ]
+            },
+            {
+              "text": " that I covenanted",
+              "strongsNumbers": [
+                "H3772"
+              ]
+            },
+            {
+              "text": " with you when ye came",
+              "strongsNumbers": [
+                "H3318"
+              ]
+            },
+            {
+              "text": " out of Egypt,",
+              "strongsNumbers": [
+                "H4714"
+              ]
+            },
+            {
+              "text": " so my spirit",
+              "strongsNumbers": [
+                "H7307"
+              ]
+            },
+            {
+              "text": " remaineth",
+              "strongsNumbers": [
+                "H5975"
+              ]
+            },
+            {
+              "text": " among",
+              "strongsNumbers": [
+                "H8432"
+              ]
+            },
+            {
+              "text": " you: fear"
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "For thus saith the LORD of hosts; Yet once, it [is] a little while, and I will shake the heavens, and the earth, and the sea, and the dry [land];"
+          "text": "For thus saith the LORD of hosts; Yet once, it is a little while, and I will shake the heavens, and the earth, and the sea, and the dry",
+          "tokens": [
+            {
+              "text": "For thus saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts;",
+              "strongsNumbers": [
+                "H6635"
+              ]
+            },
+            {
+              "text": " Yet once,",
+              "strongsNumbers": [
+                "H259"
+              ]
+            },
+            {
+              "text": " it is a little while,",
+              "strongsNumbers": [
+                "H4592"
+              ]
+            },
+            {
+              "text": " and I will shake",
+              "strongsNumbers": [
+                "H7493"
+              ]
+            },
+            {
+              "text": " the heavens,",
+              "strongsNumbers": [
+                "H8064"
+              ]
+            },
+            {
+              "text": " and the earth,",
+              "strongsNumbers": [
+                "H776"
+              ]
+            },
+            {
+              "text": " and the sea,",
+              "strongsNumbers": [
+                "H3220"
+              ]
+            },
+            {
+              "text": " and the dry"
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "And I will shake all nations, and the desire of all nations shall come: and I will fill this house with glory, saith the LORD of hosts."
+          "text": "And I will shake all nations, and the desire of all nations shall come: and I will fill this house with glory, saith the LORD of hosts.",
+          "tokens": [
+            {
+              "text": "And I will shake",
+              "strongsNumbers": [
+                "H7493"
+              ]
+            },
+            {
+              "text": " all nations,",
+              "strongsNumbers": [
+                "H1471"
+              ]
+            },
+            {
+              "text": " and the desire",
+              "strongsNumbers": [
+                "H2532"
+              ]
+            },
+            {
+              "text": " of all nations",
+              "strongsNumbers": [
+                "H1471"
+              ]
+            },
+            {
+              "text": " shall come:",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " and I will fill",
+              "strongsNumbers": [
+                "H4390"
+              ]
+            },
+            {
+              "text": " this house",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " with glory,",
+              "strongsNumbers": [
+                "H3519"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts."
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "The silver [is] mine, and the gold [is] mine, saith the LORD of hosts."
+          "text": "The silver is mine, and the gold is mine, saith the LORD of hosts.",
+          "tokens": [
+            {
+              "text": "The silver",
+              "strongsNumbers": [
+                "H3701"
+              ]
+            },
+            {
+              "text": " is mine, and the gold",
+              "strongsNumbers": [
+                "H2091"
+              ]
+            },
+            {
+              "text": " is mine, saith",
+              "strongsNumbers": [
+                "H5002"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts."
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "The glory of this latter house shall be greater than of the former, saith the LORD of hosts: and in this place will I give peace, saith the LORD of hosts."
+          "text": "The glory of this latter house shall be greater than of the former, saith the LORD of hosts: and in this place will I give peace, saith the LORD of hosts.",
+          "tokens": [
+            {
+              "text": "The glory",
+              "strongsNumbers": [
+                "H3519"
+              ]
+            },
+            {
+              "text": " of this latter",
+              "strongsNumbers": [
+                "H314"
+              ]
+            },
+            {
+              "text": " house",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " shall be greater than",
+              "strongsNumbers": [
+                "H1419"
+              ]
+            },
+            {
+              "text": " of the former,",
+              "strongsNumbers": [
+                "H7223"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H5002"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts:",
+              "strongsNumbers": [
+                "H6635"
+              ]
+            },
+            {
+              "text": " and in this place",
+              "strongsNumbers": [
+                "H4725"
+              ]
+            },
+            {
+              "text": " will I give",
+              "strongsNumbers": [
+                "H5414"
+              ]
+            },
+            {
+              "text": " peace,",
+              "strongsNumbers": [
+                "H7965"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts."
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "In the four and twentieth [day] of the ninth [month], in the second year of Darius, came the word of the LORD by Haggai the prophet, saying,"
+          "text": "In the four and twentieth day of the ninth month, in the second year of Darius, came the word of the LORD by Haggai the prophet, saying,",
+          "tokens": [
+            {
+              "text": "In the four",
+              "strongsNumbers": [
+                "H702"
+              ]
+            },
+            {
+              "text": " and twentieth",
+              "strongsNumbers": [
+                "H6242"
+              ]
+            },
+            {
+              "text": " day of the ninth",
+              "strongsNumbers": [
+                "H8671"
+              ]
+            },
+            {
+              "text": " month, in the second",
+              "strongsNumbers": [
+                "H8147"
+              ]
+            },
+            {
+              "text": " year",
+              "strongsNumbers": [
+                "H8141"
+              ]
+            },
+            {
+              "text": " of Darius,",
+              "strongsNumbers": [
+                "H1867"
+              ]
+            },
+            {
+              "text": " came the word",
+              "strongsNumbers": [
+                "H1697"
+              ]
+            },
+            {
+              "text": " of the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " by",
+              "strongsNumbers": [
+                "H3027"
+              ]
+            },
+            {
+              "text": " Haggai",
+              "strongsNumbers": [
+                "H2292"
+              ]
+            },
+            {
+              "text": " the prophet,",
+              "strongsNumbers": [
+                "H5030"
+              ]
+            },
+            {
+              "text": " saying,"
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "Thus saith the LORD of hosts; Ask now the priests [concerning] the law, saying,"
+          "text": "Thus saith the LORD of hosts; Ask now the priests concerning the law, saying,",
+          "tokens": [
+            {
+              "text": "Thus saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts;",
+              "strongsNumbers": [
+                "H6635"
+              ]
+            },
+            {
+              "text": " Ask",
+              "strongsNumbers": [
+                "H7592"
+              ]
+            },
+            {
+              "text": " now the priests",
+              "strongsNumbers": [
+                "H3548"
+              ]
+            },
+            {
+              "text": " concerning the law,",
+              "strongsNumbers": [
+                "H8451"
+              ]
+            },
+            {
+              "text": " saying,"
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "If one bear holy flesh in the skirt of his garment, and with his skirt do touch bread, or pottage, or wine, or oil, or any meat, shall it be holy? And the priests answered and said, No."
+          "text": "If one bear holy flesh in the skirt of his garment, and with his skirt do touch bread, or pottage, or wine, or oil, or any meat, shall it be holy? And the priests answered and said,",
+          "tokens": [
+            {
+              "text": "If one",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " bear",
+              "strongsNumbers": [
+                "H5375"
+              ]
+            },
+            {
+              "text": " holy",
+              "strongsNumbers": [
+                "H6944"
+              ]
+            },
+            {
+              "text": " flesh",
+              "strongsNumbers": [
+                "H1320"
+              ]
+            },
+            {
+              "text": " in the skirt",
+              "strongsNumbers": [
+                "H3671"
+              ]
+            },
+            {
+              "text": " of his garment,",
+              "strongsNumbers": [
+                "H899"
+              ]
+            },
+            {
+              "text": " and with his skirt",
+              "strongsNumbers": [
+                "H3671"
+              ]
+            },
+            {
+              "text": " do touch",
+              "strongsNumbers": [
+                "H5060"
+              ]
+            },
+            {
+              "text": " bread,",
+              "strongsNumbers": [
+                "H3899"
+              ]
+            },
+            {
+              "text": " or pottage,",
+              "strongsNumbers": [
+                "H5138"
+              ]
+            },
+            {
+              "text": " or wine,",
+              "strongsNumbers": [
+                "H3196"
+              ]
+            },
+            {
+              "text": " or oil,",
+              "strongsNumbers": [
+                "H8081"
+              ]
+            },
+            {
+              "text": " or any meat,",
+              "strongsNumbers": [
+                "H3978"
+              ]
+            },
+            {
+              "text": " shall it be holy?",
+              "strongsNumbers": [
+                "H6942"
+              ]
+            },
+            {
+              "text": " And the priests",
+              "strongsNumbers": [
+                "H3548"
+              ]
+            },
+            {
+              "text": " answered",
+              "strongsNumbers": [
+                "H6030"
+              ]
+            },
+            {
+              "text": " and said,"
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "Then said Haggai, If [one that is] unclean by a dead body touch any of these, shall it be unclean? And the priests answered and said, It shall be unclean."
+          "text": "Then said Haggai, If one that is unclean by a dead body touch any of these, shall it be unclean? And the priests answered and said, It shall be unclean.",
+          "tokens": [
+            {
+              "text": "Then said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Haggai,",
+              "strongsNumbers": [
+                "H2292"
+              ]
+            },
+            {
+              "text": " If one that is unclean",
+              "strongsNumbers": [
+                "H2931"
+              ]
+            },
+            {
+              "text": " by a dead body",
+              "strongsNumbers": [
+                "H5315"
+              ]
+            },
+            {
+              "text": " touch",
+              "strongsNumbers": [
+                "H5060"
+              ]
+            },
+            {
+              "text": " any of these, shall it be unclean?",
+              "strongsNumbers": [
+                "H2930"
+              ]
+            },
+            {
+              "text": " And the priests",
+              "strongsNumbers": [
+                "H3548"
+              ]
+            },
+            {
+              "text": " answered",
+              "strongsNumbers": [
+                "H6030"
+              ]
+            },
+            {
+              "text": " and said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " It shall be unclean."
+            }
+          ]
         },
         {
           "number": 14,
-          "text": "Then answered Haggai, and said, So [is] this people, and so [is] this nation before me, saith the LORD; and so [is] every work of their hands; and that which they offer there [is] unclean."
+          "text": "Then answered Haggai, and said, So is this people, and so is this nation before me, saith the LORD; and so is every work of their hands; and that which they offer there is unclean.",
+          "tokens": [
+            {
+              "text": "Then answered",
+              "strongsNumbers": [
+                "H6030"
+              ]
+            },
+            {
+              "text": " Haggai,",
+              "strongsNumbers": [
+                "H2292"
+              ]
+            },
+            {
+              "text": " and said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " So is this people,",
+              "strongsNumbers": [
+                "H5971"
+              ]
+            },
+            {
+              "text": " and so is this nation",
+              "strongsNumbers": [
+                "H1471"
+              ]
+            },
+            {
+              "text": " before",
+              "strongsNumbers": [
+                "H6440"
+              ]
+            },
+            {
+              "text": " me, saith",
+              "strongsNumbers": [
+                "H5002"
+              ]
+            },
+            {
+              "text": " the LORD;",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " and so is every work",
+              "strongsNumbers": [
+                "H4639"
+              ]
+            },
+            {
+              "text": " of their hands;",
+              "strongsNumbers": [
+                "H3027"
+              ]
+            },
+            {
+              "text": " and that which they offer",
+              "strongsNumbers": [
+                "H7126"
+              ]
+            },
+            {
+              "text": " there is unclean."
+            }
+          ]
         },
         {
           "number": 15,
-          "text": "And now, I pray you, consider from this day and upward, from before a stone was laid upon a stone in the temple of the LORD:"
+          "text": "And now, I pray you, consider from this day and upward, from before a stone was laid upon a stone in the temple of the LORD:",
+          "tokens": [
+            {
+              "text": "And now, I pray you, consider",
+              "strongsNumbers": [
+                "H7760",
+                "H3824"
+              ]
+            },
+            {
+              "text": " from this day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " and upward,",
+              "strongsNumbers": [
+                "H4605"
+              ]
+            },
+            {
+              "text": " from before",
+              "strongsNumbers": [
+                "H2962"
+              ]
+            },
+            {
+              "text": " a stone",
+              "strongsNumbers": [
+                "H68"
+              ]
+            },
+            {
+              "text": " was laid",
+              "strongsNumbers": [
+                "H7760"
+              ]
+            },
+            {
+              "text": " upon a stone",
+              "strongsNumbers": [
+                "H68"
+              ]
+            },
+            {
+              "text": " in the temple",
+              "strongsNumbers": [
+                "H1964"
+              ]
+            },
+            {
+              "text": " of the LORD:"
+            }
+          ]
         },
         {
           "number": 16,
-          "text": "Since those [days] were, when [one] came to an heap of twenty [measures], there were [but] ten: when [one] came to the pressfat for to draw out fifty [vessels] out of the press, there were [but] twenty."
+          "text": "Since those days were, when one came to an heap of twenty measures, there were but ten: when one came to the pressfat for to draw out fifty vessels out of the press, there were but twenty.",
+          "tokens": [
+            {
+              "text": "Since those days were, when one came",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " to an heap",
+              "strongsNumbers": [
+                "H6194"
+              ]
+            },
+            {
+              "text": " of twenty",
+              "strongsNumbers": [
+                "H6242"
+              ]
+            },
+            {
+              "text": " measures, there were but ten:",
+              "strongsNumbers": [
+                "H6235"
+              ]
+            },
+            {
+              "text": " when one came",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " to the pressfat",
+              "strongsNumbers": [
+                "H3342"
+              ]
+            },
+            {
+              "text": " for to draw out",
+              "strongsNumbers": [
+                "H2834"
+              ]
+            },
+            {
+              "text": " fifty",
+              "strongsNumbers": [
+                "H2572"
+              ]
+            },
+            {
+              "text": " vessels out of the press,",
+              "strongsNumbers": [
+                "H6333"
+              ]
+            },
+            {
+              "text": " there were but twenty."
+            }
+          ]
         },
         {
           "number": 17,
-          "text": "I smote you with blasting and with mildew and with hail in all the labours of your hands; yet ye [turned] not to me, saith the LORD."
+          "text": "I smote you with blasting and with mildew and with hail in all the labours of your hands; yet ye turned not to me, saith the LORD.",
+          "tokens": [
+            {
+              "text": "I smote",
+              "strongsNumbers": [
+                "H5221"
+              ]
+            },
+            {
+              "text": " you with blasting",
+              "strongsNumbers": [
+                "H7711"
+              ]
+            },
+            {
+              "text": " and with mildew",
+              "strongsNumbers": [
+                "H3420"
+              ]
+            },
+            {
+              "text": " and with hail",
+              "strongsNumbers": [
+                "H1259"
+              ]
+            },
+            {
+              "text": " in all the labours",
+              "strongsNumbers": [
+                "H4639"
+              ]
+            },
+            {
+              "text": " of your hands;",
+              "strongsNumbers": [
+                "H3027"
+              ]
+            },
+            {
+              "text": " yet ye turned not to me, saith",
+              "strongsNumbers": [
+                "H5002"
+              ]
+            },
+            {
+              "text": " the LORD."
+            }
+          ]
         },
         {
           "number": 18,
-          "text": "Consider now from this day and upward, from the four and twentieth day of the ninth [month, even] from the day that the foundation of the LORD'S temple was laid, consider [it]."
+          "text": "Consider now from this day and upward, from the four and twentieth day of the ninth month, even from the day that the foundation of the LORD'S temple was laid, consider",
+          "tokens": [
+            {
+              "text": "Consider",
+              "strongsNumbers": [
+                "H7760",
+                "H3824"
+              ]
+            },
+            {
+              "text": " now from this day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " and upward,",
+              "strongsNumbers": [
+                "H4605"
+              ]
+            },
+            {
+              "text": " from the four",
+              "strongsNumbers": [
+                "H702"
+              ]
+            },
+            {
+              "text": " and twentieth",
+              "strongsNumbers": [
+                "H6242"
+              ]
+            },
+            {
+              "text": " day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " of the ninth",
+              "strongsNumbers": [
+                "H8671"
+              ]
+            },
+            {
+              "text": " month, even from the day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " that the foundation",
+              "strongsNumbers": [
+                "H3245"
+              ]
+            },
+            {
+              "text": " of the LORD'S",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " temple",
+              "strongsNumbers": [
+                "H1964"
+              ]
+            },
+            {
+              "text": " was laid, consider",
+              "strongsNumbers": [
+                "H7760"
+              ]
+            }
+          ]
         },
         {
           "number": 19,
-          "text": "Is the seed yet in the barn? yea, as yet the vine, and the fig tree, and the pomegranate, and the olive tree, hath not brought forth: from this day will I bless [you]."
+          "text": "Is the seed yet in the barn? yea, as yet the vine, and the fig tree, and the pomegranate, and the olive tree, hath not brought forth: from this day will I bless",
+          "tokens": [
+            {
+              "text": "Is the seed",
+              "strongsNumbers": [
+                "H2233"
+              ]
+            },
+            {
+              "text": " yet in the barn?",
+              "strongsNumbers": [
+                "H4035"
+              ]
+            },
+            {
+              "text": " yea, as yet the vine,",
+              "strongsNumbers": [
+                "H1612"
+              ]
+            },
+            {
+              "text": " and the fig tree,",
+              "strongsNumbers": [
+                "H8384"
+              ]
+            },
+            {
+              "text": " and the pomegranate,",
+              "strongsNumbers": [
+                "H7416"
+              ]
+            },
+            {
+              "text": " and the olive",
+              "strongsNumbers": [
+                "H2132"
+              ]
+            },
+            {
+              "text": " tree,",
+              "strongsNumbers": [
+                "H6086"
+              ]
+            },
+            {
+              "text": " hath not brought forth:",
+              "strongsNumbers": [
+                "H5375"
+              ]
+            },
+            {
+              "text": " from this day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " will I bless"
+            }
+          ]
         },
         {
           "number": 20,
-          "text": "And again the word of the LORD came unto Haggai in the four and twentieth [day] of the month, saying,"
+          "text": "And again the word of the LORD came unto Haggai in the four and twentieth day of the month, saying,",
+          "tokens": [
+            {
+              "text": "And again",
+              "strongsNumbers": [
+                "H8145"
+              ]
+            },
+            {
+              "text": " the word",
+              "strongsNumbers": [
+                "H1697"
+              ]
+            },
+            {
+              "text": " of the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " came unto Haggai",
+              "strongsNumbers": [
+                "H2292"
+              ]
+            },
+            {
+              "text": " in the four",
+              "strongsNumbers": [
+                "H702"
+              ]
+            },
+            {
+              "text": " and twentieth",
+              "strongsNumbers": [
+                "H6242"
+              ]
+            },
+            {
+              "text": " day of the month,",
+              "strongsNumbers": [
+                "H2320"
+              ]
+            },
+            {
+              "text": " saying,"
+            }
+          ]
         },
         {
           "number": 21,
-          "text": "Speak to Zerubbabel, governor of Judah, saying, I will shake the heavens and the earth;"
+          "text": "Speak to Zerubbabel, governor of Judah, saying, I will shake the heavens and the earth;",
+          "tokens": [
+            {
+              "text": "Speak",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " to Zerubbabel,",
+              "strongsNumbers": [
+                "H2216"
+              ]
+            },
+            {
+              "text": " governor",
+              "strongsNumbers": [
+                "H6346"
+              ]
+            },
+            {
+              "text": " of Judah,",
+              "strongsNumbers": [
+                "H3063"
+              ]
+            },
+            {
+              "text": " saying,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " I will shake",
+              "strongsNumbers": [
+                "H7493"
+              ]
+            },
+            {
+              "text": " the heavens",
+              "strongsNumbers": [
+                "H8064"
+              ]
+            },
+            {
+              "text": " and the earth;"
+            }
+          ]
         },
         {
           "number": 22,
-          "text": "And I will overthrow the throne of kingdoms, and I will destroy the strength of the kingdoms of the heathen; and I will overthrow the chariots, and those that ride in them; and the horses and their riders shall come down, every one by the sword of his brother."
+          "text": "And I will overthrow the throne of kingdoms, and I will destroy the strength of the kingdoms of the heathen; and I will overthrow the chariots, and those that ride in them; and the horses and their riders shall come down, every one by the sword of his brother.",
+          "tokens": [
+            {
+              "text": "And I will overthrow",
+              "strongsNumbers": [
+                "H2015"
+              ]
+            },
+            {
+              "text": " the throne",
+              "strongsNumbers": [
+                "H3678"
+              ]
+            },
+            {
+              "text": " of kingdoms,",
+              "strongsNumbers": [
+                "H4467"
+              ]
+            },
+            {
+              "text": " and I will destroy",
+              "strongsNumbers": [
+                "H8045"
+              ]
+            },
+            {
+              "text": " the strength",
+              "strongsNumbers": [
+                "H2392"
+              ]
+            },
+            {
+              "text": " of the kingdoms",
+              "strongsNumbers": [
+                "H4467"
+              ]
+            },
+            {
+              "text": " of the heathen;",
+              "strongsNumbers": [
+                "H1471"
+              ]
+            },
+            {
+              "text": " and I will overthrow",
+              "strongsNumbers": [
+                "H2015"
+              ]
+            },
+            {
+              "text": " the chariots,",
+              "strongsNumbers": [
+                "H4818"
+              ]
+            },
+            {
+              "text": " and those that ride",
+              "strongsNumbers": [
+                "H7392"
+              ]
+            },
+            {
+              "text": " in them; and the horses",
+              "strongsNumbers": [
+                "H5483"
+              ]
+            },
+            {
+              "text": " and their riders",
+              "strongsNumbers": [
+                "H7392"
+              ]
+            },
+            {
+              "text": " shall come down,",
+              "strongsNumbers": [
+                "H3381"
+              ]
+            },
+            {
+              "text": " every one",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " by the sword",
+              "strongsNumbers": [
+                "H2719"
+              ]
+            },
+            {
+              "text": " of his brother."
+            }
+          ]
         },
         {
           "number": 23,
-          "text": "In that day, saith the LORD of hosts, will I take thee, O Zerubbabel, my servant, the son of Shealtiel, saith the LORD, and will make thee as a signet: for I have chosen thee, saith the LORD of hosts."
+          "text": "In that day, saith the LORD of hosts, will I take thee, O Zerubbabel, my servant, the son of Shealtiel, saith the LORD, and will make thee as a signet: for I have chosen thee, saith the LORD of hosts.",
+          "tokens": [
+            {
+              "text": "In that day,",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H5002"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts,",
+              "strongsNumbers": [
+                "H6635"
+              ]
+            },
+            {
+              "text": " will I take",
+              "strongsNumbers": [
+                "H3947"
+              ]
+            },
+            {
+              "text": " thee, O Zerubbabel,",
+              "strongsNumbers": [
+                "H2216"
+              ]
+            },
+            {
+              "text": " my servant,",
+              "strongsNumbers": [
+                "H5650"
+              ]
+            },
+            {
+              "text": " the son",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " of Shealtiel,",
+              "strongsNumbers": [
+                "H7597"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H5002"
+              ]
+            },
+            {
+              "text": " the LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " and will make",
+              "strongsNumbers": [
+                "H7760"
+              ]
+            },
+            {
+              "text": " thee as a signet:",
+              "strongsNumbers": [
+                "H2368"
+              ]
+            },
+            {
+              "text": " for I have chosen",
+              "strongsNumbers": [
+                "H977"
+              ]
+            },
+            {
+              "text": " thee, saith",
+              "strongsNumbers": [
+                "H5002"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts."
+            }
+          ]
         }
       ]
     }

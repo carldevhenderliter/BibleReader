@@ -14,87 +14,1356 @@
       "verses": [
         {
           "number": 1,
-          "text": "The vision of Obadiah. Thus saith the Lord GOD concerning Edom; We have heard a rumour from the LORD, and an ambassador is sent among the heathen, Arise ye, and let us rise up against her in battle."
+          "text": "The vision of Obadiah. Thus saith the Lord GOD concerning Edom; We have heard a rumour from the LORD, and an ambassador is sent among the heathen, Arise ye, and let us rise up against her in battle.",
+          "tokens": [
+            {
+              "text": "The vision",
+              "strongsNumbers": [
+                "H2377"
+              ]
+            },
+            {
+              "text": " of Obadiah.",
+              "strongsNumbers": [
+                "H5662"
+              ]
+            },
+            {
+              "text": " Thus saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the Lord",
+              "strongsNumbers": [
+                "H136"
+              ]
+            },
+            {
+              "text": " GOD",
+              "strongsNumbers": [
+                "H3069"
+              ]
+            },
+            {
+              "text": " concerning Edom;",
+              "strongsNumbers": [
+                "H123"
+              ]
+            },
+            {
+              "text": " We have heard",
+              "strongsNumbers": [
+                "H8085"
+              ]
+            },
+            {
+              "text": " a rumour",
+              "strongsNumbers": [
+                "H8052"
+              ]
+            },
+            {
+              "text": " from the LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " and an ambassador",
+              "strongsNumbers": [
+                "H6735"
+              ]
+            },
+            {
+              "text": " is sent",
+              "strongsNumbers": [
+                "H7971"
+              ]
+            },
+            {
+              "text": " among the heathen,",
+              "strongsNumbers": [
+                "H1471"
+              ]
+            },
+            {
+              "text": " Arise",
+              "strongsNumbers": [
+                "H6965"
+              ]
+            },
+            {
+              "text": " ye, and let us rise up",
+              "strongsNumbers": [
+                "H6965"
+              ]
+            },
+            {
+              "text": " against her in battle."
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "Behold, I have made thee small among the heathen: thou art greatly despised."
+          "text": "Behold, I have made thee small among the heathen: thou art greatly despised.",
+          "tokens": [
+            {
+              "text": "Behold, I have made",
+              "strongsNumbers": [
+                "H5414"
+              ]
+            },
+            {
+              "text": " thee small",
+              "strongsNumbers": [
+                "H6996"
+              ]
+            },
+            {
+              "text": " among the heathen:",
+              "strongsNumbers": [
+                "H1471"
+              ]
+            },
+            {
+              "text": " thou art greatly",
+              "strongsNumbers": [
+                "H3966"
+              ]
+            },
+            {
+              "text": " despised."
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "The pride of thine heart hath deceived thee, thou that dwellest in the clefts of the rock, whose habitation [is] high; that saith in his heart, Who shall bring me down to the ground?"
+          "text": "The pride of thine heart hath deceived thee, thou that dwellest in the clefts of the rock, whose habitation is high; that saith in his heart, Who shall bring me down to the ground?",
+          "tokens": [
+            {
+              "text": "The pride",
+              "strongsNumbers": [
+                "H2087"
+              ]
+            },
+            {
+              "text": " of thine heart",
+              "strongsNumbers": [
+                "H3820"
+              ]
+            },
+            {
+              "text": " hath deceived",
+              "strongsNumbers": [
+                "H5377"
+              ]
+            },
+            {
+              "text": " thee, thou that dwellest",
+              "strongsNumbers": [
+                "H7931"
+              ]
+            },
+            {
+              "text": " in the clefts",
+              "strongsNumbers": [
+                "H2288"
+              ]
+            },
+            {
+              "text": " of the rock,",
+              "strongsNumbers": [
+                "H5553"
+              ]
+            },
+            {
+              "text": " whose habitation",
+              "strongsNumbers": [
+                "H3427"
+              ]
+            },
+            {
+              "text": " is high;",
+              "strongsNumbers": [
+                "H4791"
+              ]
+            },
+            {
+              "text": " that saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " in his heart,",
+              "strongsNumbers": [
+                "H3820"
+              ]
+            },
+            {
+              "text": " Who shall bring me down",
+              "strongsNumbers": [
+                "H3381"
+              ]
+            },
+            {
+              "text": " to the ground?"
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "Though thou exalt [thyself] as the eagle, and though thou set thy nest among the stars, thence will I bring thee down, saith the LORD."
+          "text": "Though thou exalt thyself as the eagle, and though thou set thy nest among the stars, thence will I bring thee down, saith the LORD.",
+          "tokens": [
+            {
+              "text": "Though thou exalt",
+              "strongsNumbers": [
+                "H1361"
+              ]
+            },
+            {
+              "text": " thyself as the eagle,",
+              "strongsNumbers": [
+                "H5404"
+              ]
+            },
+            {
+              "text": " and though thou set",
+              "strongsNumbers": [
+                "H7760"
+              ]
+            },
+            {
+              "text": " thy nest",
+              "strongsNumbers": [
+                "H7064"
+              ]
+            },
+            {
+              "text": " among the stars,",
+              "strongsNumbers": [
+                "H3556"
+              ]
+            },
+            {
+              "text": " thence will I bring thee down,",
+              "strongsNumbers": [
+                "H3381"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H5002"
+              ]
+            },
+            {
+              "text": " the LORD."
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "If thieves came to thee, if robbers by night, (how art thou cut off!) would they not have stolen till they had enough? if the grapegatherers came to thee, would they not leave [some] grapes?"
+          "text": "If thieves came to thee, if robbers by night, (how art thou cut off!) would they not have stolen till they had enough? if the grapegatherers came to thee, would they not leave some grapes?",
+          "tokens": [
+            {
+              "text": "If thieves",
+              "strongsNumbers": [
+                "H1590"
+              ]
+            },
+            {
+              "text": " came",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " to thee, if robbers",
+              "strongsNumbers": [
+                "H7703"
+              ]
+            },
+            {
+              "text": " by night,",
+              "strongsNumbers": [
+                "H3915"
+              ]
+            },
+            {
+              "text": " (how art thou cut off!)",
+              "strongsNumbers": [
+                "H1820"
+              ]
+            },
+            {
+              "text": " would they not have stolen",
+              "strongsNumbers": [
+                "H1589"
+              ]
+            },
+            {
+              "text": " till they had enough?",
+              "strongsNumbers": [
+                "H1767"
+              ]
+            },
+            {
+              "text": " if the grapegatherers",
+              "strongsNumbers": [
+                "H1219"
+              ]
+            },
+            {
+              "text": " came",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " to thee, would they not leave",
+              "strongsNumbers": [
+                "H7604"
+              ]
+            },
+            {
+              "text": " some grapes?"
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "How are [the things] of Esau searched out! [how] are his hidden things sought up!"
+          "text": "How are the things of Esau searched out! how are his hidden things sought up!",
+          "tokens": [
+            {
+              "text": "How are the things of Esau",
+              "strongsNumbers": [
+                "H6215"
+              ]
+            },
+            {
+              "text": " searched out!",
+              "strongsNumbers": [
+                "H2664"
+              ]
+            },
+            {
+              "text": " how are his hidden",
+              "strongsNumbers": [
+                "H4710"
+              ]
+            },
+            {
+              "text": " things sought up!"
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "All the men of thy confederacy have brought thee [even] to the border: the men that were at peace with thee have deceived thee, [and] prevailed against thee; [they that eat] thy bread have laid a wound under thee: [there is] none understanding in him."
+          "text": "All the men of thy confederacy have brought thee even to the border: the men that were at peace with thee have deceived thee, and prevailed against thee; they that eat thy bread have laid a wound under thee: there is none understanding",
+          "tokens": [
+            {
+              "text": "All the men",
+              "strongsNumbers": [
+                "H582"
+              ]
+            },
+            {
+              "text": " of thy confederacy",
+              "strongsNumbers": [
+                "H1285"
+              ]
+            },
+            {
+              "text": " have brought",
+              "strongsNumbers": [
+                "H7971"
+              ]
+            },
+            {
+              "text": " thee even to the border:",
+              "strongsNumbers": [
+                "H1366"
+              ]
+            },
+            {
+              "text": " the men",
+              "strongsNumbers": [
+                "H582"
+              ]
+            },
+            {
+              "text": " that were at peace",
+              "strongsNumbers": [
+                "H7965"
+              ]
+            },
+            {
+              "text": " with thee have deceived",
+              "strongsNumbers": [
+                "H5377"
+              ]
+            },
+            {
+              "text": " thee, and prevailed",
+              "strongsNumbers": [
+                "H3201"
+              ]
+            },
+            {
+              "text": " against thee; they that eat thy bread",
+              "strongsNumbers": [
+                "H3899"
+              ]
+            },
+            {
+              "text": " have laid",
+              "strongsNumbers": [
+                "H7760"
+              ]
+            },
+            {
+              "text": " a wound",
+              "strongsNumbers": [
+                "H4204"
+              ]
+            },
+            {
+              "text": " under thee: there is none understanding"
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "Shall I not in that day, saith the LORD, even destroy the wise [men] out of Edom, and understanding out of the mount of Esau?"
+          "text": "Shall I not in that day, saith the LORD, even destroy the wise men out of Edom, and understanding out of the mount of Esau?",
+          "tokens": [
+            {
+              "text": "Shall I not in that day,",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H5002"
+              ]
+            },
+            {
+              "text": " the LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " even destroy",
+              "strongsNumbers": [
+                "H6"
+              ]
+            },
+            {
+              "text": " the wise",
+              "strongsNumbers": [
+                "H2450"
+              ]
+            },
+            {
+              "text": " men out of Edom,",
+              "strongsNumbers": [
+                "H123"
+              ]
+            },
+            {
+              "text": " and understanding",
+              "strongsNumbers": [
+                "H8394"
+              ]
+            },
+            {
+              "text": " out of the mount",
+              "strongsNumbers": [
+                "H2022"
+              ]
+            },
+            {
+              "text": " of Esau?"
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "And thy mighty [men], O Teman, shall be dismayed, to the end that every one of the mount of Esau may be cut off by slaughter."
+          "text": "And thy mighty men, O Teman, shall be dismayed, to the end that every one of the mount of Esau may be cut off by slaughter.",
+          "tokens": [
+            {
+              "text": "And thy mighty",
+              "strongsNumbers": [
+                "H1368"
+              ]
+            },
+            {
+              "text": " men, O Teman,",
+              "strongsNumbers": [
+                "H8487"
+              ]
+            },
+            {
+              "text": " shall be dismayed,",
+              "strongsNumbers": [
+                "H2865"
+              ]
+            },
+            {
+              "text": " to the end that every one",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " of the mount",
+              "strongsNumbers": [
+                "H2022"
+              ]
+            },
+            {
+              "text": " of Esau",
+              "strongsNumbers": [
+                "H6215"
+              ]
+            },
+            {
+              "text": " may be cut off",
+              "strongsNumbers": [
+                "H3772"
+              ]
+            },
+            {
+              "text": " by slaughter."
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "For [thy] violence against thy brother Jacob shame shall cover thee, and thou shalt be cut off for ever."
+          "text": "For thy violence against thy brother Jacob shame shall cover thee, and thou shalt be cut off for ever.",
+          "tokens": [
+            {
+              "text": "For thy violence",
+              "strongsNumbers": [
+                "H2555"
+              ]
+            },
+            {
+              "text": " against thy brother",
+              "strongsNumbers": [
+                "H251"
+              ]
+            },
+            {
+              "text": " Jacob",
+              "strongsNumbers": [
+                "H3290"
+              ]
+            },
+            {
+              "text": " shame",
+              "strongsNumbers": [
+                "H955"
+              ]
+            },
+            {
+              "text": " shall cover",
+              "strongsNumbers": [
+                "H3680"
+              ]
+            },
+            {
+              "text": " thee, and thou shalt be cut off",
+              "strongsNumbers": [
+                "H3772"
+              ]
+            },
+            {
+              "text": " for ever."
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "In the day that thou stoodest on the other side, in the day that the strangers carried away captive his forces, and foreigners entered into his gates, and cast lots upon Jerusalem, even thou [wast] as one of them."
+          "text": "In the day that thou stoodest on the other side, in the day that the strangers carried away captive his forces, and foreigners entered into his gates, and cast lots upon Jerusalem, even thou wast as one",
+          "tokens": [
+            {
+              "text": "In the day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " that thou stoodest",
+              "strongsNumbers": [
+                "H5975"
+              ]
+            },
+            {
+              "text": " on the other side, in the day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " that the strangers",
+              "strongsNumbers": [
+                "H2114"
+              ]
+            },
+            {
+              "text": " carried away captive",
+              "strongsNumbers": [
+                "H7617"
+              ]
+            },
+            {
+              "text": " his forces,",
+              "strongsNumbers": [
+                "H2428"
+              ]
+            },
+            {
+              "text": " and foreigners",
+              "strongsNumbers": [
+                "H5237"
+              ]
+            },
+            {
+              "text": " entered",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " into his gates,",
+              "strongsNumbers": [
+                "H8179"
+              ]
+            },
+            {
+              "text": " and cast",
+              "strongsNumbers": [
+                "H3032"
+              ]
+            },
+            {
+              "text": " lots",
+              "strongsNumbers": [
+                "H1486"
+              ]
+            },
+            {
+              "text": " upon Jerusalem,",
+              "strongsNumbers": [
+                "H3389"
+              ]
+            },
+            {
+              "text": " even thou wast as one"
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "But thou shouldest not have looked on the day of thy brother in the day that he became a stranger; neither shouldest thou have rejoiced over the children of Judah in the day of their destruction; neither shouldest thou have spoken proudly in the day of distress."
+          "text": "But thou shouldest not have looked on the day of thy brother in the day that he became a stranger; neither shouldest thou have rejoiced over the children of Judah in the day of their destruction; neither shouldest thou have spoken proudly in the day of distress.",
+          "tokens": [
+            {
+              "text": "But thou shouldest not have looked",
+              "strongsNumbers": [
+                "H7200"
+              ]
+            },
+            {
+              "text": " on the day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " of thy brother",
+              "strongsNumbers": [
+                "H251"
+              ]
+            },
+            {
+              "text": " in the day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " that he became a stranger;",
+              "strongsNumbers": [
+                "H5235"
+              ]
+            },
+            {
+              "text": " neither shouldest thou have rejoiced",
+              "strongsNumbers": [
+                "H8055"
+              ]
+            },
+            {
+              "text": " over the children",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " of Judah",
+              "strongsNumbers": [
+                "H3063"
+              ]
+            },
+            {
+              "text": " in the day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " of their destruction;",
+              "strongsNumbers": [
+                "H6"
+              ]
+            },
+            {
+              "text": " neither shouldest thou have spoken",
+              "strongsNumbers": [
+                "H6310"
+              ]
+            },
+            {
+              "text": " proudly",
+              "strongsNumbers": [
+                "H1431"
+              ]
+            },
+            {
+              "text": " in the day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " of distress."
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "Thou shouldest not have entered into the gate of my people in the day of their calamity; yea, thou shouldest not have looked on their affliction in the day of their calamity, nor have laid [hands] on their substance in the day of their calamity;"
+          "text": "Thou shouldest not have entered into the gate of my people in the day of their calamity; yea, thou shouldest not have looked on their affliction in the day of their calamity, nor have laid hands on their substance in the day of their calamity;",
+          "tokens": [
+            {
+              "text": "Thou shouldest not have entered",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " into the gate",
+              "strongsNumbers": [
+                "H8179"
+              ]
+            },
+            {
+              "text": " of my people",
+              "strongsNumbers": [
+                "H5971"
+              ]
+            },
+            {
+              "text": " in the day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " of their calamity;",
+              "strongsNumbers": [
+                "H343"
+              ]
+            },
+            {
+              "text": " yea, thou shouldest not have looked",
+              "strongsNumbers": [
+                "H7200"
+              ]
+            },
+            {
+              "text": " on their affliction",
+              "strongsNumbers": [
+                "H7451"
+              ]
+            },
+            {
+              "text": " in the day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " of their calamity,",
+              "strongsNumbers": [
+                "H343"
+              ]
+            },
+            {
+              "text": " nor have laid",
+              "strongsNumbers": [
+                "H7971"
+              ]
+            },
+            {
+              "text": " hands on their substance",
+              "strongsNumbers": [
+                "H2428"
+              ]
+            },
+            {
+              "text": " in the day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " of their calamity;"
+            }
+          ]
         },
         {
           "number": 14,
-          "text": "Neither shouldest thou have stood in the crossway, to cut off those of his that did escape; neither shouldest thou have delivered up those of his that did remain in the day of distress."
+          "text": "Neither shouldest thou have stood in the crossway, to cut off those of his that did escape; neither shouldest thou have delivered up those of his that did remain in the day of distress.",
+          "tokens": [
+            {
+              "text": "Neither shouldest thou have stood",
+              "strongsNumbers": [
+                "H5975"
+              ]
+            },
+            {
+              "text": " in the crossway,",
+              "strongsNumbers": [
+                "H6563"
+              ]
+            },
+            {
+              "text": " to cut off",
+              "strongsNumbers": [
+                "H3772"
+              ]
+            },
+            {
+              "text": " those of his that did escape;",
+              "strongsNumbers": [
+                "H6412"
+              ]
+            },
+            {
+              "text": " neither shouldest thou have delivered up",
+              "strongsNumbers": [
+                "H5462"
+              ]
+            },
+            {
+              "text": " those of his that did remain",
+              "strongsNumbers": [
+                "H8300"
+              ]
+            },
+            {
+              "text": " in the day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " of distress."
+            }
+          ]
         },
         {
           "number": 15,
-          "text": "For the day of the LORD [is] near upon all the heathen: as thou hast done, it shall be done unto thee: thy reward shall return upon thine own head."
+          "text": "For the day of the LORD is near upon all the heathen: as thou hast done, it shall be done unto thee: thy reward shall return upon thine own head.",
+          "tokens": [
+            {
+              "text": "For the day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " of the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " is near",
+              "strongsNumbers": [
+                "H7138"
+              ]
+            },
+            {
+              "text": " upon all the heathen:",
+              "strongsNumbers": [
+                "H1471"
+              ]
+            },
+            {
+              "text": " as thou hast done,",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " it shall be done",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " unto thee: thy reward",
+              "strongsNumbers": [
+                "H1576"
+              ]
+            },
+            {
+              "text": " shall return",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " upon thine own head."
+            }
+          ]
         },
         {
           "number": 16,
-          "text": "For as ye have drunk upon my holy mountain, [so] shall all the heathen drink continually, yea, they shall drink, and they shall swallow down, and they shall be as though they had not been."
+          "text": "For as ye have drunk upon my holy mountain, so shall all the heathen drink continually, yea, they shall drink, and they shall swallow down, and they shall be as though they had not",
+          "tokens": [
+            {
+              "text": "For as ye have drunk",
+              "strongsNumbers": [
+                "H8354"
+              ]
+            },
+            {
+              "text": " upon my holy",
+              "strongsNumbers": [
+                "H6944"
+              ]
+            },
+            {
+              "text": " mountain,",
+              "strongsNumbers": [
+                "H2022"
+              ]
+            },
+            {
+              "text": " so shall all the heathen",
+              "strongsNumbers": [
+                "H1471"
+              ]
+            },
+            {
+              "text": " drink",
+              "strongsNumbers": [
+                "H8354"
+              ]
+            },
+            {
+              "text": " continually,",
+              "strongsNumbers": [
+                "H8548"
+              ]
+            },
+            {
+              "text": " yea, they shall drink,",
+              "strongsNumbers": [
+                "H8354"
+              ]
+            },
+            {
+              "text": " and they shall swallow down,",
+              "strongsNumbers": [
+                "H3886"
+              ]
+            },
+            {
+              "text": " and they shall be as though they had not"
+            }
+          ]
         },
         {
           "number": 17,
-          "text": "But upon mount Zion shall be deliverance, and there shall be holiness; and the house of Jacob shall possess their possessions."
+          "text": "But upon mount Zion shall be deliverance, and there shall be holiness; and the house of Jacob shall possess their possessions.",
+          "tokens": [
+            {
+              "text": "But upon mount",
+              "strongsNumbers": [
+                "H2022"
+              ]
+            },
+            {
+              "text": " Zion",
+              "strongsNumbers": [
+                "H6726"
+              ]
+            },
+            {
+              "text": " shall be deliverance,",
+              "strongsNumbers": [
+                "H6413"
+              ]
+            },
+            {
+              "text": " and there shall be holiness;",
+              "strongsNumbers": [
+                "H6944"
+              ]
+            },
+            {
+              "text": " and the house",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " of Jacob",
+              "strongsNumbers": [
+                "H3290"
+              ]
+            },
+            {
+              "text": " shall possess",
+              "strongsNumbers": [
+                "H3423"
+              ]
+            },
+            {
+              "text": " their possessions."
+            }
+          ]
         },
         {
           "number": 18,
-          "text": "And the house of Jacob shall be a fire, and the house of Joseph a flame, and the house of Esau for stubble, and they shall kindle in them, and devour them; and there shall not be [any] remaining of the house of Esau; for the LORD hath spoken [it]."
+          "text": "And the house of Jacob shall be a fire, and the house of Joseph a flame, and the house of Esau for stubble, and they shall kindle in them, and devour them; and there shall not be any remaining of the house of Esau; for the LORD hath spoken",
+          "tokens": [
+            {
+              "text": "And the house",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " of Jacob",
+              "strongsNumbers": [
+                "H3290"
+              ]
+            },
+            {
+              "text": " shall be a fire,",
+              "strongsNumbers": [
+                "H784"
+              ]
+            },
+            {
+              "text": " and the house",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " of Joseph",
+              "strongsNumbers": [
+                "H3130"
+              ]
+            },
+            {
+              "text": " a flame,",
+              "strongsNumbers": [
+                "H3852"
+              ]
+            },
+            {
+              "text": " and the house",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " of Esau",
+              "strongsNumbers": [
+                "H6215"
+              ]
+            },
+            {
+              "text": " for stubble,",
+              "strongsNumbers": [
+                "H7179"
+              ]
+            },
+            {
+              "text": " and they shall kindle",
+              "strongsNumbers": [
+                "H1814"
+              ]
+            },
+            {
+              "text": " in them, and devour",
+              "strongsNumbers": [
+                "H398"
+              ]
+            },
+            {
+              "text": " them; and there shall not be any remaining",
+              "strongsNumbers": [
+                "H8300"
+              ]
+            },
+            {
+              "text": " of the house",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " of Esau;",
+              "strongsNumbers": [
+                "H6215"
+              ]
+            },
+            {
+              "text": " for the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " hath spoken"
+            }
+          ]
         },
         {
           "number": 19,
-          "text": "And [they of] the south shall possess the mount of Esau; and [they of] the plain the Philistines: and they shall possess the fields of Ephraim, and the fields of Samaria: and Benjamin [shall possess] Gilead."
+          "text": "And they of the south shall possess the mount of Esau; and they of the plain the Philistines: and they shall possess the fields of Ephraim, and the fields of Samaria: and Benjamin shall possess Gilead.",
+          "tokens": [
+            {
+              "text": "And they of the south",
+              "strongsNumbers": [
+                "H5045"
+              ]
+            },
+            {
+              "text": " shall possess",
+              "strongsNumbers": [
+                "H3423"
+              ]
+            },
+            {
+              "text": " the mount",
+              "strongsNumbers": [
+                "H2022"
+              ]
+            },
+            {
+              "text": " of Esau;",
+              "strongsNumbers": [
+                "H6215"
+              ]
+            },
+            {
+              "text": " and they of the plain",
+              "strongsNumbers": [
+                "H8219"
+              ]
+            },
+            {
+              "text": " the Philistines:",
+              "strongsNumbers": [
+                "H6430"
+              ]
+            },
+            {
+              "text": " and they shall possess",
+              "strongsNumbers": [
+                "H3423"
+              ]
+            },
+            {
+              "text": " the fields",
+              "strongsNumbers": [
+                "H7704"
+              ]
+            },
+            {
+              "text": " of Ephraim,",
+              "strongsNumbers": [
+                "H669"
+              ]
+            },
+            {
+              "text": " and the fields",
+              "strongsNumbers": [
+                "H7704"
+              ]
+            },
+            {
+              "text": " of Samaria:",
+              "strongsNumbers": [
+                "H8111"
+              ]
+            },
+            {
+              "text": " and Benjamin",
+              "strongsNumbers": [
+                "H1144"
+              ]
+            },
+            {
+              "text": " shall possess Gilead."
+            }
+          ]
         },
         {
           "number": 20,
-          "text": "And the captivity of this host of the children of Israel [shall possess] that of the Canaanites, [even] unto Zarephath; and the captivity of Jerusalem, which [is] in Sepharad, shall possess the cities of the south."
+          "text": "And the captivity of this host of the children of Israel shall possess that of the Canaanites, even unto Zarephath; and the captivity of Jerusalem, which is in Sepharad, shall possess the cities of the south.",
+          "tokens": [
+            {
+              "text": "And the captivity",
+              "strongsNumbers": [
+                "H1546"
+              ]
+            },
+            {
+              "text": " of this host",
+              "strongsNumbers": [
+                "H2426"
+              ]
+            },
+            {
+              "text": " of the children",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " of Israel",
+              "strongsNumbers": [
+                "H3478"
+              ]
+            },
+            {
+              "text": " shall possess that of the Canaanites,",
+              "strongsNumbers": [
+                "H3669"
+              ]
+            },
+            {
+              "text": " even unto Zarephath;",
+              "strongsNumbers": [
+                "H6886"
+              ]
+            },
+            {
+              "text": " and the captivity",
+              "strongsNumbers": [
+                "H1546"
+              ]
+            },
+            {
+              "text": " of Jerusalem,",
+              "strongsNumbers": [
+                "H3389"
+              ]
+            },
+            {
+              "text": " which is in Sepharad,",
+              "strongsNumbers": [
+                "H5614"
+              ]
+            },
+            {
+              "text": " shall possess",
+              "strongsNumbers": [
+                "H3423"
+              ]
+            },
+            {
+              "text": " the cities",
+              "strongsNumbers": [
+                "H5892"
+              ]
+            },
+            {
+              "text": " of the south."
+            }
+          ]
         },
         {
           "number": 21,
-          "text": "And saviours shall come up on mount Zion to judge the mount of Esau; and the kingdom shall be the LORD'S."
+          "text": "And saviours shall come up on mount Zion to judge the mount of Esau; and the kingdom shall be the LORD'S.",
+          "tokens": [
+            {
+              "text": "And saviours",
+              "strongsNumbers": [
+                "H3467"
+              ]
+            },
+            {
+              "text": " shall come up",
+              "strongsNumbers": [
+                "H5927"
+              ]
+            },
+            {
+              "text": " on mount",
+              "strongsNumbers": [
+                "H2022"
+              ]
+            },
+            {
+              "text": " Zion",
+              "strongsNumbers": [
+                "H6726"
+              ]
+            },
+            {
+              "text": " to judge",
+              "strongsNumbers": [
+                "H8199"
+              ]
+            },
+            {
+              "text": " the mount",
+              "strongsNumbers": [
+                "H2022"
+              ]
+            },
+            {
+              "text": " of Esau;",
+              "strongsNumbers": [
+                "H6215"
+              ]
+            },
+            {
+              "text": " and the kingdom",
+              "strongsNumbers": [
+                "H4410"
+              ]
+            },
+            {
+              "text": " shall be the LORD'S."
+            }
+          ]
         }
       ]
     }

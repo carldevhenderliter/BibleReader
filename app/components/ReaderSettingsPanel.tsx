@@ -198,6 +198,19 @@ export function ReaderSettingsPanel({
                 A+
               </button>
             </div>
+            <button
+              aria-pressed={version === "kjv" ? settings.showStrongs : false}
+              className="reader-inline-button reader-settings-link"
+              disabled={version !== "kjv"}
+              onClick={() => updateSettings({ showStrongs: !settings.showStrongs })}
+              type="button"
+            >
+              {version === "kjv"
+                ? settings.showStrongs
+                  ? "Hide Strongs"
+                  : "Show Strongs"
+                : "Strongs (KJV only)"}
+            </button>
             <Link
               className="reader-inline-action reader-settings-link"
               href={getViewToggleHref(book.slug, currentChapter, view, version)}

@@ -14,71 +14,751 @@
       "verses": [
         {
           "number": 1,
-          "text": "The song of songs, which [is] Solomon's."
+          "text": "The song of songs, which is Solomon's.",
+          "tokens": [
+            {
+              "text": "The song",
+              "strongsNumbers": [
+                "H7892"
+              ]
+            },
+            {
+              "text": " of songs,",
+              "strongsNumbers": [
+                "H7892"
+              ]
+            },
+            {
+              "text": " which is Solomon's."
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "Let him kiss me with the kisses of his mouth: for thy love [is] better than wine."
+          "text": "Let him kiss me with the kisses of his mouth: for thy love is better than wine.",
+          "tokens": [
+            {
+              "text": "Let him kiss",
+              "strongsNumbers": [
+                "H5401"
+              ]
+            },
+            {
+              "text": " me with the kisses",
+              "strongsNumbers": [
+                "H5390"
+              ]
+            },
+            {
+              "text": " of his mouth:",
+              "strongsNumbers": [
+                "H6310"
+              ]
+            },
+            {
+              "text": " for thy love",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " is better",
+              "strongsNumbers": [
+                "H2896"
+              ]
+            },
+            {
+              "text": " than wine."
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "Because of the savour of thy good ointments thy name [is as] ointment poured forth, therefore do the virgins love thee."
+          "text": "Because of the savour of thy good ointments thy name is as ointment poured forth, therefore do the virgins love",
+          "tokens": [
+            {
+              "text": "Because of the savour",
+              "strongsNumbers": [
+                "H7381"
+              ]
+            },
+            {
+              "text": " of thy good",
+              "strongsNumbers": [
+                "H2896"
+              ]
+            },
+            {
+              "text": " ointments",
+              "strongsNumbers": [
+                "H8081"
+              ]
+            },
+            {
+              "text": " thy name",
+              "strongsNumbers": [
+                "H8034"
+              ]
+            },
+            {
+              "text": " is as ointment",
+              "strongsNumbers": [
+                "H8081"
+              ]
+            },
+            {
+              "text": " poured forth,",
+              "strongsNumbers": [
+                "H7324"
+              ]
+            },
+            {
+              "text": " therefore do the virgins",
+              "strongsNumbers": [
+                "H5959"
+              ]
+            },
+            {
+              "text": " love"
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "Draw me, we will run after thee: the king hath brought me into his chambers: we will be glad and rejoice in thee, we will remember thy love more than wine: the upright love thee."
+          "text": "Draw me, we will run after thee: the king hath brought me into his chambers: we will be glad and rejoice in thee, we will remember thy love more than wine: the upright love",
+          "tokens": [
+            {
+              "text": "Draw",
+              "strongsNumbers": [
+                "H4900"
+              ]
+            },
+            {
+              "text": " me, we will run",
+              "strongsNumbers": [
+                "H7323"
+              ]
+            },
+            {
+              "text": " after",
+              "strongsNumbers": [
+                "H310"
+              ]
+            },
+            {
+              "text": " thee: the king",
+              "strongsNumbers": [
+                "H4428"
+              ]
+            },
+            {
+              "text": " hath brought",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " me into his chambers:",
+              "strongsNumbers": [
+                "H2315"
+              ]
+            },
+            {
+              "text": " we will be glad",
+              "strongsNumbers": [
+                "H1523"
+              ]
+            },
+            {
+              "text": " and rejoice",
+              "strongsNumbers": [
+                "H8055"
+              ]
+            },
+            {
+              "text": " in thee, we will remember",
+              "strongsNumbers": [
+                "H2142"
+              ]
+            },
+            {
+              "text": " thy love",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " more than wine:",
+              "strongsNumbers": [
+                "H3196"
+              ]
+            },
+            {
+              "text": " the upright",
+              "strongsNumbers": [
+                "H4339"
+              ]
+            },
+            {
+              "text": " love"
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "I [am] black, but comely, O ye daughters of Jerusalem, as the tents of Kedar, as the curtains of Solomon."
+          "text": "I am black, but comely, O ye daughters of Jerusalem, as the tents of Kedar, as the curtains of Solomon.",
+          "tokens": [
+            {
+              "text": "I am black,",
+              "strongsNumbers": [
+                "H7838"
+              ]
+            },
+            {
+              "text": " but comely,",
+              "strongsNumbers": [
+                "H5000"
+              ]
+            },
+            {
+              "text": " O ye daughters",
+              "strongsNumbers": [
+                "H1323"
+              ]
+            },
+            {
+              "text": " of Jerusalem,",
+              "strongsNumbers": [
+                "H3389"
+              ]
+            },
+            {
+              "text": " as the tents",
+              "strongsNumbers": [
+                "H168"
+              ]
+            },
+            {
+              "text": " of Kedar,",
+              "strongsNumbers": [
+                "H6938"
+              ]
+            },
+            {
+              "text": " as the curtains",
+              "strongsNumbers": [
+                "H3407"
+              ]
+            },
+            {
+              "text": " of Solomon."
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "Look not upon me, because I [am] black, because the sun hath looked upon me: my mother's children were angry with me; they made me the keeper of the vineyards; [but] mine own vineyard have I not kept."
+          "text": "Look not upon me, because I am black, because the sun hath looked upon me: my mother's children were angry with me; they made me the keeper of the vineyards; but mine own vineyard have I not kept.",
+          "tokens": [
+            {
+              "text": "Look",
+              "strongsNumbers": [
+                "H7200"
+              ]
+            },
+            {
+              "text": " not upon me, because I am black,",
+              "strongsNumbers": [
+                "H7840"
+              ]
+            },
+            {
+              "text": " because the sun",
+              "strongsNumbers": [
+                "H8121"
+              ]
+            },
+            {
+              "text": " hath looked",
+              "strongsNumbers": [
+                "H7805"
+              ]
+            },
+            {
+              "text": " upon me: my mother's",
+              "strongsNumbers": [
+                "H517"
+              ]
+            },
+            {
+              "text": " children",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " were angry",
+              "strongsNumbers": [
+                "H2787"
+              ]
+            },
+            {
+              "text": " with me; they made",
+              "strongsNumbers": [
+                "H7760"
+              ]
+            },
+            {
+              "text": " me the keeper",
+              "strongsNumbers": [
+                "H5201"
+              ]
+            },
+            {
+              "text": " of the vineyards;",
+              "strongsNumbers": [
+                "H3754"
+              ]
+            },
+            {
+              "text": " but mine own vineyard",
+              "strongsNumbers": [
+                "H3754"
+              ]
+            },
+            {
+              "text": " have I not kept."
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "Tell me, O thou whom my soul loveth, where thou feedest, where thou makest [thy flock] to rest at noon: for why should I be as one that turneth aside by the flocks of thy companions?"
+          "text": "Tell me, O thou whom my soul loveth, where thou feedest, where thou makest thy flock to rest at noon: for why should I be as one that turneth aside by the flocks of thy companions?",
+          "tokens": [
+            {
+              "text": "Tell",
+              "strongsNumbers": [
+                "H5046"
+              ]
+            },
+            {
+              "text": " me, O thou whom my soul",
+              "strongsNumbers": [
+                "H5315"
+              ]
+            },
+            {
+              "text": " loveth,",
+              "strongsNumbers": [
+                "H157"
+              ]
+            },
+            {
+              "text": " where thou feedest,",
+              "strongsNumbers": [
+                "H7462"
+              ]
+            },
+            {
+              "text": " where",
+              "strongsNumbers": [
+                "H349"
+              ]
+            },
+            {
+              "text": " thou makest thy flock to rest",
+              "strongsNumbers": [
+                "H7257"
+              ]
+            },
+            {
+              "text": " at noon:",
+              "strongsNumbers": [
+                "H6672"
+              ]
+            },
+            {
+              "text": " for",
+              "strongsNumbers": [
+                "H4100"
+              ]
+            },
+            {
+              "text": " why should I be as one that turneth aside",
+              "strongsNumbers": [
+                "H5844"
+              ]
+            },
+            {
+              "text": " by the flocks",
+              "strongsNumbers": [
+                "H5739"
+              ]
+            },
+            {
+              "text": " of thy companions?"
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "If thou know not, O thou fairest among women, go thy way forth by the footsteps of the flock, and feed thy kids beside the shepherds' tents."
+          "text": "If thou know not, O thou fairest among women, go thy way forth by the footsteps of the flock, and feed thy kids beside the shepherds' tents.",
+          "tokens": [
+            {
+              "text": "If thou know",
+              "strongsNumbers": [
+                "H3045"
+              ]
+            },
+            {
+              "text": " not, O thou fairest",
+              "strongsNumbers": [
+                "H3303"
+              ]
+            },
+            {
+              "text": " among women,",
+              "strongsNumbers": [
+                "H802"
+              ]
+            },
+            {
+              "text": " go thy way forth",
+              "strongsNumbers": [
+                "H3318"
+              ]
+            },
+            {
+              "text": " by the footsteps",
+              "strongsNumbers": [
+                "H6119"
+              ]
+            },
+            {
+              "text": " of the flock,",
+              "strongsNumbers": [
+                "H6629"
+              ]
+            },
+            {
+              "text": " and feed",
+              "strongsNumbers": [
+                "H7462"
+              ]
+            },
+            {
+              "text": " thy kids",
+              "strongsNumbers": [
+                "H1429"
+              ]
+            },
+            {
+              "text": " beside the shepherds'",
+              "strongsNumbers": [
+                "H7462"
+              ]
+            },
+            {
+              "text": " tents."
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "I have compared thee, O my love, to a company of horses in Pharaoh's chariots."
+          "text": "I have compared thee, O my love, to a company of horses in Pharaoh's chariots.",
+          "tokens": [
+            {
+              "text": "I have compared",
+              "strongsNumbers": [
+                "H1819"
+              ]
+            },
+            {
+              "text": " thee, O my love,",
+              "strongsNumbers": [
+                "H7474"
+              ]
+            },
+            {
+              "text": " to a company of horses",
+              "strongsNumbers": [
+                "H5484"
+              ]
+            },
+            {
+              "text": " in Pharaoh's",
+              "strongsNumbers": [
+                "H6547"
+              ]
+            },
+            {
+              "text": " chariots."
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "Thy cheeks are comely with rows [of jewels], thy neck with chains [of gold]."
+          "text": "Thy cheeks are comely with rows of jewels, thy neck with chains",
+          "tokens": [
+            {
+              "text": "Thy cheeks",
+              "strongsNumbers": [
+                "H3895"
+              ]
+            },
+            {
+              "text": " are comely",
+              "strongsNumbers": [
+                "H4998"
+              ]
+            },
+            {
+              "text": " with rows",
+              "strongsNumbers": [
+                "H8447"
+              ]
+            },
+            {
+              "text": " of jewels, thy neck",
+              "strongsNumbers": [
+                "H6677"
+              ]
+            },
+            {
+              "text": " with chains"
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "We will make thee borders of gold with studs of silver."
+          "text": "We will make thee borders of gold with studs of silver.",
+          "tokens": [
+            {
+              "text": "We will make",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " thee borders",
+              "strongsNumbers": [
+                "H8447"
+              ]
+            },
+            {
+              "text": " of gold",
+              "strongsNumbers": [
+                "H2091"
+              ]
+            },
+            {
+              "text": " with studs",
+              "strongsNumbers": [
+                "H5351"
+              ]
+            },
+            {
+              "text": " of silver."
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "While the king [sitteth] at his table, my spikenard sendeth forth the smell thereof."
+          "text": "While the king sitteth at his table, my spikenard sendeth forth the smell",
+          "tokens": [
+            {
+              "text": "While the king",
+              "strongsNumbers": [
+                "H4428"
+              ]
+            },
+            {
+              "text": " sitteth at his table,",
+              "strongsNumbers": [
+                "H4524"
+              ]
+            },
+            {
+              "text": " my spikenard",
+              "strongsNumbers": [
+                "H5373"
+              ]
+            },
+            {
+              "text": " sendeth forth",
+              "strongsNumbers": [
+                "H5414"
+              ]
+            },
+            {
+              "text": " the smell"
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "A bundle of myrrh [is] my wellbeloved unto me; he shall lie all night betwixt my breasts."
+          "text": "A bundle of myrrh is my wellbeloved unto me; he shall lie all night betwixt my breasts.",
+          "tokens": [
+            {
+              "text": "A bundle",
+              "strongsNumbers": [
+                "H6872"
+              ]
+            },
+            {
+              "text": " of myrrh",
+              "strongsNumbers": [
+                "H4753"
+              ]
+            },
+            {
+              "text": " is my wellbeloved",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " unto me; he shall lie",
+              "strongsNumbers": [
+                "H3885"
+              ]
+            },
+            {
+              "text": " all night betwixt my breasts."
+            }
+          ]
         },
         {
           "number": 14,
-          "text": "My beloved [is] unto me [as] a cluster of camphire in the vineyards of En-gedi."
+          "text": "My beloved is unto me as a cluster of camphire in the vineyards of Engedi.",
+          "tokens": [
+            {
+              "text": "My beloved",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " is unto me as a cluster",
+              "strongsNumbers": [
+                "H811"
+              ]
+            },
+            {
+              "text": " of camphire",
+              "strongsNumbers": [
+                "H3724"
+              ]
+            },
+            {
+              "text": " in the vineyards",
+              "strongsNumbers": [
+                "H3754"
+              ]
+            },
+            {
+              "text": " of Engedi."
+            }
+          ]
         },
         {
           "number": 15,
-          "text": "Behold, thou [art] fair, my love; behold, thou [art] fair; thou [hast] doves' eyes."
+          "text": "Behold, thou art fair, my love; behold, thou art fair; thou hast doves' eyes.",
+          "tokens": [
+            {
+              "text": "Behold, thou art fair,",
+              "strongsNumbers": [
+                "H3303"
+              ]
+            },
+            {
+              "text": " my love;",
+              "strongsNumbers": [
+                "H7474"
+              ]
+            },
+            {
+              "text": " behold, thou art fair;",
+              "strongsNumbers": [
+                "H3303"
+              ]
+            },
+            {
+              "text": " thou hast doves'",
+              "strongsNumbers": [
+                "H3123"
+              ]
+            },
+            {
+              "text": " eyes."
+            }
+          ]
         },
         {
           "number": 16,
-          "text": "Behold, thou [art] fair, my beloved, yea, pleasant: also our bed [is] green."
+          "text": "Behold, thou art fair, my beloved, yea, pleasant: also our bed is green.",
+          "tokens": [
+            {
+              "text": "Behold, thou art fair,",
+              "strongsNumbers": [
+                "H3303"
+              ]
+            },
+            {
+              "text": " my beloved,",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " yea, pleasant:",
+              "strongsNumbers": [
+                "H5273"
+              ]
+            },
+            {
+              "text": " also our bed",
+              "strongsNumbers": [
+                "H6210"
+              ]
+            },
+            {
+              "text": " is green."
+            }
+          ]
         },
         {
           "number": 17,
-          "text": "The beams of our house [are] cedar, [and] our rafters of fir."
+          "text": "The beams of our house are cedar, and our rafters of fir.",
+          "tokens": [
+            {
+              "text": "The beams",
+              "strongsNumbers": [
+                "H6982"
+              ]
+            },
+            {
+              "text": " of our house",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " are cedar,",
+              "strongsNumbers": [
+                "H730"
+              ]
+            },
+            {
+              "text": " and our rafters",
+              "strongsNumbers": [
+                "H7351",
+                "H7351"
+              ]
+            },
+            {
+              "text": " of fir."
+            }
+          ]
         }
       ]
     },
@@ -88,71 +768,852 @@
       "verses": [
         {
           "number": 1,
-          "text": "I [am] the rose of Sharon, [and] the lily of the valleys."
+          "text": "I am the rose of Sharon, and the lily of the valleys.",
+          "tokens": [
+            {
+              "text": "I am the rose",
+              "strongsNumbers": [
+                "H2261"
+              ]
+            },
+            {
+              "text": " of Sharon,",
+              "strongsNumbers": [
+                "H8289"
+              ]
+            },
+            {
+              "text": " and the lily",
+              "strongsNumbers": [
+                "H7799"
+              ]
+            },
+            {
+              "text": " of the valleys."
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "As the lily among thorns, so [is] my love among the daughters."
+          "text": "As the lily among thorns, so is my love among the daughters.",
+          "tokens": [
+            {
+              "text": "As the lily",
+              "strongsNumbers": [
+                "H7799"
+              ]
+            },
+            {
+              "text": " among thorns,",
+              "strongsNumbers": [
+                "H2336"
+              ]
+            },
+            {
+              "text": " so is my love",
+              "strongsNumbers": [
+                "H7474"
+              ]
+            },
+            {
+              "text": " among the daughters."
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "As the apple tree among the trees of the wood, so [is] my beloved among the sons. I sat down under his shadow with great delight, and his fruit [was] sweet to my taste."
+          "text": "As the apple tree among the trees of the wood, so is my beloved among the sons. I sat down under his shadow with great delight, and his fruit was sweet to my taste.",
+          "tokens": [
+            {
+              "text": "As the apple tree",
+              "strongsNumbers": [
+                "H8598"
+              ]
+            },
+            {
+              "text": " among the trees",
+              "strongsNumbers": [
+                "H6086"
+              ]
+            },
+            {
+              "text": " of the wood,",
+              "strongsNumbers": [
+                "H3293"
+              ]
+            },
+            {
+              "text": " so is my beloved",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " among the sons.",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " I sat",
+              "strongsNumbers": [
+                "H3427"
+              ]
+            },
+            {
+              "text": " down under his shadow",
+              "strongsNumbers": [
+                "H6738"
+              ]
+            },
+            {
+              "text": " with great delight,",
+              "strongsNumbers": [
+                "H2530"
+              ]
+            },
+            {
+              "text": " and his fruit",
+              "strongsNumbers": [
+                "H6529"
+              ]
+            },
+            {
+              "text": " was sweet",
+              "strongsNumbers": [
+                "H4966"
+              ]
+            },
+            {
+              "text": " to my taste."
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "He brought me to the banqueting house, and his banner over me [was] love."
+          "text": "He brought me to the banqueting house, and his banner over me was love.",
+          "tokens": [
+            {
+              "text": "He brought",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " me to the banqueting",
+              "strongsNumbers": [
+                "H3196"
+              ]
+            },
+            {
+              "text": " house,",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " and his banner",
+              "strongsNumbers": [
+                "H1714"
+              ]
+            },
+            {
+              "text": " over me was love."
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "Stay me with flagons, comfort me with apples: for I [am] sick of love."
+          "text": "Stay me with flagons, comfort me with apples: for I am sick of love.",
+          "tokens": [
+            {
+              "text": "Stay",
+              "strongsNumbers": [
+                "H5564"
+              ]
+            },
+            {
+              "text": " me with flagons,",
+              "strongsNumbers": [
+                "H809"
+              ]
+            },
+            {
+              "text": " comfort",
+              "strongsNumbers": [
+                "H7502"
+              ]
+            },
+            {
+              "text": " me with apples:",
+              "strongsNumbers": [
+                "H8598"
+              ]
+            },
+            {
+              "text": " for I am sick",
+              "strongsNumbers": [
+                "H2470"
+              ]
+            },
+            {
+              "text": " of love."
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "His left hand [is] under my head, and his right hand doth embrace me."
+          "text": "His left hand is under my head, and his right hand doth embrace",
+          "tokens": [
+            {
+              "text": "His left hand",
+              "strongsNumbers": [
+                "H8040"
+              ]
+            },
+            {
+              "text": " is under my head,",
+              "strongsNumbers": [
+                "H7218"
+              ]
+            },
+            {
+              "text": " and his right hand",
+              "strongsNumbers": [
+                "H3225"
+              ]
+            },
+            {
+              "text": " doth embrace"
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "I charge you, O ye daughters of Jerusalem, by the roes, and by the hinds of the field, that ye stir not up, nor awake [my] love, till he please."
+          "text": "I charge you, O ye daughters of Jerusalem, by the roes, and by the hinds of the field, that ye stir not up, nor awake my love, till he please.",
+          "tokens": [
+            {
+              "text": "I charge",
+              "strongsNumbers": [
+                "H7650"
+              ]
+            },
+            {
+              "text": " you, O ye daughters",
+              "strongsNumbers": [
+                "H1323"
+              ]
+            },
+            {
+              "text": " of Jerusalem,",
+              "strongsNumbers": [
+                "H3389"
+              ]
+            },
+            {
+              "text": " by the roes,",
+              "strongsNumbers": [
+                "H6643"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "H176"
+              ]
+            },
+            {
+              "text": " by the hinds",
+              "strongsNumbers": [
+                "H355"
+              ]
+            },
+            {
+              "text": " of the field,",
+              "strongsNumbers": [
+                "H7704"
+              ]
+            },
+            {
+              "text": " that ye stir not up,",
+              "strongsNumbers": [
+                "H5782"
+              ]
+            },
+            {
+              "text": " nor awake",
+              "strongsNumbers": [
+                "H5782"
+              ]
+            },
+            {
+              "text": " my love,",
+              "strongsNumbers": [
+                "H160"
+              ]
+            },
+            {
+              "text": " till he please."
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "The voice of my beloved! behold, he cometh leaping upon the mountains, skipping upon the hills."
+          "text": "The voice of my beloved! behold, he cometh leaping upon the mountains, skipping upon the hills.",
+          "tokens": [
+            {
+              "text": "The voice",
+              "strongsNumbers": [
+                "H6963"
+              ]
+            },
+            {
+              "text": " of my beloved!",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " behold, he cometh",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " leaping",
+              "strongsNumbers": [
+                "H1801"
+              ]
+            },
+            {
+              "text": " upon the mountains,",
+              "strongsNumbers": [
+                "H2022"
+              ]
+            },
+            {
+              "text": " skipping",
+              "strongsNumbers": [
+                "H7092"
+              ]
+            },
+            {
+              "text": " upon the hills."
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "My beloved is like a roe or a young hart: behold, he standeth behind our wall, he looketh forth at the windows, shewing himself through the lattice."
+          "text": "My beloved is like a roe or a young hart: behold, he standeth behind our wall, he looketh forth at the windows, shewing himself through the lattice.",
+          "tokens": [
+            {
+              "text": "My beloved",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " is like",
+              "strongsNumbers": [
+                "H1819"
+              ]
+            },
+            {
+              "text": " a roe",
+              "strongsNumbers": [
+                "H6643"
+              ]
+            },
+            {
+              "text": " or a young",
+              "strongsNumbers": [
+                "H6082"
+              ]
+            },
+            {
+              "text": " hart:",
+              "strongsNumbers": [
+                "H354"
+              ]
+            },
+            {
+              "text": " behold, he standeth",
+              "strongsNumbers": [
+                "H5975"
+              ]
+            },
+            {
+              "text": " behind",
+              "strongsNumbers": [
+                "H310"
+              ]
+            },
+            {
+              "text": " our wall,",
+              "strongsNumbers": [
+                "H3796"
+              ]
+            },
+            {
+              "text": " he looketh forth",
+              "strongsNumbers": [
+                "H7688"
+              ]
+            },
+            {
+              "text": " at the windows,",
+              "strongsNumbers": [
+                "H2474"
+              ]
+            },
+            {
+              "text": " shewing",
+              "strongsNumbers": [
+                "H6692"
+              ]
+            },
+            {
+              "text": " himself through the lattice."
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "My beloved spake, and said unto me, Rise up, my love, my fair one, and come away."
+          "text": "My beloved spake, and said unto me, Rise up, my love, my fair one, and come away.",
+          "tokens": [
+            {
+              "text": "My beloved",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " spake,",
+              "strongsNumbers": [
+                "H6030"
+              ]
+            },
+            {
+              "text": " and said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto me, Rise up,",
+              "strongsNumbers": [
+                "H6965"
+              ]
+            },
+            {
+              "text": " my love,",
+              "strongsNumbers": [
+                "H7474"
+              ]
+            },
+            {
+              "text": " my fair one,",
+              "strongsNumbers": [
+                "H3303"
+              ]
+            },
+            {
+              "text": " and come away."
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "For, lo, the winter is past, the rain is over [and] gone;"
+          "text": "For, lo, the winter is past, the rain is over and gone;",
+          "tokens": [
+            {
+              "text": "For, lo, the winter",
+              "strongsNumbers": [
+                "H5638"
+              ]
+            },
+            {
+              "text": " is past,",
+              "strongsNumbers": [
+                "H5674"
+              ]
+            },
+            {
+              "text": " the rain",
+              "strongsNumbers": [
+                "H1653"
+              ]
+            },
+            {
+              "text": " is over",
+              "strongsNumbers": [
+                "H2498"
+              ]
+            },
+            {
+              "text": " and gone;"
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "The flowers appear on the earth; the time of the singing [of birds] is come, and the voice of the turtle is heard in our land;"
+          "text": "The flowers appear on the earth; the time of the singing of birds is come, and the voice of the turtle is heard in our land;",
+          "tokens": [
+            {
+              "text": "The flowers",
+              "strongsNumbers": [
+                "H5339"
+              ]
+            },
+            {
+              "text": " appear",
+              "strongsNumbers": [
+                "H7200"
+              ]
+            },
+            {
+              "text": " on the earth;",
+              "strongsNumbers": [
+                "H776"
+              ]
+            },
+            {
+              "text": " the time",
+              "strongsNumbers": [
+                "H6256"
+              ]
+            },
+            {
+              "text": " of the singing",
+              "strongsNumbers": [
+                "H2158"
+              ]
+            },
+            {
+              "text": " of birds is come,",
+              "strongsNumbers": [
+                "H5060"
+              ]
+            },
+            {
+              "text": " and the voice",
+              "strongsNumbers": [
+                "H6963"
+              ]
+            },
+            {
+              "text": " of the turtle",
+              "strongsNumbers": [
+                "H8449"
+              ]
+            },
+            {
+              "text": " is heard",
+              "strongsNumbers": [
+                "H8085"
+              ]
+            },
+            {
+              "text": " in our land;"
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "The fig tree putteth forth her green figs, and the vines [with] the tender grape give a [good] smell. Arise, my love, my fair one, and come away."
+          "text": "The fig tree putteth forth her green figs, and the vines with the tender grape give a good smell. Arise, my love, my fair one, and come away.",
+          "tokens": [
+            {
+              "text": "The fig tree",
+              "strongsNumbers": [
+                "H8384"
+              ]
+            },
+            {
+              "text": " putteth forth",
+              "strongsNumbers": [
+                "H2590"
+              ]
+            },
+            {
+              "text": " her green figs,",
+              "strongsNumbers": [
+                "H6291"
+              ]
+            },
+            {
+              "text": " and the vines",
+              "strongsNumbers": [
+                "H1612"
+              ]
+            },
+            {
+              "text": " with the tender grape",
+              "strongsNumbers": [
+                "H5563"
+              ]
+            },
+            {
+              "text": " give",
+              "strongsNumbers": [
+                "H5414"
+              ]
+            },
+            {
+              "text": " a good smell.",
+              "strongsNumbers": [
+                "H7381"
+              ]
+            },
+            {
+              "text": " Arise,",
+              "strongsNumbers": [
+                "H6965"
+              ]
+            },
+            {
+              "text": " my love,",
+              "strongsNumbers": [
+                "H7474"
+              ]
+            },
+            {
+              "text": " my fair one,",
+              "strongsNumbers": [
+                "H3303"
+              ]
+            },
+            {
+              "text": " and come away."
+            }
+          ]
         },
         {
           "number": 14,
-          "text": "O my dove, [that art] in the clefts of the rock, in the secret [places] of the stairs, let me see thy countenance, let me hear thy voice; for sweet [is] thy voice, and thy countenance [is] comely."
+          "text": "O my dove, that art in the clefts of the rock, in the secret places of the stairs, let me see thy countenance, let me hear thy voice; for sweet is thy voice, and thy countenance is comely.",
+          "tokens": [
+            {
+              "text": "O my dove,",
+              "strongsNumbers": [
+                "H3123"
+              ]
+            },
+            {
+              "text": " that art in the clefts",
+              "strongsNumbers": [
+                "H2288"
+              ]
+            },
+            {
+              "text": " of the rock,",
+              "strongsNumbers": [
+                "H5553"
+              ]
+            },
+            {
+              "text": " in the secret",
+              "strongsNumbers": [
+                "H5643"
+              ]
+            },
+            {
+              "text": " places of the stairs,",
+              "strongsNumbers": [
+                "H4095"
+              ]
+            },
+            {
+              "text": " let me see",
+              "strongsNumbers": [
+                "H7200"
+              ]
+            },
+            {
+              "text": " thy countenance,",
+              "strongsNumbers": [
+                "H4758"
+              ]
+            },
+            {
+              "text": " let me hear",
+              "strongsNumbers": [
+                "H8085"
+              ]
+            },
+            {
+              "text": " thy voice;",
+              "strongsNumbers": [
+                "H6963"
+              ]
+            },
+            {
+              "text": " for sweet",
+              "strongsNumbers": [
+                "H6156"
+              ]
+            },
+            {
+              "text": " is thy voice,",
+              "strongsNumbers": [
+                "H6963"
+              ]
+            },
+            {
+              "text": " and thy countenance",
+              "strongsNumbers": [
+                "H4758"
+              ]
+            },
+            {
+              "text": " is comely."
+            }
+          ]
         },
         {
           "number": 15,
-          "text": "Take us the foxes, the little foxes, that spoil the vines: for our vines [have] tender grapes."
+          "text": "Take us the foxes, the little foxes, that spoil the vines: for our vines have tender grapes.",
+          "tokens": [
+            {
+              "text": "Take",
+              "strongsNumbers": [
+                "H270"
+              ]
+            },
+            {
+              "text": " us the foxes,",
+              "strongsNumbers": [
+                "H7776"
+              ]
+            },
+            {
+              "text": " the little",
+              "strongsNumbers": [
+                "H6996"
+              ]
+            },
+            {
+              "text": " foxes,",
+              "strongsNumbers": [
+                "H7776"
+              ]
+            },
+            {
+              "text": " that spoil",
+              "strongsNumbers": [
+                "H2254"
+              ]
+            },
+            {
+              "text": " the vines:",
+              "strongsNumbers": [
+                "H3754"
+              ]
+            },
+            {
+              "text": " for our vines",
+              "strongsNumbers": [
+                "H3754"
+              ]
+            },
+            {
+              "text": " have tender grapes."
+            }
+          ]
         },
         {
           "number": 16,
-          "text": "My beloved [is] mine, and I [am] his: he feedeth among the lilies."
+          "text": "My beloved is mine, and I am his: he feedeth among the lilies.",
+          "tokens": [
+            {
+              "text": "My beloved",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " is mine, and I am his: he feedeth",
+              "strongsNumbers": [
+                "H7462"
+              ]
+            },
+            {
+              "text": " among the lilies."
+            }
+          ]
         },
         {
           "number": 17,
-          "text": "Until the day break, and the shadows flee away, turn, my beloved, and be thou like a roe or a young hart upon the mountains of Bether."
+          "text": "Until the day break, and the shadows flee away, turn, my beloved, and be thou like a roe or a young hart upon the mountains of Bether.",
+          "tokens": [
+            {
+              "text": "Until the day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " break,",
+              "strongsNumbers": [
+                "H6315"
+              ]
+            },
+            {
+              "text": " and the shadows",
+              "strongsNumbers": [
+                "H6752"
+              ]
+            },
+            {
+              "text": " flee away,",
+              "strongsNumbers": [
+                "H5127"
+              ]
+            },
+            {
+              "text": " turn,",
+              "strongsNumbers": [
+                "H5437"
+              ]
+            },
+            {
+              "text": " my beloved,",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " and be thou like",
+              "strongsNumbers": [
+                "H1819"
+              ]
+            },
+            {
+              "text": " a roe",
+              "strongsNumbers": [
+                "H6643"
+              ]
+            },
+            {
+              "text": " or a young",
+              "strongsNumbers": [
+                "H6082"
+              ]
+            },
+            {
+              "text": " hart",
+              "strongsNumbers": [
+                "H354"
+              ]
+            },
+            {
+              "text": " upon the mountains",
+              "strongsNumbers": [
+                "H2022"
+              ]
+            },
+            {
+              "text": " of Bether."
+            }
+          ]
         }
       ]
     },
@@ -162,47 +1623,660 @@
       "verses": [
         {
           "number": 1,
-          "text": "By night on my bed I sought him whom my soul loveth: I sought him, but I found him not."
+          "text": "By night on my bed I sought him whom my soul loveth: I sought him, but I found",
+          "tokens": [
+            {
+              "text": "By night",
+              "strongsNumbers": [
+                "H3915"
+              ]
+            },
+            {
+              "text": " on my bed",
+              "strongsNumbers": [
+                "H4904"
+              ]
+            },
+            {
+              "text": " I sought",
+              "strongsNumbers": [
+                "H1245"
+              ]
+            },
+            {
+              "text": " him whom my soul",
+              "strongsNumbers": [
+                "H5315"
+              ]
+            },
+            {
+              "text": " loveth:",
+              "strongsNumbers": [
+                "H157"
+              ]
+            },
+            {
+              "text": " I sought",
+              "strongsNumbers": [
+                "H1245"
+              ]
+            },
+            {
+              "text": " him, but I found"
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "I will rise now, and go about the city in the streets, and in the broad ways I will seek him whom my soul loveth: I sought him, but I found him not."
+          "text": "I will rise now, and go about the city in the streets, and in the broad ways I will seek him whom my soul loveth: I sought him, but I found",
+          "tokens": [
+            {
+              "text": "I will rise",
+              "strongsNumbers": [
+                "H6965"
+              ]
+            },
+            {
+              "text": " now, and go about",
+              "strongsNumbers": [
+                "H5437"
+              ]
+            },
+            {
+              "text": " the city",
+              "strongsNumbers": [
+                "H5892"
+              ]
+            },
+            {
+              "text": " in the streets,",
+              "strongsNumbers": [
+                "H7784"
+              ]
+            },
+            {
+              "text": " and in the broad ways",
+              "strongsNumbers": [
+                "H7339"
+              ]
+            },
+            {
+              "text": " I will seek",
+              "strongsNumbers": [
+                "H1245"
+              ]
+            },
+            {
+              "text": " him whom my soul",
+              "strongsNumbers": [
+                "H5315"
+              ]
+            },
+            {
+              "text": " loveth:",
+              "strongsNumbers": [
+                "H157"
+              ]
+            },
+            {
+              "text": " I sought",
+              "strongsNumbers": [
+                "H1245"
+              ]
+            },
+            {
+              "text": " him, but I found"
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "The watchmen that go about the city found me: [to whom I said], Saw ye him whom my soul loveth?"
+          "text": "The watchmen that go about the city found me: to whom I said, Saw ye him whom my soul loveth?",
+          "tokens": [
+            {
+              "text": "The watchmen",
+              "strongsNumbers": [
+                "H8104"
+              ]
+            },
+            {
+              "text": " that go about",
+              "strongsNumbers": [
+                "H5437"
+              ]
+            },
+            {
+              "text": " the city",
+              "strongsNumbers": [
+                "H5892"
+              ]
+            },
+            {
+              "text": " found",
+              "strongsNumbers": [
+                "H4672"
+              ]
+            },
+            {
+              "text": " me: to whom I said, Saw",
+              "strongsNumbers": [
+                "H7200"
+              ]
+            },
+            {
+              "text": " ye him whom my soul",
+              "strongsNumbers": [
+                "H5315"
+              ]
+            },
+            {
+              "text": " loveth?"
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "[It was] but a little that I passed from them, but I found him whom my soul loveth: I held him, and would not let him go, until I had brought him into my mother's house, and into the chamber of her that conceived me."
+          "text": "It was but a little that I passed from them, but I found him whom my soul loveth: I held him, and would not let him go, until I had brought him into my mother's house, and into the chamber of her that conceived",
+          "tokens": [
+            {
+              "text": "It was but a little",
+              "strongsNumbers": [
+                "H4592"
+              ]
+            },
+            {
+              "text": " that I passed",
+              "strongsNumbers": [
+                "H5674"
+              ]
+            },
+            {
+              "text": " from them, but I found",
+              "strongsNumbers": [
+                "H4672"
+              ]
+            },
+            {
+              "text": " him whom my soul",
+              "strongsNumbers": [
+                "H5315"
+              ]
+            },
+            {
+              "text": " loveth:",
+              "strongsNumbers": [
+                "H157"
+              ]
+            },
+            {
+              "text": " I held",
+              "strongsNumbers": [
+                "H270"
+              ]
+            },
+            {
+              "text": " him, and would not let him go,",
+              "strongsNumbers": [
+                "H7503"
+              ]
+            },
+            {
+              "text": " until I had brought",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " him into my mother's",
+              "strongsNumbers": [
+                "H517"
+              ]
+            },
+            {
+              "text": " house,",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " and into the chamber",
+              "strongsNumbers": [
+                "H2315"
+              ]
+            },
+            {
+              "text": " of her that conceived"
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "I charge you, O ye daughters of Jerusalem, by the roes, and by the hinds of the field, that ye stir not up, nor awake [my] love, till he please."
+          "text": "I charge you, O ye daughters of Jerusalem, by the roes, and by the hinds of the field, that ye stir not up, nor awake my love, till he please.",
+          "tokens": [
+            {
+              "text": "I charge",
+              "strongsNumbers": [
+                "H7650"
+              ]
+            },
+            {
+              "text": " you, O ye daughters",
+              "strongsNumbers": [
+                "H1323"
+              ]
+            },
+            {
+              "text": " of Jerusalem,",
+              "strongsNumbers": [
+                "H3389"
+              ]
+            },
+            {
+              "text": " by the roes,",
+              "strongsNumbers": [
+                "H6643"
+              ]
+            },
+            {
+              "text": " and",
+              "strongsNumbers": [
+                "H176"
+              ]
+            },
+            {
+              "text": " by the hinds",
+              "strongsNumbers": [
+                "H355"
+              ]
+            },
+            {
+              "text": " of the field,",
+              "strongsNumbers": [
+                "H7704"
+              ]
+            },
+            {
+              "text": " that ye stir not up,",
+              "strongsNumbers": [
+                "H5782"
+              ]
+            },
+            {
+              "text": " nor awake",
+              "strongsNumbers": [
+                "H5782"
+              ]
+            },
+            {
+              "text": " my love,",
+              "strongsNumbers": [
+                "H160"
+              ]
+            },
+            {
+              "text": " till he please."
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "Who [is] this that cometh out of the wilderness like pillars of smoke, perfumed with myrrh and frankincense, with all powders of the merchant?"
+          "text": "Who is this that cometh out of the wilderness like pillars of smoke, perfumed with myrrh and frankincense, with all powders of the merchant?",
+          "tokens": [
+            {
+              "text": "Who is this that cometh",
+              "strongsNumbers": [
+                "H5927"
+              ]
+            },
+            {
+              "text": " out of the wilderness",
+              "strongsNumbers": [
+                "H4057"
+              ]
+            },
+            {
+              "text": " like pillars",
+              "strongsNumbers": [
+                "H8490"
+              ]
+            },
+            {
+              "text": " of smoke,",
+              "strongsNumbers": [
+                "H6227"
+              ]
+            },
+            {
+              "text": " perfumed",
+              "strongsNumbers": [
+                "H6999"
+              ]
+            },
+            {
+              "text": " with myrrh",
+              "strongsNumbers": [
+                "H4753"
+              ]
+            },
+            {
+              "text": " and frankincense,",
+              "strongsNumbers": [
+                "H3828"
+              ]
+            },
+            {
+              "text": " with all powders",
+              "strongsNumbers": [
+                "H81"
+              ]
+            },
+            {
+              "text": " of the merchant?"
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "Behold his bed, which [is] Solomon's; threescore valiant men [are] about it, of the valiant of Israel."
+          "text": "Behold his bed, which is Solomon's; threescore valiant men are about it, of the valiant of Israel.",
+          "tokens": [
+            {
+              "text": "Behold his bed,",
+              "strongsNumbers": [
+                "H4296"
+              ]
+            },
+            {
+              "text": " which is Solomon's;",
+              "strongsNumbers": [
+                "H8010"
+              ]
+            },
+            {
+              "text": " threescore",
+              "strongsNumbers": [
+                "H8346"
+              ]
+            },
+            {
+              "text": " valiant",
+              "strongsNumbers": [
+                "H1368"
+              ]
+            },
+            {
+              "text": " men are about",
+              "strongsNumbers": [
+                "H5439"
+              ]
+            },
+            {
+              "text": " it, of the valiant",
+              "strongsNumbers": [
+                "H1368"
+              ]
+            },
+            {
+              "text": " of Israel."
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "They all hold swords, [being] expert in war: every man [hath] his sword upon his thigh because of fear in the night."
+          "text": "They all hold swords, being expert in war: every man hath his sword upon his thigh because of fear in the night.",
+          "tokens": [
+            {
+              "text": "They all hold",
+              "strongsNumbers": [
+                "H270"
+              ]
+            },
+            {
+              "text": " swords,",
+              "strongsNumbers": [
+                "H2719"
+              ]
+            },
+            {
+              "text": " being expert",
+              "strongsNumbers": [
+                "H3925"
+              ]
+            },
+            {
+              "text": " in war:",
+              "strongsNumbers": [
+                "H4421"
+              ]
+            },
+            {
+              "text": " every man",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " hath his sword",
+              "strongsNumbers": [
+                "H2719"
+              ]
+            },
+            {
+              "text": " upon his thigh",
+              "strongsNumbers": [
+                "H3409"
+              ]
+            },
+            {
+              "text": " because of fear",
+              "strongsNumbers": [
+                "H6343"
+              ]
+            },
+            {
+              "text": " in the night."
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "King Solomon made himself a chariot of the wood of Lebanon."
+          "text": "King Solomon made himself a chariot of the wood of Lebanon.",
+          "tokens": [
+            {
+              "text": "King",
+              "strongsNumbers": [
+                "H4428"
+              ]
+            },
+            {
+              "text": " Solomon",
+              "strongsNumbers": [
+                "H8010"
+              ]
+            },
+            {
+              "text": " made",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " himself a chariot",
+              "strongsNumbers": [
+                "H668"
+              ]
+            },
+            {
+              "text": " of the wood",
+              "strongsNumbers": [
+                "H6086"
+              ]
+            },
+            {
+              "text": " of Lebanon."
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "He made the pillars thereof [of] silver, the bottom thereof [of] gold, the covering of it [of] purple, the midst thereof being paved [with] love, for the daughters of Jerusalem."
+          "text": "He made the pillars thereof of silver, the bottom thereof of gold, the covering of it of purple, the midst thereof being paved with love, for the daughters of Jerusalem.",
+          "tokens": [
+            {
+              "text": "He made",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " the pillars",
+              "strongsNumbers": [
+                "H5982"
+              ]
+            },
+            {
+              "text": " thereof of silver,",
+              "strongsNumbers": [
+                "H3701"
+              ]
+            },
+            {
+              "text": " the bottom",
+              "strongsNumbers": [
+                "H7507"
+              ]
+            },
+            {
+              "text": " thereof of gold,",
+              "strongsNumbers": [
+                "H2091"
+              ]
+            },
+            {
+              "text": " the covering",
+              "strongsNumbers": [
+                "H4817"
+              ]
+            },
+            {
+              "text": " of it of purple,",
+              "strongsNumbers": [
+                "H713"
+              ]
+            },
+            {
+              "text": " the midst",
+              "strongsNumbers": [
+                "H8432"
+              ]
+            },
+            {
+              "text": " thereof being paved",
+              "strongsNumbers": [
+                "H7528"
+              ]
+            },
+            {
+              "text": " with love,",
+              "strongsNumbers": [
+                "H160"
+              ]
+            },
+            {
+              "text": " for the daughters",
+              "strongsNumbers": [
+                "H1323"
+              ]
+            },
+            {
+              "text": " of Jerusalem."
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "Go forth, O ye daughters of Zion, and behold king Solomon with the crown wherewith his mother crowned him in the day of his espousals, and in the day of the gladness of his heart."
+          "text": "Go forth, O ye daughters of Zion, and behold king Solomon with the crown wherewith his mother crowned him in the day of his espousals, and in the day of the gladness of his heart.",
+          "tokens": [
+            {
+              "text": "Go forth,",
+              "strongsNumbers": [
+                "H3318"
+              ]
+            },
+            {
+              "text": " O ye daughters",
+              "strongsNumbers": [
+                "H1323"
+              ]
+            },
+            {
+              "text": " of Zion,",
+              "strongsNumbers": [
+                "H6726"
+              ]
+            },
+            {
+              "text": " and behold",
+              "strongsNumbers": [
+                "H7200"
+              ]
+            },
+            {
+              "text": " king",
+              "strongsNumbers": [
+                "H4428"
+              ]
+            },
+            {
+              "text": " Solomon",
+              "strongsNumbers": [
+                "H8010"
+              ]
+            },
+            {
+              "text": " with the crown",
+              "strongsNumbers": [
+                "H5850"
+              ]
+            },
+            {
+              "text": " wherewith his mother",
+              "strongsNumbers": [
+                "H517"
+              ]
+            },
+            {
+              "text": " crowned",
+              "strongsNumbers": [
+                "H5849"
+              ]
+            },
+            {
+              "text": " him in the day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " of his espousals,",
+              "strongsNumbers": [
+                "H2861"
+              ]
+            },
+            {
+              "text": " and in the day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " of the gladness",
+              "strongsNumbers": [
+                "H8057"
+              ]
+            },
+            {
+              "text": " of his heart."
+            }
+          ]
         }
       ]
     },
@@ -212,67 +2286,951 @@
       "verses": [
         {
           "number": 1,
-          "text": "Behold, thou [art] fair, my love; behold, thou [art] fair; thou [hast] doves' eyes within thy locks: thy hair [is] as a flock of goats, that appear from mount Gilead."
+          "text": "Behold, thou art fair, my love; behold, thou art fair; thou hast doves' eyes within thy locks: thy hair is as a flock of goats, that appear from mount Gilead.",
+          "tokens": [
+            {
+              "text": "Behold, thou art fair,",
+              "strongsNumbers": [
+                "H3303"
+              ]
+            },
+            {
+              "text": " my love;",
+              "strongsNumbers": [
+                "H7474"
+              ]
+            },
+            {
+              "text": " behold, thou art fair;",
+              "strongsNumbers": [
+                "H3303"
+              ]
+            },
+            {
+              "text": " thou hast doves'",
+              "strongsNumbers": [
+                "H3123"
+              ]
+            },
+            {
+              "text": " eyes",
+              "strongsNumbers": [
+                "H5869"
+              ]
+            },
+            {
+              "text": " within",
+              "strongsNumbers": [
+                "H1157"
+              ]
+            },
+            {
+              "text": " thy locks:",
+              "strongsNumbers": [
+                "H6777"
+              ]
+            },
+            {
+              "text": " thy hair",
+              "strongsNumbers": [
+                "H8181"
+              ]
+            },
+            {
+              "text": " is as a flock",
+              "strongsNumbers": [
+                "H5739"
+              ]
+            },
+            {
+              "text": " of goats,",
+              "strongsNumbers": [
+                "H5795"
+              ]
+            },
+            {
+              "text": " that appear",
+              "strongsNumbers": [
+                "H1570"
+              ]
+            },
+            {
+              "text": " from mount",
+              "strongsNumbers": [
+                "H2022"
+              ]
+            },
+            {
+              "text": " Gilead."
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "Thy teeth [are] like a flock [of sheep that are even] shorn, which came up from the washing; whereof every one bear twins, and none [is] barren among them."
+          "text": "Thy teeth are like a flock of sheep that are even shorn, which came up from the washing; whereof every one bear twins, and none is barren",
+          "tokens": [
+            {
+              "text": "Thy teeth",
+              "strongsNumbers": [
+                "H8127"
+              ]
+            },
+            {
+              "text": " are like a flock",
+              "strongsNumbers": [
+                "H5739"
+              ]
+            },
+            {
+              "text": " of sheep that are even shorn,",
+              "strongsNumbers": [
+                "H7094"
+              ]
+            },
+            {
+              "text": " which came up",
+              "strongsNumbers": [
+                "H5927"
+              ]
+            },
+            {
+              "text": " from the washing;",
+              "strongsNumbers": [
+                "H7367"
+              ]
+            },
+            {
+              "text": " whereof every one bear twins,",
+              "strongsNumbers": [
+                "H8382"
+              ]
+            },
+            {
+              "text": " and none is barren"
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "Thy lips [are] like a thread of scarlet, and thy speech [is] comely: thy temples [are] like a piece of a pomegranate within thy locks."
+          "text": "Thy lips are like a thread of scarlet, and thy speech is comely: thy temples are like a piece of a pomegranate within thy locks.",
+          "tokens": [
+            {
+              "text": "Thy lips",
+              "strongsNumbers": [
+                "H8193"
+              ]
+            },
+            {
+              "text": " are like a thread",
+              "strongsNumbers": [
+                "H2339"
+              ]
+            },
+            {
+              "text": " of scarlet,",
+              "strongsNumbers": [
+                "H8144"
+              ]
+            },
+            {
+              "text": " and thy speech",
+              "strongsNumbers": [
+                "H4057"
+              ]
+            },
+            {
+              "text": " is comely:",
+              "strongsNumbers": [
+                "H5000"
+              ]
+            },
+            {
+              "text": " thy temples",
+              "strongsNumbers": [
+                "H7541"
+              ]
+            },
+            {
+              "text": " are like a piece",
+              "strongsNumbers": [
+                "H6400"
+              ]
+            },
+            {
+              "text": " of a pomegranate",
+              "strongsNumbers": [
+                "H7416"
+              ]
+            },
+            {
+              "text": " within",
+              "strongsNumbers": [
+                "H1157"
+              ]
+            },
+            {
+              "text": " thy locks."
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "Thy neck [is] like the tower of David builded for an armoury, whereon there hang a thousand bucklers, all shields of mighty men."
+          "text": "Thy neck is like the tower of David builded for an armoury, whereon there hang a thousand bucklers, all shields of mighty men.",
+          "tokens": [
+            {
+              "text": "Thy neck",
+              "strongsNumbers": [
+                "H6677"
+              ]
+            },
+            {
+              "text": " is like the tower",
+              "strongsNumbers": [
+                "H4026"
+              ]
+            },
+            {
+              "text": " of David",
+              "strongsNumbers": [
+                "H1732"
+              ]
+            },
+            {
+              "text": " builded",
+              "strongsNumbers": [
+                "H1129"
+              ]
+            },
+            {
+              "text": " for an armoury,",
+              "strongsNumbers": [
+                "H8530"
+              ]
+            },
+            {
+              "text": " whereon there hang",
+              "strongsNumbers": [
+                "H8518"
+              ]
+            },
+            {
+              "text": " a thousand",
+              "strongsNumbers": [
+                "H505"
+              ]
+            },
+            {
+              "text": " bucklers,",
+              "strongsNumbers": [
+                "H4043"
+              ]
+            },
+            {
+              "text": " all shields",
+              "strongsNumbers": [
+                "H7982"
+              ]
+            },
+            {
+              "text": " of mighty men."
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "Thy two breasts [are] like two young roes that are twins, which feed among the lilies."
+          "text": "Thy two breasts are like two young roes that are twins, which feed among the lilies.",
+          "tokens": [
+            {
+              "text": "Thy two",
+              "strongsNumbers": [
+                "H8147"
+              ]
+            },
+            {
+              "text": " breasts",
+              "strongsNumbers": [
+                "H7699"
+              ]
+            },
+            {
+              "text": " are like two",
+              "strongsNumbers": [
+                "H8147"
+              ]
+            },
+            {
+              "text": " young",
+              "strongsNumbers": [
+                "H6082"
+              ]
+            },
+            {
+              "text": " roes",
+              "strongsNumbers": [
+                "H6646"
+              ]
+            },
+            {
+              "text": " that are twins,",
+              "strongsNumbers": [
+                "H8380"
+              ]
+            },
+            {
+              "text": " which feed",
+              "strongsNumbers": [
+                "H7462"
+              ]
+            },
+            {
+              "text": " among the lilies."
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "Until the day break, and the shadows flee away, I will get me to the mountain of myrrh, and to the hill of frankincense."
+          "text": "Until the day break, and the shadows flee away, I will get me to the mountain of myrrh, and to the hill of frankincense.",
+          "tokens": [
+            {
+              "text": "Until the day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " break,",
+              "strongsNumbers": [
+                "H6315"
+              ]
+            },
+            {
+              "text": " and the shadows",
+              "strongsNumbers": [
+                "H6752"
+              ]
+            },
+            {
+              "text": " flee away,",
+              "strongsNumbers": [
+                "H5127"
+              ]
+            },
+            {
+              "text": " I will get",
+              "strongsNumbers": [
+                "H3212"
+              ]
+            },
+            {
+              "text": " me to the mountain",
+              "strongsNumbers": [
+                "H2022"
+              ]
+            },
+            {
+              "text": " of myrrh,",
+              "strongsNumbers": [
+                "H4753"
+              ]
+            },
+            {
+              "text": " and to the hill",
+              "strongsNumbers": [
+                "H1389"
+              ]
+            },
+            {
+              "text": " of frankincense."
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "Thou [art] all fair, my love; [there is] no spot in thee."
+          "text": "Thou art all fair, my love; there is no spot",
+          "tokens": [
+            {
+              "text": "Thou art all fair,",
+              "strongsNumbers": [
+                "H3303"
+              ]
+            },
+            {
+              "text": " my love;",
+              "strongsNumbers": [
+                "H7474"
+              ]
+            },
+            {
+              "text": " there is no spot"
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "Come with me from Lebanon, [my] spouse, with me from Lebanon: look from the top of Amana, from the top of Shenir and Hermon, from the lions' dens, from the mountains of the leopards."
+          "text": "Come with me from Lebanon, my spouse, with me from Lebanon: look from the top of Amana, from the top of Shenir and Hermon, from the lions' dens, from the mountains of the leopards.",
+          "tokens": [
+            {
+              "text": "Come",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " with me from Lebanon,",
+              "strongsNumbers": [
+                "H3844"
+              ]
+            },
+            {
+              "text": " my spouse,",
+              "strongsNumbers": [
+                "H3618"
+              ]
+            },
+            {
+              "text": " with me from Lebanon:",
+              "strongsNumbers": [
+                "H3844"
+              ]
+            },
+            {
+              "text": " look",
+              "strongsNumbers": [
+                "H7789"
+              ]
+            },
+            {
+              "text": " from the top",
+              "strongsNumbers": [
+                "H7218"
+              ]
+            },
+            {
+              "text": " of Amana,",
+              "strongsNumbers": [
+                "H549"
+              ]
+            },
+            {
+              "text": " from the top",
+              "strongsNumbers": [
+                "H7218"
+              ]
+            },
+            {
+              "text": " of Shenir",
+              "strongsNumbers": [
+                "H8149"
+              ]
+            },
+            {
+              "text": " and Hermon,",
+              "strongsNumbers": [
+                "H2768"
+              ]
+            },
+            {
+              "text": " from the lions'",
+              "strongsNumbers": [
+                "H738"
+              ]
+            },
+            {
+              "text": " dens,",
+              "strongsNumbers": [
+                "H4585"
+              ]
+            },
+            {
+              "text": " from the mountains",
+              "strongsNumbers": [
+                "H2042"
+              ]
+            },
+            {
+              "text": " of the leopards."
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "Thou hast ravished my heart, my sister, [my] spouse; thou hast ravished my heart with one of thine eyes, with one chain of thy neck."
+          "text": "Thou hast ravished my heart, my sister, my spouse; thou hast ravished my heart with one of thine eyes, with one chain of thy neck.",
+          "tokens": [
+            {
+              "text": "Thou hast ravished my heart,",
+              "strongsNumbers": [
+                "H3823"
+              ]
+            },
+            {
+              "text": " my sister,",
+              "strongsNumbers": [
+                "H269"
+              ]
+            },
+            {
+              "text": " my spouse;",
+              "strongsNumbers": [
+                "H3618"
+              ]
+            },
+            {
+              "text": " thou hast ravished my heart",
+              "strongsNumbers": [
+                "H3823"
+              ]
+            },
+            {
+              "text": " with one",
+              "strongsNumbers": [
+                "H259"
+              ]
+            },
+            {
+              "text": " of thine eyes,",
+              "strongsNumbers": [
+                "H5869"
+              ]
+            },
+            {
+              "text": " with one",
+              "strongsNumbers": [
+                "H259"
+              ]
+            },
+            {
+              "text": " chain",
+              "strongsNumbers": [
+                "H6060"
+              ]
+            },
+            {
+              "text": " of thy neck."
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "How fair is thy love, my sister, [my] spouse! how much better is thy love than wine! and the smell of thine ointments than all spices!"
+          "text": "How fair is thy love, my sister, my spouse! how much better is thy love than wine! and the smell of thine ointments than all spices!",
+          "tokens": [
+            {
+              "text": "How fair",
+              "strongsNumbers": [
+                "H3302"
+              ]
+            },
+            {
+              "text": " is thy love,",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " my sister,",
+              "strongsNumbers": [
+                "H269"
+              ]
+            },
+            {
+              "text": " my spouse!",
+              "strongsNumbers": [
+                "H3618"
+              ]
+            },
+            {
+              "text": " how much better",
+              "strongsNumbers": [
+                "H2895"
+              ]
+            },
+            {
+              "text": " is thy love",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " than wine!",
+              "strongsNumbers": [
+                "H3196"
+              ]
+            },
+            {
+              "text": " and the smell",
+              "strongsNumbers": [
+                "H7381"
+              ]
+            },
+            {
+              "text": " of thine ointments",
+              "strongsNumbers": [
+                "H8081"
+              ]
+            },
+            {
+              "text": " than all spices!"
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "Thy lips, O [my] spouse, drop [as] the honeycomb: honey and milk [are] under thy tongue; and the smell of thy garments [is] like the smell of Lebanon."
+          "text": "Thy lips, O my spouse, drop as the honeycomb: honey and milk are under thy tongue; and the smell of thy garments is like the smell of Lebanon.",
+          "tokens": [
+            {
+              "text": "Thy lips,",
+              "strongsNumbers": [
+                "H8193"
+              ]
+            },
+            {
+              "text": " O my spouse,",
+              "strongsNumbers": [
+                "H3618"
+              ]
+            },
+            {
+              "text": " drop",
+              "strongsNumbers": [
+                "H5197"
+              ]
+            },
+            {
+              "text": " as the honeycomb:",
+              "strongsNumbers": [
+                "H5317"
+              ]
+            },
+            {
+              "text": " honey",
+              "strongsNumbers": [
+                "H1706"
+              ]
+            },
+            {
+              "text": " and milk",
+              "strongsNumbers": [
+                "H2461"
+              ]
+            },
+            {
+              "text": " are under thy tongue;",
+              "strongsNumbers": [
+                "H3956"
+              ]
+            },
+            {
+              "text": " and the smell",
+              "strongsNumbers": [
+                "H7381"
+              ]
+            },
+            {
+              "text": " of thy garments",
+              "strongsNumbers": [
+                "H8008"
+              ]
+            },
+            {
+              "text": " is like the smell",
+              "strongsNumbers": [
+                "H7381"
+              ]
+            },
+            {
+              "text": " of Lebanon."
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "A garden inclosed [is] my sister, [my] spouse; a spring shut up, a fountain sealed."
+          "text": "A garden inclosed is my sister, my spouse; a spring shut up, a fountain sealed.",
+          "tokens": [
+            {
+              "text": "A garden",
+              "strongsNumbers": [
+                "H1588"
+              ]
+            },
+            {
+              "text": " inclosed",
+              "strongsNumbers": [
+                "H5274"
+              ]
+            },
+            {
+              "text": " is my sister,",
+              "strongsNumbers": [
+                "H269"
+              ]
+            },
+            {
+              "text": " my spouse;",
+              "strongsNumbers": [
+                "H3618"
+              ]
+            },
+            {
+              "text": " a spring",
+              "strongsNumbers": [
+                "H1530"
+              ]
+            },
+            {
+              "text": " shut up,",
+              "strongsNumbers": [
+                "H5274"
+              ]
+            },
+            {
+              "text": " a fountain",
+              "strongsNumbers": [
+                "H4599"
+              ]
+            },
+            {
+              "text": " sealed."
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "Thy plants [are] an orchard of pomegranates, with pleasant fruits; camphire, with spikenard,"
+          "text": "Thy plants are an orchard of pomegranates, with pleasant fruits; camphire, with spikenard,",
+          "tokens": [
+            {
+              "text": "Thy plants",
+              "strongsNumbers": [
+                "H7973"
+              ]
+            },
+            {
+              "text": " are an orchard",
+              "strongsNumbers": [
+                "H6508"
+              ]
+            },
+            {
+              "text": " of pomegranates,",
+              "strongsNumbers": [
+                "H7416"
+              ]
+            },
+            {
+              "text": " with pleasant",
+              "strongsNumbers": [
+                "H4022"
+              ]
+            },
+            {
+              "text": " fruits;",
+              "strongsNumbers": [
+                "H6529"
+              ]
+            },
+            {
+              "text": " camphire,",
+              "strongsNumbers": [
+                "H3724"
+              ]
+            },
+            {
+              "text": " with spikenard,"
+            }
+          ]
         },
         {
           "number": 14,
-          "text": "Spikenard and saffron; calamus and cinnamon, with all trees of frankincense; myrrh and aloes, with all the chief spices:"
+          "text": "Spikenard and saffron; calamus and cinnamon, with all trees of frankincense; myrrh and aloes, with all the chief spices:",
+          "tokens": [
+            {
+              "text": "Spikenard",
+              "strongsNumbers": [
+                "H5373"
+              ]
+            },
+            {
+              "text": " and saffron;",
+              "strongsNumbers": [
+                "H3750"
+              ]
+            },
+            {
+              "text": " calamus",
+              "strongsNumbers": [
+                "H7070"
+              ]
+            },
+            {
+              "text": " and cinnamon,",
+              "strongsNumbers": [
+                "H7076"
+              ]
+            },
+            {
+              "text": " with all trees",
+              "strongsNumbers": [
+                "H6086"
+              ]
+            },
+            {
+              "text": " of frankincense;",
+              "strongsNumbers": [
+                "H3828"
+              ]
+            },
+            {
+              "text": " myrrh",
+              "strongsNumbers": [
+                "H4753"
+              ]
+            },
+            {
+              "text": " and aloes,",
+              "strongsNumbers": [
+                "H174"
+              ]
+            },
+            {
+              "text": " with all the chief",
+              "strongsNumbers": [
+                "H7218"
+              ]
+            },
+            {
+              "text": " spices:"
+            }
+          ]
         },
         {
           "number": 15,
-          "text": "A fountain of gardens, a well of living waters, and streams from Lebanon."
+          "text": "A fountain of gardens, a well of living waters, and streams from Lebanon.",
+          "tokens": [
+            {
+              "text": "A fountain",
+              "strongsNumbers": [
+                "H4599"
+              ]
+            },
+            {
+              "text": " of gardens,",
+              "strongsNumbers": [
+                "H1588"
+              ]
+            },
+            {
+              "text": " a well",
+              "strongsNumbers": [
+                "H875"
+              ]
+            },
+            {
+              "text": " of living",
+              "strongsNumbers": [
+                "H2416"
+              ]
+            },
+            {
+              "text": " waters,",
+              "strongsNumbers": [
+                "H4325"
+              ]
+            },
+            {
+              "text": " and streams",
+              "strongsNumbers": [
+                "H5140"
+              ]
+            },
+            {
+              "text": " from Lebanon."
+            }
+          ]
         },
         {
           "number": 16,
-          "text": "Awake, O north wind; and come, thou south; blow upon my garden, [that] the spices thereof may flow out. Let my beloved come into his garden, and eat his pleasant fruits."
+          "text": "Awake, O north wind; and come, thou south; blow upon my garden, that the spices thereof may flow out. Let my beloved come into his garden, and eat his pleasant fruits.",
+          "tokens": [
+            {
+              "text": "Awake,",
+              "strongsNumbers": [
+                "H5782"
+              ]
+            },
+            {
+              "text": " O north wind;",
+              "strongsNumbers": [
+                "H6828"
+              ]
+            },
+            {
+              "text": " and come,",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " thou south;",
+              "strongsNumbers": [
+                "H8486"
+              ]
+            },
+            {
+              "text": " blow",
+              "strongsNumbers": [
+                "H6315"
+              ]
+            },
+            {
+              "text": " upon my garden,",
+              "strongsNumbers": [
+                "H1588"
+              ]
+            },
+            {
+              "text": " that the spices",
+              "strongsNumbers": [
+                "H1314"
+              ]
+            },
+            {
+              "text": " thereof may flow out.",
+              "strongsNumbers": [
+                "H5140"
+              ]
+            },
+            {
+              "text": " Let my beloved",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " come",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " into his garden,",
+              "strongsNumbers": [
+                "H1588"
+              ]
+            },
+            {
+              "text": " and eat",
+              "strongsNumbers": [
+                "H398"
+              ]
+            },
+            {
+              "text": " his pleasant",
+              "strongsNumbers": [
+                "H4022"
+              ]
+            },
+            {
+              "text": " fruits."
+            }
+          ]
         }
       ]
     },
@@ -282,67 +3240,984 @@
       "verses": [
         {
           "number": 1,
-          "text": "I am come into my garden, my sister, [my] spouse: I have gathered my myrrh with my spice; I have eaten my honeycomb with my honey; I have drunk my wine with my milk: eat, O friends; drink, yea, drink abundantly, O beloved."
+          "text": "I am come into my garden, my sister, my spouse: I have gathered my myrrh with my spice; I have eaten my honeycomb with my honey; I have drunk my wine with my milk: eat, O friends; drink, yea, drink abundantly, O beloved.",
+          "tokens": [
+            {
+              "text": "I am come",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " into my garden,",
+              "strongsNumbers": [
+                "H1588"
+              ]
+            },
+            {
+              "text": " my sister,",
+              "strongsNumbers": [
+                "H269"
+              ]
+            },
+            {
+              "text": " my spouse:",
+              "strongsNumbers": [
+                "H3618"
+              ]
+            },
+            {
+              "text": " I have gathered",
+              "strongsNumbers": [
+                "H717"
+              ]
+            },
+            {
+              "text": " my myrrh",
+              "strongsNumbers": [
+                "H4753"
+              ]
+            },
+            {
+              "text": " with my spice;",
+              "strongsNumbers": [
+                "H1313"
+              ]
+            },
+            {
+              "text": " I have eaten",
+              "strongsNumbers": [
+                "H398"
+              ]
+            },
+            {
+              "text": " my honeycomb",
+              "strongsNumbers": [
+                "H3293"
+              ]
+            },
+            {
+              "text": " with my honey;",
+              "strongsNumbers": [
+                "H1706"
+              ]
+            },
+            {
+              "text": " I have drunk",
+              "strongsNumbers": [
+                "H8354"
+              ]
+            },
+            {
+              "text": " my wine",
+              "strongsNumbers": [
+                "H3196"
+              ]
+            },
+            {
+              "text": " with my milk:",
+              "strongsNumbers": [
+                "H2461"
+              ]
+            },
+            {
+              "text": " eat,",
+              "strongsNumbers": [
+                "H398"
+              ]
+            },
+            {
+              "text": " O friends;",
+              "strongsNumbers": [
+                "H7453"
+              ]
+            },
+            {
+              "text": " drink,",
+              "strongsNumbers": [
+                "H8354"
+              ]
+            },
+            {
+              "text": " yea, drink abundantly,",
+              "strongsNumbers": [
+                "H7937"
+              ]
+            },
+            {
+              "text": " O beloved."
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "I sleep, but my heart waketh: [it is] the voice of my beloved that knocketh, [saying], Open to me, my sister, my love, my dove, my undefiled: for my head is filled with dew, [and] my locks with the drops of the night."
+          "text": "I sleep, but my heart waketh: it is the voice of my beloved that knocketh, saying, Open to me, my sister, my love, my dove, my undefiled: for my head is filled with dew, and my locks with the drops of the night.",
+          "tokens": [
+            {
+              "text": "I sleep,",
+              "strongsNumbers": [
+                "H3463"
+              ]
+            },
+            {
+              "text": " but my heart",
+              "strongsNumbers": [
+                "H3820"
+              ]
+            },
+            {
+              "text": " waketh:",
+              "strongsNumbers": [
+                "H5782"
+              ]
+            },
+            {
+              "text": " it is the voice",
+              "strongsNumbers": [
+                "H6963"
+              ]
+            },
+            {
+              "text": " of my beloved",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " that knocketh,",
+              "strongsNumbers": [
+                "H1849"
+              ]
+            },
+            {
+              "text": " saying, Open",
+              "strongsNumbers": [
+                "H6605"
+              ]
+            },
+            {
+              "text": " to me, my sister,",
+              "strongsNumbers": [
+                "H269"
+              ]
+            },
+            {
+              "text": " my love,",
+              "strongsNumbers": [
+                "H7474"
+              ]
+            },
+            {
+              "text": " my dove,",
+              "strongsNumbers": [
+                "H3123"
+              ]
+            },
+            {
+              "text": " my undefiled:",
+              "strongsNumbers": [
+                "H8535"
+              ]
+            },
+            {
+              "text": " for my head",
+              "strongsNumbers": [
+                "H7218"
+              ]
+            },
+            {
+              "text": " is filled",
+              "strongsNumbers": [
+                "H4390"
+              ]
+            },
+            {
+              "text": " with dew,",
+              "strongsNumbers": [
+                "H2919"
+              ]
+            },
+            {
+              "text": " and my locks",
+              "strongsNumbers": [
+                "H6977"
+              ]
+            },
+            {
+              "text": " with the drops",
+              "strongsNumbers": [
+                "H7447"
+              ]
+            },
+            {
+              "text": " of the night."
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "I have put off my coat; how shall I put it on? I have washed my feet; how shall I defile them?"
+          "text": "I have put off my coat; how shall I put it on? I have washed my feet; how shall I defile",
+          "tokens": [
+            {
+              "text": "I have put off",
+              "strongsNumbers": [
+                "H6584"
+              ]
+            },
+            {
+              "text": " my coat;",
+              "strongsNumbers": [
+                "H3801"
+              ]
+            },
+            {
+              "text": " how",
+              "strongsNumbers": [
+                "H349"
+              ]
+            },
+            {
+              "text": " shall I put it on?",
+              "strongsNumbers": [
+                "H3847"
+              ]
+            },
+            {
+              "text": " I have washed",
+              "strongsNumbers": [
+                "H7364"
+              ]
+            },
+            {
+              "text": " my feet;",
+              "strongsNumbers": [
+                "H7272"
+              ]
+            },
+            {
+              "text": " how",
+              "strongsNumbers": [
+                "H349"
+              ]
+            },
+            {
+              "text": " shall I defile"
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "My beloved put in his hand by the hole [of the door], and my bowels were moved for him."
+          "text": "My beloved put in his hand by the hole of the door, and my bowels were moved",
+          "tokens": [
+            {
+              "text": "My beloved",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " put in",
+              "strongsNumbers": [
+                "H7971"
+              ]
+            },
+            {
+              "text": " his hand",
+              "strongsNumbers": [
+                "H3027"
+              ]
+            },
+            {
+              "text": " by",
+              "strongsNumbers": [
+                "H4480"
+              ]
+            },
+            {
+              "text": " the hole",
+              "strongsNumbers": [
+                "H2356"
+              ]
+            },
+            {
+              "text": " of the door, and my bowels",
+              "strongsNumbers": [
+                "H4578"
+              ]
+            },
+            {
+              "text": " were moved"
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "I rose up to open to my beloved; and my hands dropped [with] myrrh, and my fingers [with] sweet smelling myrrh, upon the handles of the lock."
+          "text": "I rose up to open to my beloved; and my hands dropped with myrrh, and my fingers with sweet smelling myrrh, upon the handles of the lock.",
+          "tokens": [
+            {
+              "text": "I rose up",
+              "strongsNumbers": [
+                "H6965"
+              ]
+            },
+            {
+              "text": " to open",
+              "strongsNumbers": [
+                "H6605"
+              ]
+            },
+            {
+              "text": " to my beloved;",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " and my hands",
+              "strongsNumbers": [
+                "H3027"
+              ]
+            },
+            {
+              "text": " dropped",
+              "strongsNumbers": [
+                "H5197"
+              ]
+            },
+            {
+              "text": " with myrrh,",
+              "strongsNumbers": [
+                "H4753"
+              ]
+            },
+            {
+              "text": " and my fingers",
+              "strongsNumbers": [
+                "H676"
+              ]
+            },
+            {
+              "text": " with sweet smelling",
+              "strongsNumbers": [
+                "H5674"
+              ]
+            },
+            {
+              "text": " myrrh,",
+              "strongsNumbers": [
+                "H4753"
+              ]
+            },
+            {
+              "text": " upon the handles",
+              "strongsNumbers": [
+                "H3709"
+              ]
+            },
+            {
+              "text": " of the lock."
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "I opened to my beloved; but my beloved had withdrawn himself, [and] was gone: my soul failed when he spake: I sought him, but I could not find him; I called him, but he gave me no answer."
+          "text": "I opened to my beloved; but my beloved had withdrawn himself, and was gone: my soul failed when he spake: I sought him, but I could not find him; I called him, but he gave me no answer.",
+          "tokens": [
+            {
+              "text": "I opened",
+              "strongsNumbers": [
+                "H6605"
+              ]
+            },
+            {
+              "text": " to my beloved;",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " but my beloved",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " had withdrawn",
+              "strongsNumbers": [
+                "H2559"
+              ]
+            },
+            {
+              "text": " himself, and was gone:",
+              "strongsNumbers": [
+                "H5674"
+              ]
+            },
+            {
+              "text": " my soul",
+              "strongsNumbers": [
+                "H5315"
+              ]
+            },
+            {
+              "text": " failed",
+              "strongsNumbers": [
+                "H3318"
+              ]
+            },
+            {
+              "text": " when he spake:",
+              "strongsNumbers": [
+                "H1696"
+              ]
+            },
+            {
+              "text": " I sought",
+              "strongsNumbers": [
+                "H1245"
+              ]
+            },
+            {
+              "text": " him, but I could not find",
+              "strongsNumbers": [
+                "H4672"
+              ]
+            },
+            {
+              "text": " him; I called",
+              "strongsNumbers": [
+                "H7121"
+              ]
+            },
+            {
+              "text": " him, but he gave me no answer."
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "The watchmen that went about the city found me, they smote me, they wounded me; the keepers of the walls took away my veil from me."
+          "text": "The watchmen that went about the city found me, they smote me, they wounded me; the keepers of the walls took away my veil",
+          "tokens": [
+            {
+              "text": "The watchmen",
+              "strongsNumbers": [
+                "H8104"
+              ]
+            },
+            {
+              "text": " that went about",
+              "strongsNumbers": [
+                "H5437"
+              ]
+            },
+            {
+              "text": " the city",
+              "strongsNumbers": [
+                "H5892"
+              ]
+            },
+            {
+              "text": " found",
+              "strongsNumbers": [
+                "H4672"
+              ]
+            },
+            {
+              "text": " me, they smote",
+              "strongsNumbers": [
+                "H5221"
+              ]
+            },
+            {
+              "text": " me, they wounded",
+              "strongsNumbers": [
+                "H6481"
+              ]
+            },
+            {
+              "text": " me; the keepers",
+              "strongsNumbers": [
+                "H8104"
+              ]
+            },
+            {
+              "text": " of the walls",
+              "strongsNumbers": [
+                "H2346"
+              ]
+            },
+            {
+              "text": " took away",
+              "strongsNumbers": [
+                "H5375"
+              ]
+            },
+            {
+              "text": " my veil"
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "I charge you, O daughters of Jerusalem, if ye find my beloved, that ye tell him, that I [am] sick of love."
+          "text": "I charge you, O daughters of Jerusalem, if ye find my beloved, that ye tell him, that I am sick of love.",
+          "tokens": [
+            {
+              "text": "I charge",
+              "strongsNumbers": [
+                "H7650"
+              ]
+            },
+            {
+              "text": " you, O daughters",
+              "strongsNumbers": [
+                "H1323"
+              ]
+            },
+            {
+              "text": " of Jerusalem,",
+              "strongsNumbers": [
+                "H3389"
+              ]
+            },
+            {
+              "text": " if ye find",
+              "strongsNumbers": [
+                "H4672"
+              ]
+            },
+            {
+              "text": " my beloved,",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " that ye tell",
+              "strongsNumbers": [
+                "H5046"
+              ]
+            },
+            {
+              "text": " him, that I am sick",
+              "strongsNumbers": [
+                "H2470"
+              ]
+            },
+            {
+              "text": " of love."
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "What [is] thy beloved more than [another] beloved, O thou fairest among women? what [is] thy beloved more than [another] beloved, that thou dost so charge us?"
+          "text": "What is thy beloved more than another beloved, O thou fairest among women? what is thy beloved more than another beloved, that thou dost so charge",
+          "tokens": [
+            {
+              "text": "What is thy beloved",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " more than another beloved,",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " O thou fairest",
+              "strongsNumbers": [
+                "H3303"
+              ]
+            },
+            {
+              "text": " among women?",
+              "strongsNumbers": [
+                "H802"
+              ]
+            },
+            {
+              "text": " what is thy beloved",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " more than another beloved,",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " that thou",
+              "strongsNumbers": [
+                "H3602"
+              ]
+            },
+            {
+              "text": " dost so charge"
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "My beloved [is] white and ruddy, the chiefest among ten thousand."
+          "text": "My beloved is white and ruddy, the chiefest among ten thousand.",
+          "tokens": [
+            {
+              "text": "My beloved",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " is white",
+              "strongsNumbers": [
+                "H6703"
+              ]
+            },
+            {
+              "text": " and ruddy,",
+              "strongsNumbers": [
+                "H122"
+              ]
+            },
+            {
+              "text": " the chiefest",
+              "strongsNumbers": [
+                "H1713"
+              ]
+            },
+            {
+              "text": " among ten thousand."
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "His head [is as] the most fine gold, his locks [are] bushy, [and] black as a raven."
+          "text": "His head is as the most fine gold, his locks are bushy, and black as a raven.",
+          "tokens": [
+            {
+              "text": "His head",
+              "strongsNumbers": [
+                "H7218"
+              ]
+            },
+            {
+              "text": " is as the most",
+              "strongsNumbers": [
+                "H3800"
+              ]
+            },
+            {
+              "text": " fine gold,",
+              "strongsNumbers": [
+                "H6337"
+              ]
+            },
+            {
+              "text": " his locks",
+              "strongsNumbers": [
+                "H6977"
+              ]
+            },
+            {
+              "text": " are bushy,",
+              "strongsNumbers": [
+                "H8534"
+              ]
+            },
+            {
+              "text": " and black",
+              "strongsNumbers": [
+                "H7838"
+              ]
+            },
+            {
+              "text": " as a raven."
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "His eyes [are] as [the eyes] of doves by the rivers of waters, washed with milk, [and] fitly set."
+          "text": "His eyes are as the eyes of doves by the rivers of waters, washed with milk, and fitly set.",
+          "tokens": [
+            {
+              "text": "His eyes",
+              "strongsNumbers": [
+                "H5869"
+              ]
+            },
+            {
+              "text": " are as the eyes of doves",
+              "strongsNumbers": [
+                "H3123"
+              ]
+            },
+            {
+              "text": " by the rivers",
+              "strongsNumbers": [
+                "H650"
+              ]
+            },
+            {
+              "text": " of waters,",
+              "strongsNumbers": [
+                "H4325"
+              ]
+            },
+            {
+              "text": " washed",
+              "strongsNumbers": [
+                "H7364"
+              ]
+            },
+            {
+              "text": " with milk,",
+              "strongsNumbers": [
+                "H2461"
+              ]
+            },
+            {
+              "text": " and fitly set.",
+              "strongsNumbers": [
+                "H3427"
+              ]
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "His cheeks [are] as a bed of spices, [as] sweet flowers: his lips [like] lilies, dropping sweet smelling myrrh."
+          "text": "His cheeks are as a bed of spices, as sweet flowers: his lips like lilies, dropping sweet smelling myrrh.",
+          "tokens": [
+            {
+              "text": "His cheeks",
+              "strongsNumbers": [
+                "H3895"
+              ]
+            },
+            {
+              "text": " are as a bed",
+              "strongsNumbers": [
+                "H6170"
+              ]
+            },
+            {
+              "text": " of spices,",
+              "strongsNumbers": [
+                "H1314"
+              ]
+            },
+            {
+              "text": " as sweet",
+              "strongsNumbers": [
+                "H4840"
+              ]
+            },
+            {
+              "text": " flowers:",
+              "strongsNumbers": [
+                "H4026"
+              ]
+            },
+            {
+              "text": " his lips",
+              "strongsNumbers": [
+                "H8193"
+              ]
+            },
+            {
+              "text": " like lilies,",
+              "strongsNumbers": [
+                "H7799"
+              ]
+            },
+            {
+              "text": " dropping",
+              "strongsNumbers": [
+                "H5197"
+              ]
+            },
+            {
+              "text": " sweet smelling",
+              "strongsNumbers": [
+                "H5674"
+              ]
+            },
+            {
+              "text": " myrrh."
+            }
+          ]
         },
         {
           "number": 14,
-          "text": "His hands [are as] gold rings set with the beryl: his belly [is as] bright ivory overlaid [with] sapphires."
+          "text": "His hands are as gold rings set with the beryl: his belly is as bright ivory overlaid with sapphires.",
+          "tokens": [
+            {
+              "text": "His hands",
+              "strongsNumbers": [
+                "H3027"
+              ]
+            },
+            {
+              "text": " are as gold",
+              "strongsNumbers": [
+                "H2091"
+              ]
+            },
+            {
+              "text": " rings",
+              "strongsNumbers": [
+                "H1550"
+              ]
+            },
+            {
+              "text": " set",
+              "strongsNumbers": [
+                "H4390"
+              ]
+            },
+            {
+              "text": " with the beryl:",
+              "strongsNumbers": [
+                "H8658"
+              ]
+            },
+            {
+              "text": " his belly",
+              "strongsNumbers": [
+                "H4578"
+              ]
+            },
+            {
+              "text": " is as bright",
+              "strongsNumbers": [
+                "H6247"
+              ]
+            },
+            {
+              "text": " ivory",
+              "strongsNumbers": [
+                "H8127"
+              ]
+            },
+            {
+              "text": " overlaid",
+              "strongsNumbers": [
+                "H5968"
+              ]
+            },
+            {
+              "text": " with sapphires."
+            }
+          ]
         },
         {
           "number": 15,
-          "text": "His legs [are as] pillars of marble, set upon sockets of fine gold: his countenance [is] as Lebanon, excellent as the cedars."
+          "text": "His legs are as pillars of marble, set upon sockets of fine gold: his countenance is as Lebanon, excellent as the cedars.",
+          "tokens": [
+            {
+              "text": "His legs",
+              "strongsNumbers": [
+                "H7785"
+              ]
+            },
+            {
+              "text": " are as pillars",
+              "strongsNumbers": [
+                "H5982"
+              ]
+            },
+            {
+              "text": " of marble,",
+              "strongsNumbers": [
+                "H8336"
+              ]
+            },
+            {
+              "text": " set",
+              "strongsNumbers": [
+                "H3245"
+              ]
+            },
+            {
+              "text": " upon sockets",
+              "strongsNumbers": [
+                "H134"
+              ]
+            },
+            {
+              "text": " of fine gold:",
+              "strongsNumbers": [
+                "H6337"
+              ]
+            },
+            {
+              "text": " his countenance",
+              "strongsNumbers": [
+                "H4758"
+              ]
+            },
+            {
+              "text": " is as Lebanon,",
+              "strongsNumbers": [
+                "H3844"
+              ]
+            },
+            {
+              "text": " excellent",
+              "strongsNumbers": [
+                "H977"
+              ]
+            },
+            {
+              "text": " as the cedars."
+            }
+          ]
         },
         {
           "number": 16,
-          "text": "His mouth [is] most sweet: yea, he [is] altogether lovely. This [is] my beloved, and this [is] my friend, O daughters of Jerusalem."
+          "text": "His mouth is most sweet: yea, he is altogether lovely. This is my beloved, and this is my friend, O daughters of Jerusalem.",
+          "tokens": [
+            {
+              "text": "His mouth",
+              "strongsNumbers": [
+                "H2441"
+              ]
+            },
+            {
+              "text": " is most sweet:",
+              "strongsNumbers": [
+                "H4477"
+              ]
+            },
+            {
+              "text": " yea, he is altogether lovely.",
+              "strongsNumbers": [
+                "H4261"
+              ]
+            },
+            {
+              "text": " This is my beloved,",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " and this is my friend,",
+              "strongsNumbers": [
+                "H7453"
+              ]
+            },
+            {
+              "text": " O daughters",
+              "strongsNumbers": [
+                "H1323"
+              ]
+            },
+            {
+              "text": " of Jerusalem."
+            }
+          ]
         }
       ]
     },
@@ -352,55 +4227,648 @@
       "verses": [
         {
           "number": 1,
-          "text": "Whither is thy beloved gone, O thou fairest among women? whither is thy beloved turned aside? that we may seek him with thee."
+          "text": "Whither is thy beloved gone, O thou fairest among women? whither is thy beloved turned aside? that we may seek",
+          "tokens": [
+            {
+              "text": "Whither is thy beloved",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " gone,",
+              "strongsNumbers": [
+                "H1980"
+              ]
+            },
+            {
+              "text": " O thou fairest",
+              "strongsNumbers": [
+                "H3303"
+              ]
+            },
+            {
+              "text": " among women?",
+              "strongsNumbers": [
+                "H802"
+              ]
+            },
+            {
+              "text": " whither is thy beloved",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " turned aside?",
+              "strongsNumbers": [
+                "H6437"
+              ]
+            },
+            {
+              "text": " that we may seek"
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "My beloved is gone down into his garden, to the beds of spices, to feed in the gardens, and to gather lilies."
+          "text": "My beloved is gone down into his garden, to the beds of spices, to feed in the gardens, and to gather lilies.",
+          "tokens": [
+            {
+              "text": "My beloved",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " is gone down",
+              "strongsNumbers": [
+                "H3381"
+              ]
+            },
+            {
+              "text": " into his garden,",
+              "strongsNumbers": [
+                "H1588"
+              ]
+            },
+            {
+              "text": " to the beds",
+              "strongsNumbers": [
+                "H6170"
+              ]
+            },
+            {
+              "text": " of spices,",
+              "strongsNumbers": [
+                "H1314"
+              ]
+            },
+            {
+              "text": " to feed",
+              "strongsNumbers": [
+                "H7462"
+              ]
+            },
+            {
+              "text": " in the gardens,",
+              "strongsNumbers": [
+                "H1588"
+              ]
+            },
+            {
+              "text": " and to gather",
+              "strongsNumbers": [
+                "H3950"
+              ]
+            },
+            {
+              "text": " lilies."
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "I [am] my beloved's, and my beloved [is] mine: he feedeth among the lilies."
+          "text": "I am my beloved's, and my beloved is mine: he feedeth among the lilies.",
+          "tokens": [
+            {
+              "text": "I am my beloved's,",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " and my beloved",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " is mine: he feedeth",
+              "strongsNumbers": [
+                "H7462"
+              ]
+            },
+            {
+              "text": " among the lilies."
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "Thou [art] beautiful, O my love, as Tirzah, comely as Jerusalem, terrible as [an army] with banners."
+          "text": "Thou art beautiful, O my love, as Tirzah, comely as Jerusalem, terrible as an army with banners.",
+          "tokens": [
+            {
+              "text": "Thou art beautiful,",
+              "strongsNumbers": [
+                "H3303"
+              ]
+            },
+            {
+              "text": " O my love,",
+              "strongsNumbers": [
+                "H7474"
+              ]
+            },
+            {
+              "text": " as Tirzah,",
+              "strongsNumbers": [
+                "H8656"
+              ]
+            },
+            {
+              "text": " comely",
+              "strongsNumbers": [
+                "H5000"
+              ]
+            },
+            {
+              "text": " as Jerusalem,",
+              "strongsNumbers": [
+                "H3389"
+              ]
+            },
+            {
+              "text": " terrible",
+              "strongsNumbers": [
+                "H366"
+              ]
+            },
+            {
+              "text": " as an army with banners."
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "Turn away thine eyes from me, for they have overcome me: thy hair [is] as a flock of goats that appear from Gilead."
+          "text": "Turn away thine eyes from me, for they have overcome me: thy hair is as a flock of goats that appear from Gilead.",
+          "tokens": [
+            {
+              "text": "Turn away",
+              "strongsNumbers": [
+                "H5437"
+              ]
+            },
+            {
+              "text": " thine eyes",
+              "strongsNumbers": [
+                "H5869"
+              ]
+            },
+            {
+              "text": " from me, for they",
+              "strongsNumbers": [
+                "H1992"
+              ]
+            },
+            {
+              "text": " have overcome",
+              "strongsNumbers": [
+                "H7292"
+              ]
+            },
+            {
+              "text": " me: thy hair",
+              "strongsNumbers": [
+                "H8181"
+              ]
+            },
+            {
+              "text": " is as a flock",
+              "strongsNumbers": [
+                "H5739"
+              ]
+            },
+            {
+              "text": " of goats",
+              "strongsNumbers": [
+                "H5795"
+              ]
+            },
+            {
+              "text": " that appear",
+              "strongsNumbers": [
+                "H1570"
+              ]
+            },
+            {
+              "text": " from Gilead."
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "Thy teeth [are] as a flock of sheep which go up from the washing, whereof every one beareth twins, and [there is] not one barren among them."
+          "text": "Thy teeth are as a flock of sheep which go up from the washing, whereof every one beareth twins, and there is not one barren",
+          "tokens": [
+            {
+              "text": "Thy teeth",
+              "strongsNumbers": [
+                "H8127"
+              ]
+            },
+            {
+              "text": " are as a flock",
+              "strongsNumbers": [
+                "H5739"
+              ]
+            },
+            {
+              "text": " of sheep",
+              "strongsNumbers": [
+                "H7353"
+              ]
+            },
+            {
+              "text": " which go up",
+              "strongsNumbers": [
+                "H5927"
+              ]
+            },
+            {
+              "text": " from the washing,",
+              "strongsNumbers": [
+                "H7367"
+              ]
+            },
+            {
+              "text": " whereof every one beareth twins,",
+              "strongsNumbers": [
+                "H8382"
+              ]
+            },
+            {
+              "text": " and there is not one barren"
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "As a piece of a pomegranate [are] thy temples within thy locks."
+          "text": "As a piece of a pomegranate are thy temples within thy locks.",
+          "tokens": [
+            {
+              "text": "As a piece",
+              "strongsNumbers": [
+                "H6400"
+              ]
+            },
+            {
+              "text": " of a pomegranate",
+              "strongsNumbers": [
+                "H7416"
+              ]
+            },
+            {
+              "text": " are thy temples",
+              "strongsNumbers": [
+                "H7541"
+              ]
+            },
+            {
+              "text": " within",
+              "strongsNumbers": [
+                "H1157"
+              ]
+            },
+            {
+              "text": " thy locks."
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "There are threescore queens, and fourscore concubines, and virgins without number."
+          "text": "There are threescore queens, and fourscore concubines, and virgins without number.",
+          "tokens": [
+            {
+              "text": "There are threescore",
+              "strongsNumbers": [
+                "H8346"
+              ]
+            },
+            {
+              "text": " queens,",
+              "strongsNumbers": [
+                "H4436"
+              ]
+            },
+            {
+              "text": " and fourscore",
+              "strongsNumbers": [
+                "H8084"
+              ]
+            },
+            {
+              "text": " concubines,",
+              "strongsNumbers": [
+                "H6370"
+              ]
+            },
+            {
+              "text": " and virgins",
+              "strongsNumbers": [
+                "H5959"
+              ]
+            },
+            {
+              "text": " without number."
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "My dove, my undefiled is [but] one; she [is] the [only] one of her mother, she [is] the choice [one] of her that bare her. The daughters saw her, and blessed her; [yea], the queens and the concubines, and they praised her."
+          "text": "My dove, my undefiled is but one; she is the only one of her mother, she is the choice one of her that bare her. The daughters saw her, and blessed her; yea, the queens and the concubines, and they praised",
+          "tokens": [
+            {
+              "text": "My dove,",
+              "strongsNumbers": [
+                "H3123"
+              ]
+            },
+            {
+              "text": " my undefiled",
+              "strongsNumbers": [
+                "H8535"
+              ]
+            },
+            {
+              "text": " is but one;",
+              "strongsNumbers": [
+                "H259"
+              ]
+            },
+            {
+              "text": " she is the only one",
+              "strongsNumbers": [
+                "H259"
+              ]
+            },
+            {
+              "text": " of her mother,",
+              "strongsNumbers": [
+                "H517"
+              ]
+            },
+            {
+              "text": " she is the choice",
+              "strongsNumbers": [
+                "H1249"
+              ]
+            },
+            {
+              "text": " one of her that bare",
+              "strongsNumbers": [
+                "H3205"
+              ]
+            },
+            {
+              "text": " her. The daughters",
+              "strongsNumbers": [
+                "H1323"
+              ]
+            },
+            {
+              "text": " saw",
+              "strongsNumbers": [
+                "H7200"
+              ]
+            },
+            {
+              "text": " her, and blessed",
+              "strongsNumbers": [
+                "H833"
+              ]
+            },
+            {
+              "text": " her; yea, the queens",
+              "strongsNumbers": [
+                "H4436"
+              ]
+            },
+            {
+              "text": " and the concubines,",
+              "strongsNumbers": [
+                "H6370"
+              ]
+            },
+            {
+              "text": " and they praised"
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "Who [is] she [that] looketh forth as the morning, fair as the moon, clear as the sun, [and] terrible as [an army] with banners?"
+          "text": "Who is she that looketh forth as the morning, fair as the moon, clear as the sun, and terrible as an army with banners?",
+          "tokens": [
+            {
+              "text": "Who is she that looketh forth",
+              "strongsNumbers": [
+                "H8259"
+              ]
+            },
+            {
+              "text": " as the morning,",
+              "strongsNumbers": [
+                "H7837"
+              ]
+            },
+            {
+              "text": " fair",
+              "strongsNumbers": [
+                "H3303"
+              ]
+            },
+            {
+              "text": " as the moon,",
+              "strongsNumbers": [
+                "H3842"
+              ]
+            },
+            {
+              "text": " clear",
+              "strongsNumbers": [
+                "H1249"
+              ]
+            },
+            {
+              "text": " as the sun,",
+              "strongsNumbers": [
+                "H2535"
+              ]
+            },
+            {
+              "text": " and terrible",
+              "strongsNumbers": [
+                "H366"
+              ]
+            },
+            {
+              "text": " as an army with banners?"
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "I went down into the garden of nuts to see the fruits of the valley, [and] to see whether the vine flourished, [and] the pomegranates budded."
+          "text": "I went down into the garden of nuts to see the fruits of the valley, and to see whether the vine flourished, and the pomegranates budded.",
+          "tokens": [
+            {
+              "text": "I went down",
+              "strongsNumbers": [
+                "H3381"
+              ]
+            },
+            {
+              "text": " into the garden",
+              "strongsNumbers": [
+                "H1594"
+              ]
+            },
+            {
+              "text": " of nuts",
+              "strongsNumbers": [
+                "H93"
+              ]
+            },
+            {
+              "text": " to see",
+              "strongsNumbers": [
+                "H7200"
+              ]
+            },
+            {
+              "text": " the fruits",
+              "strongsNumbers": [
+                "H3"
+              ]
+            },
+            {
+              "text": " of the valley,",
+              "strongsNumbers": [
+                "H5158"
+              ]
+            },
+            {
+              "text": " and to see",
+              "strongsNumbers": [
+                "H7200"
+              ]
+            },
+            {
+              "text": " whether the vine",
+              "strongsNumbers": [
+                "H1612"
+              ]
+            },
+            {
+              "text": " flourished,",
+              "strongsNumbers": [
+                "H6524"
+              ]
+            },
+            {
+              "text": " and the pomegranates",
+              "strongsNumbers": [
+                "H7416"
+              ]
+            },
+            {
+              "text": " budded."
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "Or ever I was aware, my soul made me [like] the chariots of Amminadib."
+          "text": "Or ever I was aware, my soul made me like the chariots of Amminadib.",
+          "tokens": [
+            {
+              "text": "Or ever I was aware,",
+              "strongsNumbers": [
+                "H3045"
+              ]
+            },
+            {
+              "text": " my soul",
+              "strongsNumbers": [
+                "H5315"
+              ]
+            },
+            {
+              "text": " made",
+              "strongsNumbers": [
+                "H7760"
+              ]
+            },
+            {
+              "text": " me like the chariots",
+              "strongsNumbers": [
+                "H4818"
+              ]
+            },
+            {
+              "text": " of Amminadib."
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "Return, return, O Shulamite; return, return, that we may look upon thee. What will ye see in the Shulamite? As it were the company of two armies."
+          "text": "Return, return, O Shulamite; return, return, that we may look upon thee. What will ye see in the Shulamite? As it were the company of two armies.",
+          "tokens": [
+            {
+              "text": "Return,",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " return,",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " O Shulamite;",
+              "strongsNumbers": [
+                "H7759"
+              ]
+            },
+            {
+              "text": " return,",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " return,",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " that we may look",
+              "strongsNumbers": [
+                "H2372"
+              ]
+            },
+            {
+              "text": " upon thee. What will ye see",
+              "strongsNumbers": [
+                "H2372"
+              ]
+            },
+            {
+              "text": " in the Shulamite?",
+              "strongsNumbers": [
+                "H7759"
+              ]
+            },
+            {
+              "text": " As it were the company",
+              "strongsNumbers": [
+                "H4246"
+              ]
+            },
+            {
+              "text": " of two armies."
+            }
+          ]
         }
       ]
     },
@@ -410,55 +4878,678 @@
       "verses": [
         {
           "number": 1,
-          "text": "How beautiful are thy feet with shoes, O prince's daughter! the joints of thy thighs [are] like jewels, the work of the hands of a cunning workman."
+          "text": "How beautiful are thy feet with shoes, O prince's daughter! the joints of thy thighs are like jewels, the work of the hands of a cunning workman.",
+          "tokens": [
+            {
+              "text": "How beautiful",
+              "strongsNumbers": [
+                "H3302"
+              ]
+            },
+            {
+              "text": " are thy feet",
+              "strongsNumbers": [
+                "H6471"
+              ]
+            },
+            {
+              "text": " with shoes,",
+              "strongsNumbers": [
+                "H5275"
+              ]
+            },
+            {
+              "text": " O prince's",
+              "strongsNumbers": [
+                "H5081"
+              ]
+            },
+            {
+              "text": " daughter!",
+              "strongsNumbers": [
+                "H1323"
+              ]
+            },
+            {
+              "text": " the joints",
+              "strongsNumbers": [
+                "H2542"
+              ]
+            },
+            {
+              "text": " of thy thighs",
+              "strongsNumbers": [
+                "H3409"
+              ]
+            },
+            {
+              "text": " are like jewels,",
+              "strongsNumbers": [
+                "H2481"
+              ]
+            },
+            {
+              "text": " the work",
+              "strongsNumbers": [
+                "H4639"
+              ]
+            },
+            {
+              "text": " of the hands",
+              "strongsNumbers": [
+                "H3027"
+              ]
+            },
+            {
+              "text": " of a cunning workman."
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "Thy navel [is like] a round goblet, [which] wanteth not liquor: thy belly [is like] an heap of wheat set about with lilies."
+          "text": "Thy navel is like a round goblet, which wanteth not liquor: thy belly is like an heap of wheat set about with lilies.",
+          "tokens": [
+            {
+              "text": "Thy navel",
+              "strongsNumbers": [
+                "H8326"
+              ]
+            },
+            {
+              "text": " is like a round",
+              "strongsNumbers": [
+                "H5469"
+              ]
+            },
+            {
+              "text": " goblet,",
+              "strongsNumbers": [
+                "H101"
+              ]
+            },
+            {
+              "text": " which wanteth",
+              "strongsNumbers": [
+                "H2637"
+              ]
+            },
+            {
+              "text": " not liquor:",
+              "strongsNumbers": [
+                "H4197"
+              ]
+            },
+            {
+              "text": " thy belly",
+              "strongsNumbers": [
+                "H990"
+              ]
+            },
+            {
+              "text": " is like an heap",
+              "strongsNumbers": [
+                "H6194"
+              ]
+            },
+            {
+              "text": " of wheat",
+              "strongsNumbers": [
+                "H2406"
+              ]
+            },
+            {
+              "text": " set about",
+              "strongsNumbers": [
+                "H5473"
+              ]
+            },
+            {
+              "text": " with lilies."
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "Thy two breasts [are] like two young roes [that are] twins."
+          "text": "Thy two breasts are like two young roes that are twins.",
+          "tokens": [
+            {
+              "text": "Thy two",
+              "strongsNumbers": [
+                "H8147"
+              ]
+            },
+            {
+              "text": " breasts",
+              "strongsNumbers": [
+                "H7699"
+              ]
+            },
+            {
+              "text": " are like two",
+              "strongsNumbers": [
+                "H8147"
+              ]
+            },
+            {
+              "text": " young",
+              "strongsNumbers": [
+                "H6082"
+              ]
+            },
+            {
+              "text": " roes",
+              "strongsNumbers": [
+                "H6646"
+              ]
+            },
+            {
+              "text": " that are twins."
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "Thy neck [is] as a tower of ivory; thine eyes [like] the fishpools in Heshbon, by the gate of Bath-rabbim: thy nose [is] as the tower of Lebanon which looketh toward Damascus."
+          "text": "Thy neck is as a tower of ivory; thine eyes like the fishpools in Heshbon, by the gate of Bathrabbim: thy nose is as the tower of Lebanon which looketh toward Damascus.",
+          "tokens": [
+            {
+              "text": "Thy neck",
+              "strongsNumbers": [
+                "H6677"
+              ]
+            },
+            {
+              "text": " is as a tower",
+              "strongsNumbers": [
+                "H4026"
+              ]
+            },
+            {
+              "text": " of ivory;",
+              "strongsNumbers": [
+                "H8127"
+              ]
+            },
+            {
+              "text": " thine eyes",
+              "strongsNumbers": [
+                "H5869"
+              ]
+            },
+            {
+              "text": " like the fishpools",
+              "strongsNumbers": [
+                "H1295"
+              ]
+            },
+            {
+              "text": " in Heshbon,",
+              "strongsNumbers": [
+                "H2809"
+              ]
+            },
+            {
+              "text": " by the gate",
+              "strongsNumbers": [
+                "H8179"
+              ]
+            },
+            {
+              "text": " of Bathrabbim:",
+              "strongsNumbers": [
+                "H1337"
+              ]
+            },
+            {
+              "text": " thy nose",
+              "strongsNumbers": [
+                "H639"
+              ]
+            },
+            {
+              "text": " is as the tower",
+              "strongsNumbers": [
+                "H4026"
+              ]
+            },
+            {
+              "text": " of Lebanon",
+              "strongsNumbers": [
+                "H3844"
+              ]
+            },
+            {
+              "text": " which looketh",
+              "strongsNumbers": [
+                "H6822"
+              ]
+            },
+            {
+              "text": " toward",
+              "strongsNumbers": [
+                "H6440"
+              ]
+            },
+            {
+              "text": " Damascus."
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "Thine head upon thee [is] like Carmel, and the hair of thine head like purple; the king [is] held in the galleries."
+          "text": "Thine head upon thee is like Carmel, and the hair of thine head like purple; the king is held in the galleries.",
+          "tokens": [
+            {
+              "text": "Thine head",
+              "strongsNumbers": [
+                "H7218"
+              ]
+            },
+            {
+              "text": " upon thee is like Carmel,",
+              "strongsNumbers": [
+                "H3760"
+              ]
+            },
+            {
+              "text": " and the hair",
+              "strongsNumbers": [
+                "H1803"
+              ]
+            },
+            {
+              "text": " of thine head",
+              "strongsNumbers": [
+                "H7218"
+              ]
+            },
+            {
+              "text": " like purple;",
+              "strongsNumbers": [
+                "H713"
+              ]
+            },
+            {
+              "text": " the king",
+              "strongsNumbers": [
+                "H4428"
+              ]
+            },
+            {
+              "text": " is held",
+              "strongsNumbers": [
+                "H631"
+              ]
+            },
+            {
+              "text": " in the galleries."
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "How fair and how pleasant art thou, O love, for delights!"
+          "text": "How fair and how pleasant art thou, O love, for delights!",
+          "tokens": [
+            {
+              "text": "How fair",
+              "strongsNumbers": [
+                "H3302"
+              ]
+            },
+            {
+              "text": " and how pleasant",
+              "strongsNumbers": [
+                "H5276"
+              ]
+            },
+            {
+              "text": " art thou, O love,",
+              "strongsNumbers": [
+                "H160"
+              ]
+            },
+            {
+              "text": " for delights!"
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "This thy stature is like to a palm tree, and thy breasts to clusters [of grapes]."
+          "text": "This thy stature is like to a palm tree, and thy breasts to clusters",
+          "tokens": [
+            {
+              "text": "This thy stature",
+              "strongsNumbers": [
+                "H6967"
+              ]
+            },
+            {
+              "text": " is like",
+              "strongsNumbers": [
+                "H1819"
+              ]
+            },
+            {
+              "text": " to a palm tree,",
+              "strongsNumbers": [
+                "H8558"
+              ]
+            },
+            {
+              "text": " and thy breasts",
+              "strongsNumbers": [
+                "H7699"
+              ]
+            },
+            {
+              "text": " to clusters"
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "I said, I will go up to the palm tree, I will take hold of the boughs thereof: now also thy breasts shall be as clusters of the vine, and the smell of thy nose like apples;"
+          "text": "I said, I will go up to the palm tree, I will take hold of the boughs thereof: now also thy breasts shall be as clusters of the vine, and the smell of thy nose like apples;",
+          "tokens": [
+            {
+              "text": "I said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " I will go up",
+              "strongsNumbers": [
+                "H5927"
+              ]
+            },
+            {
+              "text": " to the palm tree,",
+              "strongsNumbers": [
+                "H8558"
+              ]
+            },
+            {
+              "text": " I will take hold",
+              "strongsNumbers": [
+                "H270"
+              ]
+            },
+            {
+              "text": " of the boughs",
+              "strongsNumbers": [
+                "H5577"
+              ]
+            },
+            {
+              "text": " thereof: now also thy breasts",
+              "strongsNumbers": [
+                "H7699"
+              ]
+            },
+            {
+              "text": " shall be as clusters",
+              "strongsNumbers": [
+                "H811"
+              ]
+            },
+            {
+              "text": " of the vine,",
+              "strongsNumbers": [
+                "H1612"
+              ]
+            },
+            {
+              "text": " and the smell",
+              "strongsNumbers": [
+                "H7381"
+              ]
+            },
+            {
+              "text": " of thy nose",
+              "strongsNumbers": [
+                "H639"
+              ]
+            },
+            {
+              "text": " like apples;"
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "And the roof of thy mouth like the best wine for my beloved, that goeth [down] sweetly, causing the lips of those that are asleep to speak."
+          "text": "And the roof of thy mouth like the best wine for my beloved, that goeth down sweetly, causing the lips of those that are asleep to speak.",
+          "tokens": [
+            {
+              "text": "And the roof of thy mouth",
+              "strongsNumbers": [
+                "H2441"
+              ]
+            },
+            {
+              "text": " like the best",
+              "strongsNumbers": [
+                "H2896"
+              ]
+            },
+            {
+              "text": " wine",
+              "strongsNumbers": [
+                "H3196"
+              ]
+            },
+            {
+              "text": " for my beloved,",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " that goeth",
+              "strongsNumbers": [
+                "H1980"
+              ]
+            },
+            {
+              "text": " down sweetly,",
+              "strongsNumbers": [
+                "H4339"
+              ]
+            },
+            {
+              "text": " causing the lips",
+              "strongsNumbers": [
+                "H8193"
+              ]
+            },
+            {
+              "text": " of those that are asleep",
+              "strongsNumbers": [
+                "H3463"
+              ]
+            },
+            {
+              "text": " to speak."
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "I [am] my beloved's, and his desire [is] toward me."
+          "text": "I am my beloved's, and his desire",
+          "tokens": [
+            {
+              "text": "I am my beloved's,",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " and his desire"
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "Come, my beloved, let us go forth into the field; let us lodge in the villages."
+          "text": "Come, my beloved, let us go forth into the field; let us lodge in the villages.",
+          "tokens": [
+            {
+              "text": "Come,",
+              "strongsNumbers": [
+                "H3212"
+              ]
+            },
+            {
+              "text": " my beloved,",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " let us go forth",
+              "strongsNumbers": [
+                "H3318"
+              ]
+            },
+            {
+              "text": " into the field;",
+              "strongsNumbers": [
+                "H7704"
+              ]
+            },
+            {
+              "text": " let us lodge",
+              "strongsNumbers": [
+                "H3885"
+              ]
+            },
+            {
+              "text": " in the villages."
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "Let us get up early to the vineyards; let us see if the vine flourish, [whether] the tender grape appear, [and] the pomegranates bud forth: there will I give thee my loves."
+          "text": "Let us get up early to the vineyards; let us see if the vine flourish, whether the tender grape appear, and the pomegranates bud forth: there will I give thee my loves.",
+          "tokens": [
+            {
+              "text": "Let us get up early",
+              "strongsNumbers": [
+                "H7925"
+              ]
+            },
+            {
+              "text": " to the vineyards;",
+              "strongsNumbers": [
+                "H3754"
+              ]
+            },
+            {
+              "text": " let us see",
+              "strongsNumbers": [
+                "H7200"
+              ]
+            },
+            {
+              "text": " if the vine",
+              "strongsNumbers": [
+                "H1612"
+              ]
+            },
+            {
+              "text": " flourish,",
+              "strongsNumbers": [
+                "H6524"
+              ]
+            },
+            {
+              "text": " whether the tender grape",
+              "strongsNumbers": [
+                "H5563"
+              ]
+            },
+            {
+              "text": " appear,",
+              "strongsNumbers": [
+                "H6605"
+              ]
+            },
+            {
+              "text": " and the pomegranates",
+              "strongsNumbers": [
+                "H7416"
+              ]
+            },
+            {
+              "text": " bud forth:",
+              "strongsNumbers": [
+                "H5132"
+              ]
+            },
+            {
+              "text": " there will I give",
+              "strongsNumbers": [
+                "H5414"
+              ]
+            },
+            {
+              "text": " thee my loves."
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "The mandrakes give a smell, and at our gates [are] all manner of pleasant [fruits], new and old, [which] I have laid up for thee, O my beloved."
+          "text": "The mandrakes give a smell, and at our gates are all manner of pleasant fruits, new and old, which I have laid up for thee, O my beloved.",
+          "tokens": [
+            {
+              "text": "The mandrakes",
+              "strongsNumbers": [
+                "H1736"
+              ]
+            },
+            {
+              "text": " give",
+              "strongsNumbers": [
+                "H5414"
+              ]
+            },
+            {
+              "text": " a smell,",
+              "strongsNumbers": [
+                "H7381"
+              ]
+            },
+            {
+              "text": " and at our gates",
+              "strongsNumbers": [
+                "H6607"
+              ]
+            },
+            {
+              "text": " are all manner of pleasant",
+              "strongsNumbers": [
+                "H4022"
+              ]
+            },
+            {
+              "text": " fruits, new",
+              "strongsNumbers": [
+                "H2319"
+              ]
+            },
+            {
+              "text": " and old,",
+              "strongsNumbers": [
+                "H3465"
+              ]
+            },
+            {
+              "text": " which I have laid up",
+              "strongsNumbers": [
+                "H6845"
+              ]
+            },
+            {
+              "text": " for thee, O my beloved."
+            }
+          ]
         }
       ]
     },
@@ -468,59 +5559,777 @@
       "verses": [
         {
           "number": 1,
-          "text": "O that thou [wert] as my brother, that sucked the breasts of my mother! [when] I should find thee without, I would kiss thee; yea, I should not be despised."
+          "text": "O that thou wert as my brother, that sucked the breasts of my mother! when I should find thee without, I would kiss thee; yea, I should not be despised.",
+          "tokens": [
+            {
+              "text": "O that",
+              "strongsNumbers": [
+                "H5414"
+              ]
+            },
+            {
+              "text": " thou wert as my brother,",
+              "strongsNumbers": [
+                "H251"
+              ]
+            },
+            {
+              "text": " that sucked",
+              "strongsNumbers": [
+                "H3243"
+              ]
+            },
+            {
+              "text": " the breasts",
+              "strongsNumbers": [
+                "H7699"
+              ]
+            },
+            {
+              "text": " of my mother!",
+              "strongsNumbers": [
+                "H517"
+              ]
+            },
+            {
+              "text": " when I should find",
+              "strongsNumbers": [
+                "H4672"
+              ]
+            },
+            {
+              "text": " thee without,",
+              "strongsNumbers": [
+                "H2351"
+              ]
+            },
+            {
+              "text": " I would kiss",
+              "strongsNumbers": [
+                "H5401"
+              ]
+            },
+            {
+              "text": " thee; yea, I should not be despised."
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "I would lead thee, [and] bring thee into my mother's house, [who] would instruct me: I would cause thee to drink of spiced wine of the juice of my pomegranate."
+          "text": "I would lead thee, and bring thee into my mother's house, who would instruct me: I would cause thee to drink of spiced wine of the juice of my pomegranate.",
+          "tokens": [
+            {
+              "text": "I would lead",
+              "strongsNumbers": [
+                "H5090"
+              ]
+            },
+            {
+              "text": " thee, and bring",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " thee into my mother's",
+              "strongsNumbers": [
+                "H517"
+              ]
+            },
+            {
+              "text": " house,",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " who would instruct",
+              "strongsNumbers": [
+                "H3925"
+              ]
+            },
+            {
+              "text": " me: I would cause thee to drink",
+              "strongsNumbers": [
+                "H8248"
+              ]
+            },
+            {
+              "text": " of spiced",
+              "strongsNumbers": [
+                "H7544"
+              ]
+            },
+            {
+              "text": " wine",
+              "strongsNumbers": [
+                "H3196"
+              ]
+            },
+            {
+              "text": " of the juice",
+              "strongsNumbers": [
+                "H6071"
+              ]
+            },
+            {
+              "text": " of my pomegranate."
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "His left hand [should be] under my head, and his right hand should embrace me."
+          "text": "His left hand should be under my head, and his right hand should embrace",
+          "tokens": [
+            {
+              "text": "His left hand",
+              "strongsNumbers": [
+                "H8040"
+              ]
+            },
+            {
+              "text": " should be under my head,",
+              "strongsNumbers": [
+                "H7218"
+              ]
+            },
+            {
+              "text": " and his right hand",
+              "strongsNumbers": [
+                "H3225"
+              ]
+            },
+            {
+              "text": " should embrace"
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "I charge you, O daughters of Jerusalem, that ye stir not up, nor awake [my] love, until he please."
+          "text": "I charge you, O daughters of Jerusalem, that ye stir not up, nor awake my love, until he please.",
+          "tokens": [
+            {
+              "text": "I charge",
+              "strongsNumbers": [
+                "H7650"
+              ]
+            },
+            {
+              "text": " you, O daughters",
+              "strongsNumbers": [
+                "H1323"
+              ]
+            },
+            {
+              "text": " of Jerusalem,",
+              "strongsNumbers": [
+                "H3389"
+              ]
+            },
+            {
+              "text": " that ye stir not up,",
+              "strongsNumbers": [
+                "H5782"
+              ]
+            },
+            {
+              "text": " nor awake",
+              "strongsNumbers": [
+                "H5782"
+              ]
+            },
+            {
+              "text": " my love,",
+              "strongsNumbers": [
+                "H160"
+              ]
+            },
+            {
+              "text": " until he please."
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "Who [is] this that cometh up from the wilderness, leaning upon her beloved? I raised thee up under the apple tree: there thy mother brought thee forth: there she brought thee forth [that] bare thee."
+          "text": "Who is this that cometh up from the wilderness, leaning upon her beloved? I raised thee up under the apple tree: there thy mother brought thee forth: there she brought thee forth that bare",
+          "tokens": [
+            {
+              "text": "Who is this that cometh up",
+              "strongsNumbers": [
+                "H5927"
+              ]
+            },
+            {
+              "text": " from the wilderness,",
+              "strongsNumbers": [
+                "H4057"
+              ]
+            },
+            {
+              "text": " leaning",
+              "strongsNumbers": [
+                "H7514"
+              ]
+            },
+            {
+              "text": " upon her beloved?",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " I raised",
+              "strongsNumbers": [
+                "H5782"
+              ]
+            },
+            {
+              "text": " thee up under the apple tree:",
+              "strongsNumbers": [
+                "H8598"
+              ]
+            },
+            {
+              "text": " there thy mother",
+              "strongsNumbers": [
+                "H517"
+              ]
+            },
+            {
+              "text": " brought thee forth:",
+              "strongsNumbers": [
+                "H2254"
+              ]
+            },
+            {
+              "text": " there she brought thee forth",
+              "strongsNumbers": [
+                "H2254"
+              ]
+            },
+            {
+              "text": " that bare"
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "Set me as a seal upon thine heart, as a seal upon thine arm: for love [is] strong as death; jealousy [is] cruel as the grave: the coals thereof [are] coals of fire, [which hath a] most vehement flame."
+          "text": "Set me as a seal upon thine heart, as a seal upon thine arm: for love is strong as death; jealousy is cruel as the grave: the coals thereof are coals of fire, which hath a most vehement flame.",
+          "tokens": [
+            {
+              "text": "Set",
+              "strongsNumbers": [
+                "H7760"
+              ]
+            },
+            {
+              "text": " me as a seal",
+              "strongsNumbers": [
+                "H2368"
+              ]
+            },
+            {
+              "text": " upon thine heart,",
+              "strongsNumbers": [
+                "H3820"
+              ]
+            },
+            {
+              "text": " as a seal",
+              "strongsNumbers": [
+                "H2368"
+              ]
+            },
+            {
+              "text": " upon thine arm:",
+              "strongsNumbers": [
+                "H2220"
+              ]
+            },
+            {
+              "text": " for love",
+              "strongsNumbers": [
+                "H160"
+              ]
+            },
+            {
+              "text": " is strong",
+              "strongsNumbers": [
+                "H5794"
+              ]
+            },
+            {
+              "text": " as death;",
+              "strongsNumbers": [
+                "H4194"
+              ]
+            },
+            {
+              "text": " jealousy",
+              "strongsNumbers": [
+                "H7068"
+              ]
+            },
+            {
+              "text": " is cruel",
+              "strongsNumbers": [
+                "H7186"
+              ]
+            },
+            {
+              "text": " as the grave:",
+              "strongsNumbers": [
+                "H7585"
+              ]
+            },
+            {
+              "text": " the coals",
+              "strongsNumbers": [
+                "H7565"
+              ]
+            },
+            {
+              "text": " thereof are coals",
+              "strongsNumbers": [
+                "H7565"
+              ]
+            },
+            {
+              "text": " of fire,",
+              "strongsNumbers": [
+                "H784"
+              ]
+            },
+            {
+              "text": " which hath a most vehement flame."
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "Many waters cannot quench love, neither can the floods drown it: if [a] man would give all the substance of his house for love, it would utterly be contemned."
+          "text": "Many waters cannot quench love, neither can the floods drown it: if a man would give all the substance of his house for love, it would utterly be contemned.",
+          "tokens": [
+            {
+              "text": "Many",
+              "strongsNumbers": [
+                "H7227"
+              ]
+            },
+            {
+              "text": " waters",
+              "strongsNumbers": [
+                "H4325"
+              ]
+            },
+            {
+              "text": " cannot",
+              "strongsNumbers": [
+                "H3201"
+              ]
+            },
+            {
+              "text": " quench",
+              "strongsNumbers": [
+                "H3518"
+              ]
+            },
+            {
+              "text": " love,",
+              "strongsNumbers": [
+                "H160"
+              ]
+            },
+            {
+              "text": " neither can the floods",
+              "strongsNumbers": [
+                "H5104"
+              ]
+            },
+            {
+              "text": " drown",
+              "strongsNumbers": [
+                "H7857"
+              ]
+            },
+            {
+              "text": " it: if a man",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " would give",
+              "strongsNumbers": [
+                "H5414"
+              ]
+            },
+            {
+              "text": " all the substance",
+              "strongsNumbers": [
+                "H1952"
+              ]
+            },
+            {
+              "text": " of his house",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " for love,",
+              "strongsNumbers": [
+                "H160"
+              ]
+            },
+            {
+              "text": " it would utterly",
+              "strongsNumbers": [
+                "H936"
+              ]
+            },
+            {
+              "text": " be contemned."
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "We have a little sister, and she hath no breasts: what shall we do for our sister in the day when she shall be spoken for?"
+          "text": "We have a little sister, and she hath no breasts: what shall we do for our sister in the day when she shall be spoken for?",
+          "tokens": [
+            {
+              "text": "We have a little",
+              "strongsNumbers": [
+                "H6996"
+              ]
+            },
+            {
+              "text": " sister,",
+              "strongsNumbers": [
+                "H269"
+              ]
+            },
+            {
+              "text": " and she hath no breasts:",
+              "strongsNumbers": [
+                "H7699"
+              ]
+            },
+            {
+              "text": " what shall we do",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " for our sister",
+              "strongsNumbers": [
+                "H269"
+              ]
+            },
+            {
+              "text": " in the day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " when she shall be spoken for?"
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "If she [be] a wall, we will build upon her a palace of silver: and if she [be] a door, we will inclose her with boards of cedar."
+          "text": "If she be a wall, we will build upon her a palace of silver: and if she be a door, we will inclose her with boards of cedar.",
+          "tokens": [
+            {
+              "text": "If she be a wall,",
+              "strongsNumbers": [
+                "H2346"
+              ]
+            },
+            {
+              "text": " we will build",
+              "strongsNumbers": [
+                "H1129"
+              ]
+            },
+            {
+              "text": " upon her a palace",
+              "strongsNumbers": [
+                "H2918"
+              ]
+            },
+            {
+              "text": " of silver:",
+              "strongsNumbers": [
+                "H3701"
+              ]
+            },
+            {
+              "text": " and if she be a door,",
+              "strongsNumbers": [
+                "H1817"
+              ]
+            },
+            {
+              "text": " we will inclose",
+              "strongsNumbers": [
+                "H6696"
+              ]
+            },
+            {
+              "text": " her with boards",
+              "strongsNumbers": [
+                "H3871"
+              ]
+            },
+            {
+              "text": " of cedar."
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "I [am] a wall, and my breasts like towers: then was I in his eyes as one that found favour."
+          "text": "I am a wall, and my breasts like towers: then was I in his eyes as one that found favour.",
+          "tokens": [
+            {
+              "text": "I am a wall,",
+              "strongsNumbers": [
+                "H2346"
+              ]
+            },
+            {
+              "text": " and my breasts",
+              "strongsNumbers": [
+                "H7699"
+              ]
+            },
+            {
+              "text": " like towers:",
+              "strongsNumbers": [
+                "H4026"
+              ]
+            },
+            {
+              "text": " then was I in his eyes",
+              "strongsNumbers": [
+                "H5869"
+              ]
+            },
+            {
+              "text": " as one that found",
+              "strongsNumbers": [
+                "H4672"
+              ]
+            },
+            {
+              "text": " favour."
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "Solomon had a vineyard at Baal-hamon; he let out the vineyard unto keepers; every one for the fruit thereof was to bring a thousand [pieces] of silver."
+          "text": "Solomon had a vineyard at Baalhamon; he let out the vineyard unto keepers; every one for the fruit thereof was to bring a thousand pieces of silver.",
+          "tokens": [
+            {
+              "text": "Solomon",
+              "strongsNumbers": [
+                "H8010"
+              ]
+            },
+            {
+              "text": " had a vineyard",
+              "strongsNumbers": [
+                "H3754"
+              ]
+            },
+            {
+              "text": " at Baalhamon;",
+              "strongsNumbers": [
+                "H1174"
+              ]
+            },
+            {
+              "text": " he let out",
+              "strongsNumbers": [
+                "H5414"
+              ]
+            },
+            {
+              "text": " the vineyard",
+              "strongsNumbers": [
+                "H3754"
+              ]
+            },
+            {
+              "text": " unto keepers;",
+              "strongsNumbers": [
+                "H5201"
+              ]
+            },
+            {
+              "text": " every one",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " for the fruit",
+              "strongsNumbers": [
+                "H6529"
+              ]
+            },
+            {
+              "text": " thereof was to bring",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " a thousand",
+              "strongsNumbers": [
+                "H505"
+              ]
+            },
+            {
+              "text": " pieces of silver."
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "My vineyard, which [is] mine, [is] before me: thou, O Solomon, [must have] a thousand, and those that keep the fruit thereof two hundred."
+          "text": "My vineyard, which is mine, is before me: thou, O Solomon, must have a thousand, and those that keep the fruit thereof two hundred.",
+          "tokens": [
+            {
+              "text": "My vineyard,",
+              "strongsNumbers": [
+                "H3754"
+              ]
+            },
+            {
+              "text": " which is mine, is before",
+              "strongsNumbers": [
+                "H6440"
+              ]
+            },
+            {
+              "text": " me: thou, O Solomon,",
+              "strongsNumbers": [
+                "H8010"
+              ]
+            },
+            {
+              "text": " must have a thousand,",
+              "strongsNumbers": [
+                "H505"
+              ]
+            },
+            {
+              "text": " and those that keep",
+              "strongsNumbers": [
+                "H5201"
+              ]
+            },
+            {
+              "text": " the fruit",
+              "strongsNumbers": [
+                "H6529"
+              ]
+            },
+            {
+              "text": " thereof two hundred."
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "Thou that dwellest in the gardens, the companions hearken to thy voice: cause me to hear [it]."
+          "text": "Thou that dwellest in the gardens, the companions hearken to thy voice: cause me to hear",
+          "tokens": [
+            {
+              "text": "Thou that dwellest",
+              "strongsNumbers": [
+                "H3427"
+              ]
+            },
+            {
+              "text": " in the gardens,",
+              "strongsNumbers": [
+                "H1588"
+              ]
+            },
+            {
+              "text": " the companions",
+              "strongsNumbers": [
+                "H2270"
+              ]
+            },
+            {
+              "text": " hearken",
+              "strongsNumbers": [
+                "H7181"
+              ]
+            },
+            {
+              "text": " to thy voice:",
+              "strongsNumbers": [
+                "H6963"
+              ]
+            },
+            {
+              "text": " cause me to hear"
+            }
+          ]
         },
         {
           "number": 14,
-          "text": "Make haste, my beloved, and be thou like to a roe or to a young hart upon the mountains of spices."
+          "text": "Make haste, my beloved, and be thou like to a roe or to a young hart upon the mountains of spices.",
+          "tokens": [
+            {
+              "text": "Make haste,",
+              "strongsNumbers": [
+                "H1272"
+              ]
+            },
+            {
+              "text": " my beloved,",
+              "strongsNumbers": [
+                "H1730"
+              ]
+            },
+            {
+              "text": " and be thou like",
+              "strongsNumbers": [
+                "H1819"
+              ]
+            },
+            {
+              "text": " to a roe",
+              "strongsNumbers": [
+                "H6643"
+              ]
+            },
+            {
+              "text": " or to a young",
+              "strongsNumbers": [
+                "H6082"
+              ]
+            },
+            {
+              "text": " hart",
+              "strongsNumbers": [
+                "H354"
+              ]
+            },
+            {
+              "text": " upon the mountains",
+              "strongsNumbers": [
+                "H2022"
+              ]
+            },
+            {
+              "text": " of spices."
+            }
+          ]
         }
       ]
     }

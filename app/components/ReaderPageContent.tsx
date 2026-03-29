@@ -1,6 +1,7 @@
 "use client";
 
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
+import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { ChapterPagination } from "@/app/components/ChapterPagination";
 import { ReaderContentTabs } from "@/app/components/ReaderContentTabs";
 import { ReaderControls } from "@/app/components/ReaderControls";
@@ -33,8 +34,10 @@ export function ReaderPageContent({
   highlightedVerseRange = null
 }: ReaderPageContentProps) {
   const { version } = useReaderVersion();
+  const { settings } = useReaderCustomization();
   const { activeReaderPane } = useReaderWorkspace();
   const chapter = chaptersByVersion[version];
+  const showStrongs = version === "kjv" && settings.showStrongs;
   const chapterLinks = getChapterLinks(books, book, chapter.chapterNumber, version);
   const versionLabel = getBibleVersionLabel(version);
   const versionBadge = getBibleVersionBadge(version);
@@ -84,6 +87,7 @@ export function ReaderPageContent({
               highlightedVerseNumber={highlightedVerseNumber}
               highlightedVerseRange={highlightedVerseRange}
               key={`${version}:${book.slug}:${chapter.chapterNumber}`}
+              showStrongs={showStrongs}
               verses={chapter.verses}
             />
           </div>

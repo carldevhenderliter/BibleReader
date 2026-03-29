@@ -9,11 +9,14 @@ const legacyBooksPath = path.join(bibleDir, "books.json");
 const legacyBooksDir = path.join(bibleDir, "books");
 const versionsDir = path.join(bibleDir, "versions");
 const searchDir = path.join(bibleDir, "search");
+const strongsDir = path.join(bibleDir, "strongs");
 const sourceBooksPath = path.join(repoRoot, "data", "source", "books.json");
-const kjvVersesPath = path.join(repoRoot, "node_modules", "kjv", "json", "verses-1769.json");
+const strongsSourceDir = path.join(repoRoot, "data", "source", "strongs-kjv");
+const strongsBooksPath = path.join(strongsSourceDir, "books.json");
+const strongsLexiconPath = path.join(strongsSourceDir, "lexicon.json");
 
-const KJV_BOOK_NAME_BY_SLUG = {
-  "song-of-solomon": "Solomon's Song"
+const STRONGS_BOOK_NAME_BY_SLUG = {
+  "song-of-solomon": "Song of Songs"
 };
 
 /**
@@ -41,8 +44,10 @@ const KJV_BOOK_NAME_BY_SLUG = {
 
 /**
  * @typedef {{ number: number; text: string }} Verse
+ * @typedef {{ text: string, strongsNumbers?: string[] }} VerseToken
  * @typedef {{ bookSlug: string; chapterNumber: number; verses: Verse[] }} Chapter
  * @typedef {{ book: BookMeta; chapters: Chapter[] }} BookPayload
+ * @typedef {{ id: string, language: "hebrew" | "greek", lemma: string, transliteration: string, definition: string, partOfSpeech: string, rootWord: string, outlineUsage: string }} StrongsEntry
  */
 
 async function main() {
@@ -99,28 +104,37 @@ async function importWebVersion() {
 async function importKjvVersion(sourceBooks) {
   const kjvDir = path.join(versionsDir, "kjv");
   const booksDir = path.join(kjvDir, "books");
+  const strongsManifest = /** @type {{ books: Record<string, string>[] }} */ (
+    JSON.parse(await readFile(strongsBooksPath, "utf8"))
+  );
+  const lexicon = /** @type {Record<string, unknown>} */ (
+    JSON.parse(await readFile(strongsLexiconPath, "utf8"))
+  );
+  const sourceCodeByName = new Map(
+    strongsManifest.books.flatMap((entry) => {
+      const [name, code] = Object.entries(entry)[0] ?? [];
+      return name && code ? [[name, code]] : [];
+    })
+  );
 
   await rm(kjvDir, { recursive: true, force: true });
   await mkdir(booksDir, { recursive: true });
-
-  const verses = /** @type {Record<string, string>} */ (
-    JSON.parse(await readFile(kjvVersesPath, "utf8"))
-  );
-  const groupedVerses = groupKjvVerses(verses);
   /** @type {BookMeta[]} */
   const metadata = [];
   /** @type {Map<string, BookPayload>} */
   const payloadBySlug = new Map();
 
   for (const sourceBook of sourceBooks) {
-    const bookName = KJV_BOOK_NAME_BY_SLUG[sourceBook.slug] ?? sourceBook.name;
-    const chapterMap = groupedVerses.get(bookName);
+    const sourceName = STRONGS_BOOK_NAME_BY_SLUG[sourceBook.slug] ?? sourceBook.name;
+    const sourceCode = sourceCodeByName.get(sourceName);
 
-    if (!chapterMap) {
-      throw new Error(`KJV source is missing ${sourceBook.name}.`);
+    if (!sourceCode) {
+      throw new Error(`KJV Strongs source is missing ${sourceBook.name}.`);
     }
 
-    const payload = transformKjvBook(sourceBook, chapterMap);
+    const rawBookText = await readFile(path.join(strongsSourceDir, `${sourceCode}.json`), "utf8");
+    const verseTextByReference = extractEnglishVerses(rawBookText);
+    const payload = transformKjvBook(sourceBook, sourceCode, verseTextByReference);
 
     metadata.push(payload.book);
     payloadBySlug.set(payload.book.slug, payload);
@@ -128,74 +142,136 @@ async function importKjvVersion(sourceBooks) {
   }
 
   await writeFile(path.join(kjvDir, "books.json"), `${JSON.stringify(metadata, null, 2)}\n`);
+  await writeStrongsLexicon(lexicon);
 
   return payloadBySlug;
 }
 
 /**
- * @param {Record<string, string>} verses
+ * @param {string} value
  */
-function groupKjvVerses(verses) {
-  /** @type {Map<string, Map<number, Map<number, string>>>} */
-  const grouped = new Map();
+function decodeHtmlEntities(value) {
+  return value
+    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'");
+}
 
-  for (const [reference, text] of Object.entries(verses)) {
-    const match = reference.match(/^(.*) (\d+):(\d+)$/);
+/**
+ * @param {string} text
+ */
+function sanitizeTaggedText(text) {
+  return decodeHtmlEntities(text).replace(/<\/?em>/g, "");
+}
 
-    if (!match) {
+/**
+ * @param {string} text
+ * @returns {VerseToken[]}
+ */
+function parseVerseTokens(text) {
+  const sanitizedText = sanitizeTaggedText(text);
+  const tokens = [];
+  const tagGroupPattern = /(?:\[(?:H|G)\d+\])+/g;
+  let cursor = 0;
+
+  for (const match of sanitizedText.matchAll(tagGroupPattern)) {
+    const index = match.index ?? 0;
+    const segmentText = sanitizedText.slice(cursor, index);
+    const strongsNumbers = Array.from(match[0].matchAll(/\[(H|G)\d+\]/g), ([tag]) =>
+      tag.slice(1, -1)
+    );
+
+    if (segmentText) {
+      tokens.push(
+        strongsNumbers.length > 0
+          ? {
+              text: segmentText,
+              strongsNumbers
+            }
+          : {
+              text: segmentText
+            }
+      );
+    }
+
+    cursor = index + match[0].length;
+  }
+
+  const remainder = sanitizedText.slice(cursor);
+
+  if (remainder) {
+    tokens.push({ text: remainder });
+  }
+
+  return tokens;
+}
+
+/**
+ * @param {VerseToken[]} tokens
+ */
+function getPlainVerseText(tokens) {
+  return tokens.map((token) => token.text).join("").replace(/[ \t]{2,}/g, " ").trim();
+}
+
+/**
+ * @param {string} rawBookText
+ */
+function extractEnglishVerses(rawBookText) {
+  /** @type {Map<string, string>} */
+  const verseTextByReference = new Map();
+  const versePattern =
+    /"([^"]+\|\d+\|\d+)":\s*\{\s*"en":\s*"((?:\\.|[^"\\])*)",\s*"bg":/g;
+
+  for (const match of rawBookText.matchAll(versePattern)) {
+    const reference = match[1];
+    const encodedText = match[2];
+
+    if (!reference || !encodedText) {
       continue;
     }
 
-    const [, bookName, chapterValue, verseValue] = match;
-    const chapterNumber = Number(chapterValue);
-    const verseNumber = Number(verseValue);
-
-    let chapterMap = grouped.get(bookName);
-
-    if (!chapterMap) {
-      chapterMap = new Map();
-      grouped.set(bookName, chapterMap);
-    }
-
-    let verseMap = chapterMap.get(chapterNumber);
-
-    if (!verseMap) {
-      verseMap = new Map();
-      chapterMap.set(chapterNumber, verseMap);
-    }
-
-    verseMap.set(verseNumber, normalizeKjvVerseText(text));
+    verseTextByReference.set(reference, JSON.parse(`"${encodedText}"`));
   }
 
-  return grouped;
+  return verseTextByReference;
 }
 
 /**
  * @param {SourceBook} sourceBook
- * @param {Map<number, Map<number, string>>} chapterMap
+ * @param {string} sourceCode
+ * @param {Map<string, string>} verseTextByReference
  * @returns {BookPayload}
  */
-function transformKjvBook(sourceBook, chapterMap) {
+function transformKjvBook(sourceBook, sourceCode, verseTextByReference) {
   /** @type {Chapter[]} */
   const chapters = [];
 
   for (let chapterNumber = 1; chapterNumber <= sourceBook.chapterCount; chapterNumber += 1) {
-    const verseMap = chapterMap.get(chapterNumber);
+    const verses = Array.from(verseTextByReference.entries())
+      .filter(([reference]) => reference.startsWith(`${sourceCode}|${chapterNumber}|`))
+      .sort(([left], [right]) => {
+        const leftVerseNumber = Number(left.split("|").at(-1));
+        const rightVerseNumber = Number(right.split("|").at(-1));
 
-    if (!verseMap) {
-      throw new Error(`${sourceBook.name} is missing chapter ${chapterNumber} in KJV.`);
-    }
+        return leftVerseNumber - rightVerseNumber;
+      })
+      .map(([key, rawVerseText]) => {
+        const verseNumber = Number(key.split("|").at(-1));
+        const tokens = parseVerseTokens(rawVerseText);
 
-    const verses = Array.from(verseMap.entries())
-      .sort(([left], [right]) => left - right)
-      .map(([number, text]) => ({
-        number,
-        text
-      }))
+        return {
+          number: verseNumber,
+          text: getPlainVerseText(tokens),
+          tokens
+        };
+      })
       .filter((verse) => verse.text.length > 0);
 
     if (verses.length === 0) {
-      throw new Error(`${sourceBook.name} ${chapterNumber} has no verses in KJV.`);
+      throw new Error(`${sourceBook.name} is missing chapter ${chapterNumber} in KJV.`);
     }
 
     chapters.push({
@@ -219,10 +295,42 @@ function transformKjvBook(sourceBook, chapterMap) {
 }
 
 /**
- * @param {string} text
+ * @param {Record<string, unknown>} lexicon
  */
-function normalizeKjvVerseText(text) {
-  return text.replace(/^#\s*/, "").replace(/\r/g, "").replace(/[ \t]{2,}/g, " ").trim();
+async function writeStrongsLexicon(lexicon) {
+  await mkdir(strongsDir, { recursive: true });
+
+  /** @type {Record<string, StrongsEntry>} */
+  const normalizedLexicon = {};
+
+  for (const [id, value] of Object.entries(lexicon)) {
+    if (!/^([HG])\d+$/.test(id) || !value || typeof value !== "object") {
+      continue;
+    }
+
+    const entry = /** @type {{
+     * Hb_word?: string;
+     * Gk_word?: string;
+     * transliteration?: string;
+     * strongs_def?: string;
+     * part_of_speech?: string;
+     * root_word?: string;
+     * outline_usage?: string;
+     * }} */ (value);
+
+    normalizedLexicon[id] = {
+      id,
+      language: id.startsWith("H") ? "hebrew" : "greek",
+      lemma: decodeHtmlEntities(entry.Hb_word ?? entry.Gk_word ?? "").trim(),
+      transliteration: decodeHtmlEntities(entry.transliteration ?? "").trim(),
+      definition: decodeHtmlEntities(entry.strongs_def ?? "").trim(),
+      partOfSpeech: decodeHtmlEntities(entry.part_of_speech ?? "").trim(),
+      rootWord: decodeHtmlEntities(entry.root_word ?? "").trim(),
+      outlineUsage: decodeHtmlEntities(entry.outline_usage ?? "").trim()
+    };
+  }
+
+  await writeFile(path.join(strongsDir, "lexicon.json"), `${JSON.stringify(normalizedLexicon, null, 2)}\n`);
 }
 
 /**

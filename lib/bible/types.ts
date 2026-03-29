@@ -12,6 +12,7 @@ export type BookMeta = {
 export type Verse = {
   number: number;
   text: string;
+  tokens?: VerseToken[];
 };
 
 export type Chapter = {
@@ -55,6 +56,7 @@ export type ReaderCustomizationSettings = {
   themePreset: ThemePreset;
   bodyFont: BodyFontOption;
   uiFont: UiFontOption;
+  showStrongs: boolean;
   textSize: number;
   lineHeight: number;
   contentWidth: number;
@@ -147,3 +149,21 @@ export type BibleSearchResultGroup = {
 };
 
 export type SearchMatchMode = "partial" | "complete";
+
+export type VerseToken = {
+  text: string;
+  strongsNumbers?: string[];
+};
+
+export type StrongsLanguage = "hebrew" | "greek";
+
+export type StrongsEntry = {
+  id: string;
+  language: StrongsLanguage;
+  lemma: string;
+  transliteration: string;
+  definition: string;
+  partOfSpeech: string;
+  rootWord: string;
+  outlineUsage: string;
+};

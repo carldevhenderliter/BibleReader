@@ -14,63 +14,877 @@
       "verses": [
         {
           "number": 1,
-          "text": "The burden of Nineveh. The book of the vision of Nahum the Elkoshite."
+          "text": "The burden of Nineveh. The book of the vision of Nahum the Elkoshite.",
+          "tokens": [
+            {
+              "text": "The burden",
+              "strongsNumbers": [
+                "H4853"
+              ]
+            },
+            {
+              "text": " of Nineveh.",
+              "strongsNumbers": [
+                "H5210"
+              ]
+            },
+            {
+              "text": " The book",
+              "strongsNumbers": [
+                "H5612"
+              ]
+            },
+            {
+              "text": " of the vision",
+              "strongsNumbers": [
+                "H2377"
+              ]
+            },
+            {
+              "text": " of Nahum",
+              "strongsNumbers": [
+                "H5151"
+              ]
+            },
+            {
+              "text": " the Elkoshite."
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "God [is] jealous, and the LORD revengeth; the LORD revengeth, and [is] furious; the LORD will take vengeance on his adversaries, and he reserveth [wrath] for his enemies."
+          "text": "God is jealous, and the LORD revengeth; the LORD revengeth, and is furious; the LORD will take vengeance on his adversaries, and he reserveth wrath for his enemies.",
+          "tokens": [
+            {
+              "text": "God",
+              "strongsNumbers": [
+                "H410"
+              ]
+            },
+            {
+              "text": " is jealous,",
+              "strongsNumbers": [
+                "H7072"
+              ]
+            },
+            {
+              "text": " and the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " revengeth;",
+              "strongsNumbers": [
+                "H5358"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " revengeth,",
+              "strongsNumbers": [
+                "H5358"
+              ]
+            },
+            {
+              "text": " and is furious;",
+              "strongsNumbers": [
+                "H1167",
+                "H2534"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " will take vengeance",
+              "strongsNumbers": [
+                "H5358"
+              ]
+            },
+            {
+              "text": " on his adversaries,",
+              "strongsNumbers": [
+                "H6862"
+              ]
+            },
+            {
+              "text": " and he reserveth",
+              "strongsNumbers": [
+                "H5201"
+              ]
+            },
+            {
+              "text": " wrath for his enemies."
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "The LORD [is] slow to anger, and great in power, and will not at all acquit [the wicked]: the LORD hath his way in the whirlwind and in the storm, and the clouds [are] the dust of his feet."
+          "text": "The LORD is slow to anger, and great in power, and will not at all acquit the wicked: the LORD hath his way in the whirlwind and in the storm, and the clouds are the dust of his feet.",
+          "tokens": [
+            {
+              "text": "The LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " is slow",
+              "strongsNumbers": [
+                "H750"
+              ]
+            },
+            {
+              "text": " to anger,",
+              "strongsNumbers": [
+                "H639"
+              ]
+            },
+            {
+              "text": " and great",
+              "strongsNumbers": [
+                "H1419"
+              ]
+            },
+            {
+              "text": " in power,",
+              "strongsNumbers": [
+                "H3581"
+              ]
+            },
+            {
+              "text": " and will not at all",
+              "strongsNumbers": [
+                "H5352"
+              ]
+            },
+            {
+              "text": " acquit",
+              "strongsNumbers": [
+                "H5352"
+              ]
+            },
+            {
+              "text": " the wicked: the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " hath his way",
+              "strongsNumbers": [
+                "H1870"
+              ]
+            },
+            {
+              "text": " in the whirlwind",
+              "strongsNumbers": [
+                "H5492"
+              ]
+            },
+            {
+              "text": " and in the storm,",
+              "strongsNumbers": [
+                "H8183"
+              ]
+            },
+            {
+              "text": " and the clouds",
+              "strongsNumbers": [
+                "H6051"
+              ]
+            },
+            {
+              "text": " are the dust",
+              "strongsNumbers": [
+                "H80"
+              ]
+            },
+            {
+              "text": " of his feet."
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "He rebuketh the sea, and maketh it dry, and drieth up all the rivers: Bashan languisheth, and Carmel, and the flower of Lebanon languisheth."
+          "text": "He rebuketh the sea, and maketh it dry, and drieth up all the rivers: Bashan languisheth, and Carmel, and the flower of Lebanon languisheth.",
+          "tokens": [
+            {
+              "text": "He rebuketh",
+              "strongsNumbers": [
+                "H1605"
+              ]
+            },
+            {
+              "text": " the sea,",
+              "strongsNumbers": [
+                "H3220"
+              ]
+            },
+            {
+              "text": " and maketh it dry,",
+              "strongsNumbers": [
+                "H2717"
+              ]
+            },
+            {
+              "text": " and drieth up",
+              "strongsNumbers": [
+                "H3001"
+              ]
+            },
+            {
+              "text": " all the rivers:",
+              "strongsNumbers": [
+                "H5104"
+              ]
+            },
+            {
+              "text": " Bashan",
+              "strongsNumbers": [
+                "H1316"
+              ]
+            },
+            {
+              "text": " languisheth,",
+              "strongsNumbers": [
+                "H535"
+              ]
+            },
+            {
+              "text": " and Carmel,",
+              "strongsNumbers": [
+                "H3760"
+              ]
+            },
+            {
+              "text": " and the flower",
+              "strongsNumbers": [
+                "H6525"
+              ]
+            },
+            {
+              "text": " of Lebanon",
+              "strongsNumbers": [
+                "H3844"
+              ]
+            },
+            {
+              "text": " languisheth."
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "The mountains quake at him, and the hills melt, and the earth is burned at his presence, yea, the world, and all that dwell therein."
+          "text": "The mountains quake at him, and the hills melt, and the earth is burned at his presence, yea, the world, and all that dwell",
+          "tokens": [
+            {
+              "text": "The mountains",
+              "strongsNumbers": [
+                "H2022"
+              ]
+            },
+            {
+              "text": " quake",
+              "strongsNumbers": [
+                "H7493"
+              ]
+            },
+            {
+              "text": " at him, and the hills",
+              "strongsNumbers": [
+                "H1389"
+              ]
+            },
+            {
+              "text": " melt,",
+              "strongsNumbers": [
+                "H4127"
+              ]
+            },
+            {
+              "text": " and the earth",
+              "strongsNumbers": [
+                "H776"
+              ]
+            },
+            {
+              "text": " is burned",
+              "strongsNumbers": [
+                "H5375"
+              ]
+            },
+            {
+              "text": " at his presence,",
+              "strongsNumbers": [
+                "H6440"
+              ]
+            },
+            {
+              "text": " yea, the world,",
+              "strongsNumbers": [
+                "H8398"
+              ]
+            },
+            {
+              "text": " and all that dwell"
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "Who can stand before his indignation? and who can abide in the fierceness of his anger? his fury is poured out like fire, and the rocks are thrown down by him."
+          "text": "Who can stand before his indignation? and who can abide in the fierceness of his anger? his fury is poured out like fire, and the rocks are thrown down",
+          "tokens": [
+            {
+              "text": "Who can stand",
+              "strongsNumbers": [
+                "H5975"
+              ]
+            },
+            {
+              "text": " before",
+              "strongsNumbers": [
+                "H6440"
+              ]
+            },
+            {
+              "text": " his indignation?",
+              "strongsNumbers": [
+                "H2195"
+              ]
+            },
+            {
+              "text": " and who can abide",
+              "strongsNumbers": [
+                "H6965"
+              ]
+            },
+            {
+              "text": " in the fierceness",
+              "strongsNumbers": [
+                "H2740"
+              ]
+            },
+            {
+              "text": " of his anger?",
+              "strongsNumbers": [
+                "H639"
+              ]
+            },
+            {
+              "text": " his fury",
+              "strongsNumbers": [
+                "H2534"
+              ]
+            },
+            {
+              "text": " is poured out",
+              "strongsNumbers": [
+                "H5413"
+              ]
+            },
+            {
+              "text": " like fire,",
+              "strongsNumbers": [
+                "H784"
+              ]
+            },
+            {
+              "text": " and the rocks",
+              "strongsNumbers": [
+                "H6697"
+              ]
+            },
+            {
+              "text": " are thrown down"
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "The LORD [is] good, a strong hold in the day of trouble; and he knoweth them that trust in him."
+          "text": "The LORD is good, a strong hold in the day of trouble; and he knoweth them that trust",
+          "tokens": [
+            {
+              "text": "The LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " is good,",
+              "strongsNumbers": [
+                "H2896"
+              ]
+            },
+            {
+              "text": " a strong hold",
+              "strongsNumbers": [
+                "H4581"
+              ]
+            },
+            {
+              "text": " in the day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " of trouble;",
+              "strongsNumbers": [
+                "H6869"
+              ]
+            },
+            {
+              "text": " and he knoweth",
+              "strongsNumbers": [
+                "H3045"
+              ]
+            },
+            {
+              "text": " them that trust"
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "But with an overrunning flood he will make an utter end of the place thereof, and darkness shall pursue his enemies."
+          "text": "But with an overrunning flood he will make an utter end of the place thereof, and darkness shall pursue his enemies.",
+          "tokens": [
+            {
+              "text": "But with an overrunning",
+              "strongsNumbers": [
+                "H5674"
+              ]
+            },
+            {
+              "text": " flood",
+              "strongsNumbers": [
+                "H7858"
+              ]
+            },
+            {
+              "text": " he will make",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " an utter end",
+              "strongsNumbers": [
+                "H3617"
+              ]
+            },
+            {
+              "text": " of the place",
+              "strongsNumbers": [
+                "H4725"
+              ]
+            },
+            {
+              "text": " thereof, and darkness",
+              "strongsNumbers": [
+                "H2822"
+              ]
+            },
+            {
+              "text": " shall pursue",
+              "strongsNumbers": [
+                "H7291"
+              ]
+            },
+            {
+              "text": " his enemies."
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "What do ye imagine against the LORD? he will make an utter end: affliction shall not rise up the second time."
+          "text": "What do ye imagine against the LORD? he will make an utter end: affliction shall not rise up the second time.",
+          "tokens": [
+            {
+              "text": "What do ye imagine",
+              "strongsNumbers": [
+                "H2803"
+              ]
+            },
+            {
+              "text": " against the LORD?",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " he will make",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " an utter end:",
+              "strongsNumbers": [
+                "H3617"
+              ]
+            },
+            {
+              "text": " affliction",
+              "strongsNumbers": [
+                "H6869"
+              ]
+            },
+            {
+              "text": " shall not rise up",
+              "strongsNumbers": [
+                "H6965"
+              ]
+            },
+            {
+              "text": " the second time."
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "For while [they be] folden together [as] thorns, and while they are drunken [as] drunkards, they shall be devoured as stubble fully dry."
+          "text": "For while they be folden together as thorns, and while they are drunken as drunkards, they shall be devoured as stubble fully dry.",
+          "tokens": [
+            {
+              "text": "For while they be folden together",
+              "strongsNumbers": [
+                "H5440"
+              ]
+            },
+            {
+              "text": " as thorns,",
+              "strongsNumbers": [
+                "H5518"
+              ]
+            },
+            {
+              "text": " and while they are drunken",
+              "strongsNumbers": [
+                "H5433"
+              ]
+            },
+            {
+              "text": " as drunkards,",
+              "strongsNumbers": [
+                "H5435"
+              ]
+            },
+            {
+              "text": " they shall be devoured",
+              "strongsNumbers": [
+                "H398"
+              ]
+            },
+            {
+              "text": " as stubble",
+              "strongsNumbers": [
+                "H7179"
+              ]
+            },
+            {
+              "text": " fully",
+              "strongsNumbers": [
+                "H4392"
+              ]
+            },
+            {
+              "text": " dry."
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "There is [one] come out of thee, that imagineth evil against the LORD, a wicked counsellor."
+          "text": "There is one come out of thee, that imagineth evil against the LORD, a wicked counsellor.",
+          "tokens": [
+            {
+              "text": "There is one come out",
+              "strongsNumbers": [
+                "H3318"
+              ]
+            },
+            {
+              "text": " of thee, that imagineth",
+              "strongsNumbers": [
+                "H2803"
+              ]
+            },
+            {
+              "text": " evil",
+              "strongsNumbers": [
+                "H7451"
+              ]
+            },
+            {
+              "text": " against the LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " a wicked",
+              "strongsNumbers": [
+                "H1100"
+              ]
+            },
+            {
+              "text": " counsellor."
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "Thus saith the LORD; Though [they be] quiet, and likewise many, yet thus shall they be cut down, when he shall pass through. Though I have afflicted thee, I will afflict thee no more."
+          "text": "Thus saith the LORD; Though they be quiet, and likewise many, yet thus shall they be cut down, when he shall pass through. Though I have afflicted thee, I will afflict",
+          "tokens": [
+            {
+              "text": "Thus saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD;",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " Though they be quiet,",
+              "strongsNumbers": [
+                "H8003"
+              ]
+            },
+            {
+              "text": " and likewise many,",
+              "strongsNumbers": [
+                "H7227"
+              ]
+            },
+            {
+              "text": " yet thus shall they be cut down,",
+              "strongsNumbers": [
+                "H1494"
+              ]
+            },
+            {
+              "text": " when he shall pass through.",
+              "strongsNumbers": [
+                "H5674"
+              ]
+            },
+            {
+              "text": " Though I have afflicted",
+              "strongsNumbers": [
+                "H6031"
+              ]
+            },
+            {
+              "text": " thee, I will afflict"
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "For now will I break his yoke from off thee, and will burst thy bonds in sunder."
+          "text": "For now will I break his yoke from off thee, and will burst thy bonds in sunder.",
+          "tokens": [
+            {
+              "text": "For now will I break",
+              "strongsNumbers": [
+                "H7665"
+              ]
+            },
+            {
+              "text": " his yoke",
+              "strongsNumbers": [
+                "H4132"
+              ]
+            },
+            {
+              "text": " from off thee, and will burst",
+              "strongsNumbers": [
+                "H5423"
+              ]
+            },
+            {
+              "text": " thy bonds",
+              "strongsNumbers": [
+                "H4147"
+              ]
+            },
+            {
+              "text": " in sunder."
+            }
+          ]
         },
         {
           "number": 14,
-          "text": "And the LORD hath given a commandment concerning thee, [that] no more of thy name be sown: out of the house of thy gods will I cut off the graven image and the molten image: I will make thy grave; for thou art vile."
+          "text": "And the LORD hath given a commandment concerning thee, that no more of thy name be sown: out of the house of thy gods will I cut off the graven image and the molten image: I will make thy grave; for thou art vile.",
+          "tokens": [
+            {
+              "text": "And the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " hath given a commandment",
+              "strongsNumbers": [
+                "H6680"
+              ]
+            },
+            {
+              "text": " concerning thee, that no more of thy name",
+              "strongsNumbers": [
+                "H8034"
+              ]
+            },
+            {
+              "text": " be sown:",
+              "strongsNumbers": [
+                "H2232"
+              ]
+            },
+            {
+              "text": " out of the house",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " of thy gods",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " will I cut off",
+              "strongsNumbers": [
+                "H3772"
+              ]
+            },
+            {
+              "text": " the graven image",
+              "strongsNumbers": [
+                "H6459"
+              ]
+            },
+            {
+              "text": " and the molten image:",
+              "strongsNumbers": [
+                "H4541"
+              ]
+            },
+            {
+              "text": " I will make",
+              "strongsNumbers": [
+                "H7760"
+              ]
+            },
+            {
+              "text": " thy grave;",
+              "strongsNumbers": [
+                "H6913"
+              ]
+            },
+            {
+              "text": " for thou art vile."
+            }
+          ]
         },
         {
           "number": 15,
-          "text": "Behold upon the mountains the feet of him that bringeth good tidings, that publisheth peace! O Judah, keep thy solemn feasts, perform thy vows: for the wicked shall no more pass through thee; he is utterly cut off."
+          "text": "Behold upon the mountains the feet of him that bringeth good tidings, that publisheth peace! O Judah, keep thy solemn feasts, perform thy vows: for the wicked shall no more pass through thee; he is utterly cut off.",
+          "tokens": [
+            {
+              "text": "Behold upon the mountains",
+              "strongsNumbers": [
+                "H2022"
+              ]
+            },
+            {
+              "text": " the feet",
+              "strongsNumbers": [
+                "H7272"
+              ]
+            },
+            {
+              "text": " of him that bringeth good tidings,",
+              "strongsNumbers": [
+                "H1319"
+              ]
+            },
+            {
+              "text": " that publisheth",
+              "strongsNumbers": [
+                "H8085"
+              ]
+            },
+            {
+              "text": " peace!",
+              "strongsNumbers": [
+                "H7965"
+              ]
+            },
+            {
+              "text": " O Judah,",
+              "strongsNumbers": [
+                "H3063"
+              ]
+            },
+            {
+              "text": " keep",
+              "strongsNumbers": [
+                "H2287"
+              ]
+            },
+            {
+              "text": " thy solemn feasts,",
+              "strongsNumbers": [
+                "H2282"
+              ]
+            },
+            {
+              "text": " perform",
+              "strongsNumbers": [
+                "H7999"
+              ]
+            },
+            {
+              "text": " thy vows:",
+              "strongsNumbers": [
+                "H5088"
+              ]
+            },
+            {
+              "text": " for the wicked",
+              "strongsNumbers": [
+                "H1100"
+              ]
+            },
+            {
+              "text": " shall no more",
+              "strongsNumbers": [
+                "H3254"
+              ]
+            },
+            {
+              "text": " pass through",
+              "strongsNumbers": [
+                "H5674"
+              ]
+            },
+            {
+              "text": " thee; he is utterly cut off."
+            }
+          ]
         }
       ]
     },
@@ -80,55 +894,828 @@
       "verses": [
         {
           "number": 1,
-          "text": "He that dasheth in pieces is come up before thy face: keep the munition, watch the way, make [thy] loins strong, fortify [thy] power mightily."
+          "text": "He that dasheth in pieces is come up before thy face: keep the munition, watch the way, make thy loins strong, fortify thy power mightily.",
+          "tokens": [
+            {
+              "text": "He that dasheth in pieces",
+              "strongsNumbers": [
+                "H6327"
+              ]
+            },
+            {
+              "text": " is come up",
+              "strongsNumbers": [
+                "H5927"
+              ]
+            },
+            {
+              "text": " before thy face:",
+              "strongsNumbers": [
+                "H6440"
+              ]
+            },
+            {
+              "text": " keep",
+              "strongsNumbers": [
+                "H5341"
+              ]
+            },
+            {
+              "text": " the munition,",
+              "strongsNumbers": [
+                "H4694"
+              ]
+            },
+            {
+              "text": " watch",
+              "strongsNumbers": [
+                "H6822"
+              ]
+            },
+            {
+              "text": " the way,",
+              "strongsNumbers": [
+                "H1870"
+              ]
+            },
+            {
+              "text": " make thy loins",
+              "strongsNumbers": [
+                "H4975"
+              ]
+            },
+            {
+              "text": " strong,",
+              "strongsNumbers": [
+                "H2388"
+              ]
+            },
+            {
+              "text": " fortify",
+              "strongsNumbers": [
+                "H553"
+              ]
+            },
+            {
+              "text": " thy power",
+              "strongsNumbers": [
+                "H3581"
+              ]
+            },
+            {
+              "text": " mightily."
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "For the LORD hath turned away the excellency of Jacob, as the excellency of Israel: for the emptiers have emptied them out, and marred their vine branches."
+          "text": "For the LORD hath turned away the excellency of Jacob, as the excellency of Israel: for the emptiers have emptied them out, and marred their vine branches.",
+          "tokens": [
+            {
+              "text": "For the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " hath turned away",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " the excellency",
+              "strongsNumbers": [
+                "H1347"
+              ]
+            },
+            {
+              "text": " of Jacob,",
+              "strongsNumbers": [
+                "H3290"
+              ]
+            },
+            {
+              "text": " as the excellency",
+              "strongsNumbers": [
+                "H1347"
+              ]
+            },
+            {
+              "text": " of Israel:",
+              "strongsNumbers": [
+                "H3478"
+              ]
+            },
+            {
+              "text": " for the emptiers",
+              "strongsNumbers": [
+                "H1238"
+              ]
+            },
+            {
+              "text": " have emptied them out,",
+              "strongsNumbers": [
+                "H1238"
+              ]
+            },
+            {
+              "text": " and marred",
+              "strongsNumbers": [
+                "H7843"
+              ]
+            },
+            {
+              "text": " their vine branches."
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "The shield of his mighty men is made red, the valiant men [are] in scarlet: the chariots [shall be] with flaming torches in the day of his preparation, and the fir trees shall be terribly shaken."
+          "text": "The shield of his mighty men is made red, the valiant men are in scarlet: the chariots shall be with flaming torches in the day of his preparation, and the fir trees shall be terribly shaken.",
+          "tokens": [
+            {
+              "text": "The shield",
+              "strongsNumbers": [
+                "H4043"
+              ]
+            },
+            {
+              "text": " of his mighty men",
+              "strongsNumbers": [
+                "H1368"
+              ]
+            },
+            {
+              "text": " is made red,",
+              "strongsNumbers": [
+                "H119"
+              ]
+            },
+            {
+              "text": " the valiant",
+              "strongsNumbers": [
+                "H2428"
+              ]
+            },
+            {
+              "text": " men",
+              "strongsNumbers": [
+                "H582"
+              ]
+            },
+            {
+              "text": " are in scarlet:",
+              "strongsNumbers": [
+                "H8529"
+              ]
+            },
+            {
+              "text": " the chariots",
+              "strongsNumbers": [
+                "H7393"
+              ]
+            },
+            {
+              "text": " shall be with flaming",
+              "strongsNumbers": [
+                "H784"
+              ]
+            },
+            {
+              "text": " torches",
+              "strongsNumbers": [
+                "H6393"
+              ]
+            },
+            {
+              "text": " in the day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " of his preparation,",
+              "strongsNumbers": [
+                "H3559"
+              ]
+            },
+            {
+              "text": " and the fir trees",
+              "strongsNumbers": [
+                "H1265"
+              ]
+            },
+            {
+              "text": " shall be terribly shaken."
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "The chariots shall rage in the streets, they shall justle one against another in the broad ways: they shall seem like torches, they shall run like the lightnings."
+          "text": "The chariots shall rage in the streets, they shall justle one against another in the broad ways: they shall seem like torches, they shall run like the lightnings.",
+          "tokens": [
+            {
+              "text": "The chariots",
+              "strongsNumbers": [
+                "H7393"
+              ]
+            },
+            {
+              "text": " shall rage",
+              "strongsNumbers": [
+                "H1984"
+              ]
+            },
+            {
+              "text": " in the streets,",
+              "strongsNumbers": [
+                "H2351"
+              ]
+            },
+            {
+              "text": " they shall justle one against another",
+              "strongsNumbers": [
+                "H8264"
+              ]
+            },
+            {
+              "text": " in the broad ways:",
+              "strongsNumbers": [
+                "H7339"
+              ]
+            },
+            {
+              "text": " they shall seem",
+              "strongsNumbers": [
+                "H4758"
+              ]
+            },
+            {
+              "text": " like torches,",
+              "strongsNumbers": [
+                "H3940"
+              ]
+            },
+            {
+              "text": " they shall run",
+              "strongsNumbers": [
+                "H7323"
+              ]
+            },
+            {
+              "text": " like the lightnings."
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "He shall recount his worthies: they shall stumble in their walk; they shall make haste to the wall thereof, and the defence shall be prepared."
+          "text": "He shall recount his worthies: they shall stumble in their walk; they shall make haste to the wall thereof, and the defence shall be prepared.",
+          "tokens": [
+            {
+              "text": "He shall recount",
+              "strongsNumbers": [
+                "H2142"
+              ]
+            },
+            {
+              "text": " his worthies:",
+              "strongsNumbers": [
+                "H117"
+              ]
+            },
+            {
+              "text": " they shall stumble",
+              "strongsNumbers": [
+                "H3782"
+              ]
+            },
+            {
+              "text": " in their walk;",
+              "strongsNumbers": [
+                "H1979"
+              ]
+            },
+            {
+              "text": " they shall make haste",
+              "strongsNumbers": [
+                "H4116"
+              ]
+            },
+            {
+              "text": " to the wall",
+              "strongsNumbers": [
+                "H2346"
+              ]
+            },
+            {
+              "text": " thereof, and the defence",
+              "strongsNumbers": [
+                "H5526"
+              ]
+            },
+            {
+              "text": " shall be prepared."
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "The gates of the rivers shall be opened, and the palace shall be dissolved."
+          "text": "The gates of the rivers shall be opened, and the palace shall be dissolved.",
+          "tokens": [
+            {
+              "text": "The gates",
+              "strongsNumbers": [
+                "H8179"
+              ]
+            },
+            {
+              "text": " of the rivers",
+              "strongsNumbers": [
+                "H5104"
+              ]
+            },
+            {
+              "text": " shall be opened,",
+              "strongsNumbers": [
+                "H6605"
+              ]
+            },
+            {
+              "text": " and the palace",
+              "strongsNumbers": [
+                "H1964"
+              ]
+            },
+            {
+              "text": " shall be dissolved."
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "And Huzzab shall be led away captive, she shall be brought up, and her maids shall lead [her] as with the voice of doves, tabering upon their breasts."
+          "text": "And Huzzab shall be led away captive, she shall be brought up, and her maids shall lead her as with the voice of doves, tabering upon their breasts.",
+          "tokens": [
+            {
+              "text": "And Huzzab",
+              "strongsNumbers": [
+                "H5324"
+              ]
+            },
+            {
+              "text": " shall be led away captive,",
+              "strongsNumbers": [
+                "H1540"
+              ]
+            },
+            {
+              "text": " she shall be brought up,",
+              "strongsNumbers": [
+                "H5927"
+              ]
+            },
+            {
+              "text": " and her maids",
+              "strongsNumbers": [
+                "H519"
+              ]
+            },
+            {
+              "text": " shall lead",
+              "strongsNumbers": [
+                "H5090"
+              ]
+            },
+            {
+              "text": " her as with the voice",
+              "strongsNumbers": [
+                "H6963"
+              ]
+            },
+            {
+              "text": " of doves,",
+              "strongsNumbers": [
+                "H3123"
+              ]
+            },
+            {
+              "text": " tabering",
+              "strongsNumbers": [
+                "H8608"
+              ]
+            },
+            {
+              "text": " upon their breasts."
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "But Nineveh [is] of old like a pool of water: yet they shall flee away. Stand, stand, [shall they cry]; but none shall look back."
+          "text": "But Nineveh is of old like a pool of water: yet they shall flee away. Stand, stand, shall they cry; but none shall look back.",
+          "tokens": [
+            {
+              "text": "But Nineveh",
+              "strongsNumbers": [
+                "H5210"
+              ]
+            },
+            {
+              "text": " is of old",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " like a pool",
+              "strongsNumbers": [
+                "H1295"
+              ]
+            },
+            {
+              "text": " of water:",
+              "strongsNumbers": [
+                "H4325"
+              ]
+            },
+            {
+              "text": " yet they shall flee away.",
+              "strongsNumbers": [
+                "H5127"
+              ]
+            },
+            {
+              "text": " Stand,",
+              "strongsNumbers": [
+                "H5975"
+              ]
+            },
+            {
+              "text": " stand,",
+              "strongsNumbers": [
+                "H5975"
+              ]
+            },
+            {
+              "text": " shall they cry; but none shall look back."
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "Take ye the spoil of silver, take the spoil of gold: for [there is] none end of the store [and] glory out of all the pleasant furniture."
+          "text": "Take ye the spoil of silver, take the spoil of gold: for there is none end of the store and glory out of all the pleasant furniture.",
+          "tokens": [
+            {
+              "text": "Take ye the spoil",
+              "strongsNumbers": [
+                "H962"
+              ]
+            },
+            {
+              "text": " of silver,",
+              "strongsNumbers": [
+                "H3701"
+              ]
+            },
+            {
+              "text": " take the spoil",
+              "strongsNumbers": [
+                "H962"
+              ]
+            },
+            {
+              "text": " of gold:",
+              "strongsNumbers": [
+                "H2091"
+              ]
+            },
+            {
+              "text": " for there is none end",
+              "strongsNumbers": [
+                "H7097"
+              ]
+            },
+            {
+              "text": " of the store",
+              "strongsNumbers": [
+                "H8498"
+              ]
+            },
+            {
+              "text": " and glory",
+              "strongsNumbers": [
+                "H3519"
+              ]
+            },
+            {
+              "text": " out of all the pleasant",
+              "strongsNumbers": [
+                "H2532"
+              ]
+            },
+            {
+              "text": " furniture."
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "She is empty, and void, and waste: and the heart melteth, and the knees smite together, and much pain [is] in all loins, and the faces of them all gather blackness."
+          "text": "She is empty, and void, and waste: and the heart melteth, and the knees smite together, and much pain is in all loins, and the faces of them all gather blackness.",
+          "tokens": [
+            {
+              "text": "She is empty,",
+              "strongsNumbers": [
+                "H950"
+              ]
+            },
+            {
+              "text": " and void,",
+              "strongsNumbers": [
+                "H4003"
+              ]
+            },
+            {
+              "text": " and waste:",
+              "strongsNumbers": [
+                "H1110"
+              ]
+            },
+            {
+              "text": " and the heart",
+              "strongsNumbers": [
+                "H3820"
+              ]
+            },
+            {
+              "text": " melteth,",
+              "strongsNumbers": [
+                "H4549"
+              ]
+            },
+            {
+              "text": " and the knees",
+              "strongsNumbers": [
+                "H1290"
+              ]
+            },
+            {
+              "text": " smite together,",
+              "strongsNumbers": [
+                "H6375"
+              ]
+            },
+            {
+              "text": " and much pain",
+              "strongsNumbers": [
+                "H2479"
+              ]
+            },
+            {
+              "text": " is in all loins,",
+              "strongsNumbers": [
+                "H4975"
+              ]
+            },
+            {
+              "text": " and the faces",
+              "strongsNumbers": [
+                "H6440"
+              ]
+            },
+            {
+              "text": " of them all gather",
+              "strongsNumbers": [
+                "H6908"
+              ]
+            },
+            {
+              "text": " blackness."
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "Where [is] the dwelling of the lions, and the feedingplace of the young lions, where the lion, [even] the old lion, walked, [and] the lion's whelp, and none made [them] afraid?"
+          "text": "Where is the dwelling of the lions, and the feedingplace of the young lions, where the lion, even the old lion, walked, and the lion's whelp, and none made them afraid?",
+          "tokens": [
+            {
+              "text": "Where is the dwelling",
+              "strongsNumbers": [
+                "H4583"
+              ]
+            },
+            {
+              "text": " of the lions,",
+              "strongsNumbers": [
+                "H738"
+              ]
+            },
+            {
+              "text": " and the feedingplace",
+              "strongsNumbers": [
+                "H4829"
+              ]
+            },
+            {
+              "text": " of the young lions,",
+              "strongsNumbers": [
+                "H3715"
+              ]
+            },
+            {
+              "text": " where the lion,",
+              "strongsNumbers": [
+                "H738"
+              ]
+            },
+            {
+              "text": " even the old lion,",
+              "strongsNumbers": [
+                "H3833"
+              ]
+            },
+            {
+              "text": " walked,",
+              "strongsNumbers": [
+                "H1980"
+              ]
+            },
+            {
+              "text": " and the lion's",
+              "strongsNumbers": [
+                "H738"
+              ]
+            },
+            {
+              "text": " whelp,",
+              "strongsNumbers": [
+                "H1482"
+              ]
+            },
+            {
+              "text": " and none made them afraid?"
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "The lion did tear in pieces enough for his whelps, and strangled for his lionesses, and filled his holes with prey, and his dens with ravin."
+          "text": "The lion did tear in pieces enough for his whelps, and strangled for his lionesses, and filled his holes with prey, and his dens with ravin.",
+          "tokens": [
+            {
+              "text": "The lion",
+              "strongsNumbers": [
+                "H738"
+              ]
+            },
+            {
+              "text": " did tear in pieces",
+              "strongsNumbers": [
+                "H2963"
+              ]
+            },
+            {
+              "text": " enough",
+              "strongsNumbers": [
+                "H1767"
+              ]
+            },
+            {
+              "text": " for his whelps,",
+              "strongsNumbers": [
+                "H1484"
+              ]
+            },
+            {
+              "text": " and strangled",
+              "strongsNumbers": [
+                "H2614"
+              ]
+            },
+            {
+              "text": " for his lionesses,",
+              "strongsNumbers": [
+                "H3833"
+              ]
+            },
+            {
+              "text": " and filled",
+              "strongsNumbers": [
+                "H4390"
+              ]
+            },
+            {
+              "text": " his holes",
+              "strongsNumbers": [
+                "H2356"
+              ]
+            },
+            {
+              "text": " with prey,",
+              "strongsNumbers": [
+                "H2964"
+              ]
+            },
+            {
+              "text": " and his dens",
+              "strongsNumbers": [
+                "H4585"
+              ]
+            },
+            {
+              "text": " with ravin."
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "Behold, I [am] against thee, saith the LORD of hosts, and I will burn her chariots in the smoke, and the sword shall devour thy young lions: and I will cut off thy prey from the earth, and the voice of thy messengers shall no more be heard."
+          "text": "Behold, I am against thee, saith the LORD of hosts, and I will burn her chariots in the smoke, and the sword shall devour thy young lions: and I will cut off thy prey from the earth, and the voice of thy messengers shall no more be heard.",
+          "tokens": [
+            {
+              "text": "Behold, I am against thee, saith",
+              "strongsNumbers": [
+                "H5002"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts,",
+              "strongsNumbers": [
+                "H6635"
+              ]
+            },
+            {
+              "text": " and I will burn",
+              "strongsNumbers": [
+                "H1197"
+              ]
+            },
+            {
+              "text": " her chariots",
+              "strongsNumbers": [
+                "H7393"
+              ]
+            },
+            {
+              "text": " in the smoke,",
+              "strongsNumbers": [
+                "H6227"
+              ]
+            },
+            {
+              "text": " and the sword",
+              "strongsNumbers": [
+                "H2719"
+              ]
+            },
+            {
+              "text": " shall devour",
+              "strongsNumbers": [
+                "H398"
+              ]
+            },
+            {
+              "text": " thy young lions:",
+              "strongsNumbers": [
+                "H3715"
+              ]
+            },
+            {
+              "text": " and I will cut off",
+              "strongsNumbers": [
+                "H3772"
+              ]
+            },
+            {
+              "text": " thy prey",
+              "strongsNumbers": [
+                "H2964"
+              ]
+            },
+            {
+              "text": " from the earth,",
+              "strongsNumbers": [
+                "H776"
+              ]
+            },
+            {
+              "text": " and the voice",
+              "strongsNumbers": [
+                "H6963"
+              ]
+            },
+            {
+              "text": " of thy messengers",
+              "strongsNumbers": [
+                "H4397"
+              ]
+            },
+            {
+              "text": " shall no more be heard."
+            }
+          ]
         }
       ]
     },
@@ -138,79 +1725,1168 @@
       "verses": [
         {
           "number": 1,
-          "text": "Woe to the bloody city! it [is] all full of lies [and] robbery; the prey departeth not;"
+          "text": "Woe to the bloody city! it is all full of lies and robbery; the prey departeth",
+          "tokens": [
+            {
+              "text": "Woe",
+              "strongsNumbers": [
+                "H1945"
+              ]
+            },
+            {
+              "text": " to the bloody",
+              "strongsNumbers": [
+                "H1818"
+              ]
+            },
+            {
+              "text": " city!",
+              "strongsNumbers": [
+                "H5892"
+              ]
+            },
+            {
+              "text": " it is all full",
+              "strongsNumbers": [
+                "H4392"
+              ]
+            },
+            {
+              "text": " of lies",
+              "strongsNumbers": [
+                "H3585"
+              ]
+            },
+            {
+              "text": " and robbery;",
+              "strongsNumbers": [
+                "H6563"
+              ]
+            },
+            {
+              "text": " the prey",
+              "strongsNumbers": [
+                "H2964"
+              ]
+            },
+            {
+              "text": " departeth"
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "The noise of a whip, and the noise of the rattling of the wheels, and of the pransing horses, and of the jumping chariots."
+          "text": "The noise of a whip, and the noise of the rattling of the wheels, and of the pransing horses, and of the jumping chariots.",
+          "tokens": [
+            {
+              "text": "The noise",
+              "strongsNumbers": [
+                "H6963"
+              ]
+            },
+            {
+              "text": " of a whip,",
+              "strongsNumbers": [
+                "H7752"
+              ]
+            },
+            {
+              "text": " and the noise",
+              "strongsNumbers": [
+                "H6963"
+              ]
+            },
+            {
+              "text": " of the rattling",
+              "strongsNumbers": [
+                "H7494"
+              ]
+            },
+            {
+              "text": " of the wheels,",
+              "strongsNumbers": [
+                "H212"
+              ]
+            },
+            {
+              "text": " and of the pransing",
+              "strongsNumbers": [
+                "H1725"
+              ]
+            },
+            {
+              "text": " horses,",
+              "strongsNumbers": [
+                "H5483"
+              ]
+            },
+            {
+              "text": " and of the jumping",
+              "strongsNumbers": [
+                "H7540"
+              ]
+            },
+            {
+              "text": " chariots."
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "The horseman lifteth up both the bright sword and the glittering spear: and [there is] a multitude of slain, and a great number of carcases; and [there is] none end of [their] corpses; they stumble upon their corpses:"
+          "text": "The horseman lifteth up both the bright sword and the glittering spear: and there is a multitude of slain, and a great number of carcases; and there is none end of their corpses; they stumble upon their corpses:",
+          "tokens": [
+            {
+              "text": "The horseman",
+              "strongsNumbers": [
+                "H6571"
+              ]
+            },
+            {
+              "text": " lifteth up",
+              "strongsNumbers": [
+                "H5927"
+              ]
+            },
+            {
+              "text": " both the bright",
+              "strongsNumbers": [
+                "H3851"
+              ]
+            },
+            {
+              "text": " sword",
+              "strongsNumbers": [
+                "H2719"
+              ]
+            },
+            {
+              "text": " and the glittering",
+              "strongsNumbers": [
+                "H1300"
+              ]
+            },
+            {
+              "text": " spear:",
+              "strongsNumbers": [
+                "H2595"
+              ]
+            },
+            {
+              "text": " and there is a multitude",
+              "strongsNumbers": [
+                "H7230"
+              ]
+            },
+            {
+              "text": " of slain,",
+              "strongsNumbers": [
+                "H2491"
+              ]
+            },
+            {
+              "text": " and a great",
+              "strongsNumbers": [
+                "H3514"
+              ]
+            },
+            {
+              "text": " number of carcases;",
+              "strongsNumbers": [
+                "H6297"
+              ]
+            },
+            {
+              "text": " and there is none end",
+              "strongsNumbers": [
+                "H7097"
+              ]
+            },
+            {
+              "text": " of their corpses;",
+              "strongsNumbers": [
+                "H1472"
+              ]
+            },
+            {
+              "text": " they stumble",
+              "strongsNumbers": [
+                "H3782",
+                "H3782"
+              ]
+            },
+            {
+              "text": " upon their corpses:"
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "Because of the multitude of the whoredoms of the wellfavoured harlot, the mistress of witchcrafts, that selleth nations through her whoredoms, and families through her witchcrafts."
+          "text": "Because of the multitude of the whoredoms of the wellfavoured harlot, the mistress of witchcrafts, that selleth nations through her whoredoms, and families through her witchcrafts.",
+          "tokens": [
+            {
+              "text": "Because of the multitude",
+              "strongsNumbers": [
+                "H7230"
+              ]
+            },
+            {
+              "text": " of the whoredoms",
+              "strongsNumbers": [
+                "H2183"
+              ]
+            },
+            {
+              "text": " of the wellfavoured",
+              "strongsNumbers": [
+                "H2896",
+                "H2580"
+              ]
+            },
+            {
+              "text": " harlot,",
+              "strongsNumbers": [
+                "H2181"
+              ]
+            },
+            {
+              "text": " the mistress",
+              "strongsNumbers": [
+                "H1172"
+              ]
+            },
+            {
+              "text": " of witchcrafts,",
+              "strongsNumbers": [
+                "H3785"
+              ]
+            },
+            {
+              "text": " that selleth",
+              "strongsNumbers": [
+                "H4376"
+              ]
+            },
+            {
+              "text": " nations",
+              "strongsNumbers": [
+                "H1471"
+              ]
+            },
+            {
+              "text": " through her whoredoms,",
+              "strongsNumbers": [
+                "H2183"
+              ]
+            },
+            {
+              "text": " and families",
+              "strongsNumbers": [
+                "H4940"
+              ]
+            },
+            {
+              "text": " through her witchcrafts."
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "Behold, I [am] against thee, saith the LORD of hosts; and I will discover thy skirts upon thy face, and I will shew the nations thy nakedness, and the kingdoms thy shame."
+          "text": "Behold, I am against thee, saith the LORD of hosts; and I will discover thy skirts upon thy face, and I will shew the nations thy nakedness, and the kingdoms thy shame.",
+          "tokens": [
+            {
+              "text": "Behold, I am against thee, saith",
+              "strongsNumbers": [
+                "H5002"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts;",
+              "strongsNumbers": [
+                "H6635"
+              ]
+            },
+            {
+              "text": " and I will discover",
+              "strongsNumbers": [
+                "H1540"
+              ]
+            },
+            {
+              "text": " thy skirts",
+              "strongsNumbers": [
+                "H7757"
+              ]
+            },
+            {
+              "text": " upon thy face,",
+              "strongsNumbers": [
+                "H6440"
+              ]
+            },
+            {
+              "text": " and I will shew",
+              "strongsNumbers": [
+                "H7200"
+              ]
+            },
+            {
+              "text": " the nations",
+              "strongsNumbers": [
+                "H1471"
+              ]
+            },
+            {
+              "text": " thy nakedness,",
+              "strongsNumbers": [
+                "H4626"
+              ]
+            },
+            {
+              "text": " and the kingdoms",
+              "strongsNumbers": [
+                "H4467"
+              ]
+            },
+            {
+              "text": " thy shame."
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "And I will cast abominable filth upon thee, and make thee vile, and will set thee as a gazingstock."
+          "text": "And I will cast abominable filth upon thee, and make thee vile, and will set thee as a gazingstock.",
+          "tokens": [
+            {
+              "text": "And I will cast",
+              "strongsNumbers": [
+                "H7993"
+              ]
+            },
+            {
+              "text": " abominable filth",
+              "strongsNumbers": [
+                "H8251"
+              ]
+            },
+            {
+              "text": " upon thee, and make thee vile,",
+              "strongsNumbers": [
+                "H5034"
+              ]
+            },
+            {
+              "text": " and will set",
+              "strongsNumbers": [
+                "H7760"
+              ]
+            },
+            {
+              "text": " thee as a gazingstock."
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "And it shall come to pass, [that] all they that look upon thee shall flee from thee, and say, Nineveh is laid waste: who will bemoan her? whence shall I seek comforters for thee?"
+          "text": "And it shall come to pass, that all they that look upon thee shall flee from thee, and say, Nineveh is laid waste: who will bemoan her? whence shall I seek comforters",
+          "tokens": [
+            {
+              "text": "And it shall come to pass, that all they that look",
+              "strongsNumbers": [
+                "H7200"
+              ]
+            },
+            {
+              "text": " upon thee shall flee",
+              "strongsNumbers": [
+                "H5074"
+              ]
+            },
+            {
+              "text": " from thee, and say,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Nineveh",
+              "strongsNumbers": [
+                "H5210"
+              ]
+            },
+            {
+              "text": " is laid waste:",
+              "strongsNumbers": [
+                "H7703"
+              ]
+            },
+            {
+              "text": " who will bemoan",
+              "strongsNumbers": [
+                "H5110"
+              ]
+            },
+            {
+              "text": " her? whence",
+              "strongsNumbers": [
+                "H370"
+              ]
+            },
+            {
+              "text": " shall I seek",
+              "strongsNumbers": [
+                "H1245"
+              ]
+            },
+            {
+              "text": " comforters"
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "Art thou better than populous No, that was situate among the rivers, [that had] the waters round about it, whose rampart [was] the sea, [and] her wall [was] from the sea?"
+          "text": "Art thou better than populous No, that was situate among the rivers, that had the waters round about it, whose rampart was the sea, and her wall was from the sea?",
+          "tokens": [
+            {
+              "text": "Art thou better",
+              "strongsNumbers": [
+                "H3190"
+              ]
+            },
+            {
+              "text": " than populous",
+              "strongsNumbers": [
+                "H527",
+                "H528"
+              ]
+            },
+            {
+              "text": " No,",
+              "strongsNumbers": [
+                "H4996"
+              ]
+            },
+            {
+              "text": " that was situate",
+              "strongsNumbers": [
+                "H3427"
+              ]
+            },
+            {
+              "text": " among the rivers,",
+              "strongsNumbers": [
+                "H2975"
+              ]
+            },
+            {
+              "text": " that had the waters",
+              "strongsNumbers": [
+                "H4325"
+              ]
+            },
+            {
+              "text": " round about",
+              "strongsNumbers": [
+                "H5439"
+              ]
+            },
+            {
+              "text": " it, whose rampart",
+              "strongsNumbers": [
+                "H2426"
+              ]
+            },
+            {
+              "text": " was the sea,",
+              "strongsNumbers": [
+                "H3220"
+              ]
+            },
+            {
+              "text": " and her wall",
+              "strongsNumbers": [
+                "H2346"
+              ]
+            },
+            {
+              "text": " was from the sea?"
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "Ethiopia and Egypt [were] her strength, and [it was] infinite; Put and Lubim were thy helpers."
+          "text": "Ethiopia and Egypt were her strength, and it was infinite; Put and Lubim were thy helpers.",
+          "tokens": [
+            {
+              "text": "Ethiopia",
+              "strongsNumbers": [
+                "H3568"
+              ]
+            },
+            {
+              "text": " and Egypt",
+              "strongsNumbers": [
+                "H4714"
+              ]
+            },
+            {
+              "text": " were her strength,",
+              "strongsNumbers": [
+                "H6109"
+              ]
+            },
+            {
+              "text": " and it was infinite;",
+              "strongsNumbers": [
+                "H369",
+                "H7097"
+              ]
+            },
+            {
+              "text": " Put",
+              "strongsNumbers": [
+                "H6316"
+              ]
+            },
+            {
+              "text": " and Lubim",
+              "strongsNumbers": [
+                "H3864"
+              ]
+            },
+            {
+              "text": " were thy helpers."
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "Yet [was] she carried away, she went into captivity: her young children also were dashed in pieces at the top of all the streets: and they cast lots for her honourable men, and all her great men were bound in chains."
+          "text": "Yet was she carried away, she went into captivity: her young children also were dashed in pieces at the top of all the streets: and they cast lots for her honourable men, and all her great men were bound in chains.",
+          "tokens": [
+            {
+              "text": "Yet was she carried away,",
+              "strongsNumbers": [
+                "H1473"
+              ]
+            },
+            {
+              "text": " she went",
+              "strongsNumbers": [
+                "H1980"
+              ]
+            },
+            {
+              "text": " into captivity:",
+              "strongsNumbers": [
+                "H7628"
+              ]
+            },
+            {
+              "text": " her young children",
+              "strongsNumbers": [
+                "H5768"
+              ]
+            },
+            {
+              "text": " also were dashed in pieces",
+              "strongsNumbers": [
+                "H7376"
+              ]
+            },
+            {
+              "text": " at the top",
+              "strongsNumbers": [
+                "H7218"
+              ]
+            },
+            {
+              "text": " of all the streets:",
+              "strongsNumbers": [
+                "H2351"
+              ]
+            },
+            {
+              "text": " and they cast",
+              "strongsNumbers": [
+                "H3032"
+              ]
+            },
+            {
+              "text": " lots",
+              "strongsNumbers": [
+                "H1486"
+              ]
+            },
+            {
+              "text": " for her honourable men,",
+              "strongsNumbers": [
+                "H3513"
+              ]
+            },
+            {
+              "text": " and all her great men",
+              "strongsNumbers": [
+                "H1419"
+              ]
+            },
+            {
+              "text": " were bound",
+              "strongsNumbers": [
+                "H7576"
+              ]
+            },
+            {
+              "text": " in chains."
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "Thou also shalt be drunken: thou shalt be hid, thou also shalt seek strength because of the enemy."
+          "text": "Thou also shalt be drunken: thou shalt be hid, thou also shalt seek strength because of the enemy.",
+          "tokens": [
+            {
+              "text": "Thou also shalt be drunken:",
+              "strongsNumbers": [
+                "H7937"
+              ]
+            },
+            {
+              "text": " thou shalt be hid,",
+              "strongsNumbers": [
+                "H5956"
+              ]
+            },
+            {
+              "text": " thou also shalt seek",
+              "strongsNumbers": [
+                "H1245"
+              ]
+            },
+            {
+              "text": " strength",
+              "strongsNumbers": [
+                "H4581"
+              ]
+            },
+            {
+              "text": " because of the enemy."
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "All thy strong holds [shall be like] fig trees with the firstripe figs: if they be shaken, they shall even fall into the mouth of the eater."
+          "text": "All thy strong holds shall be like fig trees with the firstripe figs: if they be shaken, they shall even fall into the mouth of the eater.",
+          "tokens": [
+            {
+              "text": "All thy strong holds",
+              "strongsNumbers": [
+                "H4013"
+              ]
+            },
+            {
+              "text": " shall be like fig trees",
+              "strongsNumbers": [
+                "H8384"
+              ]
+            },
+            {
+              "text": " with the firstripe figs:",
+              "strongsNumbers": [
+                "H1061"
+              ]
+            },
+            {
+              "text": " if they be shaken,",
+              "strongsNumbers": [
+                "H5128"
+              ]
+            },
+            {
+              "text": " they shall even fall",
+              "strongsNumbers": [
+                "H5307"
+              ]
+            },
+            {
+              "text": " into the mouth",
+              "strongsNumbers": [
+                "H6310"
+              ]
+            },
+            {
+              "text": " of the eater."
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "Behold, thy people in the midst of thee [are] women: the gates of thy land shall be set wide open unto thine enemies: the fire shall devour thy bars."
+          "text": "Behold, thy people in the midst of thee are women: the gates of thy land shall be set wide open unto thine enemies: the fire shall devour thy bars.",
+          "tokens": [
+            {
+              "text": "Behold, thy people",
+              "strongsNumbers": [
+                "H5971"
+              ]
+            },
+            {
+              "text": " in the midst",
+              "strongsNumbers": [
+                "H7130"
+              ]
+            },
+            {
+              "text": " of thee are women:",
+              "strongsNumbers": [
+                "H802"
+              ]
+            },
+            {
+              "text": " the gates",
+              "strongsNumbers": [
+                "H8179"
+              ]
+            },
+            {
+              "text": " of thy land",
+              "strongsNumbers": [
+                "H776"
+              ]
+            },
+            {
+              "text": " shall be set wide",
+              "strongsNumbers": [
+                "H6605"
+              ]
+            },
+            {
+              "text": " open",
+              "strongsNumbers": [
+                "H6605"
+              ]
+            },
+            {
+              "text": " unto thine enemies:",
+              "strongsNumbers": [
+                "H341"
+              ]
+            },
+            {
+              "text": " the fire",
+              "strongsNumbers": [
+                "H784"
+              ]
+            },
+            {
+              "text": " shall devour",
+              "strongsNumbers": [
+                "H398"
+              ]
+            },
+            {
+              "text": " thy bars."
+            }
+          ]
         },
         {
           "number": 14,
-          "text": "Draw thee waters for the siege, fortify thy strong holds: go into clay, and tread the morter, make strong the brickkiln."
+          "text": "Draw thee waters for the siege, fortify thy strong holds: go into clay, and tread the morter, make strong the brickkiln.",
+          "tokens": [
+            {
+              "text": "Draw",
+              "strongsNumbers": [
+                "H7579"
+              ]
+            },
+            {
+              "text": " thee waters",
+              "strongsNumbers": [
+                "H4325"
+              ]
+            },
+            {
+              "text": " for the siege,",
+              "strongsNumbers": [
+                "H4692"
+              ]
+            },
+            {
+              "text": " fortify",
+              "strongsNumbers": [
+                "H2388"
+              ]
+            },
+            {
+              "text": " thy strong holds:",
+              "strongsNumbers": [
+                "H4013"
+              ]
+            },
+            {
+              "text": " go",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " into clay,",
+              "strongsNumbers": [
+                "H2916"
+              ]
+            },
+            {
+              "text": " and tread",
+              "strongsNumbers": [
+                "H7429"
+              ]
+            },
+            {
+              "text": " the morter,",
+              "strongsNumbers": [
+                "H2563"
+              ]
+            },
+            {
+              "text": " make strong",
+              "strongsNumbers": [
+                "H2388"
+              ]
+            },
+            {
+              "text": " the brickkiln."
+            }
+          ]
         },
         {
           "number": 15,
-          "text": "There shall the fire devour thee; the sword shall cut thee off, it shall eat thee up like the cankerworm: make thyself many as the cankerworm, make thyself many as the locusts."
+          "text": "There shall the fire devour thee; the sword shall cut thee off, it shall eat thee up like the cankerworm: make thyself many as the cankerworm, make thyself many as the locusts.",
+          "tokens": [
+            {
+              "text": "There shall the fire",
+              "strongsNumbers": [
+                "H784"
+              ]
+            },
+            {
+              "text": " devour",
+              "strongsNumbers": [
+                "H398"
+              ]
+            },
+            {
+              "text": " thee; the sword",
+              "strongsNumbers": [
+                "H2719"
+              ]
+            },
+            {
+              "text": " shall cut thee off,",
+              "strongsNumbers": [
+                "H3772"
+              ]
+            },
+            {
+              "text": " it shall eat thee up",
+              "strongsNumbers": [
+                "H398"
+              ]
+            },
+            {
+              "text": " like the cankerworm:",
+              "strongsNumbers": [
+                "H3218"
+              ]
+            },
+            {
+              "text": " make thyself many",
+              "strongsNumbers": [
+                "H3513"
+              ]
+            },
+            {
+              "text": " as the cankerworm,",
+              "strongsNumbers": [
+                "H3218"
+              ]
+            },
+            {
+              "text": " make thyself many",
+              "strongsNumbers": [
+                "H3513"
+              ]
+            },
+            {
+              "text": " as the locusts."
+            }
+          ]
         },
         {
           "number": 16,
-          "text": "Thou hast multiplied thy merchants above the stars of heaven: the cankerworm spoileth, and flieth away."
+          "text": "Thou hast multiplied thy merchants above the stars of heaven: the cankerworm spoileth, and flieth away.",
+          "tokens": [
+            {
+              "text": "Thou hast multiplied",
+              "strongsNumbers": [
+                "H7235"
+              ]
+            },
+            {
+              "text": " thy merchants",
+              "strongsNumbers": [
+                "H7402"
+              ]
+            },
+            {
+              "text": " above the stars",
+              "strongsNumbers": [
+                "H3556"
+              ]
+            },
+            {
+              "text": " of heaven:",
+              "strongsNumbers": [
+                "H8064"
+              ]
+            },
+            {
+              "text": " the cankerworm",
+              "strongsNumbers": [
+                "H3218"
+              ]
+            },
+            {
+              "text": " spoileth,",
+              "strongsNumbers": [
+                "H6584"
+              ]
+            },
+            {
+              "text": " and flieth away."
+            }
+          ]
         },
         {
           "number": 17,
-          "text": "Thy crowned [are] as the locusts, and thy captains as the great grasshoppers, which camp in the hedges in the cold day, [but] when the sun ariseth they flee away, and their place is not known where they [are]."
+          "text": "Thy crowned are as the locusts, and thy captains as the great grasshoppers, which camp in the hedges in the cold day, but when the sun ariseth they flee away, and their place is not known where",
+          "tokens": [
+            {
+              "text": "Thy crowned",
+              "strongsNumbers": [
+                "H4502"
+              ]
+            },
+            {
+              "text": " are as the locusts,",
+              "strongsNumbers": [
+                "H697"
+              ]
+            },
+            {
+              "text": " and thy captains",
+              "strongsNumbers": [
+                "H2951"
+              ]
+            },
+            {
+              "text": " as the great grasshoppers,",
+              "strongsNumbers": [
+                "H1462"
+              ]
+            },
+            {
+              "text": " which camp",
+              "strongsNumbers": [
+                "H2583"
+              ]
+            },
+            {
+              "text": " in the hedges",
+              "strongsNumbers": [
+                "H1448"
+              ]
+            },
+            {
+              "text": " in the cold",
+              "strongsNumbers": [
+                "H7135"
+              ]
+            },
+            {
+              "text": " day,",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " but when the sun",
+              "strongsNumbers": [
+                "H8121"
+              ]
+            },
+            {
+              "text": " ariseth",
+              "strongsNumbers": [
+                "H2224"
+              ]
+            },
+            {
+              "text": " they flee away,",
+              "strongsNumbers": [
+                "H5074"
+              ]
+            },
+            {
+              "text": " and their place",
+              "strongsNumbers": [
+                "H4725"
+              ]
+            },
+            {
+              "text": " is not known",
+              "strongsNumbers": [
+                "H3045"
+              ]
+            },
+            {
+              "text": " where"
+            }
+          ]
         },
         {
           "number": 18,
-          "text": "Thy shepherds slumber, O king of Assyria: thy nobles shall dwell [in the dust]: thy people is scattered upon the mountains, and no man gathereth [them]."
+          "text": "Thy shepherds slumber, O king of Assyria: thy nobles shall dwell in the dust: thy people is scattered upon the mountains, and no man gathereth",
+          "tokens": [
+            {
+              "text": "Thy shepherds",
+              "strongsNumbers": [
+                "H7462"
+              ]
+            },
+            {
+              "text": " slumber,",
+              "strongsNumbers": [
+                "H5123"
+              ]
+            },
+            {
+              "text": " O king",
+              "strongsNumbers": [
+                "H4428"
+              ]
+            },
+            {
+              "text": " of Assyria:",
+              "strongsNumbers": [
+                "H804"
+              ]
+            },
+            {
+              "text": " thy nobles",
+              "strongsNumbers": [
+                "H117"
+              ]
+            },
+            {
+              "text": " shall dwell",
+              "strongsNumbers": [
+                "H7931"
+              ]
+            },
+            {
+              "text": " in the dust: thy people",
+              "strongsNumbers": [
+                "H5971"
+              ]
+            },
+            {
+              "text": " is scattered",
+              "strongsNumbers": [
+                "H6335"
+              ]
+            },
+            {
+              "text": " upon the mountains,",
+              "strongsNumbers": [
+                "H2022"
+              ]
+            },
+            {
+              "text": " and no man gathereth"
+            }
+          ]
         },
         {
           "number": 19,
-          "text": "[There is] no healing of thy bruise; thy wound is grievous: all that hear the bruit of thee shall clap the hands over thee: for upon whom hath not thy wickedness passed continually?"
+          "text": "There is no healing of thy bruise; thy wound is grievous: all that hear the bruit of thee shall clap the hands over thee: for upon whom hath not thy wickedness passed continually?",
+          "tokens": [
+            {
+              "text": "There is no healing",
+              "strongsNumbers": [
+                "H3545"
+              ]
+            },
+            {
+              "text": " of thy bruise;",
+              "strongsNumbers": [
+                "H7667"
+              ]
+            },
+            {
+              "text": " thy wound",
+              "strongsNumbers": [
+                "H4347"
+              ]
+            },
+            {
+              "text": " is grievous:",
+              "strongsNumbers": [
+                "H2470"
+              ]
+            },
+            {
+              "text": " all that hear",
+              "strongsNumbers": [
+                "H8085"
+              ]
+            },
+            {
+              "text": " the bruit",
+              "strongsNumbers": [
+                "H8088"
+              ]
+            },
+            {
+              "text": " of thee shall clap",
+              "strongsNumbers": [
+                "H8628"
+              ]
+            },
+            {
+              "text": " the hands",
+              "strongsNumbers": [
+                "H3709"
+              ]
+            },
+            {
+              "text": " over thee: for upon whom hath not thy wickedness",
+              "strongsNumbers": [
+                "H7451"
+              ]
+            },
+            {
+              "text": " passed",
+              "strongsNumbers": [
+                "H5674"
+              ]
+            },
+            {
+              "text": " continually?"
+            }
+          ]
         }
       ]
     }

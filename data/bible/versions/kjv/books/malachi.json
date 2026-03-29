@@ -14,59 +14,1102 @@
       "verses": [
         {
           "number": 1,
-          "text": "The burden of the word of the LORD to Israel by Malachi."
+          "text": "The burden of the word of the LORD to Israel by Malachi.",
+          "tokens": [
+            {
+              "text": "The burden",
+              "strongsNumbers": [
+                "H4853"
+              ]
+            },
+            {
+              "text": " of the word",
+              "strongsNumbers": [
+                "H1697"
+              ]
+            },
+            {
+              "text": " of the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " to Israel",
+              "strongsNumbers": [
+                "H3478"
+              ]
+            },
+            {
+              "text": " by",
+              "strongsNumbers": [
+                "H3027"
+              ]
+            },
+            {
+              "text": " Malachi."
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "I have loved you, saith the LORD. Yet ye say, Wherein hast thou loved us? [Was] not Esau Jacob's brother? saith the LORD: yet I loved Jacob,"
+          "text": "I have loved you, saith the LORD. Yet ye say, Wherein hast thou loved us? Was not Esau Jacob's brother? saith the LORD: yet I loved Jacob,",
+          "tokens": [
+            {
+              "text": "I have loved",
+              "strongsNumbers": [
+                "H157"
+              ]
+            },
+            {
+              "text": " you, saith",
+              "strongsNumbers": [
+                "H5002"
+              ]
+            },
+            {
+              "text": " the LORD.",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " Yet ye say,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Wherein hast thou loved",
+              "strongsNumbers": [
+                "H157"
+              ]
+            },
+            {
+              "text": " us? Was not Esau",
+              "strongsNumbers": [
+                "H6215"
+              ]
+            },
+            {
+              "text": " Jacob's",
+              "strongsNumbers": [
+                "H3290"
+              ]
+            },
+            {
+              "text": " brother?",
+              "strongsNumbers": [
+                "H251"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD:",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " yet I loved",
+              "strongsNumbers": [
+                "H157"
+              ]
+            },
+            {
+              "text": " Jacob,"
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "And I hated Esau, and laid his mountains and his heritage waste for the dragons of the wilderness."
+          "text": "And I hated Esau, and laid his mountains and his heritage waste for the dragons of the wilderness.",
+          "tokens": [
+            {
+              "text": "And I hated",
+              "strongsNumbers": [
+                "H8130"
+              ]
+            },
+            {
+              "text": " Esau,",
+              "strongsNumbers": [
+                "H6215"
+              ]
+            },
+            {
+              "text": " and laid",
+              "strongsNumbers": [
+                "H7760"
+              ]
+            },
+            {
+              "text": " his mountains",
+              "strongsNumbers": [
+                "H2022"
+              ]
+            },
+            {
+              "text": " and his heritage",
+              "strongsNumbers": [
+                "H5159"
+              ]
+            },
+            {
+              "text": " waste",
+              "strongsNumbers": [
+                "H8077"
+              ]
+            },
+            {
+              "text": " for the dragons",
+              "strongsNumbers": [
+                "H8568"
+              ]
+            },
+            {
+              "text": " of the wilderness."
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "Whereas Edom saith, We are impoverished, but we will return and build the desolate places; thus saith the LORD of hosts, They shall build, but I will throw down; and they shall call them, The border of wickedness, and, The people against whom the LORD hath indignation for ever."
+          "text": "Whereas Edom saith, We are impoverished, but we will return and build the desolate places; thus saith the LORD of hosts, They shall build, but I will throw down; and they shall call them, The border of wickedness, and, The people against whom the LORD hath indignation for ever.",
+          "tokens": [
+            {
+              "text": "Whereas Edom",
+              "strongsNumbers": [
+                "H123"
+              ]
+            },
+            {
+              "text": " saith,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " We are impoverished,",
+              "strongsNumbers": [
+                "H7567"
+              ]
+            },
+            {
+              "text": " but we will return",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " and build",
+              "strongsNumbers": [
+                "H1129"
+              ]
+            },
+            {
+              "text": " the desolate places;",
+              "strongsNumbers": [
+                "H2723"
+              ]
+            },
+            {
+              "text": " thus saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts,",
+              "strongsNumbers": [
+                "H6635"
+              ]
+            },
+            {
+              "text": " They shall build,",
+              "strongsNumbers": [
+                "H1129"
+              ]
+            },
+            {
+              "text": " but I will throw down;",
+              "strongsNumbers": [
+                "H2040"
+              ]
+            },
+            {
+              "text": " and they shall call",
+              "strongsNumbers": [
+                "H7121"
+              ]
+            },
+            {
+              "text": " them, The border",
+              "strongsNumbers": [
+                "H1366"
+              ]
+            },
+            {
+              "text": " of wickedness,",
+              "strongsNumbers": [
+                "H7564"
+              ]
+            },
+            {
+              "text": " and, The people",
+              "strongsNumbers": [
+                "H5971"
+              ]
+            },
+            {
+              "text": " against whom the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " hath indignation",
+              "strongsNumbers": [
+                "H2194"
+              ]
+            },
+            {
+              "text": " for",
+              "strongsNumbers": [
+                "H5704"
+              ]
+            },
+            {
+              "text": " ever."
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "And your eyes shall see, and ye shall say, The LORD will be magnified from the border of Israel."
+          "text": "And your eyes shall see, and ye shall say, The LORD will be magnified from the border of Israel.",
+          "tokens": [
+            {
+              "text": "And your eyes",
+              "strongsNumbers": [
+                "H5869"
+              ]
+            },
+            {
+              "text": " shall see,",
+              "strongsNumbers": [
+                "H7200"
+              ]
+            },
+            {
+              "text": " and ye shall say,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " The LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " will be magnified",
+              "strongsNumbers": [
+                "H1431"
+              ]
+            },
+            {
+              "text": " from the border",
+              "strongsNumbers": [
+                "H1366"
+              ]
+            },
+            {
+              "text": " of Israel."
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "A son honoureth [his] father, and a servant his master: if then I [be] a father, where [is] mine honour? and if I [be] a master, where [is] my fear? saith the LORD of hosts unto you, O priests, that despise my name. And ye say, Wherein have we despised thy name?"
+          "text": "A son honoureth his father, and a servant his master: if then I be a father, where is mine honour? and if I be a master, where is my fear? saith the LORD of hosts unto you, O priests, that despise my name. And ye say, Wherein have we despised thy name?",
+          "tokens": [
+            {
+              "text": "A son",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " honoureth",
+              "strongsNumbers": [
+                "H3513"
+              ]
+            },
+            {
+              "text": " his father,",
+              "strongsNumbers": [
+                "H1"
+              ]
+            },
+            {
+              "text": " and a servant",
+              "strongsNumbers": [
+                "H5650"
+              ]
+            },
+            {
+              "text": " his master:",
+              "strongsNumbers": [
+                "H113"
+              ]
+            },
+            {
+              "text": " if then I be a father,",
+              "strongsNumbers": [
+                "H1"
+              ]
+            },
+            {
+              "text": " where is mine honour?",
+              "strongsNumbers": [
+                "H3519"
+              ]
+            },
+            {
+              "text": " and if I be a master,",
+              "strongsNumbers": [
+                "H113"
+              ]
+            },
+            {
+              "text": " where is my fear?",
+              "strongsNumbers": [
+                "H4172"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts",
+              "strongsNumbers": [
+                "H6635"
+              ]
+            },
+            {
+              "text": " unto you, O priests,",
+              "strongsNumbers": [
+                "H3548"
+              ]
+            },
+            {
+              "text": " that despise",
+              "strongsNumbers": [
+                "H959"
+              ]
+            },
+            {
+              "text": " my name.",
+              "strongsNumbers": [
+                "H8034"
+              ]
+            },
+            {
+              "text": " And ye say,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Wherein have we despised",
+              "strongsNumbers": [
+                "H959"
+              ]
+            },
+            {
+              "text": " thy name?"
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "Ye offer polluted bread upon mine altar; and ye say, Wherein have we polluted thee? In that ye say, The table of the LORD [is] contemptible."
+          "text": "Ye offer polluted bread upon mine altar; and ye say, Wherein have we polluted thee? In that ye say, The table of the LORD is contemptible.",
+          "tokens": [
+            {
+              "text": "Ye offer",
+              "strongsNumbers": [
+                "H5066"
+              ]
+            },
+            {
+              "text": " polluted",
+              "strongsNumbers": [
+                "H1351"
+              ]
+            },
+            {
+              "text": " bread",
+              "strongsNumbers": [
+                "H3899"
+              ]
+            },
+            {
+              "text": " upon mine altar;",
+              "strongsNumbers": [
+                "H4196"
+              ]
+            },
+            {
+              "text": " and ye say,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Wherein have we polluted",
+              "strongsNumbers": [
+                "H1351"
+              ]
+            },
+            {
+              "text": " thee? In that ye say,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " The table",
+              "strongsNumbers": [
+                "H7979"
+              ]
+            },
+            {
+              "text": " of the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " is contemptible."
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "And if ye offer the blind for sacrifice, [is it] not evil? and if ye offer the lame and sick, [is it] not evil? offer it now unto thy governor; will he be pleased with thee, or accept thy person? saith the LORD of hosts."
+          "text": "And if ye offer the blind for sacrifice, is it not evil? and if ye offer the lame and sick, is it not evil? offer it now unto thy governor; will he be pleased with thee, or accept thy person? saith the LORD of hosts.",
+          "tokens": [
+            {
+              "text": "And if ye offer",
+              "strongsNumbers": [
+                "H5066"
+              ]
+            },
+            {
+              "text": " the blind",
+              "strongsNumbers": [
+                "H5787"
+              ]
+            },
+            {
+              "text": " for sacrifice,",
+              "strongsNumbers": [
+                "H2076"
+              ]
+            },
+            {
+              "text": " is it not evil?",
+              "strongsNumbers": [
+                "H7451"
+              ]
+            },
+            {
+              "text": " and if ye offer",
+              "strongsNumbers": [
+                "H5066"
+              ]
+            },
+            {
+              "text": " the lame",
+              "strongsNumbers": [
+                "H6455"
+              ]
+            },
+            {
+              "text": " and sick,",
+              "strongsNumbers": [
+                "H2470"
+              ]
+            },
+            {
+              "text": " is it not evil?",
+              "strongsNumbers": [
+                "H7451"
+              ]
+            },
+            {
+              "text": " offer",
+              "strongsNumbers": [
+                "H7126"
+              ]
+            },
+            {
+              "text": " it now unto thy governor;",
+              "strongsNumbers": [
+                "H6346"
+              ]
+            },
+            {
+              "text": " will he be pleased",
+              "strongsNumbers": [
+                "H7521"
+              ]
+            },
+            {
+              "text": " with thee, or accept",
+              "strongsNumbers": [
+                "H5375"
+              ]
+            },
+            {
+              "text": " thy person?",
+              "strongsNumbers": [
+                "H6440"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts."
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "And now, I pray you, beseech God that he will be gracious unto us: this hath been by your means: will he regard your persons? saith the LORD of hosts."
+          "text": "And now, I pray you, beseech God that he will be gracious unto us: this hath been by your means: will he regard your persons? saith the LORD of hosts.",
+          "tokens": [
+            {
+              "text": "And now, I pray you, beseech",
+              "strongsNumbers": [
+                "H2470",
+                "H6440"
+              ]
+            },
+            {
+              "text": " God",
+              "strongsNumbers": [
+                "H410"
+              ]
+            },
+            {
+              "text": " that he will be gracious",
+              "strongsNumbers": [
+                "H2603"
+              ]
+            },
+            {
+              "text": " unto us: this hath been by your means:",
+              "strongsNumbers": [
+                "H3027"
+              ]
+            },
+            {
+              "text": " will he regard",
+              "strongsNumbers": [
+                "H5375"
+              ]
+            },
+            {
+              "text": " your persons?",
+              "strongsNumbers": [
+                "H6440"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts."
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "Who [is there] even among you that would shut the doors [for nought]? neither do ye kindle [fire] on mine altar for nought. I have no pleasure in you, saith the LORD of hosts, neither will I accept an offering at your hand."
+          "text": "Who is there even among you that would shut the doors for nought? neither do ye kindle fire on mine altar for nought. I have no pleasure in you, saith the LORD of hosts, neither will I accept an offering at your hand.",
+          "tokens": [
+            {
+              "text": "Who is there even among you that would shut",
+              "strongsNumbers": [
+                "H5462"
+              ]
+            },
+            {
+              "text": " the doors",
+              "strongsNumbers": [
+                "H1817"
+              ]
+            },
+            {
+              "text": " for nought? neither do ye kindle",
+              "strongsNumbers": [
+                "H215"
+              ]
+            },
+            {
+              "text": " fire on mine altar",
+              "strongsNumbers": [
+                "H4196"
+              ]
+            },
+            {
+              "text": " for nought.",
+              "strongsNumbers": [
+                "H2600"
+              ]
+            },
+            {
+              "text": " I have no pleasure",
+              "strongsNumbers": [
+                "H2656"
+              ]
+            },
+            {
+              "text": " in you, saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts,",
+              "strongsNumbers": [
+                "H6635"
+              ]
+            },
+            {
+              "text": " neither will I accept",
+              "strongsNumbers": [
+                "H7521"
+              ]
+            },
+            {
+              "text": " an offering",
+              "strongsNumbers": [
+                "H4503"
+              ]
+            },
+            {
+              "text": " at your hand."
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "For from the rising of the sun even unto the going down of the same my name [shall be] great among the Gentiles; and in every place incense [shall be] offered unto my name, and a pure offering: for my name [shall be] great among the heathen, saith the LORD of hosts."
+          "text": "For from the rising of the sun even unto the going down of the same my name shall be great among the Gentiles; and in every place incense shall be offered unto my name, and a pure offering: for my name shall be great among the heathen, saith the LORD of hosts.",
+          "tokens": [
+            {
+              "text": "For from the rising",
+              "strongsNumbers": [
+                "H4217"
+              ]
+            },
+            {
+              "text": " of the sun",
+              "strongsNumbers": [
+                "H8121"
+              ]
+            },
+            {
+              "text": " even unto the going down",
+              "strongsNumbers": [
+                "H3996"
+              ]
+            },
+            {
+              "text": " of the same my name",
+              "strongsNumbers": [
+                "H8034"
+              ]
+            },
+            {
+              "text": " shall be great",
+              "strongsNumbers": [
+                "H1419"
+              ]
+            },
+            {
+              "text": " among the Gentiles;",
+              "strongsNumbers": [
+                "H1471"
+              ]
+            },
+            {
+              "text": " and in every place",
+              "strongsNumbers": [
+                "H4725"
+              ]
+            },
+            {
+              "text": " incense",
+              "strongsNumbers": [
+                "H6999"
+              ]
+            },
+            {
+              "text": " shall be offered",
+              "strongsNumbers": [
+                "H5066"
+              ]
+            },
+            {
+              "text": " unto my name,",
+              "strongsNumbers": [
+                "H8034"
+              ]
+            },
+            {
+              "text": " and a pure",
+              "strongsNumbers": [
+                "H2889"
+              ]
+            },
+            {
+              "text": " offering:",
+              "strongsNumbers": [
+                "H4503"
+              ]
+            },
+            {
+              "text": " for my name",
+              "strongsNumbers": [
+                "H8034"
+              ]
+            },
+            {
+              "text": " shall be great",
+              "strongsNumbers": [
+                "H1419"
+              ]
+            },
+            {
+              "text": " among the heathen,",
+              "strongsNumbers": [
+                "H1471"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts."
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "But ye have profaned it, in that ye say, The table of the LORD [is] polluted; and the fruit thereof, [even] his meat, [is] contemptible."
+          "text": "But ye have profaned it, in that ye say, The table of the LORD is polluted; and the fruit thereof, even his meat, is contemptible.",
+          "tokens": [
+            {
+              "text": "But ye have profaned",
+              "strongsNumbers": [
+                "H2490"
+              ]
+            },
+            {
+              "text": " it, in that ye say,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " The table",
+              "strongsNumbers": [
+                "H7979"
+              ]
+            },
+            {
+              "text": " of the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " is polluted;",
+              "strongsNumbers": [
+                "H1351"
+              ]
+            },
+            {
+              "text": " and the fruit",
+              "strongsNumbers": [
+                "H5108"
+              ]
+            },
+            {
+              "text": " thereof, even his meat,",
+              "strongsNumbers": [
+                "H400"
+              ]
+            },
+            {
+              "text": " is contemptible."
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "Ye said also, Behold, what a weariness [is it]! and ye have snuffed at it, saith the LORD of hosts; and ye brought [that which was] torn, and the lame, and the sick; thus ye brought an offering: should I accept this of your hand? saith the LORD."
+          "text": "Ye said also, Behold, what a weariness is it! and ye have snuffed at it, saith the LORD of hosts; and ye brought that which was torn, and the lame, and the sick; thus ye brought an offering: should I accept this of your hand? saith the LORD.",
+          "tokens": [
+            {
+              "text": "Ye said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " also, Behold, what a weariness",
+              "strongsNumbers": [
+                "H4972"
+              ]
+            },
+            {
+              "text": " is it! and ye have snuffed",
+              "strongsNumbers": [
+                "H5301"
+              ]
+            },
+            {
+              "text": " at it, saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts;",
+              "strongsNumbers": [
+                "H6635"
+              ]
+            },
+            {
+              "text": " and ye brought",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " that which was torn,",
+              "strongsNumbers": [
+                "H1497"
+              ]
+            },
+            {
+              "text": " and the lame,",
+              "strongsNumbers": [
+                "H6455"
+              ]
+            },
+            {
+              "text": " and the sick;",
+              "strongsNumbers": [
+                "H2470"
+              ]
+            },
+            {
+              "text": " thus ye brought",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " an offering:",
+              "strongsNumbers": [
+                "H4503"
+              ]
+            },
+            {
+              "text": " should I accept",
+              "strongsNumbers": [
+                "H7521"
+              ]
+            },
+            {
+              "text": " this of your hand?",
+              "strongsNumbers": [
+                "H3027"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD."
+            }
+          ]
         },
         {
           "number": 14,
-          "text": "But cursed [be] the deceiver, which hath in his flock a male, and voweth, and sacrificeth unto the Lord a corrupt thing: for I [am] a great King, saith the LORD of hosts, and my name [is] dreadful among the heathen."
+          "text": "But cursed be the deceiver, which hath in his flock a male, and voweth, and sacrificeth unto the Lord a corrupt thing: for I am a great King, saith the LORD of hosts, and my name is dreadful among the heathen.",
+          "tokens": [
+            {
+              "text": "But cursed",
+              "strongsNumbers": [
+                "H779"
+              ]
+            },
+            {
+              "text": " be the deceiver,",
+              "strongsNumbers": [
+                "H5230"
+              ]
+            },
+            {
+              "text": " which",
+              "strongsNumbers": [
+                "H3426"
+              ]
+            },
+            {
+              "text": " hath in his flock",
+              "strongsNumbers": [
+                "H5739"
+              ]
+            },
+            {
+              "text": " a male,",
+              "strongsNumbers": [
+                "H2145"
+              ]
+            },
+            {
+              "text": " and voweth,",
+              "strongsNumbers": [
+                "H5087"
+              ]
+            },
+            {
+              "text": " and sacrificeth",
+              "strongsNumbers": [
+                "H2076"
+              ]
+            },
+            {
+              "text": " unto the Lord",
+              "strongsNumbers": [
+                "H136"
+              ]
+            },
+            {
+              "text": " a corrupt thing:",
+              "strongsNumbers": [
+                "H7843"
+              ]
+            },
+            {
+              "text": " for I am a great",
+              "strongsNumbers": [
+                "H1419"
+              ]
+            },
+            {
+              "text": " King,",
+              "strongsNumbers": [
+                "H4428"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts,",
+              "strongsNumbers": [
+                "H6635"
+              ]
+            },
+            {
+              "text": " and my name",
+              "strongsNumbers": [
+                "H8034"
+              ]
+            },
+            {
+              "text": " is dreadful",
+              "strongsNumbers": [
+                "H3372"
+              ]
+            },
+            {
+              "text": " among the heathen."
+            }
+          ]
         }
       ]
     },
@@ -76,71 +1119,1189 @@
       "verses": [
         {
           "number": 1,
-          "text": "And now, O ye priests, this commandment [is] for you."
+          "text": "And now, O ye priests, this commandment",
+          "tokens": [
+            {
+              "text": "And now, O ye priests,",
+              "strongsNumbers": [
+                "H3548"
+              ]
+            },
+            {
+              "text": " this commandment"
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "If ye will not hear, and if ye will not lay [it] to heart, to give glory unto my name, saith the LORD of hosts, I will even send a curse upon you, and I will curse your blessings: yea, I have cursed them already, because ye do not lay [it] to heart."
+          "text": "If ye will not hear, and if ye will not lay it to heart, to give glory unto my name, saith the LORD of hosts, I will even send a curse upon you, and I will curse your blessings: yea, I have cursed them already, because ye do not lay it to heart.",
+          "tokens": [
+            {
+              "text": "If ye will not hear,",
+              "strongsNumbers": [
+                "H8085"
+              ]
+            },
+            {
+              "text": " and if ye will not lay",
+              "strongsNumbers": [
+                "H7760"
+              ]
+            },
+            {
+              "text": " it to heart,",
+              "strongsNumbers": [
+                "H3820"
+              ]
+            },
+            {
+              "text": " to give",
+              "strongsNumbers": [
+                "H5414"
+              ]
+            },
+            {
+              "text": " glory",
+              "strongsNumbers": [
+                "H3519"
+              ]
+            },
+            {
+              "text": " unto my name,",
+              "strongsNumbers": [
+                "H8034"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts,",
+              "strongsNumbers": [
+                "H6635"
+              ]
+            },
+            {
+              "text": " I will even send",
+              "strongsNumbers": [
+                "H7971"
+              ]
+            },
+            {
+              "text": " a curse",
+              "strongsNumbers": [
+                "H3994"
+              ]
+            },
+            {
+              "text": " upon you, and I will curse",
+              "strongsNumbers": [
+                "H779"
+              ]
+            },
+            {
+              "text": " your blessings:",
+              "strongsNumbers": [
+                "H1293"
+              ]
+            },
+            {
+              "text": " yea, I have cursed",
+              "strongsNumbers": [
+                "H779"
+              ]
+            },
+            {
+              "text": " them already, because ye do not lay",
+              "strongsNumbers": [
+                "H7760"
+              ]
+            },
+            {
+              "text": " it to heart."
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "Behold, I will corrupt your seed, and spread dung upon your faces, [even] the dung of your solemn feasts; and [one] shall take you away with it."
+          "text": "Behold, I will corrupt your seed, and spread dung upon your faces, even the dung of your solemn feasts; and one shall take you away",
+          "tokens": [
+            {
+              "text": "Behold, I will corrupt",
+              "strongsNumbers": [
+                "H1605"
+              ]
+            },
+            {
+              "text": " your seed,",
+              "strongsNumbers": [
+                "H2233"
+              ]
+            },
+            {
+              "text": " and spread",
+              "strongsNumbers": [
+                "H2219"
+              ]
+            },
+            {
+              "text": " dung",
+              "strongsNumbers": [
+                "H6569"
+              ]
+            },
+            {
+              "text": " upon your faces,",
+              "strongsNumbers": [
+                "H6440"
+              ]
+            },
+            {
+              "text": " even the dung",
+              "strongsNumbers": [
+                "H6569"
+              ]
+            },
+            {
+              "text": " of your solemn feasts;",
+              "strongsNumbers": [
+                "H2282"
+              ]
+            },
+            {
+              "text": " and one shall take you away"
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "And ye shall know that I have sent this commandment unto you, that my covenant might be with Levi, saith the LORD of hosts."
+          "text": "And ye shall know that I have sent this commandment unto you, that my covenant might be with Levi, saith the LORD of hosts.",
+          "tokens": [
+            {
+              "text": "And ye shall know",
+              "strongsNumbers": [
+                "H3045"
+              ]
+            },
+            {
+              "text": " that I have sent",
+              "strongsNumbers": [
+                "H7971"
+              ]
+            },
+            {
+              "text": " this commandment",
+              "strongsNumbers": [
+                "H4687"
+              ]
+            },
+            {
+              "text": " unto you, that my covenant",
+              "strongsNumbers": [
+                "H1285"
+              ]
+            },
+            {
+              "text": " might be with Levi,",
+              "strongsNumbers": [
+                "H3878"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts."
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "My covenant was with him of life and peace; and I gave them to him [for] the fear wherewith he feared me, and was afraid before my name."
+          "text": "My covenant was with him of life and peace; and I gave them to him for the fear wherewith he feared me, and was afraid before my name.",
+          "tokens": [
+            {
+              "text": "My covenant",
+              "strongsNumbers": [
+                "H1285"
+              ]
+            },
+            {
+              "text": " was with him of life",
+              "strongsNumbers": [
+                "H2416"
+              ]
+            },
+            {
+              "text": " and peace;",
+              "strongsNumbers": [
+                "H7965"
+              ]
+            },
+            {
+              "text": " and I gave",
+              "strongsNumbers": [
+                "H5414"
+              ]
+            },
+            {
+              "text": " them to him for the fear",
+              "strongsNumbers": [
+                "H4172"
+              ]
+            },
+            {
+              "text": " wherewith he feared",
+              "strongsNumbers": [
+                "H3372"
+              ]
+            },
+            {
+              "text": " me, and was afraid",
+              "strongsNumbers": [
+                "H2865"
+              ]
+            },
+            {
+              "text": " before",
+              "strongsNumbers": [
+                "H6440"
+              ]
+            },
+            {
+              "text": " my name."
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "The law of truth was in his mouth, and iniquity was not found in his lips: he walked with me in peace and equity, and did turn many away from iniquity."
+          "text": "The law of truth was in his mouth, and iniquity was not found in his lips: he walked with me in peace and equity, and did turn many away from iniquity.",
+          "tokens": [
+            {
+              "text": "The law",
+              "strongsNumbers": [
+                "H8451"
+              ]
+            },
+            {
+              "text": " of truth",
+              "strongsNumbers": [
+                "H571"
+              ]
+            },
+            {
+              "text": " was in his mouth,",
+              "strongsNumbers": [
+                "H6310"
+              ]
+            },
+            {
+              "text": " and iniquity",
+              "strongsNumbers": [
+                "H5766"
+              ]
+            },
+            {
+              "text": " was not found",
+              "strongsNumbers": [
+                "H4672"
+              ]
+            },
+            {
+              "text": " in his lips:",
+              "strongsNumbers": [
+                "H8193"
+              ]
+            },
+            {
+              "text": " he walked",
+              "strongsNumbers": [
+                "H1980"
+              ]
+            },
+            {
+              "text": " with me in peace",
+              "strongsNumbers": [
+                "H7965"
+              ]
+            },
+            {
+              "text": " and equity,",
+              "strongsNumbers": [
+                "H4334"
+              ]
+            },
+            {
+              "text": " and did turn",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " many",
+              "strongsNumbers": [
+                "H7227"
+              ]
+            },
+            {
+              "text": " away",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " from iniquity."
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "For the priest's lips should keep knowledge, and they should seek the law at his mouth: for he [is] the messenger of the LORD of hosts."
+          "text": "For the priest's lips should keep knowledge, and they should seek the law at his mouth: for he is the messenger of the LORD of hosts.",
+          "tokens": [
+            {
+              "text": "For the priest's",
+              "strongsNumbers": [
+                "H3548"
+              ]
+            },
+            {
+              "text": " lips",
+              "strongsNumbers": [
+                "H8193"
+              ]
+            },
+            {
+              "text": " should keep",
+              "strongsNumbers": [
+                "H8104"
+              ]
+            },
+            {
+              "text": " knowledge,",
+              "strongsNumbers": [
+                "H1847"
+              ]
+            },
+            {
+              "text": " and they should seek",
+              "strongsNumbers": [
+                "H1245"
+              ]
+            },
+            {
+              "text": " the law",
+              "strongsNumbers": [
+                "H8451"
+              ]
+            },
+            {
+              "text": " at his mouth:",
+              "strongsNumbers": [
+                "H6310"
+              ]
+            },
+            {
+              "text": " for he is the messenger",
+              "strongsNumbers": [
+                "H4397"
+              ]
+            },
+            {
+              "text": " of the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts."
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "But ye are departed out of the way; ye have caused many to stumble at the law; ye have corrupted the covenant of Levi, saith the LORD of hosts."
+          "text": "But ye are departed out of the way; ye have caused many to stumble at the law; ye have corrupted the covenant of Levi, saith the LORD of hosts.",
+          "tokens": [
+            {
+              "text": "But ye are departed",
+              "strongsNumbers": [
+                "H5493"
+              ]
+            },
+            {
+              "text": " out of the way;",
+              "strongsNumbers": [
+                "H1870"
+              ]
+            },
+            {
+              "text": " ye have caused many",
+              "strongsNumbers": [
+                "H7227"
+              ]
+            },
+            {
+              "text": " to stumble",
+              "strongsNumbers": [
+                "H3782"
+              ]
+            },
+            {
+              "text": " at the law;",
+              "strongsNumbers": [
+                "H8451"
+              ]
+            },
+            {
+              "text": " ye have corrupted",
+              "strongsNumbers": [
+                "H7843"
+              ]
+            },
+            {
+              "text": " the covenant",
+              "strongsNumbers": [
+                "H1285"
+              ]
+            },
+            {
+              "text": " of Levi,",
+              "strongsNumbers": [
+                "H3878"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts."
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "Therefore have I also made you contemptible and base before all the people, according as ye have not kept my ways, but have been partial in the law."
+          "text": "Therefore have I also made you contemptible and base before all the people, according as ye have not kept my ways, but have been partial in the law.",
+          "tokens": [
+            {
+              "text": "Therefore have I also made",
+              "strongsNumbers": [
+                "H5414"
+              ]
+            },
+            {
+              "text": " you contemptible",
+              "strongsNumbers": [
+                "H959"
+              ]
+            },
+            {
+              "text": " and base",
+              "strongsNumbers": [
+                "H8217"
+              ]
+            },
+            {
+              "text": " before all the people,",
+              "strongsNumbers": [
+                "H5971"
+              ]
+            },
+            {
+              "text": " according",
+              "strongsNumbers": [
+                "H6310"
+              ]
+            },
+            {
+              "text": " as ye have not kept",
+              "strongsNumbers": [
+                "H8104"
+              ]
+            },
+            {
+              "text": " my ways,",
+              "strongsNumbers": [
+                "H1870"
+              ]
+            },
+            {
+              "text": " but have been partial",
+              "strongsNumbers": [
+                "H5375",
+                "H6440"
+              ]
+            },
+            {
+              "text": " in the law."
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "Have we not all one father? hath not one God created us? why do we deal treacherously every man against his brother, by profaning the covenant of our fathers?"
+          "text": "Have we not all one father? hath not one God created us? why do we deal treacherously every man against his brother, by profaning the covenant of our fathers?",
+          "tokens": [
+            {
+              "text": "Have we not all one",
+              "strongsNumbers": [
+                "H259"
+              ]
+            },
+            {
+              "text": " father?",
+              "strongsNumbers": [
+                "H1"
+              ]
+            },
+            {
+              "text": " hath not one",
+              "strongsNumbers": [
+                "H259"
+              ]
+            },
+            {
+              "text": " God",
+              "strongsNumbers": [
+                "H410"
+              ]
+            },
+            {
+              "text": " created",
+              "strongsNumbers": [
+                "H1254"
+              ]
+            },
+            {
+              "text": " us? why do we deal treacherously",
+              "strongsNumbers": [
+                "H898"
+              ]
+            },
+            {
+              "text": " every man",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " against his brother,",
+              "strongsNumbers": [
+                "H251"
+              ]
+            },
+            {
+              "text": " by profaning",
+              "strongsNumbers": [
+                "H2490"
+              ]
+            },
+            {
+              "text": " the covenant",
+              "strongsNumbers": [
+                "H1285"
+              ]
+            },
+            {
+              "text": " of our fathers?"
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "Judah hath dealt treacherously, and an abomination is committed in Israel and in Jerusalem; for Judah hath profaned the holiness of the LORD which he loved, and hath married the daughter of a strange god."
+          "text": "Judah hath dealt treacherously, and an abomination is committed in Israel and in Jerusalem; for Judah hath profaned the holiness of the LORD which he loved, and hath married the daughter of a strange god.",
+          "tokens": [
+            {
+              "text": "Judah",
+              "strongsNumbers": [
+                "H3063"
+              ]
+            },
+            {
+              "text": " hath dealt treacherously,",
+              "strongsNumbers": [
+                "H898"
+              ]
+            },
+            {
+              "text": " and an abomination",
+              "strongsNumbers": [
+                "H8441"
+              ]
+            },
+            {
+              "text": " is committed",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " in Israel",
+              "strongsNumbers": [
+                "H3478"
+              ]
+            },
+            {
+              "text": " and in Jerusalem;",
+              "strongsNumbers": [
+                "H3389"
+              ]
+            },
+            {
+              "text": " for Judah",
+              "strongsNumbers": [
+                "H3063"
+              ]
+            },
+            {
+              "text": " hath profaned",
+              "strongsNumbers": [
+                "H2490"
+              ]
+            },
+            {
+              "text": " the holiness",
+              "strongsNumbers": [
+                "H6944"
+              ]
+            },
+            {
+              "text": " of the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " which he loved,",
+              "strongsNumbers": [
+                "H157"
+              ]
+            },
+            {
+              "text": " and hath married",
+              "strongsNumbers": [
+                "H1166"
+              ]
+            },
+            {
+              "text": " the daughter",
+              "strongsNumbers": [
+                "H1323"
+              ]
+            },
+            {
+              "text": " of a strange",
+              "strongsNumbers": [
+                "H5236"
+              ]
+            },
+            {
+              "text": " god."
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "The LORD will cut off the man that doeth this, the master and the scholar, out of the tabernacles of Jacob, and him that offereth an offering unto the LORD of hosts."
+          "text": "The LORD will cut off the man that doeth this, the master and the scholar, out of the tabernacles of Jacob, and him that offereth an offering unto the LORD of hosts.",
+          "tokens": [
+            {
+              "text": "The LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " will cut off",
+              "strongsNumbers": [
+                "H3772"
+              ]
+            },
+            {
+              "text": " the man",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " that doeth",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " this, the master",
+              "strongsNumbers": [
+                "H5782"
+              ]
+            },
+            {
+              "text": " and the scholar,",
+              "strongsNumbers": [
+                "H6030"
+              ]
+            },
+            {
+              "text": " out of the tabernacles",
+              "strongsNumbers": [
+                "H168"
+              ]
+            },
+            {
+              "text": " of Jacob,",
+              "strongsNumbers": [
+                "H3290"
+              ]
+            },
+            {
+              "text": " and him that offereth",
+              "strongsNumbers": [
+                "H5066"
+              ]
+            },
+            {
+              "text": " an offering",
+              "strongsNumbers": [
+                "H4503"
+              ]
+            },
+            {
+              "text": " unto the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts."
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "And this have ye done again, covering the altar of the LORD with tears, with weeping, and with crying out, insomuch that he regardeth not the offering any more, or receiveth [it] with good will at your hand."
+          "text": "And this have ye done again, covering the altar of the LORD with tears, with weeping, and with crying out, insomuch that he regardeth not the offering any more, or receiveth it with good will at your hand.",
+          "tokens": [
+            {
+              "text": "And this have ye done",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " again,",
+              "strongsNumbers": [
+                "H8145"
+              ]
+            },
+            {
+              "text": " covering",
+              "strongsNumbers": [
+                "H3680"
+              ]
+            },
+            {
+              "text": " the altar",
+              "strongsNumbers": [
+                "H4196"
+              ]
+            },
+            {
+              "text": " of the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " with tears,",
+              "strongsNumbers": [
+                "H1832"
+              ]
+            },
+            {
+              "text": " with weeping,",
+              "strongsNumbers": [
+                "H1065"
+              ]
+            },
+            {
+              "text": " and with crying out,",
+              "strongsNumbers": [
+                "H603"
+              ]
+            },
+            {
+              "text": " insomuch that he regardeth",
+              "strongsNumbers": [
+                "H6437"
+              ]
+            },
+            {
+              "text": " not the offering",
+              "strongsNumbers": [
+                "H4503"
+              ]
+            },
+            {
+              "text": " any more, or receiveth",
+              "strongsNumbers": [
+                "H3947"
+              ]
+            },
+            {
+              "text": " it with good will",
+              "strongsNumbers": [
+                "H7522"
+              ]
+            },
+            {
+              "text": " at your hand."
+            }
+          ]
         },
         {
           "number": 14,
-          "text": "Yet ye say, Wherefore? Because the LORD hath been witness between thee and the wife of thy youth, against whom thou hast dealt treacherously: yet [is] she thy companion, and the wife of thy covenant."
+          "text": "Yet ye say, Wherefore? Because the LORD hath been witness between thee and the wife of thy youth, against whom thou hast dealt treacherously: yet is she thy companion, and the wife of thy covenant.",
+          "tokens": [
+            {
+              "text": "Yet ye say,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Wherefore?",
+              "strongsNumbers": [
+                "H4100"
+              ]
+            },
+            {
+              "text": " Because the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " hath been witness",
+              "strongsNumbers": [
+                "H5749"
+              ]
+            },
+            {
+              "text": " between thee and the wife",
+              "strongsNumbers": [
+                "H802"
+              ]
+            },
+            {
+              "text": " of thy youth,",
+              "strongsNumbers": [
+                "H5271"
+              ]
+            },
+            {
+              "text": " against whom thou hast dealt treacherously:",
+              "strongsNumbers": [
+                "H898"
+              ]
+            },
+            {
+              "text": " yet is she thy companion,",
+              "strongsNumbers": [
+                "H2278"
+              ]
+            },
+            {
+              "text": " and the wife",
+              "strongsNumbers": [
+                "H802"
+              ]
+            },
+            {
+              "text": " of thy covenant."
+            }
+          ]
         },
         {
           "number": 15,
-          "text": "And did not he make one? Yet had he the residue of the spirit. And wherefore one? That he might seek a godly seed. Therefore take heed to your spirit, and let none deal treacherously against the wife of his youth."
+          "text": "And did not he make one? Yet had he the residue of the spirit. And wherefore one? That he might seek a godly seed. Therefore take heed to your spirit, and let none deal treacherously against the wife of his youth.",
+          "tokens": [
+            {
+              "text": "And did not he make",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " one?",
+              "strongsNumbers": [
+                "H259"
+              ]
+            },
+            {
+              "text": " Yet had he the residue",
+              "strongsNumbers": [
+                "H7605"
+              ]
+            },
+            {
+              "text": " of the spirit.",
+              "strongsNumbers": [
+                "H7307"
+              ]
+            },
+            {
+              "text": " And wherefore one?",
+              "strongsNumbers": [
+                "H259"
+              ]
+            },
+            {
+              "text": " That he might seek",
+              "strongsNumbers": [
+                "H1245"
+              ]
+            },
+            {
+              "text": " a godly",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " seed.",
+              "strongsNumbers": [
+                "H2233"
+              ]
+            },
+            {
+              "text": " Therefore take heed",
+              "strongsNumbers": [
+                "H8104"
+              ]
+            },
+            {
+              "text": " to your spirit,",
+              "strongsNumbers": [
+                "H7307"
+              ]
+            },
+            {
+              "text": " and let none deal treacherously",
+              "strongsNumbers": [
+                "H898"
+              ]
+            },
+            {
+              "text": " against the wife",
+              "strongsNumbers": [
+                "H802"
+              ]
+            },
+            {
+              "text": " of his youth."
+            }
+          ]
         },
         {
           "number": 16,
-          "text": "For the LORD, the God of Israel, saith that he hateth putting away: for [one] covereth violence with his garment, saith the LORD of hosts: therefore take heed to your spirit, that ye deal not treacherously."
+          "text": "For the LORD, the God of Israel, saith that he hateth putting away: for one covereth violence with his garment, saith the LORD of hosts: therefore take heed to your spirit, that ye deal not treacherously.",
+          "tokens": [
+            {
+              "text": "For the LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " the God",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " of Israel,",
+              "strongsNumbers": [
+                "H3478"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " that he hateth",
+              "strongsNumbers": [
+                "H8130"
+              ]
+            },
+            {
+              "text": " putting away:",
+              "strongsNumbers": [
+                "H7971"
+              ]
+            },
+            {
+              "text": " for one covereth",
+              "strongsNumbers": [
+                "H3680"
+              ]
+            },
+            {
+              "text": " violence",
+              "strongsNumbers": [
+                "H2555"
+              ]
+            },
+            {
+              "text": " with his garment,",
+              "strongsNumbers": [
+                "H3830"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts:",
+              "strongsNumbers": [
+                "H6635"
+              ]
+            },
+            {
+              "text": " therefore take heed",
+              "strongsNumbers": [
+                "H8104"
+              ]
+            },
+            {
+              "text": " to your spirit,",
+              "strongsNumbers": [
+                "H7307"
+              ]
+            },
+            {
+              "text": " that ye deal not treacherously."
+            }
+          ]
         },
         {
           "number": 17,
-          "text": "Ye have wearied the LORD with your words. Yet ye say, Wherein have we wearied [him]? When ye say, Every one that doeth evil [is] good in the sight of the LORD, and he delighteth in them; or, Where [is] the God of judgment?"
+          "text": "Ye have wearied the LORD with your words. Yet ye say, Wherein have we wearied him? When ye say, Every one that doeth evil is good in the sight of the LORD, and he delighteth in them; or, Where is the God of judgment?",
+          "tokens": [
+            {
+              "text": "Ye have wearied",
+              "strongsNumbers": [
+                "H3021"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " with your words.",
+              "strongsNumbers": [
+                "H1697"
+              ]
+            },
+            {
+              "text": " Yet ye say,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Wherein have we wearied",
+              "strongsNumbers": [
+                "H3021"
+              ]
+            },
+            {
+              "text": " him? When ye say,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Every one that doeth",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " evil",
+              "strongsNumbers": [
+                "H7451"
+              ]
+            },
+            {
+              "text": " is good",
+              "strongsNumbers": [
+                "H2896"
+              ]
+            },
+            {
+              "text": " in the sight",
+              "strongsNumbers": [
+                "H5869"
+              ]
+            },
+            {
+              "text": " of the LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " and he delighteth",
+              "strongsNumbers": [
+                "H2654"
+              ]
+            },
+            {
+              "text": " in them; or, Where is the God",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " of judgment?"
+            }
+          ]
         }
       ]
     },
@@ -150,75 +2311,1209 @@
       "verses": [
         {
           "number": 1,
-          "text": "Behold, I will send my messenger, and he shall prepare the way before me: and the Lord, whom ye seek, shall suddenly come to his temple, even the messenger of the covenant, whom ye delight in: behold, he shall come, saith the LORD of hosts."
+          "text": "Behold, I will send my messenger, and he shall prepare the way before me: and the Lord, whom ye seek, shall suddenly come to his temple, even the messenger of the covenant, whom ye delight in: behold, he shall come, saith the LORD of hosts.",
+          "tokens": [
+            {
+              "text": "Behold, I will send",
+              "strongsNumbers": [
+                "H7971"
+              ]
+            },
+            {
+              "text": " my messenger,",
+              "strongsNumbers": [
+                "H4397"
+              ]
+            },
+            {
+              "text": " and he shall prepare",
+              "strongsNumbers": [
+                "H6437"
+              ]
+            },
+            {
+              "text": " the way",
+              "strongsNumbers": [
+                "H1870"
+              ]
+            },
+            {
+              "text": " before",
+              "strongsNumbers": [
+                "H6440"
+              ]
+            },
+            {
+              "text": " me: and the Lord,",
+              "strongsNumbers": [
+                "H113"
+              ]
+            },
+            {
+              "text": " whom ye seek,",
+              "strongsNumbers": [
+                "H1245"
+              ]
+            },
+            {
+              "text": " shall suddenly",
+              "strongsNumbers": [
+                "H6597"
+              ]
+            },
+            {
+              "text": " come",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " to his temple,",
+              "strongsNumbers": [
+                "H1964"
+              ]
+            },
+            {
+              "text": " even the messenger",
+              "strongsNumbers": [
+                "H4397"
+              ]
+            },
+            {
+              "text": " of the covenant,",
+              "strongsNumbers": [
+                "H1285"
+              ]
+            },
+            {
+              "text": " whom ye delight",
+              "strongsNumbers": [
+                "H2655"
+              ]
+            },
+            {
+              "text": " in: behold, he shall come,",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts."
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "But who may abide the day of his coming? and who shall stand when he appeareth? for he [is] like a refiner's fire, and like fullers' sope:"
+          "text": "But who may abide the day of his coming? and who shall stand when he appeareth? for he is like a refiner's fire, and like fullers' soap:",
+          "tokens": [
+            {
+              "text": "But who may abide",
+              "strongsNumbers": [
+                "H3557"
+              ]
+            },
+            {
+              "text": " the day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " of his coming?",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " and who shall stand",
+              "strongsNumbers": [
+                "H5975"
+              ]
+            },
+            {
+              "text": " when he appeareth?",
+              "strongsNumbers": [
+                "H7200"
+              ]
+            },
+            {
+              "text": " for he is like a refiner's",
+              "strongsNumbers": [
+                "H6884"
+              ]
+            },
+            {
+              "text": " fire,",
+              "strongsNumbers": [
+                "H784"
+              ]
+            },
+            {
+              "text": " and like fullers'",
+              "strongsNumbers": [
+                "H3526"
+              ]
+            },
+            {
+              "text": " soap:"
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "And he shall sit [as] a refiner and purifier of silver: and he shall purify the sons of Levi, and purge them as gold and silver, that they may offer unto the LORD an offering in righteousness."
+          "text": "And he shall sit as a refiner and purifier of silver: and he shall purify the sons of Levi, and purge them as gold and silver, that they may offer unto the LORD an offering in righteousness.",
+          "tokens": [
+            {
+              "text": "And he shall sit",
+              "strongsNumbers": [
+                "H3427"
+              ]
+            },
+            {
+              "text": " as a refiner",
+              "strongsNumbers": [
+                "H6884"
+              ]
+            },
+            {
+              "text": " and purifier",
+              "strongsNumbers": [
+                "H2891"
+              ]
+            },
+            {
+              "text": " of silver:",
+              "strongsNumbers": [
+                "H3701"
+              ]
+            },
+            {
+              "text": " and he shall purify",
+              "strongsNumbers": [
+                "H2891"
+              ]
+            },
+            {
+              "text": " the sons",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " of Levi,",
+              "strongsNumbers": [
+                "H3878"
+              ]
+            },
+            {
+              "text": " and purge",
+              "strongsNumbers": [
+                "H2212"
+              ]
+            },
+            {
+              "text": " them as gold",
+              "strongsNumbers": [
+                "H2091"
+              ]
+            },
+            {
+              "text": " and silver,",
+              "strongsNumbers": [
+                "H3701"
+              ]
+            },
+            {
+              "text": " that they may offer",
+              "strongsNumbers": [
+                "H5066"
+              ]
+            },
+            {
+              "text": " unto the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " an offering",
+              "strongsNumbers": [
+                "H4503"
+              ]
+            },
+            {
+              "text": " in righteousness."
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "Then shall the offering of Judah and Jerusalem be pleasant unto the LORD, as in the days of old, and as in former years."
+          "text": "Then shall the offering of Judah and Jerusalem be pleasant unto the LORD, as in the days of old, and as in former years.",
+          "tokens": [
+            {
+              "text": "Then shall the offering",
+              "strongsNumbers": [
+                "H4503"
+              ]
+            },
+            {
+              "text": " of Judah",
+              "strongsNumbers": [
+                "H3063"
+              ]
+            },
+            {
+              "text": " and Jerusalem",
+              "strongsNumbers": [
+                "H3389"
+              ]
+            },
+            {
+              "text": " be pleasant",
+              "strongsNumbers": [
+                "H6149"
+              ]
+            },
+            {
+              "text": " unto the LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " as in the days",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " of old,",
+              "strongsNumbers": [
+                "H5769"
+              ]
+            },
+            {
+              "text": " and as in former",
+              "strongsNumbers": [
+                "H6931"
+              ]
+            },
+            {
+              "text": " years."
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "And I will come near to you to judgment; and I will be a swift witness against the sorcerers, and against the adulterers, and against false swearers, and against those that oppress the hireling in [his] wages, the widow, and the fatherless, and that turn aside the stranger [from his right], and fear not me, saith the LORD of hosts."
+          "text": "And I will come near to you to judgment; and I will be a swift witness against the sorcerers, and against the adulterers, and against false swearers, and against those that oppress the hireling in his wages, the widow, and the fatherless, and that turn aside the stranger from his right, and fear not me, saith the LORD of hosts.",
+          "tokens": [
+            {
+              "text": "And I will come near",
+              "strongsNumbers": [
+                "H7126"
+              ]
+            },
+            {
+              "text": " to you to judgment;",
+              "strongsNumbers": [
+                "H4941"
+              ]
+            },
+            {
+              "text": " and I will be a swift",
+              "strongsNumbers": [
+                "H4116"
+              ]
+            },
+            {
+              "text": " witness",
+              "strongsNumbers": [
+                "H5707"
+              ]
+            },
+            {
+              "text": " against the sorcerers,",
+              "strongsNumbers": [
+                "H3784"
+              ]
+            },
+            {
+              "text": " and against the adulterers,",
+              "strongsNumbers": [
+                "H5003"
+              ]
+            },
+            {
+              "text": " and against false",
+              "strongsNumbers": [
+                "H8267"
+              ]
+            },
+            {
+              "text": " swearers,",
+              "strongsNumbers": [
+                "H7650"
+              ]
+            },
+            {
+              "text": " and against those that oppress",
+              "strongsNumbers": [
+                "H6231"
+              ]
+            },
+            {
+              "text": " the hireling",
+              "strongsNumbers": [
+                "H7916"
+              ]
+            },
+            {
+              "text": " in his wages,",
+              "strongsNumbers": [
+                "H7939"
+              ]
+            },
+            {
+              "text": " the widow,",
+              "strongsNumbers": [
+                "H490"
+              ]
+            },
+            {
+              "text": " and the fatherless,",
+              "strongsNumbers": [
+                "H3490"
+              ]
+            },
+            {
+              "text": " and that turn aside",
+              "strongsNumbers": [
+                "H5186"
+              ]
+            },
+            {
+              "text": " the stranger",
+              "strongsNumbers": [
+                "H1616"
+              ]
+            },
+            {
+              "text": " from his right, and fear",
+              "strongsNumbers": [
+                "H3372"
+              ]
+            },
+            {
+              "text": " not me, saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts."
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "For I [am] the LORD, I change not; therefore ye sons of Jacob are not consumed."
+          "text": "For I am the LORD, I change not; therefore ye sons of Jacob are not consumed.",
+          "tokens": [
+            {
+              "text": "For I am the LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " I change",
+              "strongsNumbers": [
+                "H8138"
+              ]
+            },
+            {
+              "text": " not; therefore ye sons",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " of Jacob",
+              "strongsNumbers": [
+                "H3290"
+              ]
+            },
+            {
+              "text": " are not consumed."
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "Even from the days of your fathers ye are gone away from mine ordinances, and have not kept [them]. Return unto me, and I will return unto you, saith the LORD of hosts. But ye said, Wherein shall we return?"
+          "text": "Even from the days of your fathers ye are gone away from mine ordinances, and have not kept them. Return unto me, and I will return unto you, saith the LORD of hosts. But ye said, Wherein shall we return?",
+          "tokens": [
+            {
+              "text": "Even from the days",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " of your fathers",
+              "strongsNumbers": [
+                "H1"
+              ]
+            },
+            {
+              "text": " ye are gone away",
+              "strongsNumbers": [
+                "H5493"
+              ]
+            },
+            {
+              "text": " from mine ordinances,",
+              "strongsNumbers": [
+                "H2706"
+              ]
+            },
+            {
+              "text": " and have not kept",
+              "strongsNumbers": [
+                "H8104"
+              ]
+            },
+            {
+              "text": " them. Return",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " unto me, and I will return",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " unto you, saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts.",
+              "strongsNumbers": [
+                "H6635"
+              ]
+            },
+            {
+              "text": " But ye said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Wherein shall we return?"
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "Will a man rob God? Yet ye have robbed me. But ye say, Wherein have we robbed thee? In tithes and offerings."
+          "text": "Will a man rob God? Yet ye have robbed me. But ye say, Wherein have we robbed thee? In tithes and offerings.",
+          "tokens": [
+            {
+              "text": "Will a man",
+              "strongsNumbers": [
+                "H120"
+              ]
+            },
+            {
+              "text": " rob",
+              "strongsNumbers": [
+                "H6906"
+              ]
+            },
+            {
+              "text": " God?",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " Yet ye have robbed",
+              "strongsNumbers": [
+                "H6906"
+              ]
+            },
+            {
+              "text": " me. But ye say,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Wherein have we robbed",
+              "strongsNumbers": [
+                "H6906"
+              ]
+            },
+            {
+              "text": " thee? In tithes",
+              "strongsNumbers": [
+                "H4643"
+              ]
+            },
+            {
+              "text": " and offerings."
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "Ye [are] cursed with a curse: for ye have robbed me, [even] this whole nation."
+          "text": "Ye are cursed with a curse: for ye have robbed me, even this whole nation.",
+          "tokens": [
+            {
+              "text": "Ye are cursed",
+              "strongsNumbers": [
+                "H779"
+              ]
+            },
+            {
+              "text": " with a curse:",
+              "strongsNumbers": [
+                "H3994"
+              ]
+            },
+            {
+              "text": " for ye have robbed",
+              "strongsNumbers": [
+                "H6906"
+              ]
+            },
+            {
+              "text": " me, even this whole nation."
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "Bring ye all the tithes into the storehouse, that there may be meat in mine house, and prove me now herewith, saith the LORD of hosts, if I will not open you the windows of heaven, and pour you out a blessing, that [there shall] not [be room] enough [to receive it]."
+          "text": "Bring ye all the tithes into the storehouse, that there may be meat in mine house, and prove me now herewith, saith the LORD of hosts, if I will not open you the windows of heaven, and pour you out a blessing, that there shall not be room enough",
+          "tokens": [
+            {
+              "text": "Bring",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " ye all the tithes",
+              "strongsNumbers": [
+                "H4643"
+              ]
+            },
+            {
+              "text": " into the storehouse,",
+              "strongsNumbers": [
+                "H214"
+              ]
+            },
+            {
+              "text": " that there may be meat",
+              "strongsNumbers": [
+                "H2964"
+              ]
+            },
+            {
+              "text": " in mine house,",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " and prove",
+              "strongsNumbers": [
+                "H974"
+              ]
+            },
+            {
+              "text": " me now herewith,",
+              "strongsNumbers": [
+                "H2063"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts,",
+              "strongsNumbers": [
+                "H6635"
+              ]
+            },
+            {
+              "text": " if I will not open",
+              "strongsNumbers": [
+                "H6605"
+              ]
+            },
+            {
+              "text": " you the windows",
+              "strongsNumbers": [
+                "H699"
+              ]
+            },
+            {
+              "text": " of heaven,",
+              "strongsNumbers": [
+                "H8064"
+              ]
+            },
+            {
+              "text": " and pour you out",
+              "strongsNumbers": [
+                "H7324"
+              ]
+            },
+            {
+              "text": " a blessing,",
+              "strongsNumbers": [
+                "H1293"
+              ]
+            },
+            {
+              "text": " that there shall not be room enough"
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "And I will rebuke the devourer for your sakes, and he shall not destroy the fruits of your ground; neither shall your vine cast her fruit before the time in the field, saith the LORD of hosts."
+          "text": "And I will rebuke the devourer for your sakes, and he shall not destroy the fruits of your ground; neither shall your vine cast her fruit before the time in the field, saith the LORD of hosts.",
+          "tokens": [
+            {
+              "text": "And I will rebuke",
+              "strongsNumbers": [
+                "H1605"
+              ]
+            },
+            {
+              "text": " the devourer",
+              "strongsNumbers": [
+                "H398"
+              ]
+            },
+            {
+              "text": " for your sakes, and he shall not destroy",
+              "strongsNumbers": [
+                "H7843"
+              ]
+            },
+            {
+              "text": " the fruits",
+              "strongsNumbers": [
+                "H6529"
+              ]
+            },
+            {
+              "text": " of your ground;",
+              "strongsNumbers": [
+                "H127"
+              ]
+            },
+            {
+              "text": " neither shall your vine",
+              "strongsNumbers": [
+                "H1612"
+              ]
+            },
+            {
+              "text": " cast her fruit",
+              "strongsNumbers": [
+                "H7921"
+              ]
+            },
+            {
+              "text": " before the time in the field,",
+              "strongsNumbers": [
+                "H7704"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts."
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "And all nations shall call you blessed: for ye shall be a delightsome land, saith the LORD of hosts."
+          "text": "And all nations shall call you blessed: for ye shall be a delightsome land, saith the LORD of hosts.",
+          "tokens": [
+            {
+              "text": "And all nations",
+              "strongsNumbers": [
+                "H1471"
+              ]
+            },
+            {
+              "text": " shall call you blessed:",
+              "strongsNumbers": [
+                "H833"
+              ]
+            },
+            {
+              "text": " for ye shall be a delightsome",
+              "strongsNumbers": [
+                "H2656"
+              ]
+            },
+            {
+              "text": " land,",
+              "strongsNumbers": [
+                "H776"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts."
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "Your words have been stout against me, saith the LORD. Yet ye say, What have we spoken [so much] against thee?"
+          "text": "Your words have been stout against me, saith the LORD. Yet ye say, What have we spoken",
+          "tokens": [
+            {
+              "text": "Your words",
+              "strongsNumbers": [
+                "H1697"
+              ]
+            },
+            {
+              "text": " have been stout",
+              "strongsNumbers": [
+                "H2388"
+              ]
+            },
+            {
+              "text": " against me, saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD.",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " Yet ye say,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " What have we spoken"
+            }
+          ]
         },
         {
           "number": 14,
-          "text": "Ye have said, It [is] vain to serve God: and what profit [is it] that we have kept his ordinance, and that we have walked mournfully before the LORD of hosts?"
+          "text": "Ye have said, It is vain to serve God: and what profit is it that we have kept his ordinance, and that we have walked mournfully before the LORD of hosts?",
+          "tokens": [
+            {
+              "text": "Ye have said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " It is vain",
+              "strongsNumbers": [
+                "H7723"
+              ]
+            },
+            {
+              "text": " to serve",
+              "strongsNumbers": [
+                "H5647"
+              ]
+            },
+            {
+              "text": " God:",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " and what profit",
+              "strongsNumbers": [
+                "H1215"
+              ]
+            },
+            {
+              "text": " is it that we have kept",
+              "strongsNumbers": [
+                "H8104"
+              ]
+            },
+            {
+              "text": " his ordinance,",
+              "strongsNumbers": [
+                "H4931"
+              ]
+            },
+            {
+              "text": " and that we have walked",
+              "strongsNumbers": [
+                "H1980"
+              ]
+            },
+            {
+              "text": " mournfully",
+              "strongsNumbers": [
+                "H6941"
+              ]
+            },
+            {
+              "text": " before",
+              "strongsNumbers": [
+                "H6440"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts?"
+            }
+          ]
         },
         {
           "number": 15,
-          "text": "And now we call the proud happy; yea, they that work wickedness are set up; yea, [they that] tempt God are even delivered."
+          "text": "And now we call the proud happy; yea, they that work wickedness are set up; yea, they that tempt God are even delivered.",
+          "tokens": [
+            {
+              "text": "And now we call",
+              "strongsNumbers": [
+                "H833"
+              ]
+            },
+            {
+              "text": " the proud",
+              "strongsNumbers": [
+                "H2086"
+              ]
+            },
+            {
+              "text": " happy;",
+              "strongsNumbers": [
+                "H833"
+              ]
+            },
+            {
+              "text": " yea, they that work",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " wickedness",
+              "strongsNumbers": [
+                "H7564"
+              ]
+            },
+            {
+              "text": " are set up;",
+              "strongsNumbers": [
+                "H1129"
+              ]
+            },
+            {
+              "text": " yea, they that tempt",
+              "strongsNumbers": [
+                "H974"
+              ]
+            },
+            {
+              "text": " God",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " are even delivered."
+            }
+          ]
         },
         {
           "number": 16,
-          "text": "Then they that feared the LORD spake often one to another: and the LORD hearkened, and heard [it], and a book of remembrance was written before him for them that feared the LORD, and that thought upon his name."
+          "text": "Then they that feared the LORD spake often one to another: and the LORD hearkened, and heard it, and a book of remembrance was written before him for them that feared the LORD, and that thought upon his name.",
+          "tokens": [
+            {
+              "text": "Then they that feared",
+              "strongsNumbers": [
+                "H3373"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " spake often",
+              "strongsNumbers": [
+                "H1696"
+              ]
+            },
+            {
+              "text": " one",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " to another:",
+              "strongsNumbers": [
+                "H7453"
+              ]
+            },
+            {
+              "text": " and the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " hearkened,",
+              "strongsNumbers": [
+                "H7181"
+              ]
+            },
+            {
+              "text": " and heard",
+              "strongsNumbers": [
+                "H8085"
+              ]
+            },
+            {
+              "text": " it, and a book",
+              "strongsNumbers": [
+                "H5612"
+              ]
+            },
+            {
+              "text": " of remembrance",
+              "strongsNumbers": [
+                "H2146"
+              ]
+            },
+            {
+              "text": " was written",
+              "strongsNumbers": [
+                "H3789"
+              ]
+            },
+            {
+              "text": " before",
+              "strongsNumbers": [
+                "H6440"
+              ]
+            },
+            {
+              "text": " him for them that feared",
+              "strongsNumbers": [
+                "H3373"
+              ]
+            },
+            {
+              "text": " the LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " and that thought",
+              "strongsNumbers": [
+                "H2803"
+              ]
+            },
+            {
+              "text": " upon his name."
+            }
+          ]
         },
         {
           "number": 17,
-          "text": "And they shall be mine, saith the LORD of hosts, in that day when I make up my jewels; and I will spare them, as a man spareth his own son that serveth him."
+          "text": "And they shall be mine, saith the LORD of hosts, in that day when I make up my jewels; and I will spare them, as a man spareth his own son that serveth",
+          "tokens": [
+            {
+              "text": "And they shall be mine, saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts,",
+              "strongsNumbers": [
+                "H6635"
+              ]
+            },
+            {
+              "text": " in that day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " when I make up",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " my jewels;",
+              "strongsNumbers": [
+                "H5459"
+              ]
+            },
+            {
+              "text": " and I will spare",
+              "strongsNumbers": [
+                "H2550"
+              ]
+            },
+            {
+              "text": " them, as a man",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " spareth",
+              "strongsNumbers": [
+                "H2550"
+              ]
+            },
+            {
+              "text": " his own son",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " that serveth"
+            }
+          ]
         },
         {
           "number": 18,
-          "text": "Then shall ye return, and discern between the righteous and the wicked, between him that serveth God and him that serveth him not."
+          "text": "Then shall ye return, and discern between the righteous and the wicked, between him that serveth God and him that serveth",
+          "tokens": [
+            {
+              "text": "Then shall ye return,",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " and discern",
+              "strongsNumbers": [
+                "H7200"
+              ]
+            },
+            {
+              "text": " between the righteous",
+              "strongsNumbers": [
+                "H6662"
+              ]
+            },
+            {
+              "text": " and the wicked,",
+              "strongsNumbers": [
+                "H7563"
+              ]
+            },
+            {
+              "text": " between him that serveth",
+              "strongsNumbers": [
+                "H5647"
+              ]
+            },
+            {
+              "text": " God",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " and him that serveth"
+            }
+          ]
         }
       ]
     },
@@ -228,27 +3523,423 @@
       "verses": [
         {
           "number": 1,
-          "text": "For, behold, the day cometh, that shall burn as an oven; and all the proud, yea, and all that do wickedly, shall be stubble: and the day that cometh shall burn them up, saith the LORD of hosts, that it shall leave them neither root nor branch."
+          "text": "For, behold, the day cometh, that shall burn as an oven; and all the proud, yea, and all that do wickedly, shall be stubble: and the day that cometh shall burn them up, saith the LORD of hosts, that it shall leave them neither root nor branch.",
+          "tokens": [
+            {
+              "text": "For, behold, the day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " cometh,",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " that shall burn",
+              "strongsNumbers": [
+                "H1197"
+              ]
+            },
+            {
+              "text": " as an oven;",
+              "strongsNumbers": [
+                "H8574"
+              ]
+            },
+            {
+              "text": " and all the proud,",
+              "strongsNumbers": [
+                "H2086"
+              ]
+            },
+            {
+              "text": " yea, and all that do",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " wickedly,",
+              "strongsNumbers": [
+                "H7564"
+              ]
+            },
+            {
+              "text": " shall be stubble:",
+              "strongsNumbers": [
+                "H7179"
+              ]
+            },
+            {
+              "text": " and the day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " that cometh",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " shall burn them up,",
+              "strongsNumbers": [
+                "H3857"
+              ]
+            },
+            {
+              "text": " saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts,",
+              "strongsNumbers": [
+                "H6635"
+              ]
+            },
+            {
+              "text": " that it shall leave",
+              "strongsNumbers": [
+                "H5800"
+              ]
+            },
+            {
+              "text": " them neither root",
+              "strongsNumbers": [
+                "H8328"
+              ]
+            },
+            {
+              "text": " nor branch."
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "But unto you that fear my name shall the Sun of righteousness arise with healing in his wings; and ye shall go forth, and grow up as calves of the stall."
+          "text": "But unto you that fear my name shall the Sun of righteousness arise with healing in his wings; and ye shall go forth, and grow up as calves of the stall.",
+          "tokens": [
+            {
+              "text": "But unto you that fear",
+              "strongsNumbers": [
+                "H3373"
+              ]
+            },
+            {
+              "text": " my name",
+              "strongsNumbers": [
+                "H8034"
+              ]
+            },
+            {
+              "text": " shall the Sun",
+              "strongsNumbers": [
+                "H8121"
+              ]
+            },
+            {
+              "text": " of righteousness",
+              "strongsNumbers": [
+                "H6666"
+              ]
+            },
+            {
+              "text": " arise",
+              "strongsNumbers": [
+                "H2224"
+              ]
+            },
+            {
+              "text": " with healing",
+              "strongsNumbers": [
+                "H4832"
+              ]
+            },
+            {
+              "text": " in his wings;",
+              "strongsNumbers": [
+                "H3671"
+              ]
+            },
+            {
+              "text": " and ye shall go forth,",
+              "strongsNumbers": [
+                "H3318"
+              ]
+            },
+            {
+              "text": " and grow up",
+              "strongsNumbers": [
+                "H6335"
+              ]
+            },
+            {
+              "text": " as calves",
+              "strongsNumbers": [
+                "H5695"
+              ]
+            },
+            {
+              "text": " of the stall."
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "And ye shall tread down the wicked; for they shall be ashes under the soles of your feet in the day that I shall do [this], saith the LORD of hosts."
+          "text": "And ye shall tread down the wicked; for they shall be ashes under the soles of your feet in the day that I shall do this, saith the LORD of hosts.",
+          "tokens": [
+            {
+              "text": "And ye shall tread down",
+              "strongsNumbers": [
+                "H6072"
+              ]
+            },
+            {
+              "text": " the wicked;",
+              "strongsNumbers": [
+                "H7563"
+              ]
+            },
+            {
+              "text": " for they shall be ashes",
+              "strongsNumbers": [
+                "H665"
+              ]
+            },
+            {
+              "text": " under the soles",
+              "strongsNumbers": [
+                "H3709"
+              ]
+            },
+            {
+              "text": " of your feet",
+              "strongsNumbers": [
+                "H7272"
+              ]
+            },
+            {
+              "text": " in the day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " that I shall do",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " this, saith",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " of hosts."
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "Remember ye the law of Moses my servant, which I commanded unto him in Horeb for all Israel, [with] the statutes and judgments."
+          "text": "Remember ye the law of Moses my servant, which I commanded unto him in Horeb for all Israel, with the statutes and judgments.",
+          "tokens": [
+            {
+              "text": "Remember",
+              "strongsNumbers": [
+                "H2142"
+              ]
+            },
+            {
+              "text": " ye the law",
+              "strongsNumbers": [
+                "H8451"
+              ]
+            },
+            {
+              "text": " of Moses",
+              "strongsNumbers": [
+                "H4872"
+              ]
+            },
+            {
+              "text": " my servant,",
+              "strongsNumbers": [
+                "H5650"
+              ]
+            },
+            {
+              "text": " which I commanded",
+              "strongsNumbers": [
+                "H6680"
+              ]
+            },
+            {
+              "text": " unto him in Horeb",
+              "strongsNumbers": [
+                "H2722"
+              ]
+            },
+            {
+              "text": " for all Israel,",
+              "strongsNumbers": [
+                "H3478"
+              ]
+            },
+            {
+              "text": " with the statutes",
+              "strongsNumbers": [
+                "H2706"
+              ]
+            },
+            {
+              "text": " and judgments."
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "Behold, I will send you Elijah the prophet before the coming of the great and dreadful day of the LORD:"
+          "text": "Behold, I will send you Elijah the prophet before the coming of the great and dreadful day of the LORD:",
+          "tokens": [
+            {
+              "text": "Behold, I will send",
+              "strongsNumbers": [
+                "H7971"
+              ]
+            },
+            {
+              "text": " you Elijah",
+              "strongsNumbers": [
+                "H452"
+              ]
+            },
+            {
+              "text": " the prophet",
+              "strongsNumbers": [
+                "H5030"
+              ]
+            },
+            {
+              "text": " before",
+              "strongsNumbers": [
+                "H6440"
+              ]
+            },
+            {
+              "text": " the coming",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " of the great",
+              "strongsNumbers": [
+                "H1419"
+              ]
+            },
+            {
+              "text": " and dreadful",
+              "strongsNumbers": [
+                "H3372"
+              ]
+            },
+            {
+              "text": " day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " of the LORD:"
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "And he shall turn the heart of the fathers to the children, and the heart of the children to their fathers, lest I come and smite the earth with a curse."
+          "text": "And he shall turn the heart of the fathers to the children, and the heart of the children to their fathers, lest I come and smite the earth with a curse.",
+          "tokens": [
+            {
+              "text": "And he shall turn",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " the heart",
+              "strongsNumbers": [
+                "H3820"
+              ]
+            },
+            {
+              "text": " of the fathers",
+              "strongsNumbers": [
+                "H1"
+              ]
+            },
+            {
+              "text": " to the children,",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " and the heart",
+              "strongsNumbers": [
+                "H3820"
+              ]
+            },
+            {
+              "text": " of the children",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " to their fathers,",
+              "strongsNumbers": [
+                "H1"
+              ]
+            },
+            {
+              "text": " lest I come",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " and smite",
+              "strongsNumbers": [
+                "H5221"
+              ]
+            },
+            {
+              "text": " the earth",
+              "strongsNumbers": [
+                "H776"
+              ]
+            },
+            {
+              "text": " with a curse."
+            }
+          ]
         }
       ]
     }

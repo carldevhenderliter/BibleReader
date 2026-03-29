@@ -84,6 +84,7 @@ export const DEFAULT_READER_CUSTOMIZATION: ReaderCustomizationSettings = {
   themePreset: "neon",
   bodyFont: "serif",
   uiFont: "sans",
+  showStrongs: false,
   textSize: 1.08,
   lineHeight: 1.95,
   contentWidth: 46,
@@ -155,6 +156,10 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
     uiFont: isUiFontOption(candidate.uiFont)
       ? candidate.uiFont
       : DEFAULT_READER_CUSTOMIZATION.uiFont,
+    showStrongs:
+      typeof candidate.showStrongs === "boolean"
+        ? candidate.showStrongs
+        : DEFAULT_READER_CUSTOMIZATION.showStrongs,
     textSize:
       typeof candidate.textSize === "number"
         ? clamp(candidate.textSize, TEXT_SIZE_RANGE.min, TEXT_SIZE_RANGE.max)

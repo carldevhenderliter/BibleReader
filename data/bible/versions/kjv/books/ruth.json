@@ -14,91 +14,1427 @@
       "verses": [
         {
           "number": 1,
-          "text": "Now it came to pass in the days when the judges ruled, that there was a famine in the land. And a certain man of Beth-lehem-judah went to sojourn in the country of Moab, he, and his wife, and his two sons."
+          "text": "Now it came to pass in the days when the judges ruled, that there was a famine in the land. And a certain man of Bethlehemjudah went to sojourn in the country of Moab, he, and his wife, and his two sons.",
+          "tokens": [
+            {
+              "text": "Now it came to pass in the days",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " when the judges",
+              "strongsNumbers": [
+                "H8199"
+              ]
+            },
+            {
+              "text": " ruled,",
+              "strongsNumbers": [
+                "H8199"
+              ]
+            },
+            {
+              "text": " that there was a famine",
+              "strongsNumbers": [
+                "H7458"
+              ]
+            },
+            {
+              "text": " in the land.",
+              "strongsNumbers": [
+                "H776"
+              ]
+            },
+            {
+              "text": " And a certain man",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " of Bethlehemjudah",
+              "strongsNumbers": [
+                "H1035",
+                "H3063"
+              ]
+            },
+            {
+              "text": " went",
+              "strongsNumbers": [
+                "H3212"
+              ]
+            },
+            {
+              "text": " to sojourn",
+              "strongsNumbers": [
+                "H1481"
+              ]
+            },
+            {
+              "text": " in the country",
+              "strongsNumbers": [
+                "H7704"
+              ]
+            },
+            {
+              "text": " of Moab,",
+              "strongsNumbers": [
+                "H4124"
+              ]
+            },
+            {
+              "text": " he, and his wife,",
+              "strongsNumbers": [
+                "H802"
+              ]
+            },
+            {
+              "text": " and his two",
+              "strongsNumbers": [
+                "H8147"
+              ]
+            },
+            {
+              "text": " sons."
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "And the name of the man [was] Elimelech, and the name of his wife Naomi, and the name of his two sons Mahlon and Chilion, Ephrathites of Beth-lehem-judah. And they came into the country of Moab, and continued there."
+          "text": "And the name of the man was Elimelech, and the name of his wife Naomi, and the name of his two sons Mahlon and Chilion, Ephrathites of Bethlehemjudah. And they came into the country of Moab,",
+          "tokens": [
+            {
+              "text": "And the name",
+              "strongsNumbers": [
+                "H8034"
+              ]
+            },
+            {
+              "text": " of the man",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " was Elimelech,",
+              "strongsNumbers": [
+                "H458"
+              ]
+            },
+            {
+              "text": " and the name",
+              "strongsNumbers": [
+                "H8034"
+              ]
+            },
+            {
+              "text": " of his wife",
+              "strongsNumbers": [
+                "H802"
+              ]
+            },
+            {
+              "text": " Naomi,",
+              "strongsNumbers": [
+                "H5281"
+              ]
+            },
+            {
+              "text": " and the name",
+              "strongsNumbers": [
+                "H8034"
+              ]
+            },
+            {
+              "text": " of his two",
+              "strongsNumbers": [
+                "H8147"
+              ]
+            },
+            {
+              "text": " sons",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " Mahlon",
+              "strongsNumbers": [
+                "H4248"
+              ]
+            },
+            {
+              "text": " and Chilion,",
+              "strongsNumbers": [
+                "H3630"
+              ]
+            },
+            {
+              "text": " Ephrathites",
+              "strongsNumbers": [
+                "H673"
+              ]
+            },
+            {
+              "text": " of Bethlehemjudah.",
+              "strongsNumbers": [
+                "H1035",
+                "H3063"
+              ]
+            },
+            {
+              "text": " And they came",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " into the country",
+              "strongsNumbers": [
+                "H7704"
+              ]
+            },
+            {
+              "text": " of Moab,"
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "And Elimelech Naomi's husband died; and she was left, and her two sons."
+          "text": "And Elimelech Naomi's husband died; and she was left, and her two sons.",
+          "tokens": [
+            {
+              "text": "And Elimelech",
+              "strongsNumbers": [
+                "H458"
+              ]
+            },
+            {
+              "text": " Naomi's",
+              "strongsNumbers": [
+                "H5281"
+              ]
+            },
+            {
+              "text": " husband",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " died;",
+              "strongsNumbers": [
+                "H4191"
+              ]
+            },
+            {
+              "text": " and she was left,",
+              "strongsNumbers": [
+                "H7604"
+              ]
+            },
+            {
+              "text": " and her two",
+              "strongsNumbers": [
+                "H8147"
+              ]
+            },
+            {
+              "text": " sons."
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "And they took them wives of the women of Moab; the name of the one [was] Orpah, and the name of the other Ruth: and they dwelled there about ten years."
+          "text": "And they took them wives of the women of Moab; the name of the one was Orpah, and the name of the other Ruth: and they dwelled there about ten years.",
+          "tokens": [
+            {
+              "text": "And they took",
+              "strongsNumbers": [
+                "H5375"
+              ]
+            },
+            {
+              "text": " them wives",
+              "strongsNumbers": [
+                "H802"
+              ]
+            },
+            {
+              "text": " of the women",
+              "strongsNumbers": [
+                "H802"
+              ]
+            },
+            {
+              "text": " of Moab;",
+              "strongsNumbers": [
+                "H4125"
+              ]
+            },
+            {
+              "text": " the name",
+              "strongsNumbers": [
+                "H8034"
+              ]
+            },
+            {
+              "text": " of the one",
+              "strongsNumbers": [
+                "H259"
+              ]
+            },
+            {
+              "text": " was Orpah,",
+              "strongsNumbers": [
+                "H6204"
+              ]
+            },
+            {
+              "text": " and the name",
+              "strongsNumbers": [
+                "H8034"
+              ]
+            },
+            {
+              "text": " of the other",
+              "strongsNumbers": [
+                "H8145"
+              ]
+            },
+            {
+              "text": " Ruth:",
+              "strongsNumbers": [
+                "H7327"
+              ]
+            },
+            {
+              "text": " and they dwelled",
+              "strongsNumbers": [
+                "H3427"
+              ]
+            },
+            {
+              "text": " there about ten",
+              "strongsNumbers": [
+                "H6235"
+              ]
+            },
+            {
+              "text": " years."
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "And Mahlon and Chilion died also both of them; and the woman was left of her two sons and her husband."
+          "text": "And Mahlon and Chilion died also both of them; and the woman was left of her two sons and her husband.",
+          "tokens": [
+            {
+              "text": "And Mahlon",
+              "strongsNumbers": [
+                "H4248"
+              ]
+            },
+            {
+              "text": " and Chilion",
+              "strongsNumbers": [
+                "H3630"
+              ]
+            },
+            {
+              "text": " died",
+              "strongsNumbers": [
+                "H4191"
+              ]
+            },
+            {
+              "text": " also both",
+              "strongsNumbers": [
+                "H8147"
+              ]
+            },
+            {
+              "text": " of them; and the woman",
+              "strongsNumbers": [
+                "H802"
+              ]
+            },
+            {
+              "text": " was left",
+              "strongsNumbers": [
+                "H7604"
+              ]
+            },
+            {
+              "text": " of her two",
+              "strongsNumbers": [
+                "H8147"
+              ]
+            },
+            {
+              "text": " sons",
+              "strongsNumbers": [
+                "H3206"
+              ]
+            },
+            {
+              "text": " and her husband."
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "Then she arose with her daughters in law, that she might return from the country of Moab: for she had heard in the country of Moab how that the LORD had visited his people in giving them bread."
+          "text": "Then she arose with her daughters in law, that she might return from the country of Moab: for she had heard in the country of Moab how that the LORD had visited his people in giving them bread.",
+          "tokens": [
+            {
+              "text": "Then she arose",
+              "strongsNumbers": [
+                "H6965"
+              ]
+            },
+            {
+              "text": " with her daughters in law,",
+              "strongsNumbers": [
+                "H3618"
+              ]
+            },
+            {
+              "text": " that she might return",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " from the country",
+              "strongsNumbers": [
+                "H7704"
+              ]
+            },
+            {
+              "text": " of Moab:",
+              "strongsNumbers": [
+                "H4124"
+              ]
+            },
+            {
+              "text": " for she had heard",
+              "strongsNumbers": [
+                "H8085"
+              ]
+            },
+            {
+              "text": " in the country",
+              "strongsNumbers": [
+                "H7704"
+              ]
+            },
+            {
+              "text": " of Moab",
+              "strongsNumbers": [
+                "H4124"
+              ]
+            },
+            {
+              "text": " how that the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " had visited",
+              "strongsNumbers": [
+                "H6485"
+              ]
+            },
+            {
+              "text": " his people",
+              "strongsNumbers": [
+                "H5971"
+              ]
+            },
+            {
+              "text": " in giving",
+              "strongsNumbers": [
+                "H5414"
+              ]
+            },
+            {
+              "text": " them bread."
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "Wherefore she went forth out of the place where she was, and her two daughters in law with her; and they went on the way to return unto the land of Judah."
+          "text": "Wherefore she went forth out of the place where she was, and her two daughters in law with her; and they went on the way to return unto the land of Judah.",
+          "tokens": [
+            {
+              "text": "Wherefore she went forth",
+              "strongsNumbers": [
+                "H3318"
+              ]
+            },
+            {
+              "text": " out of the place",
+              "strongsNumbers": [
+                "H4725"
+              ]
+            },
+            {
+              "text": " where she was, and her two",
+              "strongsNumbers": [
+                "H8147"
+              ]
+            },
+            {
+              "text": " daughters in law",
+              "strongsNumbers": [
+                "H3618"
+              ]
+            },
+            {
+              "text": " with her; and they went",
+              "strongsNumbers": [
+                "H3212"
+              ]
+            },
+            {
+              "text": " on the way",
+              "strongsNumbers": [
+                "H1870"
+              ]
+            },
+            {
+              "text": " to return",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " unto the land",
+              "strongsNumbers": [
+                "H776"
+              ]
+            },
+            {
+              "text": " of Judah."
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "And Naomi said unto her two daughters in law, Go, return each to her mother's house: the LORD deal kindly with you, as ye have dealt with the dead, and with me."
+          "text": "And Naomi said unto her two daughters in law, Go, return each to her mother's house: the LORD deal kindly with you, as ye have dealt with the dead,",
+          "tokens": [
+            {
+              "text": "And Naomi",
+              "strongsNumbers": [
+                "H5281"
+              ]
+            },
+            {
+              "text": " said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto her two",
+              "strongsNumbers": [
+                "H8147"
+              ]
+            },
+            {
+              "text": " daughters in law,",
+              "strongsNumbers": [
+                "H3618"
+              ]
+            },
+            {
+              "text": " Go,",
+              "strongsNumbers": [
+                "H3212"
+              ]
+            },
+            {
+              "text": " return",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " each",
+              "strongsNumbers": [
+                "H802"
+              ]
+            },
+            {
+              "text": " to her mother's",
+              "strongsNumbers": [
+                "H517"
+              ]
+            },
+            {
+              "text": " house:",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " deal",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " kindly",
+              "strongsNumbers": [
+                "H2617"
+              ]
+            },
+            {
+              "text": " with you, as ye have dealt",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " with the dead,"
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "The LORD grant you that ye may find rest, each [of you] in the house of her husband. Then she kissed them; and they lifted up their voice, and wept."
+          "text": "The LORD grant you that ye may find rest, each of you in the house of her husband. Then she kissed them; and they lifted up their voice, and wept.",
+          "tokens": [
+            {
+              "text": "The LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " grant",
+              "strongsNumbers": [
+                "H5414"
+              ]
+            },
+            {
+              "text": " you that ye may find",
+              "strongsNumbers": [
+                "H4672"
+              ]
+            },
+            {
+              "text": " rest,",
+              "strongsNumbers": [
+                "H4496"
+              ]
+            },
+            {
+              "text": " each",
+              "strongsNumbers": [
+                "H802"
+              ]
+            },
+            {
+              "text": " of you in the house",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " of her husband.",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " Then she kissed",
+              "strongsNumbers": [
+                "H5401"
+              ]
+            },
+            {
+              "text": " them; and they lifted up",
+              "strongsNumbers": [
+                "H5375"
+              ]
+            },
+            {
+              "text": " their voice,",
+              "strongsNumbers": [
+                "H6963"
+              ]
+            },
+            {
+              "text": " and wept."
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "And they said unto her, Surely we will return with thee unto thy people."
+          "text": "And they said unto her, Surely we will return with thee unto thy people.",
+          "tokens": [
+            {
+              "text": "And they said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto her, Surely we will return",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " with thee unto thy people."
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "And Naomi said, Turn again, my daughters: why will ye go with me? [are] there yet [any more] sons in my womb, that they may be your husbands?"
+          "text": "And Naomi said, Turn again, my daughters: why will ye go with me? are there yet any more sons in my womb, that they may be your husbands?",
+          "tokens": [
+            {
+              "text": "And Naomi",
+              "strongsNumbers": [
+                "H5281"
+              ]
+            },
+            {
+              "text": " said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Turn again,",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " my daughters:",
+              "strongsNumbers": [
+                "H1323"
+              ]
+            },
+            {
+              "text": " why will ye go",
+              "strongsNumbers": [
+                "H3212"
+              ]
+            },
+            {
+              "text": " with me? are there yet any more sons",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " in my womb,",
+              "strongsNumbers": [
+                "H4578"
+              ]
+            },
+            {
+              "text": " that they may be your husbands?"
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "Turn again, my daughters, go [your way]; for I am too old to have an husband. If I should say, I have hope, [if] I should have an husband also to night, and should also bear sons;"
+          "text": "Turn again, my daughters, go your way; for I am too old to have an husband. If I should say, I have hope, if I should have an husband also to night, and should also bear sons;",
+          "tokens": [
+            {
+              "text": "Turn again,",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " my daughters,",
+              "strongsNumbers": [
+                "H1323"
+              ]
+            },
+            {
+              "text": " go",
+              "strongsNumbers": [
+                "H3212"
+              ]
+            },
+            {
+              "text": " your way; for I am too old",
+              "strongsNumbers": [
+                "H2204"
+              ]
+            },
+            {
+              "text": " to have an husband.",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " If I should say,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " I have",
+              "strongsNumbers": [
+                "H3426"
+              ]
+            },
+            {
+              "text": " hope,",
+              "strongsNumbers": [
+                "H8615"
+              ]
+            },
+            {
+              "text": " if I should have an husband",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " also to night,",
+              "strongsNumbers": [
+                "H3915"
+              ]
+            },
+            {
+              "text": " and should also bear",
+              "strongsNumbers": [
+                "H3205"
+              ]
+            },
+            {
+              "text": " sons;"
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "Would ye tarry for them till they were grown? would ye stay for them from having husbands? nay, my daughters; for it grieveth me much for your sakes that the hand of the LORD is gone out against me."
+          "text": "Would ye tarry for them till they were grown? would ye stay for them from having husbands? nay, my daughters; for it grieveth me much for your sakes that the hand of the LORD is gone out",
+          "tokens": [
+            {
+              "text": "Would ye tarry",
+              "strongsNumbers": [
+                "H7663"
+              ]
+            },
+            {
+              "text": " for them",
+              "strongsNumbers": [
+                "H3860"
+              ]
+            },
+            {
+              "text": " till they were grown?",
+              "strongsNumbers": [
+                "H1431"
+              ]
+            },
+            {
+              "text": " would ye stay",
+              "strongsNumbers": [
+                "H5702"
+              ]
+            },
+            {
+              "text": " for them",
+              "strongsNumbers": [
+                "H3860"
+              ]
+            },
+            {
+              "text": " from having husbands?",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " nay, my daughters;",
+              "strongsNumbers": [
+                "H1323"
+              ]
+            },
+            {
+              "text": " for it grieveth",
+              "strongsNumbers": [
+                "H4843"
+              ]
+            },
+            {
+              "text": " me much",
+              "strongsNumbers": [
+                "H3966"
+              ]
+            },
+            {
+              "text": " for your sakes that the hand",
+              "strongsNumbers": [
+                "H3027"
+              ]
+            },
+            {
+              "text": " of the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " is gone out"
+            }
+          ]
         },
         {
           "number": 14,
-          "text": "And they lifted up their voice, and wept again: and Orpah kissed her mother in law; but Ruth clave unto her."
+          "text": "And they lifted up their voice, and wept again: and Orpah kissed her mother in law; but Ruth clave",
+          "tokens": [
+            {
+              "text": "And they lifted up",
+              "strongsNumbers": [
+                "H5375"
+              ]
+            },
+            {
+              "text": " their voice,",
+              "strongsNumbers": [
+                "H6963"
+              ]
+            },
+            {
+              "text": " and wept again:",
+              "strongsNumbers": [
+                "H1058"
+              ]
+            },
+            {
+              "text": " and Orpah",
+              "strongsNumbers": [
+                "H6204"
+              ]
+            },
+            {
+              "text": " kissed",
+              "strongsNumbers": [
+                "H5401"
+              ]
+            },
+            {
+              "text": " her mother in law;",
+              "strongsNumbers": [
+                "H2545"
+              ]
+            },
+            {
+              "text": " but Ruth",
+              "strongsNumbers": [
+                "H7327"
+              ]
+            },
+            {
+              "text": " clave"
+            }
+          ]
         },
         {
           "number": 15,
-          "text": "And she said, Behold, thy sister in law is gone back unto her people, and unto her gods: return thou after thy sister in law."
+          "text": "And she said, Behold, thy sister in law is gone back unto her people, and unto her gods: return thou after thy sister in law.",
+          "tokens": [
+            {
+              "text": "And she said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Behold, thy sister in law",
+              "strongsNumbers": [
+                "H2994"
+              ]
+            },
+            {
+              "text": " is gone back",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " unto her people,",
+              "strongsNumbers": [
+                "H5971"
+              ]
+            },
+            {
+              "text": " and unto her gods:",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " return",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " thou after",
+              "strongsNumbers": [
+                "H310"
+              ]
+            },
+            {
+              "text": " thy sister in law."
+            }
+          ]
         },
         {
           "number": 16,
-          "text": "And Ruth said, Intreat me not to leave thee, [or] to return from following after thee: for whither thou goest, I will go; and where thou lodgest, I will lodge: thy people [shall be] my people, and thy God my God:"
+          "text": "And Ruth said, Intreat me not to leave thee, or to return from following after thee: for whither thou goest, I will go; and where thou lodgest, I will lodge: thy people shall be my people, and thy God my God:",
+          "tokens": [
+            {
+              "text": "And Ruth",
+              "strongsNumbers": [
+                "H7327"
+              ]
+            },
+            {
+              "text": " said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Intreat",
+              "strongsNumbers": [
+                "H6293"
+              ]
+            },
+            {
+              "text": " me not to leave",
+              "strongsNumbers": [
+                "H5800"
+              ]
+            },
+            {
+              "text": " thee, or to return",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " from following after",
+              "strongsNumbers": [
+                "H310"
+              ]
+            },
+            {
+              "text": " thee: for whither thou goest,",
+              "strongsNumbers": [
+                "H3212"
+              ]
+            },
+            {
+              "text": " I will go;",
+              "strongsNumbers": [
+                "H3212"
+              ]
+            },
+            {
+              "text": " and where thou lodgest,",
+              "strongsNumbers": [
+                "H3885"
+              ]
+            },
+            {
+              "text": " I will lodge:",
+              "strongsNumbers": [
+                "H3885"
+              ]
+            },
+            {
+              "text": " thy people",
+              "strongsNumbers": [
+                "H5971"
+              ]
+            },
+            {
+              "text": " shall be my people,",
+              "strongsNumbers": [
+                "H5971"
+              ]
+            },
+            {
+              "text": " and thy God",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " my God:"
+            }
+          ]
         },
         {
           "number": 17,
-          "text": "Where thou diest, will I die, and there will I be buried: the LORD do so to me, and more also, [if ought] but death part thee and me."
+          "text": "Where thou diest, will I die, and there will I be buried: the LORD do so to me, and more also, if ought but death part",
+          "tokens": [
+            {
+              "text": "Where thou diest,",
+              "strongsNumbers": [
+                "H4191"
+              ]
+            },
+            {
+              "text": " will I die,",
+              "strongsNumbers": [
+                "H4191"
+              ]
+            },
+            {
+              "text": " and there will I be buried:",
+              "strongsNumbers": [
+                "H6912"
+              ]
+            },
+            {
+              "text": " the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " do",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " so to me, and more",
+              "strongsNumbers": [
+                "H3254"
+              ]
+            },
+            {
+              "text": " also, if ought but death",
+              "strongsNumbers": [
+                "H4194"
+              ]
+            },
+            {
+              "text": " part"
+            }
+          ]
         },
         {
           "number": 18,
-          "text": "When she saw that she was stedfastly minded to go with her, then she left speaking unto her."
+          "text": "When she saw that she was stedfastly minded to go with her, then she left speaking",
+          "tokens": [
+            {
+              "text": "When she saw",
+              "strongsNumbers": [
+                "H7200"
+              ]
+            },
+            {
+              "text": " that she was stedfastly minded",
+              "strongsNumbers": [
+                "H553"
+              ]
+            },
+            {
+              "text": " to go",
+              "strongsNumbers": [
+                "H3212"
+              ]
+            },
+            {
+              "text": " with her, then she left",
+              "strongsNumbers": [
+                "H2308"
+              ]
+            },
+            {
+              "text": " speaking"
+            }
+          ]
         },
         {
           "number": 19,
-          "text": "So they two went until they came to Beth-lehem. And it came to pass, when they were come to Beth-lehem, that all the city was moved about them, and they said, [Is] this Naomi?"
+          "text": "So they two went until they came to Bethlehem. And it came to pass, when they were come to Bethlehem, that all the city was moved about them, and they said, Is this Naomi?",
+          "tokens": [
+            {
+              "text": "So they two",
+              "strongsNumbers": [
+                "H8147"
+              ]
+            },
+            {
+              "text": " went",
+              "strongsNumbers": [
+                "H3212"
+              ]
+            },
+            {
+              "text": " until they came",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " to Bethlehem.",
+              "strongsNumbers": [
+                "H1035"
+              ]
+            },
+            {
+              "text": " And it came to pass, when they were come",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " to Bethlehem,",
+              "strongsNumbers": [
+                "H1035"
+              ]
+            },
+            {
+              "text": " that all the city",
+              "strongsNumbers": [
+                "H5892"
+              ]
+            },
+            {
+              "text": " was moved",
+              "strongsNumbers": [
+                "H1949"
+              ]
+            },
+            {
+              "text": " about them, and they said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Is this Naomi?"
+            }
+          ]
         },
         {
           "number": 20,
-          "text": "And she said unto them, Call me not Naomi, call me Mara: for the Almighty hath dealt very bitterly with me."
+          "text": "And she said unto them, Call me not Naomi, call me Mara: for the Almighty hath dealt very bitterly",
+          "tokens": [
+            {
+              "text": "And she said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto them, Call",
+              "strongsNumbers": [
+                "H7121"
+              ]
+            },
+            {
+              "text": " me not Naomi,",
+              "strongsNumbers": [
+                "H5281"
+              ]
+            },
+            {
+              "text": " call",
+              "strongsNumbers": [
+                "H7121"
+              ]
+            },
+            {
+              "text": " me Mara:",
+              "strongsNumbers": [
+                "H4755"
+              ]
+            },
+            {
+              "text": " for the Almighty",
+              "strongsNumbers": [
+                "H7706"
+              ]
+            },
+            {
+              "text": " hath dealt very",
+              "strongsNumbers": [
+                "H3966"
+              ]
+            },
+            {
+              "text": " bitterly"
+            }
+          ]
         },
         {
           "number": 21,
-          "text": "I went out full, and the LORD hath brought me home again empty: why [then] call ye me Naomi, seeing the LORD hath testified against me, and the Almighty hath afflicted me?"
+          "text": "I went out full, and the LORD hath brought me home again empty: why then call ye me Naomi, seeing the LORD hath testified against me, and the Almighty hath afflicted",
+          "tokens": [
+            {
+              "text": "I went out",
+              "strongsNumbers": [
+                "H1980"
+              ]
+            },
+            {
+              "text": " full,",
+              "strongsNumbers": [
+                "H4392"
+              ]
+            },
+            {
+              "text": " and the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " hath brought me home again",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " empty:",
+              "strongsNumbers": [
+                "H7387"
+              ]
+            },
+            {
+              "text": " why then call",
+              "strongsNumbers": [
+                "H7121"
+              ]
+            },
+            {
+              "text": " ye me Naomi,",
+              "strongsNumbers": [
+                "H5281"
+              ]
+            },
+            {
+              "text": " seeing the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " hath testified",
+              "strongsNumbers": [
+                "H6030"
+              ]
+            },
+            {
+              "text": " against me, and the Almighty",
+              "strongsNumbers": [
+                "H7706"
+              ]
+            },
+            {
+              "text": " hath afflicted"
+            }
+          ]
         },
         {
           "number": 22,
-          "text": "So Naomi returned, and Ruth the Moabitess, her daughter in law, with her, which returned out of the country of Moab: and they came to Beth-lehem in the beginning of barley harvest."
+          "text": "So Naomi returned, and Ruth the Moabitess, her daughter in law, with her, which returned out of the country of Moab: and they came to Bethlehem in the beginning of barley harvest.",
+          "tokens": [
+            {
+              "text": "So Naomi",
+              "strongsNumbers": [
+                "H5281"
+              ]
+            },
+            {
+              "text": " returned,",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " and Ruth",
+              "strongsNumbers": [
+                "H7327"
+              ]
+            },
+            {
+              "text": " the Moabitess,",
+              "strongsNumbers": [
+                "H4125"
+              ]
+            },
+            {
+              "text": " her daughter in law,",
+              "strongsNumbers": [
+                "H3618"
+              ]
+            },
+            {
+              "text": " with her, which returned",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " out of the country",
+              "strongsNumbers": [
+                "H7704"
+              ]
+            },
+            {
+              "text": " of Moab:",
+              "strongsNumbers": [
+                "H4124"
+              ]
+            },
+            {
+              "text": " and they came",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " to Bethlehem",
+              "strongsNumbers": [
+                "H1035"
+              ]
+            },
+            {
+              "text": " in the beginning",
+              "strongsNumbers": [
+                "H8462"
+              ]
+            },
+            {
+              "text": " of barley",
+              "strongsNumbers": [
+                "H8184"
+              ]
+            },
+            {
+              "text": " harvest."
+            }
+          ]
         }
       ]
     },
@@ -108,95 +1444,1667 @@
       "verses": [
         {
           "number": 1,
-          "text": "And Naomi had a kinsman of her husband's, a mighty man of wealth, of the family of Elimelech; and his name [was] Boaz."
+          "text": "And Naomi had a kinsman of her husband's, a mighty man of wealth, of the family of Elimelech; and his name was Boaz.",
+          "tokens": [
+            {
+              "text": "And Naomi",
+              "strongsNumbers": [
+                "H5281"
+              ]
+            },
+            {
+              "text": " had a kinsman",
+              "strongsNumbers": [
+                "H4129",
+                "H3045"
+              ]
+            },
+            {
+              "text": " of her husband's,",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " a mighty",
+              "strongsNumbers": [
+                "H1368"
+              ]
+            },
+            {
+              "text": " man",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " of wealth,",
+              "strongsNumbers": [
+                "H2428"
+              ]
+            },
+            {
+              "text": " of the family",
+              "strongsNumbers": [
+                "H4940"
+              ]
+            },
+            {
+              "text": " of Elimelech;",
+              "strongsNumbers": [
+                "H458"
+              ]
+            },
+            {
+              "text": " and his name",
+              "strongsNumbers": [
+                "H8034"
+              ]
+            },
+            {
+              "text": " was Boaz."
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "And Ruth the Moabitess said unto Naomi, Let me now go to the field, and glean ears of corn after [him] in whose sight I shall find grace. And she said unto her, Go, my daughter."
+          "text": "And Ruth the Moabitess said unto Naomi, Let me now go to the field, and glean ears of corn after him in whose sight I shall find grace. And she said unto her, Go, my daughter.",
+          "tokens": [
+            {
+              "text": "And Ruth",
+              "strongsNumbers": [
+                "H7327"
+              ]
+            },
+            {
+              "text": " the Moabitess",
+              "strongsNumbers": [
+                "H4125"
+              ]
+            },
+            {
+              "text": " said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto Naomi,",
+              "strongsNumbers": [
+                "H5281"
+              ]
+            },
+            {
+              "text": " Let me now go",
+              "strongsNumbers": [
+                "H3212"
+              ]
+            },
+            {
+              "text": " to the field,",
+              "strongsNumbers": [
+                "H7704"
+              ]
+            },
+            {
+              "text": " and glean",
+              "strongsNumbers": [
+                "H3950"
+              ]
+            },
+            {
+              "text": " ears of corn",
+              "strongsNumbers": [
+                "H7641"
+              ]
+            },
+            {
+              "text": " after",
+              "strongsNumbers": [
+                "H310"
+              ]
+            },
+            {
+              "text": " him in whose sight",
+              "strongsNumbers": [
+                "H5869"
+              ]
+            },
+            {
+              "text": " I shall find",
+              "strongsNumbers": [
+                "H4672"
+              ]
+            },
+            {
+              "text": " grace.",
+              "strongsNumbers": [
+                "H2580"
+              ]
+            },
+            {
+              "text": " And she said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto her, Go,",
+              "strongsNumbers": [
+                "H3212"
+              ]
+            },
+            {
+              "text": " my daughter."
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "And she went, and came, and gleaned in the field after the reapers: and her hap was to light on a part of the field [belonging] unto Boaz, who [was] of the kindred of Elimelech."
+          "text": "And she went, and came, and gleaned in the field after the reapers: and her hap was to light on a part of the field belonging unto Boaz, who was of the kindred of Elimelech.",
+          "tokens": [
+            {
+              "text": "And she went,",
+              "strongsNumbers": [
+                "H3212"
+              ]
+            },
+            {
+              "text": " and came,",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " and gleaned",
+              "strongsNumbers": [
+                "H3950"
+              ]
+            },
+            {
+              "text": " in the field",
+              "strongsNumbers": [
+                "H7704"
+              ]
+            },
+            {
+              "text": " after",
+              "strongsNumbers": [
+                "H310"
+              ]
+            },
+            {
+              "text": " the reapers:",
+              "strongsNumbers": [
+                "H7114"
+              ]
+            },
+            {
+              "text": " and her hap",
+              "strongsNumbers": [
+                "H4745"
+              ]
+            },
+            {
+              "text": " was to light",
+              "strongsNumbers": [
+                "H7136"
+              ]
+            },
+            {
+              "text": " on a part",
+              "strongsNumbers": [
+                "H2513"
+              ]
+            },
+            {
+              "text": " of the field",
+              "strongsNumbers": [
+                "H7704"
+              ]
+            },
+            {
+              "text": " belonging unto Boaz,",
+              "strongsNumbers": [
+                "H1162"
+              ]
+            },
+            {
+              "text": " who was of the kindred",
+              "strongsNumbers": [
+                "H4940"
+              ]
+            },
+            {
+              "text": " of Elimelech."
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "And, behold, Boaz came from Beth-lehem, and said unto the reapers, The LORD [be] with you. And they answered him, The LORD bless thee."
+          "text": "And, behold, Boaz came from Bethlehem, and said unto the reapers, The LORD be with you. And they answered him, The LORD bless",
+          "tokens": [
+            {
+              "text": "And, behold, Boaz",
+              "strongsNumbers": [
+                "H1162"
+              ]
+            },
+            {
+              "text": " came",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " from Bethlehem,",
+              "strongsNumbers": [
+                "H1035"
+              ]
+            },
+            {
+              "text": " and said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto the reapers,",
+              "strongsNumbers": [
+                "H7114"
+              ]
+            },
+            {
+              "text": " The LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " be with you. And they answered",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " him, The LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " bless"
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "Then said Boaz unto his servant that was set over the reapers, Whose damsel [is] this?"
+          "text": "Then said Boaz unto his servant that was set over the reapers, Whose damsel",
+          "tokens": [
+            {
+              "text": "Then said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Boaz",
+              "strongsNumbers": [
+                "H1162"
+              ]
+            },
+            {
+              "text": " unto his servant",
+              "strongsNumbers": [
+                "H5288"
+              ]
+            },
+            {
+              "text": " that was set",
+              "strongsNumbers": [
+                "H5324"
+              ]
+            },
+            {
+              "text": " over the reapers,",
+              "strongsNumbers": [
+                "H7114"
+              ]
+            },
+            {
+              "text": " Whose damsel"
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "And the servant that was set over the reapers answered and said, It [is] the Moabitish damsel that came back with Naomi out of the country of Moab:"
+          "text": "And the servant that was set over the reapers answered and said, It is the Moabitish damsel that came back with Naomi out of the country of Moab:",
+          "tokens": [
+            {
+              "text": "And the servant",
+              "strongsNumbers": [
+                "H5288"
+              ]
+            },
+            {
+              "text": " that was set",
+              "strongsNumbers": [
+                "H5324"
+              ]
+            },
+            {
+              "text": " over the reapers",
+              "strongsNumbers": [
+                "H7114"
+              ]
+            },
+            {
+              "text": " answered",
+              "strongsNumbers": [
+                "H6030"
+              ]
+            },
+            {
+              "text": " and said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " It is the Moabitish",
+              "strongsNumbers": [
+                "H4125"
+              ]
+            },
+            {
+              "text": " damsel",
+              "strongsNumbers": [
+                "H5291"
+              ]
+            },
+            {
+              "text": " that came back",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " with Naomi",
+              "strongsNumbers": [
+                "H5281"
+              ]
+            },
+            {
+              "text": " out of the country",
+              "strongsNumbers": [
+                "H7704"
+              ]
+            },
+            {
+              "text": " of Moab:"
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "And she said, I pray you, let me glean and gather after the reapers among the sheaves: so she came, and hath continued even from the morning until now, that she tarried a little in the house."
+          "text": "And she said, I pray you, let me glean and gather after the reapers among the sheaves: so she came, and hath continued even from the morning until now, that she tarried a little in the house.",
+          "tokens": [
+            {
+              "text": "And she said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " I pray you, let me glean",
+              "strongsNumbers": [
+                "H3950"
+              ]
+            },
+            {
+              "text": " and gather",
+              "strongsNumbers": [
+                "H622"
+              ]
+            },
+            {
+              "text": " after",
+              "strongsNumbers": [
+                "H310"
+              ]
+            },
+            {
+              "text": " the reapers",
+              "strongsNumbers": [
+                "H7114"
+              ]
+            },
+            {
+              "text": " among the sheaves:",
+              "strongsNumbers": [
+                "H6016"
+              ]
+            },
+            {
+              "text": " so she came,",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " and hath continued",
+              "strongsNumbers": [
+                "H5975"
+              ]
+            },
+            {
+              "text": " even",
+              "strongsNumbers": [
+                "H227"
+              ]
+            },
+            {
+              "text": " from the morning",
+              "strongsNumbers": [
+                "H1242"
+              ]
+            },
+            {
+              "text": " until now, that she tarried",
+              "strongsNumbers": [
+                "H3427"
+              ]
+            },
+            {
+              "text": " a little",
+              "strongsNumbers": [
+                "H4592"
+              ]
+            },
+            {
+              "text": " in the house."
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "Then said Boaz unto Ruth, Hearest thou not, my daughter? Go not to glean in another field, neither go from hence, but abide here fast by my maidens:"
+          "text": "Then said Boaz unto Ruth, Hearest thou not, my daughter? Go not to glean in another field, neither go from hence, but abide here fast by my maidens:",
+          "tokens": [
+            {
+              "text": "Then said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Boaz",
+              "strongsNumbers": [
+                "H1162"
+              ]
+            },
+            {
+              "text": " unto Ruth,",
+              "strongsNumbers": [
+                "H7327"
+              ]
+            },
+            {
+              "text": " Hearest",
+              "strongsNumbers": [
+                "H8085"
+              ]
+            },
+            {
+              "text": " thou not, my daughter?",
+              "strongsNumbers": [
+                "H1323"
+              ]
+            },
+            {
+              "text": " Go",
+              "strongsNumbers": [
+                "H3212"
+              ]
+            },
+            {
+              "text": " not to glean",
+              "strongsNumbers": [
+                "H3950"
+              ]
+            },
+            {
+              "text": " in another",
+              "strongsNumbers": [
+                "H312"
+              ]
+            },
+            {
+              "text": " field,",
+              "strongsNumbers": [
+                "H7704"
+              ]
+            },
+            {
+              "text": " neither go",
+              "strongsNumbers": [
+                "H5674"
+              ]
+            },
+            {
+              "text": " from hence, but abide",
+              "strongsNumbers": [
+                "H1692"
+              ]
+            },
+            {
+              "text": " here fast by my maidens:"
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "[Let] thine eyes [be] on the field that they do reap, and go thou after them: have I not charged the young men that they shall not touch thee? and when thou art athirst, go unto the vessels, and drink of [that] which the young men have drawn."
+          "text": "Let thine eyes be on the field that they do reap, and go thou after them: have I not charged the young men that they shall not touch thee? and when thou art athirst, go unto the vessels, and drink of that which the young men have drawn.",
+          "tokens": [
+            {
+              "text": "Let thine eyes",
+              "strongsNumbers": [
+                "H5869"
+              ]
+            },
+            {
+              "text": " be on the field",
+              "strongsNumbers": [
+                "H7704"
+              ]
+            },
+            {
+              "text": " that they do reap,",
+              "strongsNumbers": [
+                "H7114"
+              ]
+            },
+            {
+              "text": " and go",
+              "strongsNumbers": [
+                "H1980"
+              ]
+            },
+            {
+              "text": " thou after",
+              "strongsNumbers": [
+                "H310"
+              ]
+            },
+            {
+              "text": " them: have I not charged",
+              "strongsNumbers": [
+                "H6680"
+              ]
+            },
+            {
+              "text": " the young men",
+              "strongsNumbers": [
+                "H5288"
+              ]
+            },
+            {
+              "text": " that they shall not touch",
+              "strongsNumbers": [
+                "H5060"
+              ]
+            },
+            {
+              "text": " thee? and when thou art athirst,",
+              "strongsNumbers": [
+                "H6770"
+              ]
+            },
+            {
+              "text": " go",
+              "strongsNumbers": [
+                "H1980"
+              ]
+            },
+            {
+              "text": " unto the vessels,",
+              "strongsNumbers": [
+                "H3627"
+              ]
+            },
+            {
+              "text": " and drink",
+              "strongsNumbers": [
+                "H8354"
+              ]
+            },
+            {
+              "text": " of that which the young men",
+              "strongsNumbers": [
+                "H5288"
+              ]
+            },
+            {
+              "text": " have drawn."
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "Then she fell on her face, and bowed herself to the ground, and said unto him, Why have I found grace in thine eyes, that thou shouldest take knowledge of me, seeing I [am] a stranger?"
+          "text": "Then she fell on her face, and bowed herself to the ground, and said unto him, Why have I found grace in thine eyes, that thou shouldest take knowledge of me, seeing I am a stranger?",
+          "tokens": [
+            {
+              "text": "Then she fell",
+              "strongsNumbers": [
+                "H5307"
+              ]
+            },
+            {
+              "text": " on her face,",
+              "strongsNumbers": [
+                "H6440"
+              ]
+            },
+            {
+              "text": " and bowed",
+              "strongsNumbers": [
+                "H7812"
+              ]
+            },
+            {
+              "text": " herself to the ground,",
+              "strongsNumbers": [
+                "H776"
+              ]
+            },
+            {
+              "text": " and said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto him, Why have I found",
+              "strongsNumbers": [
+                "H4672"
+              ]
+            },
+            {
+              "text": " grace",
+              "strongsNumbers": [
+                "H2580"
+              ]
+            },
+            {
+              "text": " in thine eyes,",
+              "strongsNumbers": [
+                "H5869"
+              ]
+            },
+            {
+              "text": " that thou shouldest take knowledge",
+              "strongsNumbers": [
+                "H5234"
+              ]
+            },
+            {
+              "text": " of me, seeing I am a stranger?"
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "And Boaz answered and said unto her, It hath fully been shewed me, all that thou hast done unto thy mother in law since the death of thine husband: and [how] thou hast left thy father and thy mother, and the land of thy nativity, and art come unto a people which thou knewest not heretofore."
+          "text": "And Boaz answered and said unto her, It hath fully been shewed me, all that thou hast done unto thy mother in law since the death of thine husband: and how thou hast left thy father and thy mother, and the land of thy nativity, and art come unto a people which thou knewest not heretofore.",
+          "tokens": [
+            {
+              "text": "And Boaz",
+              "strongsNumbers": [
+                "H1162"
+              ]
+            },
+            {
+              "text": " answered",
+              "strongsNumbers": [
+                "H6030"
+              ]
+            },
+            {
+              "text": " and said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto her, It hath fully",
+              "strongsNumbers": [
+                "H5046"
+              ]
+            },
+            {
+              "text": " been shewed",
+              "strongsNumbers": [
+                "H5046"
+              ]
+            },
+            {
+              "text": " me, all that thou hast done",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " unto thy mother in law",
+              "strongsNumbers": [
+                "H2545"
+              ]
+            },
+            {
+              "text": " since",
+              "strongsNumbers": [
+                "H310"
+              ]
+            },
+            {
+              "text": " the death",
+              "strongsNumbers": [
+                "H4194"
+              ]
+            },
+            {
+              "text": " of thine husband:",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " and how thou hast left",
+              "strongsNumbers": [
+                "H5800"
+              ]
+            },
+            {
+              "text": " thy father",
+              "strongsNumbers": [
+                "H1"
+              ]
+            },
+            {
+              "text": " and thy mother,",
+              "strongsNumbers": [
+                "H517"
+              ]
+            },
+            {
+              "text": " and the land",
+              "strongsNumbers": [
+                "H776"
+              ]
+            },
+            {
+              "text": " of thy nativity,",
+              "strongsNumbers": [
+                "H4138"
+              ]
+            },
+            {
+              "text": " and art come",
+              "strongsNumbers": [
+                "H3212"
+              ]
+            },
+            {
+              "text": " unto a people",
+              "strongsNumbers": [
+                "H5971"
+              ]
+            },
+            {
+              "text": " which thou knewest",
+              "strongsNumbers": [
+                "H3045"
+              ]
+            },
+            {
+              "text": " not heretofore.",
+              "strongsNumbers": [
+                "H8543"
+              ]
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "The LORD recompense thy work, and a full reward be given thee of the LORD God of Israel, under whose wings thou art come to trust."
+          "text": "The LORD recompense thy work, and a full reward be given thee of the LORD God of Israel, under whose wings thou art come to trust.",
+          "tokens": [
+            {
+              "text": "The LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " recompense",
+              "strongsNumbers": [
+                "H7999"
+              ]
+            },
+            {
+              "text": " thy work,",
+              "strongsNumbers": [
+                "H6467"
+              ]
+            },
+            {
+              "text": " and a full",
+              "strongsNumbers": [
+                "H8003"
+              ]
+            },
+            {
+              "text": " reward",
+              "strongsNumbers": [
+                "H4909"
+              ]
+            },
+            {
+              "text": " be given thee of the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " God",
+              "strongsNumbers": [
+                "H430"
+              ]
+            },
+            {
+              "text": " of Israel,",
+              "strongsNumbers": [
+                "H3478"
+              ]
+            },
+            {
+              "text": " under whose wings",
+              "strongsNumbers": [
+                "H3671"
+              ]
+            },
+            {
+              "text": " thou art come",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " to trust."
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "Then she said, Let me find favour in thy sight, my lord; for that thou hast comforted me, and for that thou hast spoken friendly unto thine handmaid, though I be not like unto one of thine handmaidens."
+          "text": "Then she said, Let me find favour in thy sight, my lord; for that thou hast comforted me, and for that thou hast spoken friendly unto thine handmaid, though I be not like unto one of thine handmaidens.",
+          "tokens": [
+            {
+              "text": "Then she said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Let me find",
+              "strongsNumbers": [
+                "H4672"
+              ]
+            },
+            {
+              "text": " favour",
+              "strongsNumbers": [
+                "H2580"
+              ]
+            },
+            {
+              "text": " in thy sight,",
+              "strongsNumbers": [
+                "H5869"
+              ]
+            },
+            {
+              "text": " my lord;",
+              "strongsNumbers": [
+                "H113"
+              ]
+            },
+            {
+              "text": " for that thou hast comforted",
+              "strongsNumbers": [
+                "H5162"
+              ]
+            },
+            {
+              "text": " me, and for that thou hast spoken",
+              "strongsNumbers": [
+                "H1696"
+              ]
+            },
+            {
+              "text": " friendly",
+              "strongsNumbers": [
+                "H3820"
+              ]
+            },
+            {
+              "text": " unto thine handmaid,",
+              "strongsNumbers": [
+                "H8198"
+              ]
+            },
+            {
+              "text": " though I be not like unto one",
+              "strongsNumbers": [
+                "H259"
+              ]
+            },
+            {
+              "text": " of thine handmaidens."
+            }
+          ]
         },
         {
           "number": 14,
-          "text": "And Boaz said unto her, At mealtime come thou hither, and eat of the bread, and dip thy morsel in the vinegar. And she sat beside the reapers: and he reached her parched [corn], and she did eat, and was sufficed, and left."
+          "text": "And Boaz said unto her, At mealtime come thou hither, and eat of the bread, and dip thy morsel in the vinegar. And she sat beside the reapers: and he reached her parched corn, and she did eat, and was sufficed, and left.",
+          "tokens": [
+            {
+              "text": "And Boaz",
+              "strongsNumbers": [
+                "H1162"
+              ]
+            },
+            {
+              "text": " said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto her, At mealtime",
+              "strongsNumbers": [
+                "H6256",
+                "H400"
+              ]
+            },
+            {
+              "text": " come",
+              "strongsNumbers": [
+                "H5066"
+              ]
+            },
+            {
+              "text": " thou hither,",
+              "strongsNumbers": [
+                "H1988"
+              ]
+            },
+            {
+              "text": " and eat",
+              "strongsNumbers": [
+                "H398"
+              ]
+            },
+            {
+              "text": " of the bread,",
+              "strongsNumbers": [
+                "H3899"
+              ]
+            },
+            {
+              "text": " and dip",
+              "strongsNumbers": [
+                "H2881"
+              ]
+            },
+            {
+              "text": " thy morsel",
+              "strongsNumbers": [
+                "H6595"
+              ]
+            },
+            {
+              "text": " in the vinegar.",
+              "strongsNumbers": [
+                "H2558"
+              ]
+            },
+            {
+              "text": " And she sat",
+              "strongsNumbers": [
+                "H3427"
+              ]
+            },
+            {
+              "text": " beside",
+              "strongsNumbers": [
+                "H6654"
+              ]
+            },
+            {
+              "text": " the reapers:",
+              "strongsNumbers": [
+                "H7114"
+              ]
+            },
+            {
+              "text": " and he reached",
+              "strongsNumbers": [
+                "H6642"
+              ]
+            },
+            {
+              "text": " her parched",
+              "strongsNumbers": [
+                "H7039"
+              ]
+            },
+            {
+              "text": " corn, and she did eat,",
+              "strongsNumbers": [
+                "H398"
+              ]
+            },
+            {
+              "text": " and was sufficed,",
+              "strongsNumbers": [
+                "H7646"
+              ]
+            },
+            {
+              "text": " and left."
+            }
+          ]
         },
         {
           "number": 15,
-          "text": "And when she was risen up to glean, Boaz commanded his young men, saying, Let her glean even among the sheaves, and reproach her not:"
+          "text": "And when she was risen up to glean, Boaz commanded his young men, saying, Let her glean even among the sheaves, and reproach",
+          "tokens": [
+            {
+              "text": "And when she was risen up",
+              "strongsNumbers": [
+                "H6965"
+              ]
+            },
+            {
+              "text": " to glean,",
+              "strongsNumbers": [
+                "H3950"
+              ]
+            },
+            {
+              "text": " Boaz",
+              "strongsNumbers": [
+                "H1162"
+              ]
+            },
+            {
+              "text": " commanded",
+              "strongsNumbers": [
+                "H6680"
+              ]
+            },
+            {
+              "text": " his young men,",
+              "strongsNumbers": [
+                "H5288"
+              ]
+            },
+            {
+              "text": " saying,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Let her glean",
+              "strongsNumbers": [
+                "H3950"
+              ]
+            },
+            {
+              "text": " even among the sheaves,",
+              "strongsNumbers": [
+                "H6016"
+              ]
+            },
+            {
+              "text": " and reproach"
+            }
+          ]
         },
         {
           "number": 16,
-          "text": "And let fall also [some] of the handfuls of purpose for her, and leave [them], that she may glean [them], and rebuke her not."
+          "text": "And let fall also some of the handfuls of purpose for her, and leave them, that she may glean them, and rebuke",
+          "tokens": [
+            {
+              "text": "And let fall",
+              "strongsNumbers": [
+                "H7997"
+              ]
+            },
+            {
+              "text": " also some of the handfuls",
+              "strongsNumbers": [
+                "H6653"
+              ]
+            },
+            {
+              "text": " of purpose",
+              "strongsNumbers": [
+                "H7997"
+              ]
+            },
+            {
+              "text": " for her, and leave",
+              "strongsNumbers": [
+                "H5800"
+              ]
+            },
+            {
+              "text": " them, that she may glean",
+              "strongsNumbers": [
+                "H3950"
+              ]
+            },
+            {
+              "text": " them, and rebuke"
+            }
+          ]
         },
         {
           "number": 17,
-          "text": "So she gleaned in the field until even, and beat out that she had gleaned: and it was about an ephah of barley."
+          "text": "So she gleaned in the field until even, and beat out that she had gleaned: and it was about an ephah of barley.",
+          "tokens": [
+            {
+              "text": "So she gleaned",
+              "strongsNumbers": [
+                "H3950"
+              ]
+            },
+            {
+              "text": " in the field",
+              "strongsNumbers": [
+                "H7704"
+              ]
+            },
+            {
+              "text": " until even,",
+              "strongsNumbers": [
+                "H6153"
+              ]
+            },
+            {
+              "text": " and beat out",
+              "strongsNumbers": [
+                "H2251"
+              ]
+            },
+            {
+              "text": " that she had gleaned:",
+              "strongsNumbers": [
+                "H3950"
+              ]
+            },
+            {
+              "text": " and it was about an ephah",
+              "strongsNumbers": [
+                "H374"
+              ]
+            },
+            {
+              "text": " of barley."
+            }
+          ]
         },
         {
           "number": 18,
-          "text": "And she took [it] up, and went into the city: and her mother in law saw what she had gleaned: and she brought forth, and gave to her that she had reserved after she was sufficed."
+          "text": "And she took it up, and went into the city: and her mother in law saw what she had gleaned: and she brought forth, and gave to her that she had reserved after she was sufficed.",
+          "tokens": [
+            {
+              "text": "And she took it up,",
+              "strongsNumbers": [
+                "H5375"
+              ]
+            },
+            {
+              "text": " and went",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " into the city:",
+              "strongsNumbers": [
+                "H5892"
+              ]
+            },
+            {
+              "text": " and her mother in law",
+              "strongsNumbers": [
+                "H2545"
+              ]
+            },
+            {
+              "text": " saw",
+              "strongsNumbers": [
+                "H7200"
+              ]
+            },
+            {
+              "text": " what she had gleaned:",
+              "strongsNumbers": [
+                "H3950"
+              ]
+            },
+            {
+              "text": " and she brought forth,",
+              "strongsNumbers": [
+                "H3318"
+              ]
+            },
+            {
+              "text": " and gave",
+              "strongsNumbers": [
+                "H5414"
+              ]
+            },
+            {
+              "text": " to her that she had reserved",
+              "strongsNumbers": [
+                "H3498"
+              ]
+            },
+            {
+              "text": " after she was sufficed."
+            }
+          ]
         },
         {
           "number": 19,
-          "text": "And her mother in law said unto her, Where hast thou gleaned to day? and where wroughtest thou? blessed be he that did take knowledge of thee. And she shewed her mother in law with whom she had wrought, and said, The man's name with whom I wrought to day [is] Boaz."
+          "text": "And her mother in law said unto her, Where hast thou gleaned to day? and where wroughtest thou? blessed be he that did take knowledge of thee. And she shewed her mother in law with whom she had wrought, and said, The man's name with whom I wrought to day is Boaz.",
+          "tokens": [
+            {
+              "text": "And her mother in law",
+              "strongsNumbers": [
+                "H2545"
+              ]
+            },
+            {
+              "text": " said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto her, Where hast thou gleaned",
+              "strongsNumbers": [
+                "H3950"
+              ]
+            },
+            {
+              "text": " to day?",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " and where",
+              "strongsNumbers": [
+                "H375"
+              ]
+            },
+            {
+              "text": " wroughtest",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " thou? blessed",
+              "strongsNumbers": [
+                "H1288"
+              ]
+            },
+            {
+              "text": " be he that did take knowledge",
+              "strongsNumbers": [
+                "H5234"
+              ]
+            },
+            {
+              "text": " of thee. And she shewed",
+              "strongsNumbers": [
+                "H5046"
+              ]
+            },
+            {
+              "text": " her mother in law",
+              "strongsNumbers": [
+                "H2545"
+              ]
+            },
+            {
+              "text": " with whom she had wrought,",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " and said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " The man's",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " name",
+              "strongsNumbers": [
+                "H8034"
+              ]
+            },
+            {
+              "text": " with whom I wrought",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " to day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " is Boaz."
+            }
+          ]
         },
         {
           "number": 20,
-          "text": "And Naomi said unto her daughter in law, Blessed [be] he of the LORD, who hath not left off his kindness to the living and to the dead. And Naomi said unto her, The man [is] near of kin unto us, one of our next kinsmen."
+          "text": "And Naomi said unto her daughter in law, Blessed be he of the LORD, who hath not left off his kindness to the living and to the dead. And Naomi said unto her, The man is near of kin unto us, one of our next kinsmen.",
+          "tokens": [
+            {
+              "text": "And Naomi",
+              "strongsNumbers": [
+                "H5281"
+              ]
+            },
+            {
+              "text": " said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto her daughter in law,",
+              "strongsNumbers": [
+                "H3618"
+              ]
+            },
+            {
+              "text": " Blessed",
+              "strongsNumbers": [
+                "H1288"
+              ]
+            },
+            {
+              "text": " be he of the LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " who hath not left off",
+              "strongsNumbers": [
+                "H5800"
+              ]
+            },
+            {
+              "text": " his kindness",
+              "strongsNumbers": [
+                "H2617"
+              ]
+            },
+            {
+              "text": " to the living",
+              "strongsNumbers": [
+                "H2416"
+              ]
+            },
+            {
+              "text": " and to the dead.",
+              "strongsNumbers": [
+                "H4191"
+              ]
+            },
+            {
+              "text": " And Naomi",
+              "strongsNumbers": [
+                "H5281"
+              ]
+            },
+            {
+              "text": " said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto her, The man",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " is near of kin",
+              "strongsNumbers": [
+                "H7138"
+              ]
+            },
+            {
+              "text": " unto us, one of our next kinsmen."
+            }
+          ]
         },
         {
           "number": 21,
-          "text": "And Ruth the Moabitess said, He said unto me also, Thou shalt keep fast by my young men, until they have ended all my harvest."
+          "text": "And Ruth the Moabitess said, He said unto me also, Thou shalt keep fast by my young men, until they have ended all my harvest.",
+          "tokens": [
+            {
+              "text": "And Ruth",
+              "strongsNumbers": [
+                "H7327"
+              ]
+            },
+            {
+              "text": " the Moabitess",
+              "strongsNumbers": [
+                "H4125"
+              ]
+            },
+            {
+              "text": " said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " He said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto me also, Thou shalt keep fast",
+              "strongsNumbers": [
+                "H1692"
+              ]
+            },
+            {
+              "text": " by my young men,",
+              "strongsNumbers": [
+                "H5288"
+              ]
+            },
+            {
+              "text": " until they have ended",
+              "strongsNumbers": [
+                "H3615"
+              ]
+            },
+            {
+              "text": " all my harvest."
+            }
+          ]
         },
         {
           "number": 22,
-          "text": "And Naomi said unto Ruth her daughter in law, [It is] good, my daughter, that thou go out with his maidens, that they meet thee not in any other field."
+          "text": "And Naomi said unto Ruth her daughter in law, It is good, my daughter, that thou go out with his maidens, that they meet thee not in any other field.",
+          "tokens": [
+            {
+              "text": "And Naomi",
+              "strongsNumbers": [
+                "H5281"
+              ]
+            },
+            {
+              "text": " said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto Ruth",
+              "strongsNumbers": [
+                "H7327"
+              ]
+            },
+            {
+              "text": " her daughter in law,",
+              "strongsNumbers": [
+                "H3618"
+              ]
+            },
+            {
+              "text": " It is good,",
+              "strongsNumbers": [
+                "H2896"
+              ]
+            },
+            {
+              "text": " my daughter,",
+              "strongsNumbers": [
+                "H1323"
+              ]
+            },
+            {
+              "text": " that thou go out",
+              "strongsNumbers": [
+                "H3318"
+              ]
+            },
+            {
+              "text": " with his maidens,",
+              "strongsNumbers": [
+                "H5291"
+              ]
+            },
+            {
+              "text": " that they meet",
+              "strongsNumbers": [
+                "H6293"
+              ]
+            },
+            {
+              "text": " thee not in any other",
+              "strongsNumbers": [
+                "H312"
+              ]
+            },
+            {
+              "text": " field."
+            }
+          ]
         },
         {
           "number": 23,
-          "text": "So she kept fast by the maidens of Boaz to glean unto the end of barley harvest and of wheat harvest; and dwelt with her mother in law."
+          "text": "So she kept fast by the maidens of Boaz to glean unto the end of barley harvest and of wheat harvest; and dwelt with her mother in law.",
+          "tokens": [
+            {
+              "text": "So she kept fast",
+              "strongsNumbers": [
+                "H1692"
+              ]
+            },
+            {
+              "text": " by the maidens",
+              "strongsNumbers": [
+                "H5291"
+              ]
+            },
+            {
+              "text": " of Boaz",
+              "strongsNumbers": [
+                "H1162"
+              ]
+            },
+            {
+              "text": " to glean",
+              "strongsNumbers": [
+                "H3950"
+              ]
+            },
+            {
+              "text": " unto the end",
+              "strongsNumbers": [
+                "H3615"
+              ]
+            },
+            {
+              "text": " of barley",
+              "strongsNumbers": [
+                "H8184"
+              ]
+            },
+            {
+              "text": " harvest",
+              "strongsNumbers": [
+                "H7105"
+              ]
+            },
+            {
+              "text": " and of wheat",
+              "strongsNumbers": [
+                "H2406"
+              ]
+            },
+            {
+              "text": " harvest;",
+              "strongsNumbers": [
+                "H7105"
+              ]
+            },
+            {
+              "text": " and dwelt",
+              "strongsNumbers": [
+                "H3427"
+              ]
+            },
+            {
+              "text": " with her mother in law."
+            }
+          ]
         }
       ]
     },
@@ -206,75 +3114,1037 @@
       "verses": [
         {
           "number": 1,
-          "text": "Then Naomi her mother in law said unto her, My daughter, shall I not seek rest for thee, that it may be well with thee?"
+          "text": "Then Naomi her mother in law said unto her, My daughter, shall I not seek rest for thee, that it may be well",
+          "tokens": [
+            {
+              "text": "Then Naomi",
+              "strongsNumbers": [
+                "H5281"
+              ]
+            },
+            {
+              "text": " her mother in law",
+              "strongsNumbers": [
+                "H2545"
+              ]
+            },
+            {
+              "text": " said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto her, My daughter,",
+              "strongsNumbers": [
+                "H1323"
+              ]
+            },
+            {
+              "text": " shall I not seek",
+              "strongsNumbers": [
+                "H1245"
+              ]
+            },
+            {
+              "text": " rest",
+              "strongsNumbers": [
+                "H4494"
+              ]
+            },
+            {
+              "text": " for thee, that it may be well"
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "And now [is] not Boaz of our kindred, with whose maidens thou wast? Behold, he winnoweth barley to night in the threshingfloor."
+          "text": "And now is not Boaz of our kindred, with whose maidens thou wast? Behold, he winnoweth barley to night in the threshingfloor.",
+          "tokens": [
+            {
+              "text": "And now is not Boaz",
+              "strongsNumbers": [
+                "H1162"
+              ]
+            },
+            {
+              "text": " of our kindred,",
+              "strongsNumbers": [
+                "H4130"
+              ]
+            },
+            {
+              "text": " with whose maidens",
+              "strongsNumbers": [
+                "H5291"
+              ]
+            },
+            {
+              "text": " thou wast? Behold, he winnoweth",
+              "strongsNumbers": [
+                "H2219"
+              ]
+            },
+            {
+              "text": " barley",
+              "strongsNumbers": [
+                "H8184"
+              ]
+            },
+            {
+              "text": " to night",
+              "strongsNumbers": [
+                "H3915"
+              ]
+            },
+            {
+              "text": " in the threshingfloor."
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "Wash thyself therefore, and anoint thee, and put thy raiment upon thee, and get thee down to the floor: [but] make not thyself known unto the man, until he shall have done eating and drinking."
+          "text": "Wash thyself therefore, and anoint thee, and put thy raiment upon thee, and get thee down to the floor: but make not thyself known unto the man, until he shall have done eating and drinking.",
+          "tokens": [
+            {
+              "text": "Wash",
+              "strongsNumbers": [
+                "H7364"
+              ]
+            },
+            {
+              "text": " thyself therefore, and anoint",
+              "strongsNumbers": [
+                "H5480"
+              ]
+            },
+            {
+              "text": " thee, and put",
+              "strongsNumbers": [
+                "H7760"
+              ]
+            },
+            {
+              "text": " thy raiment",
+              "strongsNumbers": [
+                "H8071"
+              ]
+            },
+            {
+              "text": " upon thee, and get thee down",
+              "strongsNumbers": [
+                "H3381"
+              ]
+            },
+            {
+              "text": " to the floor:",
+              "strongsNumbers": [
+                "H1637"
+              ]
+            },
+            {
+              "text": " but make not thyself known",
+              "strongsNumbers": [
+                "H3045"
+              ]
+            },
+            {
+              "text": " unto the man,",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " until he shall have done",
+              "strongsNumbers": [
+                "H3615"
+              ]
+            },
+            {
+              "text": " eating",
+              "strongsNumbers": [
+                "H398"
+              ]
+            },
+            {
+              "text": " and drinking."
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "And it shall be, when he lieth down, that thou shalt mark the place where he shall lie, and thou shalt go in, and uncover his feet, and lay thee down; and he will tell thee what thou shalt do."
+          "text": "And it shall be, when he lieth down, that thou shalt mark the place where he shall lie, and thou shalt go in, and uncover his feet, and lay thee down; and he will tell thee what thou shalt do.",
+          "tokens": [
+            {
+              "text": "And it shall be, when he lieth down,",
+              "strongsNumbers": [
+                "H7901"
+              ]
+            },
+            {
+              "text": " that thou shalt mark",
+              "strongsNumbers": [
+                "H3045"
+              ]
+            },
+            {
+              "text": " the place",
+              "strongsNumbers": [
+                "H4725"
+              ]
+            },
+            {
+              "text": " where he shall lie,",
+              "strongsNumbers": [
+                "H7901"
+              ]
+            },
+            {
+              "text": " and thou shalt go in,",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " and uncover",
+              "strongsNumbers": [
+                "H1540"
+              ]
+            },
+            {
+              "text": " his feet,",
+              "strongsNumbers": [
+                "H4772"
+              ]
+            },
+            {
+              "text": " and lay thee down;",
+              "strongsNumbers": [
+                "H7901"
+              ]
+            },
+            {
+              "text": " and he will tell",
+              "strongsNumbers": [
+                "H5046"
+              ]
+            },
+            {
+              "text": " thee what thou shalt do."
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "And she said unto her, All that thou sayest unto me I will do."
+          "text": "And she said unto her, All that thou sayest unto me I will do.",
+          "tokens": [
+            {
+              "text": "And she said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto her, All that thou sayest",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto me I will do."
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "And she went down unto the floor, and did according to all that her mother in law bade her."
+          "text": "And she went down unto the floor, and did according to all that her mother in law bade",
+          "tokens": [
+            {
+              "text": "And she went down",
+              "strongsNumbers": [
+                "H3381"
+              ]
+            },
+            {
+              "text": " unto the floor,",
+              "strongsNumbers": [
+                "H1637"
+              ]
+            },
+            {
+              "text": " and did",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " according to all that her mother in law",
+              "strongsNumbers": [
+                "H2545"
+              ]
+            },
+            {
+              "text": " bade"
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "And when Boaz had eaten and drunk, and his heart was merry, he went to lie down at the end of the heap of corn: and she came softly, and uncovered his feet, and laid her down."
+          "text": "And when Boaz had eaten and drunk, and his heart was merry, he went to lie down at the end of the heap of corn: and she came softly, and uncovered his feet, and laid her down.",
+          "tokens": [
+            {
+              "text": "And when Boaz",
+              "strongsNumbers": [
+                "H1162"
+              ]
+            },
+            {
+              "text": " had eaten",
+              "strongsNumbers": [
+                "H398"
+              ]
+            },
+            {
+              "text": " and drunk,",
+              "strongsNumbers": [
+                "H8354"
+              ]
+            },
+            {
+              "text": " and his heart",
+              "strongsNumbers": [
+                "H3820"
+              ]
+            },
+            {
+              "text": " was merry,",
+              "strongsNumbers": [
+                "H3190"
+              ]
+            },
+            {
+              "text": " he went",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " to lie down",
+              "strongsNumbers": [
+                "H7901"
+              ]
+            },
+            {
+              "text": " at the end",
+              "strongsNumbers": [
+                "H7097"
+              ]
+            },
+            {
+              "text": " of the heap of corn:",
+              "strongsNumbers": [
+                "H6194"
+              ]
+            },
+            {
+              "text": " and she came",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " softly,",
+              "strongsNumbers": [
+                "H3909"
+              ]
+            },
+            {
+              "text": " and uncovered",
+              "strongsNumbers": [
+                "H1540"
+              ]
+            },
+            {
+              "text": " his feet,",
+              "strongsNumbers": [
+                "H4772"
+              ]
+            },
+            {
+              "text": " and laid her down."
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "And it came to pass at midnight, that the man was afraid, and turned himself: and, behold, a woman lay at his feet."
+          "text": "And it came to pass at midnight, that the man was afraid, and turned himself: and, behold, a woman lay at his feet.",
+          "tokens": [
+            {
+              "text": "And it came to pass at midnight,",
+              "strongsNumbers": [
+                "H2677",
+                "H3915"
+              ]
+            },
+            {
+              "text": " that the man",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " was afraid,",
+              "strongsNumbers": [
+                "H2729"
+              ]
+            },
+            {
+              "text": " and turned",
+              "strongsNumbers": [
+                "H3943"
+              ]
+            },
+            {
+              "text": " himself: and, behold, a woman",
+              "strongsNumbers": [
+                "H802"
+              ]
+            },
+            {
+              "text": " lay",
+              "strongsNumbers": [
+                "H7901"
+              ]
+            },
+            {
+              "text": " at his feet."
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "And he said, Who [art] thou? And she answered, I [am] Ruth thine handmaid: spread therefore thy skirt over thine handmaid; for thou [art] a near kinsman."
+          "text": "And he said, Who art thou? And she answered, I am Ruth thine handmaid: spread therefore thy skirt over thine handmaid; for thou art a near kinsman.",
+          "tokens": [
+            {
+              "text": "And he said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Who art thou? And she answered,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " I am Ruth",
+              "strongsNumbers": [
+                "H7327"
+              ]
+            },
+            {
+              "text": " thine handmaid:",
+              "strongsNumbers": [
+                "H519"
+              ]
+            },
+            {
+              "text": " spread",
+              "strongsNumbers": [
+                "H6566"
+              ]
+            },
+            {
+              "text": " therefore thy skirt",
+              "strongsNumbers": [
+                "H3671"
+              ]
+            },
+            {
+              "text": " over thine handmaid;",
+              "strongsNumbers": [
+                "H519"
+              ]
+            },
+            {
+              "text": " for thou art a near kinsman."
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "And he said, Blessed [be] thou of the LORD, my daughter: [for] thou hast shewed more kindness in the latter end than at the beginning, inasmuch as thou followedst not young men, whether poor or rich."
+          "text": "And he said, Blessed be thou of the LORD, my daughter: for thou hast shewed more kindness in the latter end than at the beginning, inasmuch as thou followedst not young men, whether poor or rich.",
+          "tokens": [
+            {
+              "text": "And he said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Blessed",
+              "strongsNumbers": [
+                "H1288"
+              ]
+            },
+            {
+              "text": " be thou of the LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " my daughter:",
+              "strongsNumbers": [
+                "H1323"
+              ]
+            },
+            {
+              "text": " for thou hast shewed",
+              "strongsNumbers": [
+                "H3190"
+              ]
+            },
+            {
+              "text": " more kindness",
+              "strongsNumbers": [
+                "H2617"
+              ]
+            },
+            {
+              "text": " in the latter end",
+              "strongsNumbers": [
+                "H314"
+              ]
+            },
+            {
+              "text": " than at the beginning,",
+              "strongsNumbers": [
+                "H7223"
+              ]
+            },
+            {
+              "text": " inasmuch as thou followedst",
+              "strongsNumbers": [
+                "H3212",
+                "H310"
+              ]
+            },
+            {
+              "text": " not",
+              "strongsNumbers": [
+                "H1115"
+              ]
+            },
+            {
+              "text": " young men,",
+              "strongsNumbers": [
+                "H970"
+              ]
+            },
+            {
+              "text": " whether poor",
+              "strongsNumbers": [
+                "H1800"
+              ]
+            },
+            {
+              "text": " or rich."
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "And now, my daughter, fear not; I will do to thee all that thou requirest: for all the city of my people doth know that thou [art] a virtuous woman."
+          "text": "And now, my daughter, fear not; I will do to thee all that thou requirest: for all the city of my people doth know that thou art a virtuous woman.",
+          "tokens": [
+            {
+              "text": "And now, my daughter,",
+              "strongsNumbers": [
+                "H1323"
+              ]
+            },
+            {
+              "text": " fear",
+              "strongsNumbers": [
+                "H3372"
+              ]
+            },
+            {
+              "text": " not; I will do",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " to thee all that thou requirest:",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " for all the city",
+              "strongsNumbers": [
+                "H8179"
+              ]
+            },
+            {
+              "text": " of my people",
+              "strongsNumbers": [
+                "H5971"
+              ]
+            },
+            {
+              "text": " doth know",
+              "strongsNumbers": [
+                "H3045"
+              ]
+            },
+            {
+              "text": " that thou art a virtuous",
+              "strongsNumbers": [
+                "H2428"
+              ]
+            },
+            {
+              "text": " woman."
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "And now it is true that I [am thy] near kinsman: howbeit there is a kinsman nearer than I."
+          "text": "And now it is true that I am thy near kinsman: howbeit there is a kinsman nearer",
+          "tokens": [
+            {
+              "text": "And now it is true",
+              "strongsNumbers": [
+                "H551"
+              ]
+            },
+            {
+              "text": " that I am thy near kinsman:",
+              "strongsNumbers": [
+                "H1350"
+              ]
+            },
+            {
+              "text": " howbeit there is",
+              "strongsNumbers": [
+                "H3426"
+              ]
+            },
+            {
+              "text": " a kinsman",
+              "strongsNumbers": [
+                "H1350"
+              ]
+            },
+            {
+              "text": " nearer"
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "Tarry this night, and it shall be in the morning, [that] if he will perform unto thee the part of a kinsman, well; let him do the kinsman's part: but if he will not do the part of a kinsman to thee, then will I do the part of a kinsman to thee, [as] the LORD liveth: lie down until the morning."
+          "text": "Tarry this night, and it shall be in the morning, that if he will perform unto thee the part of a kinsman, well; let him do the kinsman's part: but if he will not do the part of a kinsman to thee, then will I do the part of a kinsman to thee, as the LORD liveth: lie down until the morning.",
+          "tokens": [
+            {
+              "text": "Tarry",
+              "strongsNumbers": [
+                "H3885"
+              ]
+            },
+            {
+              "text": " this night,",
+              "strongsNumbers": [
+                "H3915"
+              ]
+            },
+            {
+              "text": " and it shall be in the morning,",
+              "strongsNumbers": [
+                "H1242"
+              ]
+            },
+            {
+              "text": " that if he will perform unto thee the part of a kinsman,",
+              "strongsNumbers": [
+                "H1350"
+              ]
+            },
+            {
+              "text": " well;",
+              "strongsNumbers": [
+                "H2896"
+              ]
+            },
+            {
+              "text": " let him do the kinsman's part:",
+              "strongsNumbers": [
+                "H1350"
+              ]
+            },
+            {
+              "text": " but if he will",
+              "strongsNumbers": [
+                "H2654"
+              ]
+            },
+            {
+              "text": " not do the part of a kinsman",
+              "strongsNumbers": [
+                "H1350"
+              ]
+            },
+            {
+              "text": " to thee, then will I do the part of a kinsman",
+              "strongsNumbers": [
+                "H1350"
+              ]
+            },
+            {
+              "text": " to thee, as the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " liveth:",
+              "strongsNumbers": [
+                "H2416"
+              ]
+            },
+            {
+              "text": " lie down",
+              "strongsNumbers": [
+                "H7901"
+              ]
+            },
+            {
+              "text": " until the morning."
+            }
+          ]
         },
         {
           "number": 14,
-          "text": "And she lay at his feet until the morning: and she rose up before one could know another. And he said, Let it not be known that a woman came into the floor."
+          "text": "And she lay at his feet until the morning: and she rose up before one could know another. And he said, Let it not be known that a woman came into the floor.",
+          "tokens": [
+            {
+              "text": "And she lay",
+              "strongsNumbers": [
+                "H7901"
+              ]
+            },
+            {
+              "text": " at his feet",
+              "strongsNumbers": [
+                "H4772"
+              ]
+            },
+            {
+              "text": " until the morning:",
+              "strongsNumbers": [
+                "H1242"
+              ]
+            },
+            {
+              "text": " and she rose up",
+              "strongsNumbers": [
+                "H6965"
+              ]
+            },
+            {
+              "text": " before",
+              "strongsNumbers": [
+                "H2958"
+              ]
+            },
+            {
+              "text": " one",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " could know",
+              "strongsNumbers": [
+                "H5234"
+              ]
+            },
+            {
+              "text": " another.",
+              "strongsNumbers": [
+                "H7453"
+              ]
+            },
+            {
+              "text": " And he said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Let it not be known",
+              "strongsNumbers": [
+                "H3045"
+              ]
+            },
+            {
+              "text": " that a woman",
+              "strongsNumbers": [
+                "H802"
+              ]
+            },
+            {
+              "text": " came",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " into the floor."
+            }
+          ]
         },
         {
           "number": 15,
-          "text": "Also he said, Bring the vail that [thou hast] upon thee, and hold it. And when she held it, he measured six [measures] of barley, and laid [it] on her: and she went into the city."
+          "text": "Also he said, Bring the vail that thou hast upon thee, and hold it. And when she held it, he measured six measures of barley, and laid it on her: and she went into the city.",
+          "tokens": [
+            {
+              "text": "Also he said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Bring",
+              "strongsNumbers": [
+                "H3051"
+              ]
+            },
+            {
+              "text": " the vail",
+              "strongsNumbers": [
+                "H4304"
+              ]
+            },
+            {
+              "text": " that thou hast upon thee, and hold",
+              "strongsNumbers": [
+                "H270"
+              ]
+            },
+            {
+              "text": " it. And when she held",
+              "strongsNumbers": [
+                "H270"
+              ]
+            },
+            {
+              "text": " it, he measured",
+              "strongsNumbers": [
+                "H4058"
+              ]
+            },
+            {
+              "text": " six",
+              "strongsNumbers": [
+                "H8337"
+              ]
+            },
+            {
+              "text": " measures of barley,",
+              "strongsNumbers": [
+                "H8184"
+              ]
+            },
+            {
+              "text": " and laid",
+              "strongsNumbers": [
+                "H7896"
+              ]
+            },
+            {
+              "text": " it on her: and she went",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " into the city."
+            }
+          ]
         },
         {
           "number": 16,
-          "text": "And when she came to her mother in law, she said, Who [art] thou, my daughter? And she told her all that the man had done to her."
+          "text": "And when she came to her mother in law, she said, Who art thou, my daughter? And she told her all that the man had done",
+          "tokens": [
+            {
+              "text": "And when she came",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " to her mother in law,",
+              "strongsNumbers": [
+                "H2545"
+              ]
+            },
+            {
+              "text": " she said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Who art thou, my daughter?",
+              "strongsNumbers": [
+                "H1323"
+              ]
+            },
+            {
+              "text": " And she told",
+              "strongsNumbers": [
+                "H5046"
+              ]
+            },
+            {
+              "text": " her all that the man",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " had done"
+            }
+          ]
         },
         {
           "number": 17,
-          "text": "And she said, These six [measures] of barley gave he me; for he said to me, Go not empty unto thy mother in law."
+          "text": "And she said, These six measures of barley gave he me; for he said to me, Go not empty unto thy mother in law.",
+          "tokens": [
+            {
+              "text": "And she said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " These six",
+              "strongsNumbers": [
+                "H8337"
+              ]
+            },
+            {
+              "text": " measures of barley",
+              "strongsNumbers": [
+                "H8184"
+              ]
+            },
+            {
+              "text": " gave",
+              "strongsNumbers": [
+                "H5414"
+              ]
+            },
+            {
+              "text": " he me; for he said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " to me, Go",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " not empty",
+              "strongsNumbers": [
+                "H7387"
+              ]
+            },
+            {
+              "text": " unto thy mother in law."
+            }
+          ]
         },
         {
           "number": 18,
-          "text": "Then said she, Sit still, my daughter, until thou know how the matter will fall: for the man will not be in rest, until he have finished the thing this day."
+          "text": "Then said she, Sit still, my daughter, until thou know how the matter will fall: for the man will not be in rest, until he have finished the thing this day.",
+          "tokens": [
+            {
+              "text": "Then said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " she, Sit still,",
+              "strongsNumbers": [
+                "H3427"
+              ]
+            },
+            {
+              "text": " my daughter,",
+              "strongsNumbers": [
+                "H1323"
+              ]
+            },
+            {
+              "text": " until thou know",
+              "strongsNumbers": [
+                "H3045"
+              ]
+            },
+            {
+              "text": " how the matter",
+              "strongsNumbers": [
+                "H1697"
+              ]
+            },
+            {
+              "text": " will fall:",
+              "strongsNumbers": [
+                "H5307"
+              ]
+            },
+            {
+              "text": " for the man",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " will not be in rest,",
+              "strongsNumbers": [
+                "H8252"
+              ]
+            },
+            {
+              "text": " until",
+              "strongsNumbers": [
+                "H518"
+              ]
+            },
+            {
+              "text": " he have finished",
+              "strongsNumbers": [
+                "H3615"
+              ]
+            },
+            {
+              "text": " the thing",
+              "strongsNumbers": [
+                "H1697"
+              ]
+            },
+            {
+              "text": " this day."
+            }
+          ]
         }
       ]
     },
@@ -284,91 +4154,1511 @@
       "verses": [
         {
           "number": 1,
-          "text": "Then went Boaz up to the gate, and sat him down there: and, behold, the kinsman of whom Boaz spake came by; unto whom he said, Ho, such a one! turn aside, sit down here. And he turned aside, and sat down."
+          "text": "Then went Boaz up to the gate, and sat him down there: and, behold, the kinsman of whom Boaz spake came by; unto whom he said, Ho, such a one! turn aside, sit down here. And he turned aside, and sat down.",
+          "tokens": [
+            {
+              "text": "Then went",
+              "strongsNumbers": [
+                "H5927"
+              ]
+            },
+            {
+              "text": " Boaz",
+              "strongsNumbers": [
+                "H1162"
+              ]
+            },
+            {
+              "text": " up",
+              "strongsNumbers": [
+                "H5927"
+              ]
+            },
+            {
+              "text": " to the gate,",
+              "strongsNumbers": [
+                "H8179"
+              ]
+            },
+            {
+              "text": " and sat him down",
+              "strongsNumbers": [
+                "H3427"
+              ]
+            },
+            {
+              "text": " there: and, behold, the kinsman",
+              "strongsNumbers": [
+                "H1350"
+              ]
+            },
+            {
+              "text": " of whom Boaz",
+              "strongsNumbers": [
+                "H1162"
+              ]
+            },
+            {
+              "text": " spake",
+              "strongsNumbers": [
+                "H1696"
+              ]
+            },
+            {
+              "text": " came",
+              "strongsNumbers": [
+                "H5674"
+              ]
+            },
+            {
+              "text": " by; unto whom he said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Ho,",
+              "strongsNumbers": [
+                "H1945"
+              ]
+            },
+            {
+              "text": " such",
+              "strongsNumbers": [
+                "H6423"
+              ]
+            },
+            {
+              "text": " a one!",
+              "strongsNumbers": [
+                "H492"
+              ]
+            },
+            {
+              "text": " turn aside,",
+              "strongsNumbers": [
+                "H5493"
+              ]
+            },
+            {
+              "text": " sit down",
+              "strongsNumbers": [
+                "H3427"
+              ]
+            },
+            {
+              "text": " here. And he turned aside,",
+              "strongsNumbers": [
+                "H5493"
+              ]
+            },
+            {
+              "text": " and sat down."
+            }
+          ]
         },
         {
           "number": 2,
-          "text": "And he took ten men of the elders of the city, and said, Sit ye down here. And they sat down."
+          "text": "And he took ten men of the elders of the city, and said, Sit ye down here. And they sat down.",
+          "tokens": [
+            {
+              "text": "And he took",
+              "strongsNumbers": [
+                "H3947"
+              ]
+            },
+            {
+              "text": " ten",
+              "strongsNumbers": [
+                "H6235"
+              ]
+            },
+            {
+              "text": " men",
+              "strongsNumbers": [
+                "H582"
+              ]
+            },
+            {
+              "text": " of the elders",
+              "strongsNumbers": [
+                "H2205"
+              ]
+            },
+            {
+              "text": " of the city,",
+              "strongsNumbers": [
+                "H5892"
+              ]
+            },
+            {
+              "text": " and said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Sit ye down",
+              "strongsNumbers": [
+                "H3427"
+              ]
+            },
+            {
+              "text": " here. And they sat down."
+            }
+          ]
         },
         {
           "number": 3,
-          "text": "And he said unto the kinsman, Naomi, that is come again out of the country of Moab, selleth a parcel of land, which [was] our brother Elimelech's:"
+          "text": "And he said unto the kinsman, Naomi, that is come again out of the country of Moab, selleth a parcel of land, which was our brother Elimelech's:",
+          "tokens": [
+            {
+              "text": "And he said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto the kinsman,",
+              "strongsNumbers": [
+                "H1350"
+              ]
+            },
+            {
+              "text": " Naomi,",
+              "strongsNumbers": [
+                "H5281"
+              ]
+            },
+            {
+              "text": " that is come again",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " out of the country",
+              "strongsNumbers": [
+                "H7704"
+              ]
+            },
+            {
+              "text": " of Moab,",
+              "strongsNumbers": [
+                "H4124"
+              ]
+            },
+            {
+              "text": " selleth",
+              "strongsNumbers": [
+                "H4376"
+              ]
+            },
+            {
+              "text": " a parcel",
+              "strongsNumbers": [
+                "H2513"
+              ]
+            },
+            {
+              "text": " of land,",
+              "strongsNumbers": [
+                "H7704"
+              ]
+            },
+            {
+              "text": " which was our brother",
+              "strongsNumbers": [
+                "H251"
+              ]
+            },
+            {
+              "text": " Elimelech's:"
+            }
+          ]
         },
         {
           "number": 4,
-          "text": "And I thought to advertise thee, saying, Buy [it] before the inhabitants, and before the elders of my people. If thou wilt redeem [it], redeem [it]: but if thou wilt not redeem [it, then] tell me, that I may know: for [there is] none to redeem [it] beside thee; and I [am] after thee. And he said, I will redeem [it]."
+          "text": "And I thought to advertise thee, saying, Buy it before the inhabitants, and before the elders of my people. If thou wilt redeem it, redeem it: but if thou wilt not redeem it, then tell me, that I may know: for there is none to redeem it beside thee; and I am after thee. And he said, I will redeem",
+          "tokens": [
+            {
+              "text": "And I thought",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " to advertise",
+              "strongsNumbers": [
+                "H1540",
+                "H241"
+              ]
+            },
+            {
+              "text": " thee, saying,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Buy",
+              "strongsNumbers": [
+                "H7069"
+              ]
+            },
+            {
+              "text": " it before the inhabitants,",
+              "strongsNumbers": [
+                "H3427"
+              ]
+            },
+            {
+              "text": " and before the elders",
+              "strongsNumbers": [
+                "H2205"
+              ]
+            },
+            {
+              "text": " of my people.",
+              "strongsNumbers": [
+                "H5971"
+              ]
+            },
+            {
+              "text": " If thou wilt redeem",
+              "strongsNumbers": [
+                "H1350"
+              ]
+            },
+            {
+              "text": " it, redeem",
+              "strongsNumbers": [
+                "H1350"
+              ]
+            },
+            {
+              "text": " it: but if thou wilt not redeem",
+              "strongsNumbers": [
+                "H1350"
+              ]
+            },
+            {
+              "text": " it, then tell",
+              "strongsNumbers": [
+                "H5046"
+              ]
+            },
+            {
+              "text": " me, that I may know:",
+              "strongsNumbers": [
+                "H3045"
+              ]
+            },
+            {
+              "text": " for there is none to redeem",
+              "strongsNumbers": [
+                "H1350"
+              ]
+            },
+            {
+              "text": " it beside",
+              "strongsNumbers": [
+                "H2108"
+              ]
+            },
+            {
+              "text": " thee; and I am after",
+              "strongsNumbers": [
+                "H310"
+              ]
+            },
+            {
+              "text": " thee. And he said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " I will redeem"
+            }
+          ]
         },
         {
           "number": 5,
-          "text": "Then said Boaz, What day thou buyest the field of the hand of Naomi, thou must buy [it] also of Ruth the Moabitess, the wife of the dead, to raise up the name of the dead upon his inheritance."
+          "text": "Then said Boaz, What day thou buyest the field of the hand of Naomi, thou must buy it also of Ruth the Moabitess, the wife of the dead, to raise up the name of the dead upon his inheritance.",
+          "tokens": [
+            {
+              "text": "Then said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " Boaz,",
+              "strongsNumbers": [
+                "H1162"
+              ]
+            },
+            {
+              "text": " What day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " thou buyest",
+              "strongsNumbers": [
+                "H7069"
+              ]
+            },
+            {
+              "text": " the field",
+              "strongsNumbers": [
+                "H7704"
+              ]
+            },
+            {
+              "text": " of the hand",
+              "strongsNumbers": [
+                "H3027"
+              ]
+            },
+            {
+              "text": " of Naomi,",
+              "strongsNumbers": [
+                "H5281"
+              ]
+            },
+            {
+              "text": " thou must buy",
+              "strongsNumbers": [
+                "H7069"
+              ]
+            },
+            {
+              "text": " it also of Ruth",
+              "strongsNumbers": [
+                "H7327"
+              ]
+            },
+            {
+              "text": " the Moabitess,",
+              "strongsNumbers": [
+                "H4125"
+              ]
+            },
+            {
+              "text": " the wife",
+              "strongsNumbers": [
+                "H802"
+              ]
+            },
+            {
+              "text": " of the dead,",
+              "strongsNumbers": [
+                "H4191"
+              ]
+            },
+            {
+              "text": " to raise up",
+              "strongsNumbers": [
+                "H6965"
+              ]
+            },
+            {
+              "text": " the name",
+              "strongsNumbers": [
+                "H8034"
+              ]
+            },
+            {
+              "text": " of the dead",
+              "strongsNumbers": [
+                "H4191"
+              ]
+            },
+            {
+              "text": " upon his inheritance."
+            }
+          ]
         },
         {
           "number": 6,
-          "text": "And the kinsman said, I cannot redeem [it] for myself, lest I mar mine own inheritance: redeem thou my right to thyself; for I cannot redeem [it]."
+          "text": "And the kinsman said, I cannot redeem it for myself, lest I mar mine own inheritance: redeem thou my right to thyself; for I cannot redeem",
+          "tokens": [
+            {
+              "text": "And the kinsman",
+              "strongsNumbers": [
+                "H1350"
+              ]
+            },
+            {
+              "text": " said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " I cannot",
+              "strongsNumbers": [
+                "H3201"
+              ]
+            },
+            {
+              "text": " redeem",
+              "strongsNumbers": [
+                "H1350"
+              ]
+            },
+            {
+              "text": " it for myself, lest I mar",
+              "strongsNumbers": [
+                "H7843"
+              ]
+            },
+            {
+              "text": " mine own inheritance:",
+              "strongsNumbers": [
+                "H5159"
+              ]
+            },
+            {
+              "text": " redeem",
+              "strongsNumbers": [
+                "H1350"
+              ]
+            },
+            {
+              "text": " thou my right",
+              "strongsNumbers": [
+                "H1353"
+              ]
+            },
+            {
+              "text": " to thyself; for I cannot",
+              "strongsNumbers": [
+                "H3201"
+              ]
+            },
+            {
+              "text": " redeem"
+            }
+          ]
         },
         {
           "number": 7,
-          "text": "Now this [was the manner] in former time in Israel concerning redeeming and concerning changing, for to confirm all things; a man plucked off his shoe, and gave [it] to his neighbour: and this [was] a testimony in Israel."
+          "text": "Now this was the manner in former time in Israel concerning redeeming and concerning changing, for to confirm all things; a man plucked off his shoe, and gave it to his neighbour: and this was a testimony in Israel.",
+          "tokens": [
+            {
+              "text": "Now this was the manner in former time",
+              "strongsNumbers": [
+                "H6440"
+              ]
+            },
+            {
+              "text": " in Israel",
+              "strongsNumbers": [
+                "H3478"
+              ]
+            },
+            {
+              "text": " concerning redeeming",
+              "strongsNumbers": [
+                "H1353"
+              ]
+            },
+            {
+              "text": " and concerning changing,",
+              "strongsNumbers": [
+                "H8545"
+              ]
+            },
+            {
+              "text": " for to confirm",
+              "strongsNumbers": [
+                "H6965"
+              ]
+            },
+            {
+              "text": " all things;",
+              "strongsNumbers": [
+                "H1697"
+              ]
+            },
+            {
+              "text": " a man",
+              "strongsNumbers": [
+                "H376"
+              ]
+            },
+            {
+              "text": " plucked off",
+              "strongsNumbers": [
+                "H8025"
+              ]
+            },
+            {
+              "text": " his shoe,",
+              "strongsNumbers": [
+                "H5275"
+              ]
+            },
+            {
+              "text": " and gave",
+              "strongsNumbers": [
+                "H5414"
+              ]
+            },
+            {
+              "text": " it to his neighbour:",
+              "strongsNumbers": [
+                "H7453"
+              ]
+            },
+            {
+              "text": " and this was a testimony",
+              "strongsNumbers": [
+                "H8584"
+              ]
+            },
+            {
+              "text": " in Israel."
+            }
+          ]
         },
         {
           "number": 8,
-          "text": "Therefore the kinsman said unto Boaz, Buy [it] for thee. So he drew off his shoe."
+          "text": "Therefore the kinsman said unto Boaz, Buy it for thee. So he drew off his shoe.",
+          "tokens": [
+            {
+              "text": "Therefore the kinsman",
+              "strongsNumbers": [
+                "H1350"
+              ]
+            },
+            {
+              "text": " said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto Boaz,",
+              "strongsNumbers": [
+                "H1162"
+              ]
+            },
+            {
+              "text": " Buy",
+              "strongsNumbers": [
+                "H7069"
+              ]
+            },
+            {
+              "text": " it for thee. So he drew off",
+              "strongsNumbers": [
+                "H8025"
+              ]
+            },
+            {
+              "text": " his shoe."
+            }
+          ]
         },
         {
           "number": 9,
-          "text": "And Boaz said unto the elders, and [unto] all the people, Ye [are] witnesses this day, that I have bought all that [was] Elimelech's, and all that [was] Chilion's and Mahlon's, of the hand of Naomi."
+          "text": "And Boaz said unto the elders, and unto all the people, Ye are witnesses this day, that I have bought all that was Elimelech's, and all that was Chilion's and Mahlon's, of the hand of Naomi.",
+          "tokens": [
+            {
+              "text": "And Boaz",
+              "strongsNumbers": [
+                "H1162"
+              ]
+            },
+            {
+              "text": " said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto the elders,",
+              "strongsNumbers": [
+                "H2205"
+              ]
+            },
+            {
+              "text": " and unto all the people,",
+              "strongsNumbers": [
+                "H5971"
+              ]
+            },
+            {
+              "text": " Ye are witnesses",
+              "strongsNumbers": [
+                "H5707"
+              ]
+            },
+            {
+              "text": " this day,",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " that I have bought",
+              "strongsNumbers": [
+                "H7069"
+              ]
+            },
+            {
+              "text": " all that was Elimelech's,",
+              "strongsNumbers": [
+                "H458"
+              ]
+            },
+            {
+              "text": " and all that was Chilion's",
+              "strongsNumbers": [
+                "H3630"
+              ]
+            },
+            {
+              "text": " and Mahlon's,",
+              "strongsNumbers": [
+                "H4248"
+              ]
+            },
+            {
+              "text": " of the hand",
+              "strongsNumbers": [
+                "H3027"
+              ]
+            },
+            {
+              "text": " of Naomi."
+            }
+          ]
         },
         {
           "number": 10,
-          "text": "Moreover Ruth the Moabitess, the wife of Mahlon, have I purchased to be my wife, to raise up the name of the dead upon his inheritance, that the name of the dead be not cut off from among his brethren, and from the gate of his place: ye [are] witnesses this day."
+          "text": "Moreover Ruth the Moabitess, the wife of Mahlon, have I purchased to be my wife, to raise up the name of the dead upon his inheritance, that the name of the dead be not cut off from among his brethren, and from the gate of his place: ye are witnesses this day.",
+          "tokens": [
+            {
+              "text": "Moreover Ruth",
+              "strongsNumbers": [
+                "H7327"
+              ]
+            },
+            {
+              "text": " the Moabitess,",
+              "strongsNumbers": [
+                "H4125"
+              ]
+            },
+            {
+              "text": " the wife",
+              "strongsNumbers": [
+                "H802"
+              ]
+            },
+            {
+              "text": " of Mahlon,",
+              "strongsNumbers": [
+                "H4248"
+              ]
+            },
+            {
+              "text": " have I purchased",
+              "strongsNumbers": [
+                "H7069"
+              ]
+            },
+            {
+              "text": " to be my wife,",
+              "strongsNumbers": [
+                "H802"
+              ]
+            },
+            {
+              "text": " to raise up",
+              "strongsNumbers": [
+                "H6965"
+              ]
+            },
+            {
+              "text": " the name",
+              "strongsNumbers": [
+                "H8034"
+              ]
+            },
+            {
+              "text": " of the dead",
+              "strongsNumbers": [
+                "H4191"
+              ]
+            },
+            {
+              "text": " upon his inheritance,",
+              "strongsNumbers": [
+                "H5159"
+              ]
+            },
+            {
+              "text": " that the name",
+              "strongsNumbers": [
+                "H8034"
+              ]
+            },
+            {
+              "text": " of the dead",
+              "strongsNumbers": [
+                "H4191"
+              ]
+            },
+            {
+              "text": " be not cut off",
+              "strongsNumbers": [
+                "H3772"
+              ]
+            },
+            {
+              "text": " from among",
+              "strongsNumbers": [
+                "H5973"
+              ]
+            },
+            {
+              "text": " his brethren,",
+              "strongsNumbers": [
+                "H251"
+              ]
+            },
+            {
+              "text": " and from the gate",
+              "strongsNumbers": [
+                "H8179"
+              ]
+            },
+            {
+              "text": " of his place:",
+              "strongsNumbers": [
+                "H4725"
+              ]
+            },
+            {
+              "text": " ye are witnesses",
+              "strongsNumbers": [
+                "H5707"
+              ]
+            },
+            {
+              "text": " this day."
+            }
+          ]
         },
         {
           "number": 11,
-          "text": "And all the people that [were] in the gate, and the elders, said, [We are] witnesses. The LORD make the woman that is come into thine house like Rachel and like Leah, which two did build the house of Israel: and do thou worthily in Ephratah, and be famous in Beth-lehem:"
+          "text": "And all the people that were in the gate, and the elders, said, We are witnesses. The LORD make the woman that is come into thine house like Rachel and like Leah, which two did build the house of Israel: and do thou worthily in Ephratah, and be famous in Bethlehem:",
+          "tokens": [
+            {
+              "text": "And all the people",
+              "strongsNumbers": [
+                "H5971"
+              ]
+            },
+            {
+              "text": " that were in the gate,",
+              "strongsNumbers": [
+                "H8179"
+              ]
+            },
+            {
+              "text": " and the elders,",
+              "strongsNumbers": [
+                "H2205"
+              ]
+            },
+            {
+              "text": " said,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " We are witnesses.",
+              "strongsNumbers": [
+                "H5707"
+              ]
+            },
+            {
+              "text": " The LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " make",
+              "strongsNumbers": [
+                "H5414"
+              ]
+            },
+            {
+              "text": " the woman",
+              "strongsNumbers": [
+                "H802"
+              ]
+            },
+            {
+              "text": " that is come",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " into thine house",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " like Rachel",
+              "strongsNumbers": [
+                "H7354"
+              ]
+            },
+            {
+              "text": " and like Leah,",
+              "strongsNumbers": [
+                "H3812"
+              ]
+            },
+            {
+              "text": " which two",
+              "strongsNumbers": [
+                "H8147"
+              ]
+            },
+            {
+              "text": " did build",
+              "strongsNumbers": [
+                "H1129"
+              ]
+            },
+            {
+              "text": " the house",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " of Israel:",
+              "strongsNumbers": [
+                "H3478"
+              ]
+            },
+            {
+              "text": " and do",
+              "strongsNumbers": [
+                "H6213"
+              ]
+            },
+            {
+              "text": " thou worthily",
+              "strongsNumbers": [
+                "H2428"
+              ]
+            },
+            {
+              "text": " in Ephratah,",
+              "strongsNumbers": [
+                "H672"
+              ]
+            },
+            {
+              "text": " and be famous",
+              "strongsNumbers": [
+                "H7121",
+                "H8034"
+              ]
+            },
+            {
+              "text": " in Bethlehem:"
+            }
+          ]
         },
         {
           "number": 12,
-          "text": "And let thy house be like the house of Pharez, whom Tamar bare unto Judah, of the seed which the LORD shall give thee of this young woman."
+          "text": "And let thy house be like the house of Pharez, whom Tamar bare unto Judah, of the seed which the LORD shall give thee of this young woman.",
+          "tokens": [
+            {
+              "text": "And let thy house",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " be like the house",
+              "strongsNumbers": [
+                "H1004"
+              ]
+            },
+            {
+              "text": " of Pharez,",
+              "strongsNumbers": [
+                "H6557"
+              ]
+            },
+            {
+              "text": " whom Tamar",
+              "strongsNumbers": [
+                "H8559"
+              ]
+            },
+            {
+              "text": " bare",
+              "strongsNumbers": [
+                "H3205"
+              ]
+            },
+            {
+              "text": " unto Judah,",
+              "strongsNumbers": [
+                "H3063"
+              ]
+            },
+            {
+              "text": " of the seed",
+              "strongsNumbers": [
+                "H2233"
+              ]
+            },
+            {
+              "text": " which the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " shall give",
+              "strongsNumbers": [
+                "H5414"
+              ]
+            },
+            {
+              "text": " thee of this young woman."
+            }
+          ]
         },
         {
           "number": 13,
-          "text": "So Boaz took Ruth, and she was his wife: and when he went in unto her, the LORD gave her conception, and she bare a son."
+          "text": "So Boaz took Ruth, and she was his wife: and when he went in unto her, the LORD gave her conception, and she bare a son.",
+          "tokens": [
+            {
+              "text": "So Boaz",
+              "strongsNumbers": [
+                "H1162"
+              ]
+            },
+            {
+              "text": " took",
+              "strongsNumbers": [
+                "H3947"
+              ]
+            },
+            {
+              "text": " Ruth,",
+              "strongsNumbers": [
+                "H7327"
+              ]
+            },
+            {
+              "text": " and she was his wife:",
+              "strongsNumbers": [
+                "H802"
+              ]
+            },
+            {
+              "text": " and when he went in",
+              "strongsNumbers": [
+                "H935"
+              ]
+            },
+            {
+              "text": " unto her, the LORD",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " gave",
+              "strongsNumbers": [
+                "H5414"
+              ]
+            },
+            {
+              "text": " her conception,",
+              "strongsNumbers": [
+                "H2032"
+              ]
+            },
+            {
+              "text": " and she bare",
+              "strongsNumbers": [
+                "H3205"
+              ]
+            },
+            {
+              "text": " a son."
+            }
+          ]
         },
         {
           "number": 14,
-          "text": "And the women said unto Naomi, Blessed [be] the LORD, which hath not left thee this day without a kinsman, that his name may be famous in Israel."
+          "text": "And the women said unto Naomi, Blessed be the LORD, which hath not left thee this day without a kinsman, that his name may be famous in Israel.",
+          "tokens": [
+            {
+              "text": "And the women",
+              "strongsNumbers": [
+                "H802"
+              ]
+            },
+            {
+              "text": " said",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " unto Naomi,",
+              "strongsNumbers": [
+                "H5281"
+              ]
+            },
+            {
+              "text": " Blessed",
+              "strongsNumbers": [
+                "H1288"
+              ]
+            },
+            {
+              "text": " be the LORD,",
+              "strongsNumbers": [
+                "H3068"
+              ]
+            },
+            {
+              "text": " which hath not left",
+              "strongsNumbers": [
+                "H7673"
+              ]
+            },
+            {
+              "text": " thee this day",
+              "strongsNumbers": [
+                "H3117"
+              ]
+            },
+            {
+              "text": " without a kinsman,",
+              "strongsNumbers": [
+                "H1350"
+              ]
+            },
+            {
+              "text": " that his name",
+              "strongsNumbers": [
+                "H8034"
+              ]
+            },
+            {
+              "text": " may be famous",
+              "strongsNumbers": [
+                "H7121"
+              ]
+            },
+            {
+              "text": " in Israel."
+            }
+          ]
         },
         {
           "number": 15,
-          "text": "And he shall be unto thee a restorer of [thy] life, and a nourisher of thine old age: for thy daughter in law, which loveth thee, which is better to thee than seven sons, hath born him."
+          "text": "And he shall be unto thee a restorer of thy life, and a nourisher of thine old age: for thy daughter in law, which loveth thee, which is better to thee than seven sons, hath born",
+          "tokens": [
+            {
+              "text": "And he shall be unto thee a restorer",
+              "strongsNumbers": [
+                "H7725"
+              ]
+            },
+            {
+              "text": " of thy life,",
+              "strongsNumbers": [
+                "H5315"
+              ]
+            },
+            {
+              "text": " and a nourisher",
+              "strongsNumbers": [
+                "H3557"
+              ]
+            },
+            {
+              "text": " of thine old age:",
+              "strongsNumbers": [
+                "H7872"
+              ]
+            },
+            {
+              "text": " for thy daughter in law,",
+              "strongsNumbers": [
+                "H3618"
+              ]
+            },
+            {
+              "text": " which loveth",
+              "strongsNumbers": [
+                "H157"
+              ]
+            },
+            {
+              "text": " thee, which is better",
+              "strongsNumbers": [
+                "H2896"
+              ]
+            },
+            {
+              "text": " to thee than seven",
+              "strongsNumbers": [
+                "H7651"
+              ]
+            },
+            {
+              "text": " sons,",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " hath born"
+            }
+          ]
         },
         {
           "number": 16,
-          "text": "And Naomi took the child, and laid it in her bosom, and became nurse unto it."
+          "text": "And Naomi took the child, and laid it in her bosom, and became nurse",
+          "tokens": [
+            {
+              "text": "And Naomi",
+              "strongsNumbers": [
+                "H5281"
+              ]
+            },
+            {
+              "text": " took",
+              "strongsNumbers": [
+                "H3947"
+              ]
+            },
+            {
+              "text": " the child,",
+              "strongsNumbers": [
+                "H3206"
+              ]
+            },
+            {
+              "text": " and laid",
+              "strongsNumbers": [
+                "H7896"
+              ]
+            },
+            {
+              "text": " it in her bosom,",
+              "strongsNumbers": [
+                "H2436"
+              ]
+            },
+            {
+              "text": " and became nurse"
+            }
+          ]
         },
         {
           "number": 17,
-          "text": "And the women her neighbours gave it a name, saying, There is a son born to Naomi; and they called his name Obed: he [is] the father of Jesse, the father of David."
+          "text": "And the women her neighbours gave it a name, saying, There is a son born to Naomi; and they called his name Obed: he is the father of Jesse, the father of David.",
+          "tokens": [
+            {
+              "text": "And the women her neighbours",
+              "strongsNumbers": [
+                "H7934"
+              ]
+            },
+            {
+              "text": " gave",
+              "strongsNumbers": [
+                "H7121"
+              ]
+            },
+            {
+              "text": " it a name,",
+              "strongsNumbers": [
+                "H8034"
+              ]
+            },
+            {
+              "text": " saying,",
+              "strongsNumbers": [
+                "H559"
+              ]
+            },
+            {
+              "text": " There is a son",
+              "strongsNumbers": [
+                "H1121"
+              ]
+            },
+            {
+              "text": " born",
+              "strongsNumbers": [
+                "H3205"
+              ]
+            },
+            {
+              "text": " to Naomi;",
+              "strongsNumbers": [
+                "H5281"
+              ]
+            },
+            {
+              "text": " and they called",
+              "strongsNumbers": [
+                "H7121"
+              ]
+            },
+            {
+              "text": " his name",
+              "strongsNumbers": [
+                "H8034"
+              ]
+            },
+            {
+              "text": " Obed:",
+              "strongsNumbers": [
+                "H5744"
+              ]
+            },
+            {
+              "text": " he is the father",
+              "strongsNumbers": [
+                "H1"
+              ]
+            },
+            {
+              "text": " of Jesse,",
+              "strongsNumbers": [
+                "H3448"
+              ]
+            },
+            {
+              "text": " the father",
+              "strongsNumbers": [
+                "H1"
+              ]
+            },
+            {
+              "text": " of David."
+            }
+          ]
         },
         {
           "number": 18,
-          "text": "Now these [are] the generations of Pharez: Pharez begat Hezron,"
+          "text": "Now these are the generations of Pharez: Pharez begat Hezron,",
+          "tokens": [
+            {
+              "text": "Now these are the generations",
+              "strongsNumbers": [
+                "H8435"
+              ]
+            },
+            {
+              "text": " of Pharez:",
+              "strongsNumbers": [
+                "H6557"
+              ]
+            },
+            {
+              "text": " Pharez",
+              "strongsNumbers": [
+                "H6557"
+              ]
+            },
+            {
+              "text": " begat",
+              "strongsNumbers": [
+                "H3205"
+              ]
+            },
+            {
+              "text": " Hezron,"
+            }
+          ]
         },
         {
           "number": 19,
-          "text": "And Hezron begat Ram, and Ram begat Amminadab,"
+          "text": "And Hezron begat Ram, and Ram begat Amminadab,",
+          "tokens": [
+            {
+              "text": "And Hezron",
+              "strongsNumbers": [
+                "H2696"
+              ]
+            },
+            {
+              "text": " begat",
+              "strongsNumbers": [
+                "H3205"
+              ]
+            },
+            {
+              "text": " Ram,",
+              "strongsNumbers": [
+                "H7410"
+              ]
+            },
+            {
+              "text": " and Ram",
+              "strongsNumbers": [
+                "H7410"
+              ]
+            },
+            {
+              "text": " begat",
+              "strongsNumbers": [
+                "H3205"
+              ]
+            },
+            {
+              "text": " Amminadab,"
+            }
+          ]
         },
         {
           "number": 20,
-          "text": "And Amminadab begat Nahshon, and Nahshon begat Salmon,"
+          "text": "And Amminadab begat Nahshon, and Nahshon begat Salmon,",
+          "tokens": [
+            {
+              "text": "And Amminadab",
+              "strongsNumbers": [
+                "H5992"
+              ]
+            },
+            {
+              "text": " begat",
+              "strongsNumbers": [
+                "H3205"
+              ]
+            },
+            {
+              "text": " Nahshon,",
+              "strongsNumbers": [
+                "H5177"
+              ]
+            },
+            {
+              "text": " and Nahshon",
+              "strongsNumbers": [
+                "H5177"
+              ]
+            },
+            {
+              "text": " begat",
+              "strongsNumbers": [
+                "H3205"
+              ]
+            },
+            {
+              "text": " Salmon,"
+            }
+          ]
         },
         {
           "number": 21,
-          "text": "And Salmon begat Boaz, and Boaz begat Obed,"
+          "text": "And Salmon begat Boaz, and Boaz begat Obed,",
+          "tokens": [
+            {
+              "text": "And Salmon",
+              "strongsNumbers": [
+                "H8012"
+              ]
+            },
+            {
+              "text": " begat",
+              "strongsNumbers": [
+                "H3205"
+              ]
+            },
+            {
+              "text": " Boaz,",
+              "strongsNumbers": [
+                "H1162"
+              ]
+            },
+            {
+              "text": " and Boaz",
+              "strongsNumbers": [
+                "H1162"
+              ]
+            },
+            {
+              "text": " begat",
+              "strongsNumbers": [
+                "H3205"
+              ]
+            },
+            {
+              "text": " Obed,"
+            }
+          ]
         },
         {
           "number": 22,
-          "text": "And Obed begat Jesse, and Jesse begat David."
+          "text": "And Obed begat Jesse, and Jesse begat David.",
+          "tokens": [
+            {
+              "text": "And Obed",
+              "strongsNumbers": [
+                "H5744"
+              ]
+            },
+            {
+              "text": " begat",
+              "strongsNumbers": [
+                "H3205"
+              ]
+            },
+            {
+              "text": " Jesse,",
+              "strongsNumbers": [
+                "H3448"
+              ]
+            },
+            {
+              "text": " and Jesse",
+              "strongsNumbers": [
+                "H3448"
+              ]
+            },
+            {
+              "text": " begat",
+              "strongsNumbers": [
+                "H3205"
+              ]
+            },
+            {
+              "text": " David."
+            }
+          ]
         }
       ]
     }

@@ -188,7 +188,7 @@ describe("BottomSearchBar", () => {
     });
     expect(
       screen.getByText(
-        "And the earth was without form, and void; and darkness [was] upon the face of the deep. And the Spirit of God moved upon the face of the waters."
+        "And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters."
       )
     ).toBeInTheDocument();
   });
