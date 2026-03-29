@@ -293,7 +293,27 @@ export type BibleSearchResultGroup = {
   emptyMessage?: string;
 };
 
+export type SearchMode = "lookup" | "ai";
+
 export type SearchMatchMode = "partial" | "complete";
+
+export type LocalBibleAiStatus = "disabled" | "downloading" | "ready" | "generating" | "error";
+
+export type LocalBibleAiSource = {
+  id: string;
+  label: string;
+  href: string;
+  preview: string;
+  bookSlug: string;
+  chapterNumber: number;
+  verseNumber?: number;
+};
+
+export type LocalBibleAiAnswer = {
+  query: string;
+  answer: string;
+  sources: LocalBibleAiSource[];
+};
 
 export type VerseToken = {
   text: string;

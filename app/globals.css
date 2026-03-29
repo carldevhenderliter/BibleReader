@@ -2186,6 +2186,89 @@ select {
   white-space: normal;
 }
 
+.search-ai-panel,
+.search-ai-response,
+.search-ai-sources,
+.search-ai-source-list {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.search-ai-state {
+  display: grid;
+  gap: 0.9rem;
+  align-content: start;
+}
+
+.search-ai-action {
+  justify-self: start;
+}
+
+.search-ai-progress {
+  position: relative;
+  width: min(24rem, 100%);
+  height: 0.55rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.search-ai-progress-bar {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--reader-accent), rgba(255, 255, 255, 0.92));
+}
+
+.search-ai-response-actions {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.search-ai-answer {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem 1.05rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.search-ai-answer-paragraph {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.7;
+}
+
+.search-ai-sources-title {
+  margin: 0;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.search-ai-source {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.95rem;
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.search-ai-source strong {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.search-ai-source span {
+  color: rgba(255, 255, 255, 0.66);
+  line-height: 1.5;
+}
+
 .search-preview-token {
   display: inline-flex;
   flex-wrap: wrap;
