@@ -4,7 +4,8 @@ import type {
   BibleSearchResultGroup,
   BibleSearchVerseEntry,
   BookMeta,
-  BundledBibleVersion
+  BundledBibleVersion,
+  SearchMatchMode
 } from "@/lib/bible/types";
 import { getChapterHref } from "@/lib/bible/utils";
 
@@ -246,9 +247,22 @@ function dedupeSearchResults(results: BibleSearchResult[]) {
   });
 }
 
+function matchesVerseText(
+  normalizedVerseText: string,
+  normalizedQuery: string,
+  matchMode: SearchMatchMode
+) {
+  if (matchMode === "partial") {
+    return normalizedVerseText.includes(normalizedQuery);
+  }
+
+  return ` ${normalizedVerseText} `.includes(` ${normalizedQuery} `);
+}
+
 async function searchSingleBibleQuery(
   rawQuery: string,
-  version: BundledBibleVersion = DEFAULT_BIBLE_VERSION
+  version: BundledBibleVersion = DEFAULT_BIBLE_VERSION,
+  matchMode: SearchMatchMode = "partial"
 ): Promise<BibleSearchResult[]> {
   const query = normalizeValue(rawQuery);
   const normalizedBookQuery = normalizeBookValue(query);
@@ -377,7 +391,7 @@ async function searchSingleBibleQuery(
 
   const verseIndex = await loadVerseIndex(version);
   const verseResults = verseIndex
-    .filter((entry) => entry.normalizedText.includes(normalizedVerseQuery))
+    .filter((entry) => matchesVerseText(entry.normalizedText, normalizedVerseQuery, matchMode))
     .slice(0, MAX_VERSE_RESULTS)
     .map<BibleSearchResult>((entry) => ({
       type: "verse",
@@ -401,14 +415,16 @@ async function searchSingleBibleQuery(
 
 export async function searchBible(
   rawQuery: string,
-  version: BundledBibleVersion = DEFAULT_BIBLE_VERSION
+  version: BundledBibleVersion = DEFAULT_BIBLE_VERSION,
+  matchMode: SearchMatchMode = "partial"
 ): Promise<BibleSearchResult[]> {
-  return searchSingleBibleQuery(rawQuery, version);
+  return searchSingleBibleQuery(rawQuery, version, matchMode);
 }
 
 export async function searchBibleGroups(
   rawQuery: string,
-  version: BundledBibleVersion = DEFAULT_BIBLE_VERSION
+  version: BundledBibleVersion = DEFAULT_BIBLE_VERSION,
+  matchMode: SearchMatchMode = "partial"
 ): Promise<BibleSearchResultGroup[]> {
   const queries = parseBibleSearchQueries(rawQuery);
 
@@ -420,7 +436,7 @@ export async function searchBibleGroups(
     queries.map(async (query, index) => ({
       id: `group:${index}:${normalizeValue(query)}`,
       query,
-      results: await searchSingleBibleQuery(query, version),
+      results: await searchSingleBibleQuery(query, version, matchMode),
       emptyMessage: "No matches found in the active translation."
     }))
   );

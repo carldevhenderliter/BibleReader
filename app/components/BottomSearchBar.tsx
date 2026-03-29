@@ -4,6 +4,7 @@ import { useEffect, useId, useRef } from "react";
 
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
+import { SearchMatchModeToggle } from "@/app/components/SearchMatchModeToggle";
 import { SearchResultGroups } from "@/app/components/SearchResultGroups";
 import { getBibleVersionLabel } from "@/lib/bible/version";
 
@@ -15,11 +16,13 @@ export function BottomSearchBar() {
     isSplitViewActive,
     isOpen,
     isSearching,
+    matchMode,
     openSearch,
     query,
     queryParts,
     resultGroups,
     selectResult,
+    setMatchMode,
     setQuery
   } = useLookup();
   const inputId = useId();
@@ -62,13 +65,16 @@ export function BottomSearchBar() {
             id={trayId}
           >
             <div className="search-tray-header">
-              <div>
+              <div className="search-tray-header-main">
                 <p className="search-tray-kicker">Bible Search</p>
                 <h2 className="search-tray-title">{getBibleVersionLabel(version)} results</h2>
               </div>
-              <button className="search-close-button" onClick={closeSearch} type="button">
-                Close
-              </button>
+              <div className="search-tray-header-actions">
+                <SearchMatchModeToggle matchMode={matchMode} onChange={setMatchMode} />
+                <button className="search-close-button" onClick={closeSearch} type="button">
+                  Close
+                </button>
+              </div>
             </div>
             {!query.trim() ? (
               <p className="search-empty-copy">

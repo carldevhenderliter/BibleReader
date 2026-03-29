@@ -95,6 +95,15 @@ describe("BottomSearchBar", () => {
     expect(screen.queryByLabelText("Bible search results")).not.toBeInTheDocument();
   });
 
+  it("renders a match-mode toggle in the mobile search tray", () => {
+    renderSearchUi();
+
+    fireEvent.focus(screen.getByLabelText("Search books, words, or phrases"));
+
+    expect(screen.getByRole("button", { name: "Partial" })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: "Complete" })).toHaveAttribute("aria-pressed", "false");
+  });
+
   it("renders on reader routes too", () => {
     setMockPathname("/read/genesis/1");
 
@@ -231,6 +240,45 @@ describe("BottomSearchBar", () => {
     expect(await screen.findByRole("button", { name: /Verse Matthew 1:1/i })).toBeInTheDocument();
     expect(container.querySelector(".search-result-groups-panes")).toBeTruthy();
     expect(container.querySelectorAll(".search-result-group-pane")).toHaveLength(2);
+  });
+
+  it("renders a match-mode toggle in the desktop lookup pane", () => {
+    setDesktopMode(true);
+    renderSearchUi();
+
+    expect(screen.getByRole("button", { name: "Partial" })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: "Complete" })).toHaveAttribute("aria-pressed", "false");
+  });
+
+  it("switches between partial and complete verse matching", async () => {
+    renderSearchUi();
+
+    fireEvent.change(screen.getByLabelText("Search books, words, or phrases"), {
+      target: { value: "begin" }
+    });
+
+    expect(await screen.findByRole("button", { name: /Verse Genesis 1:1/i })).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Complete" }));
+
+    await waitFor(() => {
+      expect(screen.queryByRole("button", { name: /Verse Genesis 1:1/i })).not.toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: "Partial" }));
+
+    expect(await screen.findByRole("button", { name: /Verse Genesis 1:1/i })).toBeInTheDocument();
+  });
+
+  it("restores the saved match mode from local storage", async () => {
+    window.localStorage.setItem("bible-reader.search-match-mode", "complete");
+    renderSearchUi();
+    fireEvent.focus(screen.getByLabelText("Search books, words, or phrases"));
+
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: "Complete" })).toHaveAttribute("aria-pressed", "true");
+    });
+    expect(screen.getByRole("button", { name: "Partial" })).toHaveAttribute("aria-pressed", "false");
   });
 
   it("uses the split lookup pane on iPad widths below the desktop breakpoint", () => {

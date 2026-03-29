@@ -145,3 +145,5 @@ export type BibleSearchResultGroup = {
   results: BibleSearchResult[];
   emptyMessage?: string;
 };
+
+export type SearchMatchMode = "partial" | "complete";

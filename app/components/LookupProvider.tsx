@@ -12,15 +12,18 @@ import { usePathname, useRouter } from "next/navigation";
 
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { parseBibleSearchQueries, searchBibleGroups } from "@/lib/bible/search";
-import type { BibleSearchResultGroup } from "@/lib/bible/types";
+import type { BibleSearchResultGroup, SearchMatchMode } from "@/lib/bible/types";
 
 const SPLIT_VIEW_MEDIA_QUERY = "(min-width: 64rem)";
+const SEARCH_MATCH_MODE_STORAGE_KEY = "bible-reader.search-match-mode";
 
 type LookupContextValue = {
   query: string;
   queryParts: string[];
   setQuery: (value: string) => void;
   resultGroups: BibleSearchResultGroup[];
+  matchMode: SearchMatchMode;
+  setMatchMode: (value: SearchMatchMode) => void;
   isSplitViewActive: boolean;
   isOpen: boolean;
   isSearching: boolean;
@@ -54,16 +57,29 @@ function getSplitViewActive() {
   return getSplitViewMediaMatch() || getIsIpadDevice();
 }
 
+function normalizeSearchMatchMode(value: string | null): SearchMatchMode {
+  return value === "complete" ? "complete" : "partial";
+}
+
 export function LookupProvider({ children }: PropsWithChildren) {
   const router = useRouter();
   const pathname = usePathname();
   const { version } = useReaderVersion();
   const [query, setQuery] = useState("");
   const [resultGroups, setResultGroups] = useState<BibleSearchResultGroup[]>([]);
+  const [matchMode, setMatchMode] = useState<SearchMatchMode>("partial");
   const [isOpen, setIsOpen] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [isSplitViewActive, setIsSplitViewActive] = useState(() => getSplitViewActive());
   const queryParts = useMemo(() => parseBibleSearchQueries(query), [query]);
+
+  useEffect(() => {
+    setMatchMode(normalizeSearchMatchMode(window.localStorage.getItem(SEARCH_MATCH_MODE_STORAGE_KEY)));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem(SEARCH_MATCH_MODE_STORAGE_KEY, matchMode);
+  }, [matchMode]);
 
   useEffect(() => {
     if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
@@ -112,7 +128,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
     setIsSearching(true);
     setResultGroups([]);
 
-    void searchBibleGroups(trimmedQuery, version).then((nextResults) => {
+    void searchBibleGroups(trimmedQuery, version, matchMode).then((nextResults) => {
       if (isCancelled) {
         return;
       }
@@ -124,7 +140,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
     return () => {
       isCancelled = true;
     };
-  }, [isOpen, isSplitViewActive, query, version]);
+  }, [isOpen, isSplitViewActive, matchMode, query, version]);
 
   const value = useMemo<LookupContextValue>(
     () => ({
@@ -138,6 +154,8 @@ export function LookupProvider({ children }: PropsWithChildren) {
         }
       },
       resultGroups,
+      matchMode,
+      setMatchMode,
       isSplitViewActive,
       isOpen,
       isSearching,
@@ -173,7 +191,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
         }
       }
     }),
-    [isOpen, isSearching, isSplitViewActive, query, queryParts, resultGroups, router]
+    [isOpen, isSearching, isSplitViewActive, matchMode, query, queryParts, resultGroups, router]
   );
 
   return <LookupContext.Provider value={value}>{children}</LookupContext.Provider>;

@@ -123,4 +123,64 @@ describe("Bible search", () => {
     });
     expect(groups[1]?.query).toBe("light");
   });
+
+  it("keeps partial matching as substring search", async () => {
+    const results = await searchBible("begin", "web", "partial");
+
+    expect(results.find((result) => result.type === "verse")).toMatchObject({
+      type: "verse",
+      bookSlug: "genesis",
+      chapterNumber: 1,
+      verseNumber: 1
+    });
+  });
+
+  it("uses whole-word matching in complete mode", async () => {
+    const results = await searchBible("begin", "web", "complete");
+
+    expect(
+      results.some(
+        (result) =>
+          result.type === "verse" &&
+          result.bookSlug === "genesis" &&
+          result.chapterNumber === 1 &&
+          result.verseNumber === 1
+      )
+    ).toBe(false);
+  });
+
+  it("matches full-word phrases in complete mode", async () => {
+    const results = await searchBible("the beginning", "web", "complete");
+
+    expect(results.find((result) => result.type === "verse")).toMatchObject({
+      type: "verse",
+      bookSlug: "genesis",
+      chapterNumber: 1,
+      verseNumber: 1
+    });
+  });
+
+  it("keeps direct references unchanged in complete mode", async () => {
+    const results = await searchBible("John 1:1", "web", "complete");
+
+    expect(results[0]).toMatchObject({
+      type: "verse",
+      bookSlug: "john",
+      chapterNumber: 1,
+      verseNumber: 1,
+      href: "/read/john/1?highlight=1"
+    });
+  });
+
+  it("applies the selected match mode to grouped multi-query searches", async () => {
+    const groups = await searchBibleGroups("John 1:1, eginni", "web", "complete");
+
+    expect(groups[0]?.results[0]).toMatchObject({
+      type: "verse",
+      bookSlug: "john",
+      chapterNumber: 1,
+      verseNumber: 1
+    });
+    expect(groups[1]?.results).toHaveLength(0);
+  });
 });
