@@ -130,7 +130,9 @@ export function VerseList({
 
           return (
             <div
-              className={`verse-row${isHighlighted ? " is-highlighted" : ""}`}
+              className={`verse-row${isHighlighted ? " is-highlighted" : ""}${
+                highlight ? ` has-study-highlight has-study-highlight-${highlight.color}` : ""
+              }`}
               id={`verse-${bookSlug}-${chapterNumber}-${verse.number}`}
               key={verse.number}
             >

@@ -189,6 +189,24 @@ describe("ReaderPageContent", () => {
     );
   });
 
+  it("applies a manual study highlight to the verse row", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+      />
+    );
+
+    fireEvent.click(screen.getAllByRole("button", { name: "Highlight" })[0]!);
+
+    expect(
+      screen
+        .getByText("In the beginning, God created the heavens and the earth.")
+        .closest(".verse-row")
+    ).toHaveClass("has-study-highlight", "has-study-highlight-gold");
+  });
+
   it("renders the notebook inline in the reader column", () => {
     renderWithReaderCustomization(
       <ReaderPageContent

@@ -899,6 +899,30 @@ select {
   box-shadow: 0 0 0 1px rgba(var(--reader-accent-rgb), 0.1);
 }
 
+.verse-row.has-study-highlight {
+  padding: 0.85rem 0.8rem;
+  margin-inline: -0.8rem;
+  border-radius: 1rem;
+}
+
+.verse-row.has-study-highlight-gold {
+  border: 1px solid rgba(255, 220, 120, 0.28);
+  background: rgba(255, 220, 120, 0.1);
+  box-shadow: 0 0 0 1px rgba(255, 220, 120, 0.08);
+}
+
+.verse-row.has-study-highlight-sky {
+  border: 1px solid rgba(137, 209, 255, 0.28);
+  background: rgba(137, 209, 255, 0.1);
+  box-shadow: 0 0 0 1px rgba(137, 209, 255, 0.08);
+}
+
+.verse-row.has-study-highlight-rose {
+  border: 1px solid rgba(255, 161, 205, 0.28);
+  background: rgba(255, 161, 205, 0.1);
+  box-shadow: 0 0 0 1px rgba(255, 161, 205, 0.08);
+}
+
 .verse-number {
   min-width: 2rem;
   padding-top: 0.15rem;
