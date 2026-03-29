@@ -16,6 +16,7 @@ import type { BibleSearchResult, BibleSearchResultGroup, SearchMatchMode } from 
 
 const SPLIT_VIEW_MEDIA_QUERY = "(min-width: 64rem)";
 const SEARCH_MATCH_MODE_STORAGE_KEY = "bible-reader.search-match-mode";
+const SEARCH_SHOW_STRONGS_STORAGE_KEY = "bible-reader.search-show-strongs";
 
 type LookupContextValue = {
   query: string;
@@ -24,13 +25,15 @@ type LookupContextValue = {
   resultGroups: BibleSearchResultGroup[];
   matchMode: SearchMatchMode;
   setMatchMode: (value: SearchMatchMode) => void;
+  showStrongsInSearch: boolean;
+  setShowStrongsInSearch: (value: boolean) => void;
   isSplitViewActive: boolean;
   isOpen: boolean;
   isSearching: boolean;
   clearSearch: () => void;
   closeSearch: () => void;
   openSearch: () => void;
-  selectResult: (result: BibleSearchResult) => void;
+  selectResult: (result: BibleSearchResult, groupQuery?: string) => void;
 };
 
 const LookupContext = createContext<LookupContextValue | null>(null);
@@ -61,6 +64,18 @@ function normalizeSearchMatchMode(value: string | null): SearchMatchMode {
   return value === "complete" ? "complete" : "partial";
 }
 
+function normalizeShowStrongsInSearch(value: string | null) {
+  return value === "true";
+}
+
+function pruneExpandedTopics(expandedTopicsByQuery: Record<string, string>, nextQuery: string) {
+  const nextQueryParts = new Set(parseBibleSearchQueries(nextQuery));
+
+  return Object.fromEntries(
+    Object.entries(expandedTopicsByQuery).filter(([queryPart]) => nextQueryParts.has(queryPart))
+  );
+}
+
 export function LookupProvider({ children }: PropsWithChildren) {
   const router = useRouter();
   const pathname = usePathname();
@@ -68,18 +83,27 @@ export function LookupProvider({ children }: PropsWithChildren) {
   const [query, setQuery] = useState("");
   const [resultGroups, setResultGroups] = useState<BibleSearchResultGroup[]>([]);
   const [matchMode, setMatchMode] = useState<SearchMatchMode>("partial");
+  const [showStrongsInSearch, setShowStrongsInSearch] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [isSplitViewActive, setIsSplitViewActive] = useState(() => getSplitViewActive());
+  const [expandedTopicsByQuery, setExpandedTopicsByQuery] = useState<Record<string, string>>({});
   const queryParts = useMemo(() => parseBibleSearchQueries(query), [query]);
 
   useEffect(() => {
     setMatchMode(normalizeSearchMatchMode(window.localStorage.getItem(SEARCH_MATCH_MODE_STORAGE_KEY)));
+    setShowStrongsInSearch(
+      normalizeShowStrongsInSearch(window.localStorage.getItem(SEARCH_SHOW_STRONGS_STORAGE_KEY))
+    );
   }, []);
 
   useEffect(() => {
     window.localStorage.setItem(SEARCH_MATCH_MODE_STORAGE_KEY, matchMode);
   }, [matchMode]);
+
+  useEffect(() => {
+    window.localStorage.setItem(SEARCH_SHOW_STRONGS_STORAGE_KEY, String(showStrongsInSearch));
+  }, [showStrongsInSearch]);
 
   useEffect(() => {
     if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
@@ -109,6 +133,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
     setIsOpen(false);
     setQuery("");
     setResultGroups([]);
+    setExpandedTopicsByQuery({});
   }, [isSplitViewActive, pathname]);
 
   useEffect(() => {
@@ -128,7 +153,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
     setIsSearching(true);
     setResultGroups([]);
 
-    void searchBibleGroups(trimmedQuery, version, matchMode).then((nextResults) => {
+    void searchBibleGroups(trimmedQuery, version, matchMode, expandedTopicsByQuery).then((nextResults) => {
       if (isCancelled) {
         return;
       }
@@ -140,7 +165,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
     return () => {
       isCancelled = true;
     };
-  }, [isOpen, isSplitViewActive, matchMode, query, version]);
+  }, [expandedTopicsByQuery, isOpen, isSplitViewActive, matchMode, query, version]);
 
   const value = useMemo<LookupContextValue>(
     () => ({
@@ -148,6 +173,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
       queryParts,
       setQuery: (value) => {
         setQuery(value);
+        setExpandedTopicsByQuery((current) => pruneExpandedTopics(current, value));
 
         if (value.trim().length > 0 || isSplitViewActive) {
           setIsOpen(true);
@@ -156,12 +182,15 @@ export function LookupProvider({ children }: PropsWithChildren) {
       resultGroups,
       matchMode,
       setMatchMode,
+      showStrongsInSearch,
+      setShowStrongsInSearch,
       isSplitViewActive,
       isOpen,
       isSearching,
       clearSearch: () => {
         setQuery("");
         setResultGroups([]);
+        setExpandedTopicsByQuery({});
 
         if (!isSplitViewActive) {
           setIsOpen(false);
@@ -172,6 +201,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
           setQuery("");
           setResultGroups([]);
           setIsSearching(false);
+          setExpandedTopicsByQuery({});
         }
 
         setIsOpen(false);
@@ -179,7 +209,20 @@ export function LookupProvider({ children }: PropsWithChildren) {
       openSearch: () => {
         setIsOpen(true);
       },
-      selectResult: (result) => {
+      selectResult: (result, groupQuery) => {
+        if (result.type === "topic-suggestion") {
+          if (!groupQuery) {
+            return;
+          }
+
+          setExpandedTopicsByQuery((current) => ({
+            ...current,
+            [groupQuery]: result.topicId
+          }));
+          setIsOpen(true);
+          return;
+        }
+
         if (!("href" in result)) {
           return;
         }
@@ -190,12 +233,23 @@ export function LookupProvider({ children }: PropsWithChildren) {
           setIsOpen(false);
           setQuery("");
           setResultGroups([]);
+          setExpandedTopicsByQuery({});
         } else {
           setIsOpen(true);
         }
       }
     }),
-    [isOpen, isSearching, isSplitViewActive, matchMode, query, queryParts, resultGroups, router]
+    [
+      isOpen,
+      isSearching,
+      isSplitViewActive,
+      matchMode,
+      query,
+      queryParts,
+      resultGroups,
+      router,
+      showStrongsInSearch
+    ]
   );
 
   return <LookupContext.Provider value={value}>{children}</LookupContext.Provider>;

@@ -185,7 +185,16 @@ export type BibleSearchTopicResult = {
     id: string;
     label: string;
     verses: BibleSearchVerseResult[];
-  }>;
+    }>;
+};
+
+export type BibleSearchTopicSuggestionResult = {
+  type: "topic-suggestion";
+  id: string;
+  topicId: string;
+  label: string;
+  description: string;
+  preview: string;
 };
 
 export type BibleSearchResult =
@@ -218,7 +227,8 @@ export type BibleSearchResult =
         tokens?: VerseToken[];
       }>;
     }
-  | BibleSearchTopicResult;
+  | BibleSearchTopicResult
+  | BibleSearchTopicSuggestionResult;
 
 export type BibleSearchResultGroup = {
   id: string;

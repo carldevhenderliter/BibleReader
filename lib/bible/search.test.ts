@@ -162,8 +162,28 @@ describe("Bible search", () => {
     });
   });
 
-  it("resolves curated topic aliases into grouped subtopic results", async () => {
-    const results = await searchBible("end times", "web");
+  it("returns starter topic suggestions for a bare Topic query", async () => {
+    const results = await searchBible("Topic:", "web");
+
+    expect(results[0]).toMatchObject({
+      type: "topic-suggestion"
+    });
+    expect(results.some((result) => result.type === "topic-suggestion" && result.label === "End Times")).toBe(true);
+  });
+
+  it("returns filtered topic suggestions for Topic-prefixed search", async () => {
+    const results = await searchBible("Topic: end times", "web");
+
+    expect(results).toHaveLength(1);
+    expect(results[0]).toMatchObject({
+      type: "topic-suggestion",
+      topicId: "end-times",
+      label: "End Times"
+    });
+  });
+
+  it("expands a selected Topic-prefixed result into grouped subtopic verses", async () => {
+    const results = await searchBible("Topic: end times", "web", "partial", "end-times");
 
     expect(results).toHaveLength(1);
     expect(results[0]).toMatchObject({
@@ -179,9 +199,9 @@ describe("Bible search", () => {
     );
   });
 
-  it("uses the active translation for topic verse text", async () => {
-    const webResults = await searchBible("last days", "web");
-    const kjvResults = await searchBible("last days", "kjv");
+  it("uses the active translation for expanded topic verse text", async () => {
+    const webResults = await searchBible("Topic: last days", "web", "partial", "end-times");
+    const kjvResults = await searchBible("Topic: last days", "kjv", "partial", "end-times");
     const webVerse = (webResults[0] as { subtopics: Array<{ verses: Array<{ preview: string }> }> }).subtopics
       .flatMap((subtopic) => subtopic.verses)
       .find((verse) => verse.preview.includes("grievous times"));
@@ -192,6 +212,14 @@ describe("Bible search", () => {
     expect(webVerse?.preview).toContain("grievous times will come");
     expect(kjvVerse?.preview).toContain("perilous times shall come");
     expect(kjvVerse?.tokens?.length).toBeGreaterThan(0);
+  });
+
+  it("does not treat plain topic aliases as topical search anymore", async () => {
+    const results = await searchBible("end times", "web");
+
+    expect(results.some((result) => result.type === "topic" || result.type === "topic-suggestion")).toBe(
+      false
+    );
   });
 
   it("groups comma-separated queries in typed order", async () => {
@@ -223,8 +251,10 @@ describe("Bible search", () => {
     expect(groups[1]?.query).toBe("repent");
   });
 
-  it("supports mixed topic and non-topic grouped searches", async () => {
-    const groups = await searchBibleGroups("faith, end times", "web");
+  it("supports mixed Topic-prefixed and normal grouped searches", async () => {
+    const groups = await searchBibleGroups("Topic: faith, John 1:1", "web", "partial", {
+      "Topic: faith": "faith"
+    });
 
     expect(groups).toHaveLength(2);
     expect(groups[0]?.results[0]).toMatchObject({
@@ -232,8 +262,10 @@ describe("Bible search", () => {
       topicId: "faith"
     });
     expect(groups[1]?.results[0]).toMatchObject({
-      type: "topic",
-      topicId: "end-times"
+      type: "verse",
+      bookSlug: "john",
+      chapterNumber: 1,
+      verseNumber: 1
     });
   });
 

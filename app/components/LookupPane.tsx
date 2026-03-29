@@ -4,6 +4,7 @@ import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { SearchMatchModeToggle } from "@/app/components/SearchMatchModeToggle";
 import { SearchResultGroups } from "@/app/components/SearchResultGroups";
+import { SearchStrongsToggle } from "@/app/components/SearchStrongsToggle";
 import { getBibleVersionLabel } from "@/lib/bible/version";
 
 export function LookupPane() {
@@ -18,7 +19,9 @@ export function LookupPane() {
     queryParts,
     resultGroups,
     selectResult,
-    setMatchMode
+    setMatchMode,
+    setShowStrongsInSearch,
+    showStrongsInSearch
   } = useLookup();
   const { version } = useReaderVersion();
 
@@ -35,6 +38,10 @@ export function LookupPane() {
         </div>
         <div className="lookup-pane-header-actions">
           <SearchMatchModeToggle matchMode={matchMode} onChange={setMatchMode} />
+          <SearchStrongsToggle
+            isEnabled={showStrongsInSearch}
+            onChange={setShowStrongsInSearch}
+          />
           {query ? (
             <button className="search-close-button" onClick={closeSearch} type="button">
               Clear
@@ -46,7 +53,7 @@ export function LookupPane() {
         {!isOpen || !query.trim() ? (
           <div id="lookup-pane-search-panel" role="tabpanel">
             <p className="search-empty-copy">
-              Search from the bottom bar to open books, topics, chapters, verses, Strongs entries, words, phrases, or comma-separated groups here.
+              Search from the bottom bar to open books, chapters, verses, Strongs entries, words, phrases, or type `Topic:` to browse study topics here.
             </p>
           </div>
         ) : (
@@ -63,6 +70,7 @@ export function LookupPane() {
               }
               isSearching={isSearching}
               onSelectResult={selectResult}
+              showStrongsInSearch={showStrongsInSearch}
               variant="panes"
             />
           </div>

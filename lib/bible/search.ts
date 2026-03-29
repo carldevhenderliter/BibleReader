@@ -5,6 +5,7 @@ import type {
   BibleSearchResultGroup,
   BibleSearchStrongsVerseEntry,
   BibleSearchTopicResult,
+  BibleSearchTopicSuggestionResult,
   BibleSearchVerseResult,
   BibleTopicSearchEntry,
   BibleSearchVerseEntry,
@@ -26,6 +27,7 @@ type SearchableVerseEntry = BibleSearchVerseEntry & {
 };
 
 type SearchableTopicEntry = BibleTopicSearchEntry & {
+  order: number;
   normalizedAliases: string[];
 };
 
@@ -36,10 +38,16 @@ type ParsedReference = {
   endVerseNumber: number | null;
 };
 
+type ParsedTopicQuery = {
+  rawFilter: string;
+  normalizedFilter: string;
+};
+
 const MIN_VERSE_QUERY_LENGTH = 2;
 const MAX_BOOK_RESULTS = 6;
 const MAX_VERSE_RESULTS = 24;
 const MAX_MULTI_QUERY_PARTS = 5;
+const MAX_TOPIC_SUGGESTIONS = 8;
 
 const verseIndexLoaders: Record<BundledBibleVersion, () => Promise<unknown>> = {
   web: () => import("@/data/bible/search/web.json"),
@@ -73,6 +81,21 @@ function normalizeVerseValue(value: string) {
     .replace(/[^a-z0-9\s]+/g, " ")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function parseTopicQuery(rawQuery: string): ParsedTopicQuery | null {
+  const match = rawQuery.match(/^topic\s*:(.*)$/i);
+
+  if (!match) {
+    return null;
+  }
+
+  const rawFilter = match[1]?.trim() ?? "";
+
+  return {
+    rawFilter,
+    normalizedFilter: normalizeTopicValue(rawFilter)
+  };
 }
 
 function getHighlightedVerseHref(
@@ -118,6 +141,19 @@ function getStrongsPreview(
   const definition = entry.definition || entry.outlineUsage || "No definition available yet.";
 
   return `${header}\n${definition}\nUsed in ${verseCount} KJV verse${verseCount === 1 ? "" : "s"}.`;
+}
+
+function getTopicSuggestionResult(topic: SearchableTopicEntry, version: BundledBibleVersion): BibleSearchTopicSuggestionResult {
+  const verseCount = topic.subtopics.reduce((count, subtopic) => count + subtopic.verses.length, 0);
+
+  return {
+    type: "topic-suggestion",
+    id: `topic-suggestion:${topic.id}:${version}`,
+    topicId: topic.id,
+    label: topic.label,
+    description: `${topic.subtopics.length} subtopic${topic.subtopics.length === 1 ? "" : "s"} • ${verseCount} verse${verseCount === 1 ? "" : "s"}`,
+    preview: topic.aliases.join(", ")
+  };
 }
 
 function findReferenceBook(bookQuery: string, books: SearchableBook[]) {
@@ -241,8 +277,9 @@ async function loadTopicIndex(version: BundledBibleVersion) {
   }
 
   const promise = topicIndexLoaders[version]().then((module) =>
-    ((module as { default: BibleTopicSearchEntry[] }).default ?? []).map((entry) => ({
+    ((module as { default: BibleTopicSearchEntry[] }).default ?? []).map((entry, index) => ({
       ...entry,
+      order: index,
       normalizedAliases: [entry.label, ...entry.aliases].map((value) => normalizeTopicValue(value))
     }))
   );
@@ -277,6 +314,26 @@ function getBookScore(book: SearchableBook, query: string) {
   }
 
   if (candidates.some((candidate) => candidate.includes(query))) {
+    return 2;
+  }
+
+  return null;
+}
+
+function getTopicScore(topic: SearchableTopicEntry, normalizedFilter: string) {
+  if (!normalizedFilter) {
+    return 0;
+  }
+
+  if (topic.normalizedAliases.some((alias) => alias === normalizedFilter)) {
+    return 0;
+  }
+
+  if (topic.normalizedAliases.some((alias) => alias.startsWith(normalizedFilter))) {
+    return 1;
+  }
+
+  if (topic.normalizedAliases.some((alias) => alias.includes(normalizedFilter))) {
     return 2;
   }
 
@@ -382,16 +439,49 @@ function getVerseTokenByReference(
 async function searchSingleBibleQuery(
   rawQuery: string,
   version: BundledBibleVersion = DEFAULT_BIBLE_VERSION,
-  matchMode: SearchMatchMode = "partial"
+  matchMode: SearchMatchMode = "partial",
+  expandedTopicId?: string | null
 ): Promise<BibleSearchResult[]> {
   const query = normalizeValue(rawQuery);
   const normalizedBookQuery = normalizeBookValue(query);
-  const normalizedTopicQuery = normalizeTopicValue(query);
   const normalizedVerseQuery = normalizeVerseValue(query);
   const strongsNumber = parseStrongsQuery(query);
+  const topicQuery = parseTopicQuery(rawQuery);
 
   if (!query) {
     return [];
+  }
+
+  if (topicQuery) {
+    const topics = await loadTopicIndex(version);
+
+    if (expandedTopicId) {
+      const expandedTopic = topics.find((topic) => topic.id === expandedTopicId) ?? null;
+
+      if (expandedTopic) {
+        return [getTopicResult(expandedTopic, version)];
+      }
+    }
+
+    const topicSuggestions = topics
+      .map((topic) => ({
+        topic,
+        score: getTopicScore(topic, topicQuery.normalizedFilter)
+      }))
+      .filter((entry): entry is { topic: SearchableTopicEntry; score: number } =>
+        topicQuery.normalizedFilter
+          ? entry.score !== null
+          : true
+      )
+      .sort((left, right) =>
+        left.score === right.score
+          ? left.topic.order - right.topic.order
+          : left.score - right.score
+      )
+      .slice(0, MAX_TOPIC_SUGGESTIONS)
+      .map<BibleSearchResult>(({ topic }) => getTopicSuggestionResult(topic, version));
+
+    return topicSuggestions;
   }
 
   const books = await loadBooks();
@@ -542,14 +632,6 @@ async function searchSingleBibleQuery(
     return dedupeSearchResults([...strongsResults, ...strongsVerseResults, ...bookResults]);
   }
 
-  const topics = await loadTopicIndex(version);
-  const topicMatch =
-    topics.find((topic) => topic.normalizedAliases.includes(normalizedTopicQuery)) ?? null;
-
-  if (topicMatch) {
-    return [getTopicResult(topicMatch, version)];
-  }
-
   if (normalizedVerseQuery.length < MIN_VERSE_QUERY_LENGTH) {
     return [...directReferenceResults, ...bookResults];
   }
@@ -566,15 +648,17 @@ async function searchSingleBibleQuery(
 export async function searchBible(
   rawQuery: string,
   version: BundledBibleVersion = DEFAULT_BIBLE_VERSION,
-  matchMode: SearchMatchMode = "partial"
+  matchMode: SearchMatchMode = "partial",
+  expandedTopicId?: string | null
 ): Promise<BibleSearchResult[]> {
-  return searchSingleBibleQuery(rawQuery, version, matchMode);
+  return searchSingleBibleQuery(rawQuery, version, matchMode, expandedTopicId);
 }
 
 export async function searchBibleGroups(
   rawQuery: string,
   version: BundledBibleVersion = DEFAULT_BIBLE_VERSION,
-  matchMode: SearchMatchMode = "partial"
+  matchMode: SearchMatchMode = "partial",
+  expandedTopicsByQuery: Record<string, string> = {}
 ): Promise<BibleSearchResultGroup[]> {
   const queries = parseBibleSearchQueries(rawQuery);
 
@@ -586,7 +670,12 @@ export async function searchBibleGroups(
     queries.map(async (query, index) => ({
       id: `group:${index}:${normalizeValue(query)}`,
       query,
-      results: await searchSingleBibleQuery(query, version, matchMode),
+      results: await searchSingleBibleQuery(
+        query,
+        version,
+        matchMode,
+        expandedTopicsByQuery[query] ?? null
+      ),
       emptyMessage: "No matches found in the active translation."
     }))
   );

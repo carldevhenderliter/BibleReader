@@ -6,6 +6,7 @@ import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { SearchMatchModeToggle } from "@/app/components/SearchMatchModeToggle";
 import { SearchResultGroups } from "@/app/components/SearchResultGroups";
+import { SearchStrongsToggle } from "@/app/components/SearchStrongsToggle";
 import { getBibleVersionLabel } from "@/lib/bible/version";
 
 export function BottomSearchBar() {
@@ -23,7 +24,9 @@ export function BottomSearchBar() {
     resultGroups,
     selectResult,
     setMatchMode,
-    setQuery
+    setQuery,
+    setShowStrongsInSearch,
+    showStrongsInSearch
   } = useLookup();
   const inputId = useId();
   const trayId = useId();
@@ -71,6 +74,10 @@ export function BottomSearchBar() {
               </div>
               <div className="search-tray-header-actions">
                 <SearchMatchModeToggle matchMode={matchMode} onChange={setMatchMode} />
+                <SearchStrongsToggle
+                  isEnabled={showStrongsInSearch}
+                  onChange={setShowStrongsInSearch}
+                />
                 <button className="search-close-button" onClick={closeSearch} type="button">
                   Close
                 </button>
@@ -78,7 +85,7 @@ export function BottomSearchBar() {
             </div>
             {!query.trim() ? (
               <p className="search-empty-copy">
-                Search for a book, topic, reference, Strongs number, word, phrase, or comma-separated list to jump anywhere in scripture.
+                Search for a book, reference, Strongs number, word, phrase, or comma-separated list, or use `Topic:` to browse study topics.
               </p>
             ) : (
               <SearchResultGroups
@@ -90,16 +97,17 @@ export function BottomSearchBar() {
                         results: []
                       }))
                     : resultGroups
-                }
-                isSearching={isSearching}
-                onSelectResult={selectResult}
-              />
-            )}
+              }
+              isSearching={isSearching}
+              onSelectResult={selectResult}
+              showStrongsInSearch={showStrongsInSearch}
+            />
+          )}
           </section>
         ) : null}
         <div className="search-bar" role="search">
           <label className="sr-only" htmlFor={inputId}>
-            Search books, topics, words, phrases, or Strongs numbers
+            Search books, words, phrases, or Strongs numbers, or use Topic:
           </label>
           <input
             aria-controls={trayId}
@@ -111,7 +119,7 @@ export function BottomSearchBar() {
               setQuery(event.target.value);
             }}
             onFocus={openSearch}
-            placeholder="Search books, topics, references, Strongs numbers, words, or phrases"
+            placeholder="Search books, references, Strongs numbers, words, phrases, or Topic:"
             ref={inputRef}
             type="search"
             value={query}

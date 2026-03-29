@@ -20,7 +20,7 @@ function SearchHarness() {
   );
 }
 
-const SEARCH_INPUT_LABEL = "Search books, topics, words, phrases, or Strongs numbers";
+const SEARCH_INPUT_LABEL = "Search books, words, phrases, or Strongs numbers, or use Topic:";
 
 function renderSearchUi(ui?: React.ReactNode) {
   return render(
@@ -104,6 +104,7 @@ describe("BottomSearchBar", () => {
 
     expect(screen.getByRole("button", { name: "Partial" })).toHaveAttribute("aria-pressed", "true");
     expect(screen.getByRole("button", { name: "Complete" })).toHaveAttribute("aria-pressed", "false");
+    expect(screen.getByRole("button", { name: "Show Strongs" })).toHaveAttribute("aria-pressed", "false");
   });
 
   it("renders on reader routes too", () => {
@@ -198,7 +199,7 @@ describe("BottomSearchBar", () => {
     );
   });
 
-  it("shows matching Strongs numbers beside KJV word-search hits", async () => {
+  it("shows Strongs numbers beside KJV word-search hits only when the search toggle is on", async () => {
     renderSearchUi(<SearchHarness />);
 
     fireEvent.click(screen.getByRole("button", { name: "Use KJV" }));
@@ -210,6 +211,9 @@ describe("BottomSearchBar", () => {
       expect(screen.getByRole("button", { name: /Verse Genesis 1:1 KJV/i })).toBeInTheDocument();
     });
 
+    expect(screen.queryByText("H7225")).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Show Strongs" }));
     expect(screen.getAllByText("H7225").length).toBeGreaterThan(0);
   });
 
@@ -226,13 +230,25 @@ describe("BottomSearchBar", () => {
     expect(await screen.findByRole("button", { name: /Verse Matthew 1:1/i })).toBeInTheDocument();
   });
 
-  it("renders topical subtopics on mobile and navigates from a topic verse", async () => {
+  it("shows starter topic suggestions for a bare Topic query on mobile", async () => {
     renderSearchUi();
 
     fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
-      target: { value: "end times" }
+      target: { value: "Topic:" }
     });
 
+    expect(await screen.findByRole("button", { name: /Topic End Times/i })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Topic Faith/i })).toBeInTheDocument();
+  });
+
+  it("expands a Topic-prefixed result on mobile and navigates from a topic verse", async () => {
+    renderSearchUi();
+
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
+      target: { value: "Topic: end times" }
+    });
+
+    fireEvent.click(await screen.findByRole("button", { name: /Topic End Times/i }));
     expect(await screen.findByText("Return of Christ")).toBeInTheDocument();
 
     const result = await screen.findByRole("button", { name: /Matthew 24:30/i });
@@ -277,7 +293,7 @@ describe("BottomSearchBar", () => {
     expect(container.querySelectorAll(".search-result-group-pane")).toHaveLength(2);
   });
 
-  it("renders topical subtopics in the desktop lookup pane", async () => {
+  it("renders Topic-prefixed suggestions and expanded topic content in the desktop lookup pane", async () => {
     setDesktopMode(true);
     renderSearchUi(
       <>
@@ -289,10 +305,13 @@ describe("BottomSearchBar", () => {
     fireEvent.click(screen.getByRole("button", { name: "Use KJV" }));
     fireEvent.focus(screen.getByLabelText(SEARCH_INPUT_LABEL));
     fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
-      target: { value: "last days" }
+      target: { value: "Topic: last days" }
     });
 
+    fireEvent.click(await screen.findByRole("button", { name: /Topic End Times/i }));
     expect(await screen.findByText("Last Days Signs")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Show Strongs" })).toHaveAttribute("aria-pressed", "false");
+    fireEvent.click(screen.getByRole("button", { name: "Show Strongs" }));
     expect(screen.getByRole("button", { name: /2 Timothy 3:1/i })).toHaveTextContent(/perilous/);
     expect(screen.getByRole("button", { name: /2 Timothy 3:1/i })).toHaveTextContent(/times/);
     expect(screen.getAllByText(/^G\d+$/).length).toBeGreaterThan(0);
@@ -304,6 +323,7 @@ describe("BottomSearchBar", () => {
 
     expect(screen.getByRole("button", { name: "Partial" })).toHaveAttribute("aria-pressed", "true");
     expect(screen.getByRole("button", { name: "Complete" })).toHaveAttribute("aria-pressed", "false");
+    expect(screen.getByRole("button", { name: "Show Strongs" })).toHaveAttribute("aria-pressed", "false");
   });
 
   it("switches between partial and complete verse matching", async () => {
@@ -335,6 +355,19 @@ describe("BottomSearchBar", () => {
       expect(screen.getByRole("button", { name: "Complete" })).toHaveAttribute("aria-pressed", "true");
     });
     expect(screen.getByRole("button", { name: "Partial" })).toHaveAttribute("aria-pressed", "false");
+  });
+
+  it("restores the saved search Strongs toggle from local storage", async () => {
+    window.localStorage.setItem("bible-reader.search-show-strongs", "true");
+    renderSearchUi();
+    fireEvent.focus(screen.getByLabelText(SEARCH_INPUT_LABEL));
+
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: "Show Strongs" })).toHaveAttribute(
+        "aria-pressed",
+        "true"
+      );
+    });
   });
 
   it("uses the split lookup pane on iPad widths below the desktop breakpoint", () => {
@@ -374,9 +407,13 @@ describe("BottomSearchBar", () => {
     );
 
     await waitFor(() => {
-      expect(screen.getAllByText("H7225").length).toBeGreaterThan(0);
       expect(screen.getByText("Hebrew Strongs")).toBeInTheDocument();
     }, { timeout: 5000 });
+
+    const beforeToggleCount = screen.getAllByText("H7225").length;
+
+    fireEvent.click(screen.getByRole("button", { name: "Show Strongs" }));
+    expect(screen.getAllByText("H7225").length).toBeGreaterThan(beforeToggleCount);
 
     fireEvent.click(verseResult);
 

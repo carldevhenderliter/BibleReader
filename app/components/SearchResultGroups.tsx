@@ -5,9 +5,10 @@ import type { BibleSearchResult, BibleSearchResultGroup, VerseToken } from "@/li
 
 type SearchResultGroupsProps = {
   groups: BibleSearchResultGroup[];
-  onSelectResult: (result: BibleSearchResult) => void;
+  onSelectResult: (result: BibleSearchResult, groupQuery?: string) => void;
   variant?: "stack" | "panes";
   isSearching?: boolean;
+  showStrongsInSearch?: boolean;
 };
 
 function getResultTypeLabel(type: BibleSearchResultGroup["results"][number]["type"]) {
@@ -28,6 +29,10 @@ function getResultTypeLabel(type: BibleSearchResultGroup["results"][number]["typ
   }
 
   if (type === "topic") {
+    return "Topic";
+  }
+
+  if (type === "topic-suggestion") {
     return "Topic";
   }
 
@@ -59,14 +64,16 @@ function SearchVersePreview({
   preview,
   query,
   tokens,
+  showStrongsInSearch = false,
   mode = "query"
 }: {
   preview: string;
   query: string;
   tokens?: VerseToken[];
+  showStrongsInSearch?: boolean;
   mode?: "query" | "allStrongs";
 }) {
-  if (!tokens?.length) {
+  if (!showStrongsInSearch || !tokens?.length) {
     return <span className="search-result-preview">{preview}</span>;
   }
 
@@ -118,11 +125,13 @@ function SearchVersePreview({
 function SearchTopicVerseButton({
   query,
   verse,
-  onSelectResult
+  onSelectResult,
+  showStrongsInSearch
 }: {
   query: string;
   verse: Extract<BibleSearchResult, { type: "verse" }>;
-  onSelectResult: (result: BibleSearchResult) => void;
+  onSelectResult: (result: BibleSearchResult, groupQuery?: string) => void;
+  showStrongsInSearch?: boolean;
 }) {
   return (
     <button
@@ -133,10 +142,12 @@ function SearchTopicVerseButton({
     >
       <span className="search-range-line-number">{verse.verseNumber}</span>
       <span className="search-range-line-copy">
+        <span className="search-result-reference">{verse.label}</span>
         <SearchVersePreview
-          mode={verse.tokens?.length ? "allStrongs" : "query"}
+          mode="allStrongs"
           preview={verse.preview}
           query={query}
+          showStrongsInSearch={showStrongsInSearch}
           tokens={verse.tokens}
         />
       </span>
@@ -148,7 +159,8 @@ export function SearchResultGroups({
   groups,
   onSelectResult,
   variant = "stack",
-  isSearching = false
+  isSearching = false,
+  showStrongsInSearch = false
 }: SearchResultGroupsProps) {
   return (
     <div
@@ -183,7 +195,23 @@ export function SearchResultGroups({
           ) : (
             <div className="search-results">
               {group.results.map((result) => (
-                result.type === "topic" ? (
+                result.type === "topic-suggestion" ? (
+                  <button
+                    className="search-result"
+                    key={result.id}
+                    onClick={() => onSelectResult(result, group.query)}
+                    type="button"
+                  >
+                    <div className="search-result-header">
+                      <span className={`search-result-type search-result-type-${result.type}`}>
+                        {getResultTypeLabel(result.type)}
+                      </span>
+                      <strong>{result.label}</strong>
+                    </div>
+                    <p className="search-result-description">{result.description}</p>
+                    <p className="search-result-preview">{result.preview}</p>
+                  </button>
+                ) : result.type === "topic" ? (
                   <article
                     aria-label={result.label}
                     className="search-result search-result-topic search-result-static"
@@ -206,6 +234,7 @@ export function SearchResultGroups({
                                 key={verse.id}
                                 onSelectResult={onSelectResult}
                                 query={group.query}
+                                showStrongsInSearch={showStrongsInSearch}
                                 verse={verse}
                               />
                             ))}
@@ -245,15 +274,18 @@ export function SearchResultGroups({
                               href: verse.href,
                               preview: verse.preview,
                               tokens: verse.tokens
-                            })
+                            }, group.query)
                           }
                           type="button"
                         >
                           <span className="search-range-line-number">{verse.verseNumber}</span>
                           <span className="search-range-line-copy">
+                            <span className="search-result-reference">{verse.label}</span>
                             <SearchVersePreview
+                              mode="allStrongs"
                               preview={verse.preview}
                               query={group.query}
+                              showStrongsInSearch={showStrongsInSearch}
                               tokens={verse.tokens}
                             />
                           </span>
@@ -275,10 +307,15 @@ export function SearchResultGroups({
                       <strong>{result.label}</strong>
                     </div>
                     <p className="search-result-description">{result.description}</p>
+                    {result.type === "verse" ? (
+                      <p className="search-result-reference">{result.label}</p>
+                    ) : null}
                     {"preview" in result ? (
                       <SearchVersePreview
+                        mode="allStrongs"
                         preview={result.preview}
                         query={group.query}
+                        showStrongsInSearch={showStrongsInSearch}
                         tokens={"tokens" in result ? result.tokens : undefined}
                       />
                     ) : null}
