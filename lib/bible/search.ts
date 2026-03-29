@@ -335,22 +335,30 @@ async function searchSingleBibleQuery(
           rangeEntries.at(-1)?.verseNumber === endVerseNumber;
 
         if (hasFullRange) {
-          directReferenceResults = rangeEntries.map<BibleSearchResult>((entry) => ({
-            type: "verse",
-            id: `verse:${entry.bookSlug}:${entry.chapterNumber}:${entry.verseNumber}:${version}`,
-            bookSlug: entry.bookSlug,
-            chapterNumber: entry.chapterNumber,
-            verseNumber: entry.verseNumber,
-            label: `${entry.bookName} ${entry.chapterNumber}:${entry.verseNumber}`,
-            description: `${version.toUpperCase()} reference range`,
-            href: getHighlightedVerseHref(
-              entry.bookSlug,
-              entry.chapterNumber,
-              entry.verseNumber,
-              version
-            ),
-            preview: entry.text
-          }));
+          directReferenceResults = [
+            {
+              type: "range",
+              id: `range:${parsedReference.book.slug}:${parsedReference.chapterNumber}:${startVerseNumber}-${endVerseNumber}:${version}`,
+              bookSlug: parsedReference.book.slug,
+              chapterNumber: parsedReference.chapterNumber,
+              startVerseNumber,
+              endVerseNumber,
+              label: `${parsedReference.book.name} ${parsedReference.chapterNumber}:${startVerseNumber}-${endVerseNumber}`,
+              description: `${version.toUpperCase()} reference range`,
+              verses: rangeEntries.map((entry) => ({
+                id: `range-verse:${entry.bookSlug}:${entry.chapterNumber}:${entry.verseNumber}:${version}`,
+                verseNumber: entry.verseNumber,
+                label: `${entry.bookName} ${entry.chapterNumber}:${entry.verseNumber}`,
+                href: getHighlightedVerseHref(
+                  entry.bookSlug,
+                  entry.chapterNumber,
+                  entry.verseNumber,
+                  version
+                ),
+                preview: entry.text
+              }))
+            }
+          ];
         }
       }
     } else {

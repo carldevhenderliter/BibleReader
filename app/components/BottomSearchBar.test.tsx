@@ -170,9 +170,10 @@ describe("BottomSearchBar", () => {
         /In the beginning was the Word, and the Word was with God, and the Word was God\./i
       )
     ).toBeInTheDocument();
-    expect(await screen.findByRole("button", { name: /Verse John 1:12/i })).toBeInTheDocument();
+    expect(await screen.findByRole("article", { name: /John 1:1-12/i })).toBeInTheDocument();
+    expect(await screen.findByRole("button", { name: /John 1:12/i })).toBeInTheDocument();
 
-    fireEvent.click((await screen.findAllByRole("button", { name: /Verse John 1:/i }))[0]!);
+    fireEvent.click((await screen.findAllByRole("button", { name: /John 1:/i }))[0]!);
     expect(mockRouter.push).toHaveBeenCalledWith("/read/john/1?highlight=1");
   });
 

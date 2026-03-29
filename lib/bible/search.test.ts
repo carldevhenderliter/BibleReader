@@ -32,22 +32,23 @@ describe("Bible search", () => {
   it("resolves same-chapter verse range references", async () => {
     const results = await searchBible("John 1:1-12", "web");
 
-    expect(results).toHaveLength(12);
+    expect(results).toHaveLength(1);
     expect(results[0]).toMatchObject({
-      type: "verse",
+      type: "range",
       bookSlug: "john",
       chapterNumber: 1,
+      startVerseNumber: 1,
+      endVerseNumber: 12
+    });
+    expect((results[0] as { verses: Array<{ verseNumber: number; href: string; preview: string }> }).verses).toHaveLength(12);
+    expect((results[0] as { verses: Array<{ verseNumber: number; href: string; preview: string }> }).verses[0]).toMatchObject({
       verseNumber: 1,
       href: "/read/john/1?highlight=1"
     });
-    expect(results[0]).toHaveProperty("preview");
-    expect((results[0] as { preview: string }).preview).toContain(
+    expect((results[0] as { verses: Array<{ verseNumber: number; href: string; preview: string }> }).verses[0]?.preview).toContain(
       "In the beginning was the Word, and the Word was with God, and the Word was God."
     );
-    expect(results.at(-1)).toMatchObject({
-      type: "verse",
-      bookSlug: "john",
-      chapterNumber: 1,
+    expect((results[0] as { verses: Array<{ verseNumber: number; href: string }> }).verses.at(-1)).toMatchObject({
       verseNumber: 12,
       href: "/read/john/1?highlight=12"
     });
@@ -56,7 +57,7 @@ describe("Bible search", () => {
   it("rejects reversed same-chapter verse ranges", async () => {
     const results = await searchBible("John 1:12-1", "web");
 
-    expect(results.some((result) => result.type === "verse")).toBe(false);
+    expect(results.some((result) => result.type === "range")).toBe(false);
   });
 
   it("prioritizes book matches before verse matches", async () => {
@@ -144,19 +145,16 @@ describe("Bible search", () => {
   it("keeps verse-by-verse range results inside grouped searches", async () => {
     const groups = await searchBibleGroups("Job 1:1-10, repent", "kjv");
 
-    expect(groups[0]?.results).toHaveLength(10);
+    expect(groups[0]?.results).toHaveLength(1);
     expect(groups[0]?.results[0]).toMatchObject({
-      type: "verse",
+      type: "range",
       bookSlug: "job",
       chapterNumber: 1,
-      verseNumber: 1
+      startVerseNumber: 1,
+      endVerseNumber: 10
     });
-    expect(groups[0]?.results.at(-1)).toMatchObject({
-      type: "verse",
-      bookSlug: "job",
-      chapterNumber: 1,
-      verseNumber: 10
-    });
+    expect((groups[0]?.results[0] as { verses: Array<{ verseNumber: number }> }).verses[0]?.verseNumber).toBe(1);
+    expect((groups[0]?.results[0] as { verses: Array<{ verseNumber: number }> }).verses.at(-1)?.verseNumber).toBe(10);
     expect(groups[1]?.query).toBe("repent");
   });
 

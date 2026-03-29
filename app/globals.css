@@ -1596,6 +1596,10 @@ select {
   cursor: default;
 }
 
+.search-result-range {
+  cursor: default;
+}
+
 .reader-notebook {
   display: grid;
   gap: 1rem;
@@ -1807,6 +1811,39 @@ select {
   color: rgba(255, 255, 255, 0.84);
   line-height: 1.55;
   white-space: pre-line;
+}
+
+.search-range-lines {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.2rem;
+}
+
+.search-range-line {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.7rem;
+  align-items: start;
+  width: 100%;
+  padding: 0.7rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.8rem;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.search-range-line-number {
+  color: rgba(var(--reader-accent-rgb), 0.94);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.search-range-line-copy {
+  color: rgba(255, 255, 255, 0.84);
+  line-height: 1.55;
 }
 
 @media (min-width: 48rem) and (max-width: 63.99rem) {

@@ -68,7 +68,47 @@ export function SearchResultGroups({
           ) : (
             <div className="search-results">
               {group.results.map((result) => (
-                "href" in result ? (
+                result.type === "range" ? (
+                  <article
+                    aria-label={result.label}
+                    className="search-result search-result-range"
+                    key={result.id}
+                  >
+                    <div className="search-result-header">
+                      <span className={`search-result-type search-result-type-${result.type}`}>
+                        {getResultTypeLabel(result.type)}
+                      </span>
+                      <strong>{result.label}</strong>
+                    </div>
+                    <p className="search-result-description">{result.description}</p>
+                    <div className="search-range-lines">
+                      {result.verses.map((verse) => (
+                        <button
+                          aria-label={verse.label}
+                          className="search-range-line"
+                          key={verse.id}
+                          onClick={() =>
+                            onSelectResult({
+                              type: "verse",
+                              id: verse.id,
+                              bookSlug: result.bookSlug,
+                              chapterNumber: result.chapterNumber,
+                              verseNumber: verse.verseNumber,
+                              label: verse.label,
+                              description: result.description,
+                              href: verse.href,
+                              preview: verse.preview
+                            })
+                          }
+                          type="button"
+                        >
+                          <span className="search-range-line-number">{verse.verseNumber}</span>
+                          <span className="search-range-line-copy">{verse.preview}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </article>
+                ) : "href" in result ? (
                   <button
                     className="search-result"
                     key={result.id}

@@ -154,8 +154,13 @@ export type BibleSearchResult =
       endVerseNumber: number;
       label: string;
       description: string;
-      href: string;
-      preview: string;
+      verses: Array<{
+        id: string;
+        verseNumber: number;
+        label: string;
+        href: string;
+        preview: string;
+      }>;
     };
 
 export type BibleSearchResultGroup = {
