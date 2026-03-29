@@ -2,7 +2,6 @@
 
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
-import { ChapterPagination } from "@/app/components/ChapterPagination";
 import { ReaderContentTabs } from "@/app/components/ReaderContentTabs";
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
@@ -12,7 +11,6 @@ import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { VerseList } from "@/app/components/VerseList";
 import type { BookMeta, BundledBibleVersion, Chapter } from "@/lib/bible/types";
-import { getChapterLinks } from "@/lib/bible/utils";
 import { getBibleVersionBadge, getBibleVersionLabel } from "@/lib/bible/version";
 
 type ReaderPageContentProps = {
@@ -38,7 +36,6 @@ export function ReaderPageContent({
   const { activeReaderPane } = useReaderWorkspace();
   const chapter = chaptersByVersion[version];
   const showStrongs = version === "kjv" && settings.showStrongs;
-  const chapterLinks = getChapterLinks(books, book, chapter.chapterNumber, version);
   const versionLabel = getBibleVersionLabel(version);
   const versionBadge = getBibleVersionBadge(version);
 
@@ -93,7 +90,6 @@ export function ReaderPageContent({
           </div>
         )}
       </section>
-      <ChapterPagination previous={chapterLinks.previous} next={chapterLinks.next} />
     </ReaderCustomizationShell>
   );
 }

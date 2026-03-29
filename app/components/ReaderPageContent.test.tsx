@@ -68,50 +68,6 @@ describe("ReaderPageContent", () => {
       "href",
       "/read/genesis"
     );
-    expect(screen.getByRole("link", { name: "Next chapter: Genesis 2" })).toHaveAttribute(
-      "href",
-      "/read/genesis/2"
-    );
-  });
-
-  it("shows empty state navigation at the beginning and end", () => {
-    const firstChapter = {
-      ...chapter,
-      chapterNumber: 1
-    };
-    const lastBook: BookMeta = {
-      slug: "revelation",
-      name: "Revelation",
-      abbreviation: "Rev",
-      testament: "New",
-      chapterCount: 22,
-      order: 66
-    };
-    const lastChapter: Chapter = {
-      bookSlug: "revelation",
-      chapterNumber: 22,
-      verses: [{ number: 1, text: "The river of the water of life..." }]
-    };
-
-    const { rerender } = renderWithReaderCustomization(
-      <ReaderPageContent
-        book={books[0]}
-        books={books}
-        chaptersByVersion={{ web: firstChapter, kjv: { ...kjvChapter, chapterNumber: 1 } }}
-      />
-    );
-
-    expect(screen.getByText("Beginning of Genesis")).toBeInTheDocument();
-
-    rerender(
-      <ReaderPageContent
-        book={lastBook}
-        books={[...books, lastBook]}
-        chaptersByVersion={{ web: lastChapter, kjv: lastChapter }}
-      />
-    );
-
-    expect(screen.getByText("End of Revelation")).toBeInTheDocument();
   });
 
   it("switches versions while preserving the current passage", () => {
