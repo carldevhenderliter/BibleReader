@@ -610,9 +610,10 @@ select {
 .reader-topline {
   display: grid;
   gap: 1rem;
-  margin-bottom: 1.25rem;
+  width: min(100%, calc(var(--reader-content-width) + 4rem));
   max-width: 100%;
-  padding-top: 6.25rem;
+  margin: 0 auto 1.25rem;
+  padding-top: 0;
 }
 
 .reader-reading-card {
@@ -637,15 +638,13 @@ select {
 }
 
 .reader-toolbar {
-  position: fixed;
+  position: sticky;
   top: max(0.65rem, env(safe-area-inset-top));
-  left: 50%;
-  transform: translateX(-50%);
   z-index: 40;
   display: grid;
   gap: 0.8rem;
-  width: min(calc(100vw - 2rem), 74rem);
-  max-width: calc(100vw - 2rem);
+  width: 100%;
+  max-width: 100%;
   padding: 0.8rem 0.9rem;
   margin: 0;
   border: 1px solid rgba(255, 255, 255, 0.09);
@@ -763,6 +762,7 @@ select {
 .reader-controls-primary {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.55rem;
   min-width: 0;
   width: 100%;
@@ -775,7 +775,7 @@ select {
 }
 
 .control-group-compact {
-  flex: 1 1 0;
+  flex: 1 1 11rem;
   min-width: 0;
 }
 
@@ -855,6 +855,7 @@ select {
 
 .reader-menu-button {
   flex: 0 0 auto;
+  margin-left: auto;
   font-weight: 700;
 }
 
@@ -1633,7 +1634,7 @@ select {
   }
 
   .reader-topline {
-    padding-top: 6.3rem;
+    width: 100%;
   }
 }
 
@@ -1876,16 +1877,13 @@ select {
 
   .reader-topline {
     gap: 0.9rem;
-    padding-top: 5.5rem;
+    width: 100%;
   }
 
   .reader-toolbar {
     top: max(0.45rem, env(safe-area-inset-top));
-    left: max(0.75rem, env(safe-area-inset-left));
-    right: max(0.75rem, env(safe-area-inset-right));
-    transform: none;
-    width: auto;
-    max-width: none;
+    width: 100%;
+    max-width: 100%;
     padding: 0.78rem;
     border-radius: 1.15rem;
   }
@@ -1901,6 +1899,11 @@ select {
   .reader-controls-primary {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+    align-items: center;
+  }
+
+  .reader-menu-button {
+    margin-left: 0;
   }
 
   .control-group select,
