@@ -7,8 +7,8 @@ import { LookupPane } from "@/app/components/LookupPane";
 import { useLookup } from "@/app/components/LookupProvider";
 
 const SPLIT_LAYOUT_WIDTH_STORAGE_KEY = "bible-reader.split-layout-width-rem";
-const MIN_LOOKUP_WIDTH_REM = 22;
-const DEFAULT_LOOKUP_WIDTH_REM = 24;
+const MIN_LOOKUP_WIDTH_REM = 18;
+const DEFAULT_LOOKUP_WIDTH_REM = 20;
 const LOOKUP_WIDTH_PER_EXTRA_QUERY_REM = 14;
 const LOOKUP_WIDTH_MAX_VIEWPORT_RATIO = 0.75;
 

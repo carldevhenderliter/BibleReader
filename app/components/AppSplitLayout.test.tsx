@@ -120,8 +120,8 @@ describe("AppSplitLayout", () => {
       window.dispatchEvent(new PointerEvent("pointerup", { clientX: 840 }));
     });
 
-    expect(layout).toHaveStyle("--app-layout-lookup-width: 34rem");
-    expect(window.localStorage.getItem(SPLIT_LAYOUT_WIDTH_STORAGE_KEY)).toBe("34");
+    expect(layout).toHaveStyle("--app-layout-lookup-width: 30rem");
+    expect(window.localStorage.getItem(SPLIT_LAYOUT_WIDTH_STORAGE_KEY)).toBe("30");
   });
 
   it("restores a saved split width on desktop", () => {
@@ -140,6 +140,15 @@ describe("AppSplitLayout", () => {
 
     return waitFor(() => {
       expect(container.querySelector(".app-layout")).toHaveStyle("--app-layout-lookup-width: 37.5rem");
+    });
+  });
+
+  it("clamps a saved split width to the lower minimum lookup width", () => {
+    window.localStorage.setItem(SPLIT_LAYOUT_WIDTH_STORAGE_KEY, "8");
+    const { container } = renderSplitLayout();
+
+    return waitFor(() => {
+      expect(container.querySelector(".app-layout")).toHaveStyle("--app-layout-lookup-width: 18rem");
     });
   });
 

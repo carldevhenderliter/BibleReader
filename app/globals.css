@@ -39,7 +39,7 @@
   --reader-shell-intensity: 0.14;
   --reader-background-intensity: 0.14;
   --reader-surface-depth: 1;
-  --app-layout-lookup-width: 24rem;
+  --app-layout-lookup-width: 20rem;
 }
 
 * {
@@ -1675,7 +1675,7 @@ select {
   grid-template-columns:
     minmax(0, 1fr)
     0.875rem
-    clamp(22rem, var(--app-layout-lookup-width), 75vw);
+    clamp(18rem, var(--app-layout-lookup-width), 75vw);
   column-gap: var(--app-layout-gap);
   align-items: start;
   max-width: 103.25rem;
@@ -1775,7 +1775,7 @@ select {
   right: auto;
   left: 50%;
   width: min(calc(100vw - 2.7rem), 103.25rem);
-  padding-right: calc(clamp(22rem, var(--app-layout-lookup-width), 75vw) + 1.25rem);
+  padding-right: calc(clamp(18rem, var(--app-layout-lookup-width), 75vw) + 1.25rem);
   transform: translateX(-50%);
 }
 
