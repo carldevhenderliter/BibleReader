@@ -2225,6 +2225,29 @@ select {
   justify-content: flex-start;
 }
 
+.search-ai-question {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.95rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.95rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.search-ai-question-title {
+  margin: 0;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.search-ai-question-copy {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.94);
+  line-height: 1.55;
+}
+
 .search-ai-answer {
   display: grid;
   gap: 0.75rem;

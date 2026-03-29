@@ -81,6 +81,10 @@ export function SearchAiPanel({
               Ask Again
             </button>
           </div>
+          <div className="search-ai-question">
+            <h3 className="search-ai-question-title">Question</h3>
+            <p className="search-ai-question-copy">{answer.query}</p>
+          </div>
           <div className="search-ai-answer">
             {answer.answer.split(/\n{2,}/).map((paragraph, index) => (
               <p className="search-ai-answer-paragraph" key={`${index}:${paragraph.slice(0, 24)}`}>

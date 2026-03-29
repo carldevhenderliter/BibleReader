@@ -34,6 +34,26 @@ const SPLIT_VIEW_MEDIA_QUERY = "(min-width: 64rem)";
 const SEARCH_MODE_STORAGE_KEY = "bible-reader.search-mode";
 const SEARCH_MATCH_MODE_STORAGE_KEY = "bible-reader.search-match-mode";
 const SEARCH_SHOW_STRONGS_STORAGE_KEY = "bible-reader.search-show-strongs";
+const AI_WEAK_ANSWER_FALLBACK =
+  "The local AI could not produce a question-specific answer from the available Bible context. Try narrowing the question or opening a more relevant verse.";
+const AI_STOP_WORDS = new Set([
+  "about",
+  "again",
+  "does",
+  "from",
+  "into",
+  "that",
+  "the",
+  "them",
+  "they",
+  "this",
+  "what",
+  "when",
+  "where",
+  "which",
+  "with",
+  "would"
+]);
 
 type LookupContextValue = {
   query: string;
@@ -108,6 +128,59 @@ function pruneExpandedTopics(expandedTopicsByQuery: Record<string, string>, next
   return Object.fromEntries(
     Object.entries(expandedTopicsByQuery).filter(([queryPart]) => nextQueryParts.has(queryPart))
   );
+}
+
+function normalizeAiText(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/[’']/g, "")
+    .replace(/[^a-z0-9\s:]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function getMeaningfulQueryTerms(query: string) {
+  return Array.from(
+    new Set(
+      normalizeAiText(query)
+        .split(" ")
+        .map((term) => term.trim())
+        .filter((term) => term.length > 2 && !AI_STOP_WORDS.has(term))
+    )
+  );
+}
+
+function isWeakAiAnswer(
+  query: string,
+  answerText: string,
+  sources: LocalBibleAiSource[],
+  previousAnswer: LocalBibleAiAnswer | null
+) {
+  const normalizedAnswer = normalizeAiText(answerText);
+
+  if (!normalizedAnswer) {
+    return true;
+  }
+
+  const queryTerms = getMeaningfulQueryTerms(query);
+  const hasQueryOverlap =
+    queryTerms.length === 0 ||
+    queryTerms.some((term) => normalizedAnswer.includes(term) || sources.some((source) => normalizeAiText(source.label).includes(term)));
+  const hasSourcesLine = /sources:/i.test(answerText);
+
+  if (!hasQueryOverlap || !hasSourcesLine) {
+    return true;
+  }
+
+  if (
+    previousAnswer &&
+    previousAnswer.query !== query &&
+    normalizeAiText(previousAnswer.answer) === normalizedAnswer
+  ) {
+    return true;
+  }
+
+  return false;
 }
 
 export function LookupProvider({ children }: PropsWithChildren) {
@@ -369,12 +442,16 @@ export function LookupProvider({ children }: PropsWithChildren) {
             bookmarks
           });
           const answerText = await generateLocalBibleAiAnswer(prompt);
+          const normalizedAnswerText = answerText.trim();
+          const nextAnswer =
+            normalizedAnswerText.length > 0 &&
+            !isWeakAiAnswer(trimmedQuery, normalizedAnswerText, prompt.sources, aiAnswer)
+              ? normalizedAnswerText
+              : AI_WEAK_ANSWER_FALLBACK;
 
           setAiAnswer({
             query: trimmedQuery,
-            answer:
-              answerText.trim() ||
-              "The local AI could not generate an answer from the available Bible context.",
+            answer: nextAnswer,
             sources: prompt.sources
           });
           setAiStatus("ready");

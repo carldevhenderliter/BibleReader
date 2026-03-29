@@ -31,17 +31,29 @@ jest.mock("@/lib/ai/bible-assistant", () => ({
   buildBibleAiPrompt: jest.fn(async ({ query }) => ({
     systemPrompt: "Bible-only",
     userPrompt: `Question: ${query}`,
-    sources: [
-      {
-        id: "john-1-1",
-        label: "John 1:1",
-        href: "/read/john/1?highlight=1",
-        preview: "In the beginning was the Word.",
-        bookSlug: "john",
-        chapterNumber: 1,
-        verseNumber: 1
-      }
-    ]
+    sources: query.toLowerCase().includes("genesis")
+      ? [
+          {
+            id: "genesis-1-1",
+            label: "Genesis 1:1",
+            href: "/read/genesis/1?highlight=1",
+            preview: "In the beginning, God created the heavens and the earth.",
+            bookSlug: "genesis",
+            chapterNumber: 1,
+            verseNumber: 1
+          }
+        ]
+      : [
+          {
+            id: "john-1-1",
+            label: "John 1:1",
+            href: "/read/john/1?highlight=1",
+            preview: "In the beginning was the Word.",
+            bookSlug: "john",
+            chapterNumber: 1,
+            verseNumber: 1
+          }
+        ]
   }))
 }));
 
@@ -87,9 +99,11 @@ describe("Search AI mode", () => {
       reason: ""
     });
     mockLoadLocalBibleAi.mockResolvedValue({});
-    mockGenerateLocalBibleAiAnswer.mockResolvedValue(
-      "John 1:1 presents the Word as eternal and fully divine (John 1:1)."
-    );
+    mockGenerateLocalBibleAiAnswer.mockImplementation(async ({ userPrompt }) => {
+      return userPrompt.includes("Genesis")
+        ? "Genesis 1:1 presents God as the creator of heaven and earth.\n\nSources: Genesis 1:1"
+        : "John 1:1 presents the Word as eternal and fully divine.\n\nSources: John 1:1";
+    });
   });
 
   it("restores the saved AI search mode from local storage", async () => {
@@ -128,6 +142,47 @@ describe("Search AI mode", () => {
     fireEvent.click(screen.getByRole("button", { name: "John 1:1 In the beginning was the Word." }));
 
     expect(mockRouter.push).toHaveBeenCalledWith("/read/john/1?highlight=1");
+  });
+
+  it("updates the visible question and cited sources when the AI query changes", async () => {
+    renderSearchUi();
+
+    fireEvent.focus(screen.getByLabelText(SEARCH_INPUT_LABEL));
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
+      target: { value: "What does John 1:1 teach about Jesus?" }
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Ask AI" }));
+    fireEvent.click(await screen.findByRole("button", { name: "Enable AI" }));
+    const readyState = await screen.findByText(
+      "AI is ready. Ask a Bible study question using the current search input."
+    );
+    fireEvent.click(readyState.parentElement?.querySelector("button") as HTMLButtonElement);
+
+    await waitFor(() => {
+      expect(screen.getByText("Question")).toBeInTheDocument();
+    });
+
+    expect(screen.getByText("What does John 1:1 teach about Jesus?")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "John 1:1 In the beginning was the Word." })).toBeInTheDocument();
+
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
+      target: { value: "What does Genesis 1:1 say about creation?" }
+    });
+    const secondReadyState = await screen.findByText(
+      "AI is ready. Ask a Bible study question using the current search input."
+    );
+    fireEvent.click(secondReadyState.parentElement?.querySelector("button") as HTMLButtonElement);
+
+    await waitFor(() => {
+      expect(screen.getByText("What does Genesis 1:1 say about creation?")).toBeInTheDocument();
+    });
+
+    expect(screen.queryByText("What does John 1:1 teach about Jesus?")).not.toBeInTheDocument();
+    expect(
+      screen.getByRole("button", {
+        name: "Genesis 1:1 In the beginning, God created the heavens and the earth."
+      })
+    ).toBeInTheDocument();
   });
 
   it("shows an unsupported-device message in split view", async () => {
