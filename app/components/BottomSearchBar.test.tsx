@@ -154,7 +154,7 @@ describe("BottomSearchBar", () => {
       target: { value: "John 1:1" }
     });
 
-    fireEvent.click(await screen.findByRole("button", { name: /Verse John 1:1/i }));
+    fireEvent.click(await screen.findByRole("button", { name: /Verse John 1:1\b/i }));
     expect(mockRouter.push).toHaveBeenCalledWith("/read/john/1?highlight=1");
   });
 
@@ -170,9 +170,10 @@ describe("BottomSearchBar", () => {
         /In the beginning was the Word, and the Word was with God, and the Word was God\./i
       )
     ).toBeInTheDocument();
+    expect(await screen.findByRole("button", { name: /Verse John 1:12/i })).toBeInTheDocument();
 
-    fireEvent.click(await screen.findByRole("button", { name: /Range John 1:1-12/i }));
-    expect(mockRouter.push).toHaveBeenCalledWith("/read/john/1?highlightStart=1&highlightEnd=12");
+    fireEvent.click((await screen.findAllByRole("button", { name: /Verse John 1:/i }))[0]!);
+    expect(mockRouter.push).toHaveBeenCalledWith("/read/john/1?highlight=1");
   });
 
   it("updates verse results when the active version changes", async () => {

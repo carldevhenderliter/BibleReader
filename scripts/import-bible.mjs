@@ -153,20 +153,61 @@ async function importKjvVersion(sourceBooks) {
  * @param {string} value
  */
 function decodeHtmlEntities(value) {
+  const namedEntities = {
+    amp: "&",
+    apos: "'",
+    gt: ">",
+    lt: "<",
+    nbsp: " ",
+    ndash: "–",
+    mdash: "—",
+    quot: '"',
+    rsquo: "’",
+    lsquo: "‘",
+    rdquo: "”",
+    ldquo: "“",
+    hellip: "…"
+  };
+
   return value
-    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
+    .replace(/&#x([0-9a-f]+);?/gi, (_, code) => String.fromCodePoint(Number.parseInt(code, 16)))
+    .replace(/&#(\d+);?/g, (_, code) => String.fromCodePoint(Number(code)))
+    .replace(/&([a-z]+);?/gi, (match, name) => namedEntities[name.toLowerCase()] ?? match)
     .replace(/&#39;/g, "'");
+}
+
+/**
+ * @param {string} value
+ */
+function normalizeImportedCopy(value) {
+  return value
+    .replace(/[ \t]+/g, " ")
+    .replace(/\s*([,;:.!?])/g, "$1")
+    .replace(/([,;:.!?])(?=[^\s"')\]}\u201d\u2019])/g, "$1 ")
+    .replace(/\s*([—–])\s*/g, " $1 ")
+    .replace(/\(\s+/g, "(")
+    .replace(/\s+\)/g, ")")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/**
+ * @param {string} text
+ */
+function sanitizeBracketMarkup(text) {
+  return text
+    .replace(/\[fn\]/gi, "")
+    .replace(/\[\[([\s\S]*?)\]\]/g, "$1")
+    .replace(/\[(?![HG]\d+\])([^\[\]]+)\]/g, "$1");
 }
 
 /**
  * @param {string} text
  */
 function sanitizeTaggedText(text) {
-  return decodeHtmlEntities(text).replace(/<\/?em>/g, "");
+  return normalizeImportedCopy(
+    sanitizeBracketMarkup(decodeHtmlEntities(text).replace(/<\/?em>/g, ""))
+  );
 }
 
 /**

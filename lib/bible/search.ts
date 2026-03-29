@@ -73,27 +73,6 @@ function getHighlightedVerseHref(
   return serialized ? `${pathname}?${serialized}` : pathname;
 }
 
-function getHighlightedVerseRangeHref(
-  bookSlug: string,
-  chapterNumber: number,
-  startVerseNumber: number,
-  endVerseNumber: number,
-  version: BundledBibleVersion
-) {
-  const href = getChapterHref(bookSlug, chapterNumber, version);
-  const [pathname, searchValue] = href.split("?");
-  const searchParams = new URLSearchParams(searchValue ?? "");
-  searchParams.set("highlightStart", String(startVerseNumber));
-  searchParams.set("highlightEnd", String(endVerseNumber));
-  const serialized = searchParams.toString();
-
-  return serialized ? `${pathname}?${serialized}` : pathname;
-}
-
-function getRangePreview(texts: string[]) {
-  return texts.join(" ").trim();
-}
-
 function parseStrongsQuery(query: string) {
   const match = query.match(/^(?:strongs\s+)?([hg])\s*0*(\d+)$/i);
 
@@ -356,26 +335,22 @@ async function searchSingleBibleQuery(
           rangeEntries.at(-1)?.verseNumber === endVerseNumber;
 
         if (hasFullRange) {
-          directReferenceResults = [
-            {
-              type: "range",
-              id: `range:${parsedReference.book.slug}:${parsedReference.chapterNumber}:${startVerseNumber}-${endVerseNumber}:${version}`,
-              bookSlug: parsedReference.book.slug,
-              chapterNumber: parsedReference.chapterNumber,
-              startVerseNumber,
-              endVerseNumber,
-              label: `${parsedReference.book.name} ${parsedReference.chapterNumber}:${startVerseNumber}-${endVerseNumber}`,
-              description: `${version.toUpperCase()} range`,
-              href: getHighlightedVerseRangeHref(
-                parsedReference.book.slug,
-                parsedReference.chapterNumber,
-                startVerseNumber,
-                endVerseNumber,
-                version
-              ),
-              preview: getRangePreview(rangeEntries.map((entry) => entry.text))
-            }
-          ];
+          directReferenceResults = rangeEntries.map<BibleSearchResult>((entry) => ({
+            type: "verse",
+            id: `verse:${entry.bookSlug}:${entry.chapterNumber}:${entry.verseNumber}:${version}`,
+            bookSlug: entry.bookSlug,
+            chapterNumber: entry.chapterNumber,
+            verseNumber: entry.verseNumber,
+            label: `${entry.bookName} ${entry.chapterNumber}:${entry.verseNumber}`,
+            description: `${version.toUpperCase()} reference range`,
+            href: getHighlightedVerseHref(
+              entry.bookSlug,
+              entry.chapterNumber,
+              entry.verseNumber,
+              version
+            ),
+            preview: entry.text
+          }));
         }
       }
     } else {

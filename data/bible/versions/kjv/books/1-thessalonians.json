@@ -17,7 +17,7 @@
           "text": "Paul, and Silvanus, and Timotheus, unto the church of the Thessalonians which is in God the Father and in the Lord Jesus Christ: Grace be unto you, and peace, from God our Father, and the Lord Jesus Christ.",
           "tokens": [
             {
-              "text": "Paul,",
+              "text": "Paul, ",
               "strongsNumbers": [
                 "G3972"
               ]
@@ -29,7 +29,7 @@
               ]
             },
             {
-              "text": " Silvanus,",
+              "text": " Silvanus, ",
               "strongsNumbers": [
                 "G4610"
               ]
@@ -41,7 +41,7 @@
               ]
             },
             {
-              "text": " Timotheus,",
+              "text": " Timotheus, ",
               "strongsNumbers": [
                 "G5095"
               ]
@@ -95,7 +95,7 @@
               ]
             },
             {
-              "text": " Christ:",
+              "text": " Christ: ",
               "strongsNumbers": [
                 "G5547"
               ]
@@ -107,7 +107,7 @@
               ]
             },
             {
-              "text": " be unto you,",
+              "text": " be unto you, ",
               "strongsNumbers": [
                 "G5213"
               ]
@@ -119,7 +119,7 @@
               ]
             },
             {
-              "text": " peace,",
+              "text": " peace, ",
               "strongsNumbers": [
                 "G1515"
               ]
@@ -143,7 +143,7 @@
               ]
             },
             {
-              "text": " Father,",
+              "text": " Father, ",
               "strongsNumbers": [
                 "G3962"
               ]
@@ -167,7 +167,7 @@
               ]
             },
             {
-              "text": " Christ.",
+              "text": " Christ. ",
               "strongsNumbers": [
                 "G5547"
               ]
@@ -209,7 +209,7 @@
               ]
             },
             {
-              "text": " all,",
+              "text": " all, ",
               "strongsNumbers": [
                 "G3956"
               ]
@@ -245,7 +245,7 @@
               ]
             },
             {
-              "text": " prayers;",
+              "text": " prayers; ",
               "strongsNumbers": [
                 "G4335"
               ]
@@ -281,7 +281,7 @@
               ]
             },
             {
-              "text": " of faith,",
+              "text": " of faith, ",
               "strongsNumbers": [
                 "G4102"
               ]
@@ -299,7 +299,7 @@
               ]
             },
             {
-              "text": " of love,",
+              "text": " of love, ",
               "strongsNumbers": [
                 "G26"
               ]
@@ -341,7 +341,7 @@
               ]
             },
             {
-              "text": " Christ,",
+              "text": " Christ, ",
               "strongsNumbers": [
                 "G5547"
               ]
@@ -371,7 +371,7 @@
               ]
             },
             {
-              "text": " Father;",
+              "text": " Father; ",
               "strongsNumbers": [
                 "G3962"
               ]
@@ -383,7 +383,7 @@
           "text": "Knowing, brethren beloved, your election of God.",
           "tokens": [
             {
-              "text": "Knowing,",
+              "text": "Knowing, ",
               "strongsNumbers": [
                 "G1492"
               ]
@@ -395,7 +395,7 @@
               ]
             },
             {
-              "text": " beloved,",
+              "text": " beloved, ",
               "strongsNumbers": [
                 "G25"
               ]
@@ -419,7 +419,7 @@
               ]
             },
             {
-              "text": " God.",
+              "text": " God. ",
               "strongsNumbers": [
                 "G2316"
               ]
@@ -485,7 +485,7 @@
               ]
             },
             {
-              "text": " only,",
+              "text": " only, ",
               "strongsNumbers": [
                 "G3440"
               ]
@@ -509,7 +509,7 @@
               ]
             },
             {
-              "text": " power,",
+              "text": " power, ",
               "strongsNumbers": [
                 "G1411"
               ]
@@ -533,7 +533,7 @@
               ]
             },
             {
-              "text": " Ghost,",
+              "text": " Ghost, ",
               "strongsNumbers": [
                 "G4151"
               ]
@@ -557,7 +557,7 @@
               ]
             },
             {
-              "text": " assurance;",
+              "text": " assurance; ",
               "strongsNumbers": [
                 "G4136"
               ]
@@ -644,7 +644,7 @@
               ]
             },
             {
-              "text": " of us,",
+              "text": " of us, ",
               "strongsNumbers": [
                 "G2257"
               ]
@@ -656,7 +656,7 @@
               ]
             },
             {
-              "text": " of the Lord,",
+              "text": " of the Lord, ",
               "strongsNumbers": [
                 "G2962"
               ]
@@ -686,7 +686,7 @@
               ]
             },
             {
-              "text": " affliction,",
+              "text": " affliction, ",
               "strongsNumbers": [
                 "G2347"
               ]
@@ -710,7 +710,7 @@
               ]
             },
             {
-              "text": " Ghost:",
+              "text": " Ghost: ",
               "strongsNumbers": [
                 "G4151"
               ]
@@ -776,7 +776,7 @@
               ]
             },
             {
-              "text": " Achaia.",
+              "text": " Achaia. ",
               "strongsNumbers": [
                 "G882"
               ]
@@ -854,7 +854,7 @@
               ]
             },
             {
-              "text": " Achaia,",
+              "text": " Achaia, ",
               "strongsNumbers": [
                 "G882"
               ]
@@ -914,7 +914,7 @@
               ]
             },
             {
-              "text": " is spread abroad;",
+              "text": " is spread abroad; ",
               "strongsNumbers": [
                 "G1831"
               ]
@@ -951,7 +951,7 @@
               ]
             },
             {
-              "text": " any thing.",
+              "text": " any thing. ",
               "strongsNumbers": [
                 "G5100"
               ]
@@ -960,7 +960,7 @@
         },
         {
           "number": 9,
-          "text": "For they ➔ themselves shew of us what manner of entering in we had unto you, and how ye turned to God from idols to serve the living and true God;",
+          "text": "For they ➔ themselves shew of us what manner of entering in we had unto you, and how ye turned to God from idols to serve the living and true God;",
           "tokens": [
             {
               "text": "For",
@@ -975,7 +975,7 @@
               ]
             },
             {
-              "text": " ➔ themselves",
+              "text": " ➔ themselves",
               "strongsNumbers": [
                 "G846"
               ]
@@ -1024,7 +1024,7 @@
               ]
             },
             {
-              "text": " you,",
+              "text": " you, ",
               "strongsNumbers": [
                 "G5209"
               ]
@@ -1096,7 +1096,7 @@
               ]
             },
             {
-              "text": " God;",
+              "text": " God; ",
               "strongsNumbers": [
                 "G2316"
               ]
@@ -1138,7 +1138,7 @@
               ]
             },
             {
-              "text": " heaven,",
+              "text": " heaven, ",
               "strongsNumbers": [
                 "G3772"
               ]
@@ -1162,13 +1162,13 @@
               ]
             },
             {
-              "text": " the dead,",
+              "text": " the dead, ",
               "strongsNumbers": [
                 "G3498"
               ]
             },
             {
-              "text": " even Jesus,",
+              "text": " even Jesus, ",
               "strongsNumbers": [
                 "G2424"
               ]
@@ -1204,7 +1204,7 @@
               ]
             },
             {
-              "text": " to come.",
+              "text": " to come. ",
               "strongsNumbers": [
                 "G2064"
               ]
@@ -1228,13 +1228,13 @@
               ]
             },
             {
-              "text": " yourselves,",
+              "text": " yourselves, ",
               "strongsNumbers": [
                 "G846"
               ]
             },
             {
-              "text": " brethren,",
+              "text": " brethren, ",
               "strongsNumbers": [
                 "G80"
               ]
@@ -1264,7 +1264,7 @@
               ]
             },
             {
-              "text": " you,",
+              "text": " you, ",
               "strongsNumbers": [
                 "G5209"
               ]
@@ -1288,7 +1288,7 @@
               ]
             },
             {
-              "text": " in vain:",
+              "text": " in vain: ",
               "strongsNumbers": [
                 "G2756"
               ]
@@ -1312,7 +1312,7 @@
               ]
             },
             {
-              "text": " after that we had suffered before,",
+              "text": " after that we had suffered before, ",
               "strongsNumbers": [
                 "G4310"
               ]
@@ -1324,7 +1324,7 @@
               ]
             },
             {
-              "text": " were shamefully entreated,",
+              "text": " were shamefully entreated, ",
               "strongsNumbers": [
                 "G5195"
               ]
@@ -1336,7 +1336,7 @@
               ]
             },
             {
-              "text": " ye know,",
+              "text": " ye know, ",
               "strongsNumbers": [
                 "G1492"
               ]
@@ -1348,7 +1348,7 @@
               ]
             },
             {
-              "text": " Philippi,",
+              "text": " Philippi, ",
               "strongsNumbers": [
                 "G5375"
               ]
@@ -1420,7 +1420,7 @@
               ]
             },
             {
-              "text": " contention.",
+              "text": " contention. ",
               "strongsNumbers": [
                 "G73"
               ]
@@ -1462,7 +1462,7 @@
               ]
             },
             {
-              "text": " deceit,",
+              "text": " deceit, ",
               "strongsNumbers": [
                 "G4106"
               ]
@@ -1480,7 +1480,7 @@
               ]
             },
             {
-              "text": " uncleanness,",
+              "text": " uncleanness, ",
               "strongsNumbers": [
                 "G167"
               ]
@@ -1498,7 +1498,7 @@
               ]
             },
             {
-              "text": " guile:",
+              "text": " guile: ",
               "strongsNumbers": [
                 "G1388"
               ]
@@ -1546,7 +1546,7 @@
               ]
             },
             {
-              "text": " with the gospel,",
+              "text": " with the gospel, ",
               "strongsNumbers": [
                 "G2098"
               ]
@@ -1558,7 +1558,7 @@
               ]
             },
             {
-              "text": " we speak;",
+              "text": " we speak; ",
               "strongsNumbers": [
                 "G2980"
               ]
@@ -1582,7 +1582,7 @@
               ]
             },
             {
-              "text": " men,",
+              "text": " men, ",
               "strongsNumbers": [
                 "G444"
               ]
@@ -1594,7 +1594,7 @@
               ]
             },
             {
-              "text": " God,",
+              "text": " God, ",
               "strongsNumbers": [
                 "G2316"
               ]
@@ -1612,7 +1612,7 @@
               ]
             },
             {
-              "text": " hearts.",
+              "text": " hearts. ",
               "strongsNumbers": [
                 "G2588"
               ]
@@ -1654,7 +1654,7 @@
               ]
             },
             {
-              "text": " words,",
+              "text": " words, ",
               "strongsNumbers": [
                 "G1722",
                 "G3056"
@@ -1667,7 +1667,7 @@
               ]
             },
             {
-              "text": " ye know,",
+              "text": " ye know, ",
               "strongsNumbers": [
                 "G1492"
               ]
@@ -1686,7 +1686,7 @@
               ]
             },
             {
-              "text": " of covetousness;",
+              "text": " of covetousness; ",
               "strongsNumbers": [
                 "G4124"
               ]
@@ -1698,7 +1698,7 @@
               ]
             },
             {
-              "text": " is witness:",
+              "text": " is witness: ",
               "strongsNumbers": [
                 "G3144"
               ]
@@ -1734,7 +1734,7 @@
               ]
             },
             {
-              "text": " we glory,",
+              "text": " we glory, ",
               "strongsNumbers": [
                 "G1391"
               ]
@@ -1752,7 +1752,7 @@
               ]
             },
             {
-              "text": " you,",
+              "text": " you, ",
               "strongsNumbers": [
                 "G5216"
               ]
@@ -1770,7 +1770,7 @@
               ]
             },
             {
-              "text": " others,",
+              "text": " others, ",
               "strongsNumbers": [
                 "G243"
               ]
@@ -1788,7 +1788,7 @@
               ]
             },
             {
-              "text": " burdensome,",
+              "text": " burdensome, ",
               "strongsNumbers": [
                 "G1722",
                 "G922"
@@ -1807,7 +1807,7 @@
               ]
             },
             {
-              "text": " of Christ.",
+              "text": " of Christ. ",
               "strongsNumbers": [
                 "G5547"
               ]
@@ -1844,7 +1844,7 @@
               ]
             },
             {
-              "text": " you,",
+              "text": " you, ",
               "strongsNumbers": [
                 "G5216"
               ]
@@ -1875,7 +1875,7 @@
               ]
             },
             {
-              "text": " children:",
+              "text": " children: ",
               "strongsNumbers": [
                 "G5043"
               ]
@@ -1899,7 +1899,7 @@
               ]
             },
             {
-              "text": " of you,",
+              "text": " of you, ",
               "strongsNumbers": [
                 "G5216"
               ]
@@ -1917,7 +1917,7 @@
               ]
             },
             {
-              "text": " unto you,",
+              "text": " unto you, ",
               "strongsNumbers": [
                 "G5213"
               ]
@@ -1941,7 +1941,7 @@
               ]
             },
             {
-              "text": " only,",
+              "text": " only, ",
               "strongsNumbers": [
                 "G3440"
               ]
@@ -1965,7 +1965,7 @@
               ]
             },
             {
-              "text": " souls,",
+              "text": " souls, ",
               "strongsNumbers": [
                 "G5590"
               ]
@@ -1989,7 +1989,7 @@
               ]
             },
             {
-              "text": " unto us.",
+              "text": " unto us. ",
               "strongsNumbers": [
                 "G2254"
               ]
@@ -1998,7 +1998,7 @@
         },
         {
           "number": 9,
-          "text": "For ye remember, brethren, our labour and travail: for labouring night and day, because we would ➔ not be chargeable unto any of you, we preached unto you the gospel of God.",
+          "text": "For ye remember, brethren, our labour and travail: for labouring night and day, because we would ➔ not be chargeable unto any of you, we preached unto you the gospel of God.",
           "tokens": [
             {
               "text": "For",
@@ -2007,13 +2007,13 @@
               ]
             },
             {
-              "text": " ye remember,",
+              "text": " ye remember, ",
               "strongsNumbers": [
                 "G3421"
               ]
             },
             {
-              "text": " brethren,",
+              "text": " brethren, ",
               "strongsNumbers": [
                 "G80"
               ]
@@ -2037,7 +2037,7 @@
               ]
             },
             {
-              "text": " travail:",
+              "text": " travail: ",
               "strongsNumbers": [
                 "G3449"
               ]
@@ -2067,7 +2067,7 @@
               ]
             },
             {
-              "text": " day,",
+              "text": " day, ",
               "strongsNumbers": [
                 "G2250"
               ]
@@ -2085,7 +2085,7 @@
               ]
             },
             {
-              "text": " ➔ not",
+              "text": " ➔ not",
               "strongsNumbers": [
                 "G3361"
               ]
@@ -2103,7 +2103,7 @@
               ]
             },
             {
-              "text": " of you,",
+              "text": " of you, ",
               "strongsNumbers": [
                 "G5216"
               ]
@@ -2133,7 +2133,7 @@
               ]
             },
             {
-              "text": " of God.",
+              "text": " of God. ",
               "strongsNumbers": [
                 "G2316"
               ]
@@ -2151,7 +2151,7 @@
               ]
             },
             {
-              "text": " are witnesses,",
+              "text": " are witnesses, ",
               "strongsNumbers": [
                 "G3144"
               ]
@@ -2217,7 +2217,7 @@
               ]
             },
             {
-              "text": " that believe:",
+              "text": " that believe: ",
               "strongsNumbers": [
                 "G4100"
               ]
@@ -2283,7 +2283,7 @@
               ]
             },
             {
-              "text": " of you,",
+              "text": " of you, ",
               "strongsNumbers": [
                 "G5209",
                 "G5216"
@@ -2308,7 +2308,7 @@
               ]
             },
             {
-              "text": " children,",
+              "text": " children, ",
               "strongsNumbers": [
                 "G5043"
               ]
@@ -2344,7 +2344,7 @@
               ]
             },
             {
-              "text": " of God,",
+              "text": " of God, ",
               "strongsNumbers": [
                 "G2316"
               ]
@@ -2386,7 +2386,7 @@
               ]
             },
             {
-              "text": " glory.",
+              "text": " glory. ",
               "strongsNumbers": [
                 "G1391"
               ]
@@ -2434,13 +2434,13 @@
               ]
             },
             {
-              "text": " without ceasing,",
+              "text": " without ceasing, ",
               "strongsNumbers": [
                 "G89"
               ]
             },
             {
-              "text": " because,",
+              "text": " because, ",
               "strongsNumbers": [
                 "G3754"
               ]
@@ -2476,7 +2476,7 @@
               ]
             },
             {
-              "text": " us,",
+              "text": " us, ",
               "strongsNumbers": [
                 "G2257"
               ]
@@ -2500,7 +2500,7 @@
               ]
             },
             {
-              "text": " of men,",
+              "text": " of men, ",
               "strongsNumbers": [
                 "G444"
               ]
@@ -2524,7 +2524,7 @@
               ]
             },
             {
-              "text": " in truth,",
+              "text": " in truth, ",
               "strongsNumbers": [
                 "G230"
               ]
@@ -2536,7 +2536,7 @@
               ]
             },
             {
-              "text": " of God,",
+              "text": " of God, ",
               "strongsNumbers": [
                 "G2316"
               ]
@@ -2572,7 +2572,7 @@
               ]
             },
             {
-              "text": " that believe.",
+              "text": " that believe. ",
               "strongsNumbers": [
                 "G4100"
               ]
@@ -2590,13 +2590,13 @@
               ]
             },
             {
-              "text": " ye,",
+              "text": " ye, ",
               "strongsNumbers": [
                 "G5210"
               ]
             },
             {
-              "text": " brethren,",
+              "text": " brethren, ",
               "strongsNumbers": [
                 "G80"
               ]
@@ -2662,7 +2662,7 @@
               ]
             },
             {
-              "text": " Jesus:",
+              "text": " Jesus: ",
               "strongsNumbers": [
                 "G2424"
               ]
@@ -2710,7 +2710,7 @@
               ]
             },
             {
-              "text": " countrymen,",
+              "text": " countrymen, ",
               "strongsNumbers": [
                 "G4853"
               ]
@@ -2740,7 +2740,7 @@
               ]
             },
             {
-              "text": " the Jews:",
+              "text": " the Jews: ",
               "strongsNumbers": [
                 "G2453"
               ]
@@ -2770,7 +2770,7 @@
               ]
             },
             {
-              "text": " Jesus,",
+              "text": " Jesus, ",
               "strongsNumbers": [
                 "G2424"
               ]
@@ -2788,7 +2788,7 @@
               ]
             },
             {
-              "text": " prophets,",
+              "text": " prophets, ",
               "strongsNumbers": [
                 "G4396"
               ]
@@ -2806,7 +2806,7 @@
               ]
             },
             {
-              "text": " us;",
+              "text": " us; ",
               "strongsNumbers": [
                 "G2248"
               ]
@@ -2830,7 +2830,7 @@
               ]
             },
             {
-              "text": " God,",
+              "text": " God, ",
               "strongsNumbers": [
                 "G2316"
               ]
@@ -2854,7 +2854,7 @@
               ]
             },
             {
-              "text": " men:",
+              "text": " men: ",
               "strongsNumbers": [
                 "G444"
               ]
@@ -2896,7 +2896,7 @@
               ]
             },
             {
-              "text": " they might be saved,",
+              "text": " they might be saved, ",
               "strongsNumbers": [
                 "G4982"
               ]
@@ -2926,7 +2926,7 @@
               ]
             },
             {
-              "text": " alway:",
+              "text": " alway: ",
               "strongsNumbers": [
                 "G3842"
               ]
@@ -2968,7 +2968,7 @@
               ]
             },
             {
-              "text": " the uttermost.",
+              "text": " the uttermost. ",
               "strongsNumbers": [
                 "G5056"
               ]
@@ -2986,13 +2986,13 @@
               ]
             },
             {
-              "text": " we,",
+              "text": " we, ",
               "strongsNumbers": [
                 "G2249"
               ]
             },
             {
-              "text": " brethren,",
+              "text": " brethren, ",
               "strongsNumbers": [
                 "G80"
               ]
@@ -3034,7 +3034,7 @@
               ]
             },
             {
-              "text": " in presence,",
+              "text": " in presence, ",
               "strongsNumbers": [
                 "G4383"
               ]
@@ -3046,7 +3046,7 @@
               ]
             },
             {
-              "text": " in heart,",
+              "text": " in heart, ",
               "strongsNumbers": [
                 "G2588"
               ]
@@ -3094,7 +3094,7 @@
               ]
             },
             {
-              "text": " desire.",
+              "text": " desire. ",
               "strongsNumbers": [
                 "G1939"
               ]
@@ -3130,7 +3130,7 @@
               ]
             },
             {
-              "text": " you,",
+              "text": " you, ",
               "strongsNumbers": [
                 "G5209"
               ]
@@ -3148,7 +3148,7 @@
               ]
             },
             {
-              "text": " Paul,",
+              "text": " Paul, ",
               "strongsNumbers": [
                 "G3972"
               ]
@@ -3167,7 +3167,7 @@
               ]
             },
             {
-              "text": " again;",
+              "text": " again; ",
               "strongsNumbers": [
                 "G1364"
               ]
@@ -3191,7 +3191,7 @@
               ]
             },
             {
-              "text": " us.",
+              "text": " us. ",
               "strongsNumbers": [
                 "G2248"
               ]
@@ -3221,7 +3221,7 @@
               ]
             },
             {
-              "text": " hope,",
+              "text": " hope, ",
               "strongsNumbers": [
                 "G1680"
               ]
@@ -3233,7 +3233,7 @@
               ]
             },
             {
-              "text": " joy,",
+              "text": " joy, ",
               "strongsNumbers": [
                 "G5479"
               ]
@@ -3251,7 +3251,7 @@
               ]
             },
             {
-              "text": " of rejoicing?",
+              "text": " of rejoicing? ",
               "strongsNumbers": [
                 "G2746",
                 "G2228"
@@ -3318,7 +3318,7 @@
               ]
             },
             {
-              "text": " coming?",
+              "text": " coming? ",
               "strongsNumbers": [
                 "G3952"
               ]
@@ -3366,7 +3366,7 @@
               ]
             },
             {
-              "text": " joy.",
+              "text": " joy. ",
               "strongsNumbers": [
                 "G5479"
               ]
@@ -3381,7 +3381,7 @@
       "verses": [
         {
           "number": 1,
-          "text": "Wherefore when we could ➔ no longer forbear, we thought it good to be left at Athens alone;",
+          "text": "Wherefore when we could ➔ no longer forbear, we thought it good to be left at Athens alone;",
           "tokens": [
             {
               "text": "Wherefore",
@@ -3396,13 +3396,13 @@
               ]
             },
             {
-              "text": " ➔ no longer",
+              "text": " ➔ no longer",
               "strongsNumbers": [
                 "G3371"
               ]
             },
             {
-              "text": " forbear,",
+              "text": " forbear, ",
               "strongsNumbers": [
                 "G4722"
               ]
@@ -3432,7 +3432,7 @@
               ]
             },
             {
-              "text": " alone;",
+              "text": " alone; ",
               "strongsNumbers": [
                 "G3441"
               ]
@@ -3456,7 +3456,7 @@
               ]
             },
             {
-              "text": " Timotheus,",
+              "text": " Timotheus, ",
               "strongsNumbers": [
                 "G5095"
               ]
@@ -3468,7 +3468,7 @@
               ]
             },
             {
-              "text": " brother,",
+              "text": " brother, ",
               "strongsNumbers": [
                 "G80"
               ]
@@ -3486,7 +3486,7 @@
               ]
             },
             {
-              "text": " of God,",
+              "text": " of God, ",
               "strongsNumbers": [
                 "G2316"
               ]
@@ -3522,7 +3522,7 @@
               ]
             },
             {
-              "text": " of Christ,",
+              "text": " of Christ, ",
               "strongsNumbers": [
                 "G5547"
               ]
@@ -3540,7 +3540,7 @@
               ]
             },
             {
-              "text": " you,",
+              "text": " you, ",
               "strongsNumbers": [
                 "G5209"
               ]
@@ -3576,7 +3576,7 @@
               ]
             },
             {
-              "text": " faith:",
+              "text": " faith: ",
               "strongsNumbers": [
                 "G4102"
               ]
@@ -3612,7 +3612,7 @@
               ]
             },
             {
-              "text": " afflictions:",
+              "text": " afflictions: ",
               "strongsNumbers": [
                 "G2347"
               ]
@@ -3648,7 +3648,7 @@
               ]
             },
             {
-              "text": " thereunto.",
+              "text": " thereunto. ",
               "strongsNumbers": [
                 "G1519",
                 "G5124"
@@ -3658,7 +3658,7 @@
         },
         {
           "number": 4,
-          "text": "For verily, when we were with you, we told ➔ you before that we should suffer tribulation; even as it came to pass, and ye know.",
+          "text": "For verily, when we were with you, we told ➔ you before that we should suffer tribulation; even as it came to pass, and ye know.",
           "tokens": [
             {
               "text": "For",
@@ -3667,7 +3667,7 @@
               ]
             },
             {
-              "text": " verily,",
+              "text": " verily, ",
               "strongsNumbers": [
                 "G2532"
               ]
@@ -3691,7 +3691,7 @@
               ]
             },
             {
-              "text": " you,",
+              "text": " you, ",
               "strongsNumbers": [
                 "G5209"
               ]
@@ -3703,7 +3703,7 @@
               ]
             },
             {
-              "text": " ➔ you",
+              "text": " ➔ you",
               "strongsNumbers": [
                 "G5213"
               ]
@@ -3727,7 +3727,7 @@
               ]
             },
             {
-              "text": " suffer tribulation;",
+              "text": " suffer tribulation; ",
               "strongsNumbers": [
                 "G2346"
               ]
@@ -3745,7 +3745,7 @@
               ]
             },
             {
-              "text": " it came to pass,",
+              "text": " it came to pass, ",
               "strongsNumbers": [
                 "G1096"
               ]
@@ -3757,7 +3757,7 @@
               ]
             },
             {
-              "text": " ye know.",
+              "text": " ye know. ",
               "strongsNumbers": [
                 "G1492"
               ]
@@ -3766,7 +3766,7 @@
         },
         {
           "number": 5,
-          "text": "For this cause, when I could ➔ no longer forbear, I sent to know your faith, lest by some means the tempter have tempted you, and our labour be in vain.",
+          "text": "For this cause, when I could ➔ no longer forbear, I sent to know your faith, lest by some means the tempter have tempted you, and our labour be in vain.",
           "tokens": [
             {
               "text": "For this",
@@ -3775,7 +3775,7 @@
               ]
             },
             {
-              "text": " cause,",
+              "text": " cause, ",
               "strongsNumbers": [
                 "G1223"
               ]
@@ -3793,13 +3793,13 @@
               ]
             },
             {
-              "text": " ➔ no longer",
+              "text": " ➔ no longer",
               "strongsNumbers": [
                 "G3371"
               ]
             },
             {
-              "text": " forbear,",
+              "text": " forbear, ",
               "strongsNumbers": [
                 "G4722"
               ]
@@ -3829,7 +3829,7 @@
               ]
             },
             {
-              "text": " faith,",
+              "text": " faith, ",
               "strongsNumbers": [
                 "G4102"
               ]
@@ -3854,7 +3854,7 @@
               ]
             },
             {
-              "text": " you,",
+              "text": " you, ",
               "strongsNumbers": [
                 "G5209"
               ]
@@ -3890,7 +3890,7 @@
               ]
             },
             {
-              "text": " vain.",
+              "text": " vain. ",
               "strongsNumbers": [
                 "G2756"
               ]
@@ -3899,7 +3899,7 @@
         },
         {
           "number": 6,
-          "text": "But now when Timotheus came from you unto us, and brought ➔ us good tidings of your faith and charity, and that ye have good remembrance of us always, desiring greatly to see us, as we also to see you:",
+          "text": "But now when Timotheus came from you unto us, and brought ➔ us good tidings of your faith and charity, and that ye have good remembrance of us always, desiring greatly to see us, as we also to see you:",
           "tokens": [
             {
               "text": "But",
@@ -3944,7 +3944,7 @@
               ]
             },
             {
-              "text": " us,",
+              "text": " us, ",
               "strongsNumbers": [
                 "G2248"
               ]
@@ -3962,7 +3962,7 @@
               ]
             },
             {
-              "text": " ➔ us",
+              "text": " ➔ us",
               "strongsNumbers": [
                 "G2254"
               ]
@@ -3992,7 +3992,7 @@
               ]
             },
             {
-              "text": " charity,",
+              "text": " charity, ",
               "strongsNumbers": [
                 "G26"
               ]
@@ -4034,7 +4034,7 @@
               ]
             },
             {
-              "text": " always,",
+              "text": " always, ",
               "strongsNumbers": [
                 "G3842"
               ]
@@ -4052,7 +4052,7 @@
               ]
             },
             {
-              "text": " us,",
+              "text": " us, ",
               "strongsNumbers": [
                 "G2248"
               ]
@@ -4076,7 +4076,7 @@
               ]
             },
             {
-              "text": " to see you:",
+              "text": " to see you: ",
               "strongsNumbers": [
                 "G5209"
               ]
@@ -4088,14 +4088,14 @@
           "text": "Therefore, brethren, we were comforted over you in all our affliction and distress by your faith:",
           "tokens": [
             {
-              "text": "Therefore,",
+              "text": "Therefore, ",
               "strongsNumbers": [
                 "G1223",
                 "G5124"
               ]
             },
             {
-              "text": " brethren,",
+              "text": " brethren, ",
               "strongsNumbers": [
                 "G80"
               ]
@@ -4167,7 +4167,7 @@
               ]
             },
             {
-              "text": " faith:",
+              "text": " faith: ",
               "strongsNumbers": [
                 "G4102"
               ]
@@ -4191,7 +4191,7 @@
               ]
             },
             {
-              "text": " we live,",
+              "text": " we live, ",
               "strongsNumbers": [
                 "G2198"
               ]
@@ -4221,7 +4221,7 @@
               ]
             },
             {
-              "text": " the Lord.",
+              "text": " the Lord. ",
               "strongsNumbers": [
                 "G2962"
               ]
@@ -4230,7 +4230,7 @@
         },
         {
           "number": 9,
-          "text": "For what thanks can we render ➔ to God again for you, for all the joy wherewith we joy for your sakes before our God;",
+          "text": "For what thanks can we render ➔ to God again for you, for all the joy wherewith we joy for your sakes before our God;",
           "tokens": [
             {
               "text": "For",
@@ -4263,7 +4263,7 @@
               ]
             },
             {
-              "text": " ➔ to God",
+              "text": " ➔ to God",
               "strongsNumbers": [
                 "G2316"
               ]
@@ -4281,7 +4281,7 @@
               ]
             },
             {
-              "text": " you,",
+              "text": " you, ",
               "strongsNumbers": [
                 "G5216"
               ]
@@ -4341,7 +4341,7 @@
               ]
             },
             {
-              "text": " God;",
+              "text": " God; ",
               "strongsNumbers": [
                 "G2316"
               ]
@@ -4403,7 +4403,7 @@
               ]
             },
             {
-              "text": " face,",
+              "text": " face, ",
               "strongsNumbers": [
                 "G4383"
               ]
@@ -4433,7 +4433,7 @@
               ]
             },
             {
-              "text": " faith?",
+              "text": " faith? ",
               "strongsNumbers": [
                 "G4102"
               ]
@@ -4475,7 +4475,7 @@
               ]
             },
             {
-              "text": " Father,",
+              "text": " Father, ",
               "strongsNumbers": [
                 "G3962"
               ]
@@ -4505,7 +4505,7 @@
               ]
             },
             {
-              "text": " Christ,",
+              "text": " Christ, ",
               "strongsNumbers": [
                 "G5547"
               ]
@@ -4535,7 +4535,7 @@
               ]
             },
             {
-              "text": " you.",
+              "text": " you. ",
               "strongsNumbers": [
                 "G5209"
               ]
@@ -4544,7 +4544,7 @@
         },
         {
           "number": 12,
-          "text": "And the Lord make ➔ you to increase and abound in love one ➔ toward another, and toward all men, even as we do toward you:",
+          "text": "And the Lord make ➔ you to increase and abound in love one ➔ toward another, and toward all men, even as we do toward you:",
           "tokens": [
             {
               "text": "And",
@@ -4565,7 +4565,7 @@
               ]
             },
             {
-              "text": " ➔ you",
+              "text": " ➔ you",
               "strongsNumbers": [
                 "G5209"
               ]
@@ -4601,13 +4601,13 @@
               ]
             },
             {
-              "text": " ➔ toward",
+              "text": " ➔ toward",
               "strongsNumbers": [
                 "G1519"
               ]
             },
             {
-              "text": " another,",
+              "text": " another, ",
               "strongsNumbers": [
                 "G240"
               ]
@@ -4655,7 +4655,7 @@
               ]
             },
             {
-              "text": " you:",
+              "text": " you: ",
               "strongsNumbers": [
                 "G5209"
               ]
@@ -4715,7 +4715,7 @@
               ]
             },
             {
-              "text": " God,",
+              "text": " God, ",
               "strongsNumbers": [
                 "G2316"
               ]
@@ -4733,7 +4733,7 @@
               ]
             },
             {
-              "text": " Father,",
+              "text": " Father, ",
               "strongsNumbers": [
                 "G3962"
               ]
@@ -4793,7 +4793,7 @@
               ]
             },
             {
-              "text": " saints.",
+              "text": " saints. ",
               "strongsNumbers": [
                 "G40"
               ]
@@ -4829,13 +4829,13 @@
               ]
             },
             {
-              "text": " you,",
+              "text": " you, ",
               "strongsNumbers": [
                 "G5209"
               ]
             },
             {
-              "text": " brethren,",
+              "text": " brethren, ",
               "strongsNumbers": [
                 "G80"
               ]
@@ -4865,7 +4865,7 @@
               ]
             },
             {
-              "text": " Jesus,",
+              "text": " Jesus, ",
               "strongsNumbers": [
                 "G2424"
               ]
@@ -4931,7 +4931,7 @@
               ]
             },
             {
-              "text": " God,",
+              "text": " God, ",
               "strongsNumbers": [
                 "G2316"
               ]
@@ -4949,7 +4949,7 @@
               ]
             },
             {
-              "text": " more and more.",
+              "text": " more and more. ",
               "strongsNumbers": [
                 "G3123"
               ]
@@ -5009,7 +5009,7 @@
               ]
             },
             {
-              "text": " Jesus.",
+              "text": " Jesus. ",
               "strongsNumbers": [
                 "G2424"
               ]
@@ -5045,7 +5045,7 @@
               ]
             },
             {
-              "text": " of God,",
+              "text": " of God, ",
               "strongsNumbers": [
                 "G2316"
               ]
@@ -5057,7 +5057,7 @@
               ]
             },
             {
-              "text": " sanctification,",
+              "text": " sanctification, ",
               "strongsNumbers": [
                 "G38"
               ]
@@ -5081,7 +5081,7 @@
               ]
             },
             {
-              "text": " fornication:",
+              "text": " fornication: ",
               "strongsNumbers": [
                 "G4202"
               ]
@@ -5147,7 +5147,7 @@
               ]
             },
             {
-              "text": " honour;",
+              "text": " honour; ",
               "strongsNumbers": [
                 "G5092"
               ]
@@ -5177,7 +5177,7 @@
               ]
             },
             {
-              "text": " of concupiscence,",
+              "text": " of concupiscence, ",
               "strongsNumbers": [
                 "G1939"
               ]
@@ -5219,7 +5219,7 @@
               ]
             },
             {
-              "text": " God:",
+              "text": " God: ",
               "strongsNumbers": [
                 "G2316"
               ]
@@ -5228,7 +5228,7 @@
         },
         {
           "number": 6,
-          "text": "That no man go beyond and defraud his brother in any matter: because that the Lord is the avenger of all such, as we ➔ also have forewarned you and testified.",
+          "text": "That no man go beyond and defraud his brother in any matter: because that the Lord is the avenger of all such, as we ➔ also have forewarned you and testified.",
           "tokens": [
             {
               "text": "That no",
@@ -5273,7 +5273,7 @@
               ]
             },
             {
-              "text": " any matter:",
+              "text": " any matter: ",
               "strongsNumbers": [
                 "G4229"
               ]
@@ -5309,7 +5309,7 @@
               ]
             },
             {
-              "text": " such,",
+              "text": " such, ",
               "strongsNumbers": [
                 "G5130"
               ]
@@ -5327,7 +5327,7 @@
               ]
             },
             {
-              "text": " ➔ also",
+              "text": " ➔ also",
               "strongsNumbers": [
                 "G2532"
               ]
@@ -5351,7 +5351,7 @@
               ]
             },
             {
-              "text": " testified.",
+              "text": " testified. ",
               "strongsNumbers": [
                 "G1263"
               ]
@@ -5360,7 +5360,7 @@
         },
         {
           "number": 7,
-          "text": "For God hath ➔ not called us unto uncleanness, but unto holiness.",
+          "text": "For God hath ➔ not called us unto uncleanness, but unto holiness.",
           "tokens": [
             {
               "text": "For",
@@ -5381,7 +5381,7 @@
               ]
             },
             {
-              "text": " ➔ not",
+              "text": " ➔ not",
               "strongsNumbers": [
                 "G3756"
               ]
@@ -5405,7 +5405,7 @@
               ]
             },
             {
-              "text": " uncleanness,",
+              "text": " uncleanness, ",
               "strongsNumbers": [
                 "G167"
               ]
@@ -5423,7 +5423,7 @@
               ]
             },
             {
-              "text": " holiness.",
+              "text": " holiness. ",
               "strongsNumbers": [
                 "G38"
               ]
@@ -5432,7 +5432,7 @@
         },
         {
           "number": 8,
-          "text": "He therefore that despiseth, despiseth not man, but God, who hath ➔ also given unto us his holy Spirit.",
+          "text": "He therefore that despiseth, despiseth not man, but God, who hath ➔ also given unto us his holy Spirit.",
           "tokens": [
             {
               "text": "He therefore",
@@ -5441,7 +5441,7 @@
               ]
             },
             {
-              "text": " that despiseth,",
+              "text": " that despiseth, ",
               "strongsNumbers": [
                 "G114"
               ]
@@ -5459,7 +5459,7 @@
               ]
             },
             {
-              "text": " man,",
+              "text": " man, ",
               "strongsNumbers": [
                 "G444"
               ]
@@ -5471,7 +5471,7 @@
               ]
             },
             {
-              "text": " God,",
+              "text": " God, ",
               "strongsNumbers": [
                 "G2316"
               ]
@@ -5483,7 +5483,7 @@
               ]
             },
             {
-              "text": " ➔ also",
+              "text": " ➔ also",
               "strongsNumbers": [
                 "G2532"
               ]
@@ -5519,7 +5519,7 @@
               ]
             },
             {
-              "text": " Spirit.",
+              "text": " Spirit. ",
               "strongsNumbers": [
                 "G4151"
               ]
@@ -5568,7 +5568,7 @@
               ]
             },
             {
-              "text": " unto you:",
+              "text": " unto you: ",
               "strongsNumbers": [
                 "G5213"
               ]
@@ -5616,7 +5616,7 @@
               ]
             },
             {
-              "text": " one another.",
+              "text": " one another. ",
               "strongsNumbers": [
                 "G240"
               ]
@@ -5688,7 +5688,7 @@
               ]
             },
             {
-              "text": " Macedonia:",
+              "text": " Macedonia: ",
               "strongsNumbers": [
                 "G3109"
               ]
@@ -5706,13 +5706,13 @@
               ]
             },
             {
-              "text": " you,",
+              "text": " you, ",
               "strongsNumbers": [
                 "G5209"
               ]
             },
             {
-              "text": " brethren,",
+              "text": " brethren, ",
               "strongsNumbers": [
                 "G80"
               ]
@@ -5724,7 +5724,7 @@
               ]
             },
             {
-              "text": " more and more;",
+              "text": " more and more; ",
               "strongsNumbers": [
                 "G3123"
               ]
@@ -5748,7 +5748,7 @@
               ]
             },
             {
-              "text": " to be quiet,",
+              "text": " to be quiet, ",
               "strongsNumbers": [
                 "G2270"
               ]
@@ -5766,7 +5766,7 @@
               ]
             },
             {
-              "text": " your own business,",
+              "text": " your own business, ",
               "strongsNumbers": [
                 "G2398"
               ]
@@ -5796,7 +5796,7 @@
               ]
             },
             {
-              "text": " hands,",
+              "text": " hands, ",
               "strongsNumbers": [
                 "G5495"
               ]
@@ -5814,7 +5814,7 @@
               ]
             },
             {
-              "text": " you;",
+              "text": " you; ",
               "strongsNumbers": [
                 "G5213"
               ]
@@ -5850,7 +5850,7 @@
               ]
             },
             {
-              "text": " them that are without,",
+              "text": " them that are without, ",
               "strongsNumbers": [
                 "G1854"
               ]
@@ -5874,7 +5874,7 @@
               ]
             },
             {
-              "text": " of nothing.",
+              "text": " of nothing. ",
               "strongsNumbers": [
                 "G3367"
               ]
@@ -5883,7 +5883,7 @@
         },
         {
           "number": 13,
-          "text": "But I would ➔ not have you to be ignorant, brethren, concerning them which are asleep, that ➔ ye sorrow not, even as others which have no hope.",
+          "text": "But I would ➔ not have you to be ignorant, brethren, concerning them which are asleep, that ➔ ye sorrow not, even as others which have no hope.",
           "tokens": [
             {
               "text": "But",
@@ -5898,7 +5898,7 @@
               ]
             },
             {
-              "text": " ➔ not",
+              "text": " ➔ not",
               "strongsNumbers": [
                 "G3756"
               ]
@@ -5916,13 +5916,13 @@
               ]
             },
             {
-              "text": " to be ignorant,",
+              "text": " to be ignorant, ",
               "strongsNumbers": [
                 "G50"
               ]
             },
             {
-              "text": " brethren,",
+              "text": " brethren, ",
               "strongsNumbers": [
                 "G80"
               ]
@@ -5934,7 +5934,7 @@
               ]
             },
             {
-              "text": " them which are asleep,",
+              "text": " them which are asleep, ",
               "strongsNumbers": [
                 "G2837"
               ]
@@ -5946,13 +5946,13 @@
               ]
             },
             {
-              "text": " ➔ ye sorrow",
+              "text": " ➔ ye sorrow",
               "strongsNumbers": [
                 "G3076"
               ]
             },
             {
-              "text": " not,",
+              "text": " not, ",
               "strongsNumbers": [
                 "G3363"
               ]
@@ -5994,7 +5994,7 @@
               ]
             },
             {
-              "text": " hope.",
+              "text": " hope. ",
               "strongsNumbers": [
                 "G1680"
               ]
@@ -6003,7 +6003,7 @@
         },
         {
           "number": 14,
-          "text": "For if we believe that Jesus died and rose again, even so them also which sleep in Jesus will ➔ God bring with him.",
+          "text": "For if we believe that Jesus died and rose again, even so them also which sleep in Jesus will ➔ God bring with him.",
           "tokens": [
             {
               "text": "For",
@@ -6048,7 +6048,7 @@
               ]
             },
             {
-              "text": " rose again,",
+              "text": " rose again, ",
               "strongsNumbers": [
                 "G450"
               ]
@@ -6090,7 +6090,7 @@
               ]
             },
             {
-              "text": " ➔ God",
+              "text": " ➔ God",
               "strongsNumbers": [
                 "G2316"
               ]
@@ -6108,7 +6108,7 @@
               ]
             },
             {
-              "text": " him.",
+              "text": " him. ",
               "strongsNumbers": [
                 "G846"
               ]
@@ -6117,7 +6117,7 @@
         },
         {
           "number": 15,
-          "text": "For this we say unto you by the word of the Lord, that we which are alive and remain unto the coming of the Lord shall ➔ not prevent them which are asleep.",
+          "text": "For this we say unto you by the word of the Lord, that we which are alive and remain unto the coming of the Lord shall ➔ not prevent them which are asleep.",
           "tokens": [
             {
               "text": "For",
@@ -6156,7 +6156,7 @@
               ]
             },
             {
-              "text": " of the Lord,",
+              "text": " of the Lord, ",
               "strongsNumbers": [
                 "G2962"
               ]
@@ -6216,7 +6216,7 @@
               ]
             },
             {
-              "text": " ➔ not",
+              "text": " ➔ not",
               "strongsNumbers": [
                 "G3364"
               ]
@@ -6234,7 +6234,7 @@
               ]
             },
             {
-              "text": " are asleep.",
+              "text": " are asleep. ",
               "strongsNumbers": [
                 "G2837"
               ]
@@ -6288,7 +6288,7 @@
               ]
             },
             {
-              "text": " a shout,",
+              "text": " a shout, ",
               "strongsNumbers": [
                 "G2752"
               ]
@@ -6306,7 +6306,7 @@
               ]
             },
             {
-              "text": " of the archangel,",
+              "text": " of the archangel, ",
               "strongsNumbers": [
                 "G743"
               ]
@@ -6330,7 +6330,7 @@
               ]
             },
             {
-              "text": " of God:",
+              "text": " of God: ",
               "strongsNumbers": [
                 "G2316"
               ]
@@ -6366,7 +6366,7 @@
               ]
             },
             {
-              "text": " first:",
+              "text": " first: ",
               "strongsNumbers": [
                 "G4412"
               ]
@@ -6375,7 +6375,7 @@
         },
         {
           "number": 17,
-          "text": "Then we which are alive and remain shall be caught up together with them in the clouds, to meet the Lord in the air: and so shall we ➔ ever be with the Lord.",
+          "text": "Then we which are alive and remain shall be caught up together with them in the clouds, to meet the Lord in the air: and so shall we ➔ ever be with the Lord.",
           "tokens": [
             {
               "text": "Then",
@@ -6438,7 +6438,7 @@
               ]
             },
             {
-              "text": " the clouds,",
+              "text": " the clouds, ",
               "strongsNumbers": [
                 "G3507"
               ]
@@ -6468,7 +6468,7 @@
               ]
             },
             {
-              "text": " the air:",
+              "text": " the air: ",
               "strongsNumbers": [
                 "G109"
               ]
@@ -6492,7 +6492,7 @@
               ]
             },
             {
-              "text": " ➔ ever",
+              "text": " ➔ ever",
               "strongsNumbers": [
                 "G3842"
               ]
@@ -6510,7 +6510,7 @@
               ]
             },
             {
-              "text": " the Lord.",
+              "text": " the Lord. ",
               "strongsNumbers": [
                 "G2962"
               ]
@@ -6552,7 +6552,7 @@
               ]
             },
             {
-              "text": " words.",
+              "text": " words. ",
               "strongsNumbers": [
                 "G3056"
               ]
@@ -6594,13 +6594,13 @@
               ]
             },
             {
-              "text": " the seasons,",
+              "text": " the seasons, ",
               "strongsNumbers": [
                 "G2540"
               ]
             },
             {
-              "text": " brethren,",
+              "text": " brethren, ",
               "strongsNumbers": [
                 "G80"
               ]
@@ -6630,7 +6630,7 @@
               ]
             },
             {
-              "text": " unto you.",
+              "text": " unto you. ",
               "strongsNumbers": [
                 "G5213"
               ]
@@ -6714,7 +6714,7 @@
               ]
             },
             {
-              "text": " the night.",
+              "text": " the night. ",
               "strongsNumbers": [
                 "G3571"
               ]
@@ -6723,7 +6723,7 @@
         },
         {
           "number": 3,
-          "text": "For when they shall say, Peace and safety; then sudden destruction cometh upon them, as travail upon a woman with child; and they shall ➔ not escape.",
+          "text": "For when they shall say, Peace and safety; then sudden destruction cometh upon them, as travail upon a woman with child; and they shall ➔ not escape.",
           "tokens": [
             {
               "text": "For",
@@ -6738,7 +6738,7 @@
               ]
             },
             {
-              "text": " they shall say,",
+              "text": " they shall say, ",
               "strongsNumbers": [
                 "G3004"
               ]
@@ -6756,7 +6756,7 @@
               ]
             },
             {
-              "text": " safety;",
+              "text": " safety; ",
               "strongsNumbers": [
                 "G803"
               ]
@@ -6786,7 +6786,7 @@
               ]
             },
             {
-              "text": " them,",
+              "text": " them, ",
               "strongsNumbers": [
                 "G846"
               ]
@@ -6810,7 +6810,7 @@
               ]
             },
             {
-              "text": " a woman with child;",
+              "text": " a woman with child; ",
               "strongsNumbers": [
                 "G1064",
                 "G2192"
@@ -6829,13 +6829,13 @@
               ]
             },
             {
-              "text": " ➔ not",
+              "text": " ➔ not",
               "strongsNumbers": [
                 "G3364"
               ]
             },
             {
-              "text": " escape.",
+              "text": " escape. ",
               "strongsNumbers": [
                 "G1628"
               ]
@@ -6853,13 +6853,13 @@
               ]
             },
             {
-              "text": " ye,",
+              "text": " ye, ",
               "strongsNumbers": [
                 "G5210"
               ]
             },
             {
-              "text": " brethren,",
+              "text": " brethren, ",
               "strongsNumbers": [
                 "G80"
               ]
@@ -6883,7 +6883,7 @@
               ]
             },
             {
-              "text": " darkness,",
+              "text": " darkness, ",
               "strongsNumbers": [
                 "G4655"
               ]
@@ -6919,7 +6919,7 @@
               ]
             },
             {
-              "text": " a thief.",
+              "text": " a thief. ",
               "strongsNumbers": [
                 "G2812"
               ]
@@ -6955,7 +6955,7 @@
               ]
             },
             {
-              "text": " of light,",
+              "text": " of light, ",
               "strongsNumbers": [
                 "G5457"
               ]
@@ -6973,7 +6973,7 @@
               ]
             },
             {
-              "text": " of the day:",
+              "text": " of the day: ",
               "strongsNumbers": [
                 "G2250"
               ]
@@ -6991,7 +6991,7 @@
               ]
             },
             {
-              "text": " of the night,",
+              "text": " of the night, ",
               "strongsNumbers": [
                 "G3571"
               ]
@@ -7003,7 +7003,7 @@
               ]
             },
             {
-              "text": " of darkness.",
+              "text": " of darkness. ",
               "strongsNumbers": [
                 "G4655"
               ]
@@ -7012,7 +7012,7 @@
         },
         {
           "number": 6,
-          "text": "Therefore let us ➔ not sleep, as do others; but let us watch and be sober.",
+          "text": "Therefore let us ➔ not sleep, as do others; but let us watch and be sober.",
           "tokens": [
             {
               "text": "Therefore",
@@ -7028,13 +7028,13 @@
               ]
             },
             {
-              "text": " ➔ not",
+              "text": " ➔ not",
               "strongsNumbers": [
                 "G3361"
               ]
             },
             {
-              "text": " sleep,",
+              "text": " sleep, ",
               "strongsNumbers": [
                 "G2518"
               ]
@@ -7047,7 +7047,7 @@
               ]
             },
             {
-              "text": " do others;",
+              "text": " do others; ",
               "strongsNumbers": [
                 "G3062"
               ]
@@ -7071,7 +7071,7 @@
               ]
             },
             {
-              "text": " be sober.",
+              "text": " be sober. ",
               "strongsNumbers": [
                 "G3525"
               ]
@@ -7101,7 +7101,7 @@
               ]
             },
             {
-              "text": " in the night;",
+              "text": " in the night; ",
               "strongsNumbers": [
                 "G3571"
               ]
@@ -7125,7 +7125,7 @@
               ]
             },
             {
-              "text": " in the night.",
+              "text": " in the night. ",
               "strongsNumbers": [
                 "G3571"
               ]
@@ -7134,7 +7134,7 @@
         },
         {
           "number": 8,
-          "text": "But let ➔ us, who are of the day, be sober, putting on the breastplate of faith and love; and for an helmet, the hope of salvation.",
+          "text": "But let ➔ us, who are of the day, be sober, putting on the breastplate of faith and love; and for an helmet, the hope of salvation.",
           "tokens": [
             {
               "text": "But",
@@ -7149,7 +7149,7 @@
               ]
             },
             {
-              "text": " ➔ us,",
+              "text": " ➔ us, ",
               "strongsNumbers": [
                 "G2249"
               ]
@@ -7161,13 +7161,13 @@
               ]
             },
             {
-              "text": " of the day,",
+              "text": " of the day, ",
               "strongsNumbers": [
                 "G2250"
               ]
             },
             {
-              "text": " be sober,",
+              "text": " be sober, ",
               "strongsNumbers": [
                 "G3525"
               ]
@@ -7197,7 +7197,7 @@
               ]
             },
             {
-              "text": " love;",
+              "text": " love; ",
               "strongsNumbers": [
                 "G26"
               ]
@@ -7209,7 +7209,7 @@
               ]
             },
             {
-              "text": " for an helmet,",
+              "text": " for an helmet, ",
               "strongsNumbers": [
                 "G4030"
               ]
@@ -7221,7 +7221,7 @@
               ]
             },
             {
-              "text": " of salvation.",
+              "text": " of salvation. ",
               "strongsNumbers": [
                 "G4991"
               ]
@@ -7230,7 +7230,7 @@
         },
         {
           "number": 9,
-          "text": "For God hath ➔ not appointed us to wrath, but to obtain salvation by our Lord Jesus Christ,",
+          "text": "For God hath ➔ not appointed us to wrath, but to obtain salvation by our Lord Jesus Christ,",
           "tokens": [
             {
               "text": "For",
@@ -7251,7 +7251,7 @@
               ]
             },
             {
-              "text": " ➔ not",
+              "text": " ➔ not",
               "strongsNumbers": [
                 "G3756"
               ]
@@ -7275,7 +7275,7 @@
               ]
             },
             {
-              "text": " wrath,",
+              "text": " wrath, ",
               "strongsNumbers": [
                 "G3709"
               ]
@@ -7329,7 +7329,7 @@
               ]
             },
             {
-              "text": " Christ,",
+              "text": " Christ, ",
               "strongsNumbers": [
                 "G5547"
               ]
@@ -7359,13 +7359,13 @@
               ]
             },
             {
-              "text": " us,",
+              "text": " us, ",
               "strongsNumbers": [
                 "G2257"
               ]
             },
             {
-              "text": " that,",
+              "text": " that, ",
               "strongsNumbers": [
                 "G2443"
               ]
@@ -7389,7 +7389,7 @@
               ]
             },
             {
-              "text": " sleep,",
+              "text": " sleep, ",
               "strongsNumbers": [
                 "G2518"
               ]
@@ -7413,7 +7413,7 @@
               ]
             },
             {
-              "text": " him.",
+              "text": " him. ",
               "strongsNumbers": [
                 "G846"
               ]
@@ -7437,7 +7437,7 @@
               ]
             },
             {
-              "text": " yourselves together,",
+              "text": " yourselves together, ",
               "strongsNumbers": [
                 "G240"
               ]
@@ -7461,7 +7461,7 @@
               ]
             },
             {
-              "text": " another,",
+              "text": " another, ",
               "strongsNumbers": [
                 "G1520"
               ]
@@ -7479,7 +7479,7 @@
               ]
             },
             {
-              "text": " ye do.",
+              "text": " ye do. ",
               "strongsNumbers": [
                 "G4160"
               ]
@@ -7503,13 +7503,13 @@
               ]
             },
             {
-              "text": " you,",
+              "text": " you, ",
               "strongsNumbers": [
                 "G5209"
               ]
             },
             {
-              "text": " brethren,",
+              "text": " brethren, ",
               "strongsNumbers": [
                 "G80"
               ]
@@ -7539,7 +7539,7 @@
               ]
             },
             {
-              "text": " you,",
+              "text": " you, ",
               "strongsNumbers": [
                 "G5213"
               ]
@@ -7569,7 +7569,7 @@
               ]
             },
             {
-              "text": " the Lord,",
+              "text": " the Lord, ",
               "strongsNumbers": [
                 "G2962"
               ]
@@ -7587,7 +7587,7 @@
               ]
             },
             {
-              "text": " you;",
+              "text": " you; ",
               "strongsNumbers": [
                 "G5209"
               ]
@@ -7654,7 +7654,7 @@
               ]
             },
             {
-              "text": " work's sake.",
+              "text": " work's sake. ",
               "strongsNumbers": [
                 "G2041"
               ]
@@ -7672,7 +7672,7 @@
               ]
             },
             {
-              "text": " yourselves.",
+              "text": " yourselves. ",
               "strongsNumbers": [
                 "G1438"
               ]
@@ -7696,13 +7696,13 @@
               ]
             },
             {
-              "text": " you,",
+              "text": " you, ",
               "strongsNumbers": [
                 "G5209"
               ]
             },
             {
-              "text": " brethren,",
+              "text": " brethren, ",
               "strongsNumbers": [
                 "G80"
               ]
@@ -7714,7 +7714,7 @@
               ]
             },
             {
-              "text": " them that are unruly,",
+              "text": " them that are unruly, ",
               "strongsNumbers": [
                 "G813"
               ]
@@ -7726,7 +7726,7 @@
               ]
             },
             {
-              "text": " the feebleminded,",
+              "text": " the feebleminded, ",
               "strongsNumbers": [
                 "G3642"
               ]
@@ -7738,7 +7738,7 @@
               ]
             },
             {
-              "text": " the weak,",
+              "text": " the weak, ",
               "strongsNumbers": [
                 "G772"
               ]
@@ -7838,7 +7838,7 @@
               ]
             },
             {
-              "text": " is good,",
+              "text": " is good, ",
               "strongsNumbers": [
                 "G18"
               ]
@@ -7856,7 +7856,7 @@
               ]
             },
             {
-              "text": " yourselves,",
+              "text": " yourselves, ",
               "strongsNumbers": [
                 "G240"
               ]
@@ -7895,7 +7895,7 @@
               ]
             },
             {
-              "text": " evermore.",
+              "text": " evermore. ",
               "strongsNumbers": [
                 "G3842"
               ]
@@ -7913,7 +7913,7 @@
               ]
             },
             {
-              "text": " without ceasing.",
+              "text": " without ceasing. ",
               "strongsNumbers": [
                 "G89"
               ]
@@ -7937,7 +7937,7 @@
               ]
             },
             {
-              "text": " give thanks:",
+              "text": " give thanks: ",
               "strongsNumbers": [
                 "G2168"
               ]
@@ -7991,7 +7991,7 @@
               ]
             },
             {
-              "text": " you.",
+              "text": " you. ",
               "strongsNumbers": [
                 "G5209"
               ]
@@ -8015,7 +8015,7 @@
               ]
             },
             {
-              "text": " the Spirit.",
+              "text": " the Spirit. ",
               "strongsNumbers": [
                 "G4151"
               ]
@@ -8039,7 +8039,7 @@
               ]
             },
             {
-              "text": " prophesyings.",
+              "text": " prophesyings. ",
               "strongsNumbers": [
                 "G4394"
               ]
@@ -8057,7 +8057,7 @@
               ]
             },
             {
-              "text": " all things;",
+              "text": " all things; ",
               "strongsNumbers": [
                 "G3956"
               ]
@@ -8075,7 +8075,7 @@
               ]
             },
             {
-              "text": " is good.",
+              "text": " is good. ",
               "strongsNumbers": [
                 "G2570"
               ]
@@ -8111,7 +8111,7 @@
               ]
             },
             {
-              "text": " of evil.",
+              "text": " of evil. ",
               "strongsNumbers": [
                 "G4190"
               ]
@@ -8159,7 +8159,7 @@
               ]
             },
             {
-              "text": " wholly;",
+              "text": " wholly; ",
               "strongsNumbers": [
                 "G3651"
               ]
@@ -8255,7 +8255,7 @@
               ]
             },
             {
-              "text": " Christ.",
+              "text": " Christ. ",
               "strongsNumbers": [
                 "G5547"
               ]
@@ -8279,7 +8279,7 @@
               ]
             },
             {
-              "text": " you,",
+              "text": " you, ",
               "strongsNumbers": [
                 "G5209"
               ]
@@ -8312,7 +8312,7 @@
           "text": "Brethren, pray for us.",
           "tokens": [
             {
-              "text": "Brethren,",
+              "text": "Brethren, ",
               "strongsNumbers": [
                 "G80"
               ]
@@ -8330,7 +8330,7 @@
               ]
             },
             {
-              "text": " us.",
+              "text": " us. ",
               "strongsNumbers": [
                 "G2257"
               ]
@@ -8372,7 +8372,7 @@
               ]
             },
             {
-              "text": " kiss.",
+              "text": " kiss. ",
               "strongsNumbers": [
                 "G5370"
               ]
@@ -8426,7 +8426,7 @@
               ]
             },
             {
-              "text": " brethren.",
+              "text": " brethren. ",
               "strongsNumbers": [
                 "G80"
               ]
@@ -8435,7 +8435,7 @@
         },
         {
           "number": 28,
-          "text": "The grace of our Lord Jesus Christ be with you. Amen.[fn]",
+          "text": "The grace of our Lord Jesus Christ be with you. Amen.",
           "tokens": [
             {
               "text": "The grace",
@@ -8474,19 +8474,16 @@
               ]
             },
             {
-              "text": " you.",
+              "text": " you. ",
               "strongsNumbers": [
                 "G5216"
               ]
             },
             {
-              "text": " Amen.",
+              "text": " Amen. ",
               "strongsNumbers": [
                 "G281"
               ]
-            },
-            {
-              "text": "[fn]"
             }
           ]
         }

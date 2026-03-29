@@ -22,6 +22,23 @@ describe("bible data", () => {
     expect(chapter?.verses[0]?.tokens?.[0]?.strongsNumbers).toContain("H7225");
   });
 
+  it("removes KJV footnote markers and unwraps readable bracketed headings", async () => {
+    const [corinthians, psalms] = await Promise.all([
+      getChapter("1-corinthians", 16, "kjv"),
+      getChapter("psalms", 3, "kjv")
+    ]);
+
+    expect(corinthians?.verses.at(-1)?.text).toBe(
+      "My love be with you all in Christ Jesus. Amen."
+    );
+    expect(corinthians?.verses.at(-1)?.tokens?.some((token) => /\[fn\]/i.test(token.text))).toBe(
+      false
+    );
+    expect(psalms?.verses[0]?.text.startsWith("A Psalm of David, when he fled from Absalom his son.")).toBe(true);
+    expect(psalms?.verses[0]?.text.includes("[[")).toBe(false);
+    expect(psalms?.verses[0]?.text.includes("]]")).toBe(false);
+  });
+
   it("loads Revelation 22 from WEB", async () => {
     const chapter = await getChapter("revelation", 22, "web");
 

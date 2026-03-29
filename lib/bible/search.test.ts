@@ -32,27 +32,31 @@ describe("Bible search", () => {
   it("resolves same-chapter verse range references", async () => {
     const results = await searchBible("John 1:1-12", "web");
 
+    expect(results).toHaveLength(12);
     expect(results[0]).toMatchObject({
-      type: "range",
+      type: "verse",
       bookSlug: "john",
       chapterNumber: 1,
-      startVerseNumber: 1,
-      endVerseNumber: 12,
-      href: "/read/john/1?highlightStart=1&highlightEnd=12"
+      verseNumber: 1,
+      href: "/read/john/1?highlight=1"
     });
     expect(results[0]).toHaveProperty("preview");
     expect((results[0] as { preview: string }).preview).toContain(
       "In the beginning was the Word, and the Word was with God, and the Word was God."
     );
-    expect((results[0] as { preview: string }).preview).toContain(
-      "But as many as received him, to them he gave the right to become God’s children"
-    );
+    expect(results.at(-1)).toMatchObject({
+      type: "verse",
+      bookSlug: "john",
+      chapterNumber: 1,
+      verseNumber: 12,
+      href: "/read/john/1?highlight=12"
+    });
   });
 
   it("rejects reversed same-chapter verse ranges", async () => {
     const results = await searchBible("John 1:12-1", "web");
 
-    expect(results.some((result) => result.type === "range")).toBe(false);
+    expect(results.some((result) => result.type === "verse")).toBe(false);
   });
 
   it("prioritizes book matches before verse matches", async () => {
@@ -135,6 +139,25 @@ describe("Bible search", () => {
       chapterNumber: 1,
       verseNumber: 1
     });
+  });
+
+  it("keeps verse-by-verse range results inside grouped searches", async () => {
+    const groups = await searchBibleGroups("Job 1:1-10, repent", "kjv");
+
+    expect(groups[0]?.results).toHaveLength(10);
+    expect(groups[0]?.results[0]).toMatchObject({
+      type: "verse",
+      bookSlug: "job",
+      chapterNumber: 1,
+      verseNumber: 1
+    });
+    expect(groups[0]?.results.at(-1)).toMatchObject({
+      type: "verse",
+      bookSlug: "job",
+      chapterNumber: 1,
+      verseNumber: 10
+    });
+    expect(groups[1]?.query).toBe("repent");
   });
 
   it("trims empty comma-separated query parts and limits groups to five", async () => {

@@ -14,6 +14,9 @@ describe("strongs lexicon", () => {
       id: "G3056",
       language: "greek"
     });
+    expect(entries[0]?.definition).not.toContain("&#");
+    expect(entries[1]?.definition).not.toContain("&#");
+    expect(entries[1]?.outlineUsage).not.toContain("&quot;");
   });
 
   it("skips missing entries", async () => {
