@@ -12,7 +12,7 @@ export function BottomSearchBar() {
   const {
     clearSearch,
     closeSearch,
-    isDesktop,
+    isSplitViewActive,
     isOpen,
     isSearching,
     openSearch,
@@ -27,7 +27,7 @@ export function BottomSearchBar() {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    if (!isOpen || isDesktop) {
+    if (!isOpen || isSplitViewActive) {
       return;
     }
 
@@ -42,11 +42,11 @@ export function BottomSearchBar() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [closeSearch, isDesktop, isOpen]);
+  }, [closeSearch, isOpen, isSplitViewActive]);
 
   return (
     <>
-      {isOpen && !isDesktop ? (
+      {isOpen && !isSplitViewActive ? (
         <button
           aria-label="Close search"
           className="search-backdrop"
@@ -54,8 +54,8 @@ export function BottomSearchBar() {
           type="button"
         />
       ) : null}
-      <div className="search-shell">
-        {isOpen && !isDesktop ? (
+      <div className={`search-shell${isSplitViewActive ? " search-shell-split" : ""}`}>
+        {isOpen && !isSplitViewActive ? (
           <section
             aria-label="Bible search results"
             className="search-tray"
@@ -97,7 +97,7 @@ export function BottomSearchBar() {
           </label>
           <input
             aria-controls={trayId}
-            aria-expanded={isDesktop ? true : isOpen}
+            aria-expanded={isSplitViewActive ? true : isOpen}
             autoComplete="off"
             className="search-input"
             id={inputId}

@@ -1669,123 +1669,123 @@ select {
   }
 }
 
+.app-layout.app-layout-split {
+  --app-layout-gap: 0.875rem;
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr)
+    0.875rem
+    clamp(22rem, var(--app-layout-lookup-width), 75vw);
+  column-gap: var(--app-layout-gap);
+  align-items: start;
+  max-width: 103.25rem;
+  margin: 0 auto;
+}
+
+.app-layout.app-layout-split .site-main {
+  max-width: none;
+  margin: 0;
+  min-width: 0;
+  padding-bottom: calc(6.9rem + env(safe-area-inset-bottom));
+}
+
+.app-layout.app-layout-split > .app-layout-divider {
+  display: block;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.06),
+      rgba(255, 255, 255, 0.18),
+      rgba(255, 255, 255, 0.06)
+    );
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  cursor: col-resize;
+}
+
+.app-layout.app-layout-split > .app-layout-divider:hover,
+.app-layout.app-layout-split > .app-layout-divider:focus-visible {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(138, 255, 193, 0.18),
+      rgba(138, 255, 193, 0.42),
+      rgba(138, 255, 193, 0.18)
+    );
+  outline: none;
+}
+
+.app-layout.app-layout-split .lookup-pane {
+  position: sticky;
+  top: calc(max(1.35rem, env(safe-area-inset-top)) + 0.1rem);
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  gap: 1rem;
+  max-height: calc(100vh - max(2.7rem, env(safe-area-inset-top)) - env(safe-area-inset-bottom));
+  padding: 1.1rem;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  border-radius: 1.5rem;
+  background: linear-gradient(180deg, rgba(24, 28, 34, 0.92), rgba(15, 18, 23, 0.96));
+  backdrop-filter: blur(20px);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.24);
+}
+
+.app-layout.app-layout-split .lookup-pane-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.app-layout.app-layout-split .lookup-pane-body,
+.app-layout.app-layout-split .lookup-pane .reader-notebook,
+.app-layout.app-layout-split .lookup-pane .reader-notebook-blocks,
+.app-layout.app-layout-split .lookup-pane .search-result-groups {
+  min-height: 0;
+}
+
+.app-layout.app-layout-split .lookup-pane-body > [role="tabpanel"] {
+  min-height: 100%;
+}
+
+.app-layout.app-layout-split .lookup-pane .search-result-groups-panes {
+  padding-right: 0.2rem;
+}
+
+.app-layout.app-layout-split .lookup-pane .search-result-groups-panes,
+.app-layout.app-layout-split .lookup-pane .search-results {
+  min-height: 0;
+}
+
+.app-layout.app-layout-split .lookup-pane-reset {
+  min-height: 2.5rem;
+  padding: 0.68rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.86);
+  cursor: pointer;
+}
+
+.search-shell.search-shell-split {
+  right: auto;
+  left: 50%;
+  width: min(calc(100vw - 2.7rem), 103.25rem);
+  padding-right: calc(clamp(22rem, var(--app-layout-lookup-width), 75vw) + 1.25rem);
+  transform: translateX(-50%);
+}
+
+.search-shell.search-shell-split .search-bar {
+  width: 100%;
+}
+
 @media (min-width: 64rem) {
   .site-header {
     max-width: 103.25rem;
-  }
-
-  .app-layout {
-    --app-layout-gap: 0.875rem;
-    display: grid;
-    grid-template-columns:
-      minmax(0, 1fr)
-      0.875rem
-      clamp(22rem, var(--app-layout-lookup-width), 75vw);
-    column-gap: var(--app-layout-gap);
-    align-items: start;
-    max-width: 103.25rem;
-    margin: 0 auto;
-  }
-
-  .site-main {
-    max-width: none;
-    margin: 0;
-    min-width: 0;
-    padding-bottom: calc(6.9rem + env(safe-area-inset-bottom));
-  }
-
-  .app-layout-divider {
-    display: block;
-    min-height: 100%;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    border-radius: 999px;
-    background:
-      linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.06),
-        rgba(255, 255, 255, 0.18),
-        rgba(255, 255, 255, 0.06)
-      );
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-    cursor: col-resize;
-  }
-
-  .app-layout-divider:hover,
-  .app-layout-divider:focus-visible {
-    background:
-      linear-gradient(
-        180deg,
-        rgba(138, 255, 193, 0.18),
-        rgba(138, 255, 193, 0.42),
-        rgba(138, 255, 193, 0.18)
-      );
-    outline: none;
-  }
-
-  .lookup-pane {
-    position: sticky;
-    top: calc(max(1.35rem, env(safe-area-inset-top)) + 0.1rem);
-    display: grid;
-    grid-template-rows: auto auto minmax(0, 1fr) auto;
-    gap: 1rem;
-    max-height: calc(100vh - max(2.7rem, env(safe-area-inset-top)) - env(safe-area-inset-bottom));
-    padding: 1.1rem;
-    border: 1px solid rgba(255, 255, 255, 0.11);
-    border-radius: 1.5rem;
-    background: linear-gradient(180deg, rgba(24, 28, 34, 0.92), rgba(15, 18, 23, 0.96));
-    backdrop-filter: blur(20px);
-    box-shadow: 0 18px 46px rgba(0, 0, 0, 0.24);
-  }
-
-  .lookup-pane-header {
-    display: flex;
-    align-items: start;
-    justify-content: space-between;
-    gap: 0.8rem;
-  }
-
-  .lookup-pane-body,
-  .lookup-pane .reader-notebook,
-  .lookup-pane .reader-notebook-blocks,
-  .lookup-pane .search-result-groups {
-    min-height: 0;
-  }
-
-  .lookup-pane-body > [role="tabpanel"] {
-    min-height: 100%;
-  }
-
-  .lookup-pane .search-result-groups-panes {
-    padding-right: 0.2rem;
-  }
-
-  .lookup-pane .search-result-groups-panes,
-  .lookup-pane .search-results {
-    min-height: 0;
-  }
-
-  .lookup-pane-reset {
-    min-height: 2.5rem;
-    padding: 0.68rem 0.9rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.05);
-    color: rgba(255, 255, 255, 0.86);
-    cursor: pointer;
-  }
-
-  .search-shell {
-    right: auto;
-    left: 50%;
-    width: min(calc(100vw - 2.7rem), 103.25rem);
-    padding-right: calc(clamp(22rem, var(--app-layout-lookup-width), 75vw) + 1.25rem);
-    transform: translateX(-50%);
-  }
-
-  .search-bar {
-    width: 100%;
   }
 }
 

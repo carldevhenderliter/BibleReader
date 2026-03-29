@@ -9,7 +9,7 @@ export function LookupPane() {
   const {
     clearSearch,
     closeSearch,
-    isDesktop,
+    isSplitViewActive,
     isOpen,
     isSearching,
     query,
@@ -19,7 +19,7 @@ export function LookupPane() {
   } = useLookup();
   const { version } = useReaderVersion();
 
-  if (!isDesktop) {
+  if (!isSplitViewActive) {
     return null;
   }
 

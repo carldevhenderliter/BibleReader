@@ -28,7 +28,7 @@ function clampLookupWidthRem(value: number, maximumLookupWidthRem: number) {
 }
 
 export function AppSplitLayout({ children }: PropsWithChildren) {
-  const { isDesktop, queryParts } = useLookup();
+  const { isSplitViewActive, queryParts } = useLookup();
   const [manualLookupWidthRem, setManualLookupWidthRem] = useState<number | null>(null);
   const [maximumLookupWidthRem, setMaximumLookupWidthRem] = useState(() =>
     typeof window === "undefined" ? DEFAULT_LOOKUP_WIDTH_REM : getMaximumLookupWidthRem()
@@ -130,7 +130,7 @@ export function AppSplitLayout({ children }: PropsWithChildren) {
 
   return (
     <div
-      className="app-layout"
+      className={`app-layout${isSplitViewActive ? " app-layout-split" : ""}`}
       style={
         {
           ["--app-layout-lookup-width" as string]: `${effectiveLookupWidthRem}rem`
@@ -138,7 +138,7 @@ export function AppSplitLayout({ children }: PropsWithChildren) {
       }
     >
       <main className="site-main app-layout-main">{children}</main>
-      {isDesktop ? (
+      {isSplitViewActive ? (
         <button
           aria-label="Resize split view"
           className="app-layout-divider"

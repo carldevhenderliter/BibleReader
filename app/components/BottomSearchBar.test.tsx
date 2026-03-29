@@ -53,12 +53,36 @@ function setDesktopMode(isDesktop: boolean) {
   });
 }
 
+function setNavigatorDevice({
+  maxTouchPoints = 0,
+  platform = "MacIntel",
+  userAgent = "Mozilla/5.0"
+}: {
+  maxTouchPoints?: number;
+  platform?: string;
+  userAgent?: string;
+} = {}) {
+  Object.defineProperty(window.navigator, "maxTouchPoints", {
+    configurable: true,
+    value: maxTouchPoints
+  });
+  Object.defineProperty(window.navigator, "platform", {
+    configurable: true,
+    value: platform
+  });
+  Object.defineProperty(window.navigator, "userAgent", {
+    configurable: true,
+    value: userAgent
+  });
+}
+
 describe("BottomSearchBar", () => {
   beforeEach(() => {
     window.localStorage.clear();
     jest.clearAllMocks();
     setMockPathname("/");
     setDesktopMode(false);
+    setNavigatorDevice();
   });
 
   it("opens and closes the mobile search tray", () => {
@@ -207,6 +231,19 @@ describe("BottomSearchBar", () => {
     expect(await screen.findByRole("button", { name: /Verse Matthew 1:1/i })).toBeInTheDocument();
     expect(container.querySelector(".search-result-groups-panes")).toBeTruthy();
     expect(container.querySelectorAll(".search-result-group-pane")).toHaveLength(2);
+  });
+
+  it("uses the split lookup pane on iPad widths below the desktop breakpoint", () => {
+    setDesktopMode(false);
+    setNavigatorDevice({
+      maxTouchPoints: 5,
+      platform: "MacIntel",
+      userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15"
+    });
+    renderSearchUi();
+
+    expect(screen.getByLabelText("Lookup pane")).toBeInTheDocument();
+    expect(screen.queryByLabelText("Bible search results")).not.toBeInTheDocument();
   });
 
   it("keeps the desktop lookup pane focused on search on reader routes", () => {

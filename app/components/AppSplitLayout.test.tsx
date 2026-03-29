@@ -40,6 +40,29 @@ function setDesktopMode(isDesktop: boolean) {
   });
 }
 
+function setNavigatorDevice({
+  maxTouchPoints = 0,
+  platform = "MacIntel",
+  userAgent = "Mozilla/5.0"
+}: {
+  maxTouchPoints?: number;
+  platform?: string;
+  userAgent?: string;
+} = {}) {
+  Object.defineProperty(window.navigator, "maxTouchPoints", {
+    configurable: true,
+    value: maxTouchPoints
+  });
+  Object.defineProperty(window.navigator, "platform", {
+    configurable: true,
+    value: platform
+  });
+  Object.defineProperty(window.navigator, "userAgent", {
+    configurable: true,
+    value: userAgent
+  });
+}
+
 function setViewportWidth(width: number) {
   Object.defineProperty(window, "innerWidth", {
     configurable: true,
@@ -62,10 +85,25 @@ describe("AppSplitLayout", () => {
     jest.clearAllMocks();
     setMockPathname("/");
     setDesktopMode(true);
+    setNavigatorDevice();
     setViewportWidth(1600);
   });
 
   it("renders a draggable desktop divider", () => {
+    renderSplitLayout();
+
+    expect(screen.getByRole("button", { name: "Resize split view" })).toBeInTheDocument();
+  });
+
+  it("keeps split view active on iPad widths below the desktop breakpoint", () => {
+    setDesktopMode(false);
+    setNavigatorDevice({
+      maxTouchPoints: 5,
+      platform: "MacIntel",
+      userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15"
+    });
+    setViewportWidth(820);
+
     renderSplitLayout();
 
     expect(screen.getByRole("button", { name: "Resize split view" })).toBeInTheDocument();
@@ -123,8 +161,36 @@ describe("AppSplitLayout", () => {
 
   it("does not render the desktop divider on mobile", () => {
     setDesktopMode(false);
+    setNavigatorDevice({
+      maxTouchPoints: 5,
+      platform: "iPhone",
+      userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X)"
+    });
     renderSplitLayout();
 
     expect(screen.queryByRole("button", { name: "Resize split view" })).not.toBeInTheDocument();
+  });
+
+  it("keeps the divider available after an iPad portrait resize", async () => {
+    setDesktopMode(false);
+    setNavigatorDevice({
+      maxTouchPoints: 5,
+      platform: "MacIntel",
+      userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15"
+    });
+    setViewportWidth(1024);
+
+    renderSplitLayout();
+
+    expect(screen.getByRole("button", { name: "Resize split view" })).toBeInTheDocument();
+
+    setViewportWidth(768);
+    act(() => {
+      window.dispatchEvent(new Event("resize"));
+    });
+
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: "Resize split view" })).toBeInTheDocument();
+    });
   });
 });

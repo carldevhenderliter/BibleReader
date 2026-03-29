@@ -14,14 +14,14 @@ import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { parseBibleSearchQueries, searchBibleGroups } from "@/lib/bible/search";
 import type { BibleSearchResultGroup } from "@/lib/bible/types";
 
-const DESKTOP_LOOKUP_MEDIA_QUERY = "(min-width: 64rem)";
+const SPLIT_VIEW_MEDIA_QUERY = "(min-width: 64rem)";
 
 type LookupContextValue = {
   query: string;
   queryParts: string[];
   setQuery: (value: string) => void;
   resultGroups: BibleSearchResultGroup[];
-  isDesktop: boolean;
+  isSplitViewActive: boolean;
   isOpen: boolean;
   isSearching: boolean;
   clearSearch: () => void;
@@ -32,10 +32,26 @@ type LookupContextValue = {
 
 const LookupContext = createContext<LookupContextValue | null>(null);
 
-function getDesktopMediaMatch() {
+function getSplitViewMediaMatch() {
   return typeof window !== "undefined" &&
     typeof window.matchMedia === "function" &&
-    window.matchMedia(DESKTOP_LOOKUP_MEDIA_QUERY).matches;
+    window.matchMedia(SPLIT_VIEW_MEDIA_QUERY).matches;
+}
+
+function getIsIpadDevice() {
+  if (typeof navigator === "undefined") {
+    return false;
+  }
+
+  const userAgent = navigator.userAgent ?? "";
+  const platform = navigator.platform ?? "";
+  const maxTouchPoints = navigator.maxTouchPoints ?? 0;
+
+  return /iPad/i.test(userAgent) || ((/Mac/i.test(platform) || /Macintosh/i.test(userAgent)) && maxTouchPoints > 1);
+}
+
+function getSplitViewActive() {
+  return getSplitViewMediaMatch() || getIsIpadDevice();
 }
 
 export function LookupProvider({ children }: PropsWithChildren) {
@@ -46,7 +62,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
   const [resultGroups, setResultGroups] = useState<BibleSearchResultGroup[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(() => getDesktopMediaMatch());
+  const [isSplitViewActive, setIsSplitViewActive] = useState(() => getSplitViewActive());
   const queryParts = useMemo(() => parseBibleSearchQueries(query), [query]);
 
   useEffect(() => {
@@ -54,33 +70,35 @@ export function LookupProvider({ children }: PropsWithChildren) {
       return;
     }
 
-    const mediaQuery = window.matchMedia(DESKTOP_LOOKUP_MEDIA_QUERY);
-    const handleChange = () => {
-      setIsDesktop(mediaQuery.matches);
+    const mediaQuery = window.matchMedia(SPLIT_VIEW_MEDIA_QUERY);
+    const syncSplitView = () => {
+      setIsSplitViewActive(getSplitViewActive());
     };
 
-    setIsDesktop(mediaQuery.matches);
-    mediaQuery.addEventListener("change", handleChange);
+    syncSplitView();
+    mediaQuery.addEventListener("change", syncSplitView);
+    window.addEventListener("resize", syncSplitView);
 
     return () => {
-      mediaQuery.removeEventListener("change", handleChange);
+      mediaQuery.removeEventListener("change", syncSplitView);
+      window.removeEventListener("resize", syncSplitView);
     };
   }, []);
 
   useEffect(() => {
-    if (isDesktop) {
+    if (isSplitViewActive) {
       return;
     }
 
     setIsOpen(false);
     setQuery("");
     setResultGroups([]);
-  }, [isDesktop, pathname]);
+  }, [isSplitViewActive, pathname]);
 
   useEffect(() => {
     const trimmedQuery = query.trim();
 
-    if (!isOpen && !isDesktop) {
+    if (!isOpen && !isSplitViewActive) {
       return;
     }
 
@@ -106,7 +124,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
     return () => {
       isCancelled = true;
     };
-  }, [isDesktop, isOpen, query, version]);
+  }, [isOpen, isSplitViewActive, query, version]);
 
   const value = useMemo<LookupContextValue>(
     () => ({
@@ -115,24 +133,24 @@ export function LookupProvider({ children }: PropsWithChildren) {
       setQuery: (value) => {
         setQuery(value);
 
-        if (value.trim().length > 0 || isDesktop) {
+        if (value.trim().length > 0 || isSplitViewActive) {
           setIsOpen(true);
         }
       },
       resultGroups,
-      isDesktop,
+      isSplitViewActive,
       isOpen,
       isSearching,
       clearSearch: () => {
         setQuery("");
         setResultGroups([]);
 
-        if (!isDesktop) {
+        if (!isSplitViewActive) {
           setIsOpen(false);
         }
       },
       closeSearch: () => {
-        if (isDesktop) {
+        if (isSplitViewActive) {
           setQuery("");
           setResultGroups([]);
           setIsSearching(false);
@@ -146,7 +164,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
       selectResult: (href) => {
         router.push(href);
 
-        if (!isDesktop) {
+        if (!isSplitViewActive) {
           setIsOpen(false);
           setQuery("");
           setResultGroups([]);
@@ -155,7 +173,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
         }
       }
     }),
-    [isDesktop, isOpen, isSearching, query, queryParts, resultGroups, router]
+    [isOpen, isSearching, isSplitViewActive, query, queryParts, resultGroups, router]
   );
 
   return <LookupContext.Provider value={value}>{children}</LookupContext.Provider>;
