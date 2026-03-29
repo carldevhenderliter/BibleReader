@@ -1,7 +1,9 @@
 import { DEFAULT_BIBLE_VERSION } from "@/lib/bible/constants";
+import { getStrongsEntry, normalizeStrongsNumber } from "@/lib/bible/strongs";
 import type {
   BibleSearchResult,
   BibleSearchResultGroup,
+  BibleSearchStrongsVerseEntry,
   BibleSearchVerseEntry,
   BookMeta,
   BundledBibleVersion,
@@ -38,6 +40,7 @@ const verseIndexLoaders: Record<BundledBibleVersion, () => Promise<unknown>> = {
 
 let booksPromise: Promise<SearchableBook[]> | null = null;
 const verseIndexCache = new Map<BundledBibleVersion, Promise<SearchableVerseEntry[]>>();
+let strongsVerseIndexPromise: Promise<BibleSearchStrongsVerseEntry[]> | null = null;
 
 function normalizeValue(value: string) {
   return value.toLowerCase().replace(/\s+/g, " ").trim();
@@ -89,6 +92,36 @@ function getHighlightedVerseRangeHref(
 
 function getRangePreview(texts: string[]) {
   return texts.join(" ").trim();
+}
+
+function parseStrongsQuery(query: string) {
+  const match = query.match(/^(?:strongs\s+)?([hg])\s*0*(\d+)$/i);
+
+  if (!match) {
+    return null;
+  }
+
+  const numericValue = Number(match[2]);
+
+  if (!Number.isFinite(numericValue) || numericValue < 1) {
+    return null;
+  }
+
+  return normalizeStrongsNumber(`${match[1]}${numericValue}`);
+}
+
+function getStrongsPreview(
+  strongsNumber: string,
+  verseCount: number,
+  entry: NonNullable<Awaited<ReturnType<typeof getStrongsEntry>>>
+) {
+  const detailParts = [entry.lemma, entry.transliteration]
+    .map((value) => value.trim())
+    .filter(Boolean);
+  const header = detailParts.length > 0 ? detailParts.join(" • ") : strongsNumber;
+  const definition = entry.definition || entry.outlineUsage || "No definition available yet.";
+
+  return `${header}\n${definition}\nUsed in ${verseCount} KJV verse${verseCount === 1 ? "" : "s"}.`;
 }
 
 function findReferenceBook(bookQuery: string, books: SearchableBook[]) {
@@ -204,6 +237,16 @@ async function loadVerseIndex(version: BundledBibleVersion) {
   return promise;
 }
 
+async function loadStrongsVerseIndex() {
+  if (!strongsVerseIndexPromise) {
+    strongsVerseIndexPromise = import("@/data/bible/search/strongs-kjv.json").then(
+      (module) => ((module as { default: BibleSearchStrongsVerseEntry[] }).default ?? [])
+    );
+  }
+
+  return strongsVerseIndexPromise;
+}
+
 function getBookScore(book: SearchableBook, query: string) {
   if (!query) {
     return null;
@@ -238,11 +281,13 @@ function dedupeSearchResults(results: BibleSearchResult[]) {
   const seen = new Set<string>();
 
   return results.filter((result) => {
-    if (seen.has(result.href)) {
+    const dedupeKey = "href" in result ? result.href : result.id;
+
+    if (seen.has(dedupeKey)) {
       return false;
     }
 
-    seen.add(result.href);
+    seen.add(dedupeKey);
     return true;
   });
 }
@@ -267,6 +312,7 @@ async function searchSingleBibleQuery(
   const query = normalizeValue(rawQuery);
   const normalizedBookQuery = normalizeBookValue(query);
   const normalizedVerseQuery = normalizeVerseValue(query);
+  const strongsNumber = parseStrongsQuery(query);
 
   if (!query) {
     return [];
@@ -384,6 +430,46 @@ async function searchSingleBibleQuery(
       description: `${entry.book.chapterCount} chapters`,
       href: getChapterHref(entry.book.slug, 1, version)
     }));
+
+  if (strongsNumber) {
+    const [entry, strongsVerseIndex] = await Promise.all([
+      getStrongsEntry(strongsNumber),
+      loadStrongsVerseIndex()
+    ]);
+    const strongsVerseResults = strongsVerseIndex
+      .filter((verseEntry) => verseEntry.strongsNumber === strongsNumber)
+      .slice(0, MAX_VERSE_RESULTS)
+      .map<BibleSearchResult>((verseEntry) => ({
+        type: "verse",
+        id: `strongs-verse:${verseEntry.strongsNumber}:${verseEntry.bookSlug}:${verseEntry.chapterNumber}:${verseEntry.verseNumber}`,
+        bookSlug: verseEntry.bookSlug,
+        chapterNumber: verseEntry.chapterNumber,
+        verseNumber: verseEntry.verseNumber,
+        label: `${verseEntry.bookName} ${verseEntry.chapterNumber}:${verseEntry.verseNumber}`,
+        description: `KJV Strongs ${verseEntry.strongsNumber}`,
+        href: getHighlightedVerseHref(
+          verseEntry.bookSlug,
+          verseEntry.chapterNumber,
+          verseEntry.verseNumber,
+          "kjv"
+        ),
+        preview: verseEntry.text
+      }));
+    const strongsResults: BibleSearchResult[] = entry
+      ? [
+          {
+            type: "strongs",
+            id: `strongs:${entry.id}`,
+            strongsNumber: entry.id,
+            label: entry.id,
+            description: `${entry.language === "hebrew" ? "Hebrew" : "Greek"} Strongs`,
+            preview: getStrongsPreview(entry.id, strongsVerseResults.length, entry)
+          }
+        ]
+      : [];
+
+    return dedupeSearchResults([...strongsResults, ...strongsVerseResults, ...bookResults]);
+  }
 
   if (normalizedVerseQuery.length < MIN_VERSE_QUERY_LENGTH) {
     return [...directReferenceResults, ...bookResults];

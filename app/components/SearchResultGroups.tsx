@@ -1,10 +1,10 @@
 "use client";
 
-import type { BibleSearchResultGroup } from "@/lib/bible/types";
+import type { BibleSearchResult, BibleSearchResultGroup } from "@/lib/bible/types";
 
 type SearchResultGroupsProps = {
   groups: BibleSearchResultGroup[];
-  onSelectResult: (href: string) => void;
+  onSelectResult: (result: BibleSearchResult) => void;
   variant?: "stack" | "panes";
   isSearching?: boolean;
 };
@@ -20,6 +20,10 @@ function getResultTypeLabel(type: BibleSearchResultGroup["results"][number]["typ
 
   if (type === "range") {
     return "Range";
+  }
+
+  if (type === "strongs") {
+    return "Strongs";
   }
 
   return "Verse";
@@ -64,23 +68,38 @@ export function SearchResultGroups({
           ) : (
             <div className="search-results">
               {group.results.map((result) => (
-                <button
-                  className="search-result"
-                  key={result.id}
-                  onClick={() => onSelectResult(result.href)}
-                  type="button"
-                >
-                  <div className="search-result-header">
-                    <span className={`search-result-type search-result-type-${result.type}`}>
-                      {getResultTypeLabel(result.type)}
-                    </span>
-                    <strong>{result.label}</strong>
-                  </div>
-                  <p className="search-result-description">{result.description}</p>
-                  {"preview" in result ? (
-                    <p className="search-result-preview">{result.preview}</p>
-                  ) : null}
-                </button>
+                "href" in result ? (
+                  <button
+                    className="search-result"
+                    key={result.id}
+                    onClick={() => onSelectResult(result)}
+                    type="button"
+                  >
+                    <div className="search-result-header">
+                      <span className={`search-result-type search-result-type-${result.type}`}>
+                        {getResultTypeLabel(result.type)}
+                      </span>
+                      <strong>{result.label}</strong>
+                    </div>
+                    <p className="search-result-description">{result.description}</p>
+                    {"preview" in result ? (
+                      <p className="search-result-preview">{result.preview}</p>
+                    ) : null}
+                  </button>
+                ) : (
+                  <article className="search-result search-result-static" key={result.id}>
+                    <div className="search-result-header">
+                      <span className={`search-result-type search-result-type-${result.type}`}>
+                        {getResultTypeLabel(result.type)}
+                      </span>
+                      <strong>{result.label}</strong>
+                    </div>
+                    <p className="search-result-description">{result.description}</p>
+                    {"preview" in result ? (
+                      <p className="search-result-preview">{result.preview}</p>
+                    ) : null}
+                  </article>
+                )
               ))}
             </div>
           )}

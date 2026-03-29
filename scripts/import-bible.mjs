@@ -48,6 +48,7 @@ const STRONGS_BOOK_NAME_BY_SLUG = {
  * @typedef {{ bookSlug: string; chapterNumber: number; verses: Verse[] }} Chapter
  * @typedef {{ book: BookMeta; chapters: Chapter[] }} BookPayload
  * @typedef {{ id: string, language: "hebrew" | "greek", lemma: string, transliteration: string, definition: string, partOfSpeech: string, rootWord: string, outlineUsage: string }} StrongsEntry
+ * @typedef {{ strongsNumber: string, bookSlug: string, bookName: string, chapterNumber: number, verseNumber: number, text: string }} StrongsSearchVerseEntry
  */
 
 async function main() {
@@ -65,6 +66,7 @@ async function main() {
 
   await buildSearchIndex("web", webPayloadBySlug);
   await buildSearchIndex("kjv", kjvPayloadBySlug);
+  await buildStrongsSearchIndex(kjvPayloadBySlug);
 
   console.log(`Imported bundled versions into ${path.relative(repoRoot, versionsDir)}.`);
 }
@@ -394,6 +396,42 @@ async function buildSearchIndex(version, payloadBySlug) {
   );
 
   await writeFile(path.join(searchDir, `${version}.json`), `${JSON.stringify(entries, null, 2)}\n`);
+}
+
+/**
+ * @param {Map<string, BookPayload>} payloadBySlug
+ */
+async function buildStrongsSearchIndex(payloadBySlug) {
+  await mkdir(searchDir, { recursive: true });
+
+  const entries = Array.from(payloadBySlug.values()).flatMap((payload) =>
+    payload.chapters.flatMap((chapter) =>
+      chapter.verses.flatMap((verse) => {
+        const strongsNumbers = Array.from(
+          new Set(
+            (verse.tokens ?? []).flatMap((token) => token.strongsNumbers ?? [])
+          )
+        );
+
+        return strongsNumbers.map(
+          /** @returns {StrongsSearchVerseEntry} */
+          (strongsNumber) => ({
+            strongsNumber,
+            bookSlug: payload.book.slug,
+            bookName: payload.book.name,
+            chapterNumber: chapter.chapterNumber,
+            verseNumber: verse.number,
+            text: verse.text
+          })
+        );
+      })
+    )
+  );
+
+  await writeFile(
+    path.join(searchDir, "strongs-kjv.json"),
+    `${JSON.stringify(entries, null, 2)}\n`
+  );
 }
 
 main().catch((error) => {

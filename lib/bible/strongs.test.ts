@@ -1,4 +1,4 @@
-import { getStrongsEntries } from "@/lib/bible/strongs";
+import { getStrongsEntries, normalizeStrongsNumber } from "@/lib/bible/strongs";
 
 describe("strongs lexicon", () => {
   it("loads normalized lexicon entries by number", async () => {
@@ -20,5 +20,10 @@ describe("strongs lexicon", () => {
     const entries = await getStrongsEntries(["G999999"]);
 
     expect(entries).toEqual([]);
+  });
+
+  it("normalizes spaced and zero-padded strongs numbers", () => {
+    expect(normalizeStrongsNumber(" g 03056 ")).toBe("G3056");
+    expect(normalizeStrongsNumber("h7225")).toBe("H7225");
   });
 });

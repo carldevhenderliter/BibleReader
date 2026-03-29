@@ -46,7 +46,7 @@ export function LookupPane() {
         {!isOpen || !query.trim() ? (
           <div id="lookup-pane-search-panel" role="tabpanel">
             <p className="search-empty-copy">
-              Search from the bottom bar to open books, chapters, verses, words, phrases, or comma-separated groups here.
+              Search from the bottom bar to open books, chapters, verses, Strongs entries, words, phrases, or comma-separated groups here.
             </p>
           </div>
         ) : (

@@ -8,6 +8,7 @@ import { ReaderVersionProvider } from "@/app/components/ReaderVersionProvider";
 import { setMockPathname } from "@/test/mocks/next-navigation";
 
 const SPLIT_LAYOUT_WIDTH_STORAGE_KEY = "bible-reader.split-layout-width-rem";
+const SEARCH_INPUT_LABEL = "Search books, words, phrases, or Strongs numbers";
 
 function renderSplitLayout() {
   return render(
@@ -156,8 +157,8 @@ describe("AppSplitLayout", () => {
     setViewportWidth(800);
     const { container } = renderSplitLayout();
 
-    fireEvent.focus(screen.getByLabelText("Search books, words, or phrases"));
-    fireEvent.change(screen.getByLabelText("Search books, words, or phrases"), {
+    fireEvent.focus(screen.getByLabelText(SEARCH_INPUT_LABEL));
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
       target: { value: "John 1:1, light, faith, grace" }
     });
 

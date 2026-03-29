@@ -99,6 +99,15 @@ export type BibleSearchVerseEntry = {
   text: string;
 };
 
+export type BibleSearchStrongsVerseEntry = {
+  strongsNumber: string;
+  bookSlug: string;
+  bookName: string;
+  chapterNumber: number;
+  verseNumber: number;
+  text: string;
+};
+
 export type BibleSearchResult =
   | {
       type: "book";
@@ -126,6 +135,14 @@ export type BibleSearchResult =
       label: string;
       description: string;
       href: string;
+      preview: string;
+    }
+  | {
+      type: "strongs";
+      id: string;
+      strongsNumber: string;
+      label: string;
+      description: string;
       preview: string;
     }
   | {

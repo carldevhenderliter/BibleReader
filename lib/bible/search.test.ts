@@ -89,6 +89,41 @@ describe("Bible search", () => {
     expect(kjvResults.some((result) => result.type === "verse")).toBe(true);
   });
 
+  it("resolves exact Strongs number lookups with entry details and matching KJV verses", async () => {
+    const results = await searchBible("H7225", "web");
+
+    expect(results[0]).toMatchObject({
+      type: "strongs",
+      strongsNumber: "H7225",
+      label: "H7225",
+      description: "Hebrew Strongs"
+    });
+    expect(results[0]).toHaveProperty("preview");
+    expect((results[0] as { preview: string }).preview).toContain("Used in");
+
+    const verseResult = results.find(
+      (result) =>
+        result.type === "verse" &&
+        result.bookSlug === "genesis" &&
+        result.chapterNumber === 1 &&
+        result.verseNumber === 1
+    );
+
+    expect(verseResult).toMatchObject({
+      type: "verse",
+      href: "/read/genesis/1?version=kjv&highlight=1"
+    });
+  });
+
+  it("normalizes Strongs queries with spaces and leading zeroes", async () => {
+    const results = await searchBible("g 03056", "kjv");
+
+    expect(results[0]).toMatchObject({
+      type: "strongs",
+      strongsNumber: "G3056"
+    });
+  });
+
   it("groups comma-separated queries in typed order", async () => {
     const groups = await searchBibleGroups("Matthew 1:1, repent, forgiveness", "web");
 

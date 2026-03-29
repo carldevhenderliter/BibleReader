@@ -20,6 +20,8 @@ function SearchHarness() {
   );
 }
 
+const SEARCH_INPUT_LABEL = "Search books, words, phrases, or Strongs numbers";
+
 function renderSearchUi(ui?: React.ReactNode) {
   return render(
     <ReaderVersionProvider>
@@ -88,7 +90,7 @@ describe("BottomSearchBar", () => {
   it("opens and closes the mobile search tray", () => {
     renderSearchUi();
 
-    fireEvent.focus(screen.getByLabelText("Search books, words, or phrases"));
+    fireEvent.focus(screen.getByLabelText(SEARCH_INPUT_LABEL));
     expect(screen.getByLabelText("Bible search results")).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Close" }));
@@ -98,7 +100,7 @@ describe("BottomSearchBar", () => {
   it("renders a match-mode toggle in the mobile search tray", () => {
     renderSearchUi();
 
-    fireEvent.focus(screen.getByLabelText("Search books, words, or phrases"));
+    fireEvent.focus(screen.getByLabelText(SEARCH_INPUT_LABEL));
 
     expect(screen.getByRole("button", { name: "Partial" })).toHaveAttribute("aria-pressed", "true");
     expect(screen.getByRole("button", { name: "Complete" })).toHaveAttribute("aria-pressed", "false");
@@ -109,13 +111,13 @@ describe("BottomSearchBar", () => {
 
     renderSearchUi();
 
-    expect(screen.getByLabelText("Search books, words, or phrases")).toBeInTheDocument();
+    expect(screen.getByLabelText(SEARCH_INPUT_LABEL)).toBeInTheDocument();
   });
 
   it("navigates to chapter 1 when a book result is selected", async () => {
     renderSearchUi();
 
-    fireEvent.change(screen.getByLabelText("Search books, words, or phrases"), {
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
       target: { value: "gen" }
     });
 
@@ -128,7 +130,7 @@ describe("BottomSearchBar", () => {
   it("navigates to a highlighted verse result", async () => {
     renderSearchUi();
 
-    fireEvent.change(screen.getByLabelText("Search books, words, or phrases"), {
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
       target: { value: "in the beginning" }
     });
 
@@ -141,14 +143,14 @@ describe("BottomSearchBar", () => {
   it("navigates from direct chapter and verse references", async () => {
     renderSearchUi();
 
-    fireEvent.change(screen.getByLabelText("Search books, words, or phrases"), {
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
       target: { value: "John 1" }
     });
 
     fireEvent.click(await screen.findByRole("button", { name: /Chapter John 1/i }));
     expect(mockRouter.push).toHaveBeenCalledWith("/read/john/1");
 
-    fireEvent.change(screen.getByLabelText("Search books, words, or phrases"), {
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
       target: { value: "John 1:1" }
     });
 
@@ -159,7 +161,7 @@ describe("BottomSearchBar", () => {
   it("navigates from direct verse range references", async () => {
     renderSearchUi();
 
-    fireEvent.change(screen.getByLabelText("Search books, words, or phrases"), {
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
       target: { value: "John 1:1-12" }
     });
 
@@ -177,7 +179,7 @@ describe("BottomSearchBar", () => {
     renderSearchUi(<SearchHarness />);
 
     fireEvent.click(screen.getByRole("button", { name: "Use KJV" }));
-    fireEvent.change(screen.getByLabelText("Search books, words, or phrases"), {
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
       target: { value: "without form and void" }
     });
 
@@ -196,7 +198,7 @@ describe("BottomSearchBar", () => {
   it("renders grouped results for comma-separated searches on mobile", async () => {
     renderSearchUi();
 
-    fireEvent.change(screen.getByLabelText("Search books, words, or phrases"), {
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
       target: { value: "Matthew 1:1, repent, forgiveness" }
     });
 
@@ -213,8 +215,8 @@ describe("BottomSearchBar", () => {
     expect(screen.getByLabelText("Lookup pane")).toBeInTheDocument();
     expect(screen.queryByLabelText("Bible search results")).not.toBeInTheDocument();
 
-    fireEvent.focus(screen.getByLabelText("Search books, words, or phrases"));
-    fireEvent.change(screen.getByLabelText("Search books, words, or phrases"), {
+    fireEvent.focus(screen.getByLabelText(SEARCH_INPUT_LABEL));
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
       target: { value: "John 1:1" }
     });
 
@@ -230,8 +232,8 @@ describe("BottomSearchBar", () => {
     setDesktopMode(true);
     const { container } = renderSearchUi();
 
-    fireEvent.focus(screen.getByLabelText("Search books, words, or phrases"));
-    fireEvent.change(screen.getByLabelText("Search books, words, or phrases"), {
+    fireEvent.focus(screen.getByLabelText(SEARCH_INPUT_LABEL));
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
       target: { value: "Matthew 1:1, repent" }
     });
 
@@ -253,7 +255,7 @@ describe("BottomSearchBar", () => {
   it("switches between partial and complete verse matching", async () => {
     renderSearchUi();
 
-    fireEvent.change(screen.getByLabelText("Search books, words, or phrases"), {
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
       target: { value: "begin" }
     });
 
@@ -273,7 +275,7 @@ describe("BottomSearchBar", () => {
   it("restores the saved match mode from local storage", async () => {
     window.localStorage.setItem("bible-reader.search-match-mode", "complete");
     renderSearchUi();
-    fireEvent.focus(screen.getByLabelText("Search books, words, or phrases"));
+    fireEvent.focus(screen.getByLabelText(SEARCH_INPUT_LABEL));
 
     await waitFor(() => {
       expect(screen.getByRole("button", { name: "Complete" })).toHaveAttribute("aria-pressed", "true");
@@ -302,5 +304,28 @@ describe("BottomSearchBar", () => {
     expect(screen.getByLabelText("Lookup pane")).toBeInTheDocument();
     expect(screen.queryByRole("tab", { name: "Notebook" })).not.toBeInTheDocument();
     expect(screen.getByText(/Search from the bottom bar/i)).toBeInTheDocument();
+  });
+
+  it("renders Strongs search results and matching KJV verses", async () => {
+    renderSearchUi();
+
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
+      target: { value: "H7225" }
+    });
+
+    const verseResult = await screen.findByRole(
+      "button",
+      { name: /Verse Genesis 1:1/i },
+      { timeout: 5000 }
+    );
+
+    await waitFor(() => {
+      expect(screen.getAllByText("H7225").length).toBeGreaterThan(0);
+      expect(screen.getByText("Hebrew Strongs")).toBeInTheDocument();
+    }, { timeout: 5000 });
+
+    fireEvent.click(verseResult);
+
+    expect(mockRouter.push).toHaveBeenCalledWith("/read/genesis/1?version=kjv&highlight=1");
   });
 });

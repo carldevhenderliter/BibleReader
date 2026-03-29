@@ -12,7 +12,7 @@ import { usePathname, useRouter } from "next/navigation";
 
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { parseBibleSearchQueries, searchBibleGroups } from "@/lib/bible/search";
-import type { BibleSearchResultGroup, SearchMatchMode } from "@/lib/bible/types";
+import type { BibleSearchResult, BibleSearchResultGroup, SearchMatchMode } from "@/lib/bible/types";
 
 const SPLIT_VIEW_MEDIA_QUERY = "(min-width: 64rem)";
 const SEARCH_MATCH_MODE_STORAGE_KEY = "bible-reader.search-match-mode";
@@ -30,7 +30,7 @@ type LookupContextValue = {
   clearSearch: () => void;
   closeSearch: () => void;
   openSearch: () => void;
-  selectResult: (href: string) => void;
+  selectResult: (result: BibleSearchResult) => void;
 };
 
 const LookupContext = createContext<LookupContextValue | null>(null);
@@ -179,8 +179,12 @@ export function LookupProvider({ children }: PropsWithChildren) {
       openSearch: () => {
         setIsOpen(true);
       },
-      selectResult: (href) => {
-        router.push(href);
+      selectResult: (result) => {
+        if (!("href" in result)) {
+          return;
+        }
+
+        router.push(result.href);
 
         if (!isSplitViewActive) {
           setIsOpen(false);
