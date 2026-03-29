@@ -389,8 +389,9 @@ describe("BottomSearchBar", () => {
     renderSearchUi();
 
     expect(screen.getByLabelText("Lookup pane")).toBeInTheDocument();
-    expect(screen.queryByRole("tab", { name: "Notebook" })).not.toBeInTheDocument();
-    expect(screen.getByText(/Search from the bottom bar/i)).toBeInTheDocument();
+    expect(screen.getByRole("tab", { name: "Notebook" })).toBeInTheDocument();
+    expect(screen.getByRole("tab", { name: "Search" })).toHaveAttribute("aria-selected", "true");
+    expect(screen.getByText(/Search for a book, reference, Strongs number/i)).toBeInTheDocument();
   });
 
   it("renders Strongs search results and matching KJV verses", async () => {

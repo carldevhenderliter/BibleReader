@@ -81,7 +81,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
   const router = useRouter();
   const pathname = usePathname();
   const { version } = useReaderVersion();
-  const { setActiveStudyVerseNumber, setActiveUtilityPane } = useReaderWorkspace();
+  const { activeUtilityPane, setActiveStudyVerseNumber, setActiveUtilityPane } = useReaderWorkspace();
   const [query, setQuery] = useState("");
   const [resultGroups, setResultGroups] = useState<BibleSearchResultGroup[]>([]);
   const [matchMode, setMatchMode] = useState<SearchMatchMode>("partial");
@@ -176,7 +176,9 @@ export function LookupProvider({ children }: PropsWithChildren) {
       setQuery: (value) => {
         setQuery(value);
         setExpandedTopicsByQuery((current) => pruneExpandedTopics(current, value));
-        setActiveUtilityPane("search");
+        if (activeUtilityPane !== "notebook") {
+          setActiveUtilityPane("search");
+        }
 
         if (value.trim().length > 0 || isSplitViewActive) {
           setIsOpen(true);
@@ -210,7 +212,9 @@ export function LookupProvider({ children }: PropsWithChildren) {
         setIsOpen(false);
       },
       openSearch: () => {
-        setActiveUtilityPane("search");
+        if (activeUtilityPane !== "notebook") {
+          setActiveUtilityPane("search");
+        }
         setIsOpen(true);
       },
       selectResult: (result, groupQuery) => {
@@ -258,6 +262,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
       queryParts,
       resultGroups,
       router,
+      activeUtilityPane,
       showStrongsInSearch
       ,
       setActiveStudyVerseNumber,

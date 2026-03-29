@@ -1,5 +1,6 @@
 import { fireEvent, screen } from "@testing-library/react";
 
+import { LookupPane } from "@/app/components/LookupPane";
 import { WholeBookContent } from "@/app/components/WholeBookContent";
 import type { BookMeta, Chapter } from "@/lib/bible/types";
 import { setMockPathname } from "@/test/mocks/next-navigation";
@@ -48,11 +49,28 @@ const kjvChapters: Chapter[] = [
   }
 ];
 
+function setSplitViewActive(isActive: boolean) {
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: jest.fn().mockImplementation(() => ({
+      matches: isActive,
+      media: "(min-width: 64rem)",
+      onchange: null,
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+      dispatchEvent: jest.fn()
+    }))
+  });
+}
+
 describe("WholeBookContent", () => {
   beforeEach(() => {
     window.localStorage.clear();
     setMockPathname("/read/jude");
     window.history.replaceState({}, "", "/read/jude");
+    setSplitViewActive(false);
   });
 
   it("renders a continuous book view", () => {
@@ -103,8 +121,30 @@ describe("WholeBookContent", () => {
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
 
+    expect(screen.getByLabelText("Notebook title")).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Chapter 1" })).not.toBeInTheDocument();
+  });
+
+  it("opens the notebook on the right and search on the left in split whole-book view", () => {
+    setSplitViewActive(true);
+
+    renderWithReaderCustomization(
+      <>
+        <WholeBookContent
+          book={books[0]}
+          books={books}
+          chaptersByVersion={{ web: chapters, kjv: kjvChapters }}
+        />
+        <LookupPane />
+      </>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
+
     expect(screen.getByRole("tab", { name: "Notebook" })).toHaveAttribute("aria-selected", "true");
     expect(screen.getByLabelText("Notebook title")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "WEB study search" })).toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Chapter 1" })).not.toBeInTheDocument();
   });
 });

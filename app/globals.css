@@ -873,6 +873,10 @@ select {
   filter: contrast(var(--reader-contrast));
 }
 
+.reader-search-surface {
+  align-content: start;
+}
+
 .verse-stack,
 .chapter-stack {
   display: grid;
@@ -1453,6 +1457,17 @@ select {
   min-height: 0;
   overflow: auto;
   overscroll-behavior: contain;
+}
+
+.search-workspace-panel {
+  display: grid;
+  gap: 1rem;
+  min-height: 0;
+  align-content: start;
+}
+
+.search-workspace-header {
+  margin-bottom: 0;
 }
 
 .search-bar {
@@ -2390,7 +2405,8 @@ select {
 .app-layout.app-layout-split .lookup-pane-body,
 .app-layout.app-layout-split .lookup-pane .reader-notebook,
 .app-layout.app-layout-split .lookup-pane .reader-notebook-blocks,
-.app-layout.app-layout-split .lookup-pane .search-result-groups {
+.app-layout.app-layout-split .lookup-pane .search-result-groups,
+.app-layout.app-layout-split .lookup-pane .search-workspace-panel {
   min-height: 0;
 }
 

@@ -40,7 +40,7 @@ export function ReaderSettingsPanel({
 }: ReaderSettingsPanelProps) {
   const { isPanelOpen, resetSettings, setIsPanelOpen, settings, updateSettings } =
     useReaderCustomization();
-  const { openCompare, openCrossReferences, setActiveReaderPane } = useReaderWorkspace();
+  const { openCompare, openCrossReferences, openNotebook, setActiveReaderPane } = useReaderWorkspace();
   const { version, setVersion } = useReaderVersion();
   const pathname = usePathname();
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -62,7 +62,7 @@ export function ReaderSettingsPanel({
   };
 
   const handleNotebookOpen = () => {
-    setActiveReaderPane("notebook");
+    openNotebook();
     setIsPanelOpen(false);
   };
 

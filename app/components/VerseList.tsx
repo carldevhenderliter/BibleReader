@@ -34,9 +34,9 @@ export function VerseList({
     cycleHighlight,
     getBookmark,
     getHighlight,
+    openNotebook,
     openCrossReferences,
     saveReferenceToStudySet,
-    setActiveReaderPane,
     toggleBookmark,
     updateBookmarkLabel,
     updateHighlightLabel
@@ -211,7 +211,7 @@ export function VerseList({
                           sourceType: "manual"
                         })
                       );
-                      setActiveReaderPane("notebook");
+                      openNotebook();
                     }}
                     type="button"
                   >

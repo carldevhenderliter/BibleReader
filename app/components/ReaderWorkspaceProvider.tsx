@@ -51,8 +51,9 @@ import {
   type StudySetStorage
 } from "@/lib/study-workspace";
 
-type ReaderPane = "reading" | "notebook" | "study-sets";
-type UtilityPane = "search" | "cross-references" | "compare";
+type ReaderPane = "reading" | "study-sets";
+type LeftReaderMode = "scripture" | "search";
+type UtilityPane = "search" | "cross-references" | "compare" | "notebook";
 
 type CurrentPassage = {
   bookSlug: string;
@@ -63,8 +64,12 @@ type CurrentPassage = {
 type ReaderWorkspaceContextValue = {
   activeReaderPane: ReaderPane;
   setActiveReaderPane: (tab: ReaderPane) => void;
+  leftReaderMode: LeftReaderMode;
+  setLeftReaderMode: (mode: LeftReaderMode) => void;
   activeUtilityPane: UtilityPane;
   setActiveUtilityPane: (pane: UtilityPane) => void;
+  openNotebook: () => void;
+  closeNotebookWorkspace: () => void;
   currentPassage: CurrentPassage | null;
   currentChapterByVersion: Record<BundledBibleVersion, Chapter> | null;
   syncCurrentPassage: (bookSlug: string, chapterNumber: number, view: ReadingView) => void;
@@ -162,7 +167,9 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   const [studySets, setStudySets] = useState<StudySetStorage>({});
   const [hasLoadedState, setHasLoadedState] = useState(false);
   const [activeReaderPane, setActiveReaderPane] = useState<ReaderPane>("reading");
-  const [activeUtilityPane, setActiveUtilityPane] = useState<UtilityPane>("search");
+  const [leftReaderMode, setLeftReaderMode] = useState<LeftReaderMode>("scripture");
+  const [activeUtilityPaneState, setActiveUtilityPaneState] = useState<UtilityPane>("search");
+  const [lastReaderUtilityPane, setLastReaderUtilityPane] = useState<Exclude<UtilityPane, "notebook">>("search");
   const [currentPassage, setCurrentPassage] = useState<CurrentPassage | null>(null);
   const [currentChapterByVersion, setCurrentChapterByVersion] = useState<
     Record<BundledBibleVersion, Chapter> | null
@@ -170,10 +177,35 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   const [activeStudyVerseNumber, setActiveStudyVerseNumber] = useState<number | null>(null);
   const [compareVersionOverride, setCompareVersionOverride] = useState<BundledBibleVersion | null>(null);
   const isReaderRoute = pathname.startsWith("/read");
+  const activeUtilityPane = activeUtilityPaneState;
   const compareVersion =
     compareVersionOverride && compareVersionOverride !== version
       ? compareVersionOverride
       : getAlternateVersion(version);
+
+  const setActiveUtilityPane = useCallback((pane: UtilityPane) => {
+    setActiveUtilityPaneState(pane);
+
+    if (pane === "notebook") {
+      setActiveReaderPane("reading");
+      setLeftReaderMode("search");
+      return;
+    }
+
+    setLastReaderUtilityPane(pane);
+    setLeftReaderMode("scripture");
+  }, []);
+
+  const openNotebook = useCallback(() => {
+    setActiveReaderPane("reading");
+    setLeftReaderMode("search");
+    setActiveUtilityPaneState("notebook");
+  }, []);
+
+  const closeNotebookWorkspace = useCallback(() => {
+    setActiveUtilityPaneState(lastReaderUtilityPane);
+    setLeftReaderMode("scripture");
+  }, [lastReaderUtilityPane]);
 
   const syncCurrentPassage = useCallback(
     (bookSlug: string, chapterNumber: number, view: ReadingView) => {
@@ -288,7 +320,9 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     if (!isReaderRoute) {
       setActiveReaderPane("reading");
-      setActiveUtilityPane("search");
+      setLeftReaderMode("scripture");
+      setActiveUtilityPaneState("search");
+      setLastReaderUtilityPane("search");
       setCurrentPassage(null);
       setCurrentChapterByVersion(null);
       setActiveStudyVerseNumber(null);
@@ -298,9 +332,23 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   const value = useMemo<ReaderWorkspaceContextValue>(
     () => ({
       activeReaderPane,
-      setActiveReaderPane,
+      setActiveReaderPane: (tab) => {
+        setActiveReaderPane(tab);
+
+        if (tab === "study-sets") {
+          setLeftReaderMode("scripture");
+
+          if (activeUtilityPaneState === "notebook") {
+            setActiveUtilityPaneState(lastReaderUtilityPane);
+          }
+        }
+      },
+      leftReaderMode,
+      setLeftReaderMode,
       activeUtilityPane,
       setActiveUtilityPane,
+      openNotebook,
+      closeNotebookWorkspace,
       currentPassage,
       currentChapterByVersion,
       syncCurrentPassage,
@@ -694,12 +742,17 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       activeReaderPane,
       activeStudyVerseNumber,
       activeUtilityPane,
+      activeUtilityPaneState,
       bookmarks,
+      closeNotebookWorkspace,
       compareVersion,
       currentChapterByVersion,
       currentPassage,
       highlights,
+      lastReaderUtilityPane,
+      leftReaderMode,
       notebooks,
+      openNotebook,
       syncCurrentChapterData,
       syncCurrentPassage,
       studySets,

@@ -7,8 +7,10 @@ import { useReaderCustomization } from "@/app/components/ReaderCustomizationProv
 import { ReaderContentTabs } from "@/app/components/ReaderContentTabs";
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
+import { SearchWorkspacePanel } from "@/app/components/SearchWorkspacePanel";
 import { ReaderStudySetsPanel } from "@/app/components/ReaderStudySetsPanel";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
+import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
@@ -36,11 +38,20 @@ export function ReaderPageContent({
 }: ReaderPageContentProps) {
   const { version } = useReaderVersion();
   const { settings } = useReaderCustomization();
-  const { activeReaderPane, setActiveStudyVerseNumber, syncCurrentChapterData } = useReaderWorkspace();
+  const { isSplitViewActive } = useLookup();
+  const {
+    activeReaderPane,
+    activeUtilityPane,
+    leftReaderMode,
+    setActiveStudyVerseNumber,
+    syncCurrentChapterData
+  } = useReaderWorkspace();
   const chapter = chaptersByVersion[version];
   const showStrongs = version === "kjv" && settings.showStrongs;
   const versionLabel = getBibleVersionLabel(version);
   const versionBadge = getBibleVersionBadge(version);
+  const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
+  const showReaderSearch = isSplitViewActive && leftReaderMode === "search";
 
   useEffect(() => {
     syncCurrentChapterData(book.slug, chapter.chapterNumber, chaptersByVersion);
@@ -89,13 +100,17 @@ export function ReaderPageContent({
           </header>
         </div>
         <ReaderContentTabs />
-        {activeReaderPane === "notebook" ? (
+        {activeReaderPane === "study-sets" ? (
+          <div className="reading-surface reader-notebook-surface">
+            <ReaderStudySetsPanel bookSlug={book.slug} chapterNumber={chapter.chapterNumber} />
+          </div>
+        ) : showNotebookInline ? (
           <div className="reading-surface reader-notebook-surface">
             <ReaderNotebookEditor bookSlug={book.slug} chapterNumber={chapter.chapterNumber} />
           </div>
-        ) : activeReaderPane === "study-sets" ? (
-          <div className="reading-surface reader-notebook-surface">
-            <ReaderStudySetsPanel bookSlug={book.slug} chapterNumber={chapter.chapterNumber} />
+        ) : showReaderSearch ? (
+          <div className="reading-surface reader-search-surface">
+            <SearchWorkspacePanel title={`${versionLabel} study search`} />
           </div>
         ) : (
           <div className="reading-surface">

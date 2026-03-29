@@ -1,5 +1,6 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react";
 
+import { LookupPane } from "@/app/components/LookupPane";
 import { ReaderPageContent } from "@/app/components/ReaderPageContent";
 import type { BookMeta, Chapter } from "@/lib/bible/types";
 import { PASSAGE_NOTEBOOK_STORAGE_KEY } from "@/lib/passage-notebooks";
@@ -43,12 +44,29 @@ const kjvChapter: Chapter = {
   ]
 };
 
+function setSplitViewActive(isActive: boolean) {
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: jest.fn().mockImplementation(() => ({
+      matches: isActive,
+      media: "(min-width: 64rem)",
+      onchange: null,
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+      dispatchEvent: jest.fn()
+    }))
+  });
+}
+
 describe("ReaderPageContent", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     window.localStorage.clear();
     setMockPathname("/read/genesis/1");
     window.history.replaceState({}, "", "/read/genesis/1");
+    setSplitViewActive(false);
   });
 
   it("renders chapter content and navigation", () => {
@@ -219,11 +237,42 @@ describe("ReaderPageContent", () => {
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
 
-    expect(screen.getByRole("tab", { name: "Notebook" })).toHaveAttribute("aria-selected", "true");
     expect(screen.getByLabelText("Notebook title")).toBeInTheDocument();
     expect(
       screen.queryByText("In the beginning, God created the heavens and the earth.")
     ).not.toBeInTheDocument();
+  });
+
+  it("moves the notebook to the right pane and shows search on the left in split view", async () => {
+    setSplitViewActive(true);
+
+    renderWithReaderCustomization(
+      <>
+        <ReaderPageContent
+          book={books[0]}
+          books={books}
+          chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+        />
+        <LookupPane />
+      </>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
+
+    expect(screen.getByRole("tab", { name: "Notebook" })).toHaveAttribute("aria-selected", "true");
+    expect(screen.getByLabelText("Notebook title")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "WEB study search" })).toBeInTheDocument();
+    expect(
+      screen.queryByText("In the beginning, God created the heavens and the earth.")
+    ).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("tab", { name: "Scripture" }));
+
+    await waitFor(() => {
+      expect(screen.getByText("In the beginning, God created the heavens and the earth.")).toBeInTheDocument();
+    });
+    expect(screen.getByRole("tab", { name: "Search" })).toHaveAttribute("aria-selected", "true");
   });
 
   it("highlights a verse range opened from search", () => {
