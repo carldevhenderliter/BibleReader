@@ -94,6 +94,30 @@ describe("Bible search", () => {
     expect(kjvResults.some((result) => result.type === "verse")).toBe(true);
   });
 
+  it("includes KJV token metadata on word-search verse hits", async () => {
+    const results = await searchBible("beginning", "kjv");
+    const verseResult = results.find(
+      (result) =>
+        result.type === "verse" &&
+        result.bookSlug === "genesis" &&
+        result.chapterNumber === 1 &&
+        result.verseNumber === 1
+    );
+
+    expect(verseResult).toMatchObject({
+      type: "verse",
+      href: "/read/genesis/1?version=kjv&highlight=1"
+    });
+    expect(verseResult && "tokens" in verseResult ? verseResult.tokens : undefined).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          text: expect.stringContaining("beginning"),
+          strongsNumbers: expect.arrayContaining(["H7225"])
+        })
+      ])
+    );
+  });
+
   it("resolves exact Strongs number lookups with entry details and matching KJV verses", async () => {
     const results = await searchBible("H7225", "web");
 
@@ -118,6 +142,14 @@ describe("Bible search", () => {
       type: "verse",
       href: "/read/genesis/1?version=kjv&highlight=1"
     });
+    expect(verseResult && "tokens" in verseResult ? verseResult.tokens : undefined).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          text: expect.stringContaining("beginning"),
+          strongsNumbers: expect.arrayContaining(["H7225"])
+        })
+      ])
+    );
   });
 
   it("normalizes Strongs queries with spaces and leading zeroes", async () => {

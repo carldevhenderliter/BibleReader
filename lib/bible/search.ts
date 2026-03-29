@@ -7,7 +7,8 @@ import type {
   BibleSearchVerseEntry,
   BookMeta,
   BundledBibleVersion,
-  SearchMatchMode
+  SearchMatchMode,
+  VerseToken
 } from "@/lib/bible/types";
 import { getChapterHref } from "@/lib/bible/utils";
 
@@ -283,6 +284,48 @@ function matchesVerseText(
   return ` ${normalizedVerseText} `.includes(` ${normalizedQuery} `);
 }
 
+function getVerseResultId(
+  bookSlug: string,
+  chapterNumber: number,
+  verseNumber: number,
+  version: BundledBibleVersion
+) {
+  return `verse:${bookSlug}:${chapterNumber}:${verseNumber}:${version}`;
+}
+
+function getVerseResult(
+  entry: BibleSearchVerseEntry,
+  version: BundledBibleVersion,
+  description: string
+): BibleSearchResult {
+  return {
+    type: "verse",
+    id: getVerseResultId(entry.bookSlug, entry.chapterNumber, entry.verseNumber, version),
+    bookSlug: entry.bookSlug,
+    chapterNumber: entry.chapterNumber,
+    verseNumber: entry.verseNumber,
+    label: `${entry.bookName} ${entry.chapterNumber}:${entry.verseNumber}`,
+    description,
+    href: getHighlightedVerseHref(entry.bookSlug, entry.chapterNumber, entry.verseNumber, version),
+    preview: entry.text,
+    tokens: entry.tokens
+  };
+}
+
+function getVerseTokenByReference(
+  verseIndex: SearchableVerseEntry[],
+  bookSlug: string,
+  chapterNumber: number,
+  verseNumber: number
+) {
+  return verseIndex.find(
+    (entry) =>
+      entry.bookSlug === bookSlug &&
+      entry.chapterNumber === chapterNumber &&
+      entry.verseNumber === verseNumber
+  )?.tokens;
+}
+
 async function searchSingleBibleQuery(
   rawQuery: string,
   version: BundledBibleVersion = DEFAULT_BIBLE_VERSION,
@@ -355,7 +398,8 @@ async function searchSingleBibleQuery(
                   entry.verseNumber,
                   version
                 ),
-                preview: entry.text
+                preview: entry.text,
+                tokens: entry.tokens
               }))
             }
           ];
@@ -371,24 +415,7 @@ async function searchSingleBibleQuery(
       );
 
       if (verseEntry) {
-        directReferenceResults = [
-          {
-            type: "verse",
-            id: `verse:${verseEntry.bookSlug}:${verseEntry.chapterNumber}:${verseEntry.verseNumber}:${version}`,
-            bookSlug: verseEntry.bookSlug,
-            chapterNumber: verseEntry.chapterNumber,
-            verseNumber: verseEntry.verseNumber,
-            label: `${verseEntry.bookName} ${verseEntry.chapterNumber}:${verseEntry.verseNumber}`,
-            description: `${version.toUpperCase()} reference`,
-            href: getHighlightedVerseHref(
-              verseEntry.bookSlug,
-              verseEntry.chapterNumber,
-              verseEntry.verseNumber,
-              version
-            ),
-            preview: verseEntry.text
-          }
-        ];
+        directReferenceResults = [getVerseResult(verseEntry, version, `${version.toUpperCase()} reference`)];
       }
     }
   }
@@ -415,9 +442,10 @@ async function searchSingleBibleQuery(
     }));
 
   if (strongsNumber) {
-    const [entry, strongsVerseIndex] = await Promise.all([
+    const [entry, strongsVerseIndex, kjvVerseIndex] = await Promise.all([
       getStrongsEntry(strongsNumber),
-      loadStrongsVerseIndex()
+      loadStrongsVerseIndex(),
+      loadVerseIndex("kjv")
     ]);
     const strongsVerseResults = strongsVerseIndex
       .filter((verseEntry) => verseEntry.strongsNumber === strongsNumber)
@@ -436,7 +464,13 @@ async function searchSingleBibleQuery(
           verseEntry.verseNumber,
           "kjv"
         ),
-        preview: verseEntry.text
+        preview: verseEntry.text,
+        tokens: getVerseTokenByReference(
+          kjvVerseIndex,
+          verseEntry.bookSlug,
+          verseEntry.chapterNumber,
+          verseEntry.verseNumber
+        )
       }));
     const strongsResults: BibleSearchResult[] = entry
       ? [
@@ -462,22 +496,7 @@ async function searchSingleBibleQuery(
   const verseResults = verseIndex
     .filter((entry) => matchesVerseText(entry.normalizedText, normalizedVerseQuery, matchMode))
     .slice(0, MAX_VERSE_RESULTS)
-    .map<BibleSearchResult>((entry) => ({
-      type: "verse",
-      id: `verse:${entry.bookSlug}:${entry.chapterNumber}:${entry.verseNumber}:${version}`,
-      bookSlug: entry.bookSlug,
-      chapterNumber: entry.chapterNumber,
-      verseNumber: entry.verseNumber,
-      label: `${entry.bookName} ${entry.chapterNumber}:${entry.verseNumber}`,
-      description: version.toUpperCase(),
-      href: getHighlightedVerseHref(
-        entry.bookSlug,
-        entry.chapterNumber,
-        entry.verseNumber,
-        version
-      ),
-      preview: entry.text
-    }));
+    .map<BibleSearchResult>((entry) => getVerseResult(entry, version, version.toUpperCase()));
 
   return dedupeSearchResults([...directReferenceResults, ...bookResults, ...verseResults]);
 }

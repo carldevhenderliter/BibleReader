@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev --hostname 0.0.0.0 --webpack",
-    "build": "next build",
+    "build": "NODE_OPTIONS=--max-old-space-size=8192 next build",
     "start": "next start",
     "test": "jest --config jest.config.js",
     "test:watch": "jest --config jest.config.js --watch",

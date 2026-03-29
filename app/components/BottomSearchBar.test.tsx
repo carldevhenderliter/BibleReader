@@ -190,11 +190,27 @@ describe("BottomSearchBar", () => {
         screen.getByRole("button", { name: /Verse Genesis 1:2 KJV/i })
       ).toBeInTheDocument();
     });
-    expect(
-      screen.getByText(
-        "And the earth was without form, and void; and darkness was upon the face of the deep. And the Spirit of God moved upon the face of the waters."
-      )
-    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Verse Genesis 1:2 KJV/i })).toHaveTextContent(
+      /without form/
+    );
+    expect(screen.getByRole("button", { name: /Verse Genesis 1:2 KJV/i })).toHaveTextContent(
+      /Spirit/
+    );
+  });
+
+  it("shows matching Strongs numbers beside KJV word-search hits", async () => {
+    renderSearchUi(<SearchHarness />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Use KJV" }));
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
+      target: { value: "beginning" }
+    });
+
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: /Verse Genesis 1:1 KJV/i })).toBeInTheDocument();
+    });
+
+    expect(screen.getAllByText("H7225").length).toBeGreaterThan(0);
   });
 
   it("renders grouped results for comma-separated searches on mobile", async () => {

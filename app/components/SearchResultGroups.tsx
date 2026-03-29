@@ -1,6 +1,7 @@
 "use client";
 
-import type { BibleSearchResult, BibleSearchResultGroup } from "@/lib/bible/types";
+import { normalizeStrongsNumber } from "@/lib/bible/strongs";
+import type { BibleSearchResult, BibleSearchResultGroup, VerseToken } from "@/lib/bible/types";
 
 type SearchResultGroupsProps = {
   groups: BibleSearchResultGroup[];
@@ -27,6 +28,80 @@ function getResultTypeLabel(type: BibleSearchResultGroup["results"][number]["typ
   }
 
   return "Verse";
+}
+
+function normalizeQueryValue(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/[’']/g, "")
+    .replace(/[^a-z0-9\s]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function parseStrongsQuery(query: string) {
+  const match = query.match(/^(?:strongs\s+)?([hg])\s*0*(\d+)$/i);
+
+  return match ? normalizeStrongsNumber(`${match[1]}${match[2]}`) : null;
+}
+
+function tokenMatchesQuery(tokenText: string, queryWords: string[]) {
+  const normalizedToken = normalizeQueryValue(tokenText);
+
+  return queryWords.some((word) => word && normalizedToken.includes(word));
+}
+
+function SearchVersePreview({
+  preview,
+  query,
+  tokens
+}: {
+  preview: string;
+  query: string;
+  tokens?: VerseToken[];
+}) {
+  if (!tokens?.length) {
+    return <span className="search-result-preview">{preview}</span>;
+  }
+
+  const strongsQuery = parseStrongsQuery(query);
+  const queryWords = strongsQuery ? [] : normalizeQueryValue(query).split(" ").filter(Boolean);
+  const hasAnnotatedMatch = tokens.some((token) =>
+    strongsQuery
+      ? (token.strongsNumbers ?? []).some((value) => normalizeStrongsNumber(value) === strongsQuery)
+      : tokenMatchesQuery(token.text, queryWords)
+  );
+
+  if (!hasAnnotatedMatch) {
+    return <span className="search-result-preview">{preview}</span>;
+  }
+
+  return (
+    <span className="search-result-preview search-result-preview-rich">
+      {tokens.map((token, index) => {
+        const matchingStrongs = strongsQuery
+          ? (token.strongsNumbers ?? []).filter(
+              (value) => normalizeStrongsNumber(value) === strongsQuery
+            )
+          : tokenMatchesQuery(token.text, queryWords)
+            ? token.strongsNumbers ?? []
+            : [];
+
+        return (
+          <span className="search-preview-token" key={`${index}:${token.text}`}>
+            <span className="search-preview-token-text">{token.text}</span>
+            {matchingStrongs.length ? (
+              <span className="search-preview-strongs">
+                {Array.from(new Set(matchingStrongs.map((value) => normalizeStrongsNumber(value)))).join(
+                  " "
+                )}
+              </span>
+            ) : null}
+          </span>
+        );
+      })}
+    </span>
+  );
 }
 
 export function SearchResultGroups({
@@ -97,13 +172,20 @@ export function SearchResultGroups({
                               label: verse.label,
                               description: result.description,
                               href: verse.href,
-                              preview: verse.preview
+                              preview: verse.preview,
+                              tokens: verse.tokens
                             })
                           }
                           type="button"
                         >
                           <span className="search-range-line-number">{verse.verseNumber}</span>
-                          <span className="search-range-line-copy">{verse.preview}</span>
+                          <span className="search-range-line-copy">
+                            <SearchVersePreview
+                              preview={verse.preview}
+                              query={group.query}
+                              tokens={verse.tokens}
+                            />
+                          </span>
                         </button>
                       ))}
                     </div>
@@ -123,7 +205,11 @@ export function SearchResultGroups({
                     </div>
                     <p className="search-result-description">{result.description}</p>
                     {"preview" in result ? (
-                      <p className="search-result-preview">{result.preview}</p>
+                      <SearchVersePreview
+                        preview={result.preview}
+                        query={group.query}
+                        tokens={"tokens" in result ? result.tokens : undefined}
+                      />
                     ) : null}
                   </button>
                 ) : (

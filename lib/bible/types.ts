@@ -97,6 +97,7 @@ export type BibleSearchVerseEntry = {
   chapterNumber: number;
   verseNumber: number;
   text: string;
+  tokens?: VerseToken[];
 };
 
 export type BibleSearchStrongsVerseEntry = {
@@ -136,6 +137,7 @@ export type BibleSearchResult =
       description: string;
       href: string;
       preview: string;
+      tokens?: VerseToken[];
     }
   | {
       type: "strongs";
@@ -160,6 +162,7 @@ export type BibleSearchResult =
         label: string;
         href: string;
         preview: string;
+        tokens?: VerseToken[];
       }>;
     };
 

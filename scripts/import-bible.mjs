@@ -431,7 +431,8 @@ async function buildSearchIndex(version, payloadBySlug) {
         bookName: payload.book.name,
         chapterNumber: chapter.chapterNumber,
         verseNumber: verse.number,
-        text: verse.text
+        text: verse.text,
+        ...(version === "kjv" && verse.tokens ? { tokens: verse.tokens } : {})
       }))
     )
   );

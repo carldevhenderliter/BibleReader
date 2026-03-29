@@ -1808,9 +1808,43 @@ select {
 }
 
 .search-result-preview {
+  display: block;
   color: rgba(255, 255, 255, 0.84);
   line-height: 1.55;
   white-space: pre-line;
+}
+
+.search-result-preview-rich {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.18rem 0.28rem;
+  align-items: baseline;
+  white-space: normal;
+}
+
+.search-preview-token {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.18rem;
+}
+
+.search-preview-token-text {
+  white-space: pre-wrap;
+}
+
+.search-preview-strongs {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.15rem;
+  padding: 0.08rem 0.42rem;
+  border-radius: 999px;
+  background: rgba(170, 203, 255, 0.14);
+  color: rgba(214, 230, 255, 0.98);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1;
 }
 
 .search-range-lines {
@@ -1844,6 +1878,7 @@ select {
 .search-range-line-copy {
   color: rgba(255, 255, 255, 0.84);
   line-height: 1.55;
+  min-width: 0;
 }
 
 @media (min-width: 48rem) and (max-width: 63.99rem) {
