@@ -1,7 +1,8 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
 
 import { VerseList } from "@/app/components/VerseList";
 import type { Verse } from "@/lib/bible/types";
+import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
 
 const verses: Verse[] = [
   {
@@ -21,7 +22,7 @@ const verses: Verse[] = [
 
 describe("VerseList", () => {
   it("renders plain text when Strongs is disabled", () => {
-    render(
+    renderWithReaderCustomization(
       <VerseList
         bookSlug="genesis"
         chapterNumber={1}
@@ -35,7 +36,7 @@ describe("VerseList", () => {
   });
 
   it("opens a Strongs popup from a tagged token", async () => {
-    render(
+    renderWithReaderCustomization(
       <VerseList
         bookSlug="genesis"
         chapterNumber={1}

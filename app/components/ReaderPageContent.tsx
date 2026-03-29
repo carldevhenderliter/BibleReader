@@ -1,10 +1,13 @@
 "use client";
 
+import { useEffect } from "react";
+
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderContentTabs } from "@/app/components/ReaderContentTabs";
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
+import { ReaderStudySetsPanel } from "@/app/components/ReaderStudySetsPanel";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
@@ -33,11 +36,25 @@ export function ReaderPageContent({
 }: ReaderPageContentProps) {
   const { version } = useReaderVersion();
   const { settings } = useReaderCustomization();
-  const { activeReaderPane } = useReaderWorkspace();
+  const { activeReaderPane, setActiveStudyVerseNumber, syncCurrentChapterData } = useReaderWorkspace();
   const chapter = chaptersByVersion[version];
   const showStrongs = version === "kjv" && settings.showStrongs;
   const versionLabel = getBibleVersionLabel(version);
   const versionBadge = getBibleVersionBadge(version);
+
+  useEffect(() => {
+    syncCurrentChapterData(book.slug, chapter.chapterNumber, chaptersByVersion);
+    setActiveStudyVerseNumber(highlightedVerseRange?.start ?? highlightedVerseNumber ?? chapter.verses[0]?.number ?? null);
+  }, [
+    book.slug,
+    chapter.chapterNumber,
+    chapter.verses,
+    chaptersByVersion,
+    highlightedVerseNumber,
+    highlightedVerseRange,
+    setActiveStudyVerseNumber,
+    syncCurrentChapterData
+  ]);
 
   return (
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
@@ -75,6 +92,10 @@ export function ReaderPageContent({
         {activeReaderPane === "notebook" ? (
           <div className="reading-surface reader-notebook-surface">
             <ReaderNotebookEditor bookSlug={book.slug} chapterNumber={chapter.chapterNumber} />
+          </div>
+        ) : activeReaderPane === "study-sets" ? (
+          <div className="reading-surface reader-notebook-surface">
+            <ReaderStudySetsPanel bookSlug={book.slug} chapterNumber={chapter.chapterNumber} />
           </div>
         ) : (
           <div className="reading-surface">

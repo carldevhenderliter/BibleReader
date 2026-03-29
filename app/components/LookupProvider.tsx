@@ -11,6 +11,7 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
+import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { parseBibleSearchQueries, searchBibleGroups } from "@/lib/bible/search";
 import type { BibleSearchResult, BibleSearchResultGroup, SearchMatchMode } from "@/lib/bible/types";
 
@@ -80,6 +81,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
   const router = useRouter();
   const pathname = usePathname();
   const { version } = useReaderVersion();
+  const { setActiveStudyVerseNumber, setActiveUtilityPane } = useReaderWorkspace();
   const [query, setQuery] = useState("");
   const [resultGroups, setResultGroups] = useState<BibleSearchResultGroup[]>([]);
   const [matchMode, setMatchMode] = useState<SearchMatchMode>("partial");
@@ -174,6 +176,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
       setQuery: (value) => {
         setQuery(value);
         setExpandedTopicsByQuery((current) => pruneExpandedTopics(current, value));
+        setActiveUtilityPane("search");
 
         if (value.trim().length > 0 || isSplitViewActive) {
           setIsOpen(true);
@@ -207,6 +210,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
         setIsOpen(false);
       },
       openSearch: () => {
+        setActiveUtilityPane("search");
         setIsOpen(true);
       },
       selectResult: (result, groupQuery) => {
@@ -225,6 +229,12 @@ export function LookupProvider({ children }: PropsWithChildren) {
 
         if (!("href" in result)) {
           return;
+        }
+
+        if (result.type === "verse") {
+          setActiveStudyVerseNumber(result.verseNumber);
+        } else if (result.type === "chapter") {
+          setActiveStudyVerseNumber(null);
         }
 
         router.push(result.href);
@@ -249,6 +259,9 @@ export function LookupProvider({ children }: PropsWithChildren) {
       resultGroups,
       router,
       showStrongsInSearch
+      ,
+      setActiveStudyVerseNumber,
+      setActiveUtilityPane
     ]
   );
 

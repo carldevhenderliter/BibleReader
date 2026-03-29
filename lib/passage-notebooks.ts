@@ -1,10 +1,12 @@
 import { PASSAGE_NOTEBOOK_STORAGE_KEY } from "@/lib/bible/constants";
 import type {
+  PassageReference,
   BundledBibleVersion,
   PassageNotebook,
   PassageNotebookBlock,
   PassageNotebookBlockType
 } from "@/lib/bible/types";
+import { createPassageReference } from "@/lib/study-workspace";
 
 export { PASSAGE_NOTEBOOK_STORAGE_KEY };
 
@@ -33,7 +35,8 @@ export function createNotebookBlock(type: PassageNotebookBlockType = "paragraph"
   return {
     id: `${type}:${Date.now().toString(36)}:${Math.random().toString(36).slice(2, 8)}`,
     type,
-    text: ""
+    text: "",
+    references: []
   };
 }
 
@@ -86,7 +89,43 @@ export function normalizePassageNotebookStorage(value: unknown): PassageNotebook
       items.push({
         id: typeof block.id === "string" && block.id.length > 0 ? block.id : `${block.type}:${items.length}`,
         type: block.type,
-        text: block.text
+        text: block.text,
+        references: Array.isArray(block.references)
+          ? block.references.reduce<PassageReference[]>((references, reference) => {
+              if (
+                !reference ||
+                typeof reference !== "object" ||
+                (reference.version !== "web" && reference.version !== "kjv") ||
+                typeof reference.bookSlug !== "string" ||
+                typeof reference.chapterNumber !== "number" ||
+                (reference.verseNumber != null && typeof reference.verseNumber !== "number") ||
+                (reference.endVerseNumber != null &&
+                  typeof reference.endVerseNumber !== "number")
+              ) {
+                return references;
+              }
+
+              references.push(
+                createPassageReference({
+                  version: reference.version,
+                  bookSlug: reference.bookSlug,
+                  chapterNumber: reference.chapterNumber,
+                  verseNumber: reference.verseNumber,
+                  endVerseNumber: reference.endVerseNumber,
+                  label: typeof reference.label === "string" ? reference.label : "",
+                  sourceType:
+                    reference.sourceType === "bookmark" ||
+                    reference.sourceType === "manual" ||
+                    reference.sourceType === "topic" ||
+                    reference.sourceType === "search"
+                      ? reference.sourceType
+                      : "manual"
+                })
+              );
+
+              return references;
+            }, [])
+          : []
       });
 
       return items;

@@ -1,8 +1,12 @@
 "use client";
 
 import { useMemo } from "react";
+import { useRouter } from "next/navigation";
 
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
+import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
+import { getChapterHref } from "@/lib/bible/utils";
+import { createPassageReference, formatPassageReference } from "@/lib/study-workspace";
 
 type ReaderNotebookEditorProps = {
   bookSlug: string;
@@ -20,8 +24,12 @@ export function ReaderNotebookEditor({
   bookSlug,
   chapterNumber
 }: ReaderNotebookEditorProps) {
+  const router = useRouter();
+  const { version } = useReaderVersion();
   const {
+    activeStudyVerseNumber,
     addNotebookBlock,
+    addNotebookReference,
     clearNotebook,
     deleteNotebookBlock,
     getNotebook,
@@ -76,6 +84,29 @@ export function ReaderNotebookEditor({
         >
           Add list
         </button>
+        <button
+          className="reader-inline-button"
+          onClick={() => {
+            if (!activeStudyVerseNumber) {
+              return;
+            }
+
+            addNotebookReference(
+              bookSlug,
+              chapterNumber,
+              createPassageReference({
+                version,
+                bookSlug,
+                chapterNumber,
+                verseNumber: activeStudyVerseNumber,
+                sourceType: "manual"
+              })
+            );
+          }}
+          type="button"
+        >
+          Add selected verse
+        </button>
       </div>
 
       {notebook.blocks.length === 0 ? (
@@ -126,6 +157,33 @@ export function ReaderNotebookEditor({
                 rows={block.type === "list" ? 5 : 7}
                 value={block.text}
               />
+              {block.references.length > 0 ? (
+                <div className="reader-notebook-references">
+                  {block.references.map((reference) => (
+                    <button
+                      className="reader-notebook-reference"
+                      key={reference.id}
+                      onClick={() => {
+                        const href = getChapterHref(
+                          reference.bookSlug,
+                          reference.chapterNumber,
+                          reference.version
+                        );
+                        const url = new URL(href, window.location.origin);
+
+                        if (reference.verseNumber) {
+                          url.searchParams.set("highlight", String(reference.verseNumber));
+                        }
+
+                        router.push(`${url.pathname}${url.search}`);
+                      }}
+                      type="button"
+                    >
+                      {formatPassageReference(reference)}
+                    </button>
+                  ))}
+                </div>
+              ) : null}
             </section>
           ))}
         </div>

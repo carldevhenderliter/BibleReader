@@ -1,0 +1,432 @@
+[
+  {
+    "bookSlug": "genesis",
+    "chapterNumber": 1,
+    "verseNumber": 1,
+    "groups": [
+      {
+        "id": "creation",
+        "label": "Creation",
+        "references": [
+          { "bookSlug": "john", "chapterNumber": 1, "verseNumber": 1 },
+          { "bookSlug": "john", "chapterNumber": 1, "verseNumber": 3 },
+          { "bookSlug": "colossians", "chapterNumber": 1, "verseNumber": 16 },
+          { "bookSlug": "hebrews", "chapterNumber": 11, "verseNumber": 3 }
+        ]
+      },
+      {
+        "id": "word-power",
+        "label": "The Word and God's Power",
+        "references": [
+          { "bookSlug": "psalms", "chapterNumber": 33, "verseNumber": 6 },
+          { "bookSlug": "revelation", "chapterNumber": 4, "verseNumber": 11 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "genesis",
+    "chapterNumber": 1,
+    "verseNumber": 27,
+    "groups": [
+      {
+        "id": "image-of-god",
+        "label": "Image of God",
+        "references": [
+          { "bookSlug": "matthew", "chapterNumber": 19, "verseNumber": 4 },
+          { "bookSlug": "colossians", "chapterNumber": 3, "verseNumber": 10 },
+          { "bookSlug": "james", "chapterNumber": 3, "verseNumber": 9 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "genesis",
+    "chapterNumber": 3,
+    "verseNumber": 15,
+    "groups": [
+      {
+        "id": "promise",
+        "label": "The First Gospel Promise",
+        "references": [
+          { "bookSlug": "galatians", "chapterNumber": 4, "verseNumber": 4 },
+          { "bookSlug": "hebrews", "chapterNumber": 2, "verseNumber": 14 },
+          { "bookSlug": "romans", "chapterNumber": 16, "verseNumber": 20 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "exodus",
+    "chapterNumber": 12,
+    "verseNumber": 13,
+    "groups": [
+      {
+        "id": "passover",
+        "label": "Passover Fulfillment",
+        "references": [
+          { "bookSlug": "john", "chapterNumber": 1, "verseNumber": 29 },
+          { "bookSlug": "1-corinthians", "chapterNumber": 5, "verseNumber": 7 },
+          { "bookSlug": "1-peter", "chapterNumber": 1, "verseNumber": 19 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "deuteronomy",
+    "chapterNumber": 6,
+    "verseNumber": 4,
+    "groups": [
+      {
+        "id": "one-god",
+        "label": "The One God",
+        "references": [
+          { "bookSlug": "mark", "chapterNumber": 12, "verseNumber": 29 },
+          { "bookSlug": "1-corinthians", "chapterNumber": 8, "verseNumber": 4 },
+          { "bookSlug": "ephesians", "chapterNumber": 4, "verseNumber": 6 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "psalms",
+    "chapterNumber": 23,
+    "verseNumber": 1,
+    "groups": [
+      {
+        "id": "shepherd",
+        "label": "The Shepherd",
+        "references": [
+          { "bookSlug": "john", "chapterNumber": 10, "verseNumber": 11 },
+          { "bookSlug": "hebrews", "chapterNumber": 13, "verseNumber": 20 },
+          { "bookSlug": "1-peter", "chapterNumber": 5, "verseNumber": 4 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "psalms",
+    "chapterNumber": 119,
+    "verseNumber": 105,
+    "groups": [
+      {
+        "id": "word-light",
+        "label": "God's Word as Light",
+        "references": [
+          { "bookSlug": "proverbs", "chapterNumber": 6, "verseNumber": 23 },
+          { "bookSlug": "2-peter", "chapterNumber": 1, "verseNumber": 19 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "isaiah",
+    "chapterNumber": 7,
+    "verseNumber": 14,
+    "groups": [
+      {
+        "id": "virgin-birth",
+        "label": "Virgin Birth",
+        "references": [
+          { "bookSlug": "matthew", "chapterNumber": 1, "verseNumber": 23 },
+          { "bookSlug": "luke", "chapterNumber": 1, "verseNumber": 31 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "isaiah",
+    "chapterNumber": 53,
+    "verseNumber": 5,
+    "groups": [
+      {
+        "id": "atonement",
+        "label": "Atonement",
+        "references": [
+          { "bookSlug": "matthew", "chapterNumber": 8, "verseNumber": 17 },
+          { "bookSlug": "1-peter", "chapterNumber": 2, "verseNumber": 24 },
+          { "bookSlug": "romans", "chapterNumber": 4, "verseNumber": 25 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "jeremiah",
+    "chapterNumber": 31,
+    "verseNumber": 31,
+    "groups": [
+      {
+        "id": "new-covenant",
+        "label": "New Covenant",
+        "references": [
+          { "bookSlug": "luke", "chapterNumber": 22, "verseNumber": 20 },
+          { "bookSlug": "hebrews", "chapterNumber": 8, "verseNumber": 8 },
+          { "bookSlug": "hebrews", "chapterNumber": 10, "verseNumber": 16 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "daniel",
+    "chapterNumber": 7,
+    "verseNumber": 13,
+    "groups": [
+      {
+        "id": "son-of-man",
+        "label": "The Son of Man",
+        "references": [
+          { "bookSlug": "matthew", "chapterNumber": 24, "verseNumber": 30 },
+          { "bookSlug": "mark", "chapterNumber": 14, "verseNumber": 62 },
+          { "bookSlug": "revelation", "chapterNumber": 1, "verseNumber": 7 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "micah",
+    "chapterNumber": 5,
+    "verseNumber": 2,
+    "groups": [
+      {
+        "id": "bethlehem",
+        "label": "Bethlehem Prophecy",
+        "references": [
+          { "bookSlug": "matthew", "chapterNumber": 2, "verseNumber": 6 },
+          { "bookSlug": "john", "chapterNumber": 7, "verseNumber": 42 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "matthew",
+    "chapterNumber": 24,
+    "verseNumber": 30,
+    "groups": [
+      {
+        "id": "return-of-christ",
+        "label": "Return of Christ",
+        "references": [
+          { "bookSlug": "daniel", "chapterNumber": 7, "verseNumber": 13 },
+          { "bookSlug": "1-thessalonians", "chapterNumber": 4, "verseNumber": 16 },
+          { "bookSlug": "revelation", "chapterNumber": 1, "verseNumber": 7 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "john",
+    "chapterNumber": 1,
+    "verseNumber": 1,
+    "groups": [
+      {
+        "id": "word",
+        "label": "The Eternal Word",
+        "references": [
+          { "bookSlug": "genesis", "chapterNumber": 1, "verseNumber": 1 },
+          { "bookSlug": "colossians", "chapterNumber": 1, "verseNumber": 16 },
+          { "bookSlug": "hebrews", "chapterNumber": 1, "verseNumber": 2 },
+          { "bookSlug": "1-john", "chapterNumber": 1, "verseNumber": 1 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "john",
+    "chapterNumber": 3,
+    "verseNumber": 16,
+    "groups": [
+      {
+        "id": "god-love",
+        "label": "God's Love and Salvation",
+        "references": [
+          { "bookSlug": "romans", "chapterNumber": 5, "verseNumber": 8 },
+          { "bookSlug": "1-john", "chapterNumber": 4, "verseNumber": 9 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "john",
+    "chapterNumber": 14,
+    "verseNumber": 6,
+    "groups": [
+      {
+        "id": "only-way",
+        "label": "The Only Way",
+        "references": [
+          { "bookSlug": "acts", "chapterNumber": 4, "verseNumber": 12 },
+          { "bookSlug": "1-timothy", "chapterNumber": 2, "verseNumber": 5 },
+          { "bookSlug": "hebrews", "chapterNumber": 10, "verseNumber": 19 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "acts",
+    "chapterNumber": 2,
+    "verseNumber": 38,
+    "groups": [
+      {
+        "id": "repentance",
+        "label": "Repentance and Baptism",
+        "references": [
+          { "bookSlug": "acts", "chapterNumber": 3, "verseNumber": 19 },
+          { "bookSlug": "romans", "chapterNumber": 6, "verseNumber": 3 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "romans",
+    "chapterNumber": 8,
+    "verseNumber": 1,
+    "groups": [
+      {
+        "id": "no-condemnation",
+        "label": "No Condemnation",
+        "references": [
+          { "bookSlug": "john", "chapterNumber": 5, "verseNumber": 24 },
+          { "bookSlug": "2-corinthians", "chapterNumber": 5, "verseNumber": 17 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "1-corinthians",
+    "chapterNumber": 13,
+    "verseNumber": 4,
+    "groups": [
+      {
+        "id": "love",
+        "label": "Love",
+        "references": [
+          { "bookSlug": "colossians", "chapterNumber": 3, "verseNumber": 14 },
+          { "bookSlug": "1-peter", "chapterNumber": 4, "verseNumber": 8 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "ephesians",
+    "chapterNumber": 2,
+    "verseNumber": 8,
+    "groups": [
+      {
+        "id": "grace",
+        "label": "Grace",
+        "references": [
+          { "bookSlug": "romans", "chapterNumber": 3, "verseNumber": 24 },
+          { "bookSlug": "titus", "chapterNumber": 3, "verseNumber": 5 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "philippians",
+    "chapterNumber": 4,
+    "verseNumber": 6,
+    "groups": [
+      {
+        "id": "prayer",
+        "label": "Prayer and Peace",
+        "references": [
+          { "bookSlug": "1-peter", "chapterNumber": 5, "verseNumber": 7 },
+          { "bookSlug": "psalms", "chapterNumber": 55, "verseNumber": 22 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "1-thessalonians",
+    "chapterNumber": 4,
+    "verseNumber": 16,
+    "groups": [
+      {
+        "id": "resurrection",
+        "label": "Return and Resurrection",
+        "references": [
+          { "bookSlug": "matthew", "chapterNumber": 24, "verseNumber": 30 },
+          { "bookSlug": "1-corinthians", "chapterNumber": 15, "verseNumber": 52 },
+          { "bookSlug": "john", "chapterNumber": 5, "verseNumber": 28 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "2-timothy",
+    "chapterNumber": 3,
+    "verseNumber": 16,
+    "groups": [
+      {
+        "id": "scripture",
+        "label": "Scripture",
+        "references": [
+          { "bookSlug": "2-peter", "chapterNumber": 1, "verseNumber": 21 },
+          { "bookSlug": "psalms", "chapterNumber": 119, "verseNumber": 160 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "hebrews",
+    "chapterNumber": 11,
+    "verseNumber": 1,
+    "groups": [
+      {
+        "id": "faith",
+        "label": "Faith",
+        "references": [
+          { "bookSlug": "romans", "chapterNumber": 8, "verseNumber": 24 },
+          { "bookSlug": "2-corinthians", "chapterNumber": 5, "verseNumber": 7 },
+          { "bookSlug": "james", "chapterNumber": 2, "verseNumber": 17 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "james",
+    "chapterNumber": 1,
+    "verseNumber": 5,
+    "groups": [
+      {
+        "id": "wisdom",
+        "label": "Wisdom",
+        "references": [
+          { "bookSlug": "proverbs", "chapterNumber": 2, "verseNumber": 6 },
+          { "bookSlug": "matthew", "chapterNumber": 7, "verseNumber": 7 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "1-peter",
+    "chapterNumber": 2,
+    "verseNumber": 24,
+    "groups": [
+      {
+        "id": "healing",
+        "label": "Sin Bearing and Healing",
+        "references": [
+          { "bookSlug": "isaiah", "chapterNumber": 53, "verseNumber": 5 },
+          { "bookSlug": "2-corinthians", "chapterNumber": 5, "verseNumber": 21 }
+        ]
+      }
+    ]
+  },
+  {
+    "bookSlug": "revelation",
+    "chapterNumber": 1,
+    "verseNumber": 7,
+    "groups": [
+      {
+        "id": "coming",
+        "label": "The Coming of Christ",
+        "references": [
+          { "bookSlug": "daniel", "chapterNumber": 7, "verseNumber": 13 },
+          { "bookSlug": "matthew", "chapterNumber": 24, "verseNumber": 30 },
+          { "bookSlug": "zechariah", "chapterNumber": 12, "verseNumber": 10 }
+        ]
+      }
+    ]
+  }
+]

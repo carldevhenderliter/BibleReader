@@ -25,6 +25,15 @@ export function ReaderContentTabs() {
       >
         Notebook
       </button>
+      <button
+        aria-selected={activeReaderPane === "study-sets"}
+        className={`reader-content-tab${activeReaderPane === "study-sets" ? " is-active" : ""}`}
+        onClick={() => setActiveReaderPane("study-sets")}
+        role="tab"
+        type="button"
+      >
+        Study Sets
+      </button>
     </div>
   );
 }

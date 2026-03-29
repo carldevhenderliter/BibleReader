@@ -1,7 +1,10 @@
 "use client";
 
+import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
+import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { normalizeStrongsNumber } from "@/lib/bible/strongs";
 import type { BibleSearchResult, BibleSearchResultGroup, VerseToken } from "@/lib/bible/types";
+import { createPassageReference } from "@/lib/study-workspace";
 
 type SearchResultGroupsProps = {
   groups: BibleSearchResultGroup[];
@@ -126,32 +129,41 @@ function SearchTopicVerseButton({
   query,
   verse,
   onSelectResult,
+  onCompareResult,
+  onSaveReference,
   showStrongsInSearch
 }: {
   query: string;
   verse: Extract<BibleSearchResult, { type: "verse" }>;
   onSelectResult: (result: BibleSearchResult, groupQuery?: string) => void;
+  onCompareResult: (result: Extract<BibleSearchResult, { type: "verse" }>) => void;
+  onSaveReference: (result: Extract<BibleSearchResult, { type: "verse" }>) => void;
   showStrongsInSearch?: boolean;
 }) {
   return (
-    <button
-      aria-label={verse.label}
-      className="search-range-line search-topic-verse"
-      onClick={() => onSelectResult(verse)}
-      type="button"
-    >
-      <span className="search-range-line-number">{verse.verseNumber}</span>
-      <span className="search-range-line-copy">
-        <span className="search-result-reference">{verse.label}</span>
-        <SearchVersePreview
-          mode="allStrongs"
-          preview={verse.preview}
-          query={query}
-          showStrongsInSearch={showStrongsInSearch}
-          tokens={verse.tokens}
-        />
-      </span>
-    </button>
+    <article className="search-range-line search-topic-verse">
+      <button aria-label={verse.label} className="search-range-line-main" onClick={() => onSelectResult(verse)} type="button">
+        <span className="search-range-line-number">{verse.verseNumber}</span>
+        <span className="search-range-line-copy">
+          <span className="search-result-reference">{verse.label}</span>
+          <SearchVersePreview
+            mode="allStrongs"
+            preview={verse.preview}
+            query={query}
+            showStrongsInSearch={showStrongsInSearch}
+            tokens={verse.tokens}
+          />
+        </span>
+      </button>
+      <div className="search-result-actions">
+        <button className="reader-inline-button" onClick={() => onCompareResult(verse)} type="button">
+          Compare
+        </button>
+        <button className="reader-inline-button" onClick={() => onSaveReference(verse)} type="button">
+          Save
+        </button>
+      </div>
+    </article>
   );
 }
 
@@ -162,6 +174,36 @@ export function SearchResultGroups({
   isSearching = false,
   showStrongsInSearch = false
 }: SearchResultGroupsProps) {
+  const { version } = useReaderVersion();
+  const { openCompare, saveReferenceToStudySet } = useReaderWorkspace();
+
+  const handleCompareResult = (result: Extract<BibleSearchResult, { type: "verse" | "chapter" }>) => {
+    openCompare(result.type === "verse" ? result.verseNumber : null);
+    onSelectResult(result);
+  };
+
+  const handleSaveReference = (reference: ReturnType<typeof createPassageReference>) => {
+    const setName = window.prompt("Add this result to which study set?", "Current study");
+
+    if (!setName) {
+      return;
+    }
+
+    saveReferenceToStudySet(setName, reference);
+  };
+
+  const handleSaveVerseResult = (result: Extract<BibleSearchResult, { type: "verse" }>) => {
+    handleSaveReference(
+      createPassageReference({
+        version,
+        bookSlug: result.bookSlug,
+        chapterNumber: result.chapterNumber,
+        verseNumber: result.verseNumber,
+        sourceType: "search"
+      })
+    );
+  };
+
   return (
     <div
       className={`search-result-groups${
@@ -232,7 +274,9 @@ export function SearchResultGroups({
                             {subtopic.verses.map((verse) => (
                               <SearchTopicVerseButton
                                 key={verse.id}
+                                onCompareResult={handleCompareResult}
                                 onSelectResult={onSelectResult}
+                                onSaveReference={handleSaveVerseResult}
                                 query={group.query}
                                 showStrongsInSearch={showStrongsInSearch}
                                 verse={verse}
@@ -258,68 +302,137 @@ export function SearchResultGroups({
                     <p className="search-result-description">{result.description}</p>
                     <div className="search-range-lines">
                       {result.verses.map((verse) => (
-                        <button
-                          aria-label={verse.label}
-                          className="search-range-line"
-                          key={verse.id}
-                          onClick={() =>
-                            onSelectResult({
-                              type: "verse",
-                              id: verse.id,
-                              bookSlug: result.bookSlug,
-                              chapterNumber: result.chapterNumber,
-                              verseNumber: verse.verseNumber,
-                              label: verse.label,
-                              description: result.description,
-                              href: verse.href,
-                              preview: verse.preview,
-                              tokens: verse.tokens
-                            }, group.query)
-                          }
-                          type="button"
-                        >
-                          <span className="search-range-line-number">{verse.verseNumber}</span>
-                          <span className="search-range-line-copy">
-                            <span className="search-result-reference">{verse.label}</span>
-                            <SearchVersePreview
-                              mode="allStrongs"
-                              preview={verse.preview}
-                              query={group.query}
-                              showStrongsInSearch={showStrongsInSearch}
-                              tokens={verse.tokens}
-                            />
-                          </span>
-                        </button>
+                        <article className="search-range-line" key={verse.id}>
+                          <button
+                            aria-label={verse.label}
+                            className="search-range-line-main"
+                            onClick={() =>
+                              onSelectResult({
+                                type: "verse",
+                                id: verse.id,
+                                bookSlug: result.bookSlug,
+                                chapterNumber: result.chapterNumber,
+                                verseNumber: verse.verseNumber,
+                                label: verse.label,
+                                description: result.description,
+                                href: verse.href,
+                                preview: verse.preview,
+                                tokens: verse.tokens
+                              }, group.query)
+                            }
+                            type="button"
+                          >
+                            <span className="search-range-line-number">{verse.verseNumber}</span>
+                            <span className="search-range-line-copy">
+                              <span className="search-result-reference">{verse.label}</span>
+                              <SearchVersePreview
+                                mode="allStrongs"
+                                preview={verse.preview}
+                                query={group.query}
+                                showStrongsInSearch={showStrongsInSearch}
+                                tokens={verse.tokens}
+                              />
+                            </span>
+                          </button>
+                          <div className="search-result-actions">
+                            <button
+                              className="reader-inline-button"
+                              onClick={() =>
+                                handleCompareResult({
+                                  type: "verse",
+                                  id: verse.id,
+                                  bookSlug: result.bookSlug,
+                                  chapterNumber: result.chapterNumber,
+                                  verseNumber: verse.verseNumber,
+                                  label: verse.label,
+                                  description: result.description,
+                                  href: verse.href,
+                                  preview: verse.preview,
+                                  tokens: verse.tokens
+                                })
+                              }
+                              type="button"
+                            >
+                              Compare
+                            </button>
+                            <button
+                              className="reader-inline-button"
+                              onClick={() =>
+                                handleSaveReference(
+                                  createPassageReference({
+                                    version,
+                                    bookSlug: result.bookSlug,
+                                    chapterNumber: result.chapterNumber,
+                                    verseNumber: verse.verseNumber,
+                                    sourceType: "search"
+                                  })
+                                )
+                              }
+                              type="button"
+                            >
+                              Save
+                            </button>
+                          </div>
+                        </article>
                       ))}
                     </div>
                   </article>
                 ) : "href" in result ? (
-                  <button
-                    className="search-result"
-                    key={result.id}
-                    onClick={() => onSelectResult(result)}
-                    type="button"
-                  >
-                    <div className="search-result-header">
-                      <span className={`search-result-type search-result-type-${result.type}`}>
-                        {getResultTypeLabel(result.type)}
-                      </span>
-                      <strong>{result.label}</strong>
-                    </div>
-                    <p className="search-result-description">{result.description}</p>
-                    {result.type === "verse" ? (
-                      <p className="search-result-reference">{result.label}</p>
+                  <article className="search-result search-result-interactive" key={result.id}>
+                    <button
+                      className="search-result-main"
+                      onClick={() => onSelectResult(result)}
+                      type="button"
+                    >
+                      <div className="search-result-header">
+                        <span className={`search-result-type search-result-type-${result.type}`}>
+                          {getResultTypeLabel(result.type)}
+                        </span>
+                        <strong>{result.label}</strong>
+                      </div>
+                      <p className="search-result-description">{result.description}</p>
+                      {result.type === "verse" ? (
+                        <p className="search-result-reference">{result.label}</p>
+                      ) : null}
+                      {"preview" in result ? (
+                        <SearchVersePreview
+                          mode="allStrongs"
+                          preview={result.preview}
+                          query={group.query}
+                          showStrongsInSearch={showStrongsInSearch}
+                          tokens={"tokens" in result ? result.tokens : undefined}
+                        />
+                      ) : null}
+                    </button>
+                    {result.type === "verse" || result.type === "chapter" ? (
+                      <div className="search-result-actions">
+                        <button
+                          className="reader-inline-button"
+                          onClick={() => handleCompareResult(result)}
+                          type="button"
+                        >
+                          Compare
+                        </button>
+                        <button
+                          className="reader-inline-button"
+                          onClick={() =>
+                            handleSaveReference(
+                              createPassageReference({
+                                version,
+                                bookSlug: result.bookSlug,
+                                chapterNumber: result.chapterNumber,
+                                verseNumber: result.type === "verse" ? result.verseNumber : undefined,
+                                sourceType: "search"
+                              })
+                            )
+                          }
+                          type="button"
+                        >
+                          Save
+                        </button>
+                      </div>
                     ) : null}
-                    {"preview" in result ? (
-                      <SearchVersePreview
-                        mode="allStrongs"
-                        preview={result.preview}
-                        query={group.query}
-                        showStrongsInSearch={showStrongsInSearch}
-                        tokens={"tokens" in result ? result.tokens : undefined}
-                      />
-                    ) : null}
-                  </button>
+                  </article>
                 ) : (
                   <article className="search-result search-result-static" key={result.id}>
                     <div className="search-result-header">

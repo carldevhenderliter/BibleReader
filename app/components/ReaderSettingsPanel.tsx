@@ -40,7 +40,7 @@ export function ReaderSettingsPanel({
 }: ReaderSettingsPanelProps) {
   const { isPanelOpen, resetSettings, setIsPanelOpen, settings, updateSettings } =
     useReaderCustomization();
-  const { setActiveReaderPane } = useReaderWorkspace();
+  const { openCompare, openCrossReferences, setActiveReaderPane } = useReaderWorkspace();
   const { version, setVersion } = useReaderVersion();
   const pathname = usePathname();
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -63,6 +63,21 @@ export function ReaderSettingsPanel({
 
   const handleNotebookOpen = () => {
     setActiveReaderPane("notebook");
+    setIsPanelOpen(false);
+  };
+
+  const handleStudySetsOpen = () => {
+    setActiveReaderPane("study-sets");
+    setIsPanelOpen(false);
+  };
+
+  const handleCompareOpen = () => {
+    openCompare();
+    setIsPanelOpen(false);
+  };
+
+  const handleCrossReferencesOpen = () => {
+    openCrossReferences();
     setIsPanelOpen(false);
   };
 
@@ -221,6 +236,33 @@ export function ReaderSettingsPanel({
             {isReaderRoute ? (
               <button className="reader-inline-button reader-settings-link" onClick={handleNotebookOpen} type="button">
                 Notebook
+              </button>
+            ) : null}
+            {isReaderRoute ? (
+              <button
+                className="reader-inline-button reader-settings-link"
+                onClick={handleStudySetsOpen}
+                type="button"
+              >
+                Study sets
+              </button>
+            ) : null}
+            {isReaderRoute ? (
+              <button
+                className="reader-inline-button reader-settings-link"
+                onClick={handleCrossReferencesOpen}
+                type="button"
+              >
+                Cross refs
+              </button>
+            ) : null}
+            {isReaderRoute ? (
+              <button
+                className="reader-inline-button reader-settings-link"
+                onClick={handleCompareOpen}
+                type="button"
+              >
+                Compare
               </button>
             ) : null}
           </div>

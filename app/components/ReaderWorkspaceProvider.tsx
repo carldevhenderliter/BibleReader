@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  useCallback,
   createContext,
   type PropsWithChildren,
   useContext,
@@ -11,7 +12,18 @@ import {
 import { usePathname } from "next/navigation";
 
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
-import type { PassageNotebook, PassageNotebookBlock } from "@/lib/bible/types";
+import type {
+  Bookmark,
+  BundledBibleVersion,
+  Chapter,
+  Highlight,
+  PassageNotebook,
+  PassageNotebookBlock,
+  PassageReference,
+  ReadingView,
+  StudyHighlightColor,
+  StudySet
+} from "@/lib/bible/types";
 import {
   PASSAGE_NOTEBOOK_STORAGE_KEY,
   createNotebookBlock,
@@ -20,12 +32,53 @@ import {
   normalizePassageNotebookStorage,
   type PassageNotebookStorage
 } from "@/lib/passage-notebooks";
+import {
+  STUDY_BOOKMARKS_STORAGE_KEY,
+  STUDY_HIGHLIGHTS_STORAGE_KEY,
+  STUDY_SETS_STORAGE_KEY,
+  createBookmark,
+  createHighlight,
+  createPassageReference,
+  createStudySet,
+  cycleHighlightColor,
+  getBookmarkKey,
+  getVerseKey,
+  normalizeBookmarkStorage,
+  normalizeHighlightStorage,
+  normalizeStudySetStorage,
+  type BookmarkStorage,
+  type HighlightStorage,
+  type StudySetStorage
+} from "@/lib/study-workspace";
 
-type ReaderPane = "reading" | "notebook";
+type ReaderPane = "reading" | "notebook" | "study-sets";
+type UtilityPane = "search" | "cross-references" | "compare";
+
+type CurrentPassage = {
+  bookSlug: string;
+  chapterNumber: number;
+  view: ReadingView;
+};
 
 type ReaderWorkspaceContextValue = {
   activeReaderPane: ReaderPane;
   setActiveReaderPane: (tab: ReaderPane) => void;
+  activeUtilityPane: UtilityPane;
+  setActiveUtilityPane: (pane: UtilityPane) => void;
+  currentPassage: CurrentPassage | null;
+  currentChapterByVersion: Record<BundledBibleVersion, Chapter> | null;
+  syncCurrentPassage: (bookSlug: string, chapterNumber: number, view: ReadingView) => void;
+  syncCurrentChapterData: (
+    bookSlug: string,
+    chapterNumber: number,
+    chaptersByVersion: Record<BundledBibleVersion, Chapter> | null
+  ) => void;
+  activeStudyVerseNumber: number | null;
+  setActiveStudyVerseNumber: (value: number | null) => void;
+  openCrossReferences: (verseNumber?: number | null) => void;
+  openCompare: (verseNumber?: number | null) => void;
+  compareVersion: BundledBibleVersion;
+  setCompareVersion: (value: BundledBibleVersion) => void;
   getNotebook: (bookSlug: string, chapterNumber: number) => PassageNotebook;
   updateNotebookTitle: (bookSlug: string, chapterNumber: number, title: string) => void;
   addNotebookBlock: (
@@ -37,10 +90,44 @@ type ReaderWorkspaceContextValue = {
     bookSlug: string,
     chapterNumber: number,
     blockId: string,
-    updates: Partial<Pick<PassageNotebookBlock, "type" | "text">>
+    updates: Partial<Pick<PassageNotebookBlock, "type" | "text" | "references">>
   ) => void;
   deleteNotebookBlock: (bookSlug: string, chapterNumber: number, blockId: string) => void;
   clearNotebook: (bookSlug: string, chapterNumber: number) => void;
+  addNotebookReference: (
+    bookSlug: string,
+    chapterNumber: number,
+    reference: PassageReference,
+    blockId?: string
+  ) => void;
+  getHighlight: (bookSlug: string, chapterNumber: number, verseNumber: number) => Highlight | null;
+  getHighlightsForPassage: (bookSlug: string, chapterNumber: number) => Highlight[];
+  cycleHighlight: (bookSlug: string, chapterNumber: number, verseNumber: number) => void;
+  updateHighlightLabel: (
+    bookSlug: string,
+    chapterNumber: number,
+    verseNumber: number,
+    label: string
+  ) => void;
+  getBookmark: (
+    bookSlug: string,
+    chapterNumber: number,
+    verseNumber?: number
+  ) => Bookmark | null;
+  getBookmarksForPassage: (bookSlug: string, chapterNumber: number) => Bookmark[];
+  toggleBookmark: (bookSlug: string, chapterNumber: number, verseNumber?: number) => void;
+  updateBookmarkLabel: (
+    bookSlug: string,
+    chapterNumber: number,
+    verseNumber: number | undefined,
+    label: string
+  ) => void;
+  getStudySets: () => StudySet[];
+  saveReferenceToStudySet: (setName: string, reference: PassageReference) => StudySet | null;
+  removeStudySetItem: (studySetId: string, itemId: string) => void;
+  renameStudySet: (studySetId: string, nextName: string) => void;
+  deleteStudySet: (studySetId: string) => void;
+  saveCurrentPassageToStudySet: (setName: string) => StudySet | null;
 };
 
 const ReaderWorkspaceContext = createContext<ReaderWorkspaceContextValue | null>(null);
@@ -48,46 +135,163 @@ const ReaderWorkspaceContext = createContext<ReaderWorkspaceContextValue | null>
 function isNotebookEmpty(notebook: PassageNotebook) {
   return (
     notebook.title.trim().length === 0 &&
-    notebook.blocks.every((block) => block.text.trim().length === 0)
+    notebook.blocks.every(
+      (block) =>
+        block.text.trim().length === 0 &&
+        (!block.references?.length || block.references.every((reference) => !reference.label?.trim()))
+    )
   );
+}
+
+function getSortedStudySets(studySets: StudySetStorage) {
+  return Object.values(studySets).sort((left, right) =>
+    right.updatedAt.localeCompare(left.updatedAt)
+  );
+}
+
+function getAlternateVersion(version: BundledBibleVersion): BundledBibleVersion {
+  return version === "web" ? "kjv" : "web";
 }
 
 export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   const pathname = usePathname();
   const { version } = useReaderVersion();
   const [notebooks, setNotebooks] = useState<PassageNotebookStorage>({});
-  const [hasLoadedNotebooks, setHasLoadedNotebooks] = useState(false);
+  const [highlights, setHighlights] = useState<HighlightStorage>({});
+  const [bookmarks, setBookmarks] = useState<BookmarkStorage>({});
+  const [studySets, setStudySets] = useState<StudySetStorage>({});
+  const [hasLoadedState, setHasLoadedState] = useState(false);
   const [activeReaderPane, setActiveReaderPane] = useState<ReaderPane>("reading");
+  const [activeUtilityPane, setActiveUtilityPane] = useState<UtilityPane>("search");
+  const [currentPassage, setCurrentPassage] = useState<CurrentPassage | null>(null);
+  const [currentChapterByVersion, setCurrentChapterByVersion] = useState<
+    Record<BundledBibleVersion, Chapter> | null
+  >(null);
+  const [activeStudyVerseNumber, setActiveStudyVerseNumber] = useState<number | null>(null);
+  const [compareVersionOverride, setCompareVersionOverride] = useState<BundledBibleVersion | null>(null);
   const isReaderRoute = pathname.startsWith("/read");
+  const compareVersion =
+    compareVersionOverride && compareVersionOverride !== version
+      ? compareVersionOverride
+      : getAlternateVersion(version);
 
-  useEffect(() => {
-    try {
-      const stored = window.localStorage.getItem(PASSAGE_NOTEBOOK_STORAGE_KEY);
+  const syncCurrentPassage = useCallback(
+    (bookSlug: string, chapterNumber: number, view: ReadingView) => {
+      setCurrentPassage((current) =>
+        current?.bookSlug === bookSlug &&
+        current.chapterNumber === chapterNumber &&
+        current.view === view
+          ? current
+          : { bookSlug, chapterNumber, view }
+      );
+    },
+    []
+  );
 
-      if (!stored) {
-        setHasLoadedNotebooks(true);
+  const syncCurrentChapterData = useCallback(
+    (
+      bookSlug: string,
+      chapterNumber: number,
+      chaptersByVersion: Record<BundledBibleVersion, Chapter> | null
+    ) => {
+      setCurrentChapterByVersion((current) => {
+        if (current === chaptersByVersion) {
+          return current;
+        }
+
+        return chaptersByVersion;
+      });
+      if (!chaptersByVersion) {
         return;
       }
 
-      setNotebooks(normalizePassageNotebookStorage(JSON.parse(stored)));
+      setCurrentPassage((current) =>
+        current?.bookSlug === bookSlug && current.chapterNumber === chapterNumber
+          ? current
+          : {
+              bookSlug,
+              chapterNumber,
+              view: "chapter"
+            }
+      );
+      setActiveStudyVerseNumber((current) =>
+        current && current > 0 ? current : chaptersByVersion[version].verses[0]?.number ?? null
+      );
+    },
+    [version]
+  );
+
+  useEffect(() => {
+    try {
+      const storedNotebooks = window.localStorage.getItem(PASSAGE_NOTEBOOK_STORAGE_KEY);
+      const storedHighlights = window.localStorage.getItem(STUDY_HIGHLIGHTS_STORAGE_KEY);
+      const storedBookmarks = window.localStorage.getItem(STUDY_BOOKMARKS_STORAGE_KEY);
+      const storedStudySets = window.localStorage.getItem(STUDY_SETS_STORAGE_KEY);
+
+      if (storedNotebooks) {
+        setNotebooks(normalizePassageNotebookStorage(JSON.parse(storedNotebooks)));
+      }
+
+      if (storedHighlights) {
+        setHighlights(normalizeHighlightStorage(JSON.parse(storedHighlights)));
+      }
+
+      if (storedBookmarks) {
+        setBookmarks(normalizeBookmarkStorage(JSON.parse(storedBookmarks)));
+      }
+
+      if (storedStudySets) {
+        setStudySets(normalizeStudySetStorage(JSON.parse(storedStudySets)));
+      }
     } catch {
       window.localStorage.removeItem(PASSAGE_NOTEBOOK_STORAGE_KEY);
+      window.localStorage.removeItem(STUDY_HIGHLIGHTS_STORAGE_KEY);
+      window.localStorage.removeItem(STUDY_BOOKMARKS_STORAGE_KEY);
+      window.localStorage.removeItem(STUDY_SETS_STORAGE_KEY);
     } finally {
-      setHasLoadedNotebooks(true);
+      setHasLoadedState(true);
     }
   }, []);
 
   useEffect(() => {
-    if (!hasLoadedNotebooks) {
+    if (!hasLoadedState) {
       return;
     }
 
     window.localStorage.setItem(PASSAGE_NOTEBOOK_STORAGE_KEY, JSON.stringify(notebooks));
-  }, [hasLoadedNotebooks, notebooks]);
+  }, [hasLoadedState, notebooks]);
+
+  useEffect(() => {
+    if (!hasLoadedState) {
+      return;
+    }
+
+    window.localStorage.setItem(STUDY_HIGHLIGHTS_STORAGE_KEY, JSON.stringify(highlights));
+  }, [hasLoadedState, highlights]);
+
+  useEffect(() => {
+    if (!hasLoadedState) {
+      return;
+    }
+
+    window.localStorage.setItem(STUDY_BOOKMARKS_STORAGE_KEY, JSON.stringify(bookmarks));
+  }, [bookmarks, hasLoadedState]);
+
+  useEffect(() => {
+    if (!hasLoadedState) {
+      return;
+    }
+
+    window.localStorage.setItem(STUDY_SETS_STORAGE_KEY, JSON.stringify(studySets));
+  }, [hasLoadedState, studySets]);
 
   useEffect(() => {
     if (!isReaderRoute) {
       setActiveReaderPane("reading");
+      setActiveUtilityPane("search");
+      setCurrentPassage(null);
+      setCurrentChapterByVersion(null);
+      setActiveStudyVerseNumber(null);
     }
   }, [isReaderRoute, pathname]);
 
@@ -95,6 +299,32 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
     () => ({
       activeReaderPane,
       setActiveReaderPane,
+      activeUtilityPane,
+      setActiveUtilityPane,
+      currentPassage,
+      currentChapterByVersion,
+      syncCurrentPassage,
+      syncCurrentChapterData,
+      activeStudyVerseNumber,
+      setActiveStudyVerseNumber,
+      openCrossReferences: (verseNumber = null) => {
+        if (verseNumber != null) {
+          setActiveStudyVerseNumber(verseNumber);
+        }
+
+        setActiveUtilityPane("cross-references");
+      },
+      openCompare: (verseNumber = null) => {
+        if (verseNumber != null) {
+          setActiveStudyVerseNumber(verseNumber);
+        }
+
+        setActiveUtilityPane("compare");
+      },
+      compareVersion,
+      setCompareVersion: (nextVersion) => {
+        setCompareVersionOverride(nextVersion === version ? getAlternateVersion(version) : nextVersion);
+      },
       getNotebook: (bookSlug, chapterNumber) => {
         const notebookId = getPassageNotebookId({ version, bookSlug, chapterNumber });
 
@@ -104,7 +334,6 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
         const notebookId = getPassageNotebookId({ version, bookSlug, chapterNumber });
         const existing =
           notebooks[notebookId] ?? createPassageNotebook({ version, bookSlug, chapterNumber });
-
         const nextNotebook = {
           ...existing,
           title,
@@ -142,18 +371,16 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
         const notebookId = getPassageNotebookId({ version, bookSlug, chapterNumber });
         const existing =
           notebooks[notebookId] ?? createPassageNotebook({ version, bookSlug, chapterNumber });
-
-        const blocks = existing.blocks.map((block) =>
-          block.id === blockId
-            ? {
-                ...block,
-                ...updates
-              }
-            : block
-        );
         const nextNotebook = {
           ...existing,
-          blocks,
+          blocks: existing.blocks.map((block) =>
+            block.id === blockId
+              ? {
+                  ...block,
+                  ...updates
+                }
+              : block
+          ),
           updatedAt: new Date().toISOString()
         };
 
@@ -180,11 +407,9 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
             chapterNumber,
             blocks: [createNotebookBlock("paragraph")]
           });
-
-        const blocks = existing.blocks.filter((block) => block.id !== blockId);
         const nextNotebook = {
           ...existing,
-          blocks,
+          blocks: existing.blocks.filter((block) => block.id !== blockId),
           updatedAt: new Date().toISOString()
         };
 
@@ -213,9 +438,273 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
           delete next[notebookId];
           return next;
         });
+      },
+      addNotebookReference: (bookSlug, chapterNumber, reference, blockId) => {
+        const notebookId = getPassageNotebookId({ version, bookSlug, chapterNumber });
+        const existing =
+          notebooks[notebookId] ?? createPassageNotebook({ version, bookSlug, chapterNumber });
+        const blocks =
+          existing.blocks.length > 0 ? [...existing.blocks] : [createNotebookBlock("paragraph")];
+        const targetIndex = blockId ? blocks.findIndex((block) => block.id === blockId) : 0;
+        const nextBlockIndex = targetIndex >= 0 ? targetIndex : 0;
+        const targetBlock = blocks[nextBlockIndex];
+        const alreadyExists = targetBlock.references.some((item) => item.id === reference.id);
+
+        blocks[nextBlockIndex] = alreadyExists
+          ? targetBlock
+          : {
+              ...targetBlock,
+              references: [...targetBlock.references, reference]
+            };
+
+        setNotebooks((current) => ({
+          ...current,
+          [notebookId]: {
+            ...existing,
+            blocks,
+            updatedAt: new Date().toISOString()
+          }
+        }));
+      },
+      getHighlight: (bookSlug, chapterNumber, verseNumber) =>
+        highlights[getVerseKey(version, bookSlug, chapterNumber, verseNumber)] ?? null,
+      getHighlightsForPassage: (bookSlug, chapterNumber) =>
+        Object.values(highlights)
+          .filter(
+            (highlight) =>
+              highlight.version === version &&
+              highlight.bookSlug === bookSlug &&
+              highlight.chapterNumber === chapterNumber
+          )
+          .sort((left, right) => left.verseNumber - right.verseNumber),
+      cycleHighlight: (bookSlug, chapterNumber, verseNumber) => {
+        const key = getVerseKey(version, bookSlug, chapterNumber, verseNumber);
+        const current = highlights[key] ?? null;
+        const nextColor = cycleHighlightColor(current?.color);
+
+        setHighlights((items) => {
+          if (!nextColor) {
+            const next = { ...items };
+            delete next[key];
+            return next;
+          }
+
+          return {
+            ...items,
+            [key]: {
+              ...(current ?? createHighlight(version, bookSlug, chapterNumber, verseNumber, nextColor)),
+              color: nextColor,
+              updatedAt: new Date().toISOString()
+            }
+          };
+        });
+      },
+      updateHighlightLabel: (bookSlug, chapterNumber, verseNumber, label) => {
+        const key = getVerseKey(version, bookSlug, chapterNumber, verseNumber);
+        const current = highlights[key];
+
+        if (!current) {
+          return;
+        }
+
+        setHighlights((items) => ({
+          ...items,
+          [key]: {
+            ...current,
+            label,
+            updatedAt: new Date().toISOString()
+          }
+        }));
+      },
+      getBookmark: (bookSlug, chapterNumber, verseNumber) =>
+        bookmarks[getBookmarkKey(version, bookSlug, chapterNumber, verseNumber)] ?? null,
+      getBookmarksForPassage: (bookSlug, chapterNumber) =>
+        Object.values(bookmarks)
+          .filter(
+            (bookmark) =>
+              bookmark.version === version &&
+              bookmark.bookSlug === bookSlug &&
+              bookmark.chapterNumber === chapterNumber
+          )
+          .sort((left, right) => (left.verseNumber ?? 0) - (right.verseNumber ?? 0)),
+      toggleBookmark: (bookSlug, chapterNumber, verseNumber) => {
+        const key = getBookmarkKey(version, bookSlug, chapterNumber, verseNumber);
+
+        setBookmarks((items) => {
+          if (items[key]) {
+            const next = { ...items };
+            delete next[key];
+            return next;
+          }
+
+          return {
+            ...items,
+            [key]: createBookmark(version, bookSlug, chapterNumber, verseNumber)
+          };
+        });
+      },
+      updateBookmarkLabel: (bookSlug, chapterNumber, verseNumber, label) => {
+        const key = getBookmarkKey(version, bookSlug, chapterNumber, verseNumber);
+        const current = bookmarks[key];
+
+        if (!current) {
+          return;
+        }
+
+        setBookmarks((items) => ({
+          ...items,
+          [key]: {
+            ...current,
+            label,
+            updatedAt: new Date().toISOString()
+          }
+        }));
+      },
+      getStudySets: () => getSortedStudySets(studySets),
+      saveReferenceToStudySet: (setName, reference) => {
+        const trimmedName = setName.trim();
+
+        if (!trimmedName) {
+          return null;
+        }
+
+        const existingStudySet =
+          getSortedStudySets(studySets).find(
+            (studySet) => studySet.name.toLowerCase() === trimmedName.toLowerCase()
+          ) ?? null;
+        const nextStudySet = existingStudySet ?? createStudySet(trimmedName);
+        const nextItems = nextStudySet.items.some((item) => item.id === reference.id)
+          ? nextStudySet.items
+          : [...nextStudySet.items, reference];
+        const savedStudySet = {
+          ...nextStudySet,
+          name: trimmedName,
+          items: nextItems,
+          updatedAt: new Date().toISOString()
+        };
+
+        setStudySets((items) => ({
+          ...items,
+          [savedStudySet.id]: savedStudySet
+        }));
+
+        return savedStudySet;
+      },
+      removeStudySetItem: (studySetId, itemId) => {
+        setStudySets((items) => {
+          const studySet = items[studySetId];
+
+          if (!studySet) {
+            return items;
+          }
+
+          const nextItems = studySet.items.filter((item) => item.id !== itemId);
+
+          if (nextItems.length === 0) {
+            const next = { ...items };
+            delete next[studySetId];
+            return next;
+          }
+
+          return {
+            ...items,
+            [studySetId]: {
+              ...studySet,
+              items: nextItems,
+              updatedAt: new Date().toISOString()
+            }
+          };
+        });
+      },
+      renameStudySet: (studySetId, nextName) => {
+        const trimmedName = nextName.trim();
+
+        if (!trimmedName) {
+          return;
+        }
+
+        setStudySets((items) => {
+          const studySet = items[studySetId];
+
+          if (!studySet) {
+            return items;
+          }
+
+          return {
+            ...items,
+            [studySetId]: {
+              ...studySet,
+              name: trimmedName,
+              updatedAt: new Date().toISOString()
+            }
+          };
+        });
+      },
+      deleteStudySet: (studySetId) => {
+        setStudySets((items) => {
+          if (!(studySetId in items)) {
+            return items;
+          }
+
+          const next = { ...items };
+          delete next[studySetId];
+          return next;
+        });
+      },
+      saveCurrentPassageToStudySet: (setName) => {
+        if (!currentPassage) {
+          return null;
+        }
+
+        const trimmedName = setName.trim();
+
+        if (!trimmedName) {
+          return null;
+        }
+
+        const reference = createPassageReference({
+          version,
+          bookSlug: currentPassage.bookSlug,
+          chapterNumber: currentPassage.chapterNumber,
+          sourceType: "manual"
+        });
+        const existingStudySet =
+          getSortedStudySets(studySets).find(
+            (studySet) => studySet.name.toLowerCase() === trimmedName.toLowerCase()
+          ) ?? null;
+        const nextStudySet = existingStudySet ?? createStudySet(trimmedName);
+        const savedStudySet = {
+          ...nextStudySet,
+          name: trimmedName,
+          items: nextStudySet.items.some((item) => item.id === reference.id)
+            ? nextStudySet.items
+            : [...nextStudySet.items, reference],
+          updatedAt: new Date().toISOString()
+        };
+
+        setStudySets((items) => ({
+          ...items,
+          [savedStudySet.id]: savedStudySet
+        }));
+
+        return savedStudySet;
       }
     }),
-    [activeReaderPane, notebooks, version]
+    [
+      activeReaderPane,
+      activeStudyVerseNumber,
+      activeUtilityPane,
+      bookmarks,
+      compareVersion,
+      currentChapterByVersion,
+      currentPassage,
+      highlights,
+      notebooks,
+      syncCurrentChapterData,
+      syncCurrentPassage,
+      studySets,
+      version
+    ]
   );
 
   return <ReaderWorkspaceContext.Provider value={value}>{children}</ReaderWorkspaceContext.Provider>;

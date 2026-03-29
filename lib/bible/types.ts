@@ -74,10 +74,22 @@ export type ReaderCustomizationSettings = {
 
 export type PassageNotebookBlockType = "paragraph" | "list";
 
+export type PassageReference = {
+  id: string;
+  version: BundledBibleVersion;
+  bookSlug: string;
+  chapterNumber: number;
+  verseNumber?: number;
+  endVerseNumber?: number;
+  sourceType?: "manual" | "bookmark" | "topic" | "search";
+  label?: string;
+};
+
 export type PassageNotebookBlock = {
   id: string;
   type: PassageNotebookBlockType;
   text: string;
+  references: PassageReference[];
 };
 
 export type PassageNotebook = {
@@ -88,6 +100,50 @@ export type PassageNotebook = {
   title: string;
   blocks: PassageNotebookBlock[];
   updatedAt: string;
+};
+
+export type StudyHighlightColor = "gold" | "sky" | "rose";
+
+export type Highlight = {
+  id: string;
+  version: BundledBibleVersion;
+  bookSlug: string;
+  chapterNumber: number;
+  verseNumber: number;
+  color: StudyHighlightColor;
+  label: string;
+  updatedAt: string;
+};
+
+export type Bookmark = {
+  id: string;
+  version: BundledBibleVersion;
+  bookSlug: string;
+  chapterNumber: number;
+  verseNumber?: number;
+  label: string;
+  updatedAt: string;
+};
+
+export type StudySet = {
+  id: string;
+  name: string;
+  items: PassageReference[];
+  updatedAt: string;
+};
+
+export type CrossReferenceGroup = {
+  id: string;
+  label: string;
+  references: PassageReference[];
+};
+
+export type CrossReferenceEntry = {
+  id: string;
+  bookSlug: string;
+  chapterNumber: number;
+  verseNumber: number;
+  groups: CrossReferenceGroup[];
 };
 
 export type BibleSearchVerseEntry = {

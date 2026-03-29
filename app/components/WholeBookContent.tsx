@@ -1,10 +1,13 @@
 "use client";
 
+import { useEffect } from "react";
+
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderContentTabs } from "@/app/components/ReaderContentTabs";
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
+import { ReaderStudySetsPanel } from "@/app/components/ReaderStudySetsPanel";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
@@ -22,11 +25,16 @@ type WholeBookContentProps = {
 export function WholeBookContent({ books, book, chaptersByVersion }: WholeBookContentProps) {
   const { version } = useReaderVersion();
   const { settings } = useReaderCustomization();
-  const { activeReaderPane } = useReaderWorkspace();
+  const { activeReaderPane, setActiveStudyVerseNumber, syncCurrentChapterData } = useReaderWorkspace();
   const chapters = chaptersByVersion[version];
   const showStrongs = version === "kjv" && settings.showStrongs;
   const versionLabel = getBibleVersionLabel(version);
   const versionBadge = getBibleVersionBadge(version);
+
+  useEffect(() => {
+    syncCurrentChapterData(book.slug, 1, null);
+    setActiveStudyVerseNumber(null);
+  }, [book.slug, setActiveStudyVerseNumber, syncCurrentChapterData]);
 
   return (
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
@@ -62,6 +70,10 @@ export function WholeBookContent({ books, book, chaptersByVersion }: WholeBookCo
         {activeReaderPane === "notebook" ? (
           <div className="reading-surface reader-notebook-surface">
             <ReaderNotebookEditor bookSlug={book.slug} chapterNumber={1} />
+          </div>
+        ) : activeReaderPane === "study-sets" ? (
+          <div className="reading-surface reader-notebook-surface">
+            <ReaderStudySetsPanel bookSlug={book.slug} chapterNumber={1} />
           </div>
         ) : (
           <div className="reading-surface chapter-stack">
