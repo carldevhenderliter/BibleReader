@@ -1,43 +1,97 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import { WritingAssistantCard } from "@/app/components/WritingAssistantCard";
+import { useWritingAssistant } from "@/app/components/WritingAssistantProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
+import { buildNotebookAiPrompt, normalizeAiWritingResult } from "@/lib/ai/writing-assistant";
 import { getChapterHref } from "@/lib/bible/utils";
-import { createPassageReference, formatPassageReference } from "@/lib/study-workspace";
+import type { AiWritingAction, AiWritingResult, Chapter } from "@/lib/bible/types";
+import {
+  createPassageReference,
+  formatBookLabel,
+  formatPassageReference
+} from "@/lib/study-workspace";
 
 type ReaderNotebookEditorProps = {
   bookSlug: string;
   chapterNumber: number;
+  currentChapter?: Chapter | null;
 };
 
-function formatBookLabel(bookSlug: string) {
-  return bookSlug
-    .split("-")
-    .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
-    .join(" ");
-}
+const NOTEBOOK_AI_OPTIONS: Array<{ id: AiWritingAction; label: string }> = [
+  { id: "summarize-passage-notes", label: "Summarize passage" },
+  { id: "rewrite-selected-block", label: "Rewrite selected block" },
+  { id: "expand-notes", label: "Expand notes" },
+  { id: "create-outline", label: "Create outline" },
+  { id: "turn-notes-into-sermon-points", label: "Sermon points" }
+];
 
 export function ReaderNotebookEditor({
   bookSlug,
-  chapterNumber
+  chapterNumber,
+  currentChapter = null
 }: ReaderNotebookEditorProps) {
   const router = useRouter();
   const { version } = useReaderVersion();
+  const { generateWritingDraft } = useWritingAssistant();
   const {
     activeStudyVerseNumber,
     addNotebookBlock,
     addNotebookReference,
+    appendNotebookDraft,
     clearNotebook,
     deleteNotebookBlock,
+    getBookmarksForPassage,
+    getHighlightsForPassage,
     getNotebook,
+    getStudySets,
+    insertNotebookDraft,
     updateNotebookBlock,
     updateNotebookTitle
   } = useReaderWorkspace();
   const notebook = getNotebook(bookSlug, chapterNumber);
   const bookLabel = useMemo(() => formatBookLabel(bookSlug), [bookSlug]);
+  const [selectedBlockId, setSelectedBlockId] = useState<string | null>(notebook.blocks[0]?.id ?? null);
+  const [preview, setPreview] = useState<AiWritingResult | null>(null);
+
+  useEffect(() => {
+    if (selectedBlockId && notebook.blocks.some((block) => block.id === selectedBlockId)) {
+      return;
+    }
+
+    setSelectedBlockId(notebook.blocks[0]?.id ?? null);
+  }, [notebook.blocks, selectedBlockId]);
+
+  const handleRunWritingAction = async (action: AiWritingAction) => {
+    const prompt = buildNotebookAiPrompt({
+      action: action as
+        | "summarize-passage-notes"
+        | "rewrite-selected-block"
+        | "expand-notes"
+        | "create-outline"
+        | "turn-notes-into-sermon-points",
+      version,
+      passageLabel: `${bookLabel} ${chapterNumber}`,
+      currentChapter,
+      activeVerseNumber: activeStudyVerseNumber,
+      notebook,
+      selectedBlockId,
+      highlights: getHighlightsForPassage(bookSlug, chapterNumber),
+      bookmarks: getBookmarksForPassage(bookSlug, chapterNumber),
+      studySets: getStudySets()
+    });
+    const result = await generateWritingDraft(prompt);
+
+    if (!result) {
+      return;
+    }
+
+    setPreview(normalizeAiWritingResult(result));
+  };
 
   return (
     <div className="reader-notebook">
@@ -68,6 +122,53 @@ export function ReaderNotebookEditor({
           value={notebook.title}
         />
       </label>
+
+      <WritingAssistantCard
+        description="Use local AI to summarize the passage, expand notes, rewrite a selected block, or turn your notes into sermon material."
+        onRun={(action) => void handleRunWritingAction(action)}
+        options={NOTEBOOK_AI_OPTIONS.map((option) => ({
+          ...option,
+          disabled: option.id === "rewrite-selected-block" && !selectedBlockId
+        }))}
+        preview={preview}
+        previewActions={
+          preview ? (
+            <>
+              <button
+                className="reader-inline-button"
+                onClick={() => insertNotebookDraft(bookSlug, chapterNumber, preview.content)}
+                type="button"
+              >
+                Insert as new block
+              </button>
+              <button
+                className="reader-inline-button"
+                onClick={() => appendNotebookDraft(bookSlug, chapterNumber, preview.content, selectedBlockId ?? undefined)}
+                type="button"
+              >
+                Append to notebook
+              </button>
+              <button
+                className="reader-inline-button"
+                disabled={!selectedBlockId}
+                onClick={() => {
+                  if (!selectedBlockId) {
+                    return;
+                  }
+
+                  updateNotebookBlock(bookSlug, chapterNumber, selectedBlockId, {
+                    text: preview.content
+                  });
+                }}
+                type="button"
+              >
+                Replace selected block
+              </button>
+            </>
+          ) : null
+        }
+        title="Notebook AI"
+      />
 
       <div className="reader-notebook-toolbar" role="toolbar" aria-label="Notebook block controls">
         <button
@@ -100,7 +201,8 @@ export function ReaderNotebookEditor({
                 chapterNumber,
                 verseNumber: activeStudyVerseNumber,
                 sourceType: "manual"
-              })
+              }),
+              selectedBlockId ?? undefined
             );
           }}
           type="button"
@@ -116,7 +218,10 @@ export function ReaderNotebookEditor({
       ) : (
         <div className="reader-notebook-blocks">
           {notebook.blocks.map((block, index) => (
-            <section className="reader-notebook-block" key={block.id}>
+            <section
+              className={`reader-notebook-block${selectedBlockId === block.id ? " is-selected" : ""}`}
+              key={block.id}
+            >
               <div className="reader-notebook-block-header">
                 <label className="reader-notebook-block-type">
                   <span className="sr-only">Block type {index + 1}</span>
@@ -133,13 +238,22 @@ export function ReaderNotebookEditor({
                     <option value="list">List</option>
                   </select>
                 </label>
-                <button
-                  className="reader-inline-button"
-                  onClick={() => deleteNotebookBlock(bookSlug, chapterNumber, block.id)}
-                  type="button"
-                >
-                  Remove
-                </button>
+                <div className="reader-notebook-block-actions">
+                  <button
+                    className="reader-inline-button"
+                    onClick={() => setSelectedBlockId(block.id)}
+                    type="button"
+                  >
+                    {selectedBlockId === block.id ? "Selected" : "Select"}
+                  </button>
+                  <button
+                    className="reader-inline-button"
+                    onClick={() => deleteNotebookBlock(bookSlug, chapterNumber, block.id)}
+                    type="button"
+                  >
+                    Remove
+                  </button>
+                </div>
               </div>
               <textarea
                 aria-label={`Notebook block ${index + 1}`}
@@ -149,6 +263,7 @@ export function ReaderNotebookEditor({
                     text: event.target.value
                   })
                 }
+                onFocus={() => setSelectedBlockId(block.id)}
                 placeholder={
                   block.type === "list"
                     ? "Write one list item per line"

@@ -7,6 +7,7 @@ import { useReaderCustomization } from "@/app/components/ReaderCustomizationProv
 import { ReaderContentTabs } from "@/app/components/ReaderContentTabs";
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
+import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
 import { SearchWorkspacePanel } from "@/app/components/SearchWorkspacePanel";
 import { ReaderStudySetsPanel } from "@/app/components/ReaderStudySetsPanel";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
@@ -40,6 +41,7 @@ export function WholeBookContent({ books, book, chaptersByVersion }: WholeBookCo
   const versionLabel = getBibleVersionLabel(version);
   const versionBadge = getBibleVersionBadge(version);
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
+  const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
   const showReaderSearch = isSplitViewActive && leftReaderMode === "search";
 
   useEffect(() => {
@@ -84,7 +86,15 @@ export function WholeBookContent({ books, book, chaptersByVersion }: WholeBookCo
           </div>
         ) : showNotebookInline ? (
           <div className="reading-surface reader-notebook-surface">
-            <ReaderNotebookEditor bookSlug={book.slug} chapterNumber={1} />
+            <ReaderNotebookEditor
+              bookSlug={book.slug}
+              chapterNumber={1}
+              currentChapter={chapters[0] ?? null}
+            />
+          </div>
+        ) : showSermonsInline ? (
+          <div className="reading-surface reader-notebook-surface">
+            <ReaderSermonWorkspace currentChapter={chapters[0] ?? null} />
           </div>
         ) : showReaderSearch ? (
           <div className="reading-surface reader-search-surface">

@@ -1874,6 +1874,12 @@ select {
   flex-wrap: wrap;
 }
 
+.reader-notebook-block-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
 .reader-notebook-references {
   display: flex;
   flex-wrap: wrap;
@@ -1891,12 +1897,120 @@ select {
 }
 
 .reader-study-sets,
+.reader-sermons,
 .reader-compare-panel,
 .reader-cross-references-panel {
   display: grid;
   gap: 1rem;
   align-content: start;
   min-height: 0;
+}
+
+.writing-ai-card,
+.writing-ai-state,
+.writing-ai-preview,
+.reader-sermon-list,
+.reader-sermon-editor,
+.reader-sermon-sections,
+.reader-sermons-layout {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.writing-ai-card {
+  padding: 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.1rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.writing-ai-card-header {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.writing-ai-card-title,
+.writing-ai-preview-title {
+  margin: 0;
+}
+
+.writing-ai-card-copy,
+.writing-ai-preview-label {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.66);
+  line-height: 1.5;
+}
+
+.writing-ai-actions,
+.writing-ai-preview-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.writing-ai-preview {
+  padding: 0.9rem;
+  border: 1px solid rgba(var(--reader-accent-rgb), 0.18);
+  border-radius: 1rem;
+  background: rgba(var(--reader-accent-rgb), 0.08);
+}
+
+.writing-ai-preview-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.writing-ai-preview-content {
+  margin: 0;
+  white-space: pre-wrap;
+  color: rgba(255, 255, 255, 0.9);
+  font: inherit;
+  line-height: 1.6;
+}
+
+.reader-sermons-layout {
+  grid-template-columns: minmax(15rem, 18rem) minmax(0, 1fr);
+  align-items: start;
+}
+
+.reader-sermon-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+  padding: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.reader-sermon-list-item.is-active {
+  border-color: rgba(var(--reader-accent-rgb), 0.3);
+  background: rgba(var(--reader-accent-rgb), 0.1);
+}
+
+.reader-sermon-list-button {
+  display: grid;
+  gap: 0.18rem;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.reader-sermon-list-button span {
+  color: rgba(255, 255, 255, 0.66);
+}
+
+.reader-sermon-reference {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
 }
 
 .reader-study-summary {
@@ -2760,6 +2874,10 @@ select {
 
   .reader-notebook-toolbar {
     display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .reader-sermons-layout {
     grid-template-columns: 1fr;
   }
 

@@ -105,6 +105,7 @@ describe("BottomSearchBar", () => {
     expect(screen.getByRole("button", { name: "Partial" })).toHaveAttribute("aria-pressed", "true");
     expect(screen.getByRole("button", { name: "Complete" })).toHaveAttribute("aria-pressed", "false");
     expect(screen.getByRole("button", { name: "Show Strongs" })).toHaveAttribute("aria-pressed", "false");
+    expect(screen.queryByRole("button", { name: "Ask AI" })).not.toBeInTheDocument();
   });
 
   it("renders on reader routes too", () => {

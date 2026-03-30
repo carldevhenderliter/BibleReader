@@ -243,6 +243,38 @@ describe("ReaderPageContent", () => {
     ).not.toBeInTheDocument();
   });
 
+  it("creates a sermon draft from the current notebook", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
+    fireEvent.change(screen.getByLabelText("Notebook title"), {
+      target: { value: "Genesis opener" }
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Add paragraph" }));
+    fireEvent.change(screen.getByLabelText("Notebook block 1"), {
+      target: { value: "God creates with intention and order." }
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "Sermons" }));
+    fireEvent.click(screen.getByRole("button", { name: "From notebook" }));
+
+    expect(screen.getByLabelText("Sermon title")).toHaveValue("Genesis opener");
+    expect(screen.getByLabelText("Sermon summary")).toHaveValue(
+      "God creates with intention and order."
+    );
+    expect(screen.getByLabelText("Sermon section 1")).toHaveValue(
+      "God creates with intention and order."
+    );
+  });
+
   it("moves the notebook to the right pane and shows search on the left in split view", async () => {
     setSplitViewActive(true);
 

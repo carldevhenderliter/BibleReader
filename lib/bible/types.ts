@@ -102,6 +102,21 @@ export type PassageNotebook = {
   updatedAt: string;
 };
 
+export type SermonDocumentSection = {
+  id: string;
+  title: string;
+  content: string;
+};
+
+export type SermonDocument = {
+  id: string;
+  title: string;
+  summary: string;
+  references: PassageReference[];
+  sections: SermonDocumentSection[];
+  updatedAt: string;
+};
+
 export type StudyHighlightColor = "gold" | "sky" | "rose";
 
 export type Highlight = {
@@ -293,8 +308,6 @@ export type BibleSearchResultGroup = {
   emptyMessage?: string;
 };
 
-export type SearchMode = "lookup" | "ai";
-
 export type SearchMatchMode = "partial" | "complete";
 
 export type LocalBibleAiStatus = "disabled" | "downloading" | "ready" | "generating" | "error";
@@ -309,10 +322,26 @@ export type LocalBibleAiSource = {
   verseNumber?: number;
 };
 
-export type LocalBibleAiAnswer = {
-  query: string;
-  answer: string;
-  sources: LocalBibleAiSource[];
+export type AiWritingTarget = "notebook" | "sermon";
+
+export type AiWritingAction =
+  | "summarize-passage-notes"
+  | "rewrite-selected-block"
+  | "expand-notes"
+  | "create-outline"
+  | "turn-notes-into-sermon-points"
+  | "generate-sermon-outline"
+  | "expand-selected-section"
+  | "write-introduction"
+  | "write-conclusion"
+  | "add-application-points"
+  | "rewrite-for-clarity";
+
+export type AiWritingResult = {
+  target: AiWritingTarget;
+  action: AiWritingAction;
+  title: string;
+  content: string;
 };
 
 export type VerseToken = {

@@ -40,7 +40,8 @@ export function ReaderSettingsPanel({
 }: ReaderSettingsPanelProps) {
   const { isPanelOpen, resetSettings, setIsPanelOpen, settings, updateSettings } =
     useReaderCustomization();
-  const { openCompare, openCrossReferences, openNotebook, setActiveReaderPane } = useReaderWorkspace();
+  const { openCompare, openCrossReferences, openNotebook, openSermons, setActiveReaderPane } =
+    useReaderWorkspace();
   const { version, setVersion } = useReaderVersion();
   const pathname = usePathname();
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -73,6 +74,11 @@ export function ReaderSettingsPanel({
 
   const handleCompareOpen = () => {
     openCompare();
+    setIsPanelOpen(false);
+  };
+
+  const handleSermonsOpen = () => {
+    openSermons();
     setIsPanelOpen(false);
   };
 
@@ -236,6 +242,15 @@ export function ReaderSettingsPanel({
             {isReaderRoute ? (
               <button className="reader-inline-button reader-settings-link" onClick={handleNotebookOpen} type="button">
                 Notebook
+              </button>
+            ) : null}
+            {isReaderRoute ? (
+              <button
+                className="reader-inline-button reader-settings-link"
+                onClick={handleSermonsOpen}
+                type="button"
+              >
+                Sermons
               </button>
             ) : null}
             {isReaderRoute ? (

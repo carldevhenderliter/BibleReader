@@ -2,11 +2,9 @@
 
 import { useEffect, useId, useRef } from "react";
 
-import { SearchAiPanel } from "@/app/components/SearchAiPanel";
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { SearchMatchModeToggle } from "@/app/components/SearchMatchModeToggle";
-import { SearchModeToggle } from "@/app/components/SearchModeToggle";
 import { SearchResultGroups } from "@/app/components/SearchResultGroups";
 import { SearchStrongsToggle } from "@/app/components/SearchStrongsToggle";
 import { getBibleVersionLabel } from "@/lib/bible/version";
@@ -14,15 +12,8 @@ import { getBibleVersionLabel } from "@/lib/bible/version";
 export function BottomSearchBar() {
   const { version } = useReaderVersion();
   const {
-    aiAnswer,
-    aiAvailabilityReason,
-    aiProgressLabel,
-    aiProgressValue,
-    aiStatus,
-    askAi,
     clearSearch,
     closeSearch,
-    enableAi,
     isSplitViewActive,
     isOpen,
     isSearching,
@@ -31,11 +22,8 @@ export function BottomSearchBar() {
     query,
     queryParts,
     resultGroups,
-    searchMode,
     selectResult,
-    selectAiSource,
     setMatchMode,
-    setSearchMode,
     setQuery,
     setShowStrongsInSearch,
     showStrongsInSearch
@@ -85,34 +73,17 @@ export function BottomSearchBar() {
                 <h2 className="search-tray-title">{getBibleVersionLabel(version)} results</h2>
               </div>
               <div className="search-tray-header-actions">
-                <SearchModeToggle onChange={setSearchMode} searchMode={searchMode} />
-                {searchMode === "lookup" ? (
-                  <>
-                    <SearchMatchModeToggle matchMode={matchMode} onChange={setMatchMode} />
-                    <SearchStrongsToggle
-                      isEnabled={showStrongsInSearch}
-                      onChange={setShowStrongsInSearch}
-                    />
-                  </>
-                ) : null}
+                <SearchMatchModeToggle matchMode={matchMode} onChange={setMatchMode} />
+                <SearchStrongsToggle
+                  isEnabled={showStrongsInSearch}
+                  onChange={setShowStrongsInSearch}
+                />
                 <button className="search-close-button" onClick={closeSearch} type="button">
                   Close
                 </button>
               </div>
             </div>
-            {searchMode === "ai" ? (
-              <SearchAiPanel
-                answer={aiAnswer}
-                availabilityReason={aiAvailabilityReason}
-                onAsk={askAi}
-                onEnable={enableAi}
-                onSelectSource={selectAiSource}
-                progressLabel={aiProgressLabel}
-                progressValue={aiProgressValue}
-                query={query}
-                status={aiStatus}
-              />
-            ) : !query.trim() ? (
+            {!query.trim() ? (
               <p className="search-empty-copy">
                 Search for a book, reference, Strongs number, word, phrase, or comma-separated list, or use `Topic:` to browse study topics.
               </p>
@@ -146,12 +117,6 @@ export function BottomSearchBar() {
             id={inputId}
             onChange={(event) => {
               setQuery(event.target.value);
-            }}
-            onKeyDown={(event) => {
-              if (event.key === "Enter" && searchMode === "ai") {
-                event.preventDefault();
-                void askAi();
-              }
             }}
             onFocus={openSearch}
             placeholder="Search books, references, Strongs numbers, words, phrases, or Topic:"

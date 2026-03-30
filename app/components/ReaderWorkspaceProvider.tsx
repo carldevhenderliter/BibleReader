@@ -21,6 +21,8 @@ import type {
   PassageNotebookBlock,
   PassageReference,
   ReadingView,
+  SermonDocument,
+  SermonDocumentSection,
   StudyHighlightColor,
   StudySet
 } from "@/lib/bible/types";
@@ -32,6 +34,13 @@ import {
   normalizePassageNotebookStorage,
   type PassageNotebookStorage
 } from "@/lib/passage-notebooks";
+import {
+  SERMON_DOCUMENTS_STORAGE_KEY,
+  createSermonDocument,
+  createSermonDocumentSection,
+  normalizeSermonDocumentStorage,
+  type SermonDocumentStorage
+} from "@/lib/sermon-documents";
 import {
   STUDY_BOOKMARKS_STORAGE_KEY,
   STUDY_HIGHLIGHTS_STORAGE_KEY,
@@ -53,7 +62,7 @@ import {
 
 type ReaderPane = "reading" | "study-sets";
 type LeftReaderMode = "scripture" | "search";
-type UtilityPane = "search" | "cross-references" | "compare" | "notebook";
+type UtilityPane = "search" | "cross-references" | "compare" | "notebook" | "sermons";
 
 type CurrentPassage = {
   bookSlug: string;
@@ -70,6 +79,7 @@ type ReaderWorkspaceContextValue = {
   setActiveUtilityPane: (pane: UtilityPane) => void;
   openNotebook: () => void;
   closeNotebookWorkspace: () => void;
+  openSermons: () => void;
   currentPassage: CurrentPassage | null;
   currentChapterByVersion: Record<BundledBibleVersion, Chapter> | null;
   syncCurrentPassage: (bookSlug: string, chapterNumber: number, view: ReadingView) => void;
@@ -90,6 +100,18 @@ type ReaderWorkspaceContextValue = {
     bookSlug: string,
     chapterNumber: number,
     type: PassageNotebookBlock["type"]
+  ) => void;
+  insertNotebookDraft: (
+    bookSlug: string,
+    chapterNumber: number,
+    text: string,
+    type?: PassageNotebookBlock["type"]
+  ) => void;
+  appendNotebookDraft: (
+    bookSlug: string,
+    chapterNumber: number,
+    text: string,
+    blockId?: string
   ) => void;
   updateNotebookBlock: (
     bookSlug: string,
@@ -133,6 +155,26 @@ type ReaderWorkspaceContextValue = {
   renameStudySet: (studySetId: string, nextName: string) => void;
   deleteStudySet: (studySetId: string) => void;
   saveCurrentPassageToStudySet: (setName: string) => StudySet | null;
+  activeSermonId: string | null;
+  setActiveSermonId: (id: string | null) => void;
+  getSermonDocuments: () => SermonDocument[];
+  getActiveSermon: () => SermonDocument | null;
+  createSermon: (title?: string) => SermonDocument;
+  createSermonFromNotebook: () => SermonDocument | null;
+  updateSermonMetadata: (
+    sermonId: string,
+    updates: Partial<Pick<SermonDocument, "title" | "summary">>
+  ) => void;
+  addSermonSection: (sermonId: string, title?: string, content?: string) => void;
+  updateSermonSection: (
+    sermonId: string,
+    sectionId: string,
+    updates: Partial<Pick<SermonDocumentSection, "title" | "content">>
+  ) => void;
+  deleteSermonSection: (sermonId: string, sectionId: string) => void;
+  deleteSermon: (sermonId: string) => void;
+  addReferenceToSermon: (sermonId: string, reference: PassageReference) => void;
+  removeReferenceFromSermon: (sermonId: string, referenceId: string) => void;
 };
 
 const ReaderWorkspaceContext = createContext<ReaderWorkspaceContextValue | null>(null);
@@ -154,6 +196,10 @@ function getSortedStudySets(studySets: StudySetStorage) {
   );
 }
 
+function getSortedSermons(documents: SermonDocumentStorage) {
+  return Object.values(documents).sort((left, right) => right.updatedAt.localeCompare(left.updatedAt));
+}
+
 function getAlternateVersion(version: BundledBibleVersion): BundledBibleVersion {
   return version === "web" ? "kjv" : "web";
 }
@@ -162,6 +208,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   const pathname = usePathname();
   const { version } = useReaderVersion();
   const [notebooks, setNotebooks] = useState<PassageNotebookStorage>({});
+  const [sermonDocuments, setSermonDocuments] = useState<SermonDocumentStorage>({});
   const [highlights, setHighlights] = useState<HighlightStorage>({});
   const [bookmarks, setBookmarks] = useState<BookmarkStorage>({});
   const [studySets, setStudySets] = useState<StudySetStorage>({});
@@ -175,6 +222,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
     Record<BundledBibleVersion, Chapter> | null
   >(null);
   const [activeStudyVerseNumber, setActiveStudyVerseNumber] = useState<number | null>(null);
+  const [activeSermonId, setActiveSermonId] = useState<string | null>(null);
   const [compareVersionOverride, setCompareVersionOverride] = useState<BundledBibleVersion | null>(null);
   const isReaderRoute = pathname.startsWith("/read");
   const activeUtilityPane = activeUtilityPaneState;
@@ -192,6 +240,12 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       return;
     }
 
+    if (pane === "sermons") {
+      setActiveReaderPane("reading");
+      setLeftReaderMode("scripture");
+      return;
+    }
+
     setLastReaderUtilityPane(pane);
     setLeftReaderMode("scripture");
   }, []);
@@ -200,6 +254,12 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
     setActiveReaderPane("reading");
     setLeftReaderMode("search");
     setActiveUtilityPaneState("notebook");
+  }, []);
+
+  const openSermons = useCallback(() => {
+    setActiveReaderPane("reading");
+    setLeftReaderMode("scripture");
+    setActiveUtilityPaneState("sermons");
   }, []);
 
   const closeNotebookWorkspace = useCallback(() => {
@@ -259,6 +319,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       const storedHighlights = window.localStorage.getItem(STUDY_HIGHLIGHTS_STORAGE_KEY);
       const storedBookmarks = window.localStorage.getItem(STUDY_BOOKMARKS_STORAGE_KEY);
       const storedStudySets = window.localStorage.getItem(STUDY_SETS_STORAGE_KEY);
+      const storedSermons = window.localStorage.getItem(SERMON_DOCUMENTS_STORAGE_KEY);
 
       if (storedNotebooks) {
         setNotebooks(normalizePassageNotebookStorage(JSON.parse(storedNotebooks)));
@@ -275,8 +336,13 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       if (storedStudySets) {
         setStudySets(normalizeStudySetStorage(JSON.parse(storedStudySets)));
       }
+
+      if (storedSermons) {
+        setSermonDocuments(normalizeSermonDocumentStorage(JSON.parse(storedSermons)));
+      }
     } catch {
       window.localStorage.removeItem(PASSAGE_NOTEBOOK_STORAGE_KEY);
+      window.localStorage.removeItem(SERMON_DOCUMENTS_STORAGE_KEY);
       window.localStorage.removeItem(STUDY_HIGHLIGHTS_STORAGE_KEY);
       window.localStorage.removeItem(STUDY_BOOKMARKS_STORAGE_KEY);
       window.localStorage.removeItem(STUDY_SETS_STORAGE_KEY);
@@ -292,6 +358,14 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
 
     window.localStorage.setItem(PASSAGE_NOTEBOOK_STORAGE_KEY, JSON.stringify(notebooks));
   }, [hasLoadedState, notebooks]);
+
+  useEffect(() => {
+    if (!hasLoadedState) {
+      return;
+    }
+
+    window.localStorage.setItem(SERMON_DOCUMENTS_STORAGE_KEY, JSON.stringify(sermonDocuments));
+  }, [hasLoadedState, sermonDocuments]);
 
   useEffect(() => {
     if (!hasLoadedState) {
@@ -326,6 +400,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       setCurrentPassage(null);
       setCurrentChapterByVersion(null);
       setActiveStudyVerseNumber(null);
+      setActiveSermonId(null);
     }
   }, [isReaderRoute, pathname]);
 
@@ -349,6 +424,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       setActiveUtilityPane,
       openNotebook,
       closeNotebookWorkspace,
+      openSermons,
       currentPassage,
       currentChapterByVersion,
       syncCurrentPassage,
@@ -411,6 +487,59 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
           [notebookId]: {
             ...existing,
             blocks: [...existing.blocks, createNotebookBlock(type)],
+            updatedAt: new Date().toISOString()
+          }
+        }));
+      },
+      insertNotebookDraft: (bookSlug, chapterNumber, text, type = "paragraph") => {
+        const trimmedText = text.trim();
+
+        if (!trimmedText) {
+          return;
+        }
+
+        const notebookId = getPassageNotebookId({ version, bookSlug, chapterNumber });
+        const existing =
+          notebooks[notebookId] ?? createPassageNotebook({ version, bookSlug, chapterNumber });
+        const nextBlock = createNotebookBlock(type);
+
+        nextBlock.text = trimmedText;
+
+        setNotebooks((current) => ({
+          ...current,
+          [notebookId]: {
+            ...existing,
+            blocks: [...existing.blocks, nextBlock],
+            updatedAt: new Date().toISOString()
+          }
+        }));
+      },
+      appendNotebookDraft: (bookSlug, chapterNumber, text, blockId) => {
+        const trimmedText = text.trim();
+
+        if (!trimmedText) {
+          return;
+        }
+
+        const notebookId = getPassageNotebookId({ version, bookSlug, chapterNumber });
+        const existing =
+          notebooks[notebookId] ?? createPassageNotebook({ version, bookSlug, chapterNumber });
+        const blocks =
+          existing.blocks.length > 0 ? [...existing.blocks] : [createNotebookBlock("paragraph")];
+        const targetIndex = blockId ? blocks.findIndex((block) => block.id === blockId) : blocks.length - 1;
+        const nextIndex = targetIndex >= 0 ? targetIndex : blocks.length - 1;
+        const targetBlock = blocks[nextIndex]!;
+
+        blocks[nextIndex] = {
+          ...targetBlock,
+          text: targetBlock.text.trim() ? `${targetBlock.text.trim()}\n\n${trimmedText}` : trimmedText
+        };
+
+        setNotebooks((current) => ({
+          ...current,
+          [notebookId]: {
+            ...existing,
+            blocks,
             updatedAt: new Date().toISOString()
           }
         }));
@@ -736,10 +865,211 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
         }));
 
         return savedStudySet;
+      },
+      activeSermonId,
+      setActiveSermonId,
+      getSermonDocuments: () => getSortedSermons(sermonDocuments),
+      getActiveSermon: () => (activeSermonId ? sermonDocuments[activeSermonId] ?? null : null),
+      createSermon: (title = "Untitled sermon") => {
+        const sermon = createSermonDocument(title);
+
+        setSermonDocuments((current) => ({
+          ...current,
+          [sermon.id]: sermon
+        }));
+        setActiveSermonId(sermon.id);
+        setActiveUtilityPaneState("sermons");
+
+        return sermon;
+      },
+      createSermonFromNotebook: () => {
+        if (!currentPassage) {
+          return null;
+        }
+
+        const notebook = notebooks[getPassageNotebookId({
+          version,
+          bookSlug: currentPassage.bookSlug,
+          chapterNumber: currentPassage.chapterNumber
+        })] ?? createPassageNotebook({
+          version,
+          bookSlug: currentPassage.bookSlug,
+          chapterNumber: currentPassage.chapterNumber
+        });
+        const sermon = createSermonDocument(
+          notebook.title.trim() || `${currentPassage.bookSlug.replace(/-/g, " ")} ${currentPassage.chapterNumber} sermon`
+        );
+        const notebookReferences = notebook.blocks.flatMap((block) => block.references);
+        const currentReference = createPassageReference({
+          version,
+          bookSlug: currentPassage.bookSlug,
+          chapterNumber: currentPassage.chapterNumber,
+          verseNumber: activeStudyVerseNumber ?? undefined,
+          sourceType: "manual"
+        });
+        const references = Array.from(
+          new Map(
+            [currentReference, ...notebookReferences].map((reference) => [reference.id, reference])
+          ).values()
+        );
+        const sections =
+          notebook.blocks.length > 0
+            ? notebook.blocks.map((block, index) => ({
+                id: createSermonDocumentSection(`Point ${index + 1}`).id,
+                title: `Point ${index + 1}`,
+                content: block.text.trim()
+              }))
+            : [createSermonDocumentSection("Main idea")];
+
+        const nextSermon: SermonDocument = {
+          ...sermon,
+          title: notebook.title.trim() || sermon.title,
+          references,
+          sections,
+          summary: notebook.blocks[0]?.text.trim() || ""
+        };
+
+        setSermonDocuments((current) => ({
+          ...current,
+          [nextSermon.id]: nextSermon
+        }));
+        setActiveSermonId(nextSermon.id);
+        setActiveUtilityPaneState("sermons");
+
+        return nextSermon;
+      },
+      updateSermonMetadata: (sermonId, updates) => {
+        setSermonDocuments((current) => {
+          const sermon = current[sermonId];
+
+          if (!sermon) {
+            return current;
+          }
+
+          return {
+            ...current,
+            [sermonId]: {
+              ...sermon,
+              ...updates,
+              updatedAt: new Date().toISOString()
+            }
+          };
+        });
+      },
+      addSermonSection: (sermonId, title = "New section", content = "") => {
+        setSermonDocuments((current) => {
+          const sermon = current[sermonId];
+
+          if (!sermon) {
+            return current;
+          }
+
+          const nextSection = createSermonDocumentSection(title);
+          nextSection.content = content;
+
+          return {
+            ...current,
+            [sermonId]: {
+              ...sermon,
+              sections: [...sermon.sections, nextSection],
+              updatedAt: new Date().toISOString()
+            }
+          };
+        });
+      },
+      updateSermonSection: (sermonId, sectionId, updates) => {
+        setSermonDocuments((current) => {
+          const sermon = current[sermonId];
+
+          if (!sermon) {
+            return current;
+          }
+
+          return {
+            ...current,
+            [sermonId]: {
+              ...sermon,
+              sections: sermon.sections.map((section) =>
+                section.id === sectionId ? { ...section, ...updates } : section
+              ),
+              updatedAt: new Date().toISOString()
+            }
+          };
+        });
+      },
+      deleteSermonSection: (sermonId, sectionId) => {
+        setSermonDocuments((current) => {
+          const sermon = current[sermonId];
+
+          if (!sermon) {
+            return current;
+          }
+
+          return {
+            ...current,
+            [sermonId]: {
+              ...sermon,
+              sections:
+                sermon.sections.filter((section) => section.id !== sectionId).length > 0
+                  ? sermon.sections.filter((section) => section.id !== sectionId)
+                  : [createSermonDocumentSection("Main idea")],
+              updatedAt: new Date().toISOString()
+            }
+          };
+        });
+      },
+      deleteSermon: (sermonId) => {
+        setSermonDocuments((current) => {
+          if (!(sermonId in current)) {
+            return current;
+          }
+
+          const next = { ...current };
+          delete next[sermonId];
+          return next;
+        });
+        setActiveSermonId((current) => (current === sermonId ? null : current));
+      },
+      addReferenceToSermon: (sermonId, reference) => {
+        setSermonDocuments((current) => {
+          const sermon = current[sermonId];
+
+          if (!sermon || sermon.references.some((item) => item.id === reference.id)) {
+            return current;
+          }
+
+          return {
+            ...current,
+            [sermonId]: {
+              ...sermon,
+              references: [...sermon.references, reference],
+              updatedAt: new Date().toISOString()
+            }
+          };
+        });
+      },
+      removeReferenceFromSermon: (sermonId, referenceId) => {
+        setSermonDocuments((current) => {
+          const sermon = current[sermonId];
+
+          if (!sermon) {
+            return current;
+          }
+
+          return {
+            ...current,
+            [sermonId]: {
+              ...sermon,
+              references: sermon.references.filter((reference) => reference.id !== referenceId),
+              updatedAt: new Date().toISOString()
+            }
+          };
+        });
       }
     }),
     [
       activeReaderPane,
+      activeSermonId,
       activeStudyVerseNumber,
       activeUtilityPane,
       activeUtilityPaneState,
@@ -753,6 +1083,8 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       leftReaderMode,
       notebooks,
       openNotebook,
+      openSermons,
+      sermonDocuments,
       syncCurrentChapterData,
       syncCurrentPassage,
       studySets,

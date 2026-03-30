@@ -1,10 +1,8 @@
 "use client";
 
 import { useLookup } from "@/app/components/LookupProvider";
-import { SearchAiPanel } from "@/app/components/SearchAiPanel";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { SearchMatchModeToggle } from "@/app/components/SearchMatchModeToggle";
-import { SearchModeToggle } from "@/app/components/SearchModeToggle";
 import { SearchResultGroups } from "@/app/components/SearchResultGroups";
 import { SearchStrongsToggle } from "@/app/components/SearchStrongsToggle";
 import { getBibleVersionLabel } from "@/lib/bible/version";
@@ -22,24 +20,14 @@ export function SearchWorkspacePanel({
 }: SearchWorkspacePanelProps) {
   const { version } = useReaderVersion();
   const {
-    aiAnswer,
-    aiAvailabilityReason,
-    aiProgressLabel,
-    aiProgressValue,
-    aiStatus,
-    askAi,
     clearSearch,
-    enableAi,
     isSearching,
     matchMode,
     query,
     queryParts,
     resultGroups,
-    searchMode,
     selectResult,
-    selectAiSource,
     setMatchMode,
-    setSearchMode,
     setShowStrongsInSearch,
     showStrongsInSearch
   } = useLookup();
@@ -52,16 +40,11 @@ export function SearchWorkspacePanel({
           <h2 className="search-tray-title">{title ?? `${getBibleVersionLabel(version)} results`}</h2>
         </div>
         <div className="lookup-pane-header-actions">
-          <SearchModeToggle onChange={setSearchMode} searchMode={searchMode} />
-          {searchMode === "lookup" ? (
-            <>
           <SearchMatchModeToggle matchMode={matchMode} onChange={setMatchMode} />
           <SearchStrongsToggle
             isEnabled={showStrongsInSearch}
             onChange={setShowStrongsInSearch}
           />
-            </>
-          ) : null}
           {query ? (
             <button className="search-close-button" onClick={clearSearch} type="button">
               Clear
@@ -69,19 +52,7 @@ export function SearchWorkspacePanel({
           ) : null}
         </div>
       </div>
-      {searchMode === "ai" ? (
-        <SearchAiPanel
-          answer={aiAnswer}
-          availabilityReason={aiAvailabilityReason}
-          onAsk={askAi}
-          onEnable={enableAi}
-          onSelectSource={selectAiSource}
-          progressLabel={aiProgressLabel}
-          progressValue={aiProgressValue}
-          query={query}
-          status={aiStatus}
-        />
-      ) : !query.trim() ? (
+      {!query.trim() ? (
         <p className="search-empty-copy">
           Search for a book, reference, Strongs number, word, phrase, or comma-separated list, or
           use `Topic:` to browse study topics.

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { ReaderComparePanel } from "@/app/components/ReaderComparePanel";
 import { ReaderCrossReferencesPanel } from "@/app/components/ReaderCrossReferencesPanel";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
+import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
@@ -79,6 +80,15 @@ export function LookupPane() {
           >
             Notebook
           </button>
+          <button
+            aria-selected={activeUtilityPane === "sermons"}
+            className={`lookup-pane-tab${activeUtilityPane === "sermons" ? " is-active" : ""}`}
+            onClick={() => setActiveUtilityPane("sermons")}
+            role="tab"
+            type="button"
+          >
+            Sermons
+          </button>
         </div>
       ) : null}
       <div className="lookup-pane-body">
@@ -93,6 +103,8 @@ export function LookupPane() {
               <p className="search-empty-copy">Open a passage to use the notebook.</p>
             </div>
           )
+        ) : activeUtilityPane === "sermons" && isReaderRoute ? (
+          <ReaderSermonWorkspace />
         ) : activeUtilityPane === "compare" && isReaderRoute ? (
           <ReaderComparePanel />
         ) : activeUtilityPane === "cross-references" && isReaderRoute ? (

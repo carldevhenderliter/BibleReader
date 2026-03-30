@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
 import { ReaderVersionProvider, useReaderVersion } from "@/app/components/ReaderVersionProvider";
+import { WritingAssistantProvider } from "@/app/components/WritingAssistantProvider";
 import { PASSAGE_NOTEBOOK_STORAGE_KEY } from "@/lib/passage-notebooks";
 
 function NotebookHarness() {
@@ -33,7 +34,9 @@ function renderNotebookHarness() {
   return render(
     <ReaderVersionProvider>
       <ReaderWorkspaceProvider>
-        <NotebookHarness />
+        <WritingAssistantProvider>
+          <NotebookHarness />
+        </WritingAssistantProvider>
       </ReaderWorkspaceProvider>
     </ReaderVersionProvider>
   );

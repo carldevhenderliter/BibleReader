@@ -5,6 +5,7 @@ import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizatio
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
 import { LookupProvider } from "@/app/components/LookupProvider";
 import { ReaderVersionProvider } from "@/app/components/ReaderVersionProvider";
+import { WritingAssistantProvider } from "@/app/components/WritingAssistantProvider";
 
 type WrapperProps = {
   children: ReactNode;
@@ -14,9 +15,11 @@ function Wrapper({ children }: WrapperProps) {
   return (
     <ReaderVersionProvider>
       <ReaderWorkspaceProvider>
-        <LookupProvider>
-          <ReaderCustomizationProvider>{children}</ReaderCustomizationProvider>
-        </LookupProvider>
+        <WritingAssistantProvider>
+          <LookupProvider>
+            <ReaderCustomizationProvider>{children}</ReaderCustomizationProvider>
+          </LookupProvider>
+        </WritingAssistantProvider>
       </ReaderWorkspaceProvider>
     </ReaderVersionProvider>
   );
