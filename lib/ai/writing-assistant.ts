@@ -52,6 +52,19 @@ type SermonAiPromptInput = {
   selectedSectionId?: string | null;
 };
 
+type NotebookSermonPromptInput = {
+  prompt: string;
+  version: BundledBibleVersion;
+  passageLabel: string;
+  currentChapter: Chapter | null;
+  activeVerseNumber: number | null;
+  notebook: PassageNotebook;
+  highlights: Highlight[];
+  bookmarks: Bookmark[];
+  studySets: StudySet[];
+  sermon?: SermonDocument | null;
+};
+
 type WritingPrompt = {
   systemPrompt: string;
   userPrompt: string;
@@ -128,6 +141,52 @@ function getStudyContext(highlights: Highlight[], bookmarks: Bookmark[], studySe
   ]
     .filter(Boolean)
     .join("\n");
+}
+
+function getRelatedNotebookSummary(notebook: PassageNotebook) {
+  return [
+    `Title: ${notebook.title.trim() || "(untitled)"}`,
+    notebook.blocks.length > 0
+      ? notebook.blocks
+          .map((block, index) => {
+            const references = block.references
+              .map((reference) => formatPassageReference(reference))
+              .join(", ");
+
+            return [
+              `Block ${index + 1} (${block.type}): ${block.text.trim() || "(empty)"}`,
+              references ? `References: ${references}` : ""
+            ]
+              .filter(Boolean)
+              .join("\n");
+          })
+          .join("\n\n")
+      : "Blocks: (empty)"
+  ].join("\n\n");
+}
+
+function getSermonDocumentContext(sermon: SermonDocument | null | undefined) {
+  if (!sermon) {
+    return "";
+  }
+
+  return [
+    `Current sermon draft: ${sermon.title.trim() || "(untitled sermon)"}`,
+    `Summary: ${sermon.summary.trim() || "(empty)"}`,
+    sermon.references.length > 0
+      ? `Attached passages: ${sermon.references.map((reference) => formatPassageReference(reference)).join(", ")}`
+      : "Attached passages: (none)",
+    sermon.sections.length > 0
+      ? sermon.sections
+          .map(
+            (section, index) =>
+              `Section ${index + 1}: ${section.title.trim() || "(untitled)"}\n${
+                section.content.trim() || "(empty)"
+              }`
+          )
+          .join("\n\n")
+      : "Sections: (empty)"
+  ].join("\n\n");
 }
 
 function getNotebookActionInstruction(action: NotebookAiPromptInput["action"]) {
@@ -272,6 +331,53 @@ export function buildSermonAiPrompt({
         ? `Selected section:\n${selectedSection.title || "(untitled)"}\n${selectedSection.content || "(empty)"}`
         : "",
       "Write a draft that can be inserted into a sermon document. Keep it organized, clear, and grounded in the supplied passages."
+    ]
+      .filter(Boolean)
+      .join("\n\n")
+  };
+}
+
+export function buildNotebookSermonPrompt({
+  prompt,
+  version,
+  passageLabel,
+  currentChapter,
+  activeVerseNumber,
+  notebook,
+  highlights,
+  bookmarks,
+  studySets,
+  sermon
+}: NotebookSermonPromptInput): WritingPrompt {
+  const trimmedPrompt = prompt.trim();
+  const chapterContext = getChapterContext(currentChapter, activeVerseNumber);
+  const studyContext = getStudyContext(highlights, bookmarks, studySets);
+  const sermonContext = getSermonDocumentContext(sermon);
+
+  return {
+    target: "sermon",
+    action: "prompt-sermon-from-notebook",
+    title: "Notebook sermon draft",
+    systemPrompt: [
+      "You are a Bible writing assistant inside a local Bible study app.",
+      "Write sermon material only from the supplied passage, notebook, and study context.",
+      "Do not invent outside references, stories, or unsupported claims.",
+      "Return plain text only. Do not use markdown fences.",
+      "Prefer a sermon-ready structure with a clear title, concise summary, and organized sections when the prompt calls for it."
+    ].join(" "),
+    userPrompt: [
+      `Task:\nUse the notebook and passage context to respond to this sermon-writing request: ${trimmedPrompt || "(no prompt provided)"}`,
+      `Active translation:\n${version.toUpperCase()}`,
+      `Current passage:\n${passageLabel}`,
+      chapterContext ? `Passage text:\n${chapterContext}` : "",
+      `Notebook context:\n${getRelatedNotebookSummary(notebook)}`,
+      studyContext ? `Study context:\n${studyContext}` : "",
+      sermonContext ? `Current sermon draft context:\n${sermonContext}` : "",
+      [
+        "Write sermon material that can be saved into a sermon document.",
+        "Start with a strong sermon title on the first line when appropriate.",
+        "Keep the draft grounded in the supplied Bible context and ready for editing."
+      ].join(" ")
     ]
       .filter(Boolean)
       .join("\n\n")

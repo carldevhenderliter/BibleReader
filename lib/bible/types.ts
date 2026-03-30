@@ -330,6 +330,7 @@ export type AiWritingAction =
   | "expand-notes"
   | "create-outline"
   | "turn-notes-into-sermon-points"
+  | "prompt-sermon-from-notebook"
   | "generate-sermon-outline"
   | "expand-selected-section"
   | "write-introduction"
