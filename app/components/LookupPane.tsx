@@ -37,18 +37,7 @@ export function LookupPane() {
   }
 
   if (collapsedSplitPanes.study) {
-    return (
-      <aside aria-label="Study pane rail" className="split-pane-rail split-pane-rail-study">
-        <button
-          aria-label="Show study pane"
-          className="split-pane-rail-button"
-          onClick={() => expandSplitPane("study")}
-          type="button"
-        >
-          Study
-        </button>
-      </aside>
-    );
+    return null;
   }
 
   return (

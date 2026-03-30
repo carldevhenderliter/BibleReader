@@ -13,8 +13,6 @@ function getRootFontSize() {
 
 export function AppSplitLayout({ children }: PropsWithChildren) {
   const {
-    canCollapseSplitPane,
-    collapseSplitPane,
     collapsedSplitPanes,
     expandSplitPane,
     isSplitViewActive,
@@ -26,28 +24,57 @@ export function AppSplitLayout({ children }: PropsWithChildren) {
     setStudyPaneWidthRem
   } = useLookup();
 
-  const showReaderSearchDivider = isSplitViewActive && !collapsedSplitPanes.reader && !collapsedSplitPanes.search;
-  const showSearchStudyDivider = isSplitViewActive && !collapsedSplitPanes.search && !collapsedSplitPanes.study;
+  const hasCollapsedPaneDock =
+    isSplitViewActive &&
+    (collapsedSplitPanes.reader || collapsedSplitPanes.search || collapsedSplitPanes.study);
+  const showReaderPane = isSplitViewActive ? !collapsedSplitPanes.reader : true;
+  const showSearchPane = isSplitViewActive ? !collapsedSplitPanes.search : false;
+  const showStudyPane = isSplitViewActive ? !collapsedSplitPanes.study : false;
+  const showReaderSearchDivider = isSplitViewActive && showReaderPane && showSearchPane;
+  const showSearchStudyDivider = isSplitViewActive && showSearchPane && showStudyPane;
+  const showReaderStudyDivider = isSplitViewActive && showReaderPane && !showSearchPane && showStudyPane;
   const splitGridTemplateColumns = useMemo(() => {
     if (!isSplitViewActive) {
       return undefined;
     }
 
-    return [
-      collapsedSplitPanes.reader ? `${splitPaneRailWidthRem}rem` : "minmax(0, 1fr)",
-      showReaderSearchDivider ? `${splitPaneDividerWidthRem}rem` : "0rem",
-      collapsedSplitPanes.search ? `${splitPaneRailWidthRem}rem` : `${searchPaneWidthRem}rem`,
-      showSearchStudyDivider ? `${splitPaneDividerWidthRem}rem` : "0rem",
-      collapsedSplitPanes.study ? `${splitPaneRailWidthRem}rem` : `${studyPaneWidthRem}rem`
-    ].join(" ");
+    const columns: string[] = [];
+
+    if (hasCollapsedPaneDock) {
+      columns.push(`${splitPaneRailWidthRem}rem`);
+    }
+
+    if (showReaderPane) {
+      columns.push("minmax(0, 1fr)");
+    }
+
+    if (showReaderSearchDivider || showReaderStudyDivider) {
+      columns.push(`${splitPaneDividerWidthRem}rem`);
+    }
+
+    if (showSearchPane) {
+      columns.push(`${searchPaneWidthRem}rem`);
+    }
+
+    if (showSearchStudyDivider) {
+      columns.push(`${splitPaneDividerWidthRem}rem`);
+    }
+
+    if (showStudyPane) {
+      columns.push(`${studyPaneWidthRem}rem`);
+    }
+
+    return columns.join(" ");
   }, [
-    collapsedSplitPanes.reader,
-    collapsedSplitPanes.search,
-    collapsedSplitPanes.study,
+    hasCollapsedPaneDock,
     isSplitViewActive,
     searchPaneWidthRem,
     showReaderSearchDivider,
+    showReaderPane,
+    showReaderStudyDivider,
+    showSearchPane,
     showSearchStudyDivider,
+    showStudyPane,
     splitPaneDividerWidthRem,
     splitPaneRailWidthRem,
     studyPaneWidthRem
@@ -96,33 +123,45 @@ export function AppSplitLayout({ children }: PropsWithChildren) {
         splitGridTemplateColumns ? { gridTemplateColumns: splitGridTemplateColumns } : undefined
       }
     >
-      {collapsedSplitPanes.reader ? (
-        <aside aria-label="Reader pane rail" className="split-pane-rail split-pane-rail-reader">
-          <button
-            aria-label="Show reader pane"
-            className="split-pane-rail-button"
-            onClick={() => expandSplitPane("reader")}
-            type="button"
-          >
-            Reader
-          </button>
-        </aside>
-      ) : (
-        <div className="app-layout-reader-pane">
-          <div className="app-layout-reader-pane-actions">
+      {hasCollapsedPaneDock ? (
+        <aside aria-label="Collapsed panes dock" className="split-pane-dock">
+          {collapsedSplitPanes.reader ? (
             <button
-              aria-label="Hide reader pane"
-              className="split-pane-hide-button"
-              disabled={!canCollapseSplitPane("reader")}
-              onClick={() => collapseSplitPane("reader")}
+              aria-label="Show reader pane"
+              className="split-pane-rail-button"
+              onClick={() => expandSplitPane("reader")}
               type="button"
             >
-              Hide
+              Reader
             </button>
-          </div>
+          ) : null}
+          {collapsedSplitPanes.search ? (
+            <button
+              aria-label="Show search pane"
+              className="split-pane-rail-button"
+              onClick={() => expandSplitPane("search")}
+              type="button"
+            >
+              Search
+            </button>
+          ) : null}
+          {collapsedSplitPanes.study ? (
+            <button
+              aria-label="Show study pane"
+              className="split-pane-rail-button"
+              onClick={() => expandSplitPane("study")}
+              type="button"
+            >
+              Study
+            </button>
+          ) : null}
+        </aside>
+      ) : null}
+      {showReaderPane ? (
+        <div className="app-layout-reader-pane">
           <main className="site-main app-layout-main">{children}</main>
         </div>
-      )}
+      ) : null}
       {showReaderSearchDivider ? (
         <button
           aria-label="Resize reader and search panes"
@@ -130,6 +169,16 @@ export function AppSplitLayout({ children }: PropsWithChildren) {
           onDoubleClick={() => setSearchPaneWidthRem(null)}
           onPointerDown={(event) => beginSearchResize(event.clientX)}
           title="Drag to resize reader and search panes. Double-click to reset."
+          type="button"
+        />
+      ) : null}
+      {showReaderStudyDivider ? (
+        <button
+          aria-label="Resize reader and study panes"
+          className="app-layout-divider"
+          onDoubleClick={() => setStudyPaneWidthRem(null)}
+          onPointerDown={(event) => beginStudyResize(event.clientX)}
+          title="Drag to resize reader and study panes. Double-click to reset."
           type="button"
         />
       ) : null}

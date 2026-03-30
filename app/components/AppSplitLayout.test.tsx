@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 
 import { AppSplitLayout } from "@/app/components/AppSplitLayout";
 import { BottomSearchBar } from "@/app/components/BottomSearchBar";
@@ -76,7 +76,7 @@ function setViewportWidth(width: number) {
 function getVisiblePaneWidths(layout: Element | null) {
   const styleValue = layout?.getAttribute("style") ?? "";
   const match = styleValue.match(
-    /grid-template-columns:\s*minmax\(0,\s*1fr\)\s+0\.875rem\s+([0-9.]+)rem\s+0\.875rem\s+([0-9.]+)rem/
+    /grid-template-columns:\s*(?:3rem\s+)?minmax\(0,\s*1fr\)\s+0\.875rem\s+([0-9.]+)rem(?:\s+0\.875rem\s+([0-9.]+)rem)?/
   );
 
   if (!match) {
@@ -85,7 +85,7 @@ function getVisiblePaneWidths(layout: Element | null) {
 
   return {
     search: Number(match[1]),
-    study: Number(match[2])
+    study: Number(match[2] ?? 0)
   };
 }
 
@@ -181,6 +181,7 @@ describe("AppSplitLayout", () => {
 
     renderSplitLayout();
 
+    expect(await screen.findByLabelText("Collapsed panes dock")).toBeInTheDocument();
     fireEvent.click(await screen.findByRole("button", { name: "Show search pane" }));
 
     expect(await screen.findByLabelText("Search pane")).toBeInTheDocument();
@@ -191,11 +192,29 @@ describe("AppSplitLayout", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Hide study pane" }));
 
+    expect(await screen.findByLabelText("Collapsed panes dock")).toBeInTheDocument();
     expect(await screen.findByRole("button", { name: "Show study pane" })).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Show study pane" }));
 
     expect(await screen.findByLabelText("Study pane")).toBeInTheDocument();
+  });
+
+  it("stacks multiple collapsed pane buttons in the shared left dock", async () => {
+    window.localStorage.setItem(
+      SPLIT_COLLAPSED_PANES_STORAGE_KEY,
+      JSON.stringify({ reader: true, search: true, study: false })
+    );
+
+    renderSplitLayout();
+
+    const dock = await screen.findByLabelText("Collapsed panes dock");
+    const dockButtons = within(dock).getAllByRole("button");
+
+    expect(dockButtons.map((button) => button.getAttribute("aria-label"))).toEqual([
+      "Show reader pane",
+      "Show search pane"
+    ]);
   });
 
   it("does not render split dividers on mobile", () => {

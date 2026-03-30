@@ -1,8 +1,7 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
 
-import { LookupPane } from "@/app/components/LookupPane";
+import { AppSplitLayout } from "@/app/components/AppSplitLayout";
 import { ReaderPageContent } from "@/app/components/ReaderPageContent";
-import { SearchPane } from "@/app/components/SearchPane";
 import type { BookMeta, Chapter } from "@/lib/bible/types";
 import { setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
@@ -47,15 +46,13 @@ function setSplitViewActive(isActive: boolean) {
 
 function renderStudyPane() {
   return renderWithReaderCustomization(
-    <>
+    <AppSplitLayout>
       <ReaderPageContent
         book={books[0]}
         books={books}
         chaptersByVersion={{ web: chapter, kjv: chapter }}
       />
-      <SearchPane />
-      <LookupPane />
-    </>
+    </AppSplitLayout>
   );
 }
 

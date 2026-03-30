@@ -38,7 +38,7 @@ export function ReaderPageContent({
 }: ReaderPageContentProps) {
   const { version } = useReaderVersion();
   const { settings } = useReaderCustomization();
-  const { isSplitViewActive } = useLookup();
+  const { canCollapseSplitPane, collapseSplitPane, isSplitViewActive } = useLookup();
   const {
     activeReaderPane,
     activeUtilityPane,
@@ -77,12 +77,27 @@ export function ReaderPageContent({
               <p className="reader-toolbar-label">{book.testament} Testament</p>
               <p className="reader-toolbar-summary">{versionLabel}</p>
             </div>
-            <ReaderControls
-              book={book}
-              books={books}
-              currentChapter={chapter.chapterNumber}
-              view="chapter"
-            />
+            <div className="reader-toolbar-actions">
+              <ReaderControls
+                book={book}
+                books={books}
+                currentChapter={chapter.chapterNumber}
+                view="chapter"
+              />
+              {isSplitViewActive ? (
+                <div className="reader-toolbar-utilities">
+                  <button
+                    aria-label="Hide reader pane"
+                    className="split-pane-hide-button reader-pane-hide-button"
+                    disabled={!canCollapseSplitPane("reader")}
+                    onClick={() => collapseSplitPane("reader")}
+                    type="button"
+                  >
+                    Hide
+                  </button>
+                </div>
+              ) : null}
+            </div>
           </div>
           <header className="reader-heading">
             <p className="reader-section-label">{versionBadge}</p>

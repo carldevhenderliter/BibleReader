@@ -10,7 +10,6 @@ export function SearchPane() {
     canCollapseSplitPane,
     collapseSplitPane,
     collapsedSplitPanes,
-    expandSplitPane,
     isSplitViewActive
   } = useLookup();
   const { version } = useReaderVersion();
@@ -20,18 +19,7 @@ export function SearchPane() {
   }
 
   if (collapsedSplitPanes.search) {
-    return (
-      <aside aria-label="Search pane rail" className="split-pane-rail split-pane-rail-search">
-        <button
-          aria-label="Show search pane"
-          className="split-pane-rail-button"
-          onClick={() => expandSplitPane("search")}
-          type="button"
-        >
-          Search
-        </button>
-      </aside>
-    );
+    return null;
   }
 
   return (

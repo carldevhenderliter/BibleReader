@@ -171,49 +171,54 @@ export function LookupProvider({ children }: PropsWithChildren) {
   const [expandedTopicsByQuery, setExpandedTopicsByQuery] = useState<Record<string, string>>({});
   const queryParts = useMemo(() => parseBibleSearchQueries(query), [query]);
   const queryCount = Math.max(queryParts.length, 1);
+  const hasCollapsedPaneDock = collapsedSplitPanes.reader || collapsedSplitPanes.search || collapsedSplitPanes.study;
+  const dockWidthRem = hasCollapsedPaneDock ? SPLIT_PANE_RAIL_WIDTH_REM : 0;
+  const readerVisible = !collapsedSplitPanes.reader;
+  const searchVisible = !collapsedSplitPanes.search;
+  const studyVisible = !collapsedSplitPanes.study;
+  const visibleDividerCount =
+    (readerVisible && searchVisible ? 1 : 0) +
+    (searchVisible && studyVisible ? 1 : 0) +
+    (readerVisible && !searchVisible && studyVisible ? 1 : 0);
   const contentWidthRem = useMemo(
     () => Math.min(APP_LAYOUT_MAX_WIDTH_REM, Math.max(0, viewportWidthRem - SEARCH_SHELL_VIEWPORT_MARGIN_REM)),
     [viewportWidthRem]
   );
   const maximumNonReaderWidthRem = useMemo(() => {
-    const minimumReaderWidthRem = collapsedSplitPanes.reader
-      ? SPLIT_PANE_RAIL_WIDTH_REM
-      : MIN_READER_PANE_WIDTH_REM;
+    const minimumReaderWidthRem = readerVisible ? MIN_READER_PANE_WIDTH_REM : 0;
     const minimumSideWidthRem =
-      (collapsedSplitPanes.search ? SPLIT_PANE_RAIL_WIDTH_REM : MIN_SEARCH_PANE_WIDTH_REM) +
-      (collapsedSplitPanes.study ? SPLIT_PANE_RAIL_WIDTH_REM : MIN_STUDY_PANE_WIDTH_REM);
+      (searchVisible ? MIN_SEARCH_PANE_WIDTH_REM : 0) +
+      (studyVisible ? MIN_STUDY_PANE_WIDTH_REM : 0);
     const widthCapFromViewport = viewportWidthRem * NON_READER_MAX_VIEWPORT_RATIO;
     const widthCapFromLayout = Math.max(
       minimumSideWidthRem,
-      contentWidthRem - minimumReaderWidthRem - SPLIT_PANE_DIVIDER_WIDTH_REM * 2
+      contentWidthRem - dockWidthRem - minimumReaderWidthRem - visibleDividerCount * SPLIT_PANE_DIVIDER_WIDTH_REM
     );
 
     return Math.max(minimumSideWidthRem, Math.min(widthCapFromViewport, widthCapFromLayout));
-  }, [collapsedSplitPanes.reader, collapsedSplitPanes.search, collapsedSplitPanes.study, contentWidthRem, viewportWidthRem]);
+  }, [contentWidthRem, dockWidthRem, readerVisible, searchVisible, studyVisible, viewportWidthRem, visibleDividerCount]);
   const automaticSearchPaneWidthRem = useMemo(
     () => DEFAULT_SEARCH_PANE_WIDTH_REM + (queryCount - 1) * SEARCH_PANE_WIDTH_PER_EXTRA_QUERY_REM,
     [queryCount]
   );
   const desiredStudyPaneWidthRem = manualStudyPaneWidthRem ?? DEFAULT_STUDY_PANE_WIDTH_REM;
   const studyPaneWidthRem = useMemo(() => {
-    if (collapsedSplitPanes.study) {
-      return SPLIT_PANE_RAIL_WIDTH_REM;
+    if (!studyVisible) {
+      return 0;
     }
 
-    const minimumSearchWidthRem = collapsedSplitPanes.search
-      ? SPLIT_PANE_RAIL_WIDTH_REM
-      : MIN_SEARCH_PANE_WIDTH_REM;
+    const minimumSearchWidthRem = searchVisible ? MIN_SEARCH_PANE_WIDTH_REM : 0;
     const maximumStudyWidthRem = Math.max(
       MIN_STUDY_PANE_WIDTH_REM,
       maximumNonReaderWidthRem - minimumSearchWidthRem
     );
 
     return clampRange(desiredStudyPaneWidthRem, MIN_STUDY_PANE_WIDTH_REM, maximumStudyWidthRem);
-  }, [collapsedSplitPanes.search, collapsedSplitPanes.study, desiredStudyPaneWidthRem, maximumNonReaderWidthRem]);
+  }, [desiredStudyPaneWidthRem, maximumNonReaderWidthRem, searchVisible, studyVisible]);
   const desiredSearchPaneWidthRem = manualSearchPaneWidthRem ?? automaticSearchPaneWidthRem;
   const searchPaneWidthRem = useMemo(() => {
-    if (collapsedSplitPanes.search) {
-      return SPLIT_PANE_RAIL_WIDTH_REM;
+    if (!searchVisible) {
+      return 0;
     }
 
     const maximumSearchWidthRem = Math.max(
@@ -222,29 +227,31 @@ export function LookupProvider({ children }: PropsWithChildren) {
     );
 
     return clampRange(desiredSearchPaneWidthRem, MIN_SEARCH_PANE_WIDTH_REM, maximumSearchWidthRem);
-  }, [collapsedSplitPanes.search, desiredSearchPaneWidthRem, maximumNonReaderWidthRem, studyPaneWidthRem]);
+  }, [desiredSearchPaneWidthRem, maximumNonReaderWidthRem, searchVisible, studyPaneWidthRem]);
   const readerPaneWidthRem = useMemo(() => {
-    if (collapsedSplitPanes.reader) {
-      return SPLIT_PANE_RAIL_WIDTH_REM;
+    if (!readerVisible) {
+      return 0;
     }
 
     return Math.max(
       MIN_READER_PANE_WIDTH_REM,
-      contentWidthRem - SPLIT_PANE_DIVIDER_WIDTH_REM * 2 - searchPaneWidthRem - studyPaneWidthRem
+      contentWidthRem -
+        dockWidthRem -
+        visibleDividerCount * SPLIT_PANE_DIVIDER_WIDTH_REM -
+        searchPaneWidthRem -
+        studyPaneWidthRem
     );
-  }, [collapsedSplitPanes.reader, contentWidthRem, searchPaneWidthRem, studyPaneWidthRem]);
+  }, [contentWidthRem, dockWidthRem, readerVisible, searchPaneWidthRem, studyPaneWidthRem, visibleDividerCount]);
   const searchShellLeftOffsetRem = useMemo(() => {
-    if (collapsedSplitPanes.search) {
-      return collapsedSplitPanes.reader
-        ? SPLIT_PANE_RAIL_WIDTH_REM + SPLIT_PANE_DIVIDER_WIDTH_REM
-        : 0;
+    if (!searchVisible) {
+      return dockWidthRem;
     }
 
-    return readerPaneWidthRem + SPLIT_PANE_DIVIDER_WIDTH_REM;
-  }, [collapsedSplitPanes.reader, collapsedSplitPanes.search, readerPaneWidthRem]);
+    return dockWidthRem + (readerVisible ? readerPaneWidthRem + SPLIT_PANE_DIVIDER_WIDTH_REM : 0);
+  }, [dockWidthRem, readerPaneWidthRem, readerVisible, searchVisible]);
   const searchShellRightOffsetRem = useMemo(
-    () => studyPaneWidthRem + SPLIT_PANE_DIVIDER_WIDTH_REM,
-    [studyPaneWidthRem]
+    () => (studyVisible ? studyPaneWidthRem + SPLIT_PANE_DIVIDER_WIDTH_REM : 0),
+    [studyPaneWidthRem, studyVisible]
   );
 
   const canCollapseSplitPane = useCallback(

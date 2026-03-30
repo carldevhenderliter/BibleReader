@@ -1,5 +1,6 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react";
 
+import { AppSplitLayout } from "@/app/components/AppSplitLayout";
 import { LookupPane } from "@/app/components/LookupPane";
 import { ReaderPageContent } from "@/app/components/ReaderPageContent";
 import { SearchPane } from "@/app/components/SearchPane";
@@ -298,6 +299,25 @@ describe("ReaderPageContent", () => {
     expect(screen.getByLabelText("Notebook title")).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "WEB search" })).toBeInTheDocument();
     expect(screen.getByText("In the beginning, God created the heavens and the earth.")).toBeInTheDocument();
+  });
+
+  it("renders the reader hide button inside the reader toolbar in split view", () => {
+    setSplitViewActive(true);
+
+    const { container } = renderWithReaderCustomization(
+      <AppSplitLayout>
+        <ReaderPageContent
+          book={books[0]}
+          books={books}
+          chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+        />
+      </AppSplitLayout>
+    );
+
+    const toolbar = container.querySelector(".reader-toolbar");
+
+    expect(toolbar).toContainElement(screen.getByRole("button", { name: "Hide reader pane" }));
+    expect(container.querySelector(".app-layout-reader-pane-actions")).toBeNull();
   });
 
   it("highlights a verse range opened from search", () => {
