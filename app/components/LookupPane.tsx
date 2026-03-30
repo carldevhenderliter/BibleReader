@@ -18,7 +18,7 @@ export function LookupPane() {
     expandSplitPane,
     isSplitViewActive
   } = useLookup();
-  const { activeUtilityPane, currentPassage, setActiveUtilityPane } = useReaderWorkspace();
+  const { activeUtilityPane, setActiveUtilityPane } = useReaderWorkspace();
   const pathname = usePathname();
   const isReaderRoute = pathname.startsWith("/read");
 
@@ -100,16 +100,7 @@ export function LookupPane() {
         </div>
         <div className="lookup-pane-study-body">
           {activeUtilityPane === "notebook" ? (
-            currentPassage ? (
-              <ReaderNotebookEditor
-                bookSlug={currentPassage.bookSlug}
-                chapterNumber={currentPassage.chapterNumber}
-              />
-            ) : (
-              <div className="lookup-panel-empty">
-                <p className="search-empty-copy">Open a passage to use the notebook.</p>
-              </div>
-            )
+            <ReaderNotebookEditor />
           ) : activeUtilityPane === "sermons" ? (
             <ReaderSermonWorkspace />
           ) : activeUtilityPane === "compare" ? (

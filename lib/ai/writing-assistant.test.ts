@@ -19,32 +19,22 @@ describe("writing assistant prompt builder", () => {
       },
       activeVerseNumber: 1,
       notebook: {
-        id: "web:john:1",
-        version: "web",
-        bookSlug: "john",
-        chapterNumber: 1,
+        id: "notebook:john-notes",
         title: "John notes",
-        blocks: [
-          {
-            id: "block-1",
-            type: "paragraph",
-            text: "The Word is eternal.",
-            references: []
-          }
-        ],
+        content: "The Word is eternal.",
+        references: [],
         updatedAt: new Date(0).toISOString()
       },
-      selectedBlockId: "block-1",
       highlights: [],
       bookmarks: [],
       studySets: []
     });
 
     expect(prompt.target).toBe("notebook");
-    expect(prompt.userPrompt).toContain("Task:\nTurn the passage and notes into a clear Bible-study outline.");
+    expect(prompt.userPrompt).toContain("Task:\nTurn the passage and note into a clear Bible-study outline.");
     expect(prompt.userPrompt).toContain("Current passage:\nJohn 1");
     expect(prompt.userPrompt).toContain("Notebook title: John notes");
-    expect(prompt.userPrompt).toContain("Block 1 (paragraph) [selected]: The Word is eternal.");
+    expect(prompt.userPrompt).toContain("Notebook content: The Word is eternal.");
   });
 
   it("builds a sermon writing prompt with sermon and related notebook context", () => {
@@ -54,19 +44,10 @@ describe("writing assistant prompt builder", () => {
       currentChapter: null,
       currentPassageLabel: "John 1",
       notebook: {
-        id: "web:john:1",
-        version: "web",
-        bookSlug: "john",
-        chapterNumber: 1,
+        id: "notebook:john-notes",
         title: "John notes",
-        blocks: [
-          {
-            id: "block-1",
-            type: "paragraph",
-            text: "The Word is eternal.",
-            references: []
-          }
-        ],
+        content: "The Word is eternal.",
+        references: [],
         updatedAt: new Date(0).toISOString()
       },
       sermon: {

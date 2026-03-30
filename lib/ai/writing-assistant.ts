@@ -8,7 +8,7 @@ import type {
   BundledBibleVersion,
   Chapter,
   Highlight,
-  PassageNotebook,
+  NotebookDocument,
   SermonDocument,
   StudySet
 } from "@/lib/bible/types";
@@ -18,17 +18,16 @@ type NotebookAiPromptInput = {
   action: Extract<
     AiWritingAction,
     | "summarize-passage-notes"
-    | "rewrite-selected-block"
     | "expand-notes"
     | "create-outline"
     | "turn-notes-into-sermon-points"
+    | "rewrite-selected-block"
   >;
   version: BundledBibleVersion;
   passageLabel: string;
   currentChapter: Chapter | null;
   activeVerseNumber: number | null;
-  notebook: PassageNotebook;
-  selectedBlockId?: string | null;
+  notebook: NotebookDocument;
   highlights: Highlight[];
   bookmarks: Bookmark[];
   studySets: StudySet[];
@@ -47,22 +46,9 @@ type SermonAiPromptInput = {
   version: BundledBibleVersion;
   currentChapter: Chapter | null;
   currentPassageLabel: string | null;
-  notebook: PassageNotebook | null;
+  notebook: NotebookDocument | null;
   sermon: SermonDocument;
   selectedSectionId?: string | null;
-};
-
-type NotebookSermonPromptInput = {
-  prompt: string;
-  version: BundledBibleVersion;
-  passageLabel: string;
-  currentChapter: Chapter | null;
-  activeVerseNumber: number | null;
-  notebook: PassageNotebook;
-  highlights: Highlight[];
-  bookmarks: Bookmark[];
-  studySets: StudySet[];
-  sermon?: SermonDocument | null;
 };
 
 type WritingPrompt = {
@@ -96,30 +82,18 @@ function getChapterContext(chapter: Chapter | null, activeVerseNumber: number | 
   return clampText(verses.map((verse) => `${verse.number}. ${verse.text}`).join("\n"), 1200);
 }
 
-function getNotebookContext(notebook: PassageNotebook, selectedBlockId?: string | null) {
-  const selectedBlock = selectedBlockId
-    ? notebook.blocks.find((block) => block.id === selectedBlockId) ?? null
-    : null;
-  const blockLines = notebook.blocks.map((block, index) => {
-    const references = block.references.map((reference) => formatPassageReference(reference)).join(", ");
+function getNotebookContext(notebook: NotebookDocument) {
+  const references = notebook.references
+    .map((reference) => formatPassageReference(reference))
+    .join(", ");
 
-    return [
-      `Block ${index + 1} (${block.type})${block.id === selectedBlockId ? " [selected]" : ""}: ${
-        block.text.trim() || "(empty)"
-      }`,
-      references ? `References: ${references}` : ""
-    ]
-      .filter(Boolean)
-      .join("\n");
-  });
-
-  return {
-    selectedBlock,
-    text: [
-      `Notebook title: ${notebook.title.trim() || "(untitled)"}`,
-      blockLines.length > 0 ? blockLines.join("\n\n") : "Notebook blocks: (empty)"
-    ].join("\n\n")
-  };
+  return [
+    `Notebook title: ${notebook.title.trim() || "(untitled)"}`,
+    `Notebook content: ${notebook.content.trim() || "(empty)"}`,
+    references ? `Notebook references: ${references}` : ""
+  ]
+    .filter(Boolean)
+    .join("\n\n");
 }
 
 function getStudyContext(highlights: Highlight[], bookmarks: Bookmark[], studySets: StudySet[]) {
@@ -143,62 +117,16 @@ function getStudyContext(highlights: Highlight[], bookmarks: Bookmark[], studySe
     .join("\n");
 }
 
-function getRelatedNotebookSummary(notebook: PassageNotebook) {
-  return [
-    `Title: ${notebook.title.trim() || "(untitled)"}`,
-    notebook.blocks.length > 0
-      ? notebook.blocks
-          .map((block, index) => {
-            const references = block.references
-              .map((reference) => formatPassageReference(reference))
-              .join(", ");
-
-            return [
-              `Block ${index + 1} (${block.type}): ${block.text.trim() || "(empty)"}`,
-              references ? `References: ${references}` : ""
-            ]
-              .filter(Boolean)
-              .join("\n");
-          })
-          .join("\n\n")
-      : "Blocks: (empty)"
-  ].join("\n\n");
-}
-
-function getSermonDocumentContext(sermon: SermonDocument | null | undefined) {
-  if (!sermon) {
-    return "";
-  }
-
-  return [
-    `Current sermon draft: ${sermon.title.trim() || "(untitled sermon)"}`,
-    `Summary: ${sermon.summary.trim() || "(empty)"}`,
-    sermon.references.length > 0
-      ? `Attached passages: ${sermon.references.map((reference) => formatPassageReference(reference)).join(", ")}`
-      : "Attached passages: (none)",
-    sermon.sections.length > 0
-      ? sermon.sections
-          .map(
-            (section, index) =>
-              `Section ${index + 1}: ${section.title.trim() || "(untitled)"}\n${
-                section.content.trim() || "(empty)"
-              }`
-          )
-          .join("\n\n")
-      : "Sections: (empty)"
-  ].join("\n\n");
-}
-
 function getNotebookActionInstruction(action: NotebookAiPromptInput["action"]) {
   switch (action) {
     case "summarize-passage-notes":
       return "Write concise study notes from the passage and current notebook context.";
     case "rewrite-selected-block":
-      return "Rewrite the selected notebook block more clearly while keeping the meaning grounded in the passage.";
+      return "Rewrite the current notebook note more clearly while keeping the meaning grounded in the passage.";
     case "expand-notes":
       return "Expand the notebook into fuller study notes without becoming repetitive.";
     case "create-outline":
-      return "Turn the passage and notes into a clear Bible-study outline.";
+      return "Turn the passage and note into a clear Bible-study outline.";
     case "turn-notes-into-sermon-points":
       return "Turn the notebook into sermon-ready points with a preaching structure.";
   }
@@ -228,13 +156,10 @@ export function buildNotebookAiPrompt({
   currentChapter,
   activeVerseNumber,
   notebook,
-  selectedBlockId,
   highlights,
   bookmarks,
   studySets
 }: NotebookAiPromptInput): WritingPrompt {
-  const notebookContext = getNotebookContext(notebook, selectedBlockId);
-  const selectedBlockText = notebookContext.selectedBlock?.text.trim() || "(none selected)";
   const chapterContext = getChapterContext(currentChapter, activeVerseNumber);
   const studyContext = getStudyContext(highlights, bookmarks, studySets);
 
@@ -258,8 +183,7 @@ export function buildNotebookAiPrompt({
       `Active translation:\n${version.toUpperCase()}`,
       `Current passage:\n${passageLabel}`,
       chapterContext ? `Passage text:\n${chapterContext}` : "",
-      `Notebook context:\n${notebookContext.text}`,
-      `Selected block:\n${selectedBlockText}`,
+      `Notebook context:\n${getNotebookContext(notebook)}`,
       studyContext ? `Study context:\n${studyContext}` : "",
       "Write a useful draft that can be inserted into a Bible notebook. Keep it readable and specific."
     ]
@@ -321,63 +245,12 @@ export function buildSermonAiPrompt({
       `Active translation:\n${version.toUpperCase()}`,
       currentPassageLabel ? `Current open passage:\n${currentPassageLabel}` : "",
       currentChapter ? `Current passage text:\n${getChapterContext(currentChapter, null)}` : "",
-      notebook
-        ? `Related notebook:\nTitle: ${notebook.title || "(untitled)"}\n${notebook.blocks
-            .map((block, index) => `Block ${index + 1} (${block.type}): ${block.text.trim() || "(empty)"}`)
-            .join("\n")}`
-        : "",
+      notebook ? `Related notebook:\n${getNotebookContext(notebook)}` : "",
       `Sermon document:\n${sermonContext}`,
       selectedSection
         ? `Selected section:\n${selectedSection.title || "(untitled)"}\n${selectedSection.content || "(empty)"}`
         : "",
       "Write a draft that can be inserted into a sermon document. Keep it organized, clear, and grounded in the supplied passages."
-    ]
-      .filter(Boolean)
-      .join("\n\n")
-  };
-}
-
-export function buildNotebookSermonPrompt({
-  prompt,
-  version,
-  passageLabel,
-  currentChapter,
-  activeVerseNumber,
-  notebook,
-  highlights,
-  bookmarks,
-  studySets,
-  sermon
-}: NotebookSermonPromptInput): WritingPrompt {
-  const trimmedPrompt = prompt.trim();
-  const chapterContext = getChapterContext(currentChapter, activeVerseNumber);
-  const studyContext = getStudyContext(highlights, bookmarks, studySets);
-  const sermonContext = getSermonDocumentContext(sermon);
-
-  return {
-    target: "sermon",
-    action: "prompt-sermon-from-notebook",
-    title: "Notebook sermon draft",
-    systemPrompt: [
-      "You are a Bible writing assistant inside a local Bible study app.",
-      "Write sermon material only from the supplied passage, notebook, and study context.",
-      "Do not invent outside references, stories, or unsupported claims.",
-      "Return plain text only. Do not use markdown fences.",
-      "Prefer a sermon-ready structure with a clear title, concise summary, and organized sections when the prompt calls for it."
-    ].join(" "),
-    userPrompt: [
-      `Task:\nUse the notebook and passage context to respond to this sermon-writing request: ${trimmedPrompt || "(no prompt provided)"}`,
-      `Active translation:\n${version.toUpperCase()}`,
-      `Current passage:\n${passageLabel}`,
-      chapterContext ? `Passage text:\n${chapterContext}` : "",
-      `Notebook context:\n${getRelatedNotebookSummary(notebook)}`,
-      studyContext ? `Study context:\n${studyContext}` : "",
-      sermonContext ? `Current sermon draft context:\n${sermonContext}` : "",
-      [
-        "Write sermon material that can be saved into a sermon document.",
-        "Start with a strong sermon title on the first line when appropriate.",
-        "Keep the draft grounded in the supplied Bible context and ready for editing."
-      ].join(" ")
     ]
       .filter(Boolean)
       .join("\n\n")

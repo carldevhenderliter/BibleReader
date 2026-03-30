@@ -120,11 +120,7 @@ export function ReaderPageContent({
           </div>
         ) : showNotebookInline ? (
           <div className="reading-surface reader-notebook-surface">
-            <ReaderNotebookEditor
-              bookSlug={book.slug}
-              chapterNumber={chapter.chapterNumber}
-              currentChapter={chapter}
-            />
+            <ReaderNotebookEditor />
           </div>
         ) : showSermonsInline ? (
           <div className="reading-surface reader-notebook-surface">

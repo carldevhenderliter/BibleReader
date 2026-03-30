@@ -26,19 +26,10 @@ describe("bible assistant prompt builder", () => {
       },
       activeStudyVerseNumber: 1,
       notebook: {
-        id: "web:john:1",
-        version: "web",
-        bookSlug: "john",
-        chapterNumber: 1,
+        id: "notebook:john-opening-study",
         title: "John opening study",
-        blocks: [
-          {
-            id: "block-1",
-            type: "paragraph",
-            text: "The prologue centers on the identity of the Word.",
-            references: []
-          }
-        ],
+        content: "The prologue centers on the identity of the Word.",
+        references: [],
         updatedAt: new Date(0).toISOString()
       },
       studySets: [],

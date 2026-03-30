@@ -72,8 +72,6 @@ export type ReaderCustomizationSettings = {
   surfaceDepth: number;
 };
 
-export type PassageNotebookBlockType = "paragraph" | "list";
-
 export type PassageReference = {
   id: string;
   version: BundledBibleVersion;
@@ -85,20 +83,11 @@ export type PassageReference = {
   label?: string;
 };
 
-export type PassageNotebookBlock = {
+export type NotebookDocument = {
   id: string;
-  type: PassageNotebookBlockType;
-  text: string;
-  references: PassageReference[];
-};
-
-export type PassageNotebook = {
-  id: string;
-  version: BundledBibleVersion;
-  bookSlug: string;
-  chapterNumber: number;
   title: string;
-  blocks: PassageNotebookBlock[];
+  content: string;
+  references: PassageReference[];
   updatedAt: string;
 };
 

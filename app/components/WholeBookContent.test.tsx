@@ -122,7 +122,7 @@ describe("WholeBookContent", () => {
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
 
-    expect(screen.getByLabelText("Notebook title")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "New notebook" })).toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Chapter 1" })).not.toBeInTheDocument();
   });
 
@@ -145,7 +145,7 @@ describe("WholeBookContent", () => {
     fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
 
     expect(screen.getByRole("tab", { name: "Notebook" })).toHaveAttribute("aria-selected", "true");
-    expect(screen.getByLabelText("Notebook title")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "New notebook" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "WEB search" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Chapter 1" })).toBeInTheDocument();
   });

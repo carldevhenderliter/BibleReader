@@ -17,22 +17,19 @@ import type {
   BundledBibleVersion,
   Chapter,
   Highlight,
-  PassageNotebook,
-  PassageNotebookBlock,
+  NotebookDocument,
   PassageReference,
   ReadingView,
   SermonDocument,
   SermonDocumentSection,
-  StudyHighlightColor,
   StudySet
 } from "@/lib/bible/types";
 import {
+  ACTIVE_NOTEBOOK_STORAGE_KEY,
   PASSAGE_NOTEBOOK_STORAGE_KEY,
-  createNotebookBlock,
-  createPassageNotebook,
-  getPassageNotebookId,
+  createNotebookDocument,
   normalizePassageNotebookStorage,
-  type PassageNotebookStorage
+  type NotebookDocumentStorage
 } from "@/lib/passage-notebooks";
 import {
   SERMON_DOCUMENTS_STORAGE_KEY,
@@ -77,7 +74,7 @@ type ReaderWorkspaceContextValue = {
   setLeftReaderMode: (mode: LeftReaderMode) => void;
   activeUtilityPane: UtilityPane;
   setActiveUtilityPane: (pane: UtilityPane) => void;
-  openNotebook: () => void;
+  openNotebook: (reference?: PassageReference | null) => void;
   closeNotebookWorkspace: () => void;
   openSermons: () => void;
   currentPassage: CurrentPassage | null;
@@ -94,39 +91,16 @@ type ReaderWorkspaceContextValue = {
   openCompare: (verseNumber?: number | null) => void;
   compareVersion: BundledBibleVersion;
   setCompareVersion: (value: BundledBibleVersion) => void;
-  getNotebook: (bookSlug: string, chapterNumber: number) => PassageNotebook;
-  updateNotebookTitle: (bookSlug: string, chapterNumber: number, title: string) => void;
-  addNotebookBlock: (
-    bookSlug: string,
-    chapterNumber: number,
-    type: PassageNotebookBlock["type"]
-  ) => void;
-  insertNotebookDraft: (
-    bookSlug: string,
-    chapterNumber: number,
-    text: string,
-    type?: PassageNotebookBlock["type"]
-  ) => void;
-  appendNotebookDraft: (
-    bookSlug: string,
-    chapterNumber: number,
-    text: string,
-    blockId?: string
-  ) => void;
-  updateNotebookBlock: (
-    bookSlug: string,
-    chapterNumber: number,
-    blockId: string,
-    updates: Partial<Pick<PassageNotebookBlock, "type" | "text" | "references">>
-  ) => void;
-  deleteNotebookBlock: (bookSlug: string, chapterNumber: number, blockId: string) => void;
-  clearNotebook: (bookSlug: string, chapterNumber: number) => void;
-  addNotebookReference: (
-    bookSlug: string,
-    chapterNumber: number,
-    reference: PassageReference,
-    blockId?: string
-  ) => void;
+  getNotebookDocuments: () => NotebookDocument[];
+  getActiveNotebook: () => NotebookDocument | null;
+  activeNotebookId: string | null;
+  setActiveNotebookId: (id: string | null) => void;
+  createNotebook: (title?: string) => NotebookDocument;
+  updateNotebook: (notebookId: string, updates: Partial<Pick<NotebookDocument, "title" | "content">>) => void;
+  deleteNotebook: (notebookId: string) => void;
+  addReferenceToNotebook: (notebookId: string, reference: PassageReference) => void;
+  pendingNotebookReference: PassageReference | null;
+  clearPendingNotebookReference: () => void;
   getHighlight: (bookSlug: string, chapterNumber: number, verseNumber: number) => Highlight | null;
   getHighlightsForPassage: (bookSlug: string, chapterNumber: number) => Highlight[];
   cycleHighlight: (bookSlug: string, chapterNumber: number, verseNumber: number) => void;
@@ -179,21 +153,14 @@ type ReaderWorkspaceContextValue = {
 
 const ReaderWorkspaceContext = createContext<ReaderWorkspaceContextValue | null>(null);
 
-function isNotebookEmpty(notebook: PassageNotebook) {
-  return (
-    notebook.title.trim().length === 0 &&
-    notebook.blocks.every(
-      (block) =>
-        block.text.trim().length === 0 &&
-        (!block.references?.length || block.references.every((reference) => !reference.label?.trim()))
-    )
-  );
-}
-
 function getSortedStudySets(studySets: StudySetStorage) {
   return Object.values(studySets).sort((left, right) =>
     right.updatedAt.localeCompare(left.updatedAt)
   );
+}
+
+function getSortedNotebooks(documents: NotebookDocumentStorage) {
+  return Object.values(documents).sort((left, right) => right.updatedAt.localeCompare(left.updatedAt));
 }
 
 function getSortedSermons(documents: SermonDocumentStorage) {
@@ -207,7 +174,7 @@ function getAlternateVersion(version: BundledBibleVersion): BundledBibleVersion 
 export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   const pathname = usePathname();
   const { version } = useReaderVersion();
-  const [notebooks, setNotebooks] = useState<PassageNotebookStorage>({});
+  const [notebooks, setNotebooks] = useState<NotebookDocumentStorage>({});
   const [sermonDocuments, setSermonDocuments] = useState<SermonDocumentStorage>({});
   const [highlights, setHighlights] = useState<HighlightStorage>({});
   const [bookmarks, setBookmarks] = useState<BookmarkStorage>({});
@@ -222,6 +189,8 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
     Record<BundledBibleVersion, Chapter> | null
   >(null);
   const [activeStudyVerseNumber, setActiveStudyVerseNumber] = useState<number | null>(null);
+  const [activeNotebookId, setActiveNotebookId] = useState<string | null>(null);
+  const [pendingNotebookReference, setPendingNotebookReference] = useState<PassageReference | null>(null);
   const [activeSermonId, setActiveSermonId] = useState<string | null>(null);
   const [compareVersionOverride, setCompareVersionOverride] = useState<BundledBibleVersion | null>(null);
   const isReaderRoute = pathname.startsWith("/read");
@@ -242,11 +211,12 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
     setLeftReaderMode("scripture");
   }, []);
 
-  const openNotebook = useCallback(() => {
+  const openNotebook = useCallback((reference: PassageReference | null = null) => {
     setActiveReaderPane("reading");
     setLeftReaderMode("scripture");
     setActiveUtilityPaneState("notebook");
     setLastReaderUtilityPane("notebook");
+    setPendingNotebookReference(reference);
   }, []);
 
   const openSermons = useCallback(() => {
@@ -259,6 +229,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   const closeNotebookWorkspace = useCallback(() => {
     setActiveUtilityPaneState(lastReaderUtilityPane);
     setLeftReaderMode("scripture");
+    setPendingNotebookReference(null);
   }, [lastReaderUtilityPane]);
 
   const syncCurrentPassage = useCallback(
@@ -314,9 +285,15 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       const storedBookmarks = window.localStorage.getItem(STUDY_BOOKMARKS_STORAGE_KEY);
       const storedStudySets = window.localStorage.getItem(STUDY_SETS_STORAGE_KEY);
       const storedSermons = window.localStorage.getItem(SERMON_DOCUMENTS_STORAGE_KEY);
+      const storedActiveNotebookId = window.localStorage.getItem(ACTIVE_NOTEBOOK_STORAGE_KEY);
 
       if (storedNotebooks) {
-        setNotebooks(normalizePassageNotebookStorage(JSON.parse(storedNotebooks)));
+        const normalizedNotebooks = normalizePassageNotebookStorage(JSON.parse(storedNotebooks));
+
+        setNotebooks(normalizedNotebooks);
+        if (storedActiveNotebookId && normalizedNotebooks[storedActiveNotebookId]) {
+          setActiveNotebookId(storedActiveNotebookId);
+        }
       }
 
       if (storedHighlights) {
@@ -336,6 +313,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       }
     } catch {
       window.localStorage.removeItem(PASSAGE_NOTEBOOK_STORAGE_KEY);
+      window.localStorage.removeItem(ACTIVE_NOTEBOOK_STORAGE_KEY);
       window.localStorage.removeItem(SERMON_DOCUMENTS_STORAGE_KEY);
       window.localStorage.removeItem(STUDY_HIGHLIGHTS_STORAGE_KEY);
       window.localStorage.removeItem(STUDY_BOOKMARKS_STORAGE_KEY);
@@ -352,6 +330,34 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
 
     window.localStorage.setItem(PASSAGE_NOTEBOOK_STORAGE_KEY, JSON.stringify(notebooks));
   }, [hasLoadedState, notebooks]);
+
+  useEffect(() => {
+    if (!hasLoadedState) {
+      return;
+    }
+
+    if (activeNotebookId) {
+      window.localStorage.setItem(ACTIVE_NOTEBOOK_STORAGE_KEY, activeNotebookId);
+      return;
+    }
+
+    window.localStorage.removeItem(ACTIVE_NOTEBOOK_STORAGE_KEY);
+  }, [activeNotebookId, hasLoadedState]);
+
+  useEffect(() => {
+    const sortedNotebooks = getSortedNotebooks(notebooks);
+
+    if (sortedNotebooks.length === 0) {
+      if (activeNotebookId !== null) {
+        setActiveNotebookId(null);
+      }
+      return;
+    }
+
+    if (!activeNotebookId || !notebooks[activeNotebookId]) {
+      setActiveNotebookId(sortedNotebooks[0]?.id ?? null);
+    }
+  }, [activeNotebookId, notebooks]);
 
   useEffect(() => {
     if (!hasLoadedState) {
@@ -394,6 +400,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       setCurrentPassage(null);
       setCurrentChapterByVersion(null);
       setActiveStudyVerseNumber(null);
+      setPendingNotebookReference(null);
       setActiveSermonId(null);
     }
   }, [isReaderRoute, pathname]);
@@ -443,163 +450,43 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       setCompareVersion: (nextVersion) => {
         setCompareVersionOverride(nextVersion === version ? getAlternateVersion(version) : nextVersion);
       },
-      getNotebook: (bookSlug, chapterNumber) => {
-        const notebookId = getPassageNotebookId({ version, bookSlug, chapterNumber });
+      getNotebookDocuments: () => getSortedNotebooks(notebooks),
+      getActiveNotebook: () =>
+        activeNotebookId && notebooks[activeNotebookId]
+          ? notebooks[activeNotebookId]
+          : getSortedNotebooks(notebooks)[0] ?? null,
+      activeNotebookId,
+      setActiveNotebookId,
+      createNotebook: (title = "") => {
+        const notebook = createNotebookDocument(title);
 
-        return notebooks[notebookId] ?? createPassageNotebook({ version, bookSlug, chapterNumber });
+        setNotebooks((current) => ({
+          ...current,
+          [notebook.id]: notebook
+        }));
+        setActiveNotebookId(notebook.id);
+
+        return notebook;
       },
-      updateNotebookTitle: (bookSlug, chapterNumber, title) => {
-        const notebookId = getPassageNotebookId({ version, bookSlug, chapterNumber });
-        const existing =
-          notebooks[notebookId] ?? createPassageNotebook({ version, bookSlug, chapterNumber });
-        const nextNotebook = {
-          ...existing,
-          title,
-          updatedAt: new Date().toISOString()
-        };
-
+      updateNotebook: (notebookId, updates) => {
         setNotebooks((current) => {
-          if (isNotebookEmpty(nextNotebook)) {
-            const next = { ...current };
-            delete next[notebookId];
-            return next;
+          const notebook = current[notebookId];
+
+          if (!notebook) {
+            return current;
           }
 
           return {
             ...current,
-            [notebookId]: nextNotebook
+            [notebookId]: {
+              ...notebook,
+              ...updates,
+              updatedAt: new Date().toISOString()
+            }
           };
         });
       },
-      addNotebookBlock: (bookSlug, chapterNumber, type) => {
-        const notebookId = getPassageNotebookId({ version, bookSlug, chapterNumber });
-        const existing =
-          notebooks[notebookId] ?? createPassageNotebook({ version, bookSlug, chapterNumber });
-
-        setNotebooks((current) => ({
-          ...current,
-          [notebookId]: {
-            ...existing,
-            blocks: [...existing.blocks, createNotebookBlock(type)],
-            updatedAt: new Date().toISOString()
-          }
-        }));
-      },
-      insertNotebookDraft: (bookSlug, chapterNumber, text, type = "paragraph") => {
-        const trimmedText = text.trim();
-
-        if (!trimmedText) {
-          return;
-        }
-
-        const notebookId = getPassageNotebookId({ version, bookSlug, chapterNumber });
-        const existing =
-          notebooks[notebookId] ?? createPassageNotebook({ version, bookSlug, chapterNumber });
-        const nextBlock = createNotebookBlock(type);
-
-        nextBlock.text = trimmedText;
-
-        setNotebooks((current) => ({
-          ...current,
-          [notebookId]: {
-            ...existing,
-            blocks: [...existing.blocks, nextBlock],
-            updatedAt: new Date().toISOString()
-          }
-        }));
-      },
-      appendNotebookDraft: (bookSlug, chapterNumber, text, blockId) => {
-        const trimmedText = text.trim();
-
-        if (!trimmedText) {
-          return;
-        }
-
-        const notebookId = getPassageNotebookId({ version, bookSlug, chapterNumber });
-        const existing =
-          notebooks[notebookId] ?? createPassageNotebook({ version, bookSlug, chapterNumber });
-        const blocks =
-          existing.blocks.length > 0 ? [...existing.blocks] : [createNotebookBlock("paragraph")];
-        const targetIndex = blockId ? blocks.findIndex((block) => block.id === blockId) : blocks.length - 1;
-        const nextIndex = targetIndex >= 0 ? targetIndex : blocks.length - 1;
-        const targetBlock = blocks[nextIndex]!;
-
-        blocks[nextIndex] = {
-          ...targetBlock,
-          text: targetBlock.text.trim() ? `${targetBlock.text.trim()}\n\n${trimmedText}` : trimmedText
-        };
-
-        setNotebooks((current) => ({
-          ...current,
-          [notebookId]: {
-            ...existing,
-            blocks,
-            updatedAt: new Date().toISOString()
-          }
-        }));
-      },
-      updateNotebookBlock: (bookSlug, chapterNumber, blockId, updates) => {
-        const notebookId = getPassageNotebookId({ version, bookSlug, chapterNumber });
-        const existing =
-          notebooks[notebookId] ?? createPassageNotebook({ version, bookSlug, chapterNumber });
-        const nextNotebook = {
-          ...existing,
-          blocks: existing.blocks.map((block) =>
-            block.id === blockId
-              ? {
-                  ...block,
-                  ...updates
-                }
-              : block
-          ),
-          updatedAt: new Date().toISOString()
-        };
-
-        setNotebooks((current) => {
-          if (isNotebookEmpty(nextNotebook)) {
-            const next = { ...current };
-            delete next[notebookId];
-            return next;
-          }
-
-          return {
-            ...current,
-            [notebookId]: nextNotebook
-          };
-        });
-      },
-      deleteNotebookBlock: (bookSlug, chapterNumber, blockId) => {
-        const notebookId = getPassageNotebookId({ version, bookSlug, chapterNumber });
-        const existing =
-          notebooks[notebookId] ??
-          createPassageNotebook({
-            version,
-            bookSlug,
-            chapterNumber,
-            blocks: [createNotebookBlock("paragraph")]
-          });
-        const nextNotebook = {
-          ...existing,
-          blocks: existing.blocks.filter((block) => block.id !== blockId),
-          updatedAt: new Date().toISOString()
-        };
-
-        setNotebooks((current) => {
-          if (isNotebookEmpty(nextNotebook)) {
-            const next = { ...current };
-            delete next[notebookId];
-            return next;
-          }
-
-          return {
-            ...current,
-            [notebookId]: nextNotebook
-          };
-        });
-      },
-      clearNotebook: (bookSlug, chapterNumber) => {
-        const notebookId = getPassageNotebookId({ version, bookSlug, chapterNumber });
-
+      deleteNotebook: (notebookId) => {
         setNotebooks((current) => {
           if (!(notebookId in current)) {
             return current;
@@ -609,34 +496,28 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
           delete next[notebookId];
           return next;
         });
+        setActiveNotebookId((current) => (current === notebookId ? null : current));
       },
-      addNotebookReference: (bookSlug, chapterNumber, reference, blockId) => {
-        const notebookId = getPassageNotebookId({ version, bookSlug, chapterNumber });
-        const existing =
-          notebooks[notebookId] ?? createPassageNotebook({ version, bookSlug, chapterNumber });
-        const blocks =
-          existing.blocks.length > 0 ? [...existing.blocks] : [createNotebookBlock("paragraph")];
-        const targetIndex = blockId ? blocks.findIndex((block) => block.id === blockId) : 0;
-        const nextBlockIndex = targetIndex >= 0 ? targetIndex : 0;
-        const targetBlock = blocks[nextBlockIndex];
-        const alreadyExists = targetBlock.references.some((item) => item.id === reference.id);
+      addReferenceToNotebook: (notebookId, reference) => {
+        setNotebooks((current) => {
+          const notebook = current[notebookId];
 
-        blocks[nextBlockIndex] = alreadyExists
-          ? targetBlock
-          : {
-              ...targetBlock,
-              references: [...targetBlock.references, reference]
-            };
-
-        setNotebooks((current) => ({
-          ...current,
-          [notebookId]: {
-            ...existing,
-            blocks,
-            updatedAt: new Date().toISOString()
+          if (!notebook || notebook.references.some((item) => item.id === reference.id)) {
+            return current;
           }
-        }));
+
+          return {
+            ...current,
+            [notebookId]: {
+              ...notebook,
+              references: [...notebook.references, reference],
+              updatedAt: new Date().toISOString()
+            }
+          };
+        });
       },
+      pendingNotebookReference,
+      clearPendingNotebookReference: () => setPendingNotebookReference(null),
       getHighlight: (bookSlug, chapterNumber, verseNumber) =>
         highlights[getVerseKey(version, bookSlug, chapterNumber, verseNumber)] ?? null,
       getHighlightsForPassage: (bookSlug, chapterNumber) =>
@@ -877,50 +758,36 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
         return sermon;
       },
       createSermonFromNotebook: () => {
-        if (!currentPassage) {
+        const notebook =
+          (activeNotebookId ? notebooks[activeNotebookId] ?? null : null) ??
+          getSortedNotebooks(notebooks)[0] ??
+          null;
+
+        if (!notebook) {
           return null;
         }
-
-        const notebook = notebooks[getPassageNotebookId({
-          version,
-          bookSlug: currentPassage.bookSlug,
-          chapterNumber: currentPassage.chapterNumber
-        })] ?? createPassageNotebook({
-          version,
-          bookSlug: currentPassage.bookSlug,
-          chapterNumber: currentPassage.chapterNumber
-        });
         const sermon = createSermonDocument(
-          notebook.title.trim() || `${currentPassage.bookSlug.replace(/-/g, " ")} ${currentPassage.chapterNumber} sermon`
+          notebook.title.trim() || "Notebook sermon"
         );
-        const notebookReferences = notebook.blocks.flatMap((block) => block.references);
-        const currentReference = createPassageReference({
-          version,
-          bookSlug: currentPassage.bookSlug,
-          chapterNumber: currentPassage.chapterNumber,
-          verseNumber: activeStudyVerseNumber ?? undefined,
-          sourceType: "manual"
-        });
         const references = Array.from(
           new Map(
-            [currentReference, ...notebookReferences].map((reference) => [reference.id, reference])
+            notebook.references.map((reference) => [reference.id, reference])
           ).values()
         );
-        const sections =
-          notebook.blocks.length > 0
-            ? notebook.blocks.map((block, index) => ({
-                id: createSermonDocumentSection(`Point ${index + 1}`).id,
-                title: `Point ${index + 1}`,
-                content: block.text.trim()
-              }))
-            : [createSermonDocumentSection("Main idea")];
+        const mainSection = createSermonDocumentSection("Main idea");
+        mainSection.content = notebook.content.trim();
+        const sections = notebook.content.trim() ? [mainSection] : [createSermonDocumentSection("Main idea")];
 
         const nextSermon: SermonDocument = {
           ...sermon,
           title: notebook.title.trim() || sermon.title,
           references,
           sections,
-          summary: notebook.blocks[0]?.text.trim() || ""
+          summary:
+            notebook.content
+              .split("\n")
+              .map((line) => line.trim())
+              .find(Boolean) ?? ""
         };
 
         setSermonDocuments((current) => ({
@@ -1063,6 +930,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
     }),
     [
       activeReaderPane,
+      activeNotebookId,
       activeSermonId,
       activeStudyVerseNumber,
       activeUtilityPane,
@@ -1078,6 +946,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       notebooks,
       openNotebook,
       openSermons,
+      pendingNotebookReference,
       sermonDocuments,
       syncCurrentChapterData,
       syncCurrentPassage,

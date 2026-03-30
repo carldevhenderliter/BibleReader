@@ -98,11 +98,7 @@ export function WholeBookContent({ books, book, chaptersByVersion }: WholeBookCo
           </div>
         ) : showNotebookInline ? (
           <div className="reading-surface reader-notebook-surface">
-            <ReaderNotebookEditor
-              bookSlug={book.slug}
-              chapterNumber={1}
-              currentChapter={chapters[0] ?? null}
-            />
+            <ReaderNotebookEditor />
           </div>
         ) : showSermonsInline ? (
           <div className="reading-surface reader-notebook-surface">

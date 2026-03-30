@@ -103,7 +103,7 @@ describe("LookupPane", () => {
     await waitFor(() => {
       expect(screen.getByRole("tab", { name: "Notebook" })).toHaveAttribute("aria-selected", "true");
     });
-    expect(screen.getByLabelText("Notebook title")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "New notebook" })).toBeInTheDocument();
   });
 
   it("does not render the study pane in mobile mode", () => {

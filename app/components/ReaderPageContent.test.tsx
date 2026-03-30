@@ -127,13 +127,13 @@ describe("ReaderPageContent", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
+    fireEvent.click(screen.getByRole("button", { name: "New notebook" }));
     fireEvent.change(screen.getByLabelText("Notebook title"), {
       target: {
         value: "Genesis opening"
       }
     });
-    fireEvent.click(screen.getByRole("button", { name: "Add paragraph" }));
-    fireEvent.change(screen.getByLabelText("Notebook block 1"), {
+    fireEvent.change(screen.getByLabelText("Notebook note"), {
       target: {
         value: "Created light before the sun."
       }
@@ -160,10 +160,10 @@ describe("ReaderPageContent", () => {
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
     expect(screen.getByLabelText("Notebook title")).toHaveValue("Genesis opening");
-    expect(screen.getByLabelText("Notebook block 1")).toHaveValue("Created light before the sun.");
+    expect(screen.getByLabelText("Notebook note")).toHaveValue("Created light before the sun.");
   });
 
-  it("clears saved passage notebooks", () => {
+  it("deletes notebook documents from the library", () => {
     renderWithReaderCustomization(
       <ReaderPageContent
         book={books[0]}
@@ -174,23 +174,23 @@ describe("ReaderPageContent", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
+    fireEvent.click(screen.getByRole("button", { name: "New notebook" }));
     fireEvent.change(screen.getByLabelText("Notebook title"), {
       target: {
         value: "Disposable notebook"
       }
     });
-    fireEvent.click(screen.getByRole("button", { name: "Add paragraph" }));
-    fireEvent.change(screen.getByLabelText("Notebook block 1"), {
+    fireEvent.change(screen.getByLabelText("Notebook note"), {
       target: {
         value: "A note to remove."
       }
     });
-    fireEvent.click(screen.getByRole("button", { name: "Clear notebook" }));
+    fireEvent.click(screen.getByRole("button", { name: "Delete notebook" }));
 
     expect(window.localStorage.getItem(PASSAGE_NOTEBOOK_STORAGE_KEY)).toBe("{}");
     expect(screen.queryByDisplayValue("Disposable notebook")).not.toBeInTheDocument();
     expect(
-      screen.getByText("Add paragraphs or list blocks to build a notebook for this passage.")
+      screen.getByText("Create a notebook to start keeping Bible-wide study notes.")
     ).toBeInTheDocument();
   });
 
@@ -239,7 +239,7 @@ describe("ReaderPageContent", () => {
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
 
-    expect(screen.getByLabelText("Notebook title")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "New notebook" })).toBeInTheDocument();
     expect(
       screen.queryByText("In the beginning, God created the heavens and the earth.")
     ).not.toBeInTheDocument();
@@ -256,11 +256,11 @@ describe("ReaderPageContent", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
+    fireEvent.click(screen.getByRole("button", { name: "New notebook" }));
     fireEvent.change(screen.getByLabelText("Notebook title"), {
       target: { value: "Genesis opener" }
     });
-    fireEvent.click(screen.getByRole("button", { name: "Add paragraph" }));
-    fireEvent.change(screen.getByLabelText("Notebook block 1"), {
+    fireEvent.change(screen.getByLabelText("Notebook note"), {
       target: { value: "God creates with intention and order." }
     });
 
@@ -275,6 +275,38 @@ describe("ReaderPageContent", () => {
     expect(screen.getByLabelText("Sermon section 1")).toHaveValue(
       "God creates with intention and order."
     );
+  });
+
+  it("adds a verse to a selected notebook through the picker flow", () => {
+    setSplitViewActive(true);
+
+    renderWithReaderCustomization(
+      <>
+        <ReaderPageContent
+          book={books[0]}
+          books={books}
+          chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+        />
+        <SearchPane />
+        <LookupPane />
+      </>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
+    fireEvent.click(screen.getByRole("button", { name: "New notebook" }));
+    fireEvent.change(screen.getByLabelText("Notebook title"), {
+      target: { value: "Current study" }
+    });
+
+    fireEvent.click(screen.getAllByRole("button", { name: "To notebook" })[0]!);
+
+    expect(screen.getByRole("status")).toHaveTextContent(/Choose a notebook for Genesis 1:1/i);
+
+    fireEvent.click(screen.getByRole("button", { name: /Current study/i }));
+
+    expect(screen.queryByRole("status")).not.toBeInTheDocument();
+    expect(window.localStorage.getItem(PASSAGE_NOTEBOOK_STORAGE_KEY)).toContain("web:genesis:1:1");
   });
 
   it("opens the notebook under the right-side search pane in split view", async () => {
@@ -296,7 +328,7 @@ describe("ReaderPageContent", () => {
     fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
 
     expect(screen.getByRole("tab", { name: "Notebook" })).toHaveAttribute("aria-selected", "true");
-    expect(screen.getByLabelText("Notebook title")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "New notebook" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "WEB search" })).toBeInTheDocument();
     expect(screen.getByText("In the beginning, God created the heavens and the earth.")).toBeInTheDocument();
   });

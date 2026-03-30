@@ -44,7 +44,7 @@ export function ReaderSermonWorkspace({ currentChapter = null }: ReaderSermonWor
     deleteSermon,
     deleteSermonSection,
     getActiveSermon,
-    getNotebook,
+    getActiveNotebook,
     getSermonDocuments,
     removeReferenceFromSermon,
     setActiveSermonId,
@@ -64,8 +64,7 @@ export function ReaderSermonWorkspace({ currentChapter = null }: ReaderSermonWor
 
     return `${formatBookLabel(currentPassage.bookSlug)} ${currentPassage.chapterNumber}`;
   }, [currentPassage]);
-  const relatedNotebook =
-    currentPassage != null ? getNotebook(currentPassage.bookSlug, currentPassage.chapterNumber) : null;
+  const relatedNotebook = getActiveNotebook();
 
   useEffect(() => {
     if (selectedSectionId && activeSermon?.sections.some((section) => section.id === selectedSectionId)) {
@@ -117,6 +116,7 @@ export function ReaderSermonWorkspace({ currentChapter = null }: ReaderSermonWor
           </button>
           <button
             className="reader-inline-button"
+            disabled={!relatedNotebook}
             onClick={() => createSermonFromNotebook()}
             type="button"
           >

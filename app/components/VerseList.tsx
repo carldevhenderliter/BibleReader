@@ -30,7 +30,6 @@ export function VerseList({
 }: VerseListProps) {
   const { version } = useReaderVersion();
   const {
-    addNotebookReference,
     cycleHighlight,
     getBookmark,
     getHighlight,
@@ -200,9 +199,7 @@ export function VerseList({
                   <button
                     className="reader-inline-button verse-study-button"
                     onClick={() => {
-                      addNotebookReference(
-                        bookSlug,
-                        chapterNumber,
+                      openNotebook(
                         createPassageReference({
                           version,
                           bookSlug,
@@ -211,7 +208,6 @@ export function VerseList({
                           sourceType: "manual"
                         })
                       );
-                      openNotebook();
                     }}
                     type="button"
                   >

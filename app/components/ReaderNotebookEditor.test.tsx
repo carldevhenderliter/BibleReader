@@ -4,7 +4,6 @@ import { useState } from "react";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
 import { ReaderVersionProvider, useReaderVersion } from "@/app/components/ReaderVersionProvider";
-import { WritingAssistantProvider } from "@/app/components/WritingAssistantProvider";
 import { PASSAGE_NOTEBOOK_STORAGE_KEY } from "@/lib/passage-notebooks";
 
 function NotebookHarness() {
@@ -25,7 +24,8 @@ function NotebookHarness() {
       <button onClick={() => setChapterNumber(2)} type="button">
         Chapter 2
       </button>
-      <ReaderNotebookEditor bookSlug="john" chapterNumber={chapterNumber} />
+      <span>{chapterNumber}</span>
+      <ReaderNotebookEditor />
     </>
   );
 }
@@ -34,9 +34,7 @@ function renderNotebookHarness() {
   return render(
     <ReaderVersionProvider>
       <ReaderWorkspaceProvider>
-        <WritingAssistantProvider>
-          <NotebookHarness />
-        </WritingAssistantProvider>
+        <NotebookHarness />
       </ReaderWorkspaceProvider>
     </ReaderVersionProvider>
   );
@@ -47,42 +45,52 @@ describe("ReaderNotebookEditor", () => {
     window.localStorage.clear();
   });
 
-  it("stores notebooks separately by chapter and translation", () => {
+  it("stores notebook library content globally across chapter and translation changes", () => {
     renderNotebookHarness();
 
+    fireEvent.click(screen.getByRole("button", { name: "New notebook" }));
     fireEvent.change(screen.getByLabelText("Notebook title"), {
-      target: { value: "WEB John 1" }
+      target: { value: "Main study" }
     });
-    fireEvent.click(screen.getByRole("button", { name: "Add paragraph" }));
-    fireEvent.change(screen.getByLabelText("Notebook block 1"), {
-      target: { value: "Opening notes for John 1." }
+    fireEvent.change(screen.getByLabelText("Notebook note"), {
+      target: { value: "One main note for the whole Bible." }
     });
 
     fireEvent.click(screen.getByRole("button", { name: "Chapter 2" }));
-    expect(screen.getByLabelText("Notebook title")).toHaveValue("");
-
-    fireEvent.change(screen.getByLabelText("Notebook title"), {
-      target: { value: "WEB John 2" }
-    });
-
     fireEvent.click(screen.getByRole("button", { name: "Use KJV" }));
-    expect(screen.getByLabelText("Notebook title")).toHaveValue("");
-
-    fireEvent.change(screen.getByLabelText("Notebook title"), {
-      target: { value: "KJV John 2" }
-    });
-
     fireEvent.click(screen.getByRole("button", { name: "Use WEB" }));
-    expect(screen.getByLabelText("Notebook title")).toHaveValue("WEB John 2");
 
-    fireEvent.click(screen.getByRole("button", { name: "Chapter 1" }));
-    expect(screen.getByLabelText("Notebook title")).toHaveValue("WEB John 1");
-    expect(screen.getByLabelText("Notebook block 1")).toHaveValue("Opening notes for John 1.");
+    expect(screen.getByLabelText("Notebook title")).toHaveValue("Main study");
+    expect(screen.getByLabelText("Notebook note")).toHaveValue("One main note for the whole Bible.");
 
     const stored = window.localStorage.getItem(PASSAGE_NOTEBOOK_STORAGE_KEY) ?? "";
 
-    expect(stored).toContain("web:john:1");
-    expect(stored).toContain("web:john:2");
-    expect(stored).toContain("kjv:john:2");
+    expect(stored).toContain("Main study");
+    expect(stored).toContain("One main note for the whole Bible.");
+  });
+
+  it("lets users create and switch between notebook documents", () => {
+    renderNotebookHarness();
+
+    fireEvent.click(screen.getByRole("button", { name: "New notebook" }));
+    fireEvent.change(screen.getByLabelText("Notebook title"), {
+      target: { value: "Notebook one" }
+    });
+    fireEvent.change(screen.getByLabelText("Notebook note"), {
+      target: { value: "First note" }
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: "New notebook" }));
+    fireEvent.change(screen.getByLabelText("Notebook title"), {
+      target: { value: "Notebook two" }
+    });
+    fireEvent.change(screen.getByLabelText("Notebook note"), {
+      target: { value: "Second note" }
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: /Notebook one/i }));
+
+    expect(screen.getByLabelText("Notebook title")).toHaveValue("Notebook one");
+    expect(screen.getByLabelText("Notebook note")).toHaveValue("First note");
   });
 });

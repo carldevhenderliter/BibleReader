@@ -10,7 +10,7 @@ import type {
   Chapter,
   Highlight,
   LocalBibleAiSource,
-  PassageNotebook,
+  NotebookDocument,
   SearchMatchMode,
   StudySet,
   Verse
@@ -30,7 +30,7 @@ type BibleAiContextInput = {
   currentPassage: CurrentPassage | null;
   currentChapter: Chapter | null;
   activeStudyVerseNumber: number | null;
-  notebook: PassageNotebook | null;
+  notebook: NotebookDocument | null;
   studySets: StudySet[];
   highlights: Highlight[];
   bookmarks: Bookmark[];
@@ -107,25 +107,23 @@ function clampText(value: string, maxLength: number) {
   return `${value.slice(0, maxLength).trim()}…`;
 }
 
-function getNotebookContext(notebook: PassageNotebook | null) {
+function getNotebookContext(notebook: NotebookDocument | null) {
   if (!notebook) {
     return "";
   }
 
-  const parts = [notebook.title.trim() ? `Title: ${notebook.title.trim()}` : ""];
+  const parts = [
+    notebook.title.trim() ? `Title: ${notebook.title.trim()}` : "",
+    notebook.content.trim() ? `Note: ${notebook.content.trim()}` : ""
+  ];
+  const references = notebook.references
+    .slice(0, MAX_NOTEBOOK_BLOCKS)
+    .map((reference) => formatPassageReference(reference))
+    .join(", ");
 
-  notebook.blocks.slice(0, MAX_NOTEBOOK_BLOCKS).forEach((block, index) => {
-    const text = block.text.trim();
-    const references = block.references.map((reference) => formatPassageReference(reference)).join(", ");
-
-    if (text) {
-      parts.push(`Block ${index + 1} (${block.type}): ${text}`);
-    }
-
-    if (references) {
-      parts.push(`Block ${index + 1} references: ${references}`);
-    }
-  });
+  if (references) {
+    parts.push(`References: ${references}`);
+  }
 
   return parts.filter(Boolean).join("\n");
 }
