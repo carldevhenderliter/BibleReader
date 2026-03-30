@@ -64,30 +64,6 @@ describe("ReaderNotebookEditor AI", () => {
     );
   });
 
-  it("previews and inserts AI-generated notebook content", async () => {
-    renderNotebookEditor();
-
-    fireEvent.click(screen.getAllByRole("button", { name: "Enable AI" })[0]!);
-
-    await waitFor(() => {
-      expect(screen.getByRole("button", { name: "Summarize passage" })).toBeEnabled();
-    });
-
-    fireEvent.click(screen.getByRole("button", { name: "Summarize passage" }));
-
-    await waitFor(() => {
-      expect(
-        screen.getByText("John 1 shows the eternal Word and invites worshipful reflection.")
-      ).toBeInTheDocument();
-    });
-
-    fireEvent.click(screen.getByRole("button", { name: "Insert as new block" }));
-
-    expect(screen.getByLabelText("Notebook block 1")).toHaveValue(
-      "John 1 shows the eternal Word and invites worshipful reflection."
-    );
-  });
-
   it("renders a separate sermon prompt and creates a sermon draft from the preview", async () => {
     mockGenerateLocalBibleAiAnswer.mockResolvedValueOnce(
       "The Word Made Flesh\nJesus is eternal, personal, and present among His people.\n\n1. Christ is eternal.\n2. Christ is revealed.\n3. Christ is received."
@@ -97,17 +73,19 @@ describe("ReaderNotebookEditor AI", () => {
 
     fireEvent.click(screen.getAllByRole("button", { name: "Enable AI" })[0]!);
 
-    await waitFor(() => {
-      expect(screen.getByRole("button", { name: "Summarize passage" })).toBeEnabled();
-    });
-
     expect(screen.getByLabelText("Sermon request")).toBeInTheDocument();
+    expect(screen.queryByText("Notebook AI")).not.toBeInTheDocument();
 
     fireEvent.change(screen.getByLabelText("Sermon request"), {
       target: {
         value: "Turn these notes into a three-point sermon outline."
       }
     });
+
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: "Generate sermon draft" })).toBeEnabled();
+    });
+
     fireEvent.click(screen.getByRole("button", { name: "Generate sermon draft" }));
 
     await waitFor(() => {
@@ -166,16 +144,17 @@ describe("ReaderNotebookEditor AI", () => {
 
     fireEvent.click(screen.getAllByRole("button", { name: "Enable AI" })[0]!);
 
-    await waitFor(() => {
-      expect(screen.getByRole("button", { name: "Summarize passage" })).toBeEnabled();
-    });
-
     fireEvent.click(screen.getByRole("button", { name: "New sermon" }));
     fireEvent.change(screen.getByLabelText("Sermon request"), {
       target: {
         value: "Add a short sermon section about witness from John 1."
       }
     });
+
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: "Generate sermon draft" })).toBeEnabled();
+    });
+
     fireEvent.click(screen.getByRole("button", { name: "Generate sermon draft" }));
 
     await waitFor(() => {

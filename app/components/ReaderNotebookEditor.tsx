@@ -3,17 +3,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { WritingAssistantCard } from "@/app/components/WritingAssistantCard";
 import { useWritingAssistant } from "@/app/components/WritingAssistantProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
-import {
-  buildNotebookAiPrompt,
-  buildNotebookSermonPrompt,
-  normalizeAiWritingResult
-} from "@/lib/ai/writing-assistant";
+import { buildNotebookSermonPrompt, normalizeAiWritingResult } from "@/lib/ai/writing-assistant";
 import { getChapterHref } from "@/lib/bible/utils";
-import type { AiWritingAction, AiWritingResult, Chapter } from "@/lib/bible/types";
+import type { AiWritingResult, Chapter } from "@/lib/bible/types";
 import {
   createPassageReference,
   formatBookLabel,
@@ -25,14 +20,6 @@ type ReaderNotebookEditorProps = {
   chapterNumber: number;
   currentChapter?: Chapter | null;
 };
-
-const NOTEBOOK_AI_OPTIONS: Array<{ id: AiWritingAction; label: string }> = [
-  { id: "summarize-passage-notes", label: "Summarize passage" },
-  { id: "rewrite-selected-block", label: "Rewrite selected block" },
-  { id: "expand-notes", label: "Expand notes" },
-  { id: "create-outline", label: "Create outline" },
-  { id: "turn-notes-into-sermon-points", label: "Sermon points" }
-];
 
 export function ReaderNotebookEditor({
   bookSlug,
@@ -56,7 +43,6 @@ export function ReaderNotebookEditor({
     addNotebookReference,
     addReferenceToSermon,
     addSermonSection,
-    appendNotebookDraft,
     clearNotebook,
     createSermon,
     deleteNotebookBlock,
@@ -65,7 +51,6 @@ export function ReaderNotebookEditor({
     getHighlightsForPassage,
     getNotebook,
     getStudySets,
-    insertNotebookDraft,
     openSermons,
     updateSermonMetadata,
     updateSermonSection,
@@ -76,7 +61,6 @@ export function ReaderNotebookEditor({
   const bookLabel = useMemo(() => formatBookLabel(bookSlug), [bookSlug]);
   const activeSermon = getActiveSermon();
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(notebook.blocks[0]?.id ?? null);
-  const [preview, setPreview] = useState<AiWritingResult | null>(null);
   const [sermonPromptInput, setSermonPromptInput] = useState("");
   const [sermonPreview, setSermonPreview] = useState<AiWritingResult | null>(null);
 
@@ -87,33 +71,6 @@ export function ReaderNotebookEditor({
 
     setSelectedBlockId(notebook.blocks[0]?.id ?? null);
   }, [notebook.blocks, selectedBlockId]);
-
-  const handleRunWritingAction = async (action: AiWritingAction) => {
-    const prompt = buildNotebookAiPrompt({
-      action: action as
-        | "summarize-passage-notes"
-        | "rewrite-selected-block"
-        | "expand-notes"
-        | "create-outline"
-        | "turn-notes-into-sermon-points",
-      version,
-      passageLabel: `${bookLabel} ${chapterNumber}`,
-      currentChapter,
-      activeVerseNumber: activeStudyVerseNumber,
-      notebook,
-      selectedBlockId,
-      highlights: getHighlightsForPassage(bookSlug, chapterNumber),
-      bookmarks: getBookmarksForPassage(bookSlug, chapterNumber),
-      studySets: getStudySets()
-    });
-    const result = await generateWritingDraft(prompt);
-
-    if (!result) {
-      return;
-    }
-
-    setPreview(normalizeAiWritingResult(result));
-  };
 
   const buildSermonDraftTitle = (result: AiWritingResult) => {
     const firstLine = result.content
@@ -272,53 +229,6 @@ export function ReaderNotebookEditor({
           value={notebook.title}
         />
       </label>
-
-      <WritingAssistantCard
-        description="Use local AI to summarize the passage, expand notes, rewrite a selected block, or turn your notes into sermon material."
-        onRun={(action) => void handleRunWritingAction(action)}
-        options={NOTEBOOK_AI_OPTIONS.map((option) => ({
-          ...option,
-          disabled: option.id === "rewrite-selected-block" && !selectedBlockId
-        }))}
-        preview={preview}
-        previewActions={
-          preview ? (
-            <>
-              <button
-                className="reader-inline-button"
-                onClick={() => insertNotebookDraft(bookSlug, chapterNumber, preview.content)}
-                type="button"
-              >
-                Insert as new block
-              </button>
-              <button
-                className="reader-inline-button"
-                onClick={() => appendNotebookDraft(bookSlug, chapterNumber, preview.content, selectedBlockId ?? undefined)}
-                type="button"
-              >
-                Append to notebook
-              </button>
-              <button
-                className="reader-inline-button"
-                disabled={!selectedBlockId}
-                onClick={() => {
-                  if (!selectedBlockId) {
-                    return;
-                  }
-
-                  updateNotebookBlock(bookSlug, chapterNumber, selectedBlockId, {
-                    text: preview.content
-                  });
-                }}
-                type="button"
-              >
-                Replace selected block
-              </button>
-            </>
-          ) : null
-        }
-        title="Notebook AI"
-      />
 
       <section className="writing-ai-card" aria-label="Notebook sermon prompt">
         <div className="writing-ai-card-header">
