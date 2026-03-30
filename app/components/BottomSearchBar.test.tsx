@@ -183,6 +183,11 @@ describe("BottomSearchBar", () => {
     renderSearchUi(<SearchHarness />);
 
     fireEvent.click(screen.getByRole("button", { name: "Use KJV" }));
+
+    await waitFor(() => {
+      expect(screen.getByText(/^KJV$/)).toBeInTheDocument();
+    });
+
     fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
       target: { value: "without form and void" }
     });
@@ -197,6 +202,11 @@ describe("BottomSearchBar", () => {
     renderSearchUi(<SearchHarness />);
 
     fireEvent.click(screen.getByRole("button", { name: "Use KJV" }));
+
+    await waitFor(() => {
+      expect(screen.getByText(/^KJV$/)).toBeInTheDocument();
+    });
+
     fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
       target: { value: "beginning" }
     });
