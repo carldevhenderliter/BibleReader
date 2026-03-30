@@ -36,7 +36,7 @@ describe("reader customization", () => {
       bodyFont: "mono",
       uiFont: "technical",
       showStrongs: true,
-      textSize: 1.4,
+      textSize: 1.8,
       lineHeight: 1.6,
       contentWidth: 60,
       verseSpacing: 1.8,

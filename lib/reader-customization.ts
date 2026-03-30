@@ -100,7 +100,7 @@ export const DEFAULT_READER_CUSTOMIZATION: ReaderCustomizationSettings = {
   surfaceDepth: 1
 };
 
-const TEXT_SIZE_RANGE = { min: 0.92, max: 1.4 };
+const TEXT_SIZE_RANGE = { min: 0.92, max: 1.8 };
 const LINE_HEIGHT_RANGE = { min: 1.6, max: 2.3 };
 const CONTENT_WIDTH_RANGE = { min: 36, max: 60 };
 const VERSE_SPACING_RANGE = { min: 0.6, max: 1.8 };

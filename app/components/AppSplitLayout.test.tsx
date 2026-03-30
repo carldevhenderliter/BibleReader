@@ -3,6 +3,7 @@ import { act, fireEvent, render, screen, waitFor, within } from "@testing-librar
 import { AppSplitLayout } from "@/app/components/AppSplitLayout";
 import { BottomSearchBar } from "@/app/components/BottomSearchBar";
 import { LookupProvider } from "@/app/components/LookupProvider";
+import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
 import { ReaderVersionProvider } from "@/app/components/ReaderVersionProvider";
 import { setMockPathname } from "@/test/mocks/next-navigation";
@@ -16,10 +17,12 @@ function renderSplitLayout() {
     <ReaderVersionProvider>
       <ReaderWorkspaceProvider>
         <LookupProvider>
-          <AppSplitLayout>
-            <div>Reader content</div>
-          </AppSplitLayout>
-          <BottomSearchBar />
+          <ReaderCustomizationProvider>
+            <AppSplitLayout>
+              <div>Reader content</div>
+            </AppSplitLayout>
+            <BottomSearchBar />
+          </ReaderCustomizationProvider>
         </LookupProvider>
       </ReaderWorkspaceProvider>
     </ReaderVersionProvider>

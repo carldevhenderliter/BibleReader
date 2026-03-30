@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef } from "react";
 
+import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { SearchMatchModeToggle } from "@/app/components/SearchMatchModeToggle";
@@ -11,6 +12,7 @@ import { getBibleVersionLabel } from "@/lib/bible/version";
 
 export function BottomSearchBar() {
   const { version } = useReaderVersion();
+  const { style } = useReaderCustomization();
   const {
     clearSearch,
     closeSearch,
@@ -64,14 +66,15 @@ export function BottomSearchBar() {
       ) : null}
       <div
         className={`search-shell${isSplitViewActive ? " search-shell-split" : ""}`}
-        style={
-          isSplitViewActive
+        style={{
+          ...style,
+          ...(isSplitViewActive
             ? {
                 ["--search-shell-left-offset" as string]: `${searchShellLeftOffsetRem}rem`,
                 ["--search-shell-right-offset" as string]: `${searchShellRightOffsetRem}rem`
               }
-            : undefined
-        }
+            : {})
+        }}
       >
         {isOpen && !isSplitViewActive ? (
           <section

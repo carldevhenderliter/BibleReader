@@ -3,6 +3,7 @@ import { fireEvent, render, screen, waitFor, waitForElementToBeRemoved } from "@
 import { BottomSearchBar } from "@/app/components/BottomSearchBar";
 import { LookupPane } from "@/app/components/LookupPane";
 import { LookupProvider } from "@/app/components/LookupProvider";
+import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
 import { ReaderVersionProvider, useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { SearchPane } from "@/app/components/SearchPane";
@@ -28,13 +29,15 @@ function renderSearchUi(ui?: React.ReactNode) {
     <ReaderVersionProvider>
       <ReaderWorkspaceProvider>
         <LookupProvider>
-          {ui ?? (
-            <>
-              <BottomSearchBar />
-              <SearchPane />
-              <LookupPane />
-            </>
-          )}
+          <ReaderCustomizationProvider>
+            {ui ?? (
+              <>
+                <BottomSearchBar />
+                <SearchPane />
+                <LookupPane />
+              </>
+            )}
+          </ReaderCustomizationProvider>
         </LookupProvider>
       </ReaderWorkspaceProvider>
     </ReaderVersionProvider>
@@ -116,6 +119,21 @@ describe("BottomSearchBar", () => {
     renderSearchUi();
 
     expect(screen.getByLabelText(SEARCH_INPUT_LABEL)).toBeInTheDocument();
+  });
+
+  it("applies reader font-size settings to the search shell", () => {
+    window.localStorage.setItem(
+      "bible-reader:customization",
+      JSON.stringify({
+        textSize: 1.62,
+        lineHeight: 2.1
+      })
+    );
+
+    const { container } = renderSearchUi();
+
+    expect(container.querySelector(".search-shell")).toHaveStyle("--reader-text-size: 1.62rem");
+    expect(container.querySelector(".search-shell")).toHaveStyle("--reader-line-height: 2.1");
   });
 
   it("navigates to chapter 1 when a book result is selected", async () => {

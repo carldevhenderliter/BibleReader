@@ -1,5 +1,6 @@
 "use client";
 
+import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { SearchWorkspacePanel } from "@/app/components/SearchWorkspacePanel";
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
@@ -13,6 +14,7 @@ export function SearchPane() {
     isSplitViewActive
   } = useLookup();
   const { version } = useReaderVersion();
+  const { style } = useReaderCustomization();
 
   if (!isSplitViewActive) {
     return null;
@@ -23,7 +25,7 @@ export function SearchPane() {
   }
 
   return (
-    <aside aria-label="Search pane" className="app-side-pane search-pane">
+    <aside aria-label="Search pane" className="app-side-pane search-pane" style={style}>
       <SearchWorkspacePanel
         className="search-pane-workspace"
         title={`${getBibleVersionLabel(version)} search`}
