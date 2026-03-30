@@ -187,17 +187,10 @@ describe("BottomSearchBar", () => {
       target: { value: "without form and void" }
     });
 
-    await waitFor(() => {
-      expect(
-        screen.getByRole("button", { name: /Verse Genesis 1:2 KJV/i })
-      ).toBeInTheDocument();
-    });
-    expect(screen.getByRole("button", { name: /Verse Genesis 1:2 KJV/i })).toHaveTextContent(
-      /without form/
-    );
-    expect(screen.getByRole("button", { name: /Verse Genesis 1:2 KJV/i })).toHaveTextContent(
-      /Spirit/
-    );
+    const resultButton = await screen.findByRole("button", { name: /Genesis 1:2/i });
+
+    expect(resultButton).toHaveTextContent(/without form/i);
+    expect(resultButton).toHaveTextContent(/Spirit/i);
   });
 
   it("shows Strongs numbers beside KJV word-search hits only when the search toggle is on", async () => {
