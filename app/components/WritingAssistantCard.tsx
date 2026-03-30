@@ -33,7 +33,6 @@ export function WritingAssistantCard({
     status === "disabled" &&
     availabilityReason.length > 0 &&
     availabilityReason !== "Enable local AI to use writing assistance.";
-  const isReady = status === "ready";
 
   return (
     <section className="writing-ai-card">
@@ -84,7 +83,7 @@ export function WritingAssistantCard({
         {options.map((option) => (
           <button
             className="reader-inline-button"
-            disabled={!isReady || option.disabled || status === "generating"}
+            disabled={status !== "ready" || option.disabled}
             key={option.id}
             onClick={() => onRun(option.id)}
             type="button"
