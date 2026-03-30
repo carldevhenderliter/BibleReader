@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
 import { ReaderComparePanel } from "@/app/components/ReaderComparePanel";
@@ -12,6 +13,28 @@ import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { SearchWorkspacePanel } from "@/app/components/SearchWorkspacePanel";
 import { getBibleVersionLabel } from "@/lib/bible/version";
 
+const LOOKUP_STUDY_HEIGHT_STORAGE_KEY = "bible-reader.lookup-study-height-px";
+const DEFAULT_LOOKUP_STUDY_HEIGHT_PX = 320;
+const MIN_LOOKUP_STUDY_HEIGHT_PX = 220;
+const MIN_LOOKUP_SEARCH_HEIGHT_PX = 280;
+const FALLBACK_LOOKUP_BODY_HEIGHT_PX = 720;
+const LOOKUP_STUDY_DIVIDER_HEIGHT_PX = 14;
+
+function getLookupBodyHeight(element: HTMLDivElement | null) {
+  return element?.clientHeight || FALLBACK_LOOKUP_BODY_HEIGHT_PX;
+}
+
+function clampLookupStudyHeightPx(value: number, bodyHeight: number) {
+  const availableHeight = Math.max(0, bodyHeight - LOOKUP_STUDY_DIVIDER_HEIGHT_PX);
+  const minimumStudyHeight = Math.min(
+    MIN_LOOKUP_STUDY_HEIGHT_PX,
+    Math.max(140, Math.round(availableHeight * 0.35))
+  );
+  const maximumStudyHeight = Math.max(minimumStudyHeight, availableHeight - MIN_LOOKUP_SEARCH_HEIGHT_PX);
+
+  return Math.min(maximumStudyHeight, Math.max(minimumStudyHeight, value));
+}
+
 export function LookupPane() {
   const {
     closeSearch,
@@ -22,10 +45,122 @@ export function LookupPane() {
   const { version } = useReaderVersion();
   const pathname = usePathname();
   const isReaderRoute = pathname.startsWith("/read");
+  const bodyRef = useRef<HTMLDivElement | null>(null);
+  const [lookupBodyHeight, setLookupBodyHeight] = useState(FALLBACK_LOOKUP_BODY_HEIGHT_PX);
+  const [manualStudyHeightPx, setManualStudyHeightPx] = useState<number | null>(null);
+
+  const effectiveStudyHeightPx = useMemo(
+    () =>
+      clampLookupStudyHeightPx(
+        manualStudyHeightPx ?? DEFAULT_LOOKUP_STUDY_HEIGHT_PX,
+        lookupBodyHeight
+      ),
+    [lookupBodyHeight, manualStudyHeightPx]
+  );
+
+  useEffect(() => {
+    if (!isReaderRoute) {
+      return;
+    }
+
+    const syncBodyHeight = () => {
+      setLookupBodyHeight(getLookupBodyHeight(bodyRef.current));
+    };
+
+    syncBodyHeight();
+
+    if (typeof ResizeObserver === "undefined" || !bodyRef.current) {
+      window.addEventListener("resize", syncBodyHeight);
+
+      return () => {
+        window.removeEventListener("resize", syncBodyHeight);
+      };
+    }
+
+    const observer = new ResizeObserver(() => {
+      syncBodyHeight();
+    });
+
+    observer.observe(bodyRef.current);
+    window.addEventListener("resize", syncBodyHeight);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", syncBodyHeight);
+    };
+  }, [isReaderRoute]);
+
+  useEffect(() => {
+    if (!isReaderRoute) {
+      return;
+    }
+
+    const storedValue = window.localStorage.getItem(LOOKUP_STUDY_HEIGHT_STORAGE_KEY);
+
+    if (!storedValue) {
+      return;
+    }
+
+    const parsedValue = Number(storedValue);
+
+    if (!Number.isFinite(parsedValue)) {
+      window.localStorage.removeItem(LOOKUP_STUDY_HEIGHT_STORAGE_KEY);
+      return;
+    }
+
+    setManualStudyHeightPx(clampLookupStudyHeightPx(parsedValue, lookupBodyHeight));
+  }, [isReaderRoute, lookupBodyHeight]);
+
+  useEffect(() => {
+    if (!isReaderRoute || manualStudyHeightPx === null) {
+      return;
+    }
+
+    const clampedHeight = clampLookupStudyHeightPx(manualStudyHeightPx, lookupBodyHeight);
+
+    if (clampedHeight !== manualStudyHeightPx) {
+      setManualStudyHeightPx(clampedHeight);
+    }
+  }, [isReaderRoute, lookupBodyHeight, manualStudyHeightPx]);
+
+  useEffect(() => {
+    if (!isReaderRoute) {
+      return;
+    }
+
+    if (manualStudyHeightPx === null) {
+      window.localStorage.removeItem(LOOKUP_STUDY_HEIGHT_STORAGE_KEY);
+      return;
+    }
+
+    window.localStorage.setItem(LOOKUP_STUDY_HEIGHT_STORAGE_KEY, String(manualStudyHeightPx));
+  }, [isReaderRoute, manualStudyHeightPx]);
 
   if (!isSplitViewActive) {
     return null;
   }
+
+  const beginStudyResize = (startClientY: number) => {
+    const startingHeight = effectiveStudyHeightPx;
+
+    const handlePointerMove = (event: PointerEvent) => {
+      const deltaY = startClientY - event.clientY;
+      const nextHeight = clampLookupStudyHeightPx(
+        startingHeight + deltaY,
+        getLookupBodyHeight(bodyRef.current)
+      );
+
+      setManualStudyHeightPx(nextHeight);
+    };
+
+    const handlePointerUp = () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerup", handlePointerUp);
+    };
+
+    window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointerup", handlePointerUp);
+  };
 
   return (
     <aside className="lookup-pane" aria-label="Lookup pane">
@@ -42,14 +177,33 @@ export function LookupPane() {
           ) : null}
         </div>
       </div>
-      <div className="lookup-pane-body">
+      <div
+        className={`lookup-pane-body${isReaderRoute ? " lookup-pane-body-has-study" : ""}`}
+        ref={bodyRef}
+        style={
+          isReaderRoute
+            ? {
+                ["--lookup-study-height" as string]: `${effectiveStudyHeightPx}px`
+              }
+            : undefined
+        }
+      >
         <SearchWorkspacePanel
           className="lookup-search-workspace"
           title={`${getBibleVersionLabel(version)} search`}
           variant="panes"
         />
         {isReaderRoute ? (
-          <section className="lookup-pane-study">
+          <>
+            <button
+              aria-label="Resize study pane"
+              className="lookup-pane-study-divider"
+              onDoubleClick={() => setManualStudyHeightPx(null)}
+              onPointerDown={(event) => beginStudyResize(event.clientY)}
+              title="Drag to resize notebook and sermon area. Double-click to reset."
+              type="button"
+            />
+            <section className="lookup-pane-study">
             <div className="lookup-pane-study-header">
               <div className="lookup-pane-header-main">
                 <p className="search-tray-kicker">Study Tools</p>
@@ -120,7 +274,8 @@ export function LookupPane() {
                 </div>
               )}
             </div>
-          </section>
+            </section>
+          </>
         ) : null}
       </div>
     </aside>
