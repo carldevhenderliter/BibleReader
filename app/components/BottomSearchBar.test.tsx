@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, waitForElementToBeRemoved } from "@testing-library/react";
 
 import { BottomSearchBar } from "@/app/components/BottomSearchBar";
 import { LookupPane } from "@/app/components/LookupPane";
@@ -192,7 +192,12 @@ describe("BottomSearchBar", () => {
       target: { value: "without form and void" }
     });
 
-    const resultButton = await screen.findByRole("button", { name: /Genesis 1:2/i });
+    await waitForElementToBeRemoved(
+      () => screen.queryByText("Searching scripture…"),
+      { timeout: 10000 }
+    );
+
+    const resultButton = screen.getByRole("button", { name: /Genesis 1:2/i });
 
     expect(resultButton).toHaveTextContent(/without form/i);
     expect(resultButton).toHaveTextContent(/Spirit/i);
