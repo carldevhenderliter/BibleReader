@@ -339,7 +339,7 @@ function getThemePresetVariables(themePreset: ThemePreset): ThemePresetVariables
   }
 }
 
-function getBodyFontValue(bodyFont: BodyFontOption) {
+export function getBodyFontValue(bodyFont: BodyFontOption) {
   switch (bodyFont) {
     case "humanist":
       return '"Inter", "Segoe UI", "Helvetica Neue", sans-serif';
@@ -351,7 +351,7 @@ function getBodyFontValue(bodyFont: BodyFontOption) {
   }
 }
 
-function getUiFontValue(uiFont: UiFontOption) {
+export function getUiFontValue(uiFont: UiFontOption) {
   switch (uiFont) {
     case "technical":
       return '"Eurostile", "Avenir Next Condensed", "Segoe UI", sans-serif';

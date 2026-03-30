@@ -6,6 +6,7 @@ import { LookupProvider } from "@/app/components/LookupProvider";
 import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
 import { ReaderVersionProvider } from "@/app/components/ReaderVersionProvider";
+import { SearchCustomizationProvider } from "@/app/components/SearchCustomizationProvider";
 import { setMockPathname } from "@/test/mocks/next-navigation";
 
 const SPLIT_SEARCH_WIDTH_STORAGE_KEY = "bible-reader.split-search-width-rem";
@@ -18,10 +19,12 @@ function renderSplitLayout() {
       <ReaderWorkspaceProvider>
         <LookupProvider>
           <ReaderCustomizationProvider>
-            <AppSplitLayout>
-              <div>Reader content</div>
-            </AppSplitLayout>
-            <BottomSearchBar />
+            <SearchCustomizationProvider>
+              <AppSplitLayout>
+                <div>Reader content</div>
+              </AppSplitLayout>
+              <BottomSearchBar />
+            </SearchCustomizationProvider>
           </ReaderCustomizationProvider>
         </LookupProvider>
       </ReaderWorkspaceProvider>

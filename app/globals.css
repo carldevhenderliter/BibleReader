@@ -1445,9 +1445,9 @@ select {
   z-index: 45;
   display: grid;
   justify-items: center;
-  gap: 0.8rem;
+  gap: var(--search-density-gap, 1rem);
   pointer-events: none;
-  font-family: var(--reader-ui-font);
+  font-family: var(--search-ui-font, "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif);
 }
 
 .search-tray,
@@ -1481,7 +1481,7 @@ select {
 
 .search-workspace-panel {
   display: grid;
-  gap: 1rem;
+  gap: var(--search-density-gap, 1rem);
   min-height: 0;
   align-content: start;
 }
@@ -1537,7 +1537,8 @@ select {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.82rem 0.9rem;
+  padding: var(--search-density-input-padding-y, 0.82rem)
+    var(--search-density-input-padding-x, 0.9rem);
   border-radius: 1.35rem;
 }
 
@@ -1547,9 +1548,9 @@ select {
   border: 0;
   background: transparent;
   color: var(--text);
-  font-family: var(--reader-ui-font);
-  font-size: max(1rem, calc(var(--reader-text-size) * 0.94));
-  line-height: 1.3;
+  font-family: var(--search-ui-font, "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif);
+  font-size: max(1rem, calc(var(--search-text-size, 1.04rem) * 0.98));
+  line-height: var(--search-line-height, 1.72);
   outline: none;
 }
 
@@ -1571,8 +1572,8 @@ select {
 .search-version-pill {
   padding: 0.45rem 0.72rem;
   border-radius: 999px;
-  background: rgba(var(--reader-accent-rgb), 0.14);
-  color: var(--reader-accent);
+  background: rgba(var(--reader-accent-rgb, 85 214 255), 0.14);
+  color: var(--reader-accent, #55d6ff);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -1586,7 +1587,7 @@ select {
   overflow-y: auto;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
-  padding: 1rem;
+  padding: var(--search-density-card-padding, 0.96rem);
   border-radius: 1.5rem;
 }
 
@@ -1594,8 +1595,8 @@ select {
   display: flex;
   align-items: start;
   justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  gap: var(--search-density-header-gap, 1rem);
+  margin-bottom: var(--search-density-header-margin, 1rem);
 }
 
 .search-tray-header-main,
@@ -1609,7 +1610,7 @@ select {
   align-items: start;
   justify-content: flex-end;
   flex-wrap: wrap;
-  gap: 0.55rem;
+  gap: 0.55rem 0.65rem;
 }
 
 .lookup-pane-tabs {
@@ -1682,7 +1683,7 @@ select {
 .search-workspace-secondary-actions {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.45rem;
   flex-wrap: wrap;
 }
 
@@ -1691,7 +1692,7 @@ select {
 }
 
 .search-workspace-header .lookup-pane-header-actions {
-  gap: 0.45rem 0.55rem;
+  gap: 0.45rem 0.7rem;
 }
 
 .search-workspace-header .search-close-button,
@@ -1715,10 +1716,104 @@ select {
   outline: none;
 }
 
+.search-customization-controls {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  max-width: 100%;
+}
+
+.search-customization-stepper,
+.search-density-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.22rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.search-customization-stepper-button,
+.search-density-option,
+.search-customization-field select,
+.search-settings-reset-button {
+  min-height: 2rem;
+  border: 0;
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.76);
+  font-family: var(--search-ui-font, "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif);
+  font-size: 0.76rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+}
+
+.search-customization-stepper-button,
+.search-density-option,
+.search-settings-reset-button {
+  padding: 0.35rem 0.62rem;
+  background: transparent;
+  cursor: pointer;
+}
+
+.search-customization-stepper-button:hover,
+.search-customization-stepper-button:focus-visible,
+.search-density-option:hover,
+.search-density-option:focus-visible,
+.search-settings-reset-button:hover,
+.search-settings-reset-button:focus-visible {
+  background: rgba(255, 255, 255, 0.07);
+  color: rgba(255, 255, 255, 0.96);
+  outline: none;
+}
+
+.search-customization-value {
+  min-width: 3.65rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+.search-customization-field {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.22rem 0.22rem 0.22rem 0.62rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.035);
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.search-customization-field select {
+  appearance: none;
+  padding: 0.35rem 1.65rem 0.35rem 0.22rem;
+  background:
+    linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.6) 50%) calc(100% - 1rem)
+      calc(50% - 0.12rem) / 0.34rem 0.34rem no-repeat,
+    linear-gradient(135deg, rgba(255, 255, 255, 0.6) 50%, transparent 50%) calc(100% - 0.8rem)
+      calc(50% - 0.12rem) / 0.34rem 0.34rem no-repeat,
+    transparent;
+  outline: none;
+}
+
+.search-density-option-active {
+  background: rgba(255, 255, 255, 0.11);
+  color: rgba(255, 255, 255, 0.98);
+}
+
 .search-match-mode-option-active {
-  background: rgba(var(--reader-accent-rgb), 0.18);
-  color: var(--reader-accent);
-  box-shadow: inset 0 0 0 1px rgba(var(--reader-accent-rgb), 0.2);
+  background: rgba(var(--reader-accent-rgb, 85 214 255), 0.18);
+  color: var(--reader-accent, #55d6ff);
+  box-shadow: inset 0 0 0 1px rgba(var(--reader-accent-rgb, 85 214 255), 0.2);
 }
 
 .search-strongs-toggle {
@@ -1758,24 +1853,26 @@ select {
 
 .search-tray-title {
   margin-top: 0.22rem;
-  font-size: max(1.2rem, calc(var(--reader-text-size) * 1.12));
+  font-family: var(--search-ui-font, "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif);
+  font-size: max(1.18rem, calc(var(--search-text-size, 1.04rem) * 1.12));
   letter-spacing: -0.02em;
 }
 
 .search-empty-copy {
   color: rgba(255, 255, 255, 0.62);
-  font-size: max(0.94rem, calc(var(--reader-text-size) * 0.84));
-  line-height: calc(var(--reader-line-height) * 0.84);
+  font-family: var(--search-body-font, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif);
+  font-size: max(0.94rem, calc(var(--search-text-size, 1.04rem) * 0.9));
+  line-height: calc(var(--search-line-height, 1.72) * 0.9);
 }
 
 .search-results {
   display: grid;
-  gap: 0.65rem;
+  gap: var(--search-density-tight-gap, 0.72rem);
 }
 
 .search-result-groups {
   display: grid;
-  gap: 1rem;
+  gap: var(--search-density-gap, 1rem);
   min-height: 0;
 }
 
@@ -1799,13 +1896,13 @@ select {
 
 .search-result-group {
   display: grid;
-  gap: 0.75rem;
+  gap: var(--search-density-tight-gap, 0.72rem);
 }
 
 .search-result-group-pane {
   grid-template-rows: auto minmax(0, 1fr);
   min-height: 0;
-  padding: 0.95rem;
+  padding: var(--search-density-group-padding, 0.98rem);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 1.1rem;
   background: rgba(255, 255, 255, 0.04);
@@ -1819,6 +1916,7 @@ select {
 .search-result-group-label {
   margin: 0 0 0.2rem;
   color: rgba(255, 255, 255, 0.42);
+  font-family: var(--search-ui-font, "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif);
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.16em;
@@ -1827,13 +1925,16 @@ select {
 
 .search-result-group-query {
   margin: 0;
-  font-size: 1rem;
+  font-family: var(--search-ui-font, "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif);
+  font-size: max(1rem, calc(var(--search-text-size, 1.04rem) * 0.94));
   letter-spacing: -0.02em;
 }
 
 .search-result-group-empty {
   color: rgba(255, 255, 255, 0.62);
-  font-size: 0.92rem;
+  font-family: var(--search-body-font, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif);
+  font-size: max(0.92rem, calc(var(--search-text-size, 1.04rem) * 0.88));
+  line-height: calc(var(--search-line-height, 1.72) * 0.9);
 }
 
 .search-result-group-pane .search-results {
@@ -1845,9 +1946,9 @@ select {
 
 .search-result {
   display: grid;
-  gap: 0.35rem;
+  gap: calc(var(--search-density-tight-gap, 0.72rem) * 0.56);
   width: 100%;
-  padding: 0.9rem;
+  padding: var(--search-density-card-padding, 0.96rem);
   text-align: left;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 1rem;
@@ -1865,7 +1966,7 @@ select {
 .search-result-main,
 .search-range-line-main {
   display: grid;
-  gap: 0.35rem;
+  gap: calc(var(--search-density-tight-gap, 0.72rem) * 0.56);
   width: 100%;
   padding: 0;
   border: 0;
@@ -1879,7 +1980,7 @@ select {
   display: flex;
   flex-wrap: wrap;
   gap: 0.42rem;
-  margin-top: 0.25rem;
+  margin-top: calc(var(--search-density-tight-gap, 0.72rem) * 0.34);
 }
 
 .search-result-static {
@@ -2437,8 +2538,8 @@ select {
 }
 
 .search-result-type-book {
-  background: rgba(var(--reader-accent-rgb), 0.14);
-  color: var(--reader-accent);
+  background: rgba(var(--reader-accent-rgb, 85 214 255), 0.14);
+  color: var(--reader-accent, #55d6ff);
 }
 
 .search-result-type-chapter {
@@ -2473,16 +2574,17 @@ select {
 
 .search-result-description {
   color: rgba(255, 255, 255, 0.56);
-  font-size: max(0.84rem, calc(var(--reader-text-size) * 0.76));
-  line-height: calc(var(--reader-line-height) * 0.76);
+  font-family: var(--search-ui-font, "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif);
+  font-size: max(0.84rem, calc(var(--search-text-size, 1.04rem) * 0.78));
+  line-height: calc(var(--search-line-height, 1.72) * 0.76);
 }
 
 .search-result-reference {
   display: block;
   margin: 0;
   color: rgba(255, 255, 255, 0.68);
-  font-family: var(--reader-ui-font);
-  font-size: max(0.8rem, calc(var(--reader-text-size) * 0.74));
+  font-family: var(--search-ui-font, "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif);
+  font-size: max(0.8rem, calc(var(--search-text-size, 1.04rem) * 0.76));
   font-weight: 650;
   letter-spacing: 0.02em;
 }
@@ -2490,11 +2592,9 @@ select {
 .search-result-preview {
   display: block;
   color: rgba(255, 255, 255, 0.84);
-  font-family: var(--reader-body-font);
-  font-size: max(0.98rem, calc(var(--reader-text-size) * 0.96));
-  line-height: var(--reader-line-height);
-  letter-spacing: var(--reader-letter-spacing);
-  text-align: var(--reader-text-align);
+  font-family: var(--search-body-font, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif);
+  font-size: max(0.98rem, calc(var(--search-text-size, 1.04rem) * 1));
+  line-height: var(--search-line-height, 1.72);
   white-space: pre-line;
 }
 

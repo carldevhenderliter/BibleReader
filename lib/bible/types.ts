@@ -72,6 +72,16 @@ export type ReaderCustomizationSettings = {
   surfaceDepth: number;
 };
 
+export type SearchDensityOption = "comfortable" | "compact";
+
+export type SearchCustomizationSettings = {
+  textSize: number;
+  lineHeight: number;
+  bodyFont: BodyFontOption;
+  uiFont: UiFontOption;
+  density: SearchDensityOption;
+};
+
 export type PassageReference = {
   id: string;
   version: BundledBibleVersion;

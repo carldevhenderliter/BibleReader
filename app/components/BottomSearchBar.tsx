@@ -2,9 +2,10 @@
 
 import { useEffect, useId, useRef } from "react";
 
-import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
+import { SearchCustomizationControls } from "@/app/components/SearchCustomizationControls";
+import { useSearchCustomization } from "@/app/components/SearchCustomizationProvider";
 import { SearchMatchModeToggle } from "@/app/components/SearchMatchModeToggle";
 import { SearchResultGroups } from "@/app/components/SearchResultGroups";
 import { SearchStrongsToggle } from "@/app/components/SearchStrongsToggle";
@@ -12,7 +13,7 @@ import { getBibleVersionLabel } from "@/lib/bible/version";
 
 export function BottomSearchBar() {
   const { version } = useReaderVersion();
-  const { style } = useReaderCustomization();
+  const { style } = useSearchCustomization();
   const {
     clearSearch,
     closeSearch,
@@ -88,14 +89,19 @@ export function BottomSearchBar() {
                 <h2 className="search-tray-title">{getBibleVersionLabel(version)} results</h2>
               </div>
               <div className="search-tray-header-actions">
-                <SearchMatchModeToggle matchMode={matchMode} onChange={setMatchMode} />
-                <SearchStrongsToggle
-                  isEnabled={showStrongsInSearch}
-                  onChange={setShowStrongsInSearch}
-                />
-                <button className="search-close-button" onClick={closeSearch} type="button">
-                  Close
-                </button>
+                <div className="search-workspace-primary-actions">
+                  <SearchMatchModeToggle matchMode={matchMode} onChange={setMatchMode} />
+                  <SearchStrongsToggle
+                    isEnabled={showStrongsInSearch}
+                    onChange={setShowStrongsInSearch}
+                  />
+                </div>
+                <SearchCustomizationControls />
+                <div className="search-workspace-secondary-actions">
+                  <button className="search-close-button" onClick={closeSearch} type="button">
+                    Close
+                  </button>
+                </div>
               </div>
             </div>
             {!query.trim() ? (

@@ -6,6 +6,7 @@ import { LookupProvider } from "@/app/components/LookupProvider";
 import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
 import { ReaderVersionProvider } from "@/app/components/ReaderVersionProvider";
+import { SearchCustomizationProvider } from "@/app/components/SearchCustomizationProvider";
 import { WritingAssistantProvider } from "@/app/components/WritingAssistantProvider";
 
 export function AppProviders({ children }: PropsWithChildren) {
@@ -14,7 +15,9 @@ export function AppProviders({ children }: PropsWithChildren) {
       <ReaderWorkspaceProvider>
         <WritingAssistantProvider>
           <LookupProvider>
-            <ReaderCustomizationProvider>{children}</ReaderCustomizationProvider>
+            <ReaderCustomizationProvider>
+              <SearchCustomizationProvider>{children}</SearchCustomizationProvider>
+            </ReaderCustomizationProvider>
           </LookupProvider>
         </WritingAssistantProvider>
       </ReaderWorkspaceProvider>

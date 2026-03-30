@@ -5,6 +5,7 @@ import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizatio
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
 import { LookupProvider } from "@/app/components/LookupProvider";
 import { ReaderVersionProvider } from "@/app/components/ReaderVersionProvider";
+import { SearchCustomizationProvider } from "@/app/components/SearchCustomizationProvider";
 import { WritingAssistantProvider } from "@/app/components/WritingAssistantProvider";
 
 type WrapperProps = {
@@ -17,7 +18,9 @@ function Wrapper({ children }: WrapperProps) {
       <ReaderWorkspaceProvider>
         <WritingAssistantProvider>
           <LookupProvider>
-            <ReaderCustomizationProvider>{children}</ReaderCustomizationProvider>
+            <ReaderCustomizationProvider>
+              <SearchCustomizationProvider>{children}</SearchCustomizationProvider>
+            </ReaderCustomizationProvider>
           </LookupProvider>
         </WritingAssistantProvider>
       </ReaderWorkspaceProvider>

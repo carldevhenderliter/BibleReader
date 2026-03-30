@@ -6,6 +6,7 @@ import { LookupProvider } from "@/app/components/LookupProvider";
 import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
 import { ReaderVersionProvider, useReaderVersion } from "@/app/components/ReaderVersionProvider";
+import { SearchCustomizationProvider } from "@/app/components/SearchCustomizationProvider";
 import { SearchPane } from "@/app/components/SearchPane";
 import { mockRouter, setMockPathname } from "@/test/mocks/next-navigation";
 
@@ -30,13 +31,15 @@ function renderSearchUi(ui?: React.ReactNode) {
       <ReaderWorkspaceProvider>
         <LookupProvider>
           <ReaderCustomizationProvider>
-            {ui ?? (
-              <>
-                <BottomSearchBar />
-                <SearchPane />
-                <LookupPane />
-              </>
-            )}
+            <SearchCustomizationProvider>
+              {ui ?? (
+                <>
+                  <BottomSearchBar />
+                  <SearchPane />
+                  <LookupPane />
+                </>
+              )}
+            </SearchCustomizationProvider>
           </ReaderCustomizationProvider>
         </LookupProvider>
       </ReaderWorkspaceProvider>
@@ -110,6 +113,12 @@ describe("BottomSearchBar", () => {
     expect(screen.getByRole("button", { name: "Partial" })).toHaveAttribute("aria-pressed", "true");
     expect(screen.getByRole("button", { name: "Complete" })).toHaveAttribute("aria-pressed", "false");
     expect(screen.getByRole("button", { name: "Show Strongs" })).toHaveAttribute("aria-pressed", "false");
+    expect(screen.getByRole("button", { name: "Increase search text size" })).toBeInTheDocument();
+    expect(screen.getByRole("combobox", { name: "Search line height" })).toBeInTheDocument();
+    expect(screen.getByRole("combobox", { name: "Search body font" })).toBeInTheDocument();
+    expect(screen.getByRole("combobox", { name: "Search UI font" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Comfortable" })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: "Compact" })).toHaveAttribute("aria-pressed", "false");
     expect(screen.queryByRole("button", { name: "Ask AI" })).not.toBeInTheDocument();
   });
 
@@ -121,19 +130,39 @@ describe("BottomSearchBar", () => {
     expect(screen.getByLabelText(SEARCH_INPUT_LABEL)).toBeInTheDocument();
   });
 
-  it("applies reader font-size settings to the search shell", () => {
+  it("applies search-only font-size settings to the search shell", () => {
     window.localStorage.setItem(
-      "bible-reader:customization",
+      "bible-reader:search-customization",
       JSON.stringify({
-        textSize: 1.62,
+        textSize: 2.04,
         lineHeight: 2.1
       })
     );
 
     const { container } = renderSearchUi();
 
-    expect(container.querySelector(".search-shell")).toHaveStyle("--reader-text-size: 1.62rem");
-    expect(container.querySelector(".search-shell")).toHaveStyle("--reader-line-height: 2.1");
+    expect(container.querySelector(".search-shell")).toHaveStyle("--search-text-size: 2.04rem");
+    expect(container.querySelector(".search-shell")).toHaveStyle("--search-line-height: 2.1");
+  });
+
+  it("keeps reader and search customization settings independent", () => {
+    window.localStorage.setItem(
+      "bible-reader:customization",
+      JSON.stringify({
+        textSize: 1.8
+      })
+    );
+    window.localStorage.setItem(
+      "bible-reader:search-customization",
+      JSON.stringify({
+        textSize: 1.22
+      })
+    );
+
+    const { container } = renderSearchUi();
+
+    expect(container.querySelector(".search-shell")).toHaveStyle("--search-text-size: 1.22rem");
+    expect(container.querySelector(".search-shell")).not.toHaveStyle("--search-text-size: 1.8rem");
   });
 
   it("navigates to chapter 1 when a book result is selected", async () => {
