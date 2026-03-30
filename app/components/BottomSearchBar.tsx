@@ -26,6 +26,8 @@ export function BottomSearchBar() {
     setMatchMode,
     setQuery,
     setShowStrongsInSearch,
+    searchShellLeftOffsetRem,
+    searchShellRightOffsetRem,
     showStrongsInSearch
   } = useLookup();
   const inputId = useId();
@@ -60,7 +62,17 @@ export function BottomSearchBar() {
           type="button"
         />
       ) : null}
-      <div className={`search-shell${isSplitViewActive ? " search-shell-split" : ""}`}>
+      <div
+        className={`search-shell${isSplitViewActive ? " search-shell-split" : ""}`}
+        style={
+          isSplitViewActive
+            ? {
+                ["--search-shell-left-offset" as string]: `${searchShellLeftOffsetRem}rem`,
+                ["--search-shell-right-offset" as string]: `${searchShellRightOffsetRem}rem`
+              }
+            : undefined
+        }
+      >
         {isOpen && !isSplitViewActive ? (
           <section
             aria-label="Bible search results"

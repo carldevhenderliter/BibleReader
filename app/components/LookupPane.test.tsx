@@ -1,12 +1,13 @@
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
 import { LookupPane } from "@/app/components/LookupPane";
 import { ReaderPageContent } from "@/app/components/ReaderPageContent";
+import { SearchPane } from "@/app/components/SearchPane";
 import type { BookMeta, Chapter } from "@/lib/bible/types";
 import { setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
 
-const LOOKUP_STUDY_HEIGHT_STORAGE_KEY = "bible-reader.lookup-study-height-px";
+const SPLIT_COLLAPSED_PANES_STORAGE_KEY = "bible-reader.split-collapsed-panes";
 
 const books: BookMeta[] = [
   {
@@ -44,16 +45,7 @@ function setSplitViewActive(isActive: boolean) {
   });
 }
 
-function setLookupBodyClientHeight(height: number) {
-  Object.defineProperty(HTMLElement.prototype, "clientHeight", {
-    configurable: true,
-    get() {
-      return this.classList?.contains("lookup-pane-body") ? height : 0;
-    }
-  });
-}
-
-function renderLookupPane() {
+function renderStudyPane() {
   return renderWithReaderCustomization(
     <>
       <ReaderPageContent
@@ -61,6 +53,7 @@ function renderLookupPane() {
         books={books}
         chaptersByVersion={{ web: chapter, kjv: chapter }}
       />
+      <SearchPane />
       <LookupPane />
     </>
   );
@@ -68,61 +61,60 @@ function renderLookupPane() {
 
 describe("LookupPane", () => {
   beforeEach(() => {
-    if (!("PointerEvent" in window)) {
-      Object.defineProperty(window, "PointerEvent", {
-        configurable: true,
-        writable: true,
-        value: MouseEvent
-      });
-    }
-
     window.localStorage.clear();
     jest.clearAllMocks();
     setMockPathname("/read/genesis/1");
     window.history.replaceState({}, "", "/read/genesis/1");
     setSplitViewActive(true);
-    setLookupBodyClientHeight(720);
   });
 
-  it("renders a draggable divider between search and the lower study pane in split view", () => {
-    renderLookupPane();
+  it("renders the study pane tabs in split view", () => {
+    renderStudyPane();
 
-    expect(screen.getByRole("button", { name: "Resize study pane" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "WEB search" })).toBeInTheDocument();
+    expect(screen.getByLabelText("Study pane")).toBeInTheDocument();
+    expect(screen.getByRole("tab", { name: "Notebook" })).toBeInTheDocument();
+    expect(screen.getByRole("tab", { name: "Sermons" })).toBeInTheDocument();
   });
 
-  it("updates and persists the lower study height when dragged", () => {
-    const { container } = renderLookupPane();
-    const divider = screen.getByRole("button", { name: "Resize study pane" });
-    const body = container.querySelector(".lookup-pane-body");
+  it("restores a collapsed study rail from local storage and reopens it", async () => {
+    window.localStorage.setItem(
+      SPLIT_COLLAPSED_PANES_STORAGE_KEY,
+      JSON.stringify({ reader: false, search: false, study: true })
+    );
 
-    fireEvent.pointerDown(divider, { clientY: 500 });
-    act(() => {
-      window.dispatchEvent(new PointerEvent("pointermove", { clientY: 420 }));
-      window.dispatchEvent(new PointerEvent("pointerup", { clientY: 420 }));
-    });
+    renderStudyPane();
 
-    expect(body).toHaveStyle("--lookup-study-height: 400px");
-    expect(window.localStorage.getItem(LOOKUP_STUDY_HEIGHT_STORAGE_KEY)).toBe("400");
+    const railButton = await screen.findByRole("button", { name: "Show study pane" });
+    fireEvent.click(railButton);
+
+    expect(await screen.findByLabelText("Study pane")).toBeInTheDocument();
   });
 
-  it("restores a saved study height and clamps it to the current pane height", async () => {
-    setLookupBodyClientHeight(500);
-    window.localStorage.setItem(LOOKUP_STUDY_HEIGHT_STORAGE_KEY, "900");
-    const { container } = renderLookupPane();
+  it("reopens the study pane automatically when notebook is opened from the reader menu", async () => {
+    window.localStorage.setItem(
+      SPLIT_COLLAPSED_PANES_STORAGE_KEY,
+      JSON.stringify({ reader: false, search: false, study: true })
+    );
+
+    renderStudyPane();
+
+    expect(await screen.findByRole("button", { name: "Show study pane" })).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
 
     await waitFor(() => {
-      expect(container.querySelector(".lookup-pane-body")).toHaveStyle(
-        "--lookup-study-height: 206px"
-      );
+      expect(screen.getByRole("tab", { name: "Notebook" })).toHaveAttribute("aria-selected", "true");
     });
+    expect(screen.getByLabelText("Notebook title")).toBeInTheDocument();
   });
 
-  it("does not render the study divider when split view is inactive", () => {
+  it("does not render the study pane in mobile mode", () => {
     setSplitViewActive(false);
 
-    renderLookupPane();
+    renderStudyPane();
 
-    expect(screen.queryByRole("button", { name: "Resize study pane" })).not.toBeInTheDocument();
+    expect(screen.queryByLabelText("Study pane")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Show study pane" })).not.toBeInTheDocument();
   });
 });

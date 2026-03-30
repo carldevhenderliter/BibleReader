@@ -1,6 +1,7 @@
 import { fireEvent, screen } from "@testing-library/react";
 
 import { LookupPane } from "@/app/components/LookupPane";
+import { SearchPane } from "@/app/components/SearchPane";
 import { WholeBookContent } from "@/app/components/WholeBookContent";
 import type { BookMeta, Chapter } from "@/lib/bible/types";
 import { setMockPathname } from "@/test/mocks/next-navigation";
@@ -135,6 +136,7 @@ describe("WholeBookContent", () => {
           books={books}
           chaptersByVersion={{ web: chapters, kjv: kjvChapters }}
         />
+        <SearchPane />
         <LookupPane />
       </>
     );

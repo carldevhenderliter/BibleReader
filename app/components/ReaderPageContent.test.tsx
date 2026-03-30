@@ -2,6 +2,7 @@ import { fireEvent, screen, waitFor } from "@testing-library/react";
 
 import { LookupPane } from "@/app/components/LookupPane";
 import { ReaderPageContent } from "@/app/components/ReaderPageContent";
+import { SearchPane } from "@/app/components/SearchPane";
 import type { BookMeta, Chapter } from "@/lib/bible/types";
 import { PASSAGE_NOTEBOOK_STORAGE_KEY } from "@/lib/passage-notebooks";
 import { setMockPathname } from "@/test/mocks/next-navigation";
@@ -285,6 +286,7 @@ describe("ReaderPageContent", () => {
           books={books}
           chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
         />
+        <SearchPane />
         <LookupPane />
       </>
     );

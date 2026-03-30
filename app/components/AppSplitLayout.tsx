@@ -1,122 +1,83 @@
 "use client";
 
 import type { PropsWithChildren } from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import { LookupPane } from "@/app/components/LookupPane";
+import { SearchPane } from "@/app/components/SearchPane";
 import { useLookup } from "@/app/components/LookupProvider";
-
-const SPLIT_LAYOUT_WIDTH_STORAGE_KEY = "bible-reader.split-layout-width-rem";
-const MIN_LOOKUP_WIDTH_REM = 18;
-const DEFAULT_LOOKUP_WIDTH_REM = 20;
-const LOOKUP_WIDTH_PER_EXTRA_QUERY_REM = 14;
-const LOOKUP_WIDTH_MAX_VIEWPORT_RATIO = 0.75;
 
 function getRootFontSize() {
   return Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
 }
 
-function getMaximumLookupWidthRem() {
-  return Math.max(
-    MIN_LOOKUP_WIDTH_REM,
-    (window.innerWidth * LOOKUP_WIDTH_MAX_VIEWPORT_RATIO) / getRootFontSize()
-  );
-}
-
-function clampLookupWidthRem(value: number, maximumLookupWidthRem: number) {
-  return Math.min(maximumLookupWidthRem, Math.max(MIN_LOOKUP_WIDTH_REM, value));
-}
-
 export function AppSplitLayout({ children }: PropsWithChildren) {
-  const { isSplitViewActive, queryParts } = useLookup();
-  const [manualLookupWidthRem, setManualLookupWidthRem] = useState<number | null>(null);
-  const [maximumLookupWidthRem, setMaximumLookupWidthRem] = useState(() =>
-    typeof window === "undefined" ? DEFAULT_LOOKUP_WIDTH_REM : getMaximumLookupWidthRem()
-  );
+  const {
+    canCollapseSplitPane,
+    collapseSplitPane,
+    collapsedSplitPanes,
+    expandSplitPane,
+    isSplitViewActive,
+    searchPaneWidthRem,
+    setSearchPaneWidthRem,
+    splitPaneDividerWidthRem,
+    splitPaneRailWidthRem,
+    studyPaneWidthRem,
+    setStudyPaneWidthRem
+  } = useLookup();
 
-  const queryCount = Math.max(queryParts.length, 1);
-  const automaticLookupWidthRem = useMemo(
-    () =>
-      clampLookupWidthRem(
-        DEFAULT_LOOKUP_WIDTH_REM + (queryCount - 1) * LOOKUP_WIDTH_PER_EXTRA_QUERY_REM,
-        maximumLookupWidthRem
-      ),
-    [maximumLookupWidthRem, queryCount]
-  );
-  const effectiveLookupWidthRem = clampLookupWidthRem(
-    manualLookupWidthRem ?? automaticLookupWidthRem,
-    maximumLookupWidthRem
-  );
-
-  useEffect(() => {
-    const syncMaximumWidth = () => {
-      setMaximumLookupWidthRem(getMaximumLookupWidthRem());
-    };
-
-    syncMaximumWidth();
-    window.addEventListener("resize", syncMaximumWidth);
-
-    return () => {
-      window.removeEventListener("resize", syncMaximumWidth);
-    };
-  }, []);
-
-  useEffect(() => {
-    const storedValue = window.localStorage.getItem(SPLIT_LAYOUT_WIDTH_STORAGE_KEY);
-
-    if (!storedValue) {
-      return;
+  const showReaderSearchDivider = isSplitViewActive && !collapsedSplitPanes.reader && !collapsedSplitPanes.search;
+  const showSearchStudyDivider = isSplitViewActive && !collapsedSplitPanes.search && !collapsedSplitPanes.study;
+  const splitGridTemplateColumns = useMemo(() => {
+    if (!isSplitViewActive) {
+      return undefined;
     }
 
-    const parsedValue = Number(storedValue);
+    return [
+      collapsedSplitPanes.reader ? `${splitPaneRailWidthRem}rem` : "minmax(0, 1fr)",
+      showReaderSearchDivider ? `${splitPaneDividerWidthRem}rem` : "0rem",
+      collapsedSplitPanes.search ? `${splitPaneRailWidthRem}rem` : `${searchPaneWidthRem}rem`,
+      showSearchStudyDivider ? `${splitPaneDividerWidthRem}rem` : "0rem",
+      collapsedSplitPanes.study ? `${splitPaneRailWidthRem}rem` : `${studyPaneWidthRem}rem`
+    ].join(" ");
+  }, [
+    collapsedSplitPanes.reader,
+    collapsedSplitPanes.search,
+    collapsedSplitPanes.study,
+    isSplitViewActive,
+    searchPaneWidthRem,
+    showReaderSearchDivider,
+    showSearchStudyDivider,
+    splitPaneDividerWidthRem,
+    splitPaneRailWidthRem,
+    studyPaneWidthRem
+  ]);
 
-    if (!Number.isFinite(parsedValue)) {
-      window.localStorage.removeItem(SPLIT_LAYOUT_WIDTH_STORAGE_KEY);
-      return;
-    }
-
-    setManualLookupWidthRem(clampLookupWidthRem(parsedValue, maximumLookupWidthRem));
-  }, [maximumLookupWidthRem]);
-
-  useEffect(() => {
-    if (manualLookupWidthRem === null) {
-      return;
-    }
-
-    const clampedWidth = clampLookupWidthRem(manualLookupWidthRem, maximumLookupWidthRem);
-
-    if (clampedWidth !== manualLookupWidthRem) {
-      setManualLookupWidthRem(clampedWidth);
-    }
-  }, [manualLookupWidthRem, maximumLookupWidthRem]);
-
-  useEffect(() => {
-    if (manualLookupWidthRem === null) {
-      window.localStorage.removeItem(SPLIT_LAYOUT_WIDTH_STORAGE_KEY);
-      return;
-    }
-
-    window.localStorage.setItem(SPLIT_LAYOUT_WIDTH_STORAGE_KEY, String(manualLookupWidthRem));
-  }, [manualLookupWidthRem]);
-
-  useEffect(() => {
-    document.documentElement.style.setProperty(
-      "--app-layout-lookup-width",
-      `${effectiveLookupWidthRem}rem`
-    );
-  }, [effectiveLookupWidthRem]);
-
-  const beginResize = (startClientX: number) => {
-    const startingWidthRem = effectiveLookupWidthRem;
+  const beginSearchResize = (startClientX: number) => {
+    const startingWidthRem = searchPaneWidthRem;
     const rootFontSize = getRootFontSize();
 
     const handlePointerMove = (event: PointerEvent) => {
-      const deltaX = startClientX - event.clientX;
-      const nextWidthRem = clampLookupWidthRem(
-        startingWidthRem + deltaX / rootFontSize,
-        getMaximumLookupWidthRem()
-      );
-      setManualLookupWidthRem(nextWidthRem);
+      const deltaX = event.clientX - startClientX;
+      setSearchPaneWidthRem(Math.max(0, startingWidthRem - deltaX / rootFontSize));
+    };
+
+    const handlePointerUp = () => {
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerup", handlePointerUp);
+    };
+
+    window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointerup", handlePointerUp);
+  };
+
+  const beginStudyResize = (startClientX: number) => {
+    const startingWidthRem = studyPaneWidthRem;
+    const rootFontSize = getRootFontSize();
+
+    const handlePointerMove = (event: PointerEvent) => {
+      const deltaX = event.clientX - startClientX;
+      setStudyPaneWidthRem(Math.max(0, startingWidthRem - deltaX / rootFontSize));
     };
 
     const handlePointerUp = () => {
@@ -132,19 +93,54 @@ export function AppSplitLayout({ children }: PropsWithChildren) {
     <div
       className={`app-layout${isSplitViewActive ? " app-layout-split" : ""}`}
       style={
-        {
-          ["--app-layout-lookup-width" as string]: `${effectiveLookupWidthRem}rem`
-        }
+        splitGridTemplateColumns ? { gridTemplateColumns: splitGridTemplateColumns } : undefined
       }
     >
-      <main className="site-main app-layout-main">{children}</main>
-      {isSplitViewActive ? (
+      {collapsedSplitPanes.reader ? (
+        <aside aria-label="Reader pane rail" className="split-pane-rail split-pane-rail-reader">
+          <button
+            aria-label="Show reader pane"
+            className="split-pane-rail-button"
+            onClick={() => expandSplitPane("reader")}
+            type="button"
+          >
+            Reader
+          </button>
+        </aside>
+      ) : (
+        <div className="app-layout-reader-pane">
+          <div className="app-layout-reader-pane-actions">
+            <button
+              aria-label="Hide reader pane"
+              className="split-pane-hide-button"
+              disabled={!canCollapseSplitPane("reader")}
+              onClick={() => collapseSplitPane("reader")}
+              type="button"
+            >
+              Hide
+            </button>
+          </div>
+          <main className="site-main app-layout-main">{children}</main>
+        </div>
+      )}
+      {showReaderSearchDivider ? (
         <button
-          aria-label="Resize split view"
+          aria-label="Resize reader and search panes"
           className="app-layout-divider"
-          onDoubleClick={() => setManualLookupWidthRem(null)}
-          onPointerDown={(event) => beginResize(event.clientX)}
-          title="Drag to resize. Double-click to reset."
+          onDoubleClick={() => setSearchPaneWidthRem(null)}
+          onPointerDown={(event) => beginSearchResize(event.clientX)}
+          title="Drag to resize reader and search panes. Double-click to reset."
+          type="button"
+        />
+      ) : null}
+      <SearchPane />
+      {showSearchStudyDivider ? (
+        <button
+          aria-label="Resize search and study panes"
+          className="app-layout-divider"
+          onDoubleClick={() => setStudyPaneWidthRem(null)}
+          onPointerDown={(event) => beginStudyResize(event.clientX)}
+          title="Drag to resize search and study panes. Double-click to reset."
           type="button"
         />
       ) : null}

@@ -5,6 +5,7 @@ import { LookupPane } from "@/app/components/LookupPane";
 import { LookupProvider } from "@/app/components/LookupProvider";
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
 import { ReaderVersionProvider, useReaderVersion } from "@/app/components/ReaderVersionProvider";
+import { SearchPane } from "@/app/components/SearchPane";
 import { mockRouter, setMockPathname } from "@/test/mocks/next-navigation";
 
 function SearchHarness() {
@@ -30,6 +31,7 @@ function renderSearchUi(ui?: React.ReactNode) {
           {ui ?? (
             <>
               <BottomSearchBar />
+              <SearchPane />
               <LookupPane />
             </>
           )}
@@ -270,7 +272,7 @@ describe("BottomSearchBar", () => {
     setDesktopMode(true);
     renderSearchUi();
 
-    expect(screen.getByLabelText("Lookup pane")).toBeInTheDocument();
+    expect(screen.getByLabelText("Search pane")).toBeInTheDocument();
     expect(screen.queryByLabelText("Bible search results")).not.toBeInTheDocument();
 
     fireEvent.focus(screen.getByLabelText(SEARCH_INPUT_LABEL));
@@ -282,7 +284,7 @@ describe("BottomSearchBar", () => {
     fireEvent.click(result);
 
     expect(mockRouter.push).toHaveBeenCalledWith("/read/john/1?highlight=1");
-    expect(screen.getByLabelText("Lookup pane")).toBeInTheDocument();
+    expect(screen.getByLabelText("Search pane")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Verse John 1:1/i })).toBeInTheDocument();
   });
 
@@ -307,6 +309,7 @@ describe("BottomSearchBar", () => {
     renderSearchUi(
       <>
         <SearchHarness />
+        <SearchPane />
         <LookupPane />
       </>
     );
@@ -388,7 +391,7 @@ describe("BottomSearchBar", () => {
     });
     renderSearchUi();
 
-    expect(screen.getByLabelText("Lookup pane")).toBeInTheDocument();
+    expect(screen.getByLabelText("Search pane")).toBeInTheDocument();
     expect(screen.queryByLabelText("Bible search results")).not.toBeInTheDocument();
   });
 
@@ -397,7 +400,7 @@ describe("BottomSearchBar", () => {
     setMockPathname("/read/genesis/1");
     renderSearchUi();
 
-    expect(screen.getByLabelText("Lookup pane")).toBeInTheDocument();
+    expect(screen.getByLabelText("Search pane")).toBeInTheDocument();
     expect(screen.getByRole("tab", { name: "Notebook" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "WEB search" })).toBeInTheDocument();
     expect(

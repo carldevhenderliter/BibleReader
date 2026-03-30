@@ -7,8 +7,9 @@ import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvide
 import { ReaderVersionProvider } from "@/app/components/ReaderVersionProvider";
 import { setMockPathname } from "@/test/mocks/next-navigation";
 
-const SPLIT_LAYOUT_WIDTH_STORAGE_KEY = "bible-reader.split-layout-width-rem";
-const SEARCH_INPUT_LABEL = "Search books, words, phrases, or Strongs numbers, or use Topic:";
+const SPLIT_SEARCH_WIDTH_STORAGE_KEY = "bible-reader.split-search-width-rem";
+const SPLIT_STUDY_WIDTH_STORAGE_KEY = "bible-reader.split-study-width-rem";
+const SPLIT_COLLAPSED_PANES_STORAGE_KEY = "bible-reader.split-collapsed-panes";
 
 function renderSplitLayout() {
   return render(
@@ -72,6 +73,22 @@ function setViewportWidth(width: number) {
   });
 }
 
+function getVisiblePaneWidths(layout: Element | null) {
+  const styleValue = layout?.getAttribute("style") ?? "";
+  const match = styleValue.match(
+    /grid-template-columns:\s*minmax\(0,\s*1fr\)\s+0\.875rem\s+([0-9.]+)rem\s+0\.875rem\s+([0-9.]+)rem/
+  );
+
+  if (!match) {
+    throw new Error(`Unable to read pane widths from layout style: ${styleValue}`);
+  }
+
+  return {
+    search: Number(match[1]),
+    study: Number(match[2])
+  };
+}
+
 describe("AppSplitLayout", () => {
   beforeEach(() => {
     if (!("PointerEvent" in window)) {
@@ -90,10 +107,11 @@ describe("AppSplitLayout", () => {
     setViewportWidth(1600);
   });
 
-  it("renders a draggable desktop divider", () => {
+  it("renders separate reader-search and search-study dividers in split view", () => {
     renderSplitLayout();
 
-    expect(screen.getByRole("button", { name: "Resize split view" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Resize reader and search panes" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Resize search and study panes" })).toBeInTheDocument();
   });
 
   it("keeps split view active on iPad widths below the desktop breakpoint", () => {
@@ -107,12 +125,29 @@ describe("AppSplitLayout", () => {
 
     renderSplitLayout();
 
-    expect(screen.getByRole("button", { name: "Resize split view" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Resize reader and search panes" })).toBeInTheDocument();
+    expect(screen.getByLabelText("Search pane")).toBeInTheDocument();
+    expect(screen.getByLabelText("Study pane")).toBeInTheDocument();
   });
 
-  it("updates and persists the split width when dragged", () => {
+  it("updates and persists the search pane width when the left divider is dragged", () => {
     const { container } = renderSplitLayout();
-    const divider = screen.getByRole("button", { name: "Resize split view" });
+    const divider = screen.getByRole("button", { name: "Resize reader and search panes" });
+    const layout = container.querySelector(".app-layout");
+
+    fireEvent.pointerDown(divider, { clientX: 1000 });
+    act(() => {
+      window.dispatchEvent(new PointerEvent("pointermove", { clientX: 808 }));
+      window.dispatchEvent(new PointerEvent("pointerup", { clientX: 808 }));
+    });
+
+    expect(getVisiblePaneWidths(layout)).toEqual({ search: 26, study: 16 });
+    expect(window.localStorage.getItem(SPLIT_SEARCH_WIDTH_STORAGE_KEY)).toBe("26");
+  });
+
+  it("updates and persists the study pane width when the right divider is dragged", () => {
+    const { container } = renderSplitLayout();
+    const divider = screen.getByRole("button", { name: "Resize search and study panes" });
     const layout = container.querySelector(".app-layout");
 
     fireEvent.pointerDown(divider, { clientX: 1000 });
@@ -121,86 +156,59 @@ describe("AppSplitLayout", () => {
       window.dispatchEvent(new PointerEvent("pointerup", { clientX: 840 }));
     });
 
-    expect(layout).toHaveStyle("--app-layout-lookup-width: 30rem");
-    expect(window.localStorage.getItem(SPLIT_LAYOUT_WIDTH_STORAGE_KEY)).toBe("30");
+    expect(getVisiblePaneWidths(layout)).toEqual({ search: 14, study: 26 });
+    expect(window.localStorage.getItem(SPLIT_STUDY_WIDTH_STORAGE_KEY)).toBe("26");
   });
 
-  it("restores a saved split width on desktop", () => {
-    window.localStorage.setItem(SPLIT_LAYOUT_WIDTH_STORAGE_KEY, "40");
+  it("restores saved search and study pane widths", async () => {
+    window.localStorage.setItem(SPLIT_SEARCH_WIDTH_STORAGE_KEY, "24");
+    window.localStorage.setItem(SPLIT_STUDY_WIDTH_STORAGE_KEY, "22");
     const { container } = renderSplitLayout();
-
-    return waitFor(() => {
-      expect(container.querySelector(".app-layout")).toHaveStyle("--app-layout-lookup-width: 40rem");
-    });
-  });
-
-  it("clamps a saved split width to 75 percent of the viewport", () => {
-    setViewportWidth(800);
-    window.localStorage.setItem(SPLIT_LAYOUT_WIDTH_STORAGE_KEY, "80");
-    const { container } = renderSplitLayout();
-
-    return waitFor(() => {
-      expect(container.querySelector(".app-layout")).toHaveStyle("--app-layout-lookup-width: 37.5rem");
-    });
-  });
-
-  it("clamps a saved split width to the lower minimum lookup width", () => {
-    window.localStorage.setItem(SPLIT_LAYOUT_WIDTH_STORAGE_KEY, "8");
-    const { container } = renderSplitLayout();
-
-    return waitFor(() => {
-      expect(container.querySelector(".app-layout")).toHaveStyle("--app-layout-lookup-width: 18rem");
-    });
-  });
-
-  it("grows the lookup side automatically from the number of query columns without exceeding the cap", async () => {
-    setViewportWidth(800);
-    const { container } = renderSplitLayout();
-
-    fireEvent.focus(screen.getByLabelText(SEARCH_INPUT_LABEL));
-    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
-      target: { value: "John 1:1, light, faith, grace" }
-    });
-
-    await screen.findByRole("button", { name: /Verse John 1:1/i });
 
     await waitFor(() => {
-      expect(container.querySelector(".app-layout")).toHaveStyle("--app-layout-lookup-width: 37.5rem");
+      expect(getVisiblePaneWidths(container.querySelector(".app-layout"))).toEqual({
+        search: 24,
+        study: 16
+      });
     });
   });
 
-  it("does not render the desktop divider on mobile", () => {
+  it("restores collapsed panes as rails and allows reopening them", async () => {
+    window.localStorage.setItem(
+      SPLIT_COLLAPSED_PANES_STORAGE_KEY,
+      JSON.stringify({ reader: false, search: true, study: false })
+    );
+
+    renderSplitLayout();
+
+    fireEvent.click(await screen.findByRole("button", { name: "Show search pane" }));
+
+    expect(await screen.findByLabelText("Search pane")).toBeInTheDocument();
+  });
+
+  it("collapses and reopens the study pane from its hide control", async () => {
+    renderSplitLayout();
+
+    fireEvent.click(screen.getByRole("button", { name: "Hide study pane" }));
+
+    expect(await screen.findByRole("button", { name: "Show study pane" })).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Show study pane" }));
+
+    expect(await screen.findByLabelText("Study pane")).toBeInTheDocument();
+  });
+
+  it("does not render split dividers on mobile", () => {
     setDesktopMode(false);
     setNavigatorDevice({
       maxTouchPoints: 5,
       platform: "iPhone",
       userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X)"
     });
-    renderSplitLayout();
-
-    expect(screen.queryByRole("button", { name: "Resize split view" })).not.toBeInTheDocument();
-  });
-
-  it("keeps the divider available after an iPad portrait resize", async () => {
-    setDesktopMode(false);
-    setNavigatorDevice({
-      maxTouchPoints: 5,
-      platform: "MacIntel",
-      userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15) AppleWebKit/605.1.15"
-    });
-    setViewportWidth(1024);
 
     renderSplitLayout();
 
-    expect(screen.getByRole("button", { name: "Resize split view" })).toBeInTheDocument();
-
-    setViewportWidth(768);
-    act(() => {
-      window.dispatchEvent(new Event("resize"));
-    });
-
-    await waitFor(() => {
-      expect(screen.getByRole("button", { name: "Resize split view" })).toBeInTheDocument();
-    });
+    expect(screen.queryByRole("button", { name: "Resize reader and search panes" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Resize search and study panes" })).not.toBeInTheDocument();
   });
 });

@@ -1,5 +1,7 @@
 "use client";
 
+import type { ReactNode } from "react";
+
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { SearchMatchModeToggle } from "@/app/components/SearchMatchModeToggle";
@@ -11,12 +13,14 @@ type SearchWorkspacePanelProps = {
   title?: string;
   variant?: "stack" | "panes";
   className?: string;
+  extraActions?: ReactNode;
 };
 
 export function SearchWorkspacePanel({
   title,
   variant = "stack",
-  className = ""
+  className = "",
+  extraActions = null
 }: SearchWorkspacePanelProps) {
   const { version } = useReaderVersion();
   const {
@@ -45,6 +49,7 @@ export function SearchWorkspacePanel({
             isEnabled={showStrongsInSearch}
             onChange={setShowStrongsInSearch}
           />
+          {extraActions}
           {query ? (
             <button className="search-close-button" onClick={clearSearch} type="button">
               Clear
