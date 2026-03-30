@@ -44,17 +44,21 @@ export function SearchWorkspacePanel({
           <h2 className="search-tray-title">{title ?? `${getBibleVersionLabel(version)} results`}</h2>
         </div>
         <div className="lookup-pane-header-actions">
-          <SearchMatchModeToggle matchMode={matchMode} onChange={setMatchMode} />
-          <SearchStrongsToggle
-            isEnabled={showStrongsInSearch}
-            onChange={setShowStrongsInSearch}
-          />
-          {extraActions}
-          {query ? (
-            <button className="search-close-button" onClick={clearSearch} type="button">
-              Clear
-            </button>
-          ) : null}
+          <div className="search-workspace-primary-actions">
+            <SearchMatchModeToggle matchMode={matchMode} onChange={setMatchMode} />
+            <SearchStrongsToggle
+              isEnabled={showStrongsInSearch}
+              onChange={setShowStrongsInSearch}
+            />
+          </div>
+          <div className="search-workspace-secondary-actions">
+            {query ? (
+              <button className="search-close-button" onClick={clearSearch} type="button">
+                Clear
+              </button>
+            ) : null}
+            {extraActions}
+          </div>
         </div>
       </div>
       {!query.trim() ? (
