@@ -113,6 +113,12 @@ describe("BottomSearchBar", () => {
     expect(screen.getByRole("button", { name: "Partial" })).toHaveAttribute("aria-pressed", "true");
     expect(screen.getByRole("button", { name: "Complete" })).toHaveAttribute("aria-pressed", "false");
     expect(screen.getByRole("button", { name: "Show Strongs" })).toHaveAttribute("aria-pressed", "false");
+    expect(screen.getByRole("button", { name: "Search settings" })).toHaveAttribute(
+      "aria-expanded",
+      "false"
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Search settings" }));
+    expect(screen.getByRole("dialog", { name: "Search settings menu" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Increase search text size" })).toBeInTheDocument();
     expect(screen.getByRole("combobox", { name: "Search line height" })).toBeInTheDocument();
     expect(screen.getByRole("combobox", { name: "Search body font" })).toBeInTheDocument();

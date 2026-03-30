@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 
-import { SearchCustomizationControls } from "@/app/components/SearchCustomizationControls";
+import { SearchCustomizationMenu } from "@/app/components/SearchCustomizationMenu";
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { SearchMatchModeToggle } from "@/app/components/SearchMatchModeToggle";
@@ -52,8 +52,8 @@ export function SearchWorkspacePanel({
               onChange={setShowStrongsInSearch}
             />
           </div>
-          <SearchCustomizationControls />
           <div className="search-workspace-secondary-actions">
+            <SearchCustomizationMenu />
             {query ? (
               <button className="search-close-button" onClick={clearSearch} type="button">
                 Clear

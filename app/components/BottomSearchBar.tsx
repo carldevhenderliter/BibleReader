@@ -3,8 +3,8 @@
 import { useEffect, useId, useRef } from "react";
 
 import { useLookup } from "@/app/components/LookupProvider";
+import { SearchCustomizationMenu } from "@/app/components/SearchCustomizationMenu";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
-import { SearchCustomizationControls } from "@/app/components/SearchCustomizationControls";
 import { useSearchCustomization } from "@/app/components/SearchCustomizationProvider";
 import { SearchMatchModeToggle } from "@/app/components/SearchMatchModeToggle";
 import { SearchResultGroups } from "@/app/components/SearchResultGroups";
@@ -96,8 +96,8 @@ export function BottomSearchBar() {
                     onChange={setShowStrongsInSearch}
                   />
                 </div>
-                <SearchCustomizationControls />
                 <div className="search-workspace-secondary-actions">
+                  <SearchCustomizationMenu />
                   <button className="search-close-button" onClick={closeSearch} type="button">
                     Close
                   </button>
