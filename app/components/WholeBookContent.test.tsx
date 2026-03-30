@@ -125,7 +125,7 @@ describe("WholeBookContent", () => {
     expect(screen.queryByRole("heading", { name: "Chapter 1" })).not.toBeInTheDocument();
   });
 
-  it("opens the notebook on the right and search on the left in split whole-book view", () => {
+  it("opens the notebook under the right-side search pane in split whole-book view", () => {
     setSplitViewActive(true);
 
     renderWithReaderCustomization(
@@ -144,7 +144,7 @@ describe("WholeBookContent", () => {
 
     expect(screen.getByRole("tab", { name: "Notebook" })).toHaveAttribute("aria-selected", "true");
     expect(screen.getByLabelText("Notebook title")).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "WEB study search" })).toBeInTheDocument();
-    expect(screen.queryByRole("heading", { name: "Chapter 1" })).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "WEB search" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Chapter 1" })).toBeInTheDocument();
   });
 });

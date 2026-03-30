@@ -275,7 +275,7 @@ describe("ReaderPageContent", () => {
     );
   });
 
-  it("moves the notebook to the right pane and shows search on the left in split view", async () => {
+  it("opens the notebook under the right-side search pane in split view", async () => {
     setSplitViewActive(true);
 
     renderWithReaderCustomization(
@@ -294,17 +294,8 @@ describe("ReaderPageContent", () => {
 
     expect(screen.getByRole("tab", { name: "Notebook" })).toHaveAttribute("aria-selected", "true");
     expect(screen.getByLabelText("Notebook title")).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "WEB study search" })).toBeInTheDocument();
-    expect(
-      screen.queryByText("In the beginning, God created the heavens and the earth.")
-    ).not.toBeInTheDocument();
-
-    fireEvent.click(screen.getByRole("tab", { name: "Scripture" }));
-
-    await waitFor(() => {
-      expect(screen.getByText("In the beginning, God created the heavens and the earth.")).toBeInTheDocument();
-    });
-    expect(screen.getByRole("tab", { name: "Search" })).toHaveAttribute("aria-selected", "true");
+    expect(screen.getByRole("heading", { name: "WEB search" })).toBeInTheDocument();
+    expect(screen.getByText("In the beginning, God created the heavens and the earth.")).toBeInTheDocument();
   });
 
   it("highlights a verse range opened from search", () => {

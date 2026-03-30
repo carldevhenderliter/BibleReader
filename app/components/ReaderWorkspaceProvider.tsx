@@ -216,7 +216,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   const [activeReaderPane, setActiveReaderPane] = useState<ReaderPane>("reading");
   const [leftReaderMode, setLeftReaderMode] = useState<LeftReaderMode>("scripture");
   const [activeUtilityPaneState, setActiveUtilityPaneState] = useState<UtilityPane>("search");
-  const [lastReaderUtilityPane, setLastReaderUtilityPane] = useState<Exclude<UtilityPane, "notebook">>("search");
+  const [lastReaderUtilityPane, setLastReaderUtilityPane] = useState<UtilityPane>("notebook");
   const [currentPassage, setCurrentPassage] = useState<CurrentPassage | null>(null);
   const [currentChapterByVersion, setCurrentChapterByVersion] = useState<
     Record<BundledBibleVersion, Chapter> | null
@@ -234,32 +234,26 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   const setActiveUtilityPane = useCallback((pane: UtilityPane) => {
     setActiveUtilityPaneState(pane);
 
-    if (pane === "notebook") {
-      setActiveReaderPane("reading");
-      setLeftReaderMode("search");
-      return;
+    if (pane !== "search") {
+      setLastReaderUtilityPane(pane);
     }
 
-    if (pane === "sermons") {
-      setActiveReaderPane("reading");
-      setLeftReaderMode("scripture");
-      return;
-    }
-
-    setLastReaderUtilityPane(pane);
+    setActiveReaderPane("reading");
     setLeftReaderMode("scripture");
   }, []);
 
   const openNotebook = useCallback(() => {
     setActiveReaderPane("reading");
-    setLeftReaderMode("search");
+    setLeftReaderMode("scripture");
     setActiveUtilityPaneState("notebook");
+    setLastReaderUtilityPane("notebook");
   }, []);
 
   const openSermons = useCallback(() => {
     setActiveReaderPane("reading");
     setLeftReaderMode("scripture");
     setActiveUtilityPaneState("sermons");
+    setLastReaderUtilityPane("sermons");
   }, []);
 
   const closeNotebookWorkspace = useCallback(() => {
