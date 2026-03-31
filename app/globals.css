@@ -1261,8 +1261,8 @@ select {
 .reader-settings-trigger,
 .reader-settings-close,
 .secondary-button {
-  min-height: 2.6rem;
-  padding: 0.62rem 0.95rem;
+  min-height: 2.35rem;
+  padding: 0.5rem 0.82rem;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.06);
@@ -1298,14 +1298,14 @@ select {
 
 .reader-settings-panel {
   position: fixed;
-  top: 1rem;
+  top: max(1rem, env(safe-area-inset-top));
   right: 1rem;
-  bottom: 1rem;
   z-index: 50;
-  width: min(30rem, calc(100vw - 2rem));
-  padding: 1rem;
+  width: min(27.5rem, calc(100vw - 2rem));
+  max-height: min(82vh, 43rem);
+  padding: 0.85rem 0.85rem 0.9rem;
   border: 1px solid var(--reader-border);
-  border-radius: 1.6rem;
+  border-radius: 1.35rem;
   background: linear-gradient(180deg, rgba(11, 19, 34, 0.96), rgba(4, 9, 17, 0.98));
   box-shadow: var(--shadow), var(--reader-glow);
   overflow-y: auto;
@@ -1322,24 +1322,31 @@ select {
 .reader-settings-section,
 .settings-slider-group {
   display: grid;
-  gap: 0.9rem;
+  gap: 0.65rem;
 }
 
 .reader-settings-header {
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: start;
-  margin-bottom: 1rem;
+  margin-bottom: 0.7rem;
+}
+
+.reader-settings-header .eyebrow {
+  margin-bottom: 0.12rem;
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
 }
 
 .reader-settings-title {
   margin: 0;
-  font-size: 1.8rem;
+  font-size: 1.45rem;
+  line-height: 1.05;
   letter-spacing: -0.03em;
 }
 
 .reader-settings-section {
-  margin-bottom: 1.1rem;
-  padding-top: 1rem;
+  margin-bottom: 0.75rem;
+  padding-top: 0.75rem;
   border-top: 1px solid rgba(120, 157, 214, 0.12);
 }
 
@@ -1353,16 +1360,22 @@ select {
   margin: 0;
 }
 
+.reader-settings-section-header {
+  display: grid;
+  gap: 0.2rem;
+}
+
 .reader-settings-section-header p,
 .settings-option-card span,
 .settings-slider span,
 .reader-settings-field span {
   color: var(--reader-meta-text);
+  font-size: 0.86rem;
 }
 
 .settings-option-grid {
   display: grid;
-  gap: 0.75rem;
+  gap: 0.5rem;
 }
 
 .settings-option-grid-compact {
@@ -1371,12 +1384,12 @@ select {
 
 .settings-option-card {
   display: grid;
-  gap: 0.35rem;
+  gap: 0.22rem;
   width: 100%;
-  padding: 0.95rem;
+  padding: 0.72rem 0.76rem;
   text-align: left;
   border: 1px solid var(--reader-border);
-  border-radius: 1.1rem;
+  border-radius: 0.92rem;
   background: rgba(255, 255, 255, 0.03);
   color: var(--text);
   transition:
@@ -1392,7 +1405,7 @@ select {
 
 .settings-slider {
   display: grid;
-  gap: 0.45rem;
+  gap: 0.28rem;
 }
 
 .settings-slider input[type="range"] {
@@ -1410,21 +1423,21 @@ select {
 
 .reader-settings-field-grid {
   display: grid;
-  gap: 0.8rem;
+  gap: 0.6rem;
   grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
 }
 
 .reader-settings-field {
   display: grid;
-  gap: 0.45rem;
+  gap: 0.3rem;
 }
 
 .reader-settings-field select {
-  min-height: 2.8rem;
+  min-height: 2.45rem;
   width: 100%;
-  padding: 0.65rem 0.85rem;
+  padding: 0.5rem 0.72rem;
   border: 1px solid var(--reader-border);
-  border-radius: 1rem;
+  border-radius: 0.88rem;
   background: rgba(255, 255, 255, 0.04);
   color: var(--text);
   outline: none;
@@ -1433,12 +1446,31 @@ select {
 .reader-settings-shortcuts {
   display: flex;
   align-items: center;
-  gap: 0.8rem;
+  gap: 0.5rem;
   flex-wrap: wrap;
 }
 
+.reader-settings-panel .reader-inline-button,
+.reader-settings-panel .reader-inline-action,
+.reader-settings-panel .reader-controls-status {
+  min-height: 2.1rem;
+  padding: 0.42rem 0.68rem;
+  font-size: 0.86rem;
+}
+
+.reader-settings-panel .reader-controls-status {
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+}
+
+.reader-settings-panel .reader-size-controls {
+  gap: 0.28rem;
+}
+
 .reader-settings-link {
-  min-width: 11rem;
+  min-width: 0;
+  flex: 0 0 auto;
+  border-radius: 0.9rem;
 }
 
 .pagination-empty {
@@ -3272,8 +3304,9 @@ select {
     bottom: 0.75rem;
     left: 0.75rem;
     width: auto;
-    max-height: min(76vh, 42rem);
-    border-radius: 1.4rem;
+    max-height: min(70vh, 38rem);
+    padding: 0.75rem 0.75rem 0.82rem;
+    border-radius: 1.2rem;
     transform: translateY(calc(100% + 1rem));
   }
 
