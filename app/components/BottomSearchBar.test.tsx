@@ -182,7 +182,7 @@ describe("BottomSearchBar", () => {
     const result = await screen.findByRole("button", { name: /Book Genesis/i });
     fireEvent.click(result);
 
-    expect(mockRouter.push).toHaveBeenCalledWith("/read/genesis/1");
+    expect(mockRouter.push).toHaveBeenCalledWith("/read/genesis");
   });
 
   it("navigates to a highlighted verse result", async () => {
@@ -195,7 +195,7 @@ describe("BottomSearchBar", () => {
     const result = await screen.findByRole("button", { name: /Verse Genesis 1:1/i });
     fireEvent.click(result);
 
-    expect(mockRouter.push).toHaveBeenCalledWith("/read/genesis/1?highlight=1");
+    expect(mockRouter.push).toHaveBeenCalledWith("/read/genesis?highlightChapter=1&highlight=1");
   });
 
   it("navigates from direct chapter and verse references", async () => {
@@ -206,14 +206,14 @@ describe("BottomSearchBar", () => {
     });
 
     fireEvent.click(await screen.findByRole("button", { name: /Chapter John 1/i }));
-    expect(mockRouter.push).toHaveBeenCalledWith("/read/john/1");
+    expect(mockRouter.push).toHaveBeenCalledWith("/read/john?chapter=1");
 
     fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
       target: { value: "John 1:1" }
     });
 
     fireEvent.click(await screen.findByRole("button", { name: /Verse John 1:1\b/i }));
-    expect(mockRouter.push).toHaveBeenCalledWith("/read/john/1?highlight=1");
+    expect(mockRouter.push).toHaveBeenCalledWith("/read/john?highlightChapter=1&highlight=1");
   });
 
   it("navigates from direct verse range references", async () => {
@@ -232,7 +232,7 @@ describe("BottomSearchBar", () => {
     expect(await screen.findByRole("button", { name: /John 1:12/i })).toBeInTheDocument();
 
     fireEvent.click((await screen.findAllByRole("button", { name: /John 1:/i }))[0]!);
-    expect(mockRouter.push).toHaveBeenCalledWith("/read/john/1?highlight=1");
+    expect(mockRouter.push).toHaveBeenCalledWith("/read/john?highlightChapter=1&highlight=1");
   });
 
   it("updates verse results when the active version changes", async () => {
@@ -341,7 +341,7 @@ describe("BottomSearchBar", () => {
     const result = await screen.findByRole("button", { name: /Matthew 24:30/i });
     fireEvent.click(result);
 
-    expect(mockRouter.push).toHaveBeenCalledWith("/read/matthew/24?highlight=30");
+    expect(mockRouter.push).toHaveBeenCalledWith("/read/matthew?highlightChapter=24&highlight=30");
   });
 
   it("renders a persistent lookup pane on desktop and keeps it open after selecting a result", async () => {
@@ -359,7 +359,7 @@ describe("BottomSearchBar", () => {
     const result = await screen.findByRole("button", { name: /Verse John 1:1/i });
     fireEvent.click(result);
 
-    expect(mockRouter.push).toHaveBeenCalledWith("/read/john/1?highlight=1");
+    expect(mockRouter.push).toHaveBeenCalledWith("/read/john?highlightChapter=1&highlight=1");
     expect(screen.getByLabelText("Search pane")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Verse John 1:1/i })).toBeInTheDocument();
   });
@@ -508,6 +508,8 @@ describe("BottomSearchBar", () => {
 
     fireEvent.click(verseResult);
 
-    expect(mockRouter.push).toHaveBeenCalledWith("/read/genesis/1?version=kjv&highlight=1");
+    expect(mockRouter.push).toHaveBeenCalledWith(
+      "/read/genesis?version=kjv&highlightChapter=1&highlight=1"
+    );
   });
 });

@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
@@ -18,6 +19,15 @@ import { VerseList } from "@/app/components/VerseList";
 import type { BookMeta, BundledBibleVersion, Chapter } from "@/lib/bible/types";
 import { getBibleVersionBadge, getBibleVersionLabel } from "@/lib/bible/version";
 
+function parsePositiveNumber(value: string | null) {
+  if (!value || !/^\d+$/.test(value)) {
+    return null;
+  }
+
+  const parsedValue = Number(value);
+  return parsedValue > 0 ? parsedValue : null;
+}
+
 type WholeBookContentProps = {
   books: BookMeta[];
   book: BookMeta;
@@ -25,6 +35,7 @@ type WholeBookContentProps = {
 };
 
 export function WholeBookContent({ books, book, chaptersByVersion }: WholeBookContentProps) {
+  const searchParams = useSearchParams();
   const { version } = useReaderVersion();
   const { settings } = useReaderCustomization();
   const { canCollapseSplitPane, collapseSplitPane, isSplitViewActive } = useLookup();
@@ -40,11 +51,54 @@ export function WholeBookContent({ books, book, chaptersByVersion }: WholeBookCo
   const versionBadge = getBibleVersionBadge(version);
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
+  const chapterParam = parsePositiveNumber(searchParams.get("chapter"));
+  const highlightedChapterNumber = parsePositiveNumber(searchParams.get("highlightChapter"));
+  const highlightedVerseNumber = parsePositiveNumber(searchParams.get("highlight"));
+  const highlightedRangeStart = parsePositiveNumber(searchParams.get("highlightStart"));
+  const highlightedRangeEnd = parsePositiveNumber(searchParams.get("highlightEnd"));
+  const highlightedVerseRange =
+    highlightedRangeStart !== null &&
+    highlightedRangeEnd !== null &&
+    highlightedRangeEnd >= highlightedRangeStart
+      ? {
+          start: highlightedRangeStart,
+          end: highlightedRangeEnd
+        }
+      : null;
+  const focusedChapterNumber =
+    highlightedChapterNumber && highlightedChapterNumber <= book.chapterCount
+      ? highlightedChapterNumber
+      : chapterParam && chapterParam <= book.chapterCount
+        ? chapterParam
+        : 1;
+  const focusedChapter =
+    chapters.find((chapter) => chapter.chapterNumber === focusedChapterNumber) ?? chapters[0] ?? null;
 
   useEffect(() => {
-    syncCurrentChapterData(book.slug, 1, null);
-    setActiveStudyVerseNumber(null);
-  }, [book.slug, setActiveStudyVerseNumber, syncCurrentChapterData]);
+    syncCurrentChapterData(book.slug, focusedChapter?.chapterNumber ?? 1, null);
+    setActiveStudyVerseNumber(
+      highlightedVerseRange?.start ??
+        highlightedVerseNumber ??
+        focusedChapter?.verses[0]?.number ??
+        null
+    );
+  }, [
+    book.slug,
+    focusedChapter,
+    highlightedVerseNumber,
+    highlightedVerseRange,
+    setActiveStudyVerseNumber,
+    syncCurrentChapterData
+  ]);
+
+  useEffect(() => {
+    if (!chapterParam || chapterParam > book.chapterCount) {
+      return;
+    }
+
+    const element = document.getElementById(`chapter-${book.slug}-${chapterParam}`);
+    element?.scrollIntoView?.({ block: "start" });
+  }, [book.chapterCount, book.slug, chapterParam]);
 
   return (
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
@@ -107,7 +161,11 @@ export function WholeBookContent({ books, book, chaptersByVersion }: WholeBookCo
         ) : (
           <div className="reading-surface chapter-stack">
             {chapters.map((chapter) => (
-              <section className="book-section" key={chapter.chapterNumber}>
+              <section
+                className="book-section"
+                id={`chapter-${book.slug}-${chapter.chapterNumber}`}
+                key={chapter.chapterNumber}
+              >
                 <div className="book-section-header">
                   <h2 className="book-section-title">Chapter {chapter.chapterNumber}</h2>
                   <p className="book-section-subtitle">{chapter.verses.length} verses</p>
@@ -115,6 +173,12 @@ export function WholeBookContent({ books, book, chaptersByVersion }: WholeBookCo
                 <VerseList
                   bookSlug={book.slug}
                   chapterNumber={chapter.chapterNumber}
+                  highlightedVerseNumber={
+                    chapter.chapterNumber === highlightedChapterNumber ? highlightedVerseNumber : null
+                  }
+                  highlightedVerseRange={
+                    chapter.chapterNumber === highlightedChapterNumber ? highlightedVerseRange : null
+                  }
                   key={`${version}:${book.slug}:${chapter.chapterNumber}`}
                   showStrongs={showStrongs}
                   verses={chapter.verses}

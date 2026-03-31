@@ -15,7 +15,11 @@ import type {
   SearchScope,
   VerseToken
 } from "@/lib/bible/types";
-import { getChapterHref } from "@/lib/bible/utils";
+import {
+  getBookChapterHref,
+  getBookHighlightedVerseHref,
+  getBookHref
+} from "@/lib/bible/utils";
 
 type SearchableBook = BookMeta & {
   normalizedAbbreviation: string;
@@ -97,21 +101,6 @@ function parseTopicQuery(rawQuery: string): ParsedTopicQuery | null {
     rawFilter,
     normalizedFilter: normalizeTopicValue(rawFilter)
   };
-}
-
-function getHighlightedVerseHref(
-  bookSlug: string,
-  chapterNumber: number,
-  verseNumber: number,
-  version: BundledBibleVersion
-) {
-  const href = getChapterHref(bookSlug, chapterNumber, version);
-  const [pathname, searchValue] = href.split("?");
-  const searchParams = new URLSearchParams(searchValue ?? "");
-  searchParams.set("highlight", String(verseNumber));
-  const serialized = searchParams.toString();
-
-  return serialized ? `${pathname}?${serialized}` : pathname;
 }
 
 function parseStrongsQuery(query: string) {
@@ -418,7 +407,12 @@ function getVerseResult(
     verseNumber: entry.verseNumber,
     label: `${entry.bookName} ${entry.chapterNumber}:${entry.verseNumber}`,
     description,
-    href: getHighlightedVerseHref(entry.bookSlug, entry.chapterNumber, entry.verseNumber, version),
+    href: getBookHighlightedVerseHref(
+      entry.bookSlug,
+      entry.chapterNumber,
+      entry.verseNumber,
+      version
+    ),
     preview: entry.text,
     tokens: entry.tokens
   };
@@ -567,7 +561,7 @@ async function searchSingleBibleQuery(
           chapterNumber: parsedReference.chapterNumber,
           label: `${parsedReference.book.name} ${parsedReference.chapterNumber}`,
           description: "Chapter reference",
-          href: getChapterHref(parsedReference.book.slug, parsedReference.chapterNumber, version)
+          href: getBookChapterHref(parsedReference.book.slug, parsedReference.chapterNumber, version)
         }
       ];
     } else if (parsedReference.endVerseNumber !== null) {
@@ -604,7 +598,7 @@ async function searchSingleBibleQuery(
                 id: `range-verse:${entry.bookSlug}:${entry.chapterNumber}:${entry.verseNumber}:${version}`,
                 verseNumber: entry.verseNumber,
                 label: `${entry.bookName} ${entry.chapterNumber}:${entry.verseNumber}`,
-                href: getHighlightedVerseHref(
+                href: getBookHighlightedVerseHref(
                   entry.bookSlug,
                   entry.chapterNumber,
                   entry.verseNumber,
@@ -651,7 +645,7 @@ async function searchSingleBibleQuery(
       bookSlug: entry.book.slug,
       label: entry.book.name,
       description: `${entry.book.chapterCount} chapters`,
-      href: getChapterHref(entry.book.slug, 1, version)
+      href: getBookHref(entry.book.slug, version)
     }));
 
   if (strongsNumber) {
@@ -678,7 +672,7 @@ async function searchSingleBibleQuery(
         verseNumber: verseEntry.verseNumber,
         label: `${verseEntry.bookName} ${verseEntry.chapterNumber}:${verseEntry.verseNumber}`,
         description: `KJV Strongs ${verseEntry.strongsNumber}`,
-        href: getHighlightedVerseHref(
+        href: getBookHighlightedVerseHref(
           verseEntry.bookSlug,
           verseEntry.chapterNumber,
           verseEntry.verseNumber,

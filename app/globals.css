@@ -608,12 +608,24 @@ select {
 }
 
 .reader-topline {
+  position: sticky;
+  top: max(0.65rem, env(safe-area-inset-top));
+  z-index: 40;
   display: grid;
   gap: 1rem;
   width: min(100%, calc(var(--reader-content-width) + 4rem));
   max-width: 100%;
   margin: 0 auto 1.25rem;
   padding-top: 0;
+  padding-bottom: 0.95rem;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(18, 20, 24, 0.96),
+      rgba(18, 20, 24, 0.9) 72%,
+      rgba(18, 20, 24, 0)
+    );
+  backdrop-filter: blur(12px);
 }
 
 .reader-reading-card {
@@ -638,9 +650,6 @@ select {
 }
 
 .reader-toolbar {
-  position: sticky;
-  top: max(0.65rem, env(safe-area-inset-top));
-  z-index: 40;
   display: grid;
   gap: 0.8rem;
   width: 100%;
@@ -894,6 +903,7 @@ select {
 }
 
 .verse-row {
+  scroll-margin-top: calc(max(0.65rem, env(safe-area-inset-top)) + 15rem);
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 0.9rem;
@@ -1163,6 +1173,7 @@ select {
 }
 
 .book-section {
+  scroll-margin-top: calc(max(0.65rem, env(safe-area-inset-top)) + 13rem);
   display: grid;
   gap: 1rem;
   padding-top: 1.15rem;
@@ -3158,7 +3169,6 @@ select {
   }
 
   .reader-toolbar {
-    top: max(0.45rem, env(safe-area-inset-top));
     width: 100%;
     max-width: 100%;
     padding: 0.78rem;

@@ -36,15 +36,15 @@ describe("HomePageContent", () => {
 
     expect(screen.getByRole("link", { name: "Open Genesis" })).toHaveAttribute(
       "href",
-      "/read/genesis/1"
+      "/read/genesis"
     );
     expect(screen.getByRole("link", { name: "Open Exodus" })).toHaveAttribute(
       "href",
-      "/read/exodus/1"
+      "/read/exodus"
     );
     expect(screen.getByRole("link", { name: "Open Matthew" })).toHaveAttribute(
       "href",
-      "/read/matthew/1"
+      "/read/matthew"
     );
   });
 });

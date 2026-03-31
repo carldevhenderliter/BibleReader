@@ -33,8 +33,8 @@ export function ReaderPageContent({
   books,
   book,
   chaptersByVersion,
-  highlightedVerseNumber = null,
-  highlightedVerseRange = null
+  highlightedVerseNumber,
+  highlightedVerseRange
 }: ReaderPageContentProps) {
   const { version } = useReaderVersion();
   const { settings } = useReaderCustomization();

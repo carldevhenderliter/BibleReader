@@ -21,6 +21,26 @@ function getVersionQueryParam(version: BibleVersion): string {
   return version === DEFAULT_BIBLE_VERSION ? "" : `?version=${version}`;
 }
 
+function appendQueryParams(
+  href: string,
+  params: Record<string, string | number | null | undefined>
+): string {
+  const [pathname, searchValue] = href.split("?");
+  const searchParams = new URLSearchParams(searchValue ?? "");
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (value === null || value === undefined || value === "") {
+      searchParams.delete(key);
+      return;
+    }
+
+    searchParams.set(key, String(value));
+  });
+
+  const serialized = searchParams.toString();
+  return serialized ? `${pathname}?${serialized}` : pathname;
+}
+
 export function getChapterHref(
   bookSlug: string,
   chapterNumber: number,
@@ -34,6 +54,51 @@ export function getBookHref(
   version: BibleVersion = DEFAULT_BIBLE_VERSION
 ): string {
   return `/read/${bookSlug}${getVersionQueryParam(version)}`;
+}
+
+export function getBookChapterHref(
+  bookSlug: string,
+  chapterNumber: number,
+  version: BibleVersion = DEFAULT_BIBLE_VERSION
+): string {
+  return appendQueryParams(getBookHref(bookSlug, version), {
+    chapter: chapterNumber,
+    highlightChapter: null,
+    highlight: null,
+    highlightStart: null,
+    highlightEnd: null
+  });
+}
+
+export function getBookHighlightedVerseHref(
+  bookSlug: string,
+  chapterNumber: number,
+  verseNumber: number,
+  version: BibleVersion = DEFAULT_BIBLE_VERSION
+): string {
+  return appendQueryParams(getBookHref(bookSlug, version), {
+    chapter: null,
+    highlightChapter: chapterNumber,
+    highlight: verseNumber,
+    highlightStart: null,
+    highlightEnd: null
+  });
+}
+
+export function getBookHighlightedVerseRangeHref(
+  bookSlug: string,
+  chapterNumber: number,
+  startVerseNumber: number,
+  endVerseNumber: number,
+  version: BibleVersion = DEFAULT_BIBLE_VERSION
+): string {
+  return appendQueryParams(getBookHref(bookSlug, version), {
+    chapter: null,
+    highlightChapter: chapterNumber,
+    highlight: null,
+    highlightStart: startVerseNumber,
+    highlightEnd: endVerseNumber
+  });
 }
 
 export function getReadingHref(location: ReadingLocation): string {

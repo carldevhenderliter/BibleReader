@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import type { BookMeta, ReadingView } from "@/lib/bible/types";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
-import { getBookHref, getChapterHref } from "@/lib/bible/utils";
+import { getBookChapterHref, getBookHref, getChapterHref } from "@/lib/bible/utils";
 import { BIBLE_VERSION_METADATA } from "@/lib/bible/version";
 
 type ReaderControlsProps = {
@@ -37,6 +37,11 @@ export function ReaderControls({ books, book, currentChapter, view }: ReaderCont
   };
 
   const handleChapterChange = (nextChapter: number) => {
+    if (view === "book" && versionMeta.supportsWholeBook) {
+      router.push(getBookChapterHref(book.slug, nextChapter, version));
+      return;
+    }
+
     router.push(getChapterHref(book.slug, nextChapter, version));
   };
 

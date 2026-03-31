@@ -10,7 +10,7 @@ describe("Bible search", () => {
       bookSlug: "john",
       chapterNumber: 1,
       label: "John 1",
-      href: "/read/john/1"
+      href: "/read/john?chapter=1"
     });
   });
 
@@ -22,7 +22,7 @@ describe("Bible search", () => {
       bookSlug: "john",
       chapterNumber: 1,
       verseNumber: 1,
-      href: "/read/john/1?highlight=1"
+      href: "/read/john?highlightChapter=1&highlight=1"
     });
     expect(results[0]).toHaveProperty(
       "preview",
@@ -44,14 +44,14 @@ describe("Bible search", () => {
     expect((results[0] as { verses: Array<{ verseNumber: number; href: string; preview: string }> }).verses).toHaveLength(12);
     expect((results[0] as { verses: Array<{ verseNumber: number; href: string; preview: string }> }).verses[0]).toMatchObject({
       verseNumber: 1,
-      href: "/read/john/1?highlight=1"
+      href: "/read/john?highlightChapter=1&highlight=1"
     });
     expect((results[0] as { verses: Array<{ verseNumber: number; href: string; preview: string }> }).verses[0]?.preview).toContain(
       "In the beginning was the Word, and the Word was with God, and the Word was God."
     );
     expect((results[0] as { verses: Array<{ verseNumber: number; href: string }> }).verses.at(-1)).toMatchObject({
       verseNumber: 12,
-      href: "/read/john/1?highlight=12"
+      href: "/read/john?highlightChapter=1&highlight=12"
     });
   });
 
@@ -142,7 +142,7 @@ describe("Bible search", () => {
 
     expect(verseResult).toMatchObject({
       type: "verse",
-      href: "/read/genesis/1?version=kjv&highlight=1"
+      href: "/read/genesis?version=kjv&highlightChapter=1&highlight=1"
     });
     expect(verseResult && "tokens" in verseResult ? verseResult.tokens : undefined).toEqual(
       expect.arrayContaining([
@@ -176,7 +176,7 @@ describe("Bible search", () => {
 
     expect(verseResult).toMatchObject({
       type: "verse",
-      href: "/read/genesis/1?version=kjv&highlight=1"
+      href: "/read/genesis?version=kjv&highlightChapter=1&highlight=1"
     });
     expect(verseResult && "tokens" in verseResult ? verseResult.tokens : undefined).toEqual(
       expect.arrayContaining([
@@ -370,7 +370,7 @@ describe("Bible search", () => {
       bookSlug: "john",
       chapterNumber: 1,
       verseNumber: 1,
-      href: "/read/john/1?highlight=1"
+      href: "/read/john?highlightChapter=1&highlight=1"
     });
   });
 

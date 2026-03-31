@@ -13,7 +13,7 @@ export const usePathname = () => mockPathname;
 export const setMockPathname = (nextPathname: string) => {
   mockPathname = nextPathname;
 };
-export const useSearchParams = () => new URLSearchParams();
+export const useSearchParams = () => new URLSearchParams(window.location.search);
 
 export const notFound = jest.fn(() => {
   throw new Error("NEXT_NOT_FOUND");

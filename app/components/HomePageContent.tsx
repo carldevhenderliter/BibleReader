@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { ContinueReading } from "@/app/components/ContinueReading";
 import type { BookMeta } from "@/lib/bible/types";
-import { getChapterHref } from "@/lib/bible/utils";
+import { getBookHref } from "@/lib/bible/utils";
 
 type HomePageContentProps = {
   books: BookMeta[];
@@ -29,8 +29,8 @@ export function HomePageContent({ books, esvEnabled }: HomePageContentProps) {
               inside a modern glass-and-neon shell.
             </p>
             <div className="hero-actions">
-              <Link className="primary-link" href={getChapterHref("genesis", 1)}>
-                Launch Genesis 1
+              <Link className="primary-link" href={getBookHref("genesis")}>
+                Launch Genesis
               </Link>
               <ContinueReading esvEnabled={esvEnabled} />
             </div>
@@ -75,13 +75,13 @@ export function HomePageContent({ books, esvEnabled }: HomePageContentProps) {
             <Link
               aria-label={`Open ${book.name}`}
               className="book-link"
-              href={getChapterHref(book.slug, 1)}
+              href={getBookHref(book.slug)}
               key={book.slug}
             >
               <span className="book-chip">OT</span>
               <strong>{book.name}</strong>
               <span className="book-meta">{book.chapterCount} chapters</span>
-              <span className="book-cta">Open chapter 1</span>
+              <span className="book-cta">Open whole book</span>
             </Link>
           ))}
         </div>
@@ -100,13 +100,13 @@ export function HomePageContent({ books, esvEnabled }: HomePageContentProps) {
             <Link
               aria-label={`Open ${book.name}`}
               className="book-link"
-              href={getChapterHref(book.slug, 1)}
+              href={getBookHref(book.slug)}
               key={book.slug}
             >
               <span className="book-chip">NT</span>
               <strong>{book.name}</strong>
               <span className="book-meta">{book.chapterCount} chapters</span>
-              <span className="book-cta">Open chapter 1</span>
+              <span className="book-cta">Open whole book</span>
             </Link>
           ))}
         </div>

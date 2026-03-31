@@ -149,4 +149,26 @@ describe("WholeBookContent", () => {
     expect(screen.getByRole("heading", { name: "WEB search" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Chapter 1" })).toBeInTheDocument();
   });
+
+  it("highlights and scrolls to the requested verse in whole-book view", () => {
+    const scrollIntoView = jest.fn();
+    Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
+      configurable: true,
+      value: scrollIntoView
+    });
+    window.history.replaceState({}, "", "/read/jude?highlightChapter=2&highlight=1");
+
+    const { container } = renderWithReaderCustomization(
+      <WholeBookContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapters, kjv: kjvChapters }}
+      />
+    );
+
+    const highlightedRows = Array.from(container.querySelectorAll(".verse-row.is-highlighted"));
+    expect(highlightedRows).toHaveLength(1);
+    expect(highlightedRows[0]).toHaveAttribute("id", "verse-jude-2-1");
+    expect(scrollIntoView).toHaveBeenCalled();
+  });
 });
