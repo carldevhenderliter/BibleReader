@@ -357,6 +357,36 @@ describe("ReaderPageContent", () => {
     expect(container.querySelector(".app-layout-reader-pane-actions")).toBeNull();
   });
 
+  it("hides the reader topline when scrolling down and shows it again when scrolling up", () => {
+    Object.defineProperty(window, "scrollY", {
+      configurable: true,
+      writable: true,
+      value: 0
+    });
+
+    const { container } = renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+      />
+    );
+
+    const topline = container.querySelector(".reader-topline");
+
+    expect(topline).not.toHaveClass("is-hidden");
+
+    window.scrollY = 160;
+    fireEvent.scroll(window);
+
+    expect(topline).toHaveClass("is-hidden");
+
+    window.scrollY = 48;
+    fireEvent.scroll(window);
+
+    expect(topline).not.toHaveClass("is-hidden");
+  });
+
   it("highlights a verse range opened from search", () => {
     renderWithReaderCustomization(
       <ReaderPageContent

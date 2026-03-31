@@ -11,6 +11,7 @@ import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
 import { ReaderStudySetsPanel } from "@/app/components/ReaderStudySetsPanel";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
 import { useLocationSearch } from "@/app/components/useLocationSearch";
+import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
@@ -52,7 +53,7 @@ export function WholeBookContent({
 }: WholeBookContentProps) {
   const locationSearch = useLocationSearch();
   const { version } = useReaderVersion();
-  const { settings } = useReaderCustomization();
+  const { isPanelOpen, settings } = useReaderCustomization();
   const { canCollapseSplitPane, collapseSplitPane, isSplitViewActive } = useLookup();
   const {
     activeReaderPane,
@@ -63,6 +64,7 @@ export function WholeBookContent({
   const chapters = chaptersByVersion[version];
   const showStrongs = version === "kjv" && settings.showStrongs;
   const versionBadge = getBibleVersionBadge(version);
+  const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
   const searchParams = new URLSearchParams(locationSearch);
@@ -129,7 +131,7 @@ export function WholeBookContent({
       <ReadingSessionSync book={book.slug} chapter={1} view="book" />
       <ReaderSettingsPanel book={book} currentChapter={1} view="book" />
       <section className="reader-card reader-reading-card">
-        <div className="reader-topline">
+        <div className={`reader-topline${isToplineVisible ? "" : " is-hidden"}`}>
           <div className="reader-toolbar">
             <div className="reader-toolbar-copy">
               <p className="reader-toolbar-summary">{versionBadge}</p>
