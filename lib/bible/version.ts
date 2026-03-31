@@ -1,4 +1,5 @@
 import { DEFAULT_BIBLE_VERSION } from "@/lib/bible/constants";
+import installedBundledVersionsSource from "@/data/bible/installed-versions.json";
 import type { BibleVersion, BundledBibleVersion } from "@/lib/bible/types";
 
 export type BibleVersionOption = {
@@ -13,8 +14,8 @@ type BibleVersionMetadata = Omit<BibleVersionOption, "disabled"> & {
   badge: string;
 };
 
-export const BIBLE_VERSIONS = ["web", "kjv", "esv"] as const satisfies readonly BibleVersion[];
-export const BUNDLED_BIBLE_VERSIONS = ["web", "kjv"] as const satisfies readonly BundledBibleVersion[];
+export const BIBLE_VERSIONS = ["web", "kjv", "nlt", "esv"] as const satisfies readonly BibleVersion[];
+export const BUNDLED_BIBLE_VERSIONS = ["web", "kjv", "nlt"] as const satisfies readonly BundledBibleVersion[];
 
 export const BIBLE_VERSION_METADATA: Record<BibleVersion, BibleVersionMetadata> = {
   web: {
@@ -31,6 +32,13 @@ export const BIBLE_VERSION_METADATA: Record<BibleVersion, BibleVersionMetadata> 
     description: "Bundled locally. Classic 1769 public-domain text with whole-book support.",
     supportsWholeBook: true
   },
+  nlt: {
+    id: "nlt",
+    label: "NLT",
+    badge: "New Living",
+    description: "Optional local import. Whole-book support without Strongs tagging.",
+    supportsWholeBook: true
+  },
   esv: {
     id: "esv",
     label: "ESV",
@@ -40,12 +48,27 @@ export const BIBLE_VERSION_METADATA: Record<BibleVersion, BibleVersionMetadata> 
   }
 };
 
+const INSTALLED_BUNDLED_BIBLE_VERSIONS = BUNDLED_BIBLE_VERSIONS.filter((version) =>
+  (installedBundledVersionsSource as string[]).includes(version)
+);
+
 export function isBibleVersion(value: unknown): value is BibleVersion {
   return typeof value === "string" && BIBLE_VERSIONS.includes(value as BibleVersion);
 }
 
 export function isBundledBibleVersion(value: unknown): value is BundledBibleVersion {
   return typeof value === "string" && BUNDLED_BIBLE_VERSIONS.includes(value as BundledBibleVersion);
+}
+
+export function getInstalledBundledBibleVersions(): readonly BundledBibleVersion[] {
+  return INSTALLED_BUNDLED_BIBLE_VERSIONS;
+}
+
+export function isInstalledBundledBibleVersion(value: unknown): value is BundledBibleVersion {
+  return (
+    typeof value === "string" &&
+    INSTALLED_BUNDLED_BIBLE_VERSIONS.includes(value as BundledBibleVersion)
+  );
 }
 
 export function getBibleVersionOptions(esvEnabled: boolean): BibleVersionOption[] {
@@ -55,7 +78,7 @@ export function getBibleVersionOptions(esvEnabled: boolean): BibleVersionOption[
     description: BIBLE_VERSION_METADATA[version].description,
     supportsWholeBook: BIBLE_VERSION_METADATA[version].supportsWholeBook,
     disabled: version === "esv" && !esvEnabled
-  }));
+  })).filter((option) => option.id === "esv" || isInstalledBundledBibleVersion(option.id));
 }
 
 export function getBibleVersionLabel(version: BibleVersion): string {
@@ -75,6 +98,10 @@ export function resolveBibleVersion(
   }
 
   if (!isBibleVersion(value)) {
+    return null;
+  }
+
+  if (isBundledBibleVersion(value) && !isInstalledBundledBibleVersion(value)) {
     return null;
   }
 

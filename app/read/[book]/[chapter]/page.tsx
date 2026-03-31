@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ReaderPageContent } from "@/app/components/ReaderPageContent";
 import { getBookBySlug, getBooks, getChapter } from "@/lib/bible/data";
 import { isValidChapter, parseChapterParam } from "@/lib/bible/utils";
+import { getInstalledBundledBibleVersions } from "@/lib/bible/version";
 
 type ReaderChapterPageProps = {
   params: Promise<{
@@ -32,14 +33,21 @@ export default async function ReaderChapterPage({ params }: ReaderChapterPagePro
     notFound();
   }
 
-  const [books, book, webChapter, kjvChapter] = await Promise.all([
+  const installedBundledVersions = getInstalledBundledBibleVersions();
+  const [books, book, ...chapters] = await Promise.all([
     getBooks("web"),
     getBookBySlug(bookSlug, "web"),
-    getChapter(bookSlug, chapterNumber, "web"),
-    getChapter(bookSlug, chapterNumber, "kjv")
+    ...installedBundledVersions.map((version) => getChapter(bookSlug, chapterNumber, version))
   ]);
+  const chaptersByVersion = Object.fromEntries(
+    installedBundledVersions.map((version, index) => [version, chapters[index] ?? null])
+  );
 
-  if (!book || !isValidChapter(book, chapterNumber) || !webChapter || !kjvChapter) {
+  if (
+    !book ||
+    !isValidChapter(book, chapterNumber) ||
+    installedBundledVersions.some((version) => !chaptersByVersion[version])
+  ) {
     notFound();
   }
 
@@ -47,10 +55,7 @@ export default async function ReaderChapterPage({ params }: ReaderChapterPagePro
     <ReaderPageContent
       book={book}
       books={books}
-      chaptersByVersion={{
-        web: webChapter,
-        kjv: kjvChapter
-      }}
+      chaptersByVersion={chaptersByVersion}
     />
   );
 }

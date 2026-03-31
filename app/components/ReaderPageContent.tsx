@@ -17,7 +17,7 @@ import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { VerseList } from "@/app/components/VerseList";
-import type { BookMeta, BundledBibleVersion, Chapter } from "@/lib/bible/types";
+import type { BookMeta, BundledChapterMap } from "@/lib/bible/types";
 import { getBibleVersionBadge } from "@/lib/bible/version";
 
 function parsePositiveNumber(value: string | null) {
@@ -32,7 +32,7 @@ function parsePositiveNumber(value: string | null) {
 type ReaderPageContentProps = {
   books: BookMeta[];
   book: BookMeta;
-  chaptersByVersion: Record<BundledBibleVersion, Chapter>;
+  chaptersByVersion: BundledChapterMap;
   highlightedVerseNumber?: number | null;
   highlightedVerseRange?: {
     start: number;
@@ -57,7 +57,7 @@ export function ReaderPageContent({
     setActiveStudyVerseNumber,
     syncCurrentChapterData
   } = useReaderWorkspace();
-  const chapter = chaptersByVersion[version];
+  const chapter = chaptersByVersion[version] ?? Object.values(chaptersByVersion)[0] ?? null;
   const showStrongs = version === "kjv" && settings.showStrongs;
   const versionBadge = getBibleVersionBadge(version);
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
@@ -79,6 +79,10 @@ export function ReaderPageContent({
   const activeHighlightedVerseRange = highlightedVerseRange ?? urlHighlightedVerseRange;
   const activeHighlightedVerseNumber =
     activeHighlightedVerseRange !== null ? null : (highlightedVerseNumber ?? urlHighlightedVerseNumber);
+
+  if (!chapter) {
+    return null;
+  }
 
   useEffect(() => {
     syncCurrentChapterData(book.slug, chapter.chapterNumber, chaptersByVersion);

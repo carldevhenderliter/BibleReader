@@ -1,7 +1,10 @@
 import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { execFile as execFileCallback } from "node:child_process";
+import { promisify } from "node:util";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+const execFile = promisify(execFileCallback);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, "..");
 const bibleDir = path.join(repoRoot, "data", "bible");
@@ -10,14 +13,85 @@ const legacyBooksDir = path.join(bibleDir, "books");
 const versionsDir = path.join(bibleDir, "versions");
 const searchDir = path.join(bibleDir, "search");
 const strongsDir = path.join(bibleDir, "strongs");
+const installedVersionsPath = path.join(bibleDir, "installed-versions.json");
 const sourceBooksPath = path.join(repoRoot, "data", "source", "books.json");
 const topicsSourcePath = path.join(repoRoot, "data", "source", "topics.json");
 const strongsSourceDir = path.join(repoRoot, "data", "source", "strongs-kjv");
 const strongsBooksPath = path.join(strongsSourceDir, "books.json");
 const strongsLexiconPath = path.join(strongsSourceDir, "lexicon.json");
+const nltPdfPath = path.join(repoRoot, "PDF", "New-Living-Translation-NLT.pdf");
 
 const STRONGS_BOOK_NAME_BY_SLUG = {
   "song-of-solomon": "Song of Songs"
+};
+
+const NLT_BOOK_CODE_BY_SLUG = {
+  genesis: "Gen",
+  exodus: "Exo",
+  leviticus: "Lev",
+  numbers: "Num",
+  deuteronomy: "Deu",
+  joshua: "Jos",
+  judges: "Jdg",
+  ruth: "Rut",
+  "1-samuel": "1Sa",
+  "2-samuel": "2Sa",
+  "1-kings": "1Ki",
+  "2-kings": "2Ki",
+  "1-chronicles": "1Ch",
+  "2-chronicles": "2Ch",
+  ezra: "Ezr",
+  nehemiah: "Neh",
+  esther: "Est",
+  job: "Job",
+  psalms: "Psa",
+  proverbs: "Pro",
+  ecclesiastes: "Ecc",
+  "song-of-solomon": "Sol",
+  isaiah: "Isa",
+  jeremiah: "Jer",
+  lamentations: "Lam",
+  ezekiel: "Eze",
+  daniel: "Dan",
+  hosea: "Hos",
+  joel: "Joe",
+  amos: "Amo",
+  obadiah: "Oba",
+  jonah: "Jon",
+  micah: "Mic",
+  nahum: "Nah",
+  habakkuk: "Hab",
+  zephaniah: "Zep",
+  haggai: "Hag",
+  zechariah: "Zec",
+  malachi: "Mal",
+  matthew: "Mat",
+  mark: "Mar",
+  luke: "Luk",
+  john: "Joh",
+  acts: "Act",
+  romans: "Rom",
+  "1-corinthians": "1Co",
+  "2-corinthians": "2Co",
+  galatians: "Gal",
+  ephesians: "Eph",
+  philippians: "Phi",
+  colossians: "Col",
+  "1-thessalonians": "1Th",
+  "2-thessalonians": "2Th",
+  "1-timothy": "1Ti",
+  "2-timothy": "2Ti",
+  titus: "Tit",
+  philemon: "Phm",
+  hebrews: "Heb",
+  james: "Jam",
+  "1-peter": "1Pe",
+  "2-peter": "2Pe",
+  "1-john": "1Jo",
+  "2-john": "2Jo",
+  "3-john": "3Jo",
+  jude: "Jud",
+  revelation: "Rev"
 };
 
 /**
@@ -51,12 +125,13 @@ const STRONGS_BOOK_NAME_BY_SLUG = {
  * @typedef {{ bookSlug: string, chapterNumber: number, verseNumber: number }} TopicReference
  * @typedef {{ id: string, label: string, references: TopicReference[] }} TopicSourceSubtopic
  * @typedef {{ id: string, label: string, aliases: string[], subtopics: TopicSourceSubtopic[] }} TopicSourceEntry
- * @typedef {{ id: string, label: string, aliases: string[], subtopics: { id: string, label: string, verses: Array<{ version: "web" | "kjv", bookSlug: string, bookName: string, chapterNumber: number, verseNumber: number, text: string, tokens?: VerseToken[] }> }[] }} TopicSearchEntry
+ * @typedef {{ id: string, label: string, aliases: string[], subtopics: { id: string, label: string, verses: Array<{ version: "web" | "kjv" | "nlt", bookSlug: string, bookName: string, chapterNumber: number, verseNumber: number, text: string, tokens?: VerseToken[] }> }[] }} TopicSearchEntry
  * @typedef {{ id: string, language: "hebrew" | "greek", lemma: string, transliteration: string, definition: string, partOfSpeech: string, rootWord: string, outlineUsage: string }} StrongsEntry
  * @typedef {{ strongsNumber: string, bookSlug: string, bookName: string, chapterNumber: number, verseNumber: number, text: string }} StrongsSearchVerseEntry
  */
 
 async function main() {
+  const shouldIncludeNlt = process.argv.includes("--include-nlt");
   const sourceBooks = /** @type {SourceBook[]} */ (
     JSON.parse(await readFile(sourceBooksPath, "utf8"))
   );
@@ -72,11 +147,27 @@ async function main() {
   const kjvPayloadBySlug = await importKjvVersion(sourceBooks);
   validateOutput("kjv", sourceBooks, kjvPayloadBySlug);
 
+  let nltPayloadBySlug = null;
+
+  if (shouldIncludeNlt) {
+    nltPayloadBySlug = await importNltVersion(sourceBooks);
+    validateOutput("nlt", sourceBooks, nltPayloadBySlug);
+  } else {
+    await resetNltArtifacts();
+  }
+
   await buildSearchIndex("web", webPayloadBySlug);
   await buildSearchIndex("kjv", kjvPayloadBySlug);
+  if (nltPayloadBySlug) {
+    await buildSearchIndex("nlt", nltPayloadBySlug);
+  }
   await buildStrongsSearchIndex(kjvPayloadBySlug);
   await buildTopicSearchIndex("web", topicsSource, sourceBooks, webPayloadBySlug);
   await buildTopicSearchIndex("kjv", topicsSource, sourceBooks, kjvPayloadBySlug);
+  if (nltPayloadBySlug) {
+    await buildTopicSearchIndex("nlt", topicsSource, sourceBooks, nltPayloadBySlug);
+  }
+  await writeInstalledVersions(nltPayloadBySlug ? ["web", "kjv", "nlt"] : ["web", "kjv"]);
 
   console.log(`Imported bundled versions into ${path.relative(repoRoot, versionsDir)}.`);
 }
@@ -105,6 +196,187 @@ async function importWebVersion() {
 
     payloadBySlug.set(book.slug, payload);
   }
+
+  return payloadBySlug;
+}
+
+async function writeInstalledVersions(versions) {
+  await writeFile(installedVersionsPath, `${JSON.stringify(versions, null, 2)}\n`);
+}
+
+async function resetNltArtifacts() {
+  const nltDir = path.join(versionsDir, "nlt");
+
+  await rm(nltDir, { recursive: true, force: true });
+  await mkdir(nltDir, { recursive: true });
+  await mkdir(searchDir, { recursive: true });
+  await writeFile(path.join(nltDir, "books.json"), "[]\n");
+  await writeFile(path.join(searchDir, "nlt.json"), "[]\n");
+  await writeFile(path.join(searchDir, "topics-nlt.json"), "[]\n");
+}
+
+function normalizeNltWhitespace(value) {
+  return value.replace(/\s+/g, " ").trim();
+}
+
+function normalizeNltVerseText(value) {
+  return normalizeNltWhitespace(
+    value
+      .replace(/\f/g, " ")
+      .replace(/LORD\]/g, "LORD")
+      .replace(/\b([A-Za-z]+)-\s+([a-z][A-Za-z-]*)\b/g, "$1$2")
+      .replace(/\s+([,;:.!?])/g, "$1")
+  );
+}
+
+async function extractNltPdfText() {
+  try {
+    const { stdout } = await execFile("pdftotext", [nltPdfPath, "-"], {
+      maxBuffer: 64 * 1024 * 1024
+    });
+
+    return stdout;
+  } catch (error) {
+    const message =
+      error && typeof error === "object" && "message" in error ? String(error.message) : "Unknown error";
+
+    throw new Error(`Failed to extract text from the NLT PDF with pdftotext: ${message}`);
+  }
+}
+
+/**
+ * @param {SourceBook[]} sourceBooks
+ * @returns {Promise<Map<string, BookPayload>>}
+ */
+async function importNltVersion(sourceBooks) {
+  const nltDir = path.join(versionsDir, "nlt");
+  const booksDir = path.join(nltDir, "books");
+  const pdfText = await extractNltPdfText();
+  const bookByCode = new Map(
+    sourceBooks.map((book) => {
+      const code = NLT_BOOK_CODE_BY_SLUG[book.slug];
+
+      if (!code) {
+        throw new Error(`NLT source mapping is missing ${book.slug}.`);
+      }
+
+      return [code, book];
+    })
+  );
+
+  await rm(nltDir, { recursive: true, force: true });
+  await mkdir(booksDir, { recursive: true });
+
+  /** @type {Array<{ bookSlug: string, chapterNumber: number, verseNumber: number, text: string }>} */
+  const parsedVerses = [];
+  let currentVerse = null;
+
+  const flushCurrentVerse = () => {
+    if (!currentVerse) {
+      return;
+    }
+
+    const text = normalizeNltVerseText(currentVerse.parts.join(" "));
+
+    if (!text) {
+      throw new Error(
+        `Encountered an empty NLT verse at ${currentVerse.bookSlug} ${currentVerse.chapterNumber}:${currentVerse.verseNumber}.`
+      );
+    }
+
+    parsedVerses.push({
+      bookSlug: currentVerse.bookSlug,
+      chapterNumber: currentVerse.chapterNumber,
+      verseNumber: currentVerse.verseNumber,
+      text
+    });
+    currentVerse = null;
+  };
+
+  for (const rawLine of pdfText.replace(/\r/g, "").split("\n")) {
+    const trimmedLine = rawLine.replace(/\f/g, "").trim();
+
+    if (!trimmedLine || trimmedLine === "The Holy Bible" || trimmedLine === "New Living Translation NLT") {
+      continue;
+    }
+
+    const referenceMatch = rawLine.match(/^(?:\f)?([1-3]?[A-Za-z]{2,6})\s+(\d+):(\d+)\s+(.*)$/);
+
+    if (referenceMatch) {
+      flushCurrentVerse();
+
+      const [, bookCode, chapterValue, verseValue, openingText] = referenceMatch;
+      const book = bookByCode.get(bookCode);
+
+      if (!book) {
+        throw new Error(`Unexpected NLT book code ${bookCode}.`);
+      }
+
+      currentVerse = {
+        bookSlug: book.slug,
+        chapterNumber: Number(chapterValue),
+        verseNumber: Number(verseValue),
+        parts: [openingText.trim()]
+      };
+      continue;
+    }
+
+    if (currentVerse) {
+      currentVerse.parts.push(trimmedLine);
+    }
+  }
+
+  flushCurrentVerse();
+
+  /** @type {BookMeta[]} */
+  const metadata = [];
+  /** @type {Map<string, BookPayload>} */
+  const payloadBySlug = new Map();
+
+  for (const sourceBook of sourceBooks) {
+    /** @type {Chapter[]} */
+    const chapters = [];
+
+    for (let chapterNumber = 1; chapterNumber <= sourceBook.chapterCount; chapterNumber += 1) {
+      const verses = parsedVerses
+        .filter(
+          (verse) => verse.bookSlug === sourceBook.slug && verse.chapterNumber === chapterNumber
+        )
+        .sort((left, right) => left.verseNumber - right.verseNumber)
+        .map((verse) => ({
+          number: verse.verseNumber,
+          text: verse.text
+        }));
+
+      if (verses.length === 0) {
+        throw new Error(`NLT is missing chapter ${chapterNumber} in ${sourceBook.name}.`);
+      }
+
+      chapters.push({
+        bookSlug: sourceBook.slug,
+        chapterNumber,
+        verses
+      });
+    }
+
+    const payload = {
+      book: {
+        slug: sourceBook.slug,
+        name: sourceBook.name,
+        abbreviation: sourceBook.abbreviation,
+        testament: sourceBook.testament,
+        chapterCount: sourceBook.chapterCount,
+        order: sourceBook.order
+      },
+      chapters
+    };
+
+    metadata.push(payload.book);
+    payloadBySlug.set(sourceBook.slug, payload);
+    await writeFile(path.join(booksDir, `${sourceBook.slug}.json`), `${JSON.stringify(payload, null, 2)}\n`);
+  }
+
+  await writeFile(path.join(nltDir, "books.json"), `${JSON.stringify(metadata, null, 2)}\n`);
 
   return payloadBySlug;
 }
@@ -387,7 +659,7 @@ async function writeStrongsLexicon(lexicon) {
 }
 
 /**
- * @param {"web" | "kjv"} version
+ * @param {"web" | "kjv" | "nlt"} version
  * @param {SourceBook[]} sourceBooks
  * @param {Map<string, BookPayload>} payloadBySlug
  */
@@ -427,7 +699,7 @@ function validateOutput(version, sourceBooks, payloadBySlug) {
 }
 
 /**
- * @param {"web" | "kjv"} version
+ * @param {"web" | "kjv" | "nlt"} version
  * @param {Map<string, BookPayload>} payloadBySlug
  */
 async function buildSearchIndex(version, payloadBySlug) {
@@ -487,7 +759,7 @@ async function buildStrongsSearchIndex(payloadBySlug) {
 }
 
 /**
- * @param {"web" | "kjv"} version
+ * @param {"web" | "kjv" | "nlt"} version
  * @param {TopicSourceEntry[]} topicsSource
  * @param {SourceBook[]} sourceBooks
  * @param {Map<string, BookPayload>} payloadBySlug

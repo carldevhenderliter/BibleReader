@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 
 import { WholeBookContent } from "@/app/components/WholeBookContent";
 import { getBookBySlug, getBookPayload, getBooks } from "@/lib/bible/data";
+import { getInstalledBundledBibleVersions } from "@/lib/bible/version";
 
 type BookPageProps = {
   params: Promise<{
@@ -20,14 +21,17 @@ export async function generateStaticParams() {
 export default async function BookPage({ params }: BookPageProps) {
   const { book: bookSlug } = await params;
 
-  const [books, book, webPayload, kjvPayload] = await Promise.all([
+  const installedBundledVersions = getInstalledBundledBibleVersions();
+  const [books, book, ...payloads] = await Promise.all([
     getBooks("web"),
     getBookBySlug(bookSlug, "web"),
-    getBookPayload(bookSlug, "web"),
-    getBookPayload(bookSlug, "kjv")
+    ...installedBundledVersions.map((version) => getBookPayload(bookSlug, version))
   ]);
+  const chaptersByVersion = Object.fromEntries(
+    installedBundledVersions.map((version, index) => [version, payloads[index]?.chapters ?? null])
+  );
 
-  if (!book || !webPayload || !kjvPayload) {
+  if (!book || installedBundledVersions.some((version) => !chaptersByVersion[version])) {
     notFound();
   }
 
@@ -35,10 +39,7 @@ export default async function BookPage({ params }: BookPageProps) {
     <WholeBookContent
       book={book}
       books={books}
-      chaptersByVersion={{
-        web: webPayload.chapters,
-        kjv: kjvPayload.chapters
-      }}
+      chaptersByVersion={chaptersByVersion}
     />
   );
 }

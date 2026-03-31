@@ -11,6 +11,7 @@ import type {
   StudyHighlightColor,
   StudySet
 } from "@/lib/bible/types";
+import { isBundledBibleVersion } from "@/lib/bible/version";
 
 export {
   STUDY_BOOKMARKS_STORAGE_KEY,
@@ -130,10 +131,6 @@ export function createStudySet(name: string): StudySet {
   };
 }
 
-function isBundledVersion(value: unknown): value is BundledBibleVersion {
-  return value === "web" || value === "kjv";
-}
-
 function normalizePassageReference(value: unknown): PassageReference | null {
   if (!value || typeof value !== "object") {
     return null;
@@ -142,7 +139,7 @@ function normalizePassageReference(value: unknown): PassageReference | null {
   const reference = value as Partial<PassageReference>;
 
   if (
-    !isBundledVersion(reference.version) ||
+    !isBundledBibleVersion(reference.version) ||
     typeof reference.bookSlug !== "string" ||
     typeof reference.chapterNumber !== "number"
   ) {
@@ -192,7 +189,7 @@ export function normalizeHighlightStorage(value: unknown): HighlightStorage {
   return Object.entries(value as Record<string, Partial<Highlight>>).reduce<HighlightStorage>(
     (items, [id, highlight]) => {
       if (
-        !isBundledVersion(highlight.version) ||
+        !isBundledBibleVersion(highlight.version) ||
         typeof highlight.bookSlug !== "string" ||
         typeof highlight.chapterNumber !== "number" ||
         typeof highlight.verseNumber !== "number" ||
@@ -229,7 +226,7 @@ export function normalizeBookmarkStorage(value: unknown): BookmarkStorage {
   return Object.entries(value as Record<string, Partial<Bookmark>>).reduce<BookmarkStorage>(
     (items, [id, bookmark]) => {
       if (
-        !isBundledVersion(bookmark.version) ||
+        !isBundledBibleVersion(bookmark.version) ||
         typeof bookmark.bookSlug !== "string" ||
         typeof bookmark.chapterNumber !== "number" ||
         (bookmark.verseNumber != null && typeof bookmark.verseNumber !== "number")

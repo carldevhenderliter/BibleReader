@@ -37,7 +37,8 @@ type ResolvedCrossReferenceEntry = Omit<CrossReferenceEntry, "groups"> & {
 
 const verseIndexLoaders: Record<BundledBibleVersion, () => Promise<unknown>> = {
   web: () => import("@/data/bible/search/web.json"),
-  kjv: () => import("@/data/bible/search/kjv.json")
+  kjv: () => import("@/data/bible/search/kjv.json"),
+  nlt: () => import("@/data/bible/search/nlt.json")
 };
 
 let crossReferencePromise: Promise<SourceCrossReferenceEntry[]> | null = null;

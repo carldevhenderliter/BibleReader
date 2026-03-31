@@ -14,6 +14,7 @@ import { usePathname } from "next/navigation";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import type {
   Bookmark,
+  BundledChapterMap,
   BundledBibleVersion,
   Chapter,
   Highlight,
@@ -56,6 +57,7 @@ import {
   type HighlightStorage,
   type StudySetStorage
 } from "@/lib/study-workspace";
+import { getInstalledBundledBibleVersions } from "@/lib/bible/version";
 
 type ReaderPane = "reading" | "study-sets";
 type LeftReaderMode = "scripture" | "search";
@@ -78,12 +80,12 @@ type ReaderWorkspaceContextValue = {
   closeNotebookWorkspace: () => void;
   openSermons: () => void;
   currentPassage: CurrentPassage | null;
-  currentChapterByVersion: Record<BundledBibleVersion, Chapter> | null;
+  currentChapterByVersion: BundledChapterMap | null;
   syncCurrentPassage: (bookSlug: string, chapterNumber: number, view: ReadingView) => void;
   syncCurrentChapterData: (
     bookSlug: string,
     chapterNumber: number,
-    chaptersByVersion: Record<BundledBibleVersion, Chapter> | null
+    chaptersByVersion: BundledChapterMap | null
   ) => void;
   activeStudyVerseNumber: number | null;
   setActiveStudyVerseNumber: (value: number | null) => void;
@@ -168,7 +170,7 @@ function getSortedSermons(documents: SermonDocumentStorage) {
 }
 
 function getAlternateVersion(version: BundledBibleVersion): BundledBibleVersion {
-  return version === "web" ? "kjv" : "web";
+  return getInstalledBundledBibleVersions().find((candidate) => candidate !== version) ?? version;
 }
 
 export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
@@ -185,9 +187,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   const [activeUtilityPaneState, setActiveUtilityPaneState] = useState<UtilityPane>("search");
   const [lastReaderUtilityPane, setLastReaderUtilityPane] = useState<UtilityPane>("notebook");
   const [currentPassage, setCurrentPassage] = useState<CurrentPassage | null>(null);
-  const [currentChapterByVersion, setCurrentChapterByVersion] = useState<
-    Record<BundledBibleVersion, Chapter> | null
-  >(null);
+  const [currentChapterByVersion, setCurrentChapterByVersion] = useState<BundledChapterMap | null>(null);
   const [activeStudyVerseNumber, setActiveStudyVerseNumber] = useState<number | null>(null);
   const [activeNotebookId, setActiveNotebookId] = useState<string | null>(null);
   const [pendingNotebookReference, setPendingNotebookReference] = useState<PassageReference | null>(null);
@@ -195,8 +195,11 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   const [compareVersionOverride, setCompareVersionOverride] = useState<BundledBibleVersion | null>(null);
   const isReaderRoute = pathname.startsWith("/read");
   const activeUtilityPane = activeUtilityPaneState;
+  const installedBundledVersions = getInstalledBundledBibleVersions();
   const compareVersion =
-    compareVersionOverride && compareVersionOverride !== version
+    compareVersionOverride &&
+    compareVersionOverride !== version &&
+    installedBundledVersions.includes(compareVersionOverride)
       ? compareVersionOverride
       : getAlternateVersion(version);
 
@@ -249,7 +252,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
     (
       bookSlug: string,
       chapterNumber: number,
-      chaptersByVersion: Record<BundledBibleVersion, Chapter> | null
+      chaptersByVersion: BundledChapterMap | null
     ) => {
       setCurrentChapterByVersion((current) => {
         if (current === chaptersByVersion) {
@@ -272,7 +275,11 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
             }
       );
       setActiveStudyVerseNumber((current) =>
-        current && current > 0 ? current : chaptersByVersion[version].verses[0]?.number ?? null
+        current && current > 0
+          ? current
+          : chaptersByVersion[version]?.verses[0]?.number ??
+            Object.values(chaptersByVersion)[0]?.verses[0]?.number ??
+            null
       );
     },
     [version]

@@ -17,7 +17,7 @@ import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { VerseList } from "@/app/components/VerseList";
-import type { BookMeta, BundledBibleVersion, Chapter } from "@/lib/bible/types";
+import type { BookMeta, BundledBookChapterMap, Chapter } from "@/lib/bible/types";
 import { getBibleVersionBadge } from "@/lib/bible/version";
 
 function parsePositiveNumber(value: string | null) {
@@ -32,7 +32,7 @@ function parsePositiveNumber(value: string | null) {
 type WholeBookContentProps = {
   books: BookMeta[];
   book: BookMeta;
-  chaptersByVersion: Record<BundledBibleVersion, Chapter[]>;
+  chaptersByVersion: BundledBookChapterMap;
   focusedChapterNumber?: number | null;
   highlightedChapterNumber?: number | null;
   highlightedVerseNumber?: number | null;
@@ -61,7 +61,7 @@ export function WholeBookContent({
     setActiveStudyVerseNumber,
     syncCurrentChapterData
   } = useReaderWorkspace();
-  const chapters = chaptersByVersion[version];
+  const chapters = chaptersByVersion[version] ?? Object.values(chaptersByVersion)[0] ?? [];
   const showStrongs = version === "kjv" && settings.showStrongs;
   const versionBadge = getBibleVersionBadge(version);
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);

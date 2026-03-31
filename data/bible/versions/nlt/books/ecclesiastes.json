@@ -1,0 +1,972 @@
+{
+  "book": {
+    "slug": "ecclesiastes",
+    "name": "Ecclesiastes",
+    "abbreviation": "Eccl",
+    "testament": "Old",
+    "chapterCount": 12,
+    "order": 21
+  },
+  "chapters": [
+    {
+      "bookSlug": "ecclesiastes",
+      "chapterNumber": 1,
+      "verses": [
+        {
+          "number": 1,
+          "text": "These are the words of the Teacher, King David's son, who ruled in Jerusalem."
+        },
+        {
+          "number": 2,
+          "text": "\"Everything is meaningless,\" says the Teacher, \"utterly meaningless!\""
+        },
+        {
+          "number": 3,
+          "text": "What do people get for all their hard work?"
+        },
+        {
+          "number": 4,
+          "text": "Generations come and go, but nothing really changes."
+        },
+        {
+          "number": 5,
+          "text": "The sun rises and sets and hurries around to rise again."
+        },
+        {
+          "number": 6,
+          "text": "The wind blows south and north, here and there, twisting back and forth, getting nowhere."
+        },
+        {
+          "number": 7,
+          "text": "The rivers run into the sea, but the sea is never full. Then the water returns again to the rivers and flows again to the sea."
+        },
+        {
+          "number": 8,
+          "text": "Everything is so weary and tiresome! No matter how much we see, we are never satisfied. No matter how much we hear, we are not content."
+        },
+        {
+          "number": 9,
+          "text": "History merely repeats itself. It has all been done before. Nothing under the sun is truly new."
+        },
+        {
+          "number": 10,
+          "text": "What can you point to that is new? How do you know it didn't already exist long ago?"
+        },
+        {
+          "number": 11,
+          "text": "We don't remember what happened in those former times. And in future generations, no one will remember what we are doing now."
+        },
+        {
+          "number": 12,
+          "text": "I, the Teacher, was king of Israel, and I lived in Jerusalem."
+        },
+        {
+          "number": 13,
+          "text": "I devoted myself to search for understanding and to explore by wisdom everything being done in the world. I soon discovered that God has dealt a tragic existence to the human race."
+        },
+        {
+          "number": 14,
+          "text": "Everything under the sun is meaningless, like chasing the wind."
+        },
+        {
+          "number": 15,
+          "text": "What is wrong cannot be righted. What is missing cannot be recovered."
+        },
+        {
+          "number": 16,
+          "text": "I said to myself, \"Look, I am wiser than any of the kings who ruled in Jerusalem before me. I have greater wisdom and knowledge than any of them.\""
+        },
+        {
+          "number": 17,
+          "text": "So I worked hard to distinguish wisdom from foolishness. But now I realize that even this was like chasing the wind."
+        },
+        {
+          "number": 18,
+          "text": "For the greater my wisdom, the greater my grief. To increase knowledge only increases sorrow."
+        }
+      ]
+    },
+    {
+      "bookSlug": "ecclesiastes",
+      "chapterNumber": 2,
+      "verses": [
+        {
+          "number": 1,
+          "text": "I said to myself, \"Come now, let's give pleasure a try. Let's look for the 'good things' in life.\" But I found that this, too, was meaningless."
+        },
+        {
+          "number": 2,
+          "text": "\"It is silly to be laughing all the time,\" I said. \"What good does it do to seek only pleasure?\""
+        },
+        {
+          "number": 3,
+          "text": "After much thought, I decided to cheer myself with wine. While still seeking wisdom, I clutched at foolishness. In this way, I hoped to experience the only happiness most people find during their brief life in this world."
+        },
+        {
+          "number": 4,
+          "text": "I also tried to find meaning by building huge homes for myself and by planting beautiful vineyards."
+        },
+        {
+          "number": 5,
+          "text": "I made gardens and parks, filling them with all kinds of fruit trees."
+        },
+        {
+          "number": 6,
+          "text": "I built reservoirs to collect the water to irrigate my many flourishing groves."
+        },
+        {
+          "number": 7,
+          "text": "I bought slaves, both men and women, and others were born into my household. I also owned great herds and flocks, more than any of the kings who lived in Jerusalem before me."
+        },
+        {
+          "number": 8,
+          "text": "I collected great sums of silver and gold, the treasure of many kings and provinces. I hired wonderful singers, both men and women, and had many beautiful concubines. I had everything a man could desire!"
+        },
+        {
+          "number": 9,
+          "text": "So I became greater than any of the kings who ruled in Jerusalem before me. And with it all, I remained clear-eyed so that I could evaluate all these things."
+        },
+        {
+          "number": 10,
+          "text": "Anything I wanted, I took. I did not restrain myself from any joy. I even found great pleasure in hard work, an additional reward for all my labors."
+        },
+        {
+          "number": 11,
+          "text": "But as I looked at everything I had worked so hard to accomplish, it was all so meaningless. It was like chasing the wind. There was nothing really worthwhile anywhere."
+        },
+        {
+          "number": 12,
+          "text": "So I decided to compare wisdom and folly, and anyone else would come to the same conclusions I did."
+        },
+        {
+          "number": 13,
+          "text": "Wisdom is of more value than foolishness, just as light is better than darkness."
+        },
+        {
+          "number": 14,
+          "text": "For the wise person sees, while the fool is blind. Yet I saw that wise and foolish people share the same fate."
+        },
+        {
+          "number": 15,
+          "text": "Both of them die. Just as the fool will die, so will I. So of what value is all my wisdom? Then I said to myself, \"This is all so meaningless!\""
+        },
+        {
+          "number": 16,
+          "text": "For the wise person and the fool both die, and in the days to come, both will be forgotten."
+        },
+        {
+          "number": 17,
+          "text": "So now I hate life because everything done here under the sun is so irrational. Everything is meaningless, like chasing the wind."
+        },
+        {
+          "number": 18,
+          "text": "I am disgusted that I must leave the fruits of my hard work to others."
+        },
+        {
+          "number": 19,
+          "text": "And who can tell whether my successors will be wise or foolish? And yet they will control everything I have gained by my skill and hard work. How meaningless!"
+        },
+        {
+          "number": 20,
+          "text": "So I turned in despair from hard work. It was not the answer to my search for satisfaction in this life."
+        },
+        {
+          "number": 21,
+          "text": "For though I do my work with wisdom, knowledge, and skill, I must leave everything I gain to people who haven't worked to earn it. This is not only foolish but highly unfair."
+        },
+        {
+          "number": 22,
+          "text": "So what do people get for all their hard work?"
+        },
+        {
+          "number": 23,
+          "text": "Their days of labor are filled with pain and grief; even at night they cannot rest. It is all utterly meaningless."
+        },
+        {
+          "number": 24,
+          "text": "So I decided there is nothing better than to enjoy food and drink and to find satisfaction in work. Then I realized that this pleasure is from the hand of God."
+        },
+        {
+          "number": 25,
+          "text": "For who can eat or enjoy anything apart from him?"
+        },
+        {
+          "number": 26,
+          "text": "God gives wisdom, knowledge, and joy to those who please him. But if a sinner becomes wealthy, God takes the wealth away and gives it to those who please him. Even this, however, is meaningless, like chasing the wind."
+        }
+      ]
+    },
+    {
+      "bookSlug": "ecclesiastes",
+      "chapterNumber": 3,
+      "verses": [
+        {
+          "number": 1,
+          "text": "There is a time for everything, a season for every activity under heaven."
+        },
+        {
+          "number": 2,
+          "text": "A time to be born and a time to die. A time to plant and a time to harvest."
+        },
+        {
+          "number": 3,
+          "text": "A time to kill and a time to heal. A time to tear down and a time to rebuild."
+        },
+        {
+          "number": 4,
+          "text": "A time to cry and a time to laugh. A time to grieve and a time to dance."
+        },
+        {
+          "number": 5,
+          "text": "A time to scatter stones and a time to gather stones. A time to embrace and a time to turn away."
+        },
+        {
+          "number": 6,
+          "text": "A time to search and a time to lose. A time to keep and a time to throw away."
+        },
+        {
+          "number": 7,
+          "text": "A time to tear and a time to mend. A time to be quiet and a time to speak up."
+        },
+        {
+          "number": 8,
+          "text": "A time to love and a time to hate. A time for war and a time for peace."
+        },
+        {
+          "number": 9,
+          "text": "What do people really get for all their hard work?"
+        },
+        {
+          "number": 10,
+          "text": "I have thought about this in connection with the various kinds of work God has given people to do."
+        },
+        {
+          "number": 11,
+          "text": "God has made everything beautiful for its own time. He has planted eternity in the human heart, but even so, people cannot see the whole scope of God's work from beginning to end."
+        },
+        {
+          "number": 12,
+          "text": "So I concluded that there is nothing better for people than to be happy and to enjoy themselves as long as they can."
+        },
+        {
+          "number": 13,
+          "text": "And people should eat and drink and enjoy the fruits of their labor, for these are gifts from God."
+        },
+        {
+          "number": 14,
+          "text": "And I know that whatever God does is final. Nothing can be added to it or taken from it. God's purpose in this is that people should fear him."
+        },
+        {
+          "number": 15,
+          "text": "Whatever exists today and whatever will exist in the future has already existed in the past. For God calls each event back in its turn."
+        },
+        {
+          "number": 16,
+          "text": "I also noticed that throughout the world there is evil in the courtroom. Yes, even the courts of law are corrupt!"
+        },
+        {
+          "number": 17,
+          "text": "I said to myself, \"In due season God will judge everyone, both good and bad, for all their deeds.\""
+        },
+        {
+          "number": 18,
+          "text": "Then I realized that God allows people to continue in their sinful ways so he can test them. That way, they can see for themselves that they are no better than animals."
+        },
+        {
+          "number": 19,
+          "text": "For humans and animals both breathe the same air, and both die. So people have no real advantage over the animals. How meaningless!"
+        },
+        {
+          "number": 20,
+          "text": "Both go to the same place-- the dust from which they came and to which they must return."
+        },
+        {
+          "number": 21,
+          "text": "For who can prove that the human spirit goes upward and the spirit of animals goes downward into the earth?"
+        },
+        {
+          "number": 22,
+          "text": "So I saw that there is nothing better for people than to be happy in their work. That is why they are here! No one will bring them back from death to enjoy life in the future."
+        }
+      ]
+    },
+    {
+      "bookSlug": "ecclesiastes",
+      "chapterNumber": 4,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Again I observed all the oppression that takes place in our world. I saw the tears of the oppressed, with no one to comfort them. The oppressors have great power, and the victims are helpless."
+        },
+        {
+          "number": 2,
+          "text": "So I concluded that the dead are better off than the living."
+        },
+        {
+          "number": 3,
+          "text": "And most fortunate of all are those who were never born. For they have never seen all the evil that is done in our world."
+        },
+        {
+          "number": 4,
+          "text": "Then I observed that most people are motivated to success by their envy of their neighbors. But this, too, is meaningless, like chasing the wind."
+        },
+        {
+          "number": 5,
+          "text": "Foolish people refuse to work and almost starve."
+        },
+        {
+          "number": 6,
+          "text": "They feel it is better to be lazy and barely survive than to work hard, especially when in the long run everything is so futile."
+        },
+        {
+          "number": 7,
+          "text": "I observed yet another example of meaninglessness in our world."
+        },
+        {
+          "number": 8,
+          "text": "This is the case of a man who is all alone, without a child or a brother, yet who works hard to gain as much wealth as he can. But then he asks himself, \"Who am I working for? Why am I giving up so much pleasure now?\" It is all so meaningless and depressing."
+        },
+        {
+          "number": 9,
+          "text": "Two people can accomplish more than twice as much as one; they get a better return for their labor."
+        },
+        {
+          "number": 10,
+          "text": "If one person falls, the other can reach out and help. But people who are alone when they fall are in real trouble."
+        },
+        {
+          "number": 11,
+          "text": "And on a cold night, two under the same blanket can gain warmth from each other. But how can one be warm alone?"
+        },
+        {
+          "number": 12,
+          "text": "A person standing alone can be attacked and defeated, but two can stand back-to-back and conquer. Three are even better, for a triple-braided cord is not easily broken."
+        },
+        {
+          "number": 13,
+          "text": "It is better to be a poor but wise youth than to be an old and foolish king who refuses all advice."
+        },
+        {
+          "number": 14,
+          "text": "Such a youth could come from prison and succeed. He might even become king, though he was born in poverty."
+        },
+        {
+          "number": 15,
+          "text": "Everyone is eager to help such a youth, even to help him take the throne."
+        },
+        {
+          "number": 16,
+          "text": "He might become the leader of millions and be very popular. But then the next generation grows up and rejects him! So again, it is all meaningless, like chasing the wind."
+        }
+      ]
+    },
+    {
+      "bookSlug": "ecclesiastes",
+      "chapterNumber": 5,
+      "verses": [
+        {
+          "number": 1,
+          "text": "As you enter the house of God, keep your ears open and your mouth shut! Don't be a fool who doesn't realize that mindless offerings to God are evil."
+        },
+        {
+          "number": 2,
+          "text": "And don't make rash promises to God, for he is in heaven, and you are only here on earth. So let your words be few."
+        },
+        {
+          "number": 3,
+          "text": "Just as being too busy gives you nightmares, being a fool makes you a blabbermouth."
+        },
+        {
+          "number": 4,
+          "text": "So when you make a promise to God, don't delay in following through, for God takes no pleasure in fools. Keep all the promises you make to him."
+        },
+        {
+          "number": 5,
+          "text": "It is better to say nothing than to promise something that you don't follow through on."
+        },
+        {
+          "number": 6,
+          "text": "In such cases, your mouth is making you sin. And don't defend yourself by telling the Temple messenger that the promise you made was a mistake. That would make God angry, and he might wipe out everything you have achieved."
+        },
+        {
+          "number": 7,
+          "text": "Dreaming all the time instead of working is foolishness. And there is ruin in a flood of empty words. Fear God instead."
+        },
+        {
+          "number": 8,
+          "text": "If you see a poor person being oppressed by the powerful and justice being miscarried throughout the land, don't be surprised! For every official is under orders from higher up, and matters of justice only get lost in red tape and bureaucracy."
+        },
+        {
+          "number": 9,
+          "text": "Even the king milks the land for his own profit!"
+        },
+        {
+          "number": 10,
+          "text": "Those who love money will never have enough. How absurd to think that wealth brings true happiness!"
+        },
+        {
+          "number": 11,
+          "text": "The more you have, the more people come to help you spend it. So what is the advantage of wealth-except perhaps to watch it run through your fingers!"
+        },
+        {
+          "number": 12,
+          "text": "People who work hard sleep well, whether they eat little or much. But the rich are always worrying and seldom get a good night's sleep."
+        },
+        {
+          "number": 13,
+          "text": "There is another serious problem I have seen in the world. Riches are sometimes hoarded to the harm of the saver,"
+        },
+        {
+          "number": 14,
+          "text": "or they are put into risky investments that turn sour, and everything is lost. In the end, there is nothing left to pass on to one's children."
+        },
+        {
+          "number": 15,
+          "text": "People who live only for wealth come to the end of their lives as naked and empty-handed as on the day they were born."
+        },
+        {
+          "number": 16,
+          "text": "And this, too, is a very serious problem. As people come into this world, so they depart. All their hard work is for nothing. They have been working for the wind, and everything will be swept away."
+        },
+        {
+          "number": 17,
+          "text": "Throughout their lives, they live under a cloud-- frustrated, discouraged, and angry."
+        },
+        {
+          "number": 18,
+          "text": "Even so, I have noticed one thing, at least, that is good. It is good for people to eat well, drink a good glass of wine, and enjoy their work-- whatever they do under the sun-- for however long God lets them live."
+        },
+        {
+          "number": 19,
+          "text": "And it is a good thing to receive wealth from God and the good health to enjoy it. To enjoy your work and accept your lot in life-- that is indeed a gift from God."
+        },
+        {
+          "number": 20,
+          "text": "People who do this rarely look with sorrow on the past, for God has given them reasons for joy."
+        }
+      ]
+    },
+    {
+      "bookSlug": "ecclesiastes",
+      "chapterNumber": 6,
+      "verses": [
+        {
+          "number": 1,
+          "text": "There is another serious tragedy I have seen in our world."
+        },
+        {
+          "number": 2,
+          "text": "God gives great wealth and honor to some people and gives them everything they could ever want, but then he doesn't give them the health to enjoy it. They die, and others get it all! This is meaningless-- a sickening tragedy."
+        },
+        {
+          "number": 3,
+          "text": "A man might have a hundred children and live to be very old. But if he finds no satisfaction in life and in the end does not even get a decent burial, I say he would have been better off born dead."
+        },
+        {
+          "number": 4,
+          "text": "I realize that his birth would have been meaningless and ended in darkness. He wouldn't even have had a name,"
+        },
+        {
+          "number": 5,
+          "text": "and he would never have seen the sun or known of its existence. Yet he would have had more peace than he has in growing up to be an unhappy man."
+        },
+        {
+          "number": 6,
+          "text": "He might live a thousand years twice over but not find contentment. And since he must die like everyone else-- well, what's the use?"
+        },
+        {
+          "number": 7,
+          "text": "All people spend their lives scratching for food, but they never seem to have enough."
+        },
+        {
+          "number": 8,
+          "text": "Considering this, do wise people really have any advantage over fools? Do poor people gain anything by being wise and knowing how to act in front of others?"
+        },
+        {
+          "number": 9,
+          "text": "Enjoy what you have rather than desiring what you don't have. Just dreaming about nice things is meaningless; it is like chasing the wind."
+        },
+        {
+          "number": 10,
+          "text": "Everything has already been decided. It was known long ago what each person would be. So there's no use arguing with God about your destiny."
+        },
+        {
+          "number": 11,
+          "text": "The more words you speak, the less they mean. So why overdo it?"
+        },
+        {
+          "number": 12,
+          "text": "In the few days of our empty lives, who knows how our days can best be spent? And who can tell what will happen in the future after we are gone?"
+        }
+      ]
+    },
+    {
+      "bookSlug": "ecclesiastes",
+      "chapterNumber": 7,
+      "verses": [
+        {
+          "number": 1,
+          "text": "A good reputation is more valuable than the most expensive perfume. In the same way, the day you die is better than the day you are born."
+        },
+        {
+          "number": 2,
+          "text": "It is better to spend your time at funerals than at festivals. For you are going to die, and you should think about it while there is still time."
+        },
+        {
+          "number": 3,
+          "text": "Sorrow is better than laughter, for sadness has a refining influence on us."
+        },
+        {
+          "number": 4,
+          "text": "A wise person thinks much about death, while the fool thinks only about having a good time now."
+        },
+        {
+          "number": 5,
+          "text": "It is better to be criticized by a wise person than to be praised by a fool!"
+        },
+        {
+          "number": 6,
+          "text": "Indeed, a fool's laughter is quickly gone, like thorns crackling in a fire. This also is meaningless."
+        },
+        {
+          "number": 7,
+          "text": "Extortion turns wise people into fools, and bribes corrupt the heart."
+        },
+        {
+          "number": 8,
+          "text": "Finishing is better than starting. Patience is better than pride."
+        },
+        {
+          "number": 9,
+          "text": "Don't be quick-tempered, for anger is the friend of fools."
+        },
+        {
+          "number": 10,
+          "text": "Don't long for \"the good old days,\" for you don't know whether they were any better than today."
+        },
+        {
+          "number": 11,
+          "text": "Being wise is as good as being rich; in fact, it is better."
+        },
+        {
+          "number": 12,
+          "text": "Wisdom or money can get you almost anything, but it's important to know that only wisdom can save your life."
+        },
+        {
+          "number": 13,
+          "text": "Notice the way God does things; then fall into line. Don't fight the ways of God, for who can straighten out what he has made crooked?"
+        },
+        {
+          "number": 14,
+          "text": "Enjoy prosperity while you can. But when hard times strike, realize that both come from God. That way you will realize that nothing is certain in this life."
+        },
+        {
+          "number": 15,
+          "text": "In this meaningless life, I have seen everything, including the fact that some good people die young and some wicked people live on and on."
+        },
+        {
+          "number": 16,
+          "text": "So don't be too good or too wise! Why destroy yourself?"
+        },
+        {
+          "number": 17,
+          "text": "On the other hand, don't be too wicked either-- don't be a fool! Why should you die before your time?"
+        },
+        {
+          "number": 18,
+          "text": "So try to walk a middle course-- but those who fear God will succeed either way."
+        },
+        {
+          "number": 19,
+          "text": "A wise person is stronger than the ten leading citizens of a town!"
+        },
+        {
+          "number": 20,
+          "text": "There is not a single person in all the earth who is always good and never sins."
+        },
+        {
+          "number": 21,
+          "text": "Don't eavesdrop on others-- you may hear your servant laughing at you."
+        },
+        {
+          "number": 22,
+          "text": "For you know how often you yourself have laughed at others."
+        },
+        {
+          "number": 23,
+          "text": "All along I have tried my best to let wisdom guide my thoughts and actions. I said to myself, \"I am determined to be wise.\" But it didn't really work."
+        },
+        {
+          "number": 24,
+          "text": "Wisdom is always distant and very difficult to find."
+        },
+        {
+          "number": 25,
+          "text": "I searched everywhere, determined to find wisdom and to understand the reason for things. I was determined to prove to myself that wickedness is stupid and that foolishness is madness."
+        },
+        {
+          "number": 26,
+          "text": "I discovered that a seductive woman is more bitter than death. Her passion is a trap, and her soft hands will bind you. Those who please God will escape from her, but sinners will be caught in her snare."
+        },
+        {
+          "number": 27,
+          "text": "\"This is my conclusion,\" says the Teacher. \"I came to this result after looking into the matter from every possible angle."
+        },
+        {
+          "number": 28,
+          "text": "Just one out of every thousand men I interviewed can be said to be upright, but not one woman!"
+        },
+        {
+          "number": 29,
+          "text": "I discovered that God created people to be upright, but they have each turned to follow their own downward path.\""
+        }
+      ]
+    },
+    {
+      "bookSlug": "ecclesiastes",
+      "chapterNumber": 8,
+      "verses": [
+        {
+          "number": 1,
+          "text": "How wonderful to be wise, to be able to analyze and interpret things. Wisdom lights up a person's face, softening its hardness."
+        },
+        {
+          "number": 2,
+          "text": "Obey the king because you have vowed before God to do this."
+        },
+        {
+          "number": 3,
+          "text": "Don't try to avoid doing your duty, and don't take a stand with those who plot evil. For the king will punish those who disobey him."
+        },
+        {
+          "number": 4,
+          "text": "The king's command is backed by great power. No one can resist or question it."
+        },
+        {
+          "number": 5,
+          "text": "Those who obey him will not be punished. Those who are wise will find a time and a way to do what is right."
+        },
+        {
+          "number": 6,
+          "text": "Yes, there is a time and a way for everything, even as people's troubles lie heavily upon them."
+        },
+        {
+          "number": 7,
+          "text": "Indeed, how can people avoid what they don't know is going to happen?"
+        },
+        {
+          "number": 8,
+          "text": "None of us can hold back our spirit from departing. None of us has the power to prevent the day of our death. There is no escaping that obligation, that dark battle. And in the face of death, wickedness will certainly not rescue those who practice it."
+        },
+        {
+          "number": 9,
+          "text": "I have thought deeply about all that goes on here in the world, where people have the power to hurt each other."
+        },
+        {
+          "number": 10,
+          "text": "I have seen wicked people buried with honor. How strange that they were the very ones who frequented the Temple and are praised in the very city where they committed their crimes!"
+        },
+        {
+          "number": 11,
+          "text": "When a crime is not punished, people feel it is safe to do wrong."
+        },
+        {
+          "number": 12,
+          "text": "But even though a person sins a hundred times and still lives a long time, I know that those who fear God will be better off."
+        },
+        {
+          "number": 13,
+          "text": "The wicked will never live long, good lives, for they do not fear God. Their days will never grow long like the evening shadows."
+        },
+        {
+          "number": 14,
+          "text": "And this is not all that is meaningless in our world. In this life, good people are often treated as though they were wicked, and wicked people are often treated as though they were good. This is so meaningless!"
+        },
+        {
+          "number": 15,
+          "text": "So I recommend having fun, because there is nothing better for people to do in this world than to eat, drink, and enjoy life. That way they will experience some happiness along with all the hard work God gives them."
+        },
+        {
+          "number": 16,
+          "text": "In my search for wisdom, I tried to observe everything that goes on all across the earth. I discovered that there is ceaseless activity, day and night."
+        },
+        {
+          "number": 17,
+          "text": "This reminded me that no one can discover everything God has created in our world, no matter how hard they work at it. Not even the wisest people know everything, even if they say they do."
+        }
+      ]
+    },
+    {
+      "bookSlug": "ecclesiastes",
+      "chapterNumber": 9,
+      "verses": [
+        {
+          "number": 1,
+          "text": "This, too, I carefully explored: Even though the actions of godly and wise people are in God's hands, no one knows whether or not God will show them favor in this life."
+        },
+        {
+          "number": 2,
+          "text": "The same destiny ultimately awaits everyone, whether they are righteous or wicked, good or bad, ceremonially clean or unclean, religious or irreligious. Good people receive the same treatment as sinners, and people who take oaths are treated like people who don't."
+        },
+        {
+          "number": 3,
+          "text": "It seems so tragic that one fate comes to all. That is why people are not more careful to be good. Instead, they choose their own mad course, for they have no hope. There is nothing ahead but death anyway."
+        },
+        {
+          "number": 4,
+          "text": "There is hope only for the living. For as they say, \"It is better to be a live dog than a dead lion!\""
+        },
+        {
+          "number": 5,
+          "text": "The living at least know they will die, but the dead know nothing. They have no further reward, nor are they remembered."
+        },
+        {
+          "number": 6,
+          "text": "Whatever they did in their lifetime-- loving, hating, envying-- is all long gone. They no longer have a part in anything here on earth."
+        },
+        {
+          "number": 7,
+          "text": "So go ahead. Eat your food and drink your wine with a happy heart, for God approves of this!"
+        },
+        {
+          "number": 8,
+          "text": "Wear fine clothes, with a dash of cologne!"
+        },
+        {
+          "number": 9,
+          "text": "Live happily with the woman you love through all the meaningless days of life that God has given you in this world. The wife God gives you is your reward for all your earthly toil."
+        },
+        {
+          "number": 10,
+          "text": "Whatever you do, do well. For when you go to the grave, there will be no work or planning or knowledge or wisdom."
+        },
+        {
+          "number": 11,
+          "text": "I have observed something else in this world of ours. The fastest runner doesn't always win the race, and the strongest warrior doesn't always win the battle. The wise are often poor, and the skillful are not necessarily wealthy. And those who are educated don't always lead successful lives. It is all decided by chance, by being at the right place at the right time."
+        },
+        {
+          "number": 12,
+          "text": "People can never predict when hard times might come. Like fish in a net or birds in a snare, people are often caught by sudden tragedy."
+        },
+        {
+          "number": 13,
+          "text": "Here is another bit of wisdom that has impressed me as I have watched the way our world works."
+        },
+        {
+          "number": 14,
+          "text": "There was a small town with only a few people living in it, and a great king came with his army and besieged it."
+        },
+        {
+          "number": 15,
+          "text": "There was a poor, wise man living there who knew how to save the town, and so it was rescued. But afterward no one thought any more about him."
+        },
+        {
+          "number": 16,
+          "text": "Then I realized that though wisdom is better than strength, those who are wise will be despised if they are poor. What they say will not be appreciated for long."
+        },
+        {
+          "number": 17,
+          "text": "But even so, the quiet words of a wise person are better than the shouts of a foolish king."
+        },
+        {
+          "number": 18,
+          "text": "A wise person can overcome weapons of war, but one sinner can destroy much that is good."
+        }
+      ]
+    },
+    {
+      "bookSlug": "ecclesiastes",
+      "chapterNumber": 10,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Dead flies will cause even a bottle of perfume to stink! Yes, an ounce of foolishness can outweigh a pound of wisdom and honor."
+        },
+        {
+          "number": 2,
+          "text": "The hearts of the wise lead them to do right, and the hearts of the foolish lead them to do evil."
+        },
+        {
+          "number": 3,
+          "text": "You can identify fools just by the way they walk down the street!"
+        },
+        {
+          "number": 4,
+          "text": "If your boss is angry with you, don't quit! A quiet spirit can overcome even great mistakes."
+        },
+        {
+          "number": 5,
+          "text": "There is another evil I have seen as I have watched the world go by. Kings and rulers make a grave mistake"
+        },
+        {
+          "number": 6,
+          "text": "if they give foolish people great authority, and if they fail to give people of proven worth their rightful place of dignity."
+        },
+        {
+          "number": 7,
+          "text": "I have even seen servants riding like princes-- and princes walking like servants."
+        },
+        {
+          "number": 8,
+          "text": "When you dig a well, you may fall in. When you demolish an old wall, you could be bitten by a snake."
+        },
+        {
+          "number": 9,
+          "text": "When you work in a quarry, stones might fall and crush you! When you chop wood, there is danger with each stroke of your ax! Such are the risks of life."
+        },
+        {
+          "number": 10,
+          "text": "Since a dull ax requires great strength, sharpen the blade. That's the value of wisdom; it helps you succeed."
+        },
+        {
+          "number": 11,
+          "text": "It does no good to charm a snake after it has bitten you."
+        },
+        {
+          "number": 12,
+          "text": "It is pleasant to listen to wise words, but the speech of fools brings them to ruin."
+        },
+        {
+          "number": 13,
+          "text": "Since fools base their thoughts on foolish premises, their conclusions will be wicked madness."
+        },
+        {
+          "number": 14,
+          "text": "Foolish people claim to know all about the future and tell everyone the details! But who can really know what is going to happen?"
+        },
+        {
+          "number": 15,
+          "text": "Fools are so exhausted by a little work that they have no strength for even the simplest tasks."
+        },
+        {
+          "number": 16,
+          "text": "Destruction is certain for the land whose king is a child and whose leaders feast in the morning."
+        },
+        {
+          "number": 17,
+          "text": "Happy is the land whose king is a nobleman and whose leaders feast only to gain strength for their work, not to get drunk."
+        },
+        {
+          "number": 18,
+          "text": "Laziness lets the roof leak, and soon the rafters begin to rot."
+        },
+        {
+          "number": 19,
+          "text": "A party gives laughter, and wine gives happiness, and money gives everything!"
+        },
+        {
+          "number": 20,
+          "text": "Never make light of the king, even in your thoughts. And don't make fun of a rich man, either. A little bird may tell them what you have said."
+        }
+      ]
+    },
+    {
+      "bookSlug": "ecclesiastes",
+      "chapterNumber": 11,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Give generously, for your gifts will return to you later."
+        },
+        {
+          "number": 2,
+          "text": "Divide your gifts among many, for you do not know what risks might lie ahead."
+        },
+        {
+          "number": 3,
+          "text": "When the clouds are heavy, the rains come down. When a tree falls, whether south or north, there it lies."
+        },
+        {
+          "number": 4,
+          "text": "If you wait for perfect conditions, you will never get anything done."
+        },
+        {
+          "number": 5,
+          "text": "God's ways are as hard to discern as the pathways of the wind, and as mysterious as a tiny baby being formed in a mother's womb."
+        },
+        {
+          "number": 6,
+          "text": "Be sure to stay busy and plant a variety of crops, for you never know which will grow-- perhaps they all will."
+        },
+        {
+          "number": 7,
+          "text": "Light is sweet; it's wonderful to see the sun!"
+        },
+        {
+          "number": 8,
+          "text": "When people live to be very old, let them rejoice in every day of life. But let them also remember that the dark days will be many. Everything still to come is meaningless."
+        },
+        {
+          "number": 9,
+          "text": "Young man, it's wonderful to be young! Enjoy every minute of it. Do everything you want to do; take it all in. But remember that you must give an account to God for everything you do."
+        },
+        {
+          "number": 10,
+          "text": "So banish grief and pain, but remember that youth, with a whole life before it, still faces the threat of meaninglessness."
+        }
+      ]
+    },
+    {
+      "bookSlug": "ecclesiastes",
+      "chapterNumber": 12,
+      "verses": [
+        {
+          "number": 1,
+          "text": "Don't let the excitement of youth cause you to forget your Creator. Honor him in your youth before you grow old and no longer enjoy living."
+        },
+        {
+          "number": 2,
+          "text": "It will be too late then to remember him, when the light of the sun and moon and stars is dim to your old eyes, and there is no silver lining left among the clouds."
+        },
+        {
+          "number": 3,
+          "text": "Your limbs will tremble with age, and your strong legs will grow weak. Your teeth will be too few to do their work, and you will be blind, too."
+        },
+        {
+          "number": 4,
+          "text": "And when your teeth are gone, keep your lips tightly closed when you eat! Even the chirping of birds will wake you up. But you yourself will be deaf and tuneless, with a quavering voice."
+        },
+        {
+          "number": 5,
+          "text": "You will be afraid of heights and of falling, white-haired and withered, dragging along without any sexual desire. You will be standing at death's door. And as you near your everlasting home, the mourners will walk along the streets."
+        },
+        {
+          "number": 6,
+          "text": "Yes, remember your Creator now while you are young, before the silver cord of life snaps and the golden bowl is broken. Don't wait until the water jar is smashed at the spring and the pulley is broken at the well."
+        },
+        {
+          "number": 7,
+          "text": "For then the dust will return to the earth, and the spirit will return to God who gave it."
+        },
+        {
+          "number": 8,
+          "text": "\"All is meaningless,\" says the Teacher, \"utterly meaningless.\""
+        },
+        {
+          "number": 9,
+          "text": "Because the Teacher was wise, he taught the people everything he knew. He collected proverbs and classified them."
+        },
+        {
+          "number": 10,
+          "text": "Indeed, the Teacher taught the plain truth, and he did so in an interesting way."
+        },
+        {
+          "number": 11,
+          "text": "A wise teacher's words spur students to action and emphasize important truths. The collected sayings of the wise are like guidance from a shepherd."
+        },
+        {
+          "number": 12,
+          "text": "But, my child, be warned: There is no end of opinions ready to be expressed. Studying them can go on forever and become very exhausting!"
+        },
+        {
+          "number": 13,
+          "text": "Here is my final conclusion: Fear God and obey his commands, for this is the duty of every person."
+        },
+        {
+          "number": 14,
+          "text": "God will judge us for everything we do, including every secret thing, whether good or bad."
+        }
+      ]
+    }
+  ]
+}

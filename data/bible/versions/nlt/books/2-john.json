@@ -1,0 +1,66 @@
+{
+  "book": {
+    "slug": "2-john",
+    "name": "2 John",
+    "abbreviation": "2 John",
+    "testament": "New",
+    "chapterCount": 1,
+    "order": 63
+  },
+  "chapters": [
+    {
+      "bookSlug": "2-john",
+      "chapterNumber": 1,
+      "verses": [
+        {
+          "number": 1,
+          "text": "This letter is from John the Elder. It is written to the chosen lady and to her children, whom I love in the truth, as does everyone else who knows God's truth-2Jo 1:2 the truth that lives in us and will be in our hearts forever."
+        },
+        {
+          "number": 3,
+          "text": "May grace, mercy, and peace, which come from God our Father and from Jesus Christ his Son, be with us who live in truth and love."
+        },
+        {
+          "number": 4,
+          "text": "How happy I was to meet some of your children and find them living in the truth, just as we have been commanded by the Father."
+        },
+        {
+          "number": 5,
+          "text": "And now I want to urge you, dear lady, that we should love one another. This is not a new commandment, but one we had from the beginning."
+        },
+        {
+          "number": 6,
+          "text": "Love means doing what God has commanded us, and he has commanded us to love one another, just as you heard from the beginning."
+        },
+        {
+          "number": 7,
+          "text": "Many deceivers have gone out into the world. They do not believe that Jesus Christ came to earth in a real body. Such a person is a deceiver and an antichrist."
+        },
+        {
+          "number": 8,
+          "text": "Watch out, so that you do not lose the prize for which we have been working so hard. Be diligent so that you will receive your full reward."
+        },
+        {
+          "number": 9,
+          "text": "For if you wander beyond the teaching of Christ, you will not have fellowship with God. But if you continue in the teaching of Christ, you will have fellowship with both the Father and the Son."
+        },
+        {
+          "number": 10,
+          "text": "If someone comes to your meeting and does not teach the truth about Christ, don't invite him into your house or encourage him in any way."
+        },
+        {
+          "number": 11,
+          "text": "Anyone who encourages him becomes a partner in his evil work."
+        },
+        {
+          "number": 12,
+          "text": "Well, I have much more to say to you, but I don't want to say it in a letter. For I hope to visit you soon and to talk with you face to face. Then our joy will be complete."
+        },
+        {
+          "number": 13,
+          "text": "Greetings from the children of your sister, chosen by God."
+        }
+      ]
+    }
+  ]
+}

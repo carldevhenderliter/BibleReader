@@ -1,0 +1,118 @@
+{
+  "book": {
+    "slug": "philemon",
+    "name": "Philemon",
+    "abbreviation": "Phlm",
+    "testament": "New",
+    "chapterCount": 1,
+    "order": 57
+  },
+  "chapters": [
+    {
+      "bookSlug": "philemon",
+      "chapterNumber": 1,
+      "verses": [
+        {
+          "number": 1,
+          "text": "This letter is from Paul, in prison for preaching the Good News about Christ Jesus, and from our brother Timothy. It is written to Philemon, our much loved co-worker,"
+        },
+        {
+          "number": 2,
+          "text": "and to our sister Apphia and to Archippus, a fellow soldier of the cross. I am also writing to the church that meets in your house."
+        },
+        {
+          "number": 3,
+          "text": "May God our Father and the Lord Jesus Christ give you grace and peace."
+        },
+        {
+          "number": 4,
+          "text": "I always thank God when I pray for you, Philemon,"
+        },
+        {
+          "number": 5,
+          "text": "because I keep hearing of your trust in the Lord Jesus and your love for all of God's people."
+        },
+        {
+          "number": 6,
+          "text": "You are generous because of your faith. And I am praying that you will really put your generosity to work, for in so doing you will come to an understanding of all the good things we can do for Christ."
+        },
+        {
+          "number": 7,
+          "text": "I myself have gained much joy and comfort from your love, my brother, because your kindness has so often refreshed the hearts of God's people."
+        },
+        {
+          "number": 8,
+          "text": "That is why I am boldly asking a favor of you. I could demand it in the name of Christ because it is the right thing for you to do,"
+        },
+        {
+          "number": 9,
+          "text": "but because of our love, I prefer just to ask you. So take this as a request from your friend Paul, an old man, now in prison for the sake of Christ Jesus."
+        },
+        {
+          "number": 10,
+          "text": "My plea is that you show kindness to Onesimus. I think of him as my own son because he became a believer as a result of my ministry here in prison."
+        },
+        {
+          "number": 11,
+          "text": "Onesimus hasn't been of much use to you in the past, but now he is very useful to both of us."
+        },
+        {
+          "number": 12,
+          "text": "I am sending him back to you, and with him comes my own heart."
+        },
+        {
+          "number": 13,
+          "text": "I really wanted to keep him here with me while I am in these chains for preaching the Good News, and he would have helped me on your behalf."
+        },
+        {
+          "number": 14,
+          "text": "But I didn't want to do anything without your consent. And I didn't want you to help because you were forced to do it but because you wanted to."
+        },
+        {
+          "number": 15,
+          "text": "Perhaps you could think of it this way: Onesimus ran away for a little while so you could have him back forever."
+        },
+        {
+          "number": 16,
+          "text": "He is no longer just a slave; he is a beloved brother, especially to me. Now he will mean much more to you, both as a slave and as a brother in the Lord."
+        },
+        {
+          "number": 17,
+          "text": "So if you consider me your partner, give him the same welcome you would give me if I were coming."
+        },
+        {
+          "number": 18,
+          "text": "If he has harmed you in any way or stolen anything from you, charge me for it."
+        },
+        {
+          "number": 19,
+          "text": "I, Paul, write this in my own handwriting: \"I will repay it.\" And I won't mention that you owe me your very soul!"
+        },
+        {
+          "number": 20,
+          "text": "Yes, dear brother, please do me this favor for the Lord's sake. Give me this encouragement in Christ."
+        },
+        {
+          "number": 21,
+          "text": "I am confident as I write this letter that you will do what I ask and even more!"
+        },
+        {
+          "number": 22,
+          "text": "Please keep a guest room ready for me, for I am hoping that God will answer your prayers and let me return to you soon."
+        },
+        {
+          "number": 23,
+          "text": "Epaphras, my fellow prisoner in Christ Jesus, sends you his greetings."
+        },
+        {
+          "number": 24,
+          "text": "So do Mark, Aristarchus, Demas, and Luke, my co-workers."
+        },
+        {
+          "number": 25,
+          "text": "The grace of the Lord Jesus Christ be with your spirit."
+        }
+      ]
+    }
+  ]
+}

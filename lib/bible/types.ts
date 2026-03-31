@@ -21,6 +21,9 @@ export type Chapter = {
   verses: Verse[];
 };
 
+export type BundledChapterMap = Partial<Record<BundledBibleVersion, Chapter>>;
+export type BundledBookChapterMap = Partial<Record<BundledBibleVersion, Chapter[]>>;
+
 export type BookPayload = {
   book: BookMeta;
   chapters: Chapter[];
@@ -28,9 +31,9 @@ export type BookPayload = {
 
 export type ReadingView = "chapter" | "book";
 
-export type BibleVersion = "web" | "kjv" | "esv";
+export type BibleVersion = "web" | "kjv" | "nlt" | "esv";
 
-export type BundledBibleVersion = Extract<BibleVersion, "web" | "kjv">;
+export type BundledBibleVersion = Extract<BibleVersion, "web" | "kjv" | "nlt">;
 
 export type ReadingLocation = {
   book: string;

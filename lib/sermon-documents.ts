@@ -4,6 +4,7 @@ import type {
   SermonDocument,
   SermonDocumentSection
 } from "@/lib/bible/types";
+import { isBundledBibleVersion } from "@/lib/bible/version";
 import { createPassageReference } from "@/lib/study-workspace";
 
 export { SERMON_DOCUMENTS_STORAGE_KEY };
@@ -39,7 +40,7 @@ function normalizePassageReference(value: unknown): PassageReference | null {
   const reference = value as Partial<PassageReference>;
 
   if (
-    (reference.version !== "web" && reference.version !== "kjv") ||
+    !isBundledBibleVersion(reference.version) ||
     typeof reference.bookSlug !== "string" ||
     typeof reference.chapterNumber !== "number"
   ) {

@@ -7,6 +7,7 @@ import type {
   PassageReference,
   BundledBibleVersion
 } from "@/lib/bible/types";
+import { isBundledBibleVersion } from "@/lib/bible/version";
 import { createPassageReference } from "@/lib/study-workspace";
 
 export { ACTIVE_NOTEBOOK_STORAGE_KEY, PASSAGE_NOTEBOOK_STORAGE_KEY };
@@ -65,7 +66,7 @@ function normalizePassageReference(value: unknown): PassageReference | null {
   const reference = value as Partial<PassageReference>;
 
   if (
-    (reference.version !== "web" && reference.version !== "kjv") ||
+    !isBundledBibleVersion(reference.version) ||
     typeof reference.bookSlug !== "string" ||
     typeof reference.chapterNumber !== "number"
   ) {
@@ -122,7 +123,7 @@ function normalizeNotebookDocument(id: string, value: Partial<NotebookDocument>)
 
 function normalizeLegacyNotebook(id: string, value: LegacyPassageNotebook): NotebookDocument | null {
   if (
-    (value.version !== "web" && value.version !== "kjv") ||
+    !isBundledBibleVersion(value.version) ||
     typeof value.bookSlug !== "string" ||
     typeof value.chapterNumber !== "number" ||
     !Array.isArray(value.blocks)

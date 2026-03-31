@@ -12,7 +12,7 @@ import type { BookMeta, ReadingView, ThemePreset } from "@/lib/bible/types";
 import { BODY_FONT_OPTIONS, UI_FONT_OPTIONS } from "@/lib/reader-customization";
 import { THEME_PRESETS } from "@/lib/reader-customization";
 import { getViewToggleHref } from "@/lib/bible/utils";
-import { getBibleVersionOptions, isBundledBibleVersion } from "@/lib/bible/version";
+import { getBibleVersionOptions, isInstalledBundledBibleVersion } from "@/lib/bible/version";
 
 const TEXT_ALIGNMENT_OPTIONS = [
   {
@@ -49,7 +49,7 @@ export function ReaderSettingsPanel({
   const isReaderRoute = pathname.startsWith("/read");
 
   const handleVersionChange = (nextVersion: string) => {
-    if (!isBundledBibleVersion(nextVersion) || nextVersion === version) {
+    if (!isInstalledBundledBibleVersion(nextVersion) || nextVersion === version) {
       return;
     }
 

@@ -4,7 +4,7 @@ import { useMemo } from "react";
 
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
-import { getBibleVersionLabel } from "@/lib/bible/version";
+import { getBibleVersionLabel, getInstalledBundledBibleVersions } from "@/lib/bible/version";
 import { formatBookLabel } from "@/lib/study-workspace";
 
 export function ReaderComparePanel() {
@@ -25,15 +25,38 @@ export function ReaderComparePanel() {
     const primaryChapter = currentChapterByVersion[version];
     const secondaryChapter = currentChapterByVersion[compareVersion];
 
-    return primaryChapter.verses.map((primaryVerse) => ({
-      number: primaryVerse.number,
-      primaryText: primaryVerse.text,
-      secondaryText:
-        secondaryChapter.verses.find((verse) => verse.number === primaryVerse.number)?.text ?? ""
+    if (!primaryChapter || !secondaryChapter) {
+      return [];
+    }
+
+    const verseNumbers = Array.from(
+      new Set([
+        ...primaryChapter.verses.map((verse) => verse.number),
+        ...secondaryChapter.verses.map((verse) => verse.number)
+      ])
+    ).sort((left, right) => left - right);
+
+    return verseNumbers.map((number) => ({
+      number,
+      primaryText: primaryChapter.verses.find((verse) => verse.number === number)?.text ?? "",
+      secondaryText: secondaryChapter.verses.find((verse) => verse.number === number)?.text ?? ""
     }));
   }, [compareVersion, currentChapterByVersion, version]);
 
-  if (!currentPassage || currentPassage.view !== "chapter" || !currentChapterByVersion) {
+  const compareVersionOptions = useMemo(
+    () =>
+      getInstalledBundledBibleVersions().filter(
+        (candidate) => candidate !== version && Boolean(currentChapterByVersion?.[candidate])
+      ),
+    [currentChapterByVersion, version]
+  );
+
+  if (
+    !currentPassage ||
+    currentPassage.view !== "chapter" ||
+    !currentChapterByVersion ||
+    compareVersionOptions.length === 0
+  ) {
     return (
       <div className="lookup-panel-empty">
         <p className="search-empty-copy">
@@ -58,16 +81,14 @@ export function ReaderComparePanel() {
           <select
             aria-label="Compare with version"
             id="compare-version-select"
-            onChange={(event) => setCompareVersion(event.target.value as "web" | "kjv")}
+            onChange={(event) => setCompareVersion(event.target.value as typeof compareVersion)}
             value={compareVersion}
           >
-            {(["web", "kjv"] as const)
-              .filter((candidate) => candidate !== version)
-              .map((candidate) => (
-                <option key={candidate} value={candidate}>
-                  {getBibleVersionLabel(candidate)}
-                </option>
-              ))}
+            {compareVersionOptions.map((candidate) => (
+              <option key={candidate} value={candidate}>
+                {getBibleVersionLabel(candidate)}
+              </option>
+            ))}
           </select>
         </label>
       </div>
