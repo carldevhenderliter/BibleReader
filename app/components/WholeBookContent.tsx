@@ -17,7 +17,7 @@ import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { VerseList } from "@/app/components/VerseList";
 import type { BookMeta, BundledBibleVersion, Chapter } from "@/lib/bible/types";
-import { getBibleVersionBadge, getBibleVersionLabel } from "@/lib/bible/version";
+import { getBibleVersionBadge } from "@/lib/bible/version";
 
 function parsePositiveNumber(value: string | null) {
   if (!value || !/^\d+$/.test(value)) {
@@ -62,7 +62,6 @@ export function WholeBookContent({
   } = useReaderWorkspace();
   const chapters = chaptersByVersion[version];
   const showStrongs = version === "kjv" && settings.showStrongs;
-  const versionLabel = getBibleVersionLabel(version);
   const versionBadge = getBibleVersionBadge(version);
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
@@ -133,8 +132,15 @@ export function WholeBookContent({
         <div className="reader-topline">
           <div className="reader-toolbar">
             <div className="reader-toolbar-copy">
-              <p className="reader-toolbar-label">{book.testament} Testament</p>
-              <p className="reader-toolbar-summary">{versionLabel}</p>
+              <p className="reader-toolbar-summary">{versionBadge}</p>
+              <p className="reader-toolbar-title">{book.name}</p>
+              <p className="reader-toolbar-meta">
+                {book.chapterCount} chapters
+                <span className="reader-meta-separator" aria-hidden="true">
+                  ·
+                </span>
+                Continuous reading
+              </p>
             </div>
             <div className="reader-toolbar-actions">
               <ReaderControls
@@ -158,17 +164,6 @@ export function WholeBookContent({
               ) : null}
             </div>
           </div>
-          <header className="reader-heading">
-            <p className="reader-section-label">{versionBadge}</p>
-            <h1>{book.name}</h1>
-            <p className="reader-meta">
-              {book.chapterCount} chapters
-              <span className="reader-meta-separator" aria-hidden="true">
-                ·
-              </span>
-              Continuous reading
-            </p>
-          </header>
         </div>
         <ReaderContentTabs />
         {activeReaderPane === "study-sets" ? (

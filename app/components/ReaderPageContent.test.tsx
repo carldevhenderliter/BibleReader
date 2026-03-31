@@ -80,9 +80,13 @@ describe("ReaderPageContent", () => {
       />
     );
 
-    expect(screen.getByRole("heading", { name: "Genesis 1" })).toBeInTheDocument();
+    expect(screen.getByText("World English")).toBeInTheDocument();
+    expect(screen.getAllByText("Genesis 1").length).toBeGreaterThan(0);
+    expect(document.querySelector(".reader-toolbar-meta")).toHaveTextContent("2 verses");
+    expect(screen.getAllByText("Chapter view").length).toBeGreaterThan(0);
+    expect(screen.queryByRole("heading", { name: "Genesis 1" })).not.toBeInTheDocument();
     expect(screen.getByText("In the beginning, God created the heavens and the earth.")).toBeInTheDocument();
-    expect(screen.getAllByText(/^WEB$/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText("World English").length).toBeGreaterThan(0);
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     expect(screen.getByRole("link", { name: /Whole book view/i })).toHaveAttribute(
       "href",
@@ -109,6 +113,7 @@ describe("ReaderPageContent", () => {
       }
     });
 
+    expect(screen.getByText("King James")).toBeInTheDocument();
     expect(screen.getByText("In the beginning God created the heaven and the earth.")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Whole book view/i })).toHaveAttribute(
       "href",

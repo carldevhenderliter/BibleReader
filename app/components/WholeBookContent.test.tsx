@@ -83,7 +83,11 @@ describe("WholeBookContent", () => {
       />
     );
 
-    expect(screen.getByRole("heading", { name: "Jude" })).toBeInTheDocument();
+    expect(screen.getByText("World English")).toBeInTheDocument();
+    expect(screen.getAllByText(/^Jude$/).length).toBeGreaterThan(0);
+    expect(document.querySelector(".reader-toolbar-meta")).toHaveTextContent("2 chapters");
+    expect(screen.getAllByText("Continuous reading").length).toBeGreaterThan(0);
+    expect(screen.queryByRole("heading", { name: "Jude" })).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Chapter 1" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Chapter 2" })).toBeInTheDocument();
     expect(screen.getByText("Mercy to you and peace and love be multiplied.")).toBeInTheDocument();
@@ -107,6 +111,7 @@ describe("WholeBookContent", () => {
       }
     });
 
+    expect(screen.getByText("King James")).toBeInTheDocument();
     expect(screen.getByText("Mercy unto you, and peace, and love, be multiplied.")).toBeInTheDocument();
   });
 

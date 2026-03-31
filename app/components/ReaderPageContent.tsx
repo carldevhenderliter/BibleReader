@@ -17,7 +17,7 @@ import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { VerseList } from "@/app/components/VerseList";
 import type { BookMeta, BundledBibleVersion, Chapter } from "@/lib/bible/types";
-import { getBibleVersionBadge, getBibleVersionLabel } from "@/lib/bible/version";
+import { getBibleVersionBadge } from "@/lib/bible/version";
 
 function parsePositiveNumber(value: string | null) {
   if (!value || !/^\d+$/.test(value)) {
@@ -58,7 +58,6 @@ export function ReaderPageContent({
   } = useReaderWorkspace();
   const chapter = chaptersByVersion[version];
   const showStrongs = version === "kjv" && settings.showStrongs;
-  const versionLabel = getBibleVersionLabel(version);
   const versionBadge = getBibleVersionBadge(version);
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
@@ -106,8 +105,17 @@ export function ReaderPageContent({
         <div className="reader-topline">
           <div className="reader-toolbar">
             <div className="reader-toolbar-copy">
-              <p className="reader-toolbar-label">{book.testament} Testament</p>
-              <p className="reader-toolbar-summary">{versionLabel}</p>
+              <p className="reader-toolbar-summary">{versionBadge}</p>
+              <p className="reader-toolbar-title">
+                {book.name} {chapter.chapterNumber}
+              </p>
+              <p className="reader-toolbar-meta">
+                {chapter.verses.length} verses
+                <span className="reader-meta-separator" aria-hidden="true">
+                  ·
+                </span>
+                Chapter view
+              </p>
             </div>
             <div className="reader-toolbar-actions">
               <ReaderControls
@@ -131,19 +139,6 @@ export function ReaderPageContent({
               ) : null}
             </div>
           </div>
-          <header className="reader-heading">
-            <p className="reader-section-label">{versionBadge}</p>
-            <h1>
-              {book.name} {chapter.chapterNumber}
-            </h1>
-            <p className="reader-meta">
-              {chapter.verses.length} verses
-              <span className="reader-meta-separator" aria-hidden="true">
-                ·
-              </span>
-              Chapter view
-            </p>
-          </header>
         </div>
         <ReaderContentTabs />
         {activeReaderPane === "study-sets" ? (
