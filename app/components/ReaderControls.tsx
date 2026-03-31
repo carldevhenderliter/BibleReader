@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useRouter } from "next/navigation";
 
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
@@ -12,10 +13,17 @@ type ReaderControlsProps = {
   books: BookMeta[];
   book: BookMeta;
   currentChapter: number;
+  trailingActions?: ReactNode;
   view: ReadingView;
 };
 
-export function ReaderControls({ books, book, currentChapter, view }: ReaderControlsProps) {
+export function ReaderControls({
+  books,
+  book,
+  currentChapter,
+  trailingActions,
+  view
+}: ReaderControlsProps) {
   const router = useRouter();
   const { isPanelOpen, setIsPanelOpen } = useReaderCustomization();
   const { version } = useReaderVersion();
@@ -48,15 +56,6 @@ export function ReaderControls({ books, book, currentChapter, view }: ReaderCont
   return (
     <section className="reader-controls" aria-label="Passage controls">
       <div className="reader-controls-bar">
-        <div className="reader-passage-summary">
-          <p className="reader-passage-kicker">
-            {view === "book" ? "Continuous reading" : "Chapter view"}
-          </p>
-          <p className="reader-passage-title">
-            {book.name}
-            {view === "chapter" ? ` ${currentChapter}` : ""}
-          </p>
-        </div>
         <div className="reader-controls-primary">
           <div className="control-group control-group-compact">
             <label className="sr-only" htmlFor="book-select">
@@ -92,6 +91,8 @@ export function ReaderControls({ books, book, currentChapter, view }: ReaderCont
               ))}
             </select>
           </div>
+        </div>
+        <div className="reader-controls-actions">
           <button
             aria-controls="reader-settings-panel"
             aria-expanded={isPanelOpen}
@@ -101,6 +102,7 @@ export function ReaderControls({ books, book, currentChapter, view }: ReaderCont
           >
             Menu
           </button>
+          {trailingActions}
         </div>
       </div>
     </section>

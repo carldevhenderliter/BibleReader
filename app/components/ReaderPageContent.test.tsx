@@ -83,7 +83,8 @@ describe("ReaderPageContent", () => {
     expect(screen.getByText("World English")).toBeInTheDocument();
     expect(screen.getAllByText("Genesis 1").length).toBeGreaterThan(0);
     expect(document.querySelector(".reader-toolbar-meta")).toHaveTextContent("2 verses");
-    expect(screen.getAllByText("Chapter view").length).toBeGreaterThan(0);
+    expect(document.querySelector(".reader-toolbar-meta")).toHaveTextContent("Chapter view");
+    expect(screen.queryByText(/^CONTINUOUS READING$/i)).not.toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Genesis 1" })).not.toBeInTheDocument();
     expect(screen.getByText("In the beginning, God created the heavens and the earth.")).toBeInTheDocument();
     expect(screen.getAllByText("World English").length).toBeGreaterThan(0);

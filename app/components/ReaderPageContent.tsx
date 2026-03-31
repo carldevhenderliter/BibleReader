@@ -124,21 +124,21 @@ export function ReaderPageContent({
                 book={book}
                 books={books}
                 currentChapter={chapter.chapterNumber}
+                trailingActions={
+                  isSplitViewActive ? (
+                    <button
+                      aria-label="Hide reader pane"
+                      className="split-pane-hide-button reader-pane-hide-button"
+                      disabled={!canCollapseSplitPane("reader")}
+                      onClick={() => collapseSplitPane("reader")}
+                      type="button"
+                    >
+                      Hide
+                    </button>
+                  ) : null
+                }
                 view="chapter"
               />
-              {isSplitViewActive ? (
-                <div className="reader-toolbar-utilities">
-                  <button
-                    aria-label="Hide reader pane"
-                    className="split-pane-hide-button reader-pane-hide-button"
-                    disabled={!canCollapseSplitPane("reader")}
-                    onClick={() => collapseSplitPane("reader")}
-                    type="button"
-                  >
-                    Hide
-                  </button>
-                </div>
-              ) : null}
             </div>
           </div>
         </div>

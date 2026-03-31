@@ -86,7 +86,7 @@ describe("WholeBookContent", () => {
     expect(screen.getByText("World English")).toBeInTheDocument();
     expect(screen.getAllByText(/^Jude$/).length).toBeGreaterThan(0);
     expect(document.querySelector(".reader-toolbar-meta")).toHaveTextContent("2 chapters");
-    expect(screen.getAllByText("Continuous reading").length).toBeGreaterThan(0);
+    expect(document.querySelector(".reader-toolbar-meta")).toHaveTextContent("Continuous reading");
     expect(screen.queryByRole("heading", { name: "Jude" })).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Chapter 1" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Chapter 2" })).toBeInTheDocument();
