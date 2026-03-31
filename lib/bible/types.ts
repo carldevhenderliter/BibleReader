@@ -309,6 +309,8 @@ export type BibleSearchResultGroup = {
 
 export type SearchMatchMode = "partial" | "complete";
 
+export type SearchScope = "all" | "old-testament" | "new-testament" | `book:${string}`;
+
 export type LocalBibleAiStatus = "disabled" | "downloading" | "ready" | "generating" | "error";
 
 export type LocalBibleAiSource = {

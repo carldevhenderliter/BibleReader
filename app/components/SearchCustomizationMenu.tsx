@@ -2,12 +2,18 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 
+import books from "@/data/bible/versions/web/books.json";
+import { useLookup } from "@/app/components/LookupProvider";
 import { SearchCustomizationControls } from "@/app/components/SearchCustomizationControls";
+import type { BookMeta, SearchScope } from "@/lib/bible/types";
+
+const orderedBooks = (books as BookMeta[]).slice().sort((left, right) => left.order - right.order);
 
 export function SearchCustomizationMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const panelId = useId();
   const menuRef = useRef<HTMLDivElement | null>(null);
+  const { searchScope, setSearchScope } = useLookup();
 
   useEffect(() => {
     if (!isOpen) {
@@ -72,6 +78,29 @@ export function SearchCustomizationMenu() {
           id={panelId}
           role="dialog"
         >
+          <div className="search-settings-section">
+            <label className="search-customization-field search-scope-field">
+              <span>Scope</span>
+              <select
+                aria-label="Search scope"
+                onChange={(event) => {
+                  setSearchScope(event.target.value as SearchScope);
+                }}
+                value={searchScope}
+              >
+                <option value="all">All Scripture</option>
+                <option value="old-testament">Old Testament</option>
+                <option value="new-testament">New Testament</option>
+                <optgroup label="Books">
+                  {orderedBooks.map((book) => (
+                    <option key={book.slug} value={`book:${book.slug}`}>
+                      {book.name}
+                    </option>
+                  ))}
+                </optgroup>
+              </select>
+            </label>
+          </div>
           <SearchCustomizationControls />
         </div>
       ) : null}

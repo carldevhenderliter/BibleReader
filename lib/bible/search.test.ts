@@ -95,6 +95,41 @@ describe("Bible search", () => {
     expect(kjvResults.some((result) => result.type === "verse")).toBe(true);
   });
 
+  it("limits search results to the old testament scope", async () => {
+    const results = await searchBible("light", "web", "partial", undefined, "old-testament");
+
+    expect(
+      results.some(
+        (result) =>
+          result.type === "verse" &&
+          result.bookSlug === "genesis" &&
+          result.chapterNumber === 1 &&
+          result.verseNumber === 3
+      )
+    ).toBe(true);
+    expect(results.some((result) => "bookSlug" in result && result.bookSlug === "john")).toBe(false);
+  });
+
+  it("limits search results to the new testament scope", async () => {
+    const results = await searchBible("light", "web", "partial", undefined, "new-testament");
+
+    expect(results.some((result) => "bookSlug" in result && result.bookSlug === "matthew")).toBe(true);
+    expect(results.some((result) => "bookSlug" in result && result.bookSlug === "genesis")).toBe(false);
+  });
+
+  it("limits search results to a specific book scope", async () => {
+    const results = await searchBible("god", "web", "partial", undefined, "book:john");
+
+    expect(results.some((result) => result.type === "verse" && result.bookSlug === "john")).toBe(true);
+    expect(results.every((result) => !("bookSlug" in result) || result.bookSlug === "john")).toBe(true);
+  });
+
+  it("filters direct references outside the selected scope", async () => {
+    const results = await searchBible("Genesis 1:1", "web", "partial", undefined, "new-testament");
+
+    expect(results).toEqual([]);
+  });
+
   it("includes KJV token metadata on word-search verse hits", async () => {
     const results = await searchBible("beginning", "kjv");
     const verseResult = results.find(

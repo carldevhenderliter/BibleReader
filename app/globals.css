@@ -1775,6 +1775,20 @@ select {
   backdrop-filter: blur(16px);
 }
 
+.search-settings-section {
+  display: grid;
+  gap: 0.55rem;
+  margin-bottom: 0.7rem;
+}
+
+.search-scope-field {
+  width: 100%;
+}
+
+.search-scope-field select {
+  width: 100%;
+}
+
 .search-customization-stepper,
 .search-density-toggle {
   display: inline-flex;

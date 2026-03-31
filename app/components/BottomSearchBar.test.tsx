@@ -119,6 +119,7 @@ describe("BottomSearchBar", () => {
     );
     fireEvent.click(screen.getByRole("button", { name: "Search settings" }));
     expect(screen.getByRole("dialog", { name: "Search settings menu" })).toBeInTheDocument();
+    expect(screen.getByRole("combobox", { name: "Search scope" })).toHaveValue("all");
     expect(screen.getByRole("button", { name: "Increase search text size" })).toBeInTheDocument();
     expect(screen.getByRole("combobox", { name: "Search line height" })).toBeInTheDocument();
     expect(screen.getByRole("combobox", { name: "Search body font" })).toBeInTheDocument();
@@ -279,6 +280,28 @@ describe("BottomSearchBar", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Show Strongs" }));
     expect(screen.getAllByText("H7225").length).toBeGreaterThan(0);
+  });
+
+  it("filters search results by the selected testament scope", async () => {
+    renderSearchUi();
+
+    fireEvent.focus(screen.getByLabelText(SEARCH_INPUT_LABEL));
+    fireEvent.click(screen.getByRole("button", { name: "Search settings" }));
+    fireEvent.change(screen.getByRole("combobox", { name: "Search scope" }), {
+      target: { value: "new-testament" }
+    });
+
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
+      target: { value: "light" }
+    });
+
+    await waitForElementToBeRemoved(
+      () => screen.queryByText("Searching scripture…"),
+      { timeout: 10000 }
+    );
+
+    expect(screen.getByRole("button", { name: /Verse Matthew 4:16/i })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Verse Genesis 1:3/i })).not.toBeInTheDocument();
   });
 
   it("renders grouped results for comma-separated searches on mobile", async () => {
