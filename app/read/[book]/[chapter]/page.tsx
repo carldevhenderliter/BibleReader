@@ -9,7 +9,23 @@ type ReaderChapterPageProps = {
     book: string;
     chapter: string;
   }>;
+  searchParams?: Promise<{
+    highlight?: string | string[];
+    highlightStart?: string | string[];
+    highlightEnd?: string | string[];
+  }>;
 };
+
+function parsePositiveNumber(value: string | string[] | undefined) {
+  const normalizedValue = Array.isArray(value) ? value[0] : value;
+
+  if (!normalizedValue || !/^\d+$/.test(normalizedValue)) {
+    return null;
+  }
+
+  const numericValue = Number(normalizedValue);
+  return numericValue > 0 ? numericValue : null;
+}
 
 export const dynamicParams = false;
 
@@ -24,9 +40,22 @@ export async function generateStaticParams() {
   );
 }
 
-export default async function ReaderChapterPage({ params }: ReaderChapterPageProps) {
+export default async function ReaderChapterPage({ params, searchParams }: ReaderChapterPageProps) {
   const { book: bookSlug, chapter: chapterParam } = await params;
+  const resolvedSearchParams = (await searchParams) ?? {};
   const chapterNumber = parseChapterParam(chapterParam);
+  const highlightedVerseNumber = parsePositiveNumber(resolvedSearchParams.highlight);
+  const highlightedRangeStart = parsePositiveNumber(resolvedSearchParams.highlightStart);
+  const highlightedRangeEnd = parsePositiveNumber(resolvedSearchParams.highlightEnd);
+  const highlightedVerseRange =
+    highlightedRangeStart !== null &&
+    highlightedRangeEnd !== null &&
+    highlightedRangeEnd >= highlightedRangeStart
+      ? {
+          start: highlightedRangeStart,
+          end: highlightedRangeEnd
+        }
+      : null;
 
   if (!chapterNumber) {
     notFound();
@@ -51,6 +80,8 @@ export default async function ReaderChapterPage({ params }: ReaderChapterPagePro
         web: webChapter,
         kjv: kjvChapter
       }}
+      highlightedVerseNumber={highlightedVerseRange ? null : highlightedVerseNumber}
+      highlightedVerseRange={highlightedVerseRange}
     />
   );
 }

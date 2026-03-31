@@ -373,13 +373,12 @@ describe("ReaderPageContent", () => {
   });
 
   it("reads verse range highlights from the search URL params", async () => {
-    window.history.replaceState({}, "", "/read/genesis/1?highlightStart=1&highlightEnd=2");
-
     renderWithReaderCustomization(
       <ReaderPageContent
         book={books[0]}
         books={books}
         chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+        highlightedVerseRange={{ start: 1, end: 2 }}
       />
     );
 
@@ -390,7 +389,6 @@ describe("ReaderPageContent", () => {
           .closest(".verse-row")
       ).toHaveClass("is-highlighted");
     });
-
     expect(screen.getByText("The earth was formless and empty.").closest(".verse-row")).toHaveClass(
       "is-highlighted"
     );

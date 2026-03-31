@@ -1,6 +1,5 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
@@ -19,23 +18,28 @@ import { VerseList } from "@/app/components/VerseList";
 import type { BookMeta, BundledBibleVersion, Chapter } from "@/lib/bible/types";
 import { getBibleVersionBadge, getBibleVersionLabel } from "@/lib/bible/version";
 
-function parsePositiveNumber(value: string | null) {
-  if (!value || !/^\d+$/.test(value)) {
-    return null;
-  }
-
-  const parsedValue = Number(value);
-  return parsedValue > 0 ? parsedValue : null;
-}
-
 type WholeBookContentProps = {
   books: BookMeta[];
   book: BookMeta;
   chaptersByVersion: Record<BundledBibleVersion, Chapter[]>;
+  focusedChapterNumber?: number | null;
+  highlightedChapterNumber?: number | null;
+  highlightedVerseNumber?: number | null;
+  highlightedVerseRange?: {
+    start: number;
+    end: number;
+  } | null;
 };
 
-export function WholeBookContent({ books, book, chaptersByVersion }: WholeBookContentProps) {
-  const searchParams = useSearchParams();
+export function WholeBookContent({
+  books,
+  book,
+  chaptersByVersion,
+  focusedChapterNumber = null,
+  highlightedChapterNumber = null,
+  highlightedVerseNumber = null,
+  highlightedVerseRange = null
+}: WholeBookContentProps) {
   const { version } = useReaderVersion();
   const { settings } = useReaderCustomization();
   const { canCollapseSplitPane, collapseSplitPane, isSplitViewActive } = useLookup();
@@ -51,28 +55,12 @@ export function WholeBookContent({ books, book, chaptersByVersion }: WholeBookCo
   const versionBadge = getBibleVersionBadge(version);
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
-  const chapterParam = parsePositiveNumber(searchParams.get("chapter"));
-  const highlightedChapterNumber = parsePositiveNumber(searchParams.get("highlightChapter"));
-  const highlightedVerseNumber = parsePositiveNumber(searchParams.get("highlight"));
-  const highlightedRangeStart = parsePositiveNumber(searchParams.get("highlightStart"));
-  const highlightedRangeEnd = parsePositiveNumber(searchParams.get("highlightEnd"));
-  const highlightedVerseRange =
-    highlightedRangeStart !== null &&
-    highlightedRangeEnd !== null &&
-    highlightedRangeEnd >= highlightedRangeStart
-      ? {
-          start: highlightedRangeStart,
-          end: highlightedRangeEnd
-        }
-      : null;
-  const focusedChapterNumber =
-    highlightedChapterNumber && highlightedChapterNumber <= book.chapterCount
-      ? highlightedChapterNumber
-      : chapterParam && chapterParam <= book.chapterCount
-        ? chapterParam
-        : 1;
+  const activeFocusedChapterNumber =
+    focusedChapterNumber && focusedChapterNumber <= book.chapterCount ? focusedChapterNumber : 1;
   const focusedChapter =
-    chapters.find((chapter) => chapter.chapterNumber === focusedChapterNumber) ?? chapters[0] ?? null;
+    chapters.find((chapter) => chapter.chapterNumber === activeFocusedChapterNumber) ??
+    chapters[0] ??
+    null;
 
   useEffect(() => {
     syncCurrentChapterData(book.slug, focusedChapter?.chapterNumber ?? 1, null);
@@ -92,13 +80,13 @@ export function WholeBookContent({ books, book, chaptersByVersion }: WholeBookCo
   ]);
 
   useEffect(() => {
-    if (!chapterParam || chapterParam > book.chapterCount) {
+    if (!activeFocusedChapterNumber || activeFocusedChapterNumber > book.chapterCount) {
       return;
     }
 
-    const element = document.getElementById(`chapter-${book.slug}-${chapterParam}`);
+    const element = document.getElementById(`chapter-${book.slug}-${activeFocusedChapterNumber}`);
     element?.scrollIntoView?.({ block: "start" });
-  }, [book.chapterCount, book.slug, chapterParam]);
+  }, [activeFocusedChapterNumber, book.chapterCount, book.slug]);
 
   return (
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">

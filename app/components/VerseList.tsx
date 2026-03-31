@@ -1,6 +1,5 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { StrongsPopover } from "@/app/components/StrongsPopover";
@@ -29,8 +28,6 @@ export function VerseList({
   showStrongs = false,
   verses
 }: VerseListProps) {
-  const searchParams = useSearchParams();
-  const searchParamsValue = searchParams.toString();
   const { version } = useReaderVersion();
   const {
     cycleHighlight,
@@ -43,73 +40,13 @@ export function VerseList({
     updateBookmarkLabel,
     updateHighlightLabel
   } = useReaderWorkspace();
-  const [urlHighlightedVerseNumber, setUrlHighlightedVerseNumber] = useState<number | null>(null);
-  const [urlHighlightedVerseRange, setUrlHighlightedVerseRange] = useState<{
-    start: number;
-    end: number;
-  } | null>(null);
-  const activeHighlightedVerseNumber =
-    highlightedVerseNumber !== undefined ? highlightedVerseNumber : urlHighlightedVerseNumber;
-  const activeHighlightedVerseRange =
-    highlightedVerseRange !== undefined ? highlightedVerseRange : urlHighlightedVerseRange;
+  const activeHighlightedVerseNumber = highlightedVerseNumber ?? null;
+  const activeHighlightedVerseRange = highlightedVerseRange ?? null;
   const [activeStrongsToken, setActiveStrongsToken] = useState<{
     rect: DOMRect;
     strongsNumbers: string[];
     text: string;
   } | null>(null);
-
-  useEffect(() => {
-    if (highlightedVerseNumber !== undefined || highlightedVerseRange !== undefined) {
-      return;
-    }
-
-    const nextSearchParams = new URLSearchParams(searchParamsValue);
-    const highlightedChapterValue = nextSearchParams.get("highlightChapter");
-
-    if (
-      highlightedChapterValue &&
-      /^\d+$/.test(highlightedChapterValue) &&
-      Number(highlightedChapterValue) !== chapterNumber
-    ) {
-      setUrlHighlightedVerseRange(null);
-      setUrlHighlightedVerseNumber(null);
-      return;
-    }
-
-    const rangeStartValue = nextSearchParams.get("highlightStart");
-    const rangeEndValue = nextSearchParams.get("highlightEnd");
-
-    if (
-      rangeStartValue &&
-      rangeEndValue &&
-      /^\d+$/.test(rangeStartValue) &&
-      /^\d+$/.test(rangeEndValue)
-    ) {
-      const startVerseNumber = Number(rangeStartValue);
-      const endVerseNumber = Number(rangeEndValue);
-
-      if (startVerseNumber > 0 && endVerseNumber >= startVerseNumber) {
-        setUrlHighlightedVerseRange({
-          start: startVerseNumber,
-          end: endVerseNumber
-        });
-        setUrlHighlightedVerseNumber(null);
-        return;
-      }
-    }
-
-    setUrlHighlightedVerseRange(null);
-
-    const value = nextSearchParams.get("highlight");
-
-    if (!value || !/^\d+$/.test(value)) {
-      setUrlHighlightedVerseNumber(null);
-      return;
-    }
-
-    const verseNumber = Number(value);
-    setUrlHighlightedVerseNumber(verseNumber > 0 ? verseNumber : null);
-  }, [chapterNumber, highlightedVerseNumber, highlightedVerseRange, searchParamsValue]);
 
   useEffect(() => {
     const scrollTargetVerseNumber =

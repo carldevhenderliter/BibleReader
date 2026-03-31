@@ -156,13 +156,15 @@ describe("WholeBookContent", () => {
       configurable: true,
       value: scrollIntoView
     });
-    window.history.replaceState({}, "", "/read/jude?highlightChapter=2&highlight=1");
 
     const { container } = renderWithReaderCustomization(
       <WholeBookContent
         book={books[0]}
         books={books}
         chaptersByVersion={{ web: chapters, kjv: kjvChapters }}
+        focusedChapterNumber={2}
+        highlightedChapterNumber={2}
+        highlightedVerseNumber={1}
       />
     );
 

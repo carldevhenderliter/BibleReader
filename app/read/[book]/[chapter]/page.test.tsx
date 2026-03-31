@@ -69,12 +69,13 @@ describe("ReaderChapterPage", () => {
       verses: [{ number: 1, text: "In the beginning, God created the heavens and the earth." }]
     });
 
-    window.history.replaceState({}, "", "/read/genesis/1?highlight=1");
-
     const element = await ReaderChapterPage({
       params: Promise.resolve({
         book: "genesis",
         chapter: "1"
+      }),
+      searchParams: Promise.resolve({
+        highlight: "1"
       })
     });
 
