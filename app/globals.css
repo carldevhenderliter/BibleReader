@@ -1314,10 +1314,11 @@ select {
   width: min(27.5rem, calc(100vw - 2rem));
   max-height: min(82vh, 43rem);
   padding: 0.85rem 0.85rem 0.9rem;
-  border: 1px solid var(--reader-border);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 1.35rem;
-  background: linear-gradient(180deg, rgba(11, 19, 34, 0.96), rgba(4, 9, 17, 0.98));
-  box-shadow: var(--shadow), var(--reader-glow);
+  background: linear-gradient(180deg, rgba(23, 28, 35, 0.98), rgba(10, 14, 19, 0.98));
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.34);
+  backdrop-filter: blur(16px);
   overflow-y: auto;
   transform: translateX(calc(100% + 1rem));
   transition: transform 220ms ease;
@@ -1339,6 +1340,8 @@ select {
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: start;
   margin-bottom: 0.7rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .reader-settings-header .eyebrow {
@@ -1355,14 +1358,15 @@ select {
 }
 
 .reader-settings-section {
-  margin-bottom: 0.75rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid rgba(120, 157, 214, 0.12);
+  margin-bottom: 0.65rem;
+  padding: 0.78rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .reader-settings-section:first-of-type {
-  padding-top: 0;
-  border-top: none;
+  padding-top: 0.78rem;
 }
 
 .reader-settings-section-header h3,
@@ -1383,6 +1387,24 @@ select {
   font-size: 0.86rem;
 }
 
+.reader-settings-subsection {
+  display: grid;
+  gap: 0.48rem;
+  padding: 0.62rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 0.92rem;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.reader-settings-subsection-label {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.69rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
 .settings-option-grid {
   display: grid;
   gap: 0.5rem;
@@ -1398,24 +1420,30 @@ select {
   width: 100%;
   padding: 0.72rem 0.76rem;
   text-align: left;
-  border: 1px solid var(--reader-border);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 0.92rem;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.035);
   color: var(--text);
   transition:
     transform 180ms ease,
     border-color 180ms ease,
+    background-color 180ms ease,
     box-shadow 180ms ease;
 }
 
 .settings-option-card.is-active {
-  border-color: var(--reader-accent);
-  box-shadow: var(--reader-glow);
+  border-color: rgba(var(--reader-accent-rgb), 0.28);
+  background: rgba(var(--reader-accent-rgb), 0.1);
+  box-shadow: inset 0 0 0 1px rgba(var(--reader-accent-rgb), 0.12);
 }
 
 .settings-slider {
   display: grid;
   gap: 0.28rem;
+  padding: 0.62rem 0.68rem;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 0.88rem;
+  background: rgba(255, 255, 255, 0.025);
 }
 
 .settings-slider input[type="range"] {
@@ -1425,10 +1453,12 @@ select {
 
 .settings-slider strong {
   color: var(--text);
+  font-size: 0.78rem;
 }
 
 .settings-slider-group {
   grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.48rem;
 }
 
 .reader-settings-field-grid {
@@ -1442,22 +1472,37 @@ select {
   gap: 0.3rem;
 }
 
+.reader-settings-field span {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .reader-settings-field select {
+  appearance: none;
   min-height: 2.45rem;
   width: 100%;
-  padding: 0.5rem 0.72rem;
-  border: 1px solid var(--reader-border);
+  padding: 0.5rem 2rem 0.5rem 0.72rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 0.88rem;
-  background: rgba(255, 255, 255, 0.04);
+  background:
+    linear-gradient(45deg, transparent 50%, rgba(255, 255, 255, 0.6) 50%) calc(100% - 1rem)
+      calc(50% - 0.12rem) / 0.34rem 0.34rem no-repeat,
+    linear-gradient(135deg, rgba(255, 255, 255, 0.6) 50%, transparent 50%) calc(100% - 0.8rem)
+      calc(50% - 0.12rem) / 0.34rem 0.34rem no-repeat,
+    rgba(255, 255, 255, 0.04);
   color: var(--text);
   outline: none;
 }
 
 .reader-settings-shortcuts {
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 0.5rem;
   flex-wrap: wrap;
+  max-width: 100%;
 }
 
 .reader-settings-panel .reader-inline-button,
@@ -1465,22 +1510,44 @@ select {
 .reader-settings-panel .reader-controls-status {
   min-height: 2.1rem;
   padding: 0.42rem 0.68rem;
-  font-size: 0.86rem;
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.8rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
 }
 
 .reader-settings-panel .reader-controls-status {
+  min-width: 3.7rem;
   font-size: 0.68rem;
   letter-spacing: 0.06em;
+  justify-content: center;
+  text-align: center;
 }
 
 .reader-settings-panel .reader-size-controls {
   gap: 0.28rem;
+  padding: 0.22rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.035);
 }
 
 .reader-settings-link {
   min-width: 0;
   flex: 0 0 auto;
-  border-radius: 0.9rem;
+  border-radius: 999px;
+}
+
+.reader-settings-panel .reader-inline-button:hover,
+.reader-settings-panel .reader-inline-button:focus-visible,
+.reader-settings-panel .reader-inline-action:hover,
+.reader-settings-panel .reader-inline-action:focus-visible {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.96);
+  outline: none;
 }
 
 .pagination-empty {
