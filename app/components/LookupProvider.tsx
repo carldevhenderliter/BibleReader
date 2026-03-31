@@ -129,8 +129,12 @@ function normalizeShowStrongsInSearch(value: string | null) {
 }
 
 function normalizeSearchScope(value: string | null): SearchScope {
-  if (!value || value === "all" || value === "old-testament" || value === "new-testament") {
-    return value ?? "all";
+  if (!value) {
+    return "all";
+  }
+
+  if (value === "all" || value === "old-testament" || value === "new-testament") {
+    return value;
   }
 
   if (value.startsWith("book:")) {
