@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 
 const REVEAL_AT_TOP_SCROLL_Y = 24;
-const HIDE_SCROLL_Y = 96;
-const SCROLL_DELTA_THRESHOLD = 8;
+const HIDE_SCROLL_Y = 72;
+const HIDE_DISTANCE_THRESHOLD = 20;
+const SHOW_DISTANCE_THRESHOLD = 12;
 
 export function useReaderToplineVisibility(forceVisible = false) {
   const [isVisible, setIsVisible] = useState(true);
@@ -16,6 +17,8 @@ export function useReaderToplineVisibility(forceVisible = false) {
     }
 
     let lastScrollY = window.scrollY;
+    let accumulatedDownwardDistance = 0;
+    let accumulatedUpwardDistance = 0;
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -23,10 +26,24 @@ export function useReaderToplineVisibility(forceVisible = false) {
 
       if (currentScrollY <= REVEAL_AT_TOP_SCROLL_Y) {
         setIsVisible(true);
-      } else if (delta > SCROLL_DELTA_THRESHOLD && currentScrollY > HIDE_SCROLL_Y) {
-        setIsVisible(false);
-      } else if (delta < -SCROLL_DELTA_THRESHOLD) {
-        setIsVisible(true);
+        accumulatedDownwardDistance = 0;
+        accumulatedUpwardDistance = 0;
+      } else if (delta > 0) {
+        accumulatedDownwardDistance += delta;
+        accumulatedUpwardDistance = 0;
+
+        if (currentScrollY > HIDE_SCROLL_Y && accumulatedDownwardDistance >= HIDE_DISTANCE_THRESHOLD) {
+          setIsVisible(false);
+          accumulatedDownwardDistance = 0;
+        }
+      } else if (delta < 0) {
+        accumulatedUpwardDistance += Math.abs(delta);
+        accumulatedDownwardDistance = 0;
+
+        if (accumulatedUpwardDistance >= SHOW_DISTANCE_THRESHOLD) {
+          setIsVisible(true);
+          accumulatedUpwardDistance = 0;
+        }
       }
 
       lastScrollY = currentScrollY;

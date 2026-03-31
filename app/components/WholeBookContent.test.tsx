@@ -204,4 +204,34 @@ describe("WholeBookContent", () => {
     fireEvent.scroll(window);
     expect(topline).not.toHaveClass("is-hidden");
   });
+
+  it("hides the whole-book reader topline after slow downward scrolling", () => {
+    Object.defineProperty(window, "scrollY", {
+      configurable: true,
+      writable: true,
+      value: 0
+    });
+
+    const { container } = renderWithReaderCustomization(
+      <WholeBookContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapters, kjv: kjvChapters }}
+      />
+    );
+
+    const topline = container.querySelector(".reader-topline");
+
+    window.scrollY = 42;
+    fireEvent.scroll(window);
+    expect(topline).not.toHaveClass("is-hidden");
+
+    window.scrollY = 60;
+    fireEvent.scroll(window);
+    expect(topline).not.toHaveClass("is-hidden");
+
+    window.scrollY = 78;
+    fireEvent.scroll(window);
+    expect(topline).toHaveClass("is-hidden");
+  });
 });

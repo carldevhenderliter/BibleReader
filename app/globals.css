@@ -626,22 +626,15 @@ select {
       rgba(18, 20, 24, 0)
     );
   backdrop-filter: blur(12px);
-  overflow: hidden;
-  max-height: 18rem;
+  will-change: transform, opacity;
   transition:
-    max-height 220ms ease,
-    margin-bottom 220ms ease,
-    padding-bottom 220ms ease,
     opacity 180ms ease,
     transform 220ms ease;
 }
 
 .reader-topline.is-hidden {
-  max-height: 0;
-  margin-bottom: 0;
-  padding-bottom: 0;
   opacity: 0;
-  transform: translateY(-0.85rem);
+  transform: translateY(calc(-100% - 0.55rem));
   pointer-events: none;
 }
 
