@@ -31,6 +31,7 @@ const SPLIT_COLLAPSED_PANES_STORAGE_KEY = "bible-reader.split-collapsed-panes";
 const APP_LAYOUT_MAX_WIDTH_REM = 103.25;
 const SEARCH_SHELL_VIEWPORT_MARGIN_REM = 2.7;
 const NON_READER_MAX_VIEWPORT_RATIO = 0.75;
+const MIN_SPLIT_PANE_WIDTH_RATIO = 1 / 3;
 const SPLIT_PANE_DIVIDER_WIDTH_REM = 0.875;
 const SPLIT_PANE_RAIL_WIDTH_REM = 3;
 const MIN_READER_PANE_WIDTH_REM = 12;
@@ -207,11 +208,37 @@ export function LookupProvider({ children }: PropsWithChildren) {
     () => Math.min(APP_LAYOUT_MAX_WIDTH_REM, Math.max(0, viewportWidthRem - SEARCH_SHELL_VIEWPORT_MARGIN_REM)),
     [viewportWidthRem]
   );
+  const availablePaneWidthRem = useMemo(
+    () =>
+      Math.max(
+        0,
+        contentWidthRem - dockWidthRem - visibleDividerCount * SPLIT_PANE_DIVIDER_WIDTH_REM
+      ),
+    [contentWidthRem, dockWidthRem, visibleDividerCount]
+  );
+  const minimumReaderWidthRem = useMemo(
+    () =>
+      readerVisible
+        ? Math.max(MIN_READER_PANE_WIDTH_REM, availablePaneWidthRem * MIN_SPLIT_PANE_WIDTH_RATIO)
+        : 0,
+    [availablePaneWidthRem, readerVisible]
+  );
+  const minimumSearchWidthRem = useMemo(
+    () =>
+      searchVisible
+        ? Math.max(MIN_SEARCH_PANE_WIDTH_REM, availablePaneWidthRem * MIN_SPLIT_PANE_WIDTH_RATIO)
+        : 0,
+    [availablePaneWidthRem, searchVisible]
+  );
+  const minimumStudyWidthRem = useMemo(
+    () =>
+      studyVisible
+        ? Math.max(MIN_STUDY_PANE_WIDTH_REM, availablePaneWidthRem * MIN_SPLIT_PANE_WIDTH_RATIO)
+        : 0,
+    [availablePaneWidthRem, studyVisible]
+  );
   const maximumNonReaderWidthRem = useMemo(() => {
-    const minimumReaderWidthRem = readerVisible ? MIN_READER_PANE_WIDTH_REM : 0;
-    const minimumSideWidthRem =
-      (searchVisible ? MIN_SEARCH_PANE_WIDTH_REM : 0) +
-      (studyVisible ? MIN_STUDY_PANE_WIDTH_REM : 0);
+    const minimumSideWidthRem = minimumSearchWidthRem + minimumStudyWidthRem;
     const widthCapFromViewport = viewportWidthRem * NON_READER_MAX_VIEWPORT_RATIO;
     const widthCapFromLayout = Math.max(
       minimumSideWidthRem,
@@ -219,7 +246,15 @@ export function LookupProvider({ children }: PropsWithChildren) {
     );
 
     return Math.max(minimumSideWidthRem, Math.min(widthCapFromViewport, widthCapFromLayout));
-  }, [contentWidthRem, dockWidthRem, readerVisible, searchVisible, studyVisible, viewportWidthRem, visibleDividerCount]);
+  }, [
+    contentWidthRem,
+    dockWidthRem,
+    minimumReaderWidthRem,
+    minimumSearchWidthRem,
+    minimumStudyWidthRem,
+    viewportWidthRem,
+    visibleDividerCount
+  ]);
   const automaticSearchPaneWidthRem = useMemo(
     () => DEFAULT_SEARCH_PANE_WIDTH_REM + (queryCount - 1) * SEARCH_PANE_WIDTH_PER_EXTRA_QUERY_REM,
     [queryCount]
@@ -230,14 +265,19 @@ export function LookupProvider({ children }: PropsWithChildren) {
       return 0;
     }
 
-    const minimumSearchWidthRem = searchVisible ? MIN_SEARCH_PANE_WIDTH_REM : 0;
     const maximumStudyWidthRem = Math.max(
-      MIN_STUDY_PANE_WIDTH_REM,
+      minimumStudyWidthRem,
       maximumNonReaderWidthRem - minimumSearchWidthRem
     );
 
-    return clampRange(desiredStudyPaneWidthRem, MIN_STUDY_PANE_WIDTH_REM, maximumStudyWidthRem);
-  }, [desiredStudyPaneWidthRem, maximumNonReaderWidthRem, searchVisible, studyVisible]);
+    return clampRange(desiredStudyPaneWidthRem, minimumStudyWidthRem, maximumStudyWidthRem);
+  }, [
+    desiredStudyPaneWidthRem,
+    maximumNonReaderWidthRem,
+    minimumSearchWidthRem,
+    minimumStudyWidthRem,
+    studyVisible
+  ]);
   const desiredSearchPaneWidthRem = manualSearchPaneWidthRem ?? automaticSearchPaneWidthRem;
   const searchPaneWidthRem = useMemo(() => {
     if (!searchVisible) {
@@ -245,26 +285,40 @@ export function LookupProvider({ children }: PropsWithChildren) {
     }
 
     const maximumSearchWidthRem = Math.max(
-      MIN_SEARCH_PANE_WIDTH_REM,
+      minimumSearchWidthRem,
       maximumNonReaderWidthRem - studyPaneWidthRem
     );
 
-    return clampRange(desiredSearchPaneWidthRem, MIN_SEARCH_PANE_WIDTH_REM, maximumSearchWidthRem);
-  }, [desiredSearchPaneWidthRem, maximumNonReaderWidthRem, searchVisible, studyPaneWidthRem]);
+    return clampRange(desiredSearchPaneWidthRem, minimumSearchWidthRem, maximumSearchWidthRem);
+  }, [
+    desiredSearchPaneWidthRem,
+    maximumNonReaderWidthRem,
+    minimumSearchWidthRem,
+    searchVisible,
+    studyPaneWidthRem
+  ]);
   const readerPaneWidthRem = useMemo(() => {
     if (!readerVisible) {
       return 0;
     }
 
     return Math.max(
-      MIN_READER_PANE_WIDTH_REM,
+      minimumReaderWidthRem,
       contentWidthRem -
         dockWidthRem -
         visibleDividerCount * SPLIT_PANE_DIVIDER_WIDTH_REM -
         searchPaneWidthRem -
         studyPaneWidthRem
     );
-  }, [contentWidthRem, dockWidthRem, readerVisible, searchPaneWidthRem, studyPaneWidthRem, visibleDividerCount]);
+  }, [
+    contentWidthRem,
+    dockWidthRem,
+    minimumReaderWidthRem,
+    readerVisible,
+    searchPaneWidthRem,
+    studyPaneWidthRem,
+    visibleDividerCount
+  ]);
   const searchShellLeftOffsetRem = useMemo(() => {
     if (!searchVisible) {
       return dockWidthRem;

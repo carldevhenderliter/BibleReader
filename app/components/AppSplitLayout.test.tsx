@@ -12,6 +12,19 @@ import { setMockPathname } from "@/test/mocks/next-navigation";
 const SPLIT_SEARCH_WIDTH_STORAGE_KEY = "bible-reader.split-search-width-rem";
 const SPLIT_STUDY_WIDTH_STORAGE_KEY = "bible-reader.split-study-width-rem";
 const SPLIT_COLLAPSED_PANES_STORAGE_KEY = "bible-reader.split-collapsed-panes";
+const APP_LAYOUT_MAX_WIDTH_REM = 103.25;
+const SEARCH_SHELL_VIEWPORT_MARGIN_REM = 2.7;
+const SPLIT_PANE_DIVIDER_WIDTH_REM = 0.875;
+
+function getMinimumVisiblePaneWidthRem(viewportWidth = window.innerWidth) {
+  const viewportWidthRem = viewportWidth / 16;
+  const contentWidthRem = Math.min(
+    APP_LAYOUT_MAX_WIDTH_REM,
+    Math.max(0, viewportWidthRem - SEARCH_SHELL_VIEWPORT_MARGIN_REM)
+  );
+
+  return (contentWidthRem - SPLIT_PANE_DIVIDER_WIDTH_REM * 2) / 3;
+}
 
 function renderSplitLayout() {
   return render(
@@ -136,10 +149,11 @@ describe("AppSplitLayout", () => {
     expect(screen.getByLabelText("Study pane")).toBeInTheDocument();
   });
 
-  it("updates and persists the search pane width when the left divider is dragged", () => {
+  it("does not let the search pane shrink below one third of the split layout", () => {
     const { container } = renderSplitLayout();
     const divider = screen.getByRole("button", { name: "Resize reader and search panes" });
     const layout = container.querySelector(".app-layout");
+    const minimumPaneWidthRem = getMinimumVisiblePaneWidthRem();
 
     fireEvent.pointerDown(divider, { clientX: 1000 });
     act(() => {
@@ -147,14 +161,18 @@ describe("AppSplitLayout", () => {
       window.dispatchEvent(new PointerEvent("pointerup", { clientX: 808 }));
     });
 
-    expect(getVisiblePaneWidths(layout)).toEqual({ search: 26, study: 16 });
-    expect(window.localStorage.getItem(SPLIT_SEARCH_WIDTH_STORAGE_KEY)).toBe("26");
+    expect(getVisiblePaneWidths(layout).search).toBeCloseTo(minimumPaneWidthRem, 1);
+    expect(Number(window.localStorage.getItem(SPLIT_SEARCH_WIDTH_STORAGE_KEY))).toBeCloseTo(
+      minimumPaneWidthRem,
+      1
+    );
   });
 
-  it("updates and persists the study pane width when the right divider is dragged", () => {
+  it("does not let the study pane shrink below one third of the split layout", () => {
     const { container } = renderSplitLayout();
     const divider = screen.getByRole("button", { name: "Resize search and study panes" });
     const layout = container.querySelector(".app-layout");
+    const minimumPaneWidthRem = getMinimumVisiblePaneWidthRem();
 
     fireEvent.pointerDown(divider, { clientX: 1000 });
     act(() => {
@@ -162,20 +180,24 @@ describe("AppSplitLayout", () => {
       window.dispatchEvent(new PointerEvent("pointerup", { clientX: 840 }));
     });
 
-    expect(getVisiblePaneWidths(layout)).toEqual({ search: 14, study: 26 });
-    expect(window.localStorage.getItem(SPLIT_STUDY_WIDTH_STORAGE_KEY)).toBe("26");
+    expect(getVisiblePaneWidths(layout).study).toBeCloseTo(minimumPaneWidthRem, 1);
+    expect(Number(window.localStorage.getItem(SPLIT_STUDY_WIDTH_STORAGE_KEY))).toBeCloseTo(
+      minimumPaneWidthRem,
+      1
+    );
   });
 
   it("restores saved search and study pane widths", async () => {
     window.localStorage.setItem(SPLIT_SEARCH_WIDTH_STORAGE_KEY, "24");
     window.localStorage.setItem(SPLIT_STUDY_WIDTH_STORAGE_KEY, "22");
     const { container } = renderSplitLayout();
+    const minimumPaneWidthRem = getMinimumVisiblePaneWidthRem();
 
     await waitFor(() => {
-      expect(getVisiblePaneWidths(container.querySelector(".app-layout"))).toEqual({
-        search: 24,
-        study: 16
-      });
+      const widths = getVisiblePaneWidths(container.querySelector(".app-layout"));
+
+      expect(widths.search).toBeCloseTo(minimumPaneWidthRem, 1);
+      expect(widths.study).toBeCloseTo(minimumPaneWidthRem, 1);
     });
   });
 
