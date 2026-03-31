@@ -10,6 +10,7 @@ import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
 import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
 import { ReaderStudySetsPanel } from "@/app/components/ReaderStudySetsPanel";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
+import { useLocationSearch } from "@/app/components/useLocationSearch";
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
@@ -17,6 +18,15 @@ import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { VerseList } from "@/app/components/VerseList";
 import type { BookMeta, BundledBibleVersion, Chapter } from "@/lib/bible/types";
 import { getBibleVersionBadge, getBibleVersionLabel } from "@/lib/bible/version";
+
+function parsePositiveNumber(value: string | null) {
+  if (!value || !/^\d+$/.test(value)) {
+    return null;
+  }
+
+  const parsedValue = Number(value);
+  return parsedValue > 0 ? parsedValue : null;
+}
 
 type WholeBookContentProps = {
   books: BookMeta[];
@@ -40,6 +50,7 @@ export function WholeBookContent({
   highlightedVerseNumber = null,
   highlightedVerseRange = null
 }: WholeBookContentProps) {
+  const locationSearch = useLocationSearch();
   const { version } = useReaderVersion();
   const { settings } = useReaderCustomization();
   const { canCollapseSplitPane, collapseSplitPane, isSplitViewActive } = useLookup();
@@ -55,8 +66,34 @@ export function WholeBookContent({
   const versionBadge = getBibleVersionBadge(version);
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
+  const searchParams = new URLSearchParams(locationSearch);
+  const urlFocusedChapterNumber = parsePositiveNumber(searchParams.get("chapter"));
+  const urlHighlightedChapterNumber = parsePositiveNumber(searchParams.get("highlightChapter"));
+  const urlHighlightedVerseNumber = parsePositiveNumber(searchParams.get("highlight"));
+  const urlHighlightedRangeStart = parsePositiveNumber(searchParams.get("highlightStart"));
+  const urlHighlightedRangeEnd = parsePositiveNumber(searchParams.get("highlightEnd"));
+  const urlHighlightedVerseRange =
+    urlHighlightedRangeStart !== null &&
+    urlHighlightedRangeEnd !== null &&
+    urlHighlightedRangeEnd >= urlHighlightedRangeStart
+      ? {
+          start: urlHighlightedRangeStart,
+          end: urlHighlightedRangeEnd
+        }
+      : null;
+  const activeHighlightedChapterNumber =
+    highlightedChapterNumber ?? urlHighlightedChapterNumber;
+  const activeHighlightedVerseRange = highlightedVerseRange ?? urlHighlightedVerseRange;
+  const activeHighlightedVerseNumber =
+    activeHighlightedVerseRange !== null ? null : (highlightedVerseNumber ?? urlHighlightedVerseNumber);
   const activeFocusedChapterNumber =
-    focusedChapterNumber && focusedChapterNumber <= book.chapterCount ? focusedChapterNumber : 1;
+    (activeHighlightedChapterNumber && activeHighlightedChapterNumber <= book.chapterCount
+      ? activeHighlightedChapterNumber
+      : focusedChapterNumber && focusedChapterNumber <= book.chapterCount
+        ? focusedChapterNumber
+        : urlFocusedChapterNumber && urlFocusedChapterNumber <= book.chapterCount
+          ? urlFocusedChapterNumber
+          : 1);
   const focusedChapter =
     chapters.find((chapter) => chapter.chapterNumber === activeFocusedChapterNumber) ??
     chapters[0] ??
@@ -65,16 +102,16 @@ export function WholeBookContent({
   useEffect(() => {
     syncCurrentChapterData(book.slug, focusedChapter?.chapterNumber ?? 1, null);
     setActiveStudyVerseNumber(
-      highlightedVerseRange?.start ??
-        highlightedVerseNumber ??
+      activeHighlightedVerseRange?.start ??
+        activeHighlightedVerseNumber ??
         focusedChapter?.verses[0]?.number ??
         null
     );
   }, [
+    activeHighlightedVerseNumber,
+    activeHighlightedVerseRange,
     book.slug,
     focusedChapter,
-    highlightedVerseNumber,
-    highlightedVerseRange,
     setActiveStudyVerseNumber,
     syncCurrentChapterData
   ]);
@@ -162,10 +199,14 @@ export function WholeBookContent({
                   bookSlug={book.slug}
                   chapterNumber={chapter.chapterNumber}
                   highlightedVerseNumber={
-                    chapter.chapterNumber === highlightedChapterNumber ? highlightedVerseNumber : null
+                    chapter.chapterNumber === activeHighlightedChapterNumber
+                      ? activeHighlightedVerseNumber
+                      : null
                   }
                   highlightedVerseRange={
-                    chapter.chapterNumber === highlightedChapterNumber ? highlightedVerseRange : null
+                    chapter.chapterNumber === activeHighlightedChapterNumber
+                      ? activeHighlightedVerseRange
+                      : null
                   }
                   key={`${version}:${book.slug}:${chapter.chapterNumber}`}
                   showStrongs={showStrongs}

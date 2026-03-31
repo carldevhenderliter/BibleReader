@@ -10,6 +10,7 @@ import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
 import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
 import { ReaderStudySetsPanel } from "@/app/components/ReaderStudySetsPanel";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
+import { useLocationSearch } from "@/app/components/useLocationSearch";
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
@@ -17,6 +18,15 @@ import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { VerseList } from "@/app/components/VerseList";
 import type { BookMeta, BundledBibleVersion, Chapter } from "@/lib/bible/types";
 import { getBibleVersionBadge, getBibleVersionLabel } from "@/lib/bible/version";
+
+function parsePositiveNumber(value: string | null) {
+  if (!value || !/^\d+$/.test(value)) {
+    return null;
+  }
+
+  const parsedValue = Number(value);
+  return parsedValue > 0 ? parsedValue : null;
+}
 
 type ReaderPageContentProps = {
   books: BookMeta[];
@@ -36,6 +46,7 @@ export function ReaderPageContent({
   highlightedVerseNumber,
   highlightedVerseRange
 }: ReaderPageContentProps) {
+  const locationSearch = useLocationSearch();
   const { version } = useReaderVersion();
   const { settings } = useReaderCustomization();
   const { canCollapseSplitPane, collapseSplitPane, isSplitViewActive } = useLookup();
@@ -51,17 +62,38 @@ export function ReaderPageContent({
   const versionBadge = getBibleVersionBadge(version);
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
+  const searchParams = new URLSearchParams(locationSearch);
+  const urlHighlightedVerseNumber = parsePositiveNumber(searchParams.get("highlight"));
+  const urlHighlightedRangeStart = parsePositiveNumber(searchParams.get("highlightStart"));
+  const urlHighlightedRangeEnd = parsePositiveNumber(searchParams.get("highlightEnd"));
+  const urlHighlightedVerseRange =
+    urlHighlightedRangeStart !== null &&
+    urlHighlightedRangeEnd !== null &&
+    urlHighlightedRangeEnd >= urlHighlightedRangeStart
+      ? {
+          start: urlHighlightedRangeStart,
+          end: urlHighlightedRangeEnd
+        }
+      : null;
+  const activeHighlightedVerseRange = highlightedVerseRange ?? urlHighlightedVerseRange;
+  const activeHighlightedVerseNumber =
+    activeHighlightedVerseRange !== null ? null : (highlightedVerseNumber ?? urlHighlightedVerseNumber);
 
   useEffect(() => {
     syncCurrentChapterData(book.slug, chapter.chapterNumber, chaptersByVersion);
-    setActiveStudyVerseNumber(highlightedVerseRange?.start ?? highlightedVerseNumber ?? chapter.verses[0]?.number ?? null);
+    setActiveStudyVerseNumber(
+      activeHighlightedVerseRange?.start ??
+        activeHighlightedVerseNumber ??
+        chapter.verses[0]?.number ??
+        null
+    );
   }, [
+    activeHighlightedVerseNumber,
+    activeHighlightedVerseRange,
     book.slug,
     chapter.chapterNumber,
     chapter.verses,
     chaptersByVersion,
-    highlightedVerseNumber,
-    highlightedVerseRange,
     setActiveStudyVerseNumber,
     syncCurrentChapterData
   ]);
@@ -131,8 +163,8 @@ export function ReaderPageContent({
             <VerseList
               bookSlug={book.slug}
               chapterNumber={chapter.chapterNumber}
-              highlightedVerseNumber={highlightedVerseNumber}
-              highlightedVerseRange={highlightedVerseRange}
+              highlightedVerseNumber={activeHighlightedVerseNumber}
+              highlightedVerseRange={activeHighlightedVerseRange}
               key={`${version}:${book.slug}:${chapter.chapterNumber}`}
               showStrongs={showStrongs}
               verses={chapter.verses}

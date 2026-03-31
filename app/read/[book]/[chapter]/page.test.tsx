@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 
 import ReaderChapterPage from "@/app/read/[book]/[chapter]/page";
 import * as bibleData from "@/lib/bible/data";
@@ -68,14 +68,12 @@ describe("ReaderChapterPage", () => {
       chapterNumber: 1,
       verses: [{ number: 1, text: "In the beginning, God created the heavens and the earth." }]
     });
+    window.history.replaceState({}, "", "/read/genesis/1?highlight=1");
 
     const element = await ReaderChapterPage({
       params: Promise.resolve({
         book: "genesis",
         chapter: "1"
-      }),
-      searchParams: Promise.resolve({
-        highlight: "1"
       })
     });
 
@@ -89,10 +87,12 @@ describe("ReaderChapterPage", () => {
     expect(mockedGetBookBySlug).toHaveBeenCalledWith("genesis", "web");
     expect(mockedGetChapter).toHaveBeenNthCalledWith(1, "genesis", 1, "web");
     expect(mockedGetChapter).toHaveBeenNthCalledWith(2, "genesis", 1, "kjv");
-    expect(
-      screen
-        .getByText("In the beginning, God created the heavens and the earth.")
-        .closest(".verse-row")
-    ).toHaveClass("is-highlighted");
+    await waitFor(() => {
+      expect(
+        screen
+          .getByText("In the beginning, God created the heavens and the earth.")
+          .closest(".verse-row")
+      ).toHaveClass("is-highlighted");
+    });
   });
 });
