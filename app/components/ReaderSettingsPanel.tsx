@@ -44,6 +44,7 @@ export function ReaderSettingsPanel({
   const {
     activeEngine,
     isSupported: isTtsSupported,
+    kokoroProgressLabel,
     kokoroStatus,
     kokoroVoices,
     settings: ttsSettings,
@@ -315,7 +316,7 @@ export function ReaderSettingsPanel({
                 <p className="reader-settings-subsection-label">Engine status</p>
                 <p className="reader-settings-unavailable">
                   {kokoroStatus === "loading"
-                    ? "Downloading the HD voice now so it is ready when you press play."
+                    ? kokoroProgressLabel ?? "Downloading the HD voice now so it is ready when you press play."
                     : kokoroStatus === "ready"
                       ? activeEngine === "kokoro"
                         ? "HD voice is active for this reading session."

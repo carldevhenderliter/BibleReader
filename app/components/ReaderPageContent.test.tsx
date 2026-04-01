@@ -269,7 +269,7 @@ describe("ReaderPageContent", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
 
-    expect(screen.getByText("Downloading the HD voice now so it is ready when you press play.")).toBeInTheDocument();
+    expect(screen.getAllByText(/Downloading HD voice/i).length).toBeGreaterThan(0);
     expect(screen.getByLabelText("Read aloud speed")).toBeInTheDocument();
     expect(screen.queryByLabelText("Read aloud pitch")).not.toBeInTheDocument();
   });
@@ -290,7 +290,7 @@ describe("ReaderPageContent", () => {
     await waitFor(() => {
       expect(mockKokoroFromPretrained).toHaveBeenCalled();
     });
-    expect(screen.getByText("Preparing HD voice")).toBeInTheDocument();
+    expect(screen.getByText("Downloading HD voice")).toBeInTheDocument();
   });
 
   it("starts chapter read-aloud and advances to the next chapter route", async () => {

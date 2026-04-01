@@ -3,16 +3,26 @@
 import { useReaderTts } from "@/app/components/ReaderTtsProvider";
 
 export function ReaderTtsControls() {
-  const { activeEngine, hasSource, isSupported, kokoroStatus, pause, play, resume, status, stop } =
-    useReaderTts();
+  const {
+    activeEngine,
+    hasSource,
+    isSupported,
+    kokoroProgressLabel,
+    kokoroStatus,
+    pause,
+    play,
+    resume,
+    status,
+    stop
+  } = useReaderTts();
   const canStartPlayback = isSupported && hasSource;
   const isPaused = status === "paused";
   const isActive = status === "playing" || status === "paused";
   const statusLabel =
     status === "loading"
-      ? "Preparing HD voice"
+      ? kokoroProgressLabel ?? "Preparing HD voice"
       : kokoroStatus === "loading"
-        ? "Downloading HD voice"
+        ? kokoroProgressLabel ?? "Downloading HD voice"
         : kokoroStatus === "error"
           ? "HD voice error"
           : kokoroStatus === "unavailable"

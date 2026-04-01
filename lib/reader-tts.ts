@@ -30,10 +30,6 @@ export function isKokoroTtsSupported() {
 }
 
 export function getPreferredKokoroDevice() {
-  if (typeof navigator !== "undefined" && "gpu" in navigator) {
-    return "webgpu" as const;
-  }
-
   return "wasm" as const;
 }
 

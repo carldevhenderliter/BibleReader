@@ -66,6 +66,7 @@ type ReaderTtsContextValue = {
   activeEngine: ReaderTtsEngine | null;
   hasSource: boolean;
   isSupported: boolean;
+  kokoroProgressLabel: string | null;
   kokoroStatus: ReaderTtsKokoroStatus;
   kokoroVoices: ReaderTtsKokoroVoice[];
   pause: () => void;
@@ -117,6 +118,7 @@ export function ReaderTtsProvider({ children }: PropsWithChildren) {
   const [status, setStatus] = useState<ReaderTtsStatus>("idle");
   const [activeEngine, setActiveEngine] = useState<ReaderTtsEngine | null>(null);
   const [kokoroStatus, setKokoroStatus] = useState<ReaderTtsKokoroStatus>("unavailable");
+  const [kokoroProgressLabel, setKokoroProgressLabel] = useState<string | null>(null);
   const [activeChapterNumber, setActiveChapterNumber] = useState<number | null>(null);
   const [source, setSource] = useState<ReaderTtsSource | null>(null);
   const sessionRef = useRef<ReaderTtsSession | null>(null);
@@ -199,6 +201,7 @@ export function ReaderTtsProvider({ children }: PropsWithChildren) {
 
     setIsKokoroSupported(kokoroSupport);
     setKokoroStatus(kokoroSupport ? "idle" : "unavailable");
+    setKokoroProgressLabel(null);
 
     try {
       const stored = window.localStorage.getItem(READER_TTS_STORAGE_KEY);
@@ -282,12 +285,29 @@ export function ReaderTtsProvider({ children }: PropsWithChildren) {
     }
 
     setKokoroStatus("loading");
+    setKokoroProgressLabel("Downloading HD voice");
 
     kokoroLoadPromiseRef.current = import("kokoro-js")
       .then(async ({ KokoroTTS }) => {
         const tts = await KokoroTTS.from_pretrained(KOKORO_MODEL_ID, {
           device: getPreferredKokoroDevice(),
-          dtype: "q8"
+          dtype: "q8",
+          progress_callback: (progress) => {
+            if (!progress || typeof progress !== "object") {
+              return;
+            }
+
+            const progressValue =
+              typeof progress.progress === "number" ? `${Math.round(progress.progress)}%` : null;
+            const statusLabel =
+              typeof progress.status === "string" && progress.status.length > 0
+                ? progress.status
+                : "Downloading HD voice";
+
+            setKokoroProgressLabel(
+              progressValue ? `${statusLabel} ${progressValue}` : statusLabel
+            );
+          }
         });
 
         const instance: KokoroInstance = {
@@ -304,11 +324,13 @@ export function ReaderTtsProvider({ children }: PropsWithChildren) {
         kokoroInstanceRef.current = instance;
         setKokoroVoices(instance.voices);
         setKokoroStatus("ready");
+        setKokoroProgressLabel("HD voice ready");
         return instance;
       })
       .catch(() => {
         kokoroLoadPromiseRef.current = null;
         setKokoroStatus("error");
+        setKokoroProgressLabel("HD voice download failed");
         return null;
       });
 
@@ -430,10 +452,12 @@ export function ReaderTtsProvider({ children }: PropsWithChildren) {
         return;
       }
 
-      setStatus("loading");
+      if (kokoroStatus !== "loading") {
+        setStatus("loading");
+      }
       await playKokoroChapter(chapterNumber, chapter.text, activeSource, playbackId);
     },
-    [isKokoroSupported, playKokoroChapter, stop]
+    [isKokoroSupported, kokoroStatus, playKokoroChapter, stop]
   );
 
   useEffect(() => {
@@ -575,6 +599,7 @@ export function ReaderTtsProvider({ children }: PropsWithChildren) {
       activeEngine,
       hasSource: source !== null,
       isSupported: isKokoroSupported,
+      kokoroProgressLabel,
       kokoroStatus,
       kokoroVoices,
       pause,
@@ -592,6 +617,7 @@ export function ReaderTtsProvider({ children }: PropsWithChildren) {
       activeChapterNumber,
       activeEngine,
       isKokoroSupported,
+      kokoroProgressLabel,
       kokoroStatus,
       kokoroVoices,
       pause,
