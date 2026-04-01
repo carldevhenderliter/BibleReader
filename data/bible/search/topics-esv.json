@@ -1,0 +1,671 @@
+[
+  {
+    "id": "end-times",
+    "label": "End Times",
+    "aliases": [
+      "end times",
+      "end time",
+      "last days",
+      "second coming"
+    ],
+    "subtopics": [
+      {
+        "id": "return-of-christ",
+        "label": "Return of Christ",
+        "verses": [
+          {
+            "version": "esv",
+            "bookSlug": "matthew",
+            "bookName": "Matthew",
+            "chapterNumber": 24,
+            "verseNumber": 30,
+            "text": "Then will appear in heaven the sign of the Son of Man, and then all the tribes of the earth will mourn, and they will see the Son of Man coming on the clouds of heaven with power and great glory."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "acts",
+            "bookName": "Acts",
+            "chapterNumber": 1,
+            "verseNumber": 11,
+            "text": "and said, Men of Galilee, why do you stand looking into heaven? This Jesus, who was taken up from you into heaven, will come in the same way as you saw him go into heaven."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "1-thessalonians",
+            "bookName": "1 Thessalonians",
+            "chapterNumber": 4,
+            "verseNumber": 16,
+            "text": "For the Lord himself will descend from heaven with a cry of command, with the voice of an archangel, and with the sound of the trumpet of God. And the dead in Christ will rise first."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "revelation",
+            "bookName": "Revelation",
+            "chapterNumber": 1,
+            "verseNumber": 7,
+            "text": "Behold, he is coming with the clouds, and every eye will see him, even those who pierced him, and all tribes of the earth will wail on account of him. Even so. Amen."
+          }
+        ]
+      },
+      {
+        "id": "last-days-signs",
+        "label": "Last Days Signs",
+        "verses": [
+          {
+            "version": "esv",
+            "bookSlug": "matthew",
+            "bookName": "Matthew",
+            "chapterNumber": 24,
+            "verseNumber": 6,
+            "text": "And you will hear of wars and rumors of wars. See that you are not alarmed, for this must take place, but the end is not yet."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "matthew",
+            "bookName": "Matthew",
+            "chapterNumber": 24,
+            "verseNumber": 7,
+            "text": "For nation will rise against nation, and kingdom against kingdom, and there will be famines and earthquakes in various places."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "2-timothy",
+            "bookName": "2 Timothy",
+            "chapterNumber": 3,
+            "verseNumber": 1,
+            "text": "But understand this, that in the last days there will come times of difficulty."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "2-peter",
+            "bookName": "2 Peter",
+            "chapterNumber": 3,
+            "verseNumber": 3,
+            "text": "knowing this first of all, that scoffers will come in the last days with scoffing, following their own sinful desires."
+          }
+        ]
+      },
+      {
+        "id": "judgment",
+        "label": "Judgment",
+        "verses": [
+          {
+            "version": "esv",
+            "bookSlug": "matthew",
+            "bookName": "Matthew",
+            "chapterNumber": 25,
+            "verseNumber": 31,
+            "text": "When the Son of Man comes in his glory, and all the angels with him, then he will sit on his glorious throne."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "matthew",
+            "bookName": "Matthew",
+            "chapterNumber": 25,
+            "verseNumber": 32,
+            "text": "Before him will be gathered all the nations, and he will separate people one from another as a shepherd separates the sheep from the goats."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "2-corinthians",
+            "bookName": "2 Corinthians",
+            "chapterNumber": 5,
+            "verseNumber": 10,
+            "text": "For we must all appear before the judgment seat of Christ, so that each one may receive what is due for what he has done in the body, whether good or evil."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "revelation",
+            "bookName": "Revelation",
+            "chapterNumber": 20,
+            "verseNumber": 12,
+            "text": "And I saw the dead, great and small, standing before the throne, and books were opened. Then another book was opened, which is the book of life. And the dead were judged by what was written in the books, according to what they had done."
+          }
+        ]
+      },
+      {
+        "id": "resurrection-hope",
+        "label": "Resurrection Hope",
+        "verses": [
+          {
+            "version": "esv",
+            "bookSlug": "john",
+            "bookName": "John",
+            "chapterNumber": 5,
+            "verseNumber": 28,
+            "text": "Do not marvel at this, for an hour is coming when all who are in the tombs will hear his voice"
+          },
+          {
+            "version": "esv",
+            "bookSlug": "john",
+            "bookName": "John",
+            "chapterNumber": 5,
+            "verseNumber": 29,
+            "text": "and come out, those who have done good to the resurrection of life, and those who have done evil to the resurrection of judgment."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "1-corinthians",
+            "bookName": "1 Corinthians",
+            "chapterNumber": 15,
+            "verseNumber": 51,
+            "text": "Behold! I tell you a mystery. We shall not all sleep, but we shall all be changed,"
+          },
+          {
+            "version": "esv",
+            "bookSlug": "1-corinthians",
+            "bookName": "1 Corinthians",
+            "chapterNumber": 15,
+            "verseNumber": 52,
+            "text": "in a moment, in the twinkling of an eye, at the last trumpet. For the trumpet will sound, and the dead will be raised imperishable, and we shall be changed."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "salvation",
+    "label": "Salvation",
+    "aliases": [
+      "salvation",
+      "saved",
+      "eternal life"
+    ],
+    "subtopics": [
+      {
+        "id": "by-grace",
+        "label": "By Grace",
+        "verses": [
+          {
+            "version": "esv",
+            "bookSlug": "ephesians",
+            "bookName": "Ephesians",
+            "chapterNumber": 2,
+            "verseNumber": 8,
+            "text": "For by grace you have been saved through faith. And this is not your own doing; it is the gift of God,"
+          },
+          {
+            "version": "esv",
+            "bookSlug": "ephesians",
+            "bookName": "Ephesians",
+            "chapterNumber": 2,
+            "verseNumber": 9,
+            "text": "not a result of works, so that no one may boast."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "titus",
+            "bookName": "Titus",
+            "chapterNumber": 3,
+            "verseNumber": 5,
+            "text": "he saved us, not because of works done by us in righteousness, but according to his own mercy, by the washing of regeneration and renewal of the Holy Spirit,"
+          }
+        ]
+      },
+      {
+        "id": "through-christ",
+        "label": "Through Christ",
+        "verses": [
+          {
+            "version": "esv",
+            "bookSlug": "john",
+            "bookName": "John",
+            "chapterNumber": 14,
+            "verseNumber": 6,
+            "text": "Jesus said to him, I am the way, and the truth, and the life. No one comes to the Father except through me."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "acts",
+            "bookName": "Acts",
+            "chapterNumber": 4,
+            "verseNumber": 12,
+            "text": "And there is salvation in no one else, for there is no other name under heaven given among men by which we must be saved."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "1-timothy",
+            "bookName": "1 Timothy",
+            "chapterNumber": 2,
+            "verseNumber": 5,
+            "text": "For there is one God, and there is one mediator between God and men, the man Christ Jesus,"
+          }
+        ]
+      },
+      {
+        "id": "confession-and-faith",
+        "label": "Confession and Faith",
+        "verses": [
+          {
+            "version": "esv",
+            "bookSlug": "john",
+            "bookName": "John",
+            "chapterNumber": 3,
+            "verseNumber": 16,
+            "text": "For God so loved the world, that he gave his only Son, that whoever believes in him should not perish but have eternal life."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "romans",
+            "bookName": "Romans",
+            "chapterNumber": 10,
+            "verseNumber": 9,
+            "text": "because, if you confess with your mouth that Jesus is Lord and believe in your heart that God raised him from the dead, you will be saved."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "romans",
+            "bookName": "Romans",
+            "chapterNumber": 10,
+            "verseNumber": 10,
+            "text": "For with the heart one believes and is justified, and with the mouth one confesses and is saved."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "faith",
+    "label": "Faith",
+    "aliases": [
+      "faith",
+      "trust god",
+      "trust in god"
+    ],
+    "subtopics": [
+      {
+        "id": "what-faith-is",
+        "label": "What Faith Is",
+        "verses": [
+          {
+            "version": "esv",
+            "bookSlug": "romans",
+            "bookName": "Romans",
+            "chapterNumber": 10,
+            "verseNumber": 17,
+            "text": "So faith comes from hearing, and hearing through the word of Christ."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "2-corinthians",
+            "bookName": "2 Corinthians",
+            "chapterNumber": 5,
+            "verseNumber": 7,
+            "text": "for we walk by faith, not by sight."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "hebrews",
+            "bookName": "Hebrews",
+            "chapterNumber": 11,
+            "verseNumber": 1,
+            "text": "Now faith is the assurance of things hoped for, the conviction of things not seen."
+          }
+        ]
+      },
+      {
+        "id": "trusting-god",
+        "label": "Trusting God",
+        "verses": [
+          {
+            "version": "esv",
+            "bookSlug": "proverbs",
+            "bookName": "Proverbs",
+            "chapterNumber": 3,
+            "verseNumber": 5,
+            "text": "Trust in the Lord with all your heart, and do not lean on your own understanding."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "proverbs",
+            "bookName": "Proverbs",
+            "chapterNumber": 3,
+            "verseNumber": 6,
+            "text": "In all your ways acknowledge him, and he will make straight your paths."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "mark",
+            "bookName": "Mark",
+            "chapterNumber": 11,
+            "verseNumber": 22,
+            "text": "And Jesus answered them, Have faith in God."
+          }
+        ]
+      },
+      {
+        "id": "steadfast-faith",
+        "label": "Steadfast Faith",
+        "verses": [
+          {
+            "version": "esv",
+            "bookSlug": "galatians",
+            "bookName": "Galatians",
+            "chapterNumber": 2,
+            "verseNumber": 20,
+            "text": "I have been crucified with Christ. It is no longer I who live, but Christ who lives in me. And the life I now live in the flesh I live by faith in the Son of God, who loved me and gave himself for me."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "james",
+            "bookName": "James",
+            "chapterNumber": 1,
+            "verseNumber": 3,
+            "text": "for you know that the testing of your faith produces steadfastness."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "1-peter",
+            "bookName": "1 Peter",
+            "chapterNumber": 1,
+            "verseNumber": 7,
+            "text": "so that the tested genuineness of your faith —more precious than gold that perishes though it is tested by fire —may be found to result in praise and glory and honor at the revelation of Jesus Christ."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "prayer",
+    "label": "Prayer",
+    "aliases": [
+      "prayer",
+      "pray",
+      "praying"
+    ],
+    "subtopics": [
+      {
+        "id": "ask-and-seek",
+        "label": "Ask and Seek",
+        "verses": [
+          {
+            "version": "esv",
+            "bookSlug": "matthew",
+            "bookName": "Matthew",
+            "chapterNumber": 7,
+            "verseNumber": 7,
+            "text": "Ask, and it will be given to you; seek, and you will find; knock, and it will be opened to you."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "matthew",
+            "bookName": "Matthew",
+            "chapterNumber": 7,
+            "verseNumber": 8,
+            "text": "For everyone who asks receives, and the one who seeks finds, and to the one who knocks it will be opened."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "philippians",
+            "bookName": "Philippians",
+            "chapterNumber": 4,
+            "verseNumber": 6,
+            "text": "do not be anxious about anything, but in everything by prayer and supplication with thanksgiving let your requests be made known to God."
+          }
+        ]
+      },
+      {
+        "id": "persistence",
+        "label": "Persistence",
+        "verses": [
+          {
+            "version": "esv",
+            "bookSlug": "luke",
+            "bookName": "Luke",
+            "chapterNumber": 18,
+            "verseNumber": 1,
+            "text": "And he told them a parable to the effect that they ought always to pray and not lose heart."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "colossians",
+            "bookName": "Colossians",
+            "chapterNumber": 4,
+            "verseNumber": 2,
+            "text": "Continue steadfastly in prayer, being watchful in it with thanksgiving."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "1-thessalonians",
+            "bookName": "1 Thessalonians",
+            "chapterNumber": 5,
+            "verseNumber": 17,
+            "text": "pray without ceasing,"
+          }
+        ]
+      },
+      {
+        "id": "confidence-before-god",
+        "label": "Confidence Before God",
+        "verses": [
+          {
+            "version": "esv",
+            "bookSlug": "hebrews",
+            "bookName": "Hebrews",
+            "chapterNumber": 4,
+            "verseNumber": 16,
+            "text": "Let us then with confidence draw near to the throne of grace, that we may receive mercy and find grace to help in time of need."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "1-john",
+            "bookName": "1 John",
+            "chapterNumber": 5,
+            "verseNumber": 14,
+            "text": "And this is the confidence that we have toward him, that if we ask anything according to his will he hears us."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "1-john",
+            "bookName": "1 John",
+            "chapterNumber": 5,
+            "verseNumber": 15,
+            "text": "And if we know that he hears us in whatever we ask, we know that we have the requests that we have asked of him."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "grace",
+    "label": "Grace",
+    "aliases": [
+      "grace",
+      "god's grace",
+      "grace of god"
+    ],
+    "subtopics": [
+      {
+        "id": "saving-grace",
+        "label": "Saving Grace",
+        "verses": [
+          {
+            "version": "esv",
+            "bookSlug": "romans",
+            "bookName": "Romans",
+            "chapterNumber": 3,
+            "verseNumber": 24,
+            "text": "and are justified by his grace as a gift, through the redemption that is in Christ Jesus,"
+          },
+          {
+            "version": "esv",
+            "bookSlug": "ephesians",
+            "bookName": "Ephesians",
+            "chapterNumber": 2,
+            "verseNumber": 8,
+            "text": "For by grace you have been saved through faith. And this is not your own doing; it is the gift of God,"
+          },
+          {
+            "version": "esv",
+            "bookSlug": "ephesians",
+            "bookName": "Ephesians",
+            "chapterNumber": 2,
+            "verseNumber": 9,
+            "text": "not a result of works, so that no one may boast."
+          }
+        ]
+      },
+      {
+        "id": "grace-for-strength",
+        "label": "Grace for Strength",
+        "verses": [
+          {
+            "version": "esv",
+            "bookSlug": "2-corinthians",
+            "bookName": "2 Corinthians",
+            "chapterNumber": 12,
+            "verseNumber": 9,
+            "text": "But he said to me, My grace is sufficient for you, for my power is made perfect in weakness. Therefore I will boast all the more gladly of my weaknesses, so that the power of Christ may rest upon me."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "2-timothy",
+            "bookName": "2 Timothy",
+            "chapterNumber": 2,
+            "verseNumber": 1,
+            "text": "You then, my child, be strengthened by the grace that is in Christ Jesus,"
+          },
+          {
+            "version": "esv",
+            "bookSlug": "hebrews",
+            "bookName": "Hebrews",
+            "chapterNumber": 4,
+            "verseNumber": 16,
+            "text": "Let us then with confidence draw near to the throne of grace, that we may receive mercy and find grace to help in time of need."
+          }
+        ]
+      },
+      {
+        "id": "growing-in-grace",
+        "label": "Growing in Grace",
+        "verses": [
+          {
+            "version": "esv",
+            "bookSlug": "john",
+            "bookName": "John",
+            "chapterNumber": 1,
+            "verseNumber": 16,
+            "text": "For from his fullness we have all received, grace upon grace."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "acts",
+            "bookName": "Acts",
+            "chapterNumber": 20,
+            "verseNumber": 32,
+            "text": "And now I commend you to God and to the word of his grace, which is able to build you up and to give you the inheritance among all those who are sanctified."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "2-peter",
+            "bookName": "2 Peter",
+            "chapterNumber": 3,
+            "verseNumber": 18,
+            "text": "But grow in the grace and knowledge of our Lord and Savior Jesus Christ. To him be the glory both now and to the day of eternity. Amen."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "repentance",
+    "label": "Repentance",
+    "aliases": [
+      "repentance",
+      "repent",
+      "turn back"
+    ],
+    "subtopics": [
+      {
+        "id": "call-to-repent",
+        "label": "Call to Repent",
+        "verses": [
+          {
+            "version": "esv",
+            "bookSlug": "mark",
+            "bookName": "Mark",
+            "chapterNumber": 1,
+            "verseNumber": 15,
+            "text": "and saying, The time is fulfilled, and the kingdom of God is at hand; repent and believe in the gospel."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "luke",
+            "bookName": "Luke",
+            "chapterNumber": 13,
+            "verseNumber": 3,
+            "text": "No, I tell you; but unless you repent, you will all likewise perish."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "acts",
+            "bookName": "Acts",
+            "chapterNumber": 3,
+            "verseNumber": 19,
+            "text": "Repent therefore, and turn back, that your sins may be blotted out,"
+          }
+        ]
+      },
+      {
+        "id": "godly-sorrow",
+        "label": "Godly Sorrow",
+        "verses": [
+          {
+            "version": "esv",
+            "bookSlug": "psalms",
+            "bookName": "Psalms",
+            "chapterNumber": 51,
+            "verseNumber": 17,
+            "text": "The sacrifices of God are a broken spirit; a broken and contrite heart, O God, you will not despise."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "joel",
+            "bookName": "Joel",
+            "chapterNumber": 2,
+            "verseNumber": 13,
+            "text": "and rend your hearts and not your garments. Return to the Lord your God, for he is gracious and merciful, slow to anger, and abounding in steadfast love; and he relents over disaster."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "2-corinthians",
+            "bookName": "2 Corinthians",
+            "chapterNumber": 7,
+            "verseNumber": 10,
+            "text": "For godly grief produces a repentance that leads to salvation without regret, whereas worldly grief produces death."
+          }
+        ]
+      },
+      {
+        "id": "mercy-and-cleansing",
+        "label": "Mercy and Cleansing",
+        "verses": [
+          {
+            "version": "esv",
+            "bookSlug": "ezekiel",
+            "bookName": "Ezekiel",
+            "chapterNumber": 18,
+            "verseNumber": 30,
+            "text": "Therefore I will judge you, O house of Israel, every one according to his ways, declares the Lord God. Repent and turn from all your transgressions, lest iniquity be your ruin."
+          },
+          {
+            "version": "esv",
+            "bookSlug": "ezekiel",
+            "bookName": "Ezekiel",
+            "chapterNumber": 18,
+            "verseNumber": 31,
+            "text": "Cast away from you all the transgressions that you have committed, and make yourselves a new heart and a new spirit! Why will you die, O house of Israel?"
+          },
+          {
+            "version": "esv",
+            "bookSlug": "1-john",
+            "bookName": "1 John",
+            "chapterNumber": 1,
+            "verseNumber": 9,
+            "text": "If we confess our sins, he is faithful and just to forgive us our sins and to cleanse us from all unrighteousness."
+          }
+        ]
+      }
+    ]
+  }
+]

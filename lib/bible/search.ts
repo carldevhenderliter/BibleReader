@@ -57,12 +57,14 @@ const MAX_TOPIC_SUGGESTIONS = 8;
 const verseIndexLoaders: Record<BundledBibleVersion, () => Promise<unknown>> = {
   web: () => import("@/data/bible/search/web.json"),
   kjv: () => import("@/data/bible/search/kjv.json"),
-  nlt: () => import("@/data/bible/search/nlt.json")
+  nlt: () => import("@/data/bible/search/nlt.json"),
+  esv: () => import("@/data/bible/search/esv.json")
 };
 const topicIndexLoaders: Record<BundledBibleVersion, () => Promise<unknown>> = {
   web: () => import("@/data/bible/search/topics-web.json"),
   kjv: () => import("@/data/bible/search/topics-kjv.json"),
-  nlt: () => import("@/data/bible/search/topics-nlt.json")
+  nlt: () => import("@/data/bible/search/topics-nlt.json"),
+  esv: () => import("@/data/bible/search/topics-esv.json")
 };
 
 let booksPromise: Promise<SearchableBook[]> | null = null;

@@ -6,10 +6,9 @@ import { getBookHref } from "@/lib/bible/utils";
 
 type HomePageContentProps = {
   books: BookMeta[];
-  esvEnabled: boolean;
 };
 
-export function HomePageContent({ books, esvEnabled }: HomePageContentProps) {
+export function HomePageContent({ books }: HomePageContentProps) {
   const oldTestament = books.filter((book) => book.testament === "Old");
   const newTestament = books.filter((book) => book.testament === "New");
 
@@ -32,7 +31,7 @@ export function HomePageContent({ books, esvEnabled }: HomePageContentProps) {
               <Link className="primary-link" href={getBookHref("genesis")}>
                 Launch Genesis
               </Link>
-              <ContinueReading esvEnabled={esvEnabled} />
+              <ContinueReading />
             </div>
           </div>
           <div className="hero-panel">

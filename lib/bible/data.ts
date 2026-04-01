@@ -3,7 +3,6 @@ import path from "node:path";
 import { cache } from "react";
 
 import { DEFAULT_BIBLE_VERSION } from "@/lib/bible/constants";
-import { getEsvChapter } from "@/lib/bible/esv";
 import type {
   BibleVersion,
   BookMeta,
@@ -93,21 +92,13 @@ export async function getChapter(
   chapterNumber: number,
   version: BibleVersion = DEFAULT_BIBLE_VERSION
 ): Promise<Chapter | null> {
-  if (isBundledBibleVersion(version)) {
-    const bookPayload = await getBookPayload(bookSlug, version);
+  const bookPayload = isBundledBibleVersion(version)
+    ? await getBookPayload(bookSlug, version)
+    : null;
 
-    if (!bookPayload) {
-      return null;
-    }
-
-    return bookPayload.chapters.find((chapter) => chapter.chapterNumber === chapterNumber) ?? null;
-  }
-
-  const book = await getBookBySlug(bookSlug, version);
-
-  if (!book) {
+  if (!bookPayload) {
     return null;
   }
 
-  return getEsvChapter(book, chapterNumber);
+  return bookPayload.chapters.find((chapter) => chapter.chapterNumber === chapterNumber) ?? null;
 }

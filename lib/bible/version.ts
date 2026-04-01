@@ -15,7 +15,7 @@ type BibleVersionMetadata = Omit<BibleVersionOption, "disabled"> & {
 };
 
 export const BIBLE_VERSIONS = ["web", "kjv", "nlt", "esv"] as const satisfies readonly BibleVersion[];
-export const BUNDLED_BIBLE_VERSIONS = ["web", "kjv", "nlt"] as const satisfies readonly BundledBibleVersion[];
+export const BUNDLED_BIBLE_VERSIONS = ["web", "kjv", "nlt", "esv"] as const satisfies readonly BundledBibleVersion[];
 
 export const BIBLE_VERSION_METADATA: Record<BibleVersion, BibleVersionMetadata> = {
   web: {
@@ -42,9 +42,9 @@ export const BIBLE_VERSION_METADATA: Record<BibleVersion, BibleVersionMetadata> 
   esv: {
     id: "esv",
     label: "ESV",
-    badge: "Crossway API",
-    description: "Chapter mode only. Requires an ESV API key on the server.",
-    supportsWholeBook: false
+    badge: "English Standard",
+    description: "Bundled locally from mdbible with whole-book support.",
+    supportsWholeBook: true
   }
 };
 
@@ -71,14 +71,14 @@ export function isInstalledBundledBibleVersion(value: unknown): value is Bundled
   );
 }
 
-export function getBibleVersionOptions(esvEnabled: boolean): BibleVersionOption[] {
+export function getBibleVersionOptions(): BibleVersionOption[] {
   return BIBLE_VERSIONS.map((version) => ({
     id: version,
     label: BIBLE_VERSION_METADATA[version].label,
     description: BIBLE_VERSION_METADATA[version].description,
     supportsWholeBook: BIBLE_VERSION_METADATA[version].supportsWholeBook,
-    disabled: version === "esv" && !esvEnabled
-  })).filter((option) => option.id === "esv" || isInstalledBundledBibleVersion(option.id));
+    disabled: false
+  })).filter((option) => isInstalledBundledBibleVersion(option.id));
 }
 
 export function getBibleVersionLabel(version: BibleVersion): string {
@@ -89,10 +89,7 @@ export function getBibleVersionBadge(version: BibleVersion): string {
   return BIBLE_VERSION_METADATA[version].badge;
 }
 
-export function resolveBibleVersion(
-  value: unknown,
-  options: { esvEnabled: boolean }
-): BibleVersion | null {
+export function resolveBibleVersion(value: unknown): BibleVersion | null {
   if (value == null || value === "") {
     return DEFAULT_BIBLE_VERSION;
   }
@@ -105,16 +102,9 @@ export function resolveBibleVersion(
     return null;
   }
 
-  if (value === "esv" && !options.esvEnabled) {
-    return null;
-  }
-
   return value;
 }
 
-export function normalizeBibleVersion(
-  value: unknown,
-  options: { esvEnabled: boolean }
-): BibleVersion {
-  return resolveBibleVersion(value, options) ?? DEFAULT_BIBLE_VERSION;
+export function normalizeBibleVersion(value: unknown): BibleVersion {
+  return resolveBibleVersion(value) ?? DEFAULT_BIBLE_VERSION;
 }

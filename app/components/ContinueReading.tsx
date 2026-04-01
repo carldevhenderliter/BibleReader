@@ -8,11 +8,7 @@ import type { ReadingLocation } from "@/lib/bible/types";
 import { getReadingHref } from "@/lib/bible/utils";
 import { getBibleVersionLabel, isBibleVersion } from "@/lib/bible/version";
 
-type ContinueReadingProps = {
-  esvEnabled: boolean;
-};
-
-export function ContinueReading({ esvEnabled }: ContinueReadingProps) {
+export function ContinueReading() {
   const [location, setLocation] = useState<ReadingLocation | null>(null);
   const [hasLoaded, setHasLoaded] = useState(false);
 
@@ -36,11 +32,7 @@ export function ContinueReading({ esvEnabled }: ContinueReadingProps) {
           book: parsedValue.book,
           chapter: parsedValue.chapter,
           view: parsedValue.view,
-          version:
-            isBibleVersion(parsedValue.version) &&
-            (parsedValue.version !== "esv" || esvEnabled)
-              ? parsedValue.version
-              : DEFAULT_BIBLE_VERSION
+          version: isBibleVersion(parsedValue.version) ? parsedValue.version : DEFAULT_BIBLE_VERSION
         });
       }
     } catch {
@@ -48,7 +40,7 @@ export function ContinueReading({ esvEnabled }: ContinueReadingProps) {
     } finally {
       setHasLoaded(true);
     }
-  }, [esvEnabled]);
+  }, []);
 
   if (!hasLoaded) {
     return <div className="continue-pill">Syncing your last reading spot…</div>;

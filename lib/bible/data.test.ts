@@ -1,13 +1,19 @@
 import { getBookBySlug, getBooks, getChapter } from "@/lib/bible/data";
 
 describe("bible data", () => {
-  it("loads bundled books for WEB and KJV", async () => {
-    const [webBooks, kjvBooks] = await Promise.all([getBooks("web"), getBooks("kjv")]);
+  it("loads bundled books for WEB, KJV, and ESV", async () => {
+    const [webBooks, kjvBooks, esvBooks] = await Promise.all([
+      getBooks("web"),
+      getBooks("kjv"),
+      getBooks("esv")
+    ]);
 
     expect(webBooks).toHaveLength(66);
     expect(kjvBooks).toHaveLength(66);
+    expect(esvBooks).toHaveLength(66);
     expect(webBooks[0]?.slug).toBe("genesis");
     expect(kjvBooks.at(-1)?.slug).toBe("revelation");
+    expect(esvBooks[0]?.slug).toBe("genesis");
   });
 
   it("loads Genesis 1 from KJV", async () => {
@@ -44,5 +50,13 @@ describe("bible data", () => {
 
     expect(chapter?.chapterNumber).toBe(22);
     expect(chapter?.verses.length).toBeGreaterThan(0);
+  });
+
+  it("loads Genesis 1 from bundled ESV", async () => {
+    const chapter = await getChapter("genesis", 1, "esv");
+
+    expect(chapter?.chapterNumber).toBe(1);
+    expect(chapter?.verses[0]?.text).toContain("In the beginning, God created the heavens");
+    expect(chapter?.verses[0]?.tokens).toBeUndefined();
   });
 });

@@ -19,7 +19,7 @@ describe("ContinueReading", () => {
       })
     );
 
-    render(<ContinueReading esvEnabled={false} />);
+    render(<ContinueReading />);
 
     expect(await screen.findByRole("link", { name: "Continue reading KJV" })).toHaveAttribute(
       "href",

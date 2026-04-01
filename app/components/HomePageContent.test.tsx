@@ -32,7 +32,7 @@ const books: BookMeta[] = [
 
 describe("HomePageContent", () => {
   it("renders books in canonical order grouped by testament", () => {
-    render(<HomePageContent books={books} esvEnabled={false} />);
+    render(<HomePageContent books={books} />);
 
     expect(screen.getByRole("link", { name: "Open Genesis" })).toHaveAttribute(
       "href",

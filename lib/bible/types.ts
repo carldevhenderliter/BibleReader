@@ -33,7 +33,7 @@ export type ReadingView = "chapter" | "book";
 
 export type BibleVersion = "web" | "kjv" | "nlt" | "esv";
 
-export type BundledBibleVersion = Extract<BibleVersion, "web" | "kjv" | "nlt">;
+export type BundledBibleVersion = Extract<BibleVersion, "web" | "kjv" | "nlt" | "esv">;
 
 export type ReadingLocation = {
   book: string;

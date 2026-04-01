@@ -105,7 +105,7 @@ describe("ReaderPageContent", () => {
     );
 
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
-    expect(screen.getByRole("option", { name: "ESV (API key required)" })).toBeDisabled();
+    expect(screen.getByRole("option", { name: "ESV" })).toBeEnabled();
     expect(screen.getByText("In the beginning, God created the heavens and the earth.")).toBeInTheDocument();
 
     fireEvent.change(screen.getByLabelText("Version"), {

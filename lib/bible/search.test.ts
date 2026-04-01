@@ -95,6 +95,20 @@ describe("Bible search", () => {
     expect(kjvResults.some((result) => result.type === "verse")).toBe(true);
   });
 
+  it("loads ESV verse search results from bundled indexes", async () => {
+    const results = await searchBible("only Son", "esv");
+
+    expect(
+      results.some(
+        (result) =>
+          result.type === "verse" &&
+          result.bookSlug === "john" &&
+          result.chapterNumber === 3 &&
+          result.verseNumber === 16
+      )
+    ).toBe(true);
+  });
+
   it("limits search results to the old testament scope", async () => {
     const results = await searchBible("light", "web", "partial", undefined, "old-testament");
 

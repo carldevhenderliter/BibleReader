@@ -20,6 +20,10 @@ const strongsSourceDir = path.join(repoRoot, "data", "source", "strongs-kjv");
 const strongsBooksPath = path.join(strongsSourceDir, "books.json");
 const strongsLexiconPath = path.join(strongsSourceDir, "lexicon.json");
 const nltPdfPath = path.join(repoRoot, "PDF", "New-Living-Translation-NLT.pdf");
+const ESV_SOURCE_URL = "https://raw.githubusercontent.com/lguenth/mdbible/main/json/ESV.json";
+const ESV_BOOK_NAME_ALIASES = {
+  revelation: "revelation of john"
+};
 
 const STRONGS_BOOK_NAME_BY_SLUG = {
   "song-of-solomon": "Song of Songs"
@@ -125,13 +129,15 @@ const NLT_BOOK_CODE_BY_SLUG = {
  * @typedef {{ bookSlug: string, chapterNumber: number, verseNumber: number }} TopicReference
  * @typedef {{ id: string, label: string, references: TopicReference[] }} TopicSourceSubtopic
  * @typedef {{ id: string, label: string, aliases: string[], subtopics: TopicSourceSubtopic[] }} TopicSourceEntry
- * @typedef {{ id: string, label: string, aliases: string[], subtopics: { id: string, label: string, verses: Array<{ version: "web" | "kjv" | "nlt", bookSlug: string, bookName: string, chapterNumber: number, verseNumber: number, text: string, tokens?: VerseToken[] }> }[] }} TopicSearchEntry
+ * @typedef {{ id: string, label: string, aliases: string[], subtopics: { id: string, label: string, verses: Array<{ version: "web" | "kjv" | "nlt" | "esv", bookSlug: string, bookName: string, chapterNumber: number, verseNumber: number, text: string, tokens?: VerseToken[] }> }[] }} TopicSearchEntry
  * @typedef {{ id: string, language: "hebrew" | "greek", lemma: string, transliteration: string, definition: string, partOfSpeech: string, rootWord: string, outlineUsage: string }} StrongsEntry
  * @typedef {{ strongsNumber: string, bookSlug: string, bookName: string, chapterNumber: number, verseNumber: number, text: string }} StrongsSearchVerseEntry
  */
 
 async function main() {
   const shouldIncludeNlt = process.argv.includes("--include-nlt");
+  const shouldIncludeEsv = process.argv.includes("--include-esv");
+  const esvSourcePath = getArgValue("--esv-source");
   const sourceBooks = /** @type {SourceBook[]} */ (
     JSON.parse(await readFile(sourceBooksPath, "utf8"))
   );
@@ -148,12 +154,16 @@ async function main() {
   validateOutput("kjv", sourceBooks, kjvPayloadBySlug);
 
   let nltPayloadBySlug = null;
+  let esvPayloadBySlug = null;
 
   if (shouldIncludeNlt) {
     nltPayloadBySlug = await importNltVersion(sourceBooks);
     validateOutput("nlt", sourceBooks, nltPayloadBySlug);
-  } else {
-    await resetNltArtifacts();
+  }
+
+  if (shouldIncludeEsv) {
+    esvPayloadBySlug = await importEsvVersion(sourceBooks, esvSourcePath);
+    validateOutput("esv", sourceBooks, esvPayloadBySlug);
   }
 
   await buildSearchIndex("web", webPayloadBySlug);
@@ -161,13 +171,33 @@ async function main() {
   if (nltPayloadBySlug) {
     await buildSearchIndex("nlt", nltPayloadBySlug);
   }
+  if (esvPayloadBySlug) {
+    await buildSearchIndex("esv", esvPayloadBySlug);
+  }
   await buildStrongsSearchIndex(kjvPayloadBySlug);
   await buildTopicSearchIndex("web", topicsSource, sourceBooks, webPayloadBySlug);
   await buildTopicSearchIndex("kjv", topicsSource, sourceBooks, kjvPayloadBySlug);
   if (nltPayloadBySlug) {
     await buildTopicSearchIndex("nlt", topicsSource, sourceBooks, nltPayloadBySlug);
   }
-  await writeInstalledVersions(nltPayloadBySlug ? ["web", "kjv", "nlt"] : ["web", "kjv"]);
+  if (esvPayloadBySlug) {
+    await buildTopicSearchIndex("esv", topicsSource, sourceBooks, esvPayloadBySlug);
+  }
+
+  /** @type {Array<"web" | "kjv" | "nlt" | "esv">} */
+  const installedVersions = ["web", "kjv"];
+
+  if (nltPayloadBySlug) {
+    installedVersions.push("nlt");
+  } else if (await hasBundledVersionArtifacts("nlt")) {
+    installedVersions.push("nlt");
+  }
+
+  if (esvPayloadBySlug || (await hasBundledVersionArtifacts("esv"))) {
+    installedVersions.push("esv");
+  }
+
+  await writeInstalledVersions(installedVersions);
 
   console.log(`Imported bundled versions into ${path.relative(repoRoot, versionsDir)}.`);
 }
@@ -204,15 +234,28 @@ async function writeInstalledVersions(versions) {
   await writeFile(installedVersionsPath, `${JSON.stringify(versions, null, 2)}\n`);
 }
 
-async function resetNltArtifacts() {
-  const nltDir = path.join(versionsDir, "nlt");
+function getArgValue(flag) {
+  const flagIndex = process.argv.indexOf(flag);
 
-  await rm(nltDir, { recursive: true, force: true });
-  await mkdir(nltDir, { recursive: true });
-  await mkdir(searchDir, { recursive: true });
-  await writeFile(path.join(nltDir, "books.json"), "[]\n");
-  await writeFile(path.join(searchDir, "nlt.json"), "[]\n");
-  await writeFile(path.join(searchDir, "topics-nlt.json"), "[]\n");
+  if (flagIndex === -1) {
+    return null;
+  }
+
+  const value = process.argv[flagIndex + 1];
+
+  return value && !value.startsWith("--") ? value : null;
+}
+
+async function hasBundledVersionArtifacts(version) {
+  try {
+    const books = /** @type {BookMeta[]} */ (
+      JSON.parse(await readFile(path.join(versionsDir, version, "books.json"), "utf8"))
+    );
+
+    return Array.isArray(books) && books.length > 0;
+  } catch {
+    return false;
+  }
 }
 
 function normalizeNltWhitespace(value) {
@@ -227,6 +270,43 @@ function normalizeNltVerseText(value) {
       .replace(/\b([A-Za-z]+)-\s+([a-z][A-Za-z-]*)\b/g, "$1$2")
       .replace(/\s+([,;:.!?])/g, "$1")
   );
+}
+
+function normalizeEsvSourceBookName(value) {
+  return value
+    .toLowerCase()
+    .replace(/\biii\b/g, "3")
+    .replace(/\bii\b/g, "2")
+    .replace(/\bi\b/g, "1")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+function parseEsvSourceVerse(tokens) {
+  return tokens
+    .map((token) => (Array.isArray(token) ? token[0] ?? "" : token))
+    .join(" ")
+    .replace(/[ \t]+/g, " ")
+    .replace(/\s*([,;:.!?])/g, "$1")
+    .replace(/([,;:.!?])(?![\s"')\]}\u201d\u2019])/g, "$1 ")
+    .replace(/\(\s+/g, "(")
+    .replace(/\s+\)/g, ")")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+async function readEsvSource(esvSourcePath = null) {
+  if (esvSourcePath) {
+    return JSON.parse(await readFile(path.resolve(repoRoot, esvSourcePath), "utf8"));
+  }
+
+  const response = await fetch(ESV_SOURCE_URL);
+
+  if (!response.ok) {
+    throw new Error(`Failed to download the ESV source: ${response.status} ${response.statusText}`);
+  }
+
+  return response.json();
 }
 
 async function extractNltPdfText() {
@@ -377,6 +457,102 @@ async function importNltVersion(sourceBooks) {
   }
 
   await writeFile(path.join(nltDir, "books.json"), `${JSON.stringify(metadata, null, 2)}\n`);
+
+  return payloadBySlug;
+}
+
+/**
+ * @param {SourceBook[]} sourceBooks
+ * @param {string | null} esvSourcePath
+ * @returns {Promise<Map<string, BookPayload>>}
+ */
+async function importEsvVersion(sourceBooks, esvSourcePath = null) {
+  const esvDir = path.join(versionsDir, "esv");
+  const booksDir = path.join(esvDir, "books");
+  const sourcePayload = await readEsvSource(esvSourcePath);
+  const sourceBookMap = sourcePayload?.books;
+
+  if (!sourceBookMap || typeof sourceBookMap !== "object") {
+    throw new Error("The ESV source is missing a valid books payload.");
+  }
+
+  const sourceChaptersByNormalizedName = new Map(
+    Object.entries(sourceBookMap).map(([bookName, chapters]) => [
+      normalizeEsvSourceBookName(bookName),
+      chapters
+    ])
+  );
+
+  await rm(esvDir, { recursive: true, force: true });
+  await mkdir(booksDir, { recursive: true });
+
+  /** @type {BookMeta[]} */
+  const metadata = [];
+  /** @type {Map<string, BookPayload>} */
+  const payloadBySlug = new Map();
+
+  for (const sourceBook of sourceBooks) {
+    const normalizedBookName = normalizeEsvSourceBookName(sourceBook.name);
+    const sourceChapters =
+      sourceChaptersByNormalizedName.get(normalizedBookName) ??
+      sourceChaptersByNormalizedName.get(ESV_BOOK_NAME_ALIASES[normalizedBookName] ?? "");
+
+    if (!Array.isArray(sourceChapters)) {
+      throw new Error(`ESV source is missing ${sourceBook.name}.`);
+    }
+
+    if (sourceChapters.length !== sourceBook.chapterCount) {
+      throw new Error(
+        `ESV ${sourceBook.name} chapter count mismatch: expected ${sourceBook.chapterCount}, received ${sourceChapters.length}.`
+      );
+    }
+
+    /** @type {Chapter[]} */
+    const chapters = sourceChapters.map((sourceChapter, chapterIndex) => {
+      if (!Array.isArray(sourceChapter) || sourceChapter.length === 0) {
+        throw new Error(`ESV is missing ${sourceBook.name} chapter ${chapterIndex + 1}.`);
+      }
+
+      const verses = sourceChapter.map((sourceVerse, verseIndex) => {
+        const text = parseEsvSourceVerse(Array.isArray(sourceVerse) ? sourceVerse : []);
+
+        if (!text) {
+          throw new Error(
+            `Encountered an empty ESV verse at ${sourceBook.slug} ${chapterIndex + 1}:${verseIndex + 1}.`
+          );
+        }
+
+        return {
+          number: verseIndex + 1,
+          text
+        };
+      });
+
+      return {
+        bookSlug: sourceBook.slug,
+        chapterNumber: chapterIndex + 1,
+        verses
+      };
+    });
+
+    const payload = {
+      book: {
+        slug: sourceBook.slug,
+        name: sourceBook.name,
+        abbreviation: sourceBook.abbreviation,
+        testament: sourceBook.testament,
+        chapterCount: sourceBook.chapterCount,
+        order: sourceBook.order
+      },
+      chapters
+    };
+
+    metadata.push(payload.book);
+    payloadBySlug.set(sourceBook.slug, payload);
+    await writeFile(path.join(booksDir, `${sourceBook.slug}.json`), `${JSON.stringify(payload, null, 2)}\n`);
+  }
+
+  await writeFile(path.join(esvDir, "books.json"), `${JSON.stringify(metadata, null, 2)}\n`);
 
   return payloadBySlug;
 }
@@ -659,7 +835,7 @@ async function writeStrongsLexicon(lexicon) {
 }
 
 /**
- * @param {"web" | "kjv" | "nlt"} version
+ * @param {"web" | "kjv" | "nlt" | "esv"} version
  * @param {SourceBook[]} sourceBooks
  * @param {Map<string, BookPayload>} payloadBySlug
  */
@@ -699,7 +875,7 @@ function validateOutput(version, sourceBooks, payloadBySlug) {
 }
 
 /**
- * @param {"web" | "kjv" | "nlt"} version
+ * @param {"web" | "kjv" | "nlt" | "esv"} version
  * @param {Map<string, BookPayload>} payloadBySlug
  */
 async function buildSearchIndex(version, payloadBySlug) {
@@ -759,7 +935,7 @@ async function buildStrongsSearchIndex(payloadBySlug) {
 }
 
 /**
- * @param {"web" | "kjv" | "nlt"} version
+ * @param {"web" | "kjv" | "nlt" | "esv"} version
  * @param {TopicSourceEntry[]} topicsSource
  * @param {SourceBook[]} sourceBooks
  * @param {Map<string, BookPayload>} payloadBySlug

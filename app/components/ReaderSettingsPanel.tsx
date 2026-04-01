@@ -45,7 +45,7 @@ export function ReaderSettingsPanel({
   const { version, setVersion } = useReaderVersion();
   const pathname = usePathname();
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
-  const versionOptions = getBibleVersionOptions(false);
+  const versionOptions = getBibleVersionOptions();
   const isReaderRoute = pathname.startsWith("/read");
 
   const handleVersionChange = (nextVersion: string) => {
@@ -177,7 +177,7 @@ export function ReaderSettingsPanel({
                 >
                   {versionOptions.map((option) => (
                     <option disabled={option.disabled} key={option.id} value={option.id}>
-                      {option.disabled ? `${option.label} (API key required)` : option.label}
+                      {option.label}
                     </option>
                   ))}
                 </select>
