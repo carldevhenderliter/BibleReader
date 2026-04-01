@@ -6,7 +6,7 @@ import { ReaderPageContent } from "@/app/components/ReaderPageContent";
 import { SearchPane } from "@/app/components/SearchPane";
 import type { BookMeta, Chapter } from "@/lib/bible/types";
 import { PASSAGE_NOTEBOOK_STORAGE_KEY } from "@/lib/passage-notebooks";
-import { setMockPathname } from "@/test/mocks/next-navigation";
+import { mockRouter, setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
 
 const books: BookMeta[] = [
@@ -62,6 +62,55 @@ function setSplitViewActive(isActive: boolean) {
   });
 }
 
+function installSpeechSynthesisMock() {
+  const voices = [
+    {
+      voiceURI: "test-voice",
+      name: "Test Voice",
+      lang: "en-US",
+      default: true
+    } as SpeechSynthesisVoice
+  ];
+  const utterances: SpeechSynthesisUtterance[] = [];
+  const speechSynthesis = {
+    getVoices: jest.fn(() => voices),
+    speak: jest.fn((utterance: SpeechSynthesisUtterance) => {
+      utterances.push(utterance);
+    }),
+    pause: jest.fn(),
+    resume: jest.fn(),
+    cancel: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn()
+  };
+
+  class MockSpeechSynthesisUtterance {
+    text: string;
+    rate = 1;
+    pitch = 1;
+    voice: SpeechSynthesisVoice | null = null;
+    onend: ((event: Event) => void) | null = null;
+    onerror: ((event: Event) => void) | null = null;
+
+    constructor(text: string) {
+      this.text = text;
+    }
+  }
+
+  Object.defineProperty(window, "speechSynthesis", {
+    configurable: true,
+    writable: true,
+    value: speechSynthesis
+  });
+  Object.defineProperty(window, "SpeechSynthesisUtterance", {
+    configurable: true,
+    writable: true,
+    value: MockSpeechSynthesisUtterance
+  });
+
+  return { speechSynthesis, utterances };
+}
+
 describe("ReaderPageContent", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -69,6 +118,7 @@ describe("ReaderPageContent", () => {
     setMockPathname("/read/genesis/1");
     window.history.replaceState({}, "", "/read/genesis/1");
     setSplitViewActive(false);
+    installSpeechSynthesisMock();
   });
 
   it("renders chapter content and navigation", () => {
@@ -120,6 +170,73 @@ describe("ReaderPageContent", () => {
       "href",
       "/read/genesis?version=kjv"
     );
+  });
+
+  it("renders read-aloud controls in the reader toolbar and settings menu", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+      />
+    );
+
+    expect(screen.getByRole("button", { name: "Play read aloud" })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Pause read aloud" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Stop read aloud" })).toBeDisabled();
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+
+    expect(screen.getByLabelText("Read aloud voice")).toBeInTheDocument();
+    expect(screen.getByLabelText("Read aloud speed")).toBeInTheDocument();
+    expect(screen.getByLabelText("Read aloud pitch")).toBeInTheDocument();
+  });
+
+  it("starts chapter read-aloud and advances to the next chapter route", () => {
+    const { utterances } = installSpeechSynthesisMock();
+
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Play read aloud" }));
+
+    expect(utterances[0]?.text).toContain("Genesis chapter 1.");
+    expect(utterances[0]?.text).toContain("The earth was formless and empty.");
+
+    utterances[0]?.onend?.(new Event("end"));
+
+    expect(mockRouter.push).toHaveBeenCalledWith("/read/genesis/2");
+  });
+
+  it("shows an unavailable message for read-aloud when browser speech is missing", () => {
+    Object.defineProperty(window, "speechSynthesis", {
+      configurable: true,
+      writable: true,
+      value: undefined
+    });
+    Object.defineProperty(window, "SpeechSynthesisUtterance", {
+      configurable: true,
+      writable: true,
+      value: undefined
+    });
+
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+      />
+    );
+
+    expect(screen.getByRole("button", { name: "Play read aloud" })).toBeDisabled();
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    expect(screen.getByText("Read aloud is unavailable in this browser.")).toBeInTheDocument();
   });
 
   it("opens the passage notebook from the reader menu and restores saved content", () => {

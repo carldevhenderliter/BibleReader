@@ -13,6 +13,7 @@ type ReaderControlsProps = {
   books: BookMeta[];
   book: BookMeta;
   currentChapter: number;
+  leadingActions?: ReactNode;
   trailingActions?: ReactNode;
   view: ReadingView;
 };
@@ -21,6 +22,7 @@ export function ReaderControls({
   books,
   book,
   currentChapter,
+  leadingActions,
   trailingActions,
   view
 }: ReaderControlsProps) {
@@ -93,6 +95,7 @@ export function ReaderControls({
           </div>
         </div>
         <div className="reader-controls-actions">
+          {leadingActions}
           <button
             aria-controls="reader-settings-panel"
             aria-expanded={isPanelOpen}

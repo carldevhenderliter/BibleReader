@@ -2,6 +2,7 @@ import type { ReactElement, ReactNode } from "react";
 import { render } from "@testing-library/react";
 
 import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizationProvider";
+import { ReaderTtsProvider } from "@/app/components/ReaderTtsProvider";
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
 import { LookupProvider } from "@/app/components/LookupProvider";
 import { ReaderVersionProvider } from "@/app/components/ReaderVersionProvider";
@@ -19,7 +20,9 @@ function Wrapper({ children }: WrapperProps) {
         <WritingAssistantProvider>
           <LookupProvider>
             <ReaderCustomizationProvider>
-              <SearchCustomizationProvider>{children}</SearchCustomizationProvider>
+              <ReaderTtsProvider>
+                <SearchCustomizationProvider>{children}</SearchCustomizationProvider>
+              </ReaderTtsProvider>
             </ReaderCustomizationProvider>
           </LookupProvider>
         </WritingAssistantProvider>

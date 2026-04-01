@@ -85,6 +85,14 @@ export type SearchCustomizationSettings = {
   density: SearchDensityOption;
 };
 
+export type ReaderTtsStatus = "idle" | "playing" | "paused" | "error";
+
+export type ReaderTtsSettings = {
+  voiceURI: string | null;
+  rate: number;
+  pitch: number;
+};
+
 export type PassageReference = {
   id: string;
   version: BundledBibleVersion;

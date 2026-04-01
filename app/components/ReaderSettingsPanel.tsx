@@ -6,6 +6,7 @@ import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
+import { useReaderTts } from "@/app/components/ReaderTtsProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import type { BookMeta, ReadingView, ThemePreset } from "@/lib/bible/types";
@@ -40,6 +41,12 @@ export function ReaderSettingsPanel({
 }: ReaderSettingsPanelProps) {
   const { isPanelOpen, resetSettings, setIsPanelOpen, settings, updateSettings } =
     useReaderCustomization();
+  const {
+    isSupported: isTtsSupported,
+    settings: ttsSettings,
+    updateSettings: updateTtsSettings,
+    voices
+  } = useReaderTts();
   const { openCompare, openCrossReferences, openNotebook, openSermons, setActiveReaderPane } =
     useReaderWorkspace();
   const { version, setVersion } = useReaderVersion();
@@ -287,6 +294,83 @@ export function ReaderSettingsPanel({
               </div>
             </div>
           ) : null}
+        </section>
+
+        <section className="reader-settings-section">
+          <div className="reader-settings-section-header">
+            <h3>Read Aloud</h3>
+            <p>Use your browser’s built-in text-to-speech voices for continuous reading.</p>
+          </div>
+          {!isTtsSupported ? (
+            <div className="reader-settings-subsection">
+              <p className="reader-settings-unavailable">
+                Read aloud is unavailable in this browser.
+              </p>
+            </div>
+          ) : (
+            <>
+              <div className="reader-settings-subsection">
+                <label className="reader-settings-field" htmlFor="reader-menu-voice">
+                  <span>Voice</span>
+                  <select
+                    aria-label="Read aloud voice"
+                    id="reader-menu-voice"
+                    onChange={(event) =>
+                      updateTtsSettings({
+                        voiceURI: event.target.value ? event.target.value : null
+                      })
+                    }
+                    value={ttsSettings.voiceURI ?? ""}
+                  >
+                    <option value="">System default</option>
+                    {voices.map((voice) => (
+                      <option key={voice.voiceURI} value={voice.voiceURI}>
+                        {voice.name} ({voice.lang})
+                        {voice.isDefault ? " · default" : ""}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                {voices.length === 0 ? (
+                  <p className="reader-settings-unavailable">Loading available system voices…</p>
+                ) : null}
+              </div>
+              <div className="reader-settings-subsection">
+                <div className="settings-slider-group">
+                  <label className="settings-slider">
+                    <span>Reading speed</span>
+                    <input
+                      aria-label="Read aloud speed"
+                      max="1.6"
+                      min="0.6"
+                      onChange={(event) =>
+                        updateTtsSettings({ rate: Number(event.target.value) })
+                      }
+                      step="0.05"
+                      type="range"
+                      value={ttsSettings.rate}
+                    />
+                    <strong>{ttsSettings.rate.toFixed(2)}x</strong>
+                  </label>
+                  <label className="settings-slider">
+                    <span>Pitch</span>
+                    <input
+                      aria-label="Read aloud pitch"
+                      max="1.5"
+                      min="0.5"
+                      onChange={(event) =>
+                        updateTtsSettings({ pitch: Number(event.target.value) })
+                      }
+                      step="0.05"
+                      type="range"
+                      value={ttsSettings.pitch}
+                    />
+                    <strong>{ttsSettings.pitch.toFixed(2)}x</strong>
+                  </label>
+                </div>
+              </div>
+            </>
+          )}
         </section>
         <section className="reader-settings-section">
           <div className="reader-settings-section-header">

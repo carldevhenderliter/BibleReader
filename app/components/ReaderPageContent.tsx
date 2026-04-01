@@ -10,6 +10,8 @@ import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
 import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
 import { ReaderStudySetsPanel } from "@/app/components/ReaderStudySetsPanel";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
+import { ReaderTtsControls } from "@/app/components/ReaderTtsControls";
+import { useReaderTts } from "@/app/components/ReaderTtsProvider";
 import { useLocationSearch } from "@/app/components/useLocationSearch";
 import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { useLookup } from "@/app/components/LookupProvider";
@@ -18,6 +20,7 @@ import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { VerseList } from "@/app/components/VerseList";
 import type { BookMeta, BundledChapterMap } from "@/lib/bible/types";
+import { buildChapterSpeechText } from "@/lib/reader-tts";
 import { getBibleVersionBadge } from "@/lib/bible/version";
 
 function parsePositiveNumber(value: string | null) {
@@ -50,6 +53,7 @@ export function ReaderPageContent({
   const locationSearch = useLocationSearch();
   const { version } = useReaderVersion();
   const { isPanelOpen, settings } = useReaderCustomization();
+  const { setReadingSource } = useReaderTts();
   const { canCollapseSplitPane, collapseSplitPane, isSplitViewActive } = useLookup();
   const {
     activeReaderPane,
@@ -103,6 +107,26 @@ export function ReaderPageContent({
     syncCurrentChapterData
   ]);
 
+  useEffect(() => {
+    setReadingSource({
+      bookSlug: book.slug,
+      bookName: book.name,
+      chapterCount: book.chapterCount,
+      currentChapterNumber: chapter.chapterNumber,
+      chapters: [
+        {
+          chapterNumber: chapter.chapterNumber,
+          text: buildChapterSpeechText(book.name, chapter.chapterNumber, chapter.verses)
+        }
+      ],
+      view: "chapter"
+    });
+
+    return () => {
+      setReadingSource(null);
+    };
+  }, [book.chapterCount, book.name, book.slug, chapter.chapterNumber, chapter.verses, setReadingSource]);
+
   return (
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
       <ReadingSessionSync book={book.slug} chapter={chapter.chapterNumber} view="chapter" />
@@ -128,6 +152,7 @@ export function ReaderPageContent({
                 book={book}
                 books={books}
                 currentChapter={chapter.chapterNumber}
+                leadingActions={<ReaderTtsControls />}
                 trailingActions={
                   isSplitViewActive ? (
                     <button

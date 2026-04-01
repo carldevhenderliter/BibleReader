@@ -66,12 +66,61 @@ function setSplitViewActive(isActive: boolean) {
   });
 }
 
+function installSpeechSynthesisMock() {
+  const utterances: SpeechSynthesisUtterance[] = [];
+  const speechSynthesis = {
+    getVoices: jest.fn(() => [
+      {
+        voiceURI: "test-voice",
+        name: "Test Voice",
+        lang: "en-US",
+        default: true
+      } as SpeechSynthesisVoice
+    ]),
+    speak: jest.fn((utterance: SpeechSynthesisUtterance) => {
+      utterances.push(utterance);
+    }),
+    pause: jest.fn(),
+    resume: jest.fn(),
+    cancel: jest.fn(),
+    addEventListener: jest.fn(),
+    removeEventListener: jest.fn()
+  };
+
+  class MockSpeechSynthesisUtterance {
+    text: string;
+    rate = 1;
+    pitch = 1;
+    voice: SpeechSynthesisVoice | null = null;
+    onend: ((event: Event) => void) | null = null;
+    onerror: ((event: Event) => void) | null = null;
+
+    constructor(text: string) {
+      this.text = text;
+    }
+  }
+
+  Object.defineProperty(window, "speechSynthesis", {
+    configurable: true,
+    writable: true,
+    value: speechSynthesis
+  });
+  Object.defineProperty(window, "SpeechSynthesisUtterance", {
+    configurable: true,
+    writable: true,
+    value: MockSpeechSynthesisUtterance
+  });
+
+  return { utterances };
+}
+
 describe("WholeBookContent", () => {
   beforeEach(() => {
     window.localStorage.clear();
     setMockPathname("/read/jude");
     window.history.replaceState({}, "", "/read/jude");
     setSplitViewActive(false);
+    installSpeechSynthesisMock();
   });
 
   it("renders a continuous book view", () => {
@@ -113,6 +162,33 @@ describe("WholeBookContent", () => {
 
     expect(screen.getByText("King James")).toBeInTheDocument();
     expect(screen.getByText("Mercy unto you, and peace, and love, be multiplied.")).toBeInTheDocument();
+  });
+
+  it("continues read-aloud through later chapters in whole-book view", () => {
+    const { utterances } = installSpeechSynthesisMock();
+    const scrollIntoView = jest.fn();
+
+    Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
+      configurable: true,
+      value: scrollIntoView
+    });
+
+    renderWithReaderCustomization(
+      <WholeBookContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapters, kjv: kjvChapters }}
+        focusedChapterNumber={1}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Play read aloud" }));
+
+    expect(utterances[0]?.text).toContain("Jude chapter 1.");
+    utterances[0]?.onend?.(new Event("end"));
+
+    expect(utterances[1]?.text).toContain("Jude chapter 2.");
+    expect(scrollIntoView).toHaveBeenCalled();
   });
 
   it("opens the notebook from whole-book view", () => {

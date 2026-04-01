@@ -873,6 +873,10 @@ select {
   font-weight: 700;
 }
 
+.reader-tts-button {
+  min-width: 0;
+}
+
 .reading-surface {
   padding: 1.3rem;
   width: min(100%, calc(var(--reader-content-width) + 4rem));
@@ -1478,6 +1482,12 @@ select {
   gap: 0.5rem;
   flex-wrap: wrap;
   max-width: 100%;
+}
+
+.reader-settings-unavailable {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.88rem;
 }
 
 .reader-settings-panel .reader-inline-button,

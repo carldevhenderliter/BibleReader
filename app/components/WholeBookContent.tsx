@@ -10,6 +10,8 @@ import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
 import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
 import { ReaderStudySetsPanel } from "@/app/components/ReaderStudySetsPanel";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
+import { ReaderTtsControls } from "@/app/components/ReaderTtsControls";
+import { useReaderTts } from "@/app/components/ReaderTtsProvider";
 import { useLocationSearch } from "@/app/components/useLocationSearch";
 import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { useLookup } from "@/app/components/LookupProvider";
@@ -18,6 +20,7 @@ import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { VerseList } from "@/app/components/VerseList";
 import type { BookMeta, BundledBookChapterMap, Chapter } from "@/lib/bible/types";
+import { buildChapterSpeechText } from "@/lib/reader-tts";
 import { getBibleVersionBadge } from "@/lib/bible/version";
 
 function parsePositiveNumber(value: string | null) {
@@ -54,6 +57,7 @@ export function WholeBookContent({
   const locationSearch = useLocationSearch();
   const { version } = useReaderVersion();
   const { isPanelOpen, settings } = useReaderCustomization();
+  const { setReadingSource } = useReaderTts();
   const { canCollapseSplitPane, collapseSplitPane, isSplitViewActive } = useLookup();
   const {
     activeReaderPane,
@@ -126,6 +130,35 @@ export function WholeBookContent({
     element?.scrollIntoView?.({ block: "start" });
   }, [activeFocusedChapterNumber, book.chapterCount, book.slug]);
 
+  useEffect(() => {
+    setReadingSource({
+      bookSlug: book.slug,
+      bookName: book.name,
+      chapterCount: book.chapterCount,
+      currentChapterNumber: activeFocusedChapterNumber,
+      chapters: chapters.map((chapter) => ({
+        chapterNumber: chapter.chapterNumber,
+        text: buildChapterSpeechText(book.name, chapter.chapterNumber, chapter.verses)
+      })),
+      view: "book",
+      scrollToChapter: (chapterNumber) => {
+        const element = document.getElementById(`chapter-${book.slug}-${chapterNumber}`);
+        element?.scrollIntoView?.({ block: "start" });
+      }
+    });
+
+    return () => {
+      setReadingSource(null);
+    };
+  }, [
+    activeFocusedChapterNumber,
+    book.chapterCount,
+    book.name,
+    book.slug,
+    chapters,
+    setReadingSource
+  ]);
+
   return (
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
       <ReadingSessionSync book={book.slug} chapter={1} view="book" />
@@ -149,6 +182,7 @@ export function WholeBookContent({
                 book={book}
                 books={books}
                 currentChapter={1}
+                leadingActions={<ReaderTtsControls />}
                 trailingActions={
                   isSplitViewActive ? (
                     <button
