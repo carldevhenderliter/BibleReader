@@ -33,7 +33,7 @@ export function ReaderTtsControls() {
       <button
         aria-label={isPaused ? "Resume read aloud" : "Pause read aloud"}
         className="reader-inline-button reader-tts-button"
-        disabled={!isSupported || !isActive || status === "loading"}
+        disabled={!isSupported || !isActive}
         onClick={isPaused ? resume : pause}
         type="button"
       >
