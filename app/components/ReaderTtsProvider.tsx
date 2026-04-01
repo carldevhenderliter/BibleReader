@@ -298,11 +298,13 @@ export function ReaderTtsProvider({ children }: PropsWithChildren) {
             }
 
             const progressValue =
-              typeof progress.progress === "number" ? `${Math.round(progress.progress)}%` : null;
+              progress.status === "progress" ? `${Math.round(progress.progress)}%` : null;
             const statusLabel =
-              typeof progress.status === "string" && progress.status.length > 0
-                ? progress.status
-                : "Downloading HD voice";
+              progress.status === "ready"
+                ? "HD voice ready"
+                : progress.status === "done"
+                  ? "Finalizing HD voice"
+                  : "Downloading HD voice";
 
             setKokoroProgressLabel(
               progressValue ? `${statusLabel} ${progressValue}` : statusLabel
