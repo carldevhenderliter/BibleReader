@@ -1,4 +1,9 @@
-type EsvSourceToken = string | [string] | [string, string];
+export type EsvSourceToken =
+  | string
+  | [string]
+  | [string, string | null | undefined]
+  | [string, string | null | undefined, string | null | undefined]
+  | [string, string | null | undefined, string | null | undefined, string | null | undefined];
 
 export function normalizeEsvSourceBookName(value: string) {
   return value

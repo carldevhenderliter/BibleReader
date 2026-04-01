@@ -1,16 +1,13 @@
 import type { BookMeta, BookPayload, Chapter, Verse } from "@/lib/bible/types";
-import { normalizeEsvSourceBookName, parseEsvSourceVerse } from "@/lib/bible/esv";
+import {
+  normalizeEsvSourceBookName,
+  parseEsvSourceVerse,
+  type EsvSourceToken
+} from "@/lib/bible/esv";
 
 type SourceBook = BookMeta & {
   sourceKey: string;
 };
-
-export type EsvSourceToken =
-  | string
-  | [string]
-  | [string, string | null | undefined]
-  | [string, string | null | undefined, string | null | undefined]
-  | [string, string | null | undefined, string | null | undefined, string | null | undefined];
 
 export type EsvSourceBooks = Record<string, EsvSourceToken[][][]>;
 
