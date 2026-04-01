@@ -2,9 +2,12 @@ import { READER_TTS_SETTINGS_STORAGE_KEY } from "@/lib/bible/constants";
 import type { ReaderTtsSettings, Verse } from "@/lib/bible/types";
 
 export const READER_TTS_STORAGE_KEY = READER_TTS_SETTINGS_STORAGE_KEY;
+export const KOKORO_MODEL_ID = "onnx-community/Kokoro-82M-v1.0-ONNX";
+export const DEFAULT_KOKORO_VOICE = "af_heart";
 
 export const DEFAULT_READER_TTS_SETTINGS: ReaderTtsSettings = {
-  voiceURI: null,
+  browserVoiceURI: null,
+  kokoroVoice: DEFAULT_KOKORO_VOICE,
   rate: 1,
   pitch: 1
 };
@@ -24,18 +27,44 @@ export function isBrowserTtsSupported() {
   );
 }
 
+export function isKokoroTtsSupported() {
+  return (
+    typeof window !== "undefined" &&
+    typeof window.Audio !== "undefined" &&
+    typeof window.Blob !== "undefined" &&
+    typeof window.URL?.createObjectURL === "function" &&
+    !/Android|iPhone|iPad|iPod|Mobile/i.test(window.navigator.userAgent)
+  );
+}
+
+export function getPreferredKokoroDevice() {
+  if (typeof navigator !== "undefined" && "gpu" in navigator) {
+    return "webgpu" as const;
+  }
+
+  return "wasm" as const;
+}
+
 export function normalizeReaderTtsSettings(value: unknown): ReaderTtsSettings {
   if (!value || typeof value !== "object") {
     return DEFAULT_READER_TTS_SETTINGS;
   }
 
-  const candidate = value as Partial<ReaderTtsSettings>;
+  const candidate = value as Partial<ReaderTtsSettings> & {
+    voiceURI?: string | null;
+  };
 
   return {
-    voiceURI:
-      typeof candidate.voiceURI === "string" && candidate.voiceURI.trim().length > 0
-        ? candidate.voiceURI
-        : null,
+    browserVoiceURI:
+      typeof candidate.browserVoiceURI === "string" && candidate.browserVoiceURI.trim().length > 0
+        ? candidate.browserVoiceURI
+        : typeof candidate.voiceURI === "string" && candidate.voiceURI.trim().length > 0
+          ? candidate.voiceURI
+          : null,
+    kokoroVoice:
+      typeof candidate.kokoroVoice === "string" && candidate.kokoroVoice.trim().length > 0
+        ? candidate.kokoroVoice
+        : DEFAULT_READER_TTS_SETTINGS.kokoroVoice,
     rate:
       typeof candidate.rate === "number"
         ? clamp(candidate.rate, RATE_RANGE.min, RATE_RANGE.max)

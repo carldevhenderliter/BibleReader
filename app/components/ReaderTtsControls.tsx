@@ -3,17 +3,28 @@
 import { useReaderTts } from "@/app/components/ReaderTtsProvider";
 
 export function ReaderTtsControls() {
-  const { hasSource, isSupported, pause, play, resume, status, stop } = useReaderTts();
+  const { activeEngine, hasSource, isSupported, kokoroStatus, pause, play, resume, status, stop } =
+    useReaderTts();
   const canStartPlayback = isSupported && hasSource;
   const isPaused = status === "paused";
   const isActive = status === "playing" || status === "paused";
+  const statusLabel =
+    kokoroStatus === "loading"
+      ? "Loading HD voice"
+      : activeEngine === "kokoro"
+        ? "HD voice"
+        : activeEngine === "browser"
+          ? "Browser voice"
+          : kokoroStatus === "ready"
+            ? "HD voice ready"
+            : null;
 
   return (
     <>
       <button
         aria-label="Play read aloud"
         className="reader-inline-button reader-tts-button"
-        disabled={!canStartPlayback}
+        disabled={!canStartPlayback || status === "loading"}
         onClick={play}
         type="button"
       >
@@ -22,7 +33,7 @@ export function ReaderTtsControls() {
       <button
         aria-label={isPaused ? "Resume read aloud" : "Pause read aloud"}
         className="reader-inline-button reader-tts-button"
-        disabled={!isSupported || !isActive}
+        disabled={!isSupported || !isActive || status === "loading"}
         onClick={isPaused ? resume : pause}
         type="button"
       >
@@ -37,6 +48,15 @@ export function ReaderTtsControls() {
       >
         Stop
       </button>
+      {statusLabel ? (
+        <span
+          className={`reader-controls-status reader-tts-status${
+            kokoroStatus === "loading" ? " is-loading" : ""
+          }`}
+        >
+          {statusLabel}
+        </span>
+      ) : null}
     </>
   );
 }

@@ -877,6 +877,17 @@ select {
   min-width: 0;
 }
 
+.reader-tts-status {
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.reader-tts-status.is-loading {
+  border-color: rgba(var(--reader-accent-rgb), 0.24);
+  background: rgba(var(--reader-accent-rgb), 0.12);
+  color: rgba(255, 255, 255, 0.96);
+}
+
 .reading-surface {
   padding: 1.3rem;
   width: min(100%, calc(var(--reader-content-width) + 4rem));

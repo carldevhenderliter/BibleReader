@@ -7,6 +7,15 @@ import type { BookMeta, Chapter } from "@/lib/bible/types";
 import { setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
 
+const mockKokoroGenerate = jest.fn();
+const mockKokoroFromPretrained = jest.fn();
+
+jest.mock("kokoro-js", () => ({
+  KokoroTTS: {
+    from_pretrained: mockKokoroFromPretrained
+  }
+}));
+
 const books: BookMeta[] = [
   {
     slug: "jude",
@@ -114,13 +123,88 @@ function installSpeechSynthesisMock() {
   return { utterances };
 }
 
+function installKokoroSupport() {
+  const audioInstances: Array<{
+    onended: ((event: Event) => void) | null;
+    onerror: ((event: Event) => void) | null;
+    pause: jest.Mock;
+    play: jest.Mock<Promise<void>, []>;
+    src: string;
+  }> = [];
+
+  class MockAudio {
+    onended: ((event: Event) => void) | null = null;
+    onerror: ((event: Event) => void) | null = null;
+    pause = jest.fn();
+    play = jest.fn(async () => {});
+    src: string;
+
+    constructor(src: string) {
+      this.src = src;
+      audioInstances.push(this);
+    }
+  }
+
+  Object.defineProperty(window, "Audio", {
+    configurable: true,
+    writable: true,
+    value: MockAudio
+  });
+  Object.defineProperty(window.URL, "createObjectURL", {
+    configurable: true,
+    writable: true,
+    value: jest.fn(() => `blob:kokoro-${audioInstances.length + 1}`)
+  });
+  Object.defineProperty(window.URL, "revokeObjectURL", {
+    configurable: true,
+    writable: true,
+    value: jest.fn()
+  });
+  Object.defineProperty(window.navigator, "userAgent", {
+    configurable: true,
+    value: "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0)"
+  });
+
+  mockKokoroGenerate.mockResolvedValue({
+    toBlob: () => new Blob(["audio"], { type: "audio/wav" })
+  });
+  mockKokoroFromPretrained.mockResolvedValue({
+    voices: {
+      af_heart: {
+        name: "Heart",
+        language: "en-us",
+        gender: "female"
+      }
+    },
+    generate: mockKokoroGenerate
+  });
+
+  return { audioInstances };
+}
+
 describe("WholeBookContent", () => {
   beforeEach(() => {
+    jest.clearAllMocks();
     window.localStorage.clear();
     setMockPathname("/read/jude");
     window.history.replaceState({}, "", "/read/jude");
     setSplitViewActive(false);
     installSpeechSynthesisMock();
+    Object.defineProperty(window, "Audio", {
+      configurable: true,
+      writable: true,
+      value: undefined
+    });
+    Object.defineProperty(window.URL, "createObjectURL", {
+      configurable: true,
+      writable: true,
+      value: undefined
+    });
+    Object.defineProperty(window.URL, "revokeObjectURL", {
+      configurable: true,
+      writable: true,
+      value: undefined
+    });
   });
 
   it("renders a continuous book view", () => {
@@ -188,6 +272,50 @@ describe("WholeBookContent", () => {
     utterances[0]?.onend?.(new Event("end"));
 
     expect(utterances[1]?.text).toContain("Jude chapter 2.");
+    expect(scrollIntoView).toHaveBeenCalled();
+  });
+
+  it("continues whole-book playback with kokoro audio when browser speech is unavailable", async () => {
+    const { audioInstances } = installKokoroSupport();
+    const scrollIntoView = jest.fn();
+
+    Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
+      configurable: true,
+      value: scrollIntoView
+    });
+    Object.defineProperty(window, "speechSynthesis", {
+      configurable: true,
+      writable: true,
+      value: undefined
+    });
+    Object.defineProperty(window, "SpeechSynthesisUtterance", {
+      configurable: true,
+      writable: true,
+      value: undefined
+    });
+
+    renderWithReaderCustomization(
+      <WholeBookContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapters, kjv: kjvChapters }}
+        focusedChapterNumber={1}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Play read aloud" }));
+
+    await screen.findByText("HD voice");
+    expect(audioInstances).toHaveLength(1);
+
+    audioInstances[0]?.onended?.(new Event("ended"));
+
+    await screen.findByText("HD voice");
+    expect(audioInstances).toHaveLength(2);
+    expect(mockKokoroGenerate).toHaveBeenCalledWith(
+      expect.stringContaining("Jude chapter 2."),
+      expect.objectContaining({ voice: "af_heart", speed: 1 })
+    );
     expect(scrollIntoView).toHaveBeenCalled();
   });
 

@@ -85,10 +85,15 @@ export type SearchCustomizationSettings = {
   density: SearchDensityOption;
 };
 
-export type ReaderTtsStatus = "idle" | "playing" | "paused" | "error";
+export type ReaderTtsStatus = "idle" | "loading" | "playing" | "paused" | "error";
+
+export type ReaderTtsEngine = "kokoro" | "browser";
+
+export type ReaderTtsKokoroStatus = "unavailable" | "idle" | "loading" | "ready" | "error";
 
 export type ReaderTtsSettings = {
-  voiceURI: string | null;
+  browserVoiceURI: string | null;
+  kokoroVoice: string | null;
   rate: number;
   pitch: number;
 };

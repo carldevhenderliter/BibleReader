@@ -13,6 +13,7 @@
   "dependencies": {
     "@mlc-ai/web-llm": "^0.2.82",
     "kjv": "^1.0.0",
+    "kokoro-js": "^1.2.1",
     "next": "16.2.1",
     "react": "19.2.0",
     "react-dom": "19.2.0"

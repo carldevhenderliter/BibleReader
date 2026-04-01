@@ -9,6 +9,15 @@ import { PASSAGE_NOTEBOOK_STORAGE_KEY } from "@/lib/passage-notebooks";
 import { mockRouter, setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
 
+const mockKokoroGenerate = jest.fn();
+const mockKokoroFromPretrained = jest.fn();
+
+jest.mock("kokoro-js", () => ({
+  KokoroTTS: {
+    from_pretrained: mockKokoroFromPretrained
+  }
+}));
+
 const books: BookMeta[] = [
   {
     slug: "genesis",
@@ -111,6 +120,71 @@ function installSpeechSynthesisMock() {
   return { speechSynthesis, utterances };
 }
 
+function installKokoroSupport(options?: { pendingLoad?: boolean }) {
+  const audioInstances: Array<{
+    onended: ((event: Event) => void) | null;
+    onerror: ((event: Event) => void) | null;
+    pause: jest.Mock;
+    play: jest.Mock<Promise<void>, []>;
+    src: string;
+  }> = [];
+  const createObjectURL = jest.fn(() => `blob:kokoro-${audioInstances.length + 1}`);
+  const revokeObjectURL = jest.fn();
+
+  class MockAudio {
+    onended: ((event: Event) => void) | null = null;
+    onerror: ((event: Event) => void) | null = null;
+    pause = jest.fn();
+    play = jest.fn(async () => {});
+    src: string;
+
+    constructor(src: string) {
+      this.src = src;
+      audioInstances.push(this);
+    }
+  }
+
+  Object.defineProperty(window, "Audio", {
+    configurable: true,
+    writable: true,
+    value: MockAudio
+  });
+  Object.defineProperty(window.URL, "createObjectURL", {
+    configurable: true,
+    writable: true,
+    value: createObjectURL
+  });
+  Object.defineProperty(window.URL, "revokeObjectURL", {
+    configurable: true,
+    writable: true,
+    value: revokeObjectURL
+  });
+  Object.defineProperty(window.navigator, "userAgent", {
+    configurable: true,
+    value: "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0)"
+  });
+
+  mockKokoroGenerate.mockResolvedValue({
+    toBlob: () => new Blob(["audio"], { type: "audio/wav" })
+  });
+  if (options?.pendingLoad) {
+    mockKokoroFromPretrained.mockReturnValue(new Promise(() => {}) as Promise<never>);
+  } else {
+    mockKokoroFromPretrained.mockResolvedValue({
+      voices: {
+        af_heart: {
+          name: "Heart",
+          language: "en-us",
+          gender: "female"
+        }
+      },
+      generate: mockKokoroGenerate
+    });
+  }
+
+  return { audioInstances, createObjectURL, revokeObjectURL };
+}
+
 describe("ReaderPageContent", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -119,6 +193,21 @@ describe("ReaderPageContent", () => {
     window.history.replaceState({}, "", "/read/genesis/1");
     setSplitViewActive(false);
     installSpeechSynthesisMock();
+    Object.defineProperty(window, "Audio", {
+      configurable: true,
+      writable: true,
+      value: undefined
+    });
+    Object.defineProperty(window.URL, "createObjectURL", {
+      configurable: true,
+      writable: true,
+      value: undefined
+    });
+    Object.defineProperty(window.URL, "revokeObjectURL", {
+      configurable: true,
+      writable: true,
+      value: undefined
+    });
   });
 
   it("renders chapter content and navigation", () => {
@@ -187,9 +276,30 @@ describe("ReaderPageContent", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
 
-    expect(screen.getByLabelText("Read aloud voice")).toBeInTheDocument();
+    expect(screen.getByLabelText("Fallback browser voice")).toBeInTheDocument();
     expect(screen.getByLabelText("Read aloud speed")).toBeInTheDocument();
     expect(screen.getByLabelText("Read aloud pitch")).toBeInTheDocument();
+  });
+
+  it("starts loading kokoro on first play while continuing with browser read aloud", async () => {
+    const { utterances } = installSpeechSynthesisMock();
+    installKokoroSupport({ pendingLoad: true });
+
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Play read aloud" }));
+
+    await waitFor(() => {
+      expect(mockKokoroFromPretrained).toHaveBeenCalled();
+    });
+    expect(utterances[0]?.text).toContain("Genesis chapter 1.");
+    expect(screen.getByText("Loading HD voice")).toBeInTheDocument();
   });
 
   it("starts chapter read-aloud and advances to the next chapter route", () => {
@@ -213,6 +323,50 @@ describe("ReaderPageContent", () => {
     expect(mockRouter.push).toHaveBeenCalledWith("/read/genesis/2");
   });
 
+  it("uses kokoro audio when browser speech is unavailable", async () => {
+    const { audioInstances, createObjectURL } = installKokoroSupport();
+
+    Object.defineProperty(window, "speechSynthesis", {
+      configurable: true,
+      writable: true,
+      value: undefined
+    });
+    Object.defineProperty(window, "SpeechSynthesisUtterance", {
+      configurable: true,
+      writable: true,
+      value: undefined
+    });
+
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Play read aloud" }));
+
+    await waitFor(() => {
+      expect(mockKokoroGenerate).toHaveBeenCalledWith(
+        expect.stringContaining("Genesis chapter 1."),
+        expect.objectContaining({ voice: "af_heart", speed: 1 })
+      );
+    });
+    expect(createObjectURL).toHaveBeenCalled();
+    expect(audioInstances).toHaveLength(1);
+    await waitFor(() => {
+      expect(screen.getByText("HD voice")).toBeInTheDocument();
+    });
+
+    audioInstances[0]?.onended?.(new Event("ended"));
+
+    expect(mockRouter.push).toHaveBeenCalledWith("/read/genesis/2");
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    expect(screen.getByLabelText("Read aloud HD voice")).toBeInTheDocument();
+  });
+
   it("shows an unavailable message for read-aloud when browser speech is missing", () => {
     Object.defineProperty(window, "speechSynthesis", {
       configurable: true,
@@ -220,6 +374,21 @@ describe("ReaderPageContent", () => {
       value: undefined
     });
     Object.defineProperty(window, "SpeechSynthesisUtterance", {
+      configurable: true,
+      writable: true,
+      value: undefined
+    });
+    Object.defineProperty(window, "Audio", {
+      configurable: true,
+      writable: true,
+      value: undefined
+    });
+    Object.defineProperty(window.URL, "createObjectURL", {
+      configurable: true,
+      writable: true,
+      value: undefined
+    });
+    Object.defineProperty(window.URL, "revokeObjectURL", {
       configurable: true,
       writable: true,
       value: undefined
