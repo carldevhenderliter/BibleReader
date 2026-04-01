@@ -9,15 +9,19 @@ export function ReaderTtsControls() {
   const isPaused = status === "paused";
   const isActive = status === "playing" || status === "paused";
   const statusLabel =
-    kokoroStatus === "loading"
-      ? "Loading HD voice"
-      : activeEngine === "kokoro"
-        ? "HD voice"
-        : activeEngine === "browser"
-          ? "Browser voice"
-          : kokoroStatus === "ready"
-            ? "HD voice ready"
-            : null;
+    status === "loading"
+      ? "Preparing HD voice"
+      : kokoroStatus === "loading"
+        ? "Downloading HD voice"
+        : kokoroStatus === "error"
+          ? "HD voice error"
+          : kokoroStatus === "unavailable"
+            ? "HD voice unavailable"
+            : activeEngine === "kokoro"
+              ? "HD voice"
+              : kokoroStatus === "ready"
+                ? "HD voice ready"
+                : null;
 
   return (
     <>
@@ -51,7 +55,7 @@ export function ReaderTtsControls() {
       {statusLabel ? (
         <span
           className={`reader-controls-status reader-tts-status${
-            kokoroStatus === "loading" ? " is-loading" : ""
+            kokoroStatus === "loading" || status === "loading" ? " is-loading" : ""
           }`}
         >
           {statusLabel}

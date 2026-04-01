@@ -87,12 +87,11 @@ export type SearchCustomizationSettings = {
 
 export type ReaderTtsStatus = "idle" | "loading" | "playing" | "paused" | "error";
 
-export type ReaderTtsEngine = "kokoro" | "browser";
+export type ReaderTtsEngine = "kokoro";
 
 export type ReaderTtsKokoroStatus = "unavailable" | "idle" | "loading" | "ready" | "error";
 
 export type ReaderTtsSettings = {
-  browserVoiceURI: string | null;
   kokoroVoice: string | null;
   rate: number;
   pitch: number;

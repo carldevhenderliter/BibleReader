@@ -24,19 +24,11 @@ import {
   DEFAULT_KOKORO_VOICE,
   DEFAULT_READER_TTS_SETTINGS,
   getPreferredKokoroDevice,
-  isBrowserTtsSupported,
   isKokoroTtsSupported,
   KOKORO_MODEL_ID,
   normalizeReaderTtsSettings,
   READER_TTS_STORAGE_KEY
 } from "@/lib/reader-tts";
-
-type ReaderTtsVoice = {
-  voiceURI: string;
-  name: string;
-  lang: string;
-  isDefault: boolean;
-};
 
 type ReaderTtsKokoroVoice = {
   id: string;
@@ -72,7 +64,6 @@ type ReaderTtsSession = {
 type ReaderTtsContextValue = {
   activeChapterNumber: number | null;
   activeEngine: ReaderTtsEngine | null;
-  browserVoices: ReaderTtsVoice[];
   hasSource: boolean;
   isSupported: boolean;
   kokoroStatus: ReaderTtsKokoroStatus;
@@ -107,15 +98,6 @@ type KokoroInstance = {
 
 const ReaderTtsContext = createContext<ReaderTtsContextValue | null>(null);
 
-function getVoiceSnapshot(voice: SpeechSynthesisVoice): ReaderTtsVoice {
-  return {
-    voiceURI: voice.voiceURI,
-    name: voice.name,
-    lang: voice.lang,
-    isDefault: voice.default
-  };
-}
-
 function mapKokoroVoices(sourceVoices: Record<string, KokoroVoiceEntry>) {
   return Object.entries(sourceVoices).map(([id, voice]) => ({
     id,
@@ -129,9 +111,7 @@ function mapKokoroVoices(sourceVoices: Record<string, KokoroVoiceEntry>) {
 export function ReaderTtsProvider({ children }: PropsWithChildren) {
   const router = useRouter();
   const { version } = useReaderVersion();
-  const [isBrowserSupported, setIsBrowserSupported] = useState(false);
   const [isKokoroSupported, setIsKokoroSupported] = useState(false);
-  const [browserVoices, setBrowserVoices] = useState<ReaderTtsVoice[]>([]);
   const [kokoroVoices, setKokoroVoices] = useState<ReaderTtsKokoroVoice[]>([]);
   const [settings, setSettings] = useState(DEFAULT_READER_TTS_SETTINGS);
   const [status, setStatus] = useState<ReaderTtsStatus>("idle");
@@ -210,22 +190,13 @@ export function ReaderTtsProvider({ children }: PropsWithChildren) {
     return context;
   }, []);
 
-  const cancelBrowserSpeech = useCallback(() => {
-    if (isBrowserTtsSupported()) {
-      window.speechSynthesis.cancel();
-    }
-  }, []);
-
   const cancelPlaybackOutput = useCallback(() => {
-    cancelBrowserSpeech();
     clearKokoroPlayback();
-  }, [cancelBrowserSpeech, clearKokoroPlayback]);
+  }, [clearKokoroPlayback]);
 
   useEffect(() => {
-    const browserSupport = isBrowserTtsSupported();
     const kokoroSupport = isKokoroTtsSupported();
 
-    setIsBrowserSupported(browserSupport);
     setIsKokoroSupported(kokoroSupport);
     setKokoroStatus(kokoroSupport ? "idle" : "unavailable");
 
@@ -239,34 +210,18 @@ export function ReaderTtsProvider({ children }: PropsWithChildren) {
       window.localStorage.removeItem(READER_TTS_STORAGE_KEY);
     }
 
-    if (!browserSupport) {
-      return () => {
-        cancelPlaybackOutput();
-      };
-    }
-
-    const speechSynthesis = window.speechSynthesis;
-
-    const updateVoices = () => {
-      setBrowserVoices(speechSynthesis.getVoices().map(getVoiceSnapshot));
-    };
-
-    updateVoices();
-    speechSynthesis.addEventListener?.("voiceschanged", updateVoices);
-
     return () => {
       cancelPlaybackOutput();
-      speechSynthesis.removeEventListener?.("voiceschanged", updateVoices);
     };
   }, [cancelPlaybackOutput]);
 
   useEffect(() => {
-    if (!isBrowserSupported && !isKokoroSupported) {
+    if (!isKokoroSupported) {
       return;
     }
 
     window.localStorage.setItem(READER_TTS_STORAGE_KEY, JSON.stringify(settings));
-  }, [isBrowserSupported, isKokoroSupported, settings]);
+  }, [isKokoroSupported, settings]);
 
   const stop = useCallback(() => {
     playbackIdRef.current += 1;
@@ -360,58 +315,13 @@ export function ReaderTtsProvider({ children }: PropsWithChildren) {
     return kokoroLoadPromiseRef.current;
   }, [isKokoroSupported]);
 
-  const playBrowserChapter = useCallback(
-    (
-      chapterNumber: number,
-      chapterText: string,
-      activeSource: ReaderTtsSource,
-      playbackId: number
-    ) => {
-      if (!isBrowserTtsSupported()) {
-        return false;
-      }
+  useEffect(() => {
+    if (!isKokoroSupported) {
+      return;
+    }
 
-      cancelPlaybackOutput();
-
-      const utterance = new window.SpeechSynthesisUtterance(chapterText);
-      const selectedVoice =
-        settings.browserVoiceURI !== null
-          ? window.speechSynthesis
-              .getVoices()
-              .find((voice) => voice.voiceURI === settings.browserVoiceURI) ?? null
-          : null;
-
-      if (selectedVoice) {
-        utterance.voice = selectedVoice;
-      }
-
-      utterance.rate = settings.rate;
-      utterance.pitch = settings.pitch;
-      utterance.onend = () => {
-        if (playbackId !== playbackIdRef.current) {
-          return;
-        }
-
-        handleChapterFinished(chapterNumber, activeSource);
-      };
-      utterance.onerror = () => {
-        if (playbackId !== playbackIdRef.current) {
-          return;
-        }
-
-        stop();
-        setStatus("error");
-      };
-
-      activeSource.scrollToChapter?.(chapterNumber);
-      setActiveChapterNumber(chapterNumber);
-      setActiveEngine("browser");
-      setStatus("playing");
-      window.speechSynthesis.speak(utterance);
-      return true;
-    },
-    [cancelPlaybackOutput, handleChapterFinished, settings.browserVoiceURI, settings.pitch, settings.rate, stop]
-  );
+    void ensureKokoroStarted();
+  }, [ensureKokoroStarted, isKokoroSupported]);
 
   const playKokoroChapter = useCallback(
     async (
@@ -485,10 +395,6 @@ export function ReaderTtsProvider({ children }: PropsWithChildren) {
           return false;
         }
 
-        if (isBrowserSupported) {
-          return playBrowserChapter(chapterNumber, chapterText, activeSource, playbackId);
-        }
-
         stop();
         setStatus("error");
         return false;
@@ -499,8 +405,6 @@ export function ReaderTtsProvider({ children }: PropsWithChildren) {
       ensureKokoroStarted,
       getAudioContext,
       handleChapterFinished,
-      isBrowserSupported,
-      playBrowserChapter,
       settings.kokoroVoice,
       settings.rate,
       stop
@@ -520,40 +424,16 @@ export function ReaderTtsProvider({ children }: PropsWithChildren) {
 
       playbackIdRef.current += 1;
       const playbackId = playbackIdRef.current;
-      const shouldTryKokoro = isKokoroSupported;
 
-      if (shouldTryKokoro && !kokoroInstanceRef.current) {
-        void ensureKokoroStarted();
-      }
-
-      if (shouldTryKokoro && kokoroInstanceRef.current) {
-        setStatus("loading");
-        const startedKokoro = await playKokoroChapter(
-          chapterNumber,
-          chapter.text,
-          activeSource,
-          playbackId
-        );
-
-        if (startedKokoro) {
-          return;
-        }
-      }
-
-      if (isBrowserSupported) {
-        playBrowserChapter(chapterNumber, chapter.text, activeSource, playbackId);
+      if (!isKokoroSupported) {
+        setStatus("error");
         return;
       }
 
-      if (shouldTryKokoro) {
-        setStatus("loading");
-        await playKokoroChapter(chapterNumber, chapter.text, activeSource, playbackId);
-        return;
-      }
-
-      setStatus("error");
+      setStatus("loading");
+      await playKokoroChapter(chapterNumber, chapter.text, activeSource, playbackId);
     },
-    [ensureKokoroStarted, isBrowserSupported, isKokoroSupported, playBrowserChapter, playKokoroChapter, stop]
+    [isKokoroSupported, playKokoroChapter, stop]
   );
 
   useEffect(() => {
@@ -593,13 +473,11 @@ export function ReaderTtsProvider({ children }: PropsWithChildren) {
   }, [playChapter, source, stop, version]);
 
   const play = useCallback(() => {
-    if ((!isBrowserSupported && !isKokoroSupported) || !sourceRef.current) {
+    if (!isKokoroSupported || !sourceRef.current) {
       return;
     }
 
-    if (isKokoroSupported) {
-      void getAudioContext();
-    }
+    void getAudioContext();
 
     const nextSession = {
       bookSlug: sourceRef.current.bookSlug,
@@ -612,7 +490,7 @@ export function ReaderTtsProvider({ children }: PropsWithChildren) {
     awaitingRouteChapterRef.current = null;
     sessionRef.current = nextSession;
     void playChapter(nextSession.chapterNumber, sourceRef.current);
-  }, [getAudioContext, isBrowserSupported, isKokoroSupported, playChapter, version]);
+  }, [getAudioContext, isKokoroSupported, playChapter, version]);
 
   useEffect(() => {
     playChapterRef.current = (chapterNumber, nextSource) => {
@@ -639,12 +517,6 @@ export function ReaderTtsProvider({ children }: PropsWithChildren) {
       return;
     }
 
-    if (!isBrowserTtsSupported()) {
-      return;
-    }
-
-    window.speechSynthesis.pause();
-    setStatus("paused");
   }, [stopKokoroSource]);
 
   const resume = useCallback(() => {
@@ -695,21 +567,14 @@ export function ReaderTtsProvider({ children }: PropsWithChildren) {
       return;
     }
 
-    if (!isBrowserTtsSupported()) {
-      return;
-    }
-
-    window.speechSynthesis.resume();
-    setStatus("playing");
   }, [handleChapterFinished, stop]);
 
   const value = useMemo<ReaderTtsContextValue>(
     () => ({
       activeChapterNumber,
       activeEngine,
-      browserVoices,
       hasSource: source !== null,
-      isSupported: isBrowserSupported || isKokoroSupported,
+      isSupported: isKokoroSupported,
       kokoroStatus,
       kokoroVoices,
       pause,
@@ -726,8 +591,6 @@ export function ReaderTtsProvider({ children }: PropsWithChildren) {
     [
       activeChapterNumber,
       activeEngine,
-      browserVoices,
-      isBrowserSupported,
       isKokoroSupported,
       kokoroStatus,
       kokoroVoices,

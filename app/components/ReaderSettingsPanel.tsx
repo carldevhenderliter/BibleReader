@@ -43,12 +43,11 @@ export function ReaderSettingsPanel({
     useReaderCustomization();
   const {
     activeEngine,
-    browserVoices,
     isSupported: isTtsSupported,
     kokoroStatus,
     kokoroVoices,
     settings: ttsSettings,
-    updateSettings: updateTtsSettings,
+    updateSettings: updateTtsSettings
   } = useReaderTts();
   const { openCompare, openCrossReferences, openNotebook, openSermons, setActiveReaderPane } =
     useReaderWorkspace();
@@ -302,12 +301,12 @@ export function ReaderSettingsPanel({
         <section className="reader-settings-section">
           <div className="reader-settings-section-header">
             <h3>Read Aloud</h3>
-            <p>Use the local HD voice when available, with browser read-aloud as the fallback.</p>
+            <p>Use the local HD voice for continuous reading.</p>
           </div>
           {!isTtsSupported ? (
             <div className="reader-settings-subsection">
               <p className="reader-settings-unavailable">
-                Read aloud is unavailable in this browser.
+                The HD voice is unavailable in this browser.
               </p>
             </div>
           ) : (
@@ -316,16 +315,16 @@ export function ReaderSettingsPanel({
                 <p className="reader-settings-subsection-label">Engine status</p>
                 <p className="reader-settings-unavailable">
                   {kokoroStatus === "loading"
-                    ? "Loading the HD voice for local playback. Browser read-aloud will be used until it is ready."
+                    ? "Downloading the HD voice now so it is ready when you press play."
                     : kokoroStatus === "ready"
                       ? activeEngine === "kokoro"
                         ? "HD voice is active for this reading session."
-                        : "HD voice is ready and will be used automatically when possible."
+                        : "HD voice is downloaded and ready."
                       : kokoroStatus === "error"
-                        ? "HD voice could not start. Browser read-aloud will be used instead."
-                        : kokoroStatus === "unavailable"
-                          ? "HD voice is not available on this device. Browser read-aloud will be used."
-                          : "HD voice will download the first time you press play."}
+                        ? "HD voice could not start on this device."
+                      : kokoroStatus === "unavailable"
+                          ? "HD voice is not available on this device."
+                          : "HD voice is preparing in the background."}
                 </p>
                 {kokoroStatus === "ready" ? (
                   <label className="reader-settings-field" htmlFor="reader-menu-kokoro-voice">
@@ -348,33 +347,9 @@ export function ReaderSettingsPanel({
                     </select>
                   </label>
                 ) : null}
-                <label className="reader-settings-field" htmlFor="reader-menu-browser-voice">
-                  <span>Fallback browser voice</span>
-                  <select
-                    aria-label="Fallback browser voice"
-                    id="reader-menu-browser-voice"
-                    onChange={(event) =>
-                      updateTtsSettings({
-                        browserVoiceURI: event.target.value ? event.target.value : null
-                      })
-                    }
-                    value={ttsSettings.browserVoiceURI ?? ""}
-                  >
-                    <option value="">System default</option>
-                    {browserVoices.map((voice) => (
-                      <option key={voice.voiceURI} value={voice.voiceURI}>
-                        {voice.name} ({voice.lang})
-                        {voice.isDefault ? " · default" : ""}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                {browserVoices.length === 0 ? (
-                  <p className="reader-settings-unavailable">Loading available browser voices…</p>
-                ) : null}
               </div>
               <div className="reader-settings-subsection">
-                <div className="settings-slider-group">
+                <div className="settings-slider-group settings-slider-group-single">
                   <label className="settings-slider">
                     <span>Reading speed</span>
                     <input
@@ -389,21 +364,6 @@ export function ReaderSettingsPanel({
                       value={ttsSettings.rate}
                     />
                     <strong>{ttsSettings.rate.toFixed(2)}x</strong>
-                  </label>
-                  <label className="settings-slider">
-                    <span>Pitch (browser only)</span>
-                    <input
-                      aria-label="Read aloud pitch"
-                      max="1.5"
-                      min="0.5"
-                      onChange={(event) =>
-                        updateTtsSettings({ pitch: Number(event.target.value) })
-                      }
-                      step="0.05"
-                      type="range"
-                      value={ttsSettings.pitch}
-                    />
-                    <strong>{ttsSettings.pitch.toFixed(2)}x</strong>
                   </label>
                 </div>
               </div>

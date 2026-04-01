@@ -253,6 +253,8 @@ describe("ReaderPageContent", () => {
   });
 
   it("renders read-aloud controls in the reader toolbar and settings menu", () => {
+    installKokoroSupport({ pendingLoad: true });
+
     renderWithReaderCustomization(
       <ReaderPageContent
         book={books[0]}
@@ -267,13 +269,12 @@ describe("ReaderPageContent", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
 
-    expect(screen.getByLabelText("Fallback browser voice")).toBeInTheDocument();
+    expect(screen.getByText("Downloading the HD voice now so it is ready when you press play.")).toBeInTheDocument();
     expect(screen.getByLabelText("Read aloud speed")).toBeInTheDocument();
-    expect(screen.getByLabelText("Read aloud pitch")).toBeInTheDocument();
+    expect(screen.queryByLabelText("Read aloud pitch")).not.toBeInTheDocument();
   });
 
-  it("starts loading kokoro on first play while continuing with browser read aloud", async () => {
-    const { utterances } = installSpeechSynthesisMock();
+  it("starts loading kokoro on first play while the hd voice is still downloading", async () => {
     installKokoroSupport({ pendingLoad: true });
 
     renderWithReaderCustomization(
@@ -289,12 +290,11 @@ describe("ReaderPageContent", () => {
     await waitFor(() => {
       expect(mockKokoroFromPretrained).toHaveBeenCalled();
     });
-    expect(utterances[0]?.text).toContain("Genesis chapter 1.");
-    expect(screen.getByText("Loading HD voice")).toBeInTheDocument();
+    expect(screen.getByText("Preparing HD voice")).toBeInTheDocument();
   });
 
-  it("starts chapter read-aloud and advances to the next chapter route", () => {
-    const { utterances } = installSpeechSynthesisMock();
+  it("starts chapter read-aloud and advances to the next chapter route", async () => {
+    const { sourceNodes } = installKokoroSupport();
 
     renderWithReaderCustomization(
       <ReaderPageContent
@@ -306,27 +306,20 @@ describe("ReaderPageContent", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Play read aloud" }));
 
-    expect(utterances[0]?.text).toContain("Genesis chapter 1.");
-    expect(utterances[0]?.text).toContain("The earth was formless and empty.");
+    await waitFor(() => {
+      expect(mockKokoroGenerate).toHaveBeenCalledWith(
+        expect.stringContaining("Genesis chapter 1."),
+        expect.objectContaining({ voice: "af_heart", speed: 1 })
+      );
+    });
 
-    utterances[0]?.onend?.(new Event("end"));
+    sourceNodes[0]?.onended?.(new Event("end"));
 
     expect(mockRouter.push).toHaveBeenCalledWith("/read/genesis/2");
   });
 
-  it("uses kokoro audio when browser speech is unavailable", async () => {
+  it("uses kokoro audio for read aloud playback", async () => {
     const { sourceNodes } = installKokoroSupport();
-
-    Object.defineProperty(window, "speechSynthesis", {
-      configurable: true,
-      writable: true,
-      value: undefined
-    });
-    Object.defineProperty(window, "SpeechSynthesisUtterance", {
-      configurable: true,
-      writable: true,
-      value: undefined
-    });
 
     renderWithReaderCustomization(
       <ReaderPageContent
@@ -357,17 +350,7 @@ describe("ReaderPageContent", () => {
     expect(screen.getByLabelText("Read aloud HD voice")).toBeInTheDocument();
   });
 
-  it("shows an unavailable message for read-aloud when browser speech is missing", () => {
-    Object.defineProperty(window, "speechSynthesis", {
-      configurable: true,
-      writable: true,
-      value: undefined
-    });
-    Object.defineProperty(window, "SpeechSynthesisUtterance", {
-      configurable: true,
-      writable: true,
-      value: undefined
-    });
+  it("shows an unavailable message for read-aloud when web audio is missing", () => {
     Object.defineProperty(window, "AudioContext", {
       configurable: true,
       writable: true,
@@ -390,7 +373,7 @@ describe("ReaderPageContent", () => {
     expect(screen.getByRole("button", { name: "Play read aloud" })).toBeDisabled();
 
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
-    expect(screen.getByText("Read aloud is unavailable in this browser.")).toBeInTheDocument();
+    expect(screen.getByText("The HD voice is unavailable in this browser.")).toBeInTheDocument();
   });
 
   it("opens the passage notebook from the reader menu and restores saved content", () => {

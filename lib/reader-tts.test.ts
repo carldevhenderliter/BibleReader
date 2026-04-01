@@ -27,7 +27,6 @@ describe("reader tts helpers", () => {
         pitch: -1
       })
     ).toEqual({
-      browserVoiceURI: "voice-1",
       kokoroVoice: "af_bella",
       rate: 1.6,
       pitch: 0.5

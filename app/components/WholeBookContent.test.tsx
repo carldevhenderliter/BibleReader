@@ -1,4 +1,4 @@
-import { fireEvent, screen } from "@testing-library/react";
+import { fireEvent, screen, waitFor } from "@testing-library/react";
 
 import { LookupPane } from "@/app/components/LookupPane";
 import { SearchPane } from "@/app/components/SearchPane";
@@ -241,8 +241,8 @@ describe("WholeBookContent", () => {
     expect(screen.getByText("Mercy unto you, and peace, and love, be multiplied.")).toBeInTheDocument();
   });
 
-  it("continues read-aloud through later chapters in whole-book view", () => {
-    const { utterances } = installSpeechSynthesisMock();
+  it("continues read-aloud through later chapters in whole-book view", async () => {
+    const { sourceNodes } = installKokoroSupport();
     const scrollIntoView = jest.fn();
 
     Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
@@ -261,14 +261,24 @@ describe("WholeBookContent", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Play read aloud" }));
 
-    expect(utterances[0]?.text).toContain("Jude chapter 1.");
-    utterances[0]?.onend?.(new Event("end"));
+    await waitFor(() => {
+      expect(mockKokoroGenerate).toHaveBeenCalledWith(
+        expect.stringContaining("Jude chapter 1."),
+        expect.objectContaining({ voice: "af_heart", speed: 1 })
+      );
+    });
+    sourceNodes[0]?.onended?.(new Event("end"));
 
-    expect(utterances[1]?.text).toContain("Jude chapter 2.");
+    await waitFor(() => {
+      expect(mockKokoroGenerate).toHaveBeenCalledWith(
+        expect.stringContaining("Jude chapter 2."),
+        expect.objectContaining({ voice: "af_heart", speed: 1 })
+      );
+    });
     expect(scrollIntoView).toHaveBeenCalled();
   });
 
-  it("continues whole-book playback with kokoro audio when browser speech is unavailable", async () => {
+  it("continues whole-book playback with kokoro audio", async () => {
     const { sourceNodes } = installKokoroSupport();
     const scrollIntoView = jest.fn();
 
@@ -276,17 +286,6 @@ describe("WholeBookContent", () => {
       configurable: true,
       value: scrollIntoView
     });
-    Object.defineProperty(window, "speechSynthesis", {
-      configurable: true,
-      writable: true,
-      value: undefined
-    });
-    Object.defineProperty(window, "SpeechSynthesisUtterance", {
-      configurable: true,
-      writable: true,
-      value: undefined
-    });
-
     renderWithReaderCustomization(
       <WholeBookContent
         book={books[0]}

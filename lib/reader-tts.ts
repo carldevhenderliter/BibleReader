@@ -6,7 +6,6 @@ export const KOKORO_MODEL_ID = "onnx-community/Kokoro-82M-v1.0-ONNX";
 export const DEFAULT_KOKORO_VOICE = "af_heart";
 
 export const DEFAULT_READER_TTS_SETTINGS: ReaderTtsSettings = {
-  browserVoiceURI: null,
   kokoroVoice: DEFAULT_KOKORO_VOICE,
   rate: 1,
   pitch: 1
@@ -17,14 +16,6 @@ const PITCH_RANGE = { min: 0.5, max: 1.5 };
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));
-}
-
-export function isBrowserTtsSupported() {
-  return (
-    typeof window !== "undefined" &&
-    typeof window.speechSynthesis !== "undefined" &&
-    typeof window.SpeechSynthesisUtterance !== "undefined"
-  );
 }
 
 export function isKokoroTtsSupported() {
@@ -56,12 +47,6 @@ export function normalizeReaderTtsSettings(value: unknown): ReaderTtsSettings {
   };
 
   return {
-    browserVoiceURI:
-      typeof candidate.browserVoiceURI === "string" && candidate.browserVoiceURI.trim().length > 0
-        ? candidate.browserVoiceURI
-        : typeof candidate.voiceURI === "string" && candidate.voiceURI.trim().length > 0
-          ? candidate.voiceURI
-          : null,
     kokoroVoice:
       typeof candidate.kokoroVoice === "string" && candidate.kokoroVoice.trim().length > 0
         ? candidate.kokoroVoice
