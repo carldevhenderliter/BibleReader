@@ -95,7 +95,13 @@ type KokoroVoiceEntry = {
 };
 
 type KokoroInstance = {
-  generate: (text: string, options: { voice: string; speed: number }) => Promise<Blob>;
+  generate: (
+    text: string,
+    options: {
+      voice: string;
+      speed: number;
+    }
+  ) => Promise<Blob>;
   voices: ReaderTtsKokoroVoice[];
 };
 
@@ -296,7 +302,10 @@ export function ReaderTtsProvider({ children }: PropsWithChildren) {
 
         const instance: KokoroInstance = {
           generate: async (text, options) => {
-            const output = await tts.generate(text, options);
+            const output = await tts.generate(
+              text,
+              options as Parameters<typeof tts.generate>[1]
+            );
             return output.toBlob();
           },
           voices: mapKokoroVoices(tts.voices as Record<string, KokoroVoiceEntry>)
