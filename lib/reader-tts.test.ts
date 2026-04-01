@@ -35,23 +35,13 @@ describe("reader tts helpers", () => {
     expect(normalizeReaderTtsSettings(null)).toEqual(DEFAULT_READER_TTS_SETTINGS);
   });
 
-  it("requires audio and object-url support for kokoro playback", () => {
+  it("requires web audio support for kokoro playback", () => {
     expect(isKokoroTtsSupported()).toBe(false);
 
-    Object.defineProperty(window, "Audio", {
+    Object.defineProperty(window, "AudioContext", {
       configurable: true,
       writable: true,
-      value: class MockAudio {}
-    });
-    Object.defineProperty(window.URL, "createObjectURL", {
-      configurable: true,
-      writable: true,
-      value: () => "blob:kokoro"
-    });
-    Object.defineProperty(window.URL, "revokeObjectURL", {
-      configurable: true,
-      writable: true,
-      value: () => {}
+      value: class MockAudioContext {}
     });
     Object.defineProperty(window.navigator, "userAgent", {
       configurable: true,

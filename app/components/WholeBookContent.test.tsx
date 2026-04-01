@@ -124,41 +124,39 @@ function installSpeechSynthesisMock() {
 }
 
 function installKokoroSupport() {
-  const audioInstances: Array<{
+  const sourceNodes: Array<{
     onended: ((event: Event) => void) | null;
-    onerror: ((event: Event) => void) | null;
-    pause: jest.Mock;
-    play: jest.Mock<Promise<void>, []>;
-    src: string;
+    buffer: AudioBuffer | null;
+    connect: jest.Mock;
+    disconnect: jest.Mock;
+    start: jest.Mock;
+    stop: jest.Mock;
   }> = [];
 
-  class MockAudio {
-    onended: ((event: Event) => void) | null = null;
-    onerror: ((event: Event) => void) | null = null;
-    pause = jest.fn();
-    play = jest.fn(async () => {});
-    src: string;
-
-    constructor(src: string) {
-      this.src = src;
-      audioInstances.push(this);
-    }
+  class MockAudioContext {
+    currentTime = 0;
+    destination = {} as AudioDestinationNode;
+    state: AudioContextState = "running";
+    resume = jest.fn(async () => {});
+    decodeAudioData = jest.fn(async () => ({}) as AudioBuffer);
+    createBufferSource = jest.fn(() => {
+      const sourceNode = {
+        buffer: null,
+        onended: null,
+        connect: jest.fn(),
+        disconnect: jest.fn(),
+        start: jest.fn(),
+        stop: jest.fn()
+      };
+      sourceNodes.push(sourceNode);
+      return sourceNode as unknown as AudioBufferSourceNode;
+    });
   }
 
-  Object.defineProperty(window, "Audio", {
+  Object.defineProperty(window, "AudioContext", {
     configurable: true,
     writable: true,
-    value: MockAudio
-  });
-  Object.defineProperty(window.URL, "createObjectURL", {
-    configurable: true,
-    writable: true,
-    value: jest.fn(() => `blob:kokoro-${audioInstances.length + 1}`)
-  });
-  Object.defineProperty(window.URL, "revokeObjectURL", {
-    configurable: true,
-    writable: true,
-    value: jest.fn()
+    value: MockAudioContext
   });
   Object.defineProperty(window.navigator, "userAgent", {
     configurable: true,
@@ -166,7 +164,7 @@ function installKokoroSupport() {
   });
 
   mockKokoroGenerate.mockResolvedValue({
-    toBlob: () => new Blob(["audio"], { type: "audio/wav" })
+    toWav: () => new ArrayBuffer(8)
   });
   mockKokoroFromPretrained.mockResolvedValue({
     voices: {
@@ -179,7 +177,7 @@ function installKokoroSupport() {
     generate: mockKokoroGenerate
   });
 
-  return { audioInstances };
+  return { sourceNodes };
 }
 
 describe("WholeBookContent", () => {
@@ -190,17 +188,12 @@ describe("WholeBookContent", () => {
     window.history.replaceState({}, "", "/read/jude");
     setSplitViewActive(false);
     installSpeechSynthesisMock();
-    Object.defineProperty(window, "Audio", {
+    Object.defineProperty(window, "AudioContext", {
       configurable: true,
       writable: true,
       value: undefined
     });
-    Object.defineProperty(window.URL, "createObjectURL", {
-      configurable: true,
-      writable: true,
-      value: undefined
-    });
-    Object.defineProperty(window.URL, "revokeObjectURL", {
+    Object.defineProperty(window, "webkitAudioContext", {
       configurable: true,
       writable: true,
       value: undefined
@@ -276,7 +269,7 @@ describe("WholeBookContent", () => {
   });
 
   it("continues whole-book playback with kokoro audio when browser speech is unavailable", async () => {
-    const { audioInstances } = installKokoroSupport();
+    const { sourceNodes } = installKokoroSupport();
     const scrollIntoView = jest.fn();
 
     Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
@@ -306,12 +299,12 @@ describe("WholeBookContent", () => {
     fireEvent.click(screen.getByRole("button", { name: "Play read aloud" }));
 
     await screen.findByText("HD voice");
-    expect(audioInstances).toHaveLength(1);
+    expect(sourceNodes).toHaveLength(1);
 
-    audioInstances[0]?.onended?.(new Event("ended"));
+    sourceNodes[0]?.onended?.(new Event("ended"));
 
     await screen.findByText("HD voice");
-    expect(audioInstances).toHaveLength(2);
+    expect(sourceNodes).toHaveLength(2);
     expect(mockKokoroGenerate).toHaveBeenCalledWith(
       expect.stringContaining("Jude chapter 2."),
       expect.objectContaining({ voice: "af_heart", speed: 1 })

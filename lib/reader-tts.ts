@@ -30,9 +30,10 @@ export function isBrowserTtsSupported() {
 export function isKokoroTtsSupported() {
   return (
     typeof window !== "undefined" &&
-    typeof window.Audio !== "undefined" &&
     typeof window.Blob !== "undefined" &&
-    typeof window.URL?.createObjectURL === "function" &&
+    (typeof window.AudioContext !== "undefined" ||
+      typeof (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext !==
+        "undefined") &&
     !/Android|iPhone|iPad|iPod|Mobile/i.test(window.navigator.userAgent)
   );
 }

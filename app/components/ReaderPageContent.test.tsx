@@ -121,43 +121,39 @@ function installSpeechSynthesisMock() {
 }
 
 function installKokoroSupport(options?: { pendingLoad?: boolean }) {
-  const audioInstances: Array<{
+  const sourceNodes: Array<{
     onended: ((event: Event) => void) | null;
-    onerror: ((event: Event) => void) | null;
-    pause: jest.Mock;
-    play: jest.Mock<Promise<void>, []>;
-    src: string;
+    buffer: AudioBuffer | null;
+    connect: jest.Mock;
+    disconnect: jest.Mock;
+    start: jest.Mock;
+    stop: jest.Mock;
   }> = [];
-  const createObjectURL = jest.fn(() => `blob:kokoro-${audioInstances.length + 1}`);
-  const revokeObjectURL = jest.fn();
 
-  class MockAudio {
-    onended: ((event: Event) => void) | null = null;
-    onerror: ((event: Event) => void) | null = null;
-    pause = jest.fn();
-    play = jest.fn(async () => {});
-    src: string;
-
-    constructor(src: string) {
-      this.src = src;
-      audioInstances.push(this);
-    }
+  class MockAudioContext {
+    currentTime = 0;
+    destination = {} as AudioDestinationNode;
+    state: AudioContextState = "running";
+    resume = jest.fn(async () => {});
+    decodeAudioData = jest.fn(async () => ({}) as AudioBuffer);
+    createBufferSource = jest.fn(() => {
+      const sourceNode = {
+        buffer: null,
+        onended: null,
+        connect: jest.fn(),
+        disconnect: jest.fn(),
+        start: jest.fn(),
+        stop: jest.fn()
+      };
+      sourceNodes.push(sourceNode);
+      return sourceNode as unknown as AudioBufferSourceNode;
+    });
   }
 
-  Object.defineProperty(window, "Audio", {
+  Object.defineProperty(window, "AudioContext", {
     configurable: true,
     writable: true,
-    value: MockAudio
-  });
-  Object.defineProperty(window.URL, "createObjectURL", {
-    configurable: true,
-    writable: true,
-    value: createObjectURL
-  });
-  Object.defineProperty(window.URL, "revokeObjectURL", {
-    configurable: true,
-    writable: true,
-    value: revokeObjectURL
+    value: MockAudioContext
   });
   Object.defineProperty(window.navigator, "userAgent", {
     configurable: true,
@@ -165,7 +161,7 @@ function installKokoroSupport(options?: { pendingLoad?: boolean }) {
   });
 
   mockKokoroGenerate.mockResolvedValue({
-    toBlob: () => new Blob(["audio"], { type: "audio/wav" })
+    toWav: () => new ArrayBuffer(8)
   });
   if (options?.pendingLoad) {
     mockKokoroFromPretrained.mockReturnValue(new Promise(() => {}) as Promise<never>);
@@ -182,7 +178,7 @@ function installKokoroSupport(options?: { pendingLoad?: boolean }) {
     });
   }
 
-  return { audioInstances, createObjectURL, revokeObjectURL };
+  return { sourceNodes };
 }
 
 describe("ReaderPageContent", () => {
@@ -193,17 +189,12 @@ describe("ReaderPageContent", () => {
     window.history.replaceState({}, "", "/read/genesis/1");
     setSplitViewActive(false);
     installSpeechSynthesisMock();
-    Object.defineProperty(window, "Audio", {
+    Object.defineProperty(window, "AudioContext", {
       configurable: true,
       writable: true,
       value: undefined
     });
-    Object.defineProperty(window.URL, "createObjectURL", {
-      configurable: true,
-      writable: true,
-      value: undefined
-    });
-    Object.defineProperty(window.URL, "revokeObjectURL", {
+    Object.defineProperty(window, "webkitAudioContext", {
       configurable: true,
       writable: true,
       value: undefined
@@ -324,7 +315,7 @@ describe("ReaderPageContent", () => {
   });
 
   it("uses kokoro audio when browser speech is unavailable", async () => {
-    const { audioInstances, createObjectURL } = installKokoroSupport();
+    const { sourceNodes } = installKokoroSupport();
 
     Object.defineProperty(window, "speechSynthesis", {
       configurable: true,
@@ -353,13 +344,12 @@ describe("ReaderPageContent", () => {
         expect.objectContaining({ voice: "af_heart", speed: 1 })
       );
     });
-    expect(createObjectURL).toHaveBeenCalled();
-    expect(audioInstances).toHaveLength(1);
+    expect(sourceNodes).toHaveLength(1);
     await waitFor(() => {
       expect(screen.getByText("HD voice")).toBeInTheDocument();
     });
 
-    audioInstances[0]?.onended?.(new Event("ended"));
+    sourceNodes[0]?.onended?.(new Event("ended"));
 
     expect(mockRouter.push).toHaveBeenCalledWith("/read/genesis/2");
 
@@ -378,17 +368,12 @@ describe("ReaderPageContent", () => {
       writable: true,
       value: undefined
     });
-    Object.defineProperty(window, "Audio", {
+    Object.defineProperty(window, "AudioContext", {
       configurable: true,
       writable: true,
       value: undefined
     });
-    Object.defineProperty(window.URL, "createObjectURL", {
-      configurable: true,
-      writable: true,
-      value: undefined
-    });
-    Object.defineProperty(window.URL, "revokeObjectURL", {
+    Object.defineProperty(window, "webkitAudioContext", {
       configurable: true,
       writable: true,
       value: undefined
