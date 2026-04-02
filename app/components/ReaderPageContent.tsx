@@ -10,7 +10,6 @@ import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
 import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
 import { ReaderStudySetsPanel } from "@/app/components/ReaderStudySetsPanel";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
-import { ReaderTtsControls } from "@/app/components/ReaderTtsControls";
 import { useReaderTts } from "@/app/components/ReaderTtsProvider";
 import { useLocationSearch } from "@/app/components/useLocationSearch";
 import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
@@ -152,7 +151,6 @@ export function ReaderPageContent({
                 book={book}
                 books={books}
                 currentChapter={chapter.chapterNumber}
-                leadingActions={<ReaderTtsControls />}
                 trailingActions={
                   isSplitViewActive ? (
                     <button

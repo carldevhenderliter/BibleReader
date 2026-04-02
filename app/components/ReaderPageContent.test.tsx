@@ -257,7 +257,7 @@ describe("ReaderPageContent", () => {
     );
   });
 
-  it("renders read-aloud controls in the reader toolbar and settings menu", () => {
+  it("hides read-aloud controls from the reader toolbar and settings menu", () => {
     installKokoroSupport({ pendingLoad: true });
 
     renderWithReaderCustomization(
@@ -268,117 +268,15 @@ describe("ReaderPageContent", () => {
       />
     );
 
-    expect(screen.getByRole("button", { name: "Play read aloud" })).toBeEnabled();
-    expect(screen.getByRole("button", { name: "Pause read aloud" })).toBeDisabled();
-    expect(screen.getByRole("button", { name: "Stop read aloud" })).toBeDisabled();
+    expect(screen.queryByRole("button", { name: "Play read aloud" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Pause read aloud" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Stop read aloud" })).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
 
-    expect(screen.getAllByText(/Downloading HD voice/i).length).toBeGreaterThan(0);
-    expect(screen.getByLabelText("Read aloud speed")).toBeInTheDocument();
-    expect(screen.queryByLabelText("Read aloud pitch")).not.toBeInTheDocument();
-  });
-
-  it("starts loading kokoro on first play while the hd voice is still downloading", async () => {
-    installKokoroSupport({ pendingLoad: true });
-
-    renderWithReaderCustomization(
-      <ReaderPageContent
-        book={books[0]}
-        books={books}
-        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
-      />
-    );
-
-    fireEvent.click(screen.getByRole("button", { name: "Play read aloud" }));
-
-    await waitFor(() => {
-      expect(mockLoadLocalKokoroTts).toHaveBeenCalled();
-    });
-    expect(screen.getByText("Downloading HD voice")).toBeInTheDocument();
-  });
-
-  it("starts chapter read-aloud and advances to the next chapter route", async () => {
-    const { sourceNodes } = installKokoroSupport();
-
-    renderWithReaderCustomization(
-      <ReaderPageContent
-        book={books[0]}
-        books={books}
-        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
-      />
-    );
-
-    fireEvent.click(screen.getByRole("button", { name: "Play read aloud" }));
-
-    await waitFor(() => {
-      expect(mockKokoroGenerate).toHaveBeenCalledWith(
-        expect.stringContaining("Genesis chapter 1."),
-        expect.objectContaining({ voice: "af_heart", speed: 1 })
-      );
-    });
-
-    sourceNodes[0]?.onended?.(new Event("end"));
-
-    expect(mockRouter.push).toHaveBeenCalledWith("/read/genesis/2");
-  });
-
-  it("uses kokoro audio for read aloud playback", async () => {
-    const { sourceNodes } = installKokoroSupport();
-
-    renderWithReaderCustomization(
-      <ReaderPageContent
-        book={books[0]}
-        books={books}
-        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
-      />
-    );
-
-    fireEvent.click(screen.getByRole("button", { name: "Play read aloud" }));
-
-    await waitFor(() => {
-      expect(mockKokoroGenerate).toHaveBeenCalledWith(
-        expect.stringContaining("Genesis chapter 1."),
-        expect.objectContaining({ voice: "af_heart", speed: 1 })
-      );
-    });
-    expect(sourceNodes).toHaveLength(1);
-    await waitFor(() => {
-      expect(screen.getByText("HD voice")).toBeInTheDocument();
-    });
-
-    sourceNodes[0]?.onended?.(new Event("ended"));
-
-    expect(mockRouter.push).toHaveBeenCalledWith("/read/genesis/2");
-
-    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
-    expect(screen.getByLabelText("Read aloud HD voice")).toBeInTheDocument();
-  });
-
-  it("shows an unavailable message for read-aloud when web audio is missing", () => {
-    Object.defineProperty(window, "AudioContext", {
-      configurable: true,
-      writable: true,
-      value: undefined
-    });
-    Object.defineProperty(window, "webkitAudioContext", {
-      configurable: true,
-      writable: true,
-      value: undefined
-    });
-
-    renderWithReaderCustomization(
-      <ReaderPageContent
-        book={books[0]}
-        books={books}
-        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
-      />
-    );
-
-    expect(screen.getByRole("button", { name: "Play read aloud" })).toBeDisabled();
-
-    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
-    expect(screen.getByText("The HD voice is unavailable in this browser.")).toBeInTheDocument();
+    expect(screen.queryByText(/Downloading HD voice/i)).not.toBeInTheDocument();
+    expect(screen.queryByLabelText("Read aloud speed")).not.toBeInTheDocument();
+    expect(screen.queryByLabelText("Read aloud HD voice")).not.toBeInTheDocument();
   });
 
   it("opens the passage notebook from the reader menu and restores saved content", () => {

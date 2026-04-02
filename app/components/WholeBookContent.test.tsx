@@ -246,14 +246,8 @@ describe("WholeBookContent", () => {
     expect(screen.getByText("Mercy unto you, and peace, and love, be multiplied.")).toBeInTheDocument();
   });
 
-  it("continues read-aloud through later chapters in whole-book view", async () => {
-    const { sourceNodes } = installKokoroSupport();
-    const scrollIntoView = jest.fn();
-
-    Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
-      configurable: true,
-      value: scrollIntoView
-    });
+  it("hides read-aloud controls in whole-book view", () => {
+    installKokoroSupport();
 
     renderWithReaderCustomization(
       <WholeBookContent
@@ -264,56 +258,9 @@ describe("WholeBookContent", () => {
       />
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "Play read aloud" }));
-
-    await waitFor(() => {
-      expect(mockKokoroGenerate).toHaveBeenCalledWith(
-        expect.stringContaining("Jude chapter 1."),
-        expect.objectContaining({ voice: "af_heart", speed: 1 })
-      );
-    });
-    sourceNodes[0]?.onended?.(new Event("end"));
-
-    await waitFor(() => {
-      expect(mockKokoroGenerate).toHaveBeenCalledWith(
-        expect.stringContaining("Jude chapter 2."),
-        expect.objectContaining({ voice: "af_heart", speed: 1 })
-      );
-    });
-    expect(scrollIntoView).toHaveBeenCalled();
-  });
-
-  it("continues whole-book playback with kokoro audio", async () => {
-    const { sourceNodes } = installKokoroSupport();
-    const scrollIntoView = jest.fn();
-
-    Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {
-      configurable: true,
-      value: scrollIntoView
-    });
-    renderWithReaderCustomization(
-      <WholeBookContent
-        book={books[0]}
-        books={books}
-        chaptersByVersion={{ web: chapters, kjv: kjvChapters }}
-        focusedChapterNumber={1}
-      />
-    );
-
-    fireEvent.click(screen.getByRole("button", { name: "Play read aloud" }));
-
-    await screen.findByText("HD voice");
-    expect(sourceNodes).toHaveLength(1);
-
-    sourceNodes[0]?.onended?.(new Event("ended"));
-
-    await screen.findByText("HD voice");
-    expect(sourceNodes).toHaveLength(2);
-    expect(mockKokoroGenerate).toHaveBeenCalledWith(
-      expect.stringContaining("Jude chapter 2."),
-      expect.objectContaining({ voice: "af_heart", speed: 1 })
-    );
-    expect(scrollIntoView).toHaveBeenCalled();
+    expect(screen.queryByRole("button", { name: "Play read aloud" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Pause read aloud" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Stop read aloud" })).not.toBeInTheDocument();
   });
 
   it("opens the notebook from whole-book view", () => {

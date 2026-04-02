@@ -6,7 +6,6 @@ import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
-import { useReaderTts } from "@/app/components/ReaderTtsProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import type { BookMeta, ReadingView, ThemePreset } from "@/lib/bible/types";
@@ -41,15 +40,6 @@ export function ReaderSettingsPanel({
 }: ReaderSettingsPanelProps) {
   const { isPanelOpen, resetSettings, setIsPanelOpen, settings, updateSettings } =
     useReaderCustomization();
-  const {
-    activeEngine,
-    isSupported: isTtsSupported,
-    kokoroProgressLabel,
-    kokoroStatus,
-    kokoroVoices,
-    settings: ttsSettings,
-    updateSettings: updateTtsSettings
-  } = useReaderTts();
   const { openCompare, openCrossReferences, openNotebook, openSermons, setActiveReaderPane } =
     useReaderWorkspace();
   const { version, setVersion } = useReaderVersion();
@@ -299,78 +289,6 @@ export function ReaderSettingsPanel({
           ) : null}
         </section>
 
-        <section className="reader-settings-section">
-          <div className="reader-settings-section-header">
-            <h3>Read Aloud</h3>
-            <p>Use the local HD voice for continuous reading.</p>
-          </div>
-          {!isTtsSupported ? (
-            <div className="reader-settings-subsection">
-              <p className="reader-settings-unavailable">
-                The HD voice is unavailable in this browser.
-              </p>
-            </div>
-          ) : (
-            <>
-              <div className="reader-settings-subsection">
-                <p className="reader-settings-subsection-label">Engine status</p>
-                <p className="reader-settings-unavailable">
-                  {kokoroStatus === "loading"
-                    ? kokoroProgressLabel ?? "Downloading the HD voice now so it is ready when you press play."
-                    : kokoroStatus === "ready"
-                      ? activeEngine === "kokoro"
-                        ? "HD voice is active for this reading session."
-                        : "HD voice is downloaded and ready."
-                      : kokoroStatus === "error"
-                        ? "HD voice could not start on this device."
-                      : kokoroStatus === "unavailable"
-                          ? "HD voice is not available on this device."
-                          : "HD voice is preparing in the background."}
-                </p>
-                {kokoroStatus === "ready" ? (
-                  <label className="reader-settings-field" htmlFor="reader-menu-kokoro-voice">
-                    <span>HD voice</span>
-                    <select
-                      aria-label="Read aloud HD voice"
-                      id="reader-menu-kokoro-voice"
-                      onChange={(event) =>
-                        updateTtsSettings({
-                          kokoroVoice: event.target.value ? event.target.value : null
-                        })
-                      }
-                      value={ttsSettings.kokoroVoice ?? ""}
-                    >
-                      {kokoroVoices.map((voice) => (
-                        <option key={voice.id} value={voice.id}>
-                          {voice.name} ({voice.language}, {voice.gender})
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                ) : null}
-              </div>
-              <div className="reader-settings-subsection">
-                <div className="settings-slider-group settings-slider-group-single">
-                  <label className="settings-slider">
-                    <span>Reading speed</span>
-                    <input
-                      aria-label="Read aloud speed"
-                      max="1.6"
-                      min="0.6"
-                      onChange={(event) =>
-                        updateTtsSettings({ rate: Number(event.target.value) })
-                      }
-                      step="0.05"
-                      type="range"
-                      value={ttsSettings.rate}
-                    />
-                    <strong>{ttsSettings.rate.toFixed(2)}x</strong>
-                  </label>
-                </div>
-              </div>
-            </>
-          )}
-        </section>
         <section className="reader-settings-section">
           <div className="reader-settings-section-header">
             <h3>Typography</h3>
