@@ -79,9 +79,15 @@ async function configureKokoroEnvironmentRuntime() {
   transformersEnv.allowRemoteModels = false;
   transformersEnv.allowLocalModels = true;
   transformersEnv.localModelPath = modelRoot;
-  transformersEnv.backends.onnx ??= {};
-  transformersEnv.backends.onnx.wasm ??= {};
-  transformersEnv.backends.onnx.wasm.wasmPaths = wasmRoot;
+  const wasmBackend = transformersEnv.backends.onnx?.wasm as
+    | { wasmPaths?: string | Record<string, string> }
+    | undefined;
+
+  if (!wasmBackend) {
+    throw new Error("Kokoro ONNX wasm backend is unavailable.");
+  }
+
+  wasmBackend.wasmPaths = wasmRoot;
   kokoroEnv.wasmPaths = wasmRoot;
 
   isEnvironmentConfigured = true;
