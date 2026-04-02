@@ -275,11 +275,12 @@ describe("WholeBookContent", () => {
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
 
+    expect(screen.getByRole("tab", { name: "Notes" })).toHaveAttribute("aria-selected", "true");
     expect(screen.getByRole("button", { name: "New notebook" })).toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Chapter 1" })).not.toBeInTheDocument();
   });
 
-  it("opens the notebook under the right-side search pane in split whole-book view", () => {
+  it("opens the notebook in the reader notes tab in split whole-book view", () => {
     setSplitViewActive(true);
 
     renderWithReaderCustomization(
@@ -297,10 +298,10 @@ describe("WholeBookContent", () => {
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
 
-    expect(screen.getByRole("tab", { name: "Notebook" })).toHaveAttribute("aria-selected", "true");
+    expect(screen.getByRole("tab", { name: "Notes" })).toHaveAttribute("aria-selected", "true");
     expect(screen.getByRole("button", { name: "New notebook" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "WEB search" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Chapter 1" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Chapter 1" })).not.toBeInTheDocument();
   });
 
   it("highlights and scrolls to the requested verse in whole-book view", () => {

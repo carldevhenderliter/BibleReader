@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
 import { ReaderVersionProvider, useReaderVersion } from "@/app/components/ReaderVersionProvider";
+import { NOTEBOOK_CUSTOMIZATION_STORAGE_KEY } from "@/lib/notebook-customization";
 import { PASSAGE_NOTEBOOK_STORAGE_KEY } from "@/lib/passage-notebooks";
 
 function NotebookHarness() {
@@ -88,9 +89,30 @@ describe("ReaderNotebookEditor", () => {
       target: { value: "Second note" }
     });
 
-    fireEvent.click(screen.getByRole("button", { name: /Notebook one/i }));
+    fireEvent.click(screen.getByRole("tab", { name: /Notebook one/i }));
 
     expect(screen.getByLabelText("Notebook title")).toHaveValue("Notebook one");
     expect(screen.getByLabelText("Notebook note")).toHaveValue("First note");
+  });
+
+  it("stores notebook style settings separately from notebook content", () => {
+    renderNotebookHarness();
+
+    fireEvent.click(screen.getByRole("button", { name: "New notebook" }));
+    fireEvent.change(screen.getByLabelText("Notebook font"), {
+      target: { value: "mono" }
+    });
+    fireEvent.change(screen.getByLabelText("Notebook width"), {
+      target: { value: "focused" }
+    });
+    fireEvent.change(screen.getByLabelText("Notebook surface style"), {
+      target: { value: "paper" }
+    });
+
+    const stored = window.localStorage.getItem(NOTEBOOK_CUSTOMIZATION_STORAGE_KEY) ?? "";
+
+    expect(stored).toContain("\"bodyFont\":\"mono\"");
+    expect(stored).toContain("\"width\":\"focused\"");
+    expect(stored).toContain("\"surfaceStyle\":\"paper\"");
   });
 });

@@ -307,6 +307,7 @@ describe("ReaderPageContent", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
+    expect(screen.getByRole("tab", { name: "Notes" })).toHaveAttribute("aria-selected", "true");
     fireEvent.click(screen.getByRole("button", { name: "New notebook" }));
     fireEvent.change(screen.getByLabelText("Notebook title"), {
       target: {
@@ -339,6 +340,7 @@ describe("ReaderPageContent", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
+    expect(screen.getByRole("tab", { name: "Notes" })).toHaveAttribute("aria-selected", "true");
     expect(screen.getByLabelText("Notebook title")).toHaveValue("Genesis opening");
     expect(screen.getByLabelText("Notebook note")).toHaveValue("Created light before the sun.");
   });
@@ -419,6 +421,7 @@ describe("ReaderPageContent", () => {
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
 
+    expect(screen.getByRole("tab", { name: "Notes" })).toHaveAttribute("aria-selected", "true");
     expect(screen.getByRole("button", { name: "New notebook" })).toBeInTheDocument();
     expect(
       screen.queryByText("In the beginning, God created the heavens and the earth.")
@@ -478,18 +481,19 @@ describe("ReaderPageContent", () => {
     fireEvent.change(screen.getByLabelText("Notebook title"), {
       target: { value: "Current study" }
     });
+    fireEvent.click(screen.getByRole("tab", { name: "Scripture" }));
 
     fireEvent.click(screen.getAllByRole("button", { name: "To notebook" })[0]!);
 
     expect(screen.getByRole("status")).toHaveTextContent(/Choose a notebook for Genesis 1:1/i);
 
-    fireEvent.click(screen.getByRole("button", { name: /Current study/i }));
+    fireEvent.click(screen.getByRole("tab", { name: /Current study/i }));
 
     expect(screen.queryByRole("status")).not.toBeInTheDocument();
     expect(window.localStorage.getItem(PASSAGE_NOTEBOOK_STORAGE_KEY)).toContain("web:genesis:1:1");
   });
 
-  it("opens the notebook under the right-side search pane in split view", async () => {
+  it("opens the notebook in the reader notes tab in split view", async () => {
     setSplitViewActive(true);
 
     renderWithReaderCustomization(
@@ -507,10 +511,12 @@ describe("ReaderPageContent", () => {
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
 
-    expect(screen.getByRole("tab", { name: "Notebook" })).toHaveAttribute("aria-selected", "true");
+    expect(screen.getByRole("tab", { name: "Notes" })).toHaveAttribute("aria-selected", "true");
     expect(screen.getByRole("button", { name: "New notebook" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "WEB search" })).toBeInTheDocument();
-    expect(screen.getByText("In the beginning, God created the heavens and the earth.")).toBeInTheDocument();
+    expect(
+      screen.queryByText("In the beginning, God created the heavens and the earth.")
+    ).not.toBeInTheDocument();
   });
 
   it("renders the reader hide button inside the reader toolbar in split view", () => {

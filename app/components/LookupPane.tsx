@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 import { ReaderCrossReferencesPanel } from "@/app/components/ReaderCrossReferencesPanel";
-import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
 import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
@@ -44,7 +43,7 @@ export function LookupPane() {
       <div className="lookup-pane-header">
         <div className="lookup-pane-header-main">
           <p className="search-tray-kicker">Study Tools</p>
-          <h2 className="search-tray-title">Notebook and sermons</h2>
+          <h2 className="search-tray-title">Cross references and sermons</h2>
         </div>
         <div className="lookup-pane-header-actions">
           <button
@@ -70,15 +69,6 @@ export function LookupPane() {
             Cross References
           </button>
           <button
-            aria-selected={activeUtilityPane === "notebook"}
-            className={`lookup-pane-tab${activeUtilityPane === "notebook" ? " is-active" : ""}`}
-            onClick={() => setActiveUtilityPane("notebook")}
-            role="tab"
-            type="button"
-          >
-            Notebook
-          </button>
-          <button
             aria-selected={activeUtilityPane === "sermons"}
             className={`lookup-pane-tab${activeUtilityPane === "sermons" ? " is-active" : ""}`}
             onClick={() => setActiveUtilityPane("sermons")}
@@ -89,9 +79,7 @@ export function LookupPane() {
           </button>
         </div>
         <div className="lookup-pane-study-body">
-          {activeUtilityPane === "notebook" ? (
-            <ReaderNotebookEditor />
-          ) : activeUtilityPane === "sermons" ? (
+          {activeUtilityPane === "sermons" ? (
             <ReaderSermonWorkspace />
           ) : activeUtilityPane === "cross-references" ? (
             isReaderRoute ? (
@@ -104,7 +92,7 @@ export function LookupPane() {
           ) : (
             <div className="lookup-panel-empty">
               <p className="search-empty-copy">
-                Open notebook, sermons, or cross references in the study pane.
+                Open sermons or cross references in the study pane.
               </p>
             </div>
           )}

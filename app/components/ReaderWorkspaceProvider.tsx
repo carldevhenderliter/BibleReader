@@ -59,7 +59,7 @@ import {
 } from "@/lib/study-workspace";
 import { getInstalledBundledBibleVersions } from "@/lib/bible/version";
 
-type ReaderPane = "reading" | "compare" | "study-sets";
+type ReaderPane = "reading" | "notebook" | "compare" | "study-sets";
 type LeftReaderMode = "scripture" | "search";
 type UtilityPane = "search" | "cross-references" | "compare" | "notebook" | "sermons";
 
@@ -204,6 +204,12 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       : getAlternateVersion(version);
 
   const setActiveUtilityPane = useCallback((pane: UtilityPane) => {
+    if (pane === "notebook") {
+      setActiveReaderPane("notebook");
+      setLeftReaderMode("scripture");
+      return;
+    }
+
     setActiveUtilityPaneState(pane);
 
     if (pane !== "search") {
@@ -215,12 +221,13 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   }, []);
 
   const openNotebook = useCallback((reference: PassageReference | null = null) => {
-    setActiveReaderPane("reading");
+    setActiveReaderPane("notebook");
     setLeftReaderMode("scripture");
-    setActiveUtilityPaneState("notebook");
-    setLastReaderUtilityPane("notebook");
+    setActiveUtilityPaneState((current) =>
+      current === "notebook" ? (lastReaderUtilityPane === "notebook" ? "search" : lastReaderUtilityPane) : current
+    );
     setPendingNotebookReference(reference);
-  }, []);
+  }, [lastReaderUtilityPane]);
 
   const openSermons = useCallback(() => {
     setActiveReaderPane("reading");
@@ -418,12 +425,12 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       setActiveReaderPane: (tab) => {
         setActiveReaderPane(tab);
 
-        if (tab === "study-sets") {
+        if (tab === "notebook" || tab === "compare" || tab === "study-sets") {
           setLeftReaderMode("scripture");
+        }
 
-          if (activeUtilityPaneState === "notebook") {
-            setActiveUtilityPaneState(lastReaderUtilityPane);
-          }
+        if (tab !== "reading" && activeUtilityPaneState === "notebook") {
+          setActiveUtilityPaneState(lastReaderUtilityPane === "notebook" ? "search" : lastReaderUtilityPane);
         }
       },
       leftReaderMode,

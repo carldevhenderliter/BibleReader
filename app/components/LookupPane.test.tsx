@@ -73,7 +73,6 @@ describe("LookupPane", () => {
 
     expect(studyPane).toBeInTheDocument();
     expect(within(studyPane).queryByRole("tab", { name: "Compare" })).not.toBeInTheDocument();
-    expect(within(studyPane).getByRole("tab", { name: "Notebook" })).toBeInTheDocument();
     expect(within(studyPane).getByRole("tab", { name: "Sermons" })).toBeInTheDocument();
   });
 
@@ -91,7 +90,7 @@ describe("LookupPane", () => {
     expect(await screen.findByLabelText("Study pane")).toBeInTheDocument();
   });
 
-  it("reopens the study pane automatically when notebook is opened from the reader menu", async () => {
+  it("keeps the study pane collapsed when notebook is opened from the reader menu", async () => {
     window.localStorage.setItem(
       SPLIT_COLLAPSED_PANES_STORAGE_KEY,
       JSON.stringify({ reader: false, search: false, study: true })
@@ -105,9 +104,10 @@ describe("LookupPane", () => {
     fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
 
     await waitFor(() => {
-      expect(screen.getByRole("tab", { name: "Notebook" })).toHaveAttribute("aria-selected", "true");
+      expect(screen.getByRole("tab", { name: "Notes" })).toHaveAttribute("aria-selected", "true");
     });
     expect(screen.getByRole("button", { name: "New notebook" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Show study pane" })).toBeInTheDocument();
   });
 
   it("does not render the study pane in mobile mode", () => {

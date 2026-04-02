@@ -477,10 +477,9 @@ describe("BottomSearchBar", () => {
     renderSearchUi();
 
     expect(screen.getByLabelText("Search pane")).toBeInTheDocument();
-    expect(screen.getByRole("tab", { name: "Notebook" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "WEB search" })).toBeInTheDocument();
     expect(
-      screen.getByText(/Open notebook, sermons, or cross references/i)
+      screen.getByText(/Open sermons or cross references/i)
     ).toBeInTheDocument();
   });
 
