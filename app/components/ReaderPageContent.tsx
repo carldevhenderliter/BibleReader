@@ -65,6 +65,7 @@ export function ReaderPageContent({
   const showStrongs = version === "kjv" && settings.showStrongs;
   const versionBadge = getBibleVersionBadge(version);
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
+  const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
   const searchParams = new URLSearchParams(locationSearch);
   const urlHighlightedVerseNumber = parsePositiveNumber(searchParams.get("highlight"));
@@ -174,13 +175,13 @@ export function ReaderPageContent({
           <div className="reading-surface reader-notebook-surface">
             <ReaderStudySetsPanel bookSlug={book.slug} chapterNumber={chapter.chapterNumber} />
           </div>
-        ) : activeReaderPane === "notebook" ? (
-          <div className="reading-surface reader-notebook-surface">
-            <ReaderNotebookEditor />
-          </div>
         ) : activeReaderPane === "compare" ? (
           <div className="reading-surface reader-notebook-surface">
             <ReaderComparePanel />
+          </div>
+        ) : showNotebookInline ? (
+          <div className="reading-surface reader-notebook-surface">
+            <ReaderNotebookEditor />
           </div>
         ) : showSermonsInline ? (
           <div className="reading-surface reader-notebook-surface">
