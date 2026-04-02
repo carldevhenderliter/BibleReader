@@ -68,14 +68,13 @@ export function ReaderNotebookEditor() {
     [pendingNotebookReference]
   );
 
-  const editorStyle = useMemo(
-    () =>
-      ({
-        "--notebook-editor-text-size": `${customization.textSize}rem`,
-        "--notebook-editor-line-height": String(customization.lineHeight),
-        "--notebook-editor-max-width":
-          customization.width === "full" ? "100%" : "68rem"
-      }) satisfies CSSProperties,
+  const editorStyle = useMemo<CSSProperties & Record<string, string>>(
+    () => ({
+      "--notebook-editor-text-size": `${customization.textSize}rem`,
+      "--notebook-editor-line-height": String(customization.lineHeight),
+      "--notebook-editor-max-width":
+        customization.width === "full" ? "100%" : "68rem"
+    }),
     [customization.lineHeight, customization.textSize, customization.width]
   );
 
