@@ -79,6 +79,8 @@ async function configureKokoroEnvironmentRuntime() {
   transformersEnv.allowRemoteModels = false;
   transformersEnv.allowLocalModels = true;
   transformersEnv.localModelPath = modelRoot;
+  transformersEnv.backends.onnx ??= {};
+  transformersEnv.backends.onnx.wasm ??= {};
   transformersEnv.backends.onnx.wasm.wasmPaths = wasmRoot;
   kokoroEnv.wasmPaths = wasmRoot;
 
