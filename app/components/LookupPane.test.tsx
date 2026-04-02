@@ -1,4 +1,5 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react";
+import { within } from "@testing-library/react";
 
 import { AppSplitLayout } from "@/app/components/AppSplitLayout";
 import { ReaderPageContent } from "@/app/components/ReaderPageContent";
@@ -68,9 +69,12 @@ describe("LookupPane", () => {
   it("renders the study pane tabs in split view", () => {
     renderStudyPane();
 
-    expect(screen.getByLabelText("Study pane")).toBeInTheDocument();
-    expect(screen.getByRole("tab", { name: "Notebook" })).toBeInTheDocument();
-    expect(screen.getByRole("tab", { name: "Sermons" })).toBeInTheDocument();
+    const studyPane = screen.getByLabelText("Study pane");
+
+    expect(studyPane).toBeInTheDocument();
+    expect(within(studyPane).queryByRole("tab", { name: "Compare" })).not.toBeInTheDocument();
+    expect(within(studyPane).getByRole("tab", { name: "Notebook" })).toBeInTheDocument();
+    expect(within(studyPane).getByRole("tab", { name: "Sermons" })).toBeInTheDocument();
   });
 
   it("restores a collapsed study rail from local storage and reopens it", async () => {

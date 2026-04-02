@@ -17,6 +17,15 @@ export function ReaderContentTabs() {
         Scripture
       </button>
       <button
+        aria-selected={activeReaderPane === "compare"}
+        className={`reader-content-tab${activeReaderPane === "compare" ? " is-active" : ""}`}
+        onClick={() => setActiveReaderPane("compare")}
+        role="tab"
+        type="button"
+      >
+        Compare
+      </button>
+      <button
         aria-selected={activeReaderPane === "study-sets"}
         className={`reader-content-tab${activeReaderPane === "study-sets" ? " is-active" : ""}`}
         onClick={() => setActiveReaderPane("study-sets")}

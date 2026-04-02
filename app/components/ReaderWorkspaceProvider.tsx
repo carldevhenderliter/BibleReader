@@ -59,7 +59,7 @@ import {
 } from "@/lib/study-workspace";
 import { getInstalledBundledBibleVersions } from "@/lib/bible/version";
 
-type ReaderPane = "reading" | "study-sets";
+type ReaderPane = "reading" | "compare" | "study-sets";
 type LeftReaderMode = "scripture" | "search";
 type UtilityPane = "search" | "cross-references" | "compare" | "notebook" | "sermons";
 
@@ -451,7 +451,8 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
           setActiveStudyVerseNumber(verseNumber);
         }
 
-        setActiveUtilityPane("compare");
+        setActiveReaderPane("compare");
+        setLeftReaderMode("scripture");
       },
       compareVersion,
       setCompareVersion: (nextVersion) => {

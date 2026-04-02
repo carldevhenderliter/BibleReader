@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderContentTabs } from "@/app/components/ReaderContentTabs";
+import { ReaderComparePanel } from "@/app/components/ReaderComparePanel";
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
 import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
@@ -173,6 +174,10 @@ export function ReaderPageContent({
         {activeReaderPane === "study-sets" ? (
           <div className="reading-surface reader-notebook-surface">
             <ReaderStudySetsPanel bookSlug={book.slug} chapterNumber={chapter.chapterNumber} />
+          </div>
+        ) : activeReaderPane === "compare" ? (
+          <div className="reading-surface reader-notebook-surface">
+            <ReaderComparePanel />
           </div>
         ) : showNotebookInline ? (
           <div className="reading-surface reader-notebook-surface">

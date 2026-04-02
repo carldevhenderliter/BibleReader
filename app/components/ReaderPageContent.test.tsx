@@ -257,6 +257,23 @@ describe("ReaderPageContent", () => {
     );
   });
 
+  it("opens compare in the reader view from the menu", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "Compare" }));
+
+    expect(screen.getByRole("tab", { name: "Compare" })).toHaveAttribute("aria-selected", "true");
+    expect(screen.getByText("Parallel Compare")).toBeInTheDocument();
+    expect(screen.getByLabelText("Parallel translation comparison")).toBeInTheDocument();
+  });
+
   it("hides read-aloud controls from the reader toolbar and settings menu", () => {
     installKokoroSupport({ pendingLoad: true });
 

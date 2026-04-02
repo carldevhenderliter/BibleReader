@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
-import { ReaderComparePanel } from "@/app/components/ReaderComparePanel";
 import { ReaderCrossReferencesPanel } from "@/app/components/ReaderCrossReferencesPanel";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
 import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
@@ -71,15 +70,6 @@ export function LookupPane() {
             Cross References
           </button>
           <button
-            aria-selected={activeUtilityPane === "compare"}
-            className={`lookup-pane-tab${activeUtilityPane === "compare" ? " is-active" : ""}`}
-            onClick={() => setActiveUtilityPane("compare")}
-            role="tab"
-            type="button"
-          >
-            Compare
-          </button>
-          <button
             aria-selected={activeUtilityPane === "notebook"}
             className={`lookup-pane-tab${activeUtilityPane === "notebook" ? " is-active" : ""}`}
             onClick={() => setActiveUtilityPane("notebook")}
@@ -103,14 +93,6 @@ export function LookupPane() {
             <ReaderNotebookEditor />
           ) : activeUtilityPane === "sermons" ? (
             <ReaderSermonWorkspace />
-          ) : activeUtilityPane === "compare" ? (
-            isReaderRoute ? (
-              <ReaderComparePanel />
-            ) : (
-              <div className="lookup-panel-empty">
-                <p className="search-empty-copy">Open a passage to compare translations.</p>
-              </div>
-            )
           ) : activeUtilityPane === "cross-references" ? (
             isReaderRoute ? (
               <ReaderCrossReferencesPanel />
@@ -122,7 +104,7 @@ export function LookupPane() {
           ) : (
             <div className="lookup-panel-empty">
               <p className="search-empty-copy">
-                Open notebook, sermons, compare, or cross references in the study pane.
+                Open notebook, sermons, or cross references in the study pane.
               </p>
             </div>
           )}
