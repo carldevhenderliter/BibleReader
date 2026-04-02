@@ -8,12 +8,18 @@ import { setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
 
 const mockKokoroGenerate = jest.fn();
-const mockKokoroFromPretrained = jest.fn();
+const mockLoadLocalKokoroTts = jest.fn();
 
-jest.mock("kokoro-js", () => ({
-  KokoroTTS: {
-    from_pretrained: mockKokoroFromPretrained
-  }
+jest.mock("@/lib/kokoro-local", () => ({
+  getKokoroVoices: () => [
+    {
+      id: "af_heart",
+      name: "Heart",
+      language: "en-us",
+      gender: "Female"
+    }
+  ],
+  loadLocalKokoroTts: (...args: unknown[]) => mockLoadLocalKokoroTts(...args)
 }));
 
 const books: BookMeta[] = [
@@ -163,17 +169,16 @@ function installKokoroSupport() {
     value: "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0)"
   });
 
-  mockKokoroGenerate.mockResolvedValue({
-    toWav: () => new ArrayBuffer(8)
-  });
-  mockKokoroFromPretrained.mockResolvedValue({
-    voices: {
-      af_heart: {
+  mockKokoroGenerate.mockResolvedValue(new ArrayBuffer(8));
+  mockLoadLocalKokoroTts.mockResolvedValue({
+    voices: [
+      {
+        id: "af_heart",
         name: "Heart",
         language: "en-us",
-        gender: "female"
+        gender: "Female"
       }
-    },
+    ],
     generate: mockKokoroGenerate
   });
 

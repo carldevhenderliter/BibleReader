@@ -8,7 +8,8 @@
     "start": "next start",
     "test": "jest --config jest.config.js",
     "test:watch": "jest --config jest.config.js --watch",
-    "import:bible": "node scripts/import-bible.mjs"
+    "import:bible": "node scripts/import-bible.mjs",
+    "setup:kokoro": "node scripts/setup-kokoro-assets.mjs"
   },
   "dependencies": {
     "@mlc-ai/web-llm": "^0.2.82",

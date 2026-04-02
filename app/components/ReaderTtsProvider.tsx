@@ -20,12 +20,11 @@ import type {
   ReaderTtsStatus
 } from "@/lib/bible/types";
 import { getChapterHref } from "@/lib/bible/utils";
+import { getKokoroVoices, loadLocalKokoroTts } from "@/lib/kokoro-local";
 import {
   DEFAULT_KOKORO_VOICE,
   DEFAULT_READER_TTS_SETTINGS,
-  getPreferredKokoroDevice,
   isKokoroTtsSupported,
-  KOKORO_MODEL_ID,
   normalizeReaderTtsSettings,
   READER_TTS_STORAGE_KEY
 } from "@/lib/reader-tts";
@@ -79,13 +78,6 @@ type ReaderTtsContextValue = {
   updateSettings: (updates: Partial<ReaderTtsSettings>) => void;
 };
 
-type KokoroVoiceEntry = {
-  name: string;
-  language: string;
-  gender: string;
-  traits?: string;
-};
-
 type KokoroInstance = {
   generate: (
     text: string,
@@ -99,21 +91,11 @@ type KokoroInstance = {
 
 const ReaderTtsContext = createContext<ReaderTtsContextValue | null>(null);
 
-function mapKokoroVoices(sourceVoices: Record<string, KokoroVoiceEntry>) {
-  return Object.entries(sourceVoices).map(([id, voice]) => ({
-    id,
-    name: voice.name,
-    language: voice.language,
-    gender: voice.gender,
-    traits: voice.traits
-  }));
-}
-
 export function ReaderTtsProvider({ children }: PropsWithChildren) {
   const router = useRouter();
   const { version } = useReaderVersion();
   const [isKokoroSupported, setIsKokoroSupported] = useState(false);
-  const [kokoroVoices, setKokoroVoices] = useState<ReaderTtsKokoroVoice[]>([]);
+  const [kokoroVoices, setKokoroVoices] = useState<ReaderTtsKokoroVoice[]>(getKokoroVoices());
   const [settings, setSettings] = useState(DEFAULT_READER_TTS_SETTINGS);
   const [status, setStatus] = useState<ReaderTtsStatus>("idle");
   const [activeEngine, setActiveEngine] = useState<ReaderTtsEngine | null>(null);
@@ -287,42 +269,10 @@ export function ReaderTtsProvider({ children }: PropsWithChildren) {
     setKokoroStatus("loading");
     setKokoroProgressLabel("Downloading HD voice");
 
-    kokoroLoadPromiseRef.current = import("kokoro-js")
-      .then(async ({ KokoroTTS }) => {
-        const tts = await KokoroTTS.from_pretrained(KOKORO_MODEL_ID, {
-          device: getPreferredKokoroDevice(),
-          dtype: "q8",
-          progress_callback: (progress) => {
-            if (!progress || typeof progress !== "object") {
-              return;
-            }
-
-            const progressValue =
-              progress.status === "progress" ? `${Math.round(progress.progress)}%` : null;
-            const statusLabel =
-              progress.status === "ready"
-                ? "HD voice ready"
-                : progress.status === "done"
-                  ? "Finalizing HD voice"
-                  : "Downloading HD voice";
-
-            setKokoroProgressLabel(
-              progressValue ? `${statusLabel} ${progressValue}` : statusLabel
-            );
-          }
-        });
-
-        const instance: KokoroInstance = {
-          generate: async (text, options) => {
-            const output = await tts.generate(
-              text,
-              options as Parameters<typeof tts.generate>[1]
-            );
-            return output.toWav();
-          },
-          voices: mapKokoroVoices(tts.voices as Record<string, KokoroVoiceEntry>)
-        };
-
+    kokoroLoadPromiseRef.current = loadLocalKokoroTts((label) => {
+      setKokoroProgressLabel(label);
+    })
+      .then((instance) => {
         kokoroInstanceRef.current = instance;
         setKokoroVoices(instance.voices);
         setKokoroStatus("ready");
@@ -332,7 +282,7 @@ export function ReaderTtsProvider({ children }: PropsWithChildren) {
       .catch(() => {
         kokoroLoadPromiseRef.current = null;
         setKokoroStatus("error");
-        setKokoroProgressLabel("HD voice download failed");
+        setKokoroProgressLabel("HD voice failed to load");
         return null;
       });
 
