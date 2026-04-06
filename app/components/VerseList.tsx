@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
-import { StrongsPopover } from "@/app/components/StrongsPopover";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import type { Verse } from "@/lib/bible/types";
@@ -35,6 +34,7 @@ export function VerseList({
     getHighlight,
     openNotebook,
     openCrossReferences,
+    openStrongs,
     saveReferenceToStudySet,
     toggleBookmark,
     updateBookmarkLabel,
@@ -42,11 +42,6 @@ export function VerseList({
   } = useReaderWorkspace();
   const activeHighlightedVerseNumber = highlightedVerseNumber ?? null;
   const activeHighlightedVerseRange = highlightedVerseRange ?? null;
-  const [activeStrongsToken, setActiveStrongsToken] = useState<{
-    rect: DOMRect;
-    strongsNumbers: string[];
-    text: string;
-  } | null>(null);
 
   useEffect(() => {
     const scrollTargetVerseNumber =
@@ -62,12 +57,6 @@ export function VerseList({
 
     element?.scrollIntoView?.({ block: "center" });
   }, [activeHighlightedVerseNumber, activeHighlightedVerseRange, bookSlug, chapterNumber]);
-
-  useEffect(() => {
-    if (!showStrongs) {
-      setActiveStrongsToken(null);
-    }
-  }, [showStrongs]);
 
   return (
     <>
@@ -100,13 +89,7 @@ export function VerseList({
                         <button
                           className="strongs-token"
                           key={`${verse.number}:${index}:${token.text}`}
-                          onClick={(event) =>
-                            setActiveStrongsToken({
-                              rect: event.currentTarget.getBoundingClientRect(),
-                              strongsNumbers: token.strongsNumbers ?? [],
-                              text: token.text
-                            })
-                          }
+                          onClick={() => openStrongs(token.strongsNumbers ?? [], token.strongsNumbers?.join(" "))}
                           type="button"
                         >
                           <span>{token.text}</span>
@@ -256,7 +239,6 @@ export function VerseList({
           );
         })}
       </div>
-      <StrongsPopover activeToken={activeStrongsToken} onClose={() => setActiveStrongsToken(null)} />
     </>
   );
 }

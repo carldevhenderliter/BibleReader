@@ -1,7 +1,9 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react";
+import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 
+import { LookupPane } from "@/app/components/LookupPane";
 import { VerseList } from "@/app/components/VerseList";
 import type { Verse } from "@/lib/bible/types";
+import { setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
 
 const verses: Verse[] = [
@@ -21,6 +23,23 @@ const verses: Verse[] = [
 ];
 
 describe("VerseList", () => {
+  beforeEach(() => {
+    setMockPathname("/read/genesis/1");
+    Object.defineProperty(window, "matchMedia", {
+      writable: true,
+      value: jest.fn().mockImplementation(() => ({
+        matches: true,
+        media: "(min-width: 64rem)",
+        onchange: null,
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+        dispatchEvent: jest.fn()
+      }))
+    });
+  });
+
   it("renders plain text when Strongs is disabled", () => {
     renderWithReaderCustomization(
       <VerseList
@@ -35,22 +54,28 @@ describe("VerseList", () => {
     expect(screen.queryByText("H7225")).not.toBeInTheDocument();
   });
 
-  it("opens a Strongs popup from a tagged token", async () => {
+  it("opens Strongs details in the study pane from a tagged token", async () => {
     renderWithReaderCustomization(
-      <VerseList
-        bookSlug="genesis"
-        chapterNumber={1}
-        showStrongs
-        verses={verses}
-      />
+      <>
+        <VerseList
+          bookSlug="genesis"
+          chapterNumber={1}
+          showStrongs
+          verses={verses}
+        />
+        <LookupPane />
+      </>
     );
 
     fireEvent.click(screen.getByRole("button", { name: /In the beginning H7225/i }));
 
-    expect(await screen.findByRole("dialog")).toBeInTheDocument();
     await waitFor(() => {
-      expect(screen.getAllByText("H7225").length).toBeGreaterThan(0);
-      expect(screen.getByText(/Transliteration:/i)).toBeInTheDocument();
+      expect(screen.getByRole("tab", { name: "Strongs" })).toHaveAttribute("aria-selected", "true");
     });
+    const studyPane = screen.getByLabelText("Study pane");
+
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(within(studyPane).getByRole("heading", { name: "H7225" })).toBeInTheDocument();
+    expect(await within(studyPane).findByText(/Transliteration:/i)).toBeInTheDocument();
   });
 });
