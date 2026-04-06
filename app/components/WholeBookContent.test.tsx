@@ -54,7 +54,15 @@ const kjvChapters: Chapter[] = [
     bookSlug: "jude",
     chapterNumber: 1,
     verses: [
-      { number: 1, text: "Jude, the servant of Jesus Christ..." },
+      {
+        number: 1,
+        text: "Jude, the servant of Jesus Christ...",
+        tokens: [
+          { text: "Jude, the servant of ", strongsNumbers: [] },
+          { text: "Jesus", strongsNumbers: ["G2424"] },
+          { text: " Christ...", strongsNumbers: [] }
+        ]
+      },
       { number: 2, text: "Mercy unto you, and peace, and love, be multiplied." }
     ]
   },
@@ -62,6 +70,22 @@ const kjvChapters: Chapter[] = [
     bookSlug: "jude",
     chapterNumber: 2,
     verses: [{ number: 1, text: "Beloved, when I gave all diligence to write unto you..." }]
+  }
+];
+
+const nltChapters: Chapter[] = [
+  {
+    bookSlug: "jude",
+    chapterNumber: 1,
+    verses: [
+      { number: 1, text: "This letter is from Jude, a slave of Jesus Christ..." },
+      { number: 2, text: "May God give you more and more mercy, peace, and love." }
+    ]
+  },
+  {
+    bookSlug: "jude",
+    chapterNumber: 2,
+    verses: [{ number: 1, text: "Dear friends, I had been eagerly planning to write to you..." }]
   }
 ];
 
@@ -244,6 +268,25 @@ describe("WholeBookContent", () => {
 
     expect(screen.getByText("King James")).toBeInTheDocument();
     expect(screen.getByText("Mercy unto you, and peace, and love, be multiplied.")).toBeInTheDocument();
+  });
+
+  it("renders three versions in whole-book compare with chapter sections", () => {
+    renderWithReaderCustomization(
+      <WholeBookContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapters, kjv: kjvChapters, nlt: nltChapters }}
+        focusedChapterNumber={2}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("tab", { name: "Compare" }));
+
+    expect(screen.getAllByText("WEB").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("KJV").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("NLT").length).toBeGreaterThan(0);
+    expect(screen.getAllByRole("heading", { name: /Chapter /i }).length).toBeGreaterThan(1);
+    expect(screen.getByText("Dear friends, I had been eagerly planning to write to you...")).toBeInTheDocument();
   });
 
   it("hides read-aloud controls in whole-book view", () => {

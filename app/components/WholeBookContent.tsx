@@ -209,7 +209,12 @@ export function WholeBookContent({
           </div>
         ) : activeReaderPane === "compare" ? (
           <div className="reading-surface reader-notebook-surface">
-            <ReaderComparePanel />
+            <ReaderComparePanel
+              book={book}
+              chaptersByVersion={chaptersByVersion}
+              focusedChapterNumber={activeFocusedChapterNumber}
+              view="book"
+            />
           </div>
         ) : showNotebookInline ? (
           <div className="reading-surface reader-notebook-surface">

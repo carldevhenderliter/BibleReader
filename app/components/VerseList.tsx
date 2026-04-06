@@ -4,6 +4,7 @@ import { useEffect } from "react";
 
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
+import { VerseTextContent } from "@/app/components/VerseTextContent";
 import type { Verse } from "@/lib/bible/types";
 import { createPassageReference } from "@/lib/study-workspace";
 
@@ -83,29 +84,16 @@ export function VerseList({
               </span>
               <div className="verse-content">
                 {showStrongs && verse.tokens?.length ? (
-                  <p className="verse-text verse-text-rich">
-                    {verse.tokens.map((token, index) =>
-                      token.strongsNumbers?.length ? (
-                        <button
-                          className="strongs-token"
-                          key={`${verse.number}:${index}:${token.text}`}
-                          onClick={() => openStrongs(token.strongsNumbers ?? [], token.strongsNumbers?.join(" "))}
-                          type="button"
-                        >
-                          <span>{token.text}</span>
-                          <span className="strongs-token-numbers">
-                            {token.strongsNumbers.join(" ")}
-                          </span>
-                        </button>
-                      ) : (
-                        <span className="strongs-text-segment" key={`${verse.number}:${index}:${token.text}`}>
-                          {token.text}
-                        </span>
-                      )
-                    )}
-                  </p>
+                  <VerseTextContent
+                    className="verse-text verse-text-rich"
+                    onOpenStrongs={(strongsNumbers) =>
+                      openStrongs(strongsNumbers, strongsNumbers.join(" "))
+                    }
+                    showStrongs
+                    verse={verse}
+                  />
                 ) : (
-                  <p className="verse-text">{verse.text}</p>
+                  <VerseTextContent className="verse-text" verse={verse} />
                 )}
                 <div className="verse-study-actions">
                   <button

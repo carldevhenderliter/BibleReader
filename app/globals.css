@@ -2723,6 +2723,23 @@ select {
   min-width: 11rem;
 }
 
+.reader-compare-selectors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  justify-content: flex-end;
+}
+
+.reader-compare-section {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.reader-compare-section-header h4 {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
 .reader-compare-columns {
   display: grid;
   gap: 0.75rem;
@@ -2731,7 +2748,6 @@ select {
 .reader-compare-columns-header,
 .reader-compare-row {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr);
   gap: 0.75rem;
 }
 
@@ -2768,6 +2784,25 @@ select {
 .reader-compare-row p {
   margin: 0;
   line-height: 1.55;
+}
+
+.reader-compare-cell {
+  display: grid;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.reader-compare-cell-version {
+  display: none;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.reader-compare-text {
+  min-width: 0;
 }
 
 .reader-compare-verse-number {
@@ -3567,14 +3602,30 @@ select {
     width: min(100%, 24rem);
   }
 
-  .reader-compare-columns-header,
   .reader-compare-row {
     grid-template-columns: auto 1fr;
   }
 
-  .reader-compare-columns-header span:last-child,
-  .reader-compare-row p:last-child {
+  .reader-compare-row > :not(:first-child) {
     grid-column: 2;
+  }
+
+  .reader-compare-columns-header {
+    display: none;
+  }
+
+  .reader-compare-selectors {
+    justify-content: stretch;
+    width: 100%;
+  }
+
+  .reader-compare-select {
+    min-width: min(100%, 14rem);
+    width: 100%;
+  }
+
+  .reader-compare-cell-version {
+    display: block;
   }
 }
 

@@ -92,8 +92,9 @@ type ReaderWorkspaceContextValue = {
   setActiveStudyVerseNumber: (value: number | null) => void;
   openCrossReferences: (verseNumber?: number | null) => void;
   openCompare: (verseNumber?: number | null) => void;
-  compareVersion: BundledBibleVersion;
-  setCompareVersion: (value: BundledBibleVersion) => void;
+  compareVersions: BundledBibleVersion[];
+  setCompareVersions: (values: BundledBibleVersion[]) => void;
+  setCompareVersionAtIndex: (index: number, value: BundledBibleVersion) => void;
   getNotebookDocuments: () => NotebookDocument[];
   getActiveNotebook: () => NotebookDocument | null;
   activeNotebookId: string | null;
@@ -172,8 +173,43 @@ function getSortedSermons(documents: SermonDocumentStorage) {
   return Object.values(documents).sort((left, right) => right.updatedAt.localeCompare(left.updatedAt));
 }
 
-function getAlternateVersion(version: BundledBibleVersion): BundledBibleVersion {
-  return getInstalledBundledBibleVersions().find((candidate) => candidate !== version) ?? version;
+function getDefaultCompareVersions(
+  primaryVersion: BundledBibleVersion,
+  installedVersions: readonly BundledBibleVersion[]
+) {
+  return installedVersions.filter((candidate) => candidate !== primaryVersion).slice(0, 2);
+}
+
+function normalizeCompareVersions(
+  primaryVersion: BundledBibleVersion,
+  installedVersions: readonly BundledBibleVersion[],
+  requestedVersions: readonly BundledBibleVersion[]
+) {
+  const uniqueSelections: BundledBibleVersion[] = [];
+
+  for (const candidate of requestedVersions) {
+    if (
+      candidate === primaryVersion ||
+      !installedVersions.includes(candidate) ||
+      uniqueSelections.includes(candidate)
+    ) {
+      continue;
+    }
+
+    uniqueSelections.push(candidate);
+  }
+
+  for (const candidate of getDefaultCompareVersions(primaryVersion, installedVersions)) {
+    if (uniqueSelections.length >= Math.max(0, installedVersions.length - 1) || uniqueSelections.length >= 2) {
+      break;
+    }
+
+    if (!uniqueSelections.includes(candidate)) {
+      uniqueSelections.push(candidate);
+    }
+  }
+
+  return uniqueSelections.slice(0, Math.min(2, Math.max(0, installedVersions.length - 1)));
 }
 
 export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
@@ -197,16 +233,14 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   const [activeStrongsNumbers, setActiveStrongsNumbers] = useState<string[]>([]);
   const [activeStrongsLabel, setActiveStrongsLabel] = useState<string | null>(null);
   const [activeSermonId, setActiveSermonId] = useState<string | null>(null);
-  const [compareVersionOverride, setCompareVersionOverride] = useState<BundledBibleVersion | null>(null);
+  const [compareVersionOverrides, setCompareVersionOverrides] = useState<BundledBibleVersion[]>([]);
   const isReaderRoute = pathname.startsWith("/read");
   const activeUtilityPane = activeUtilityPaneState;
   const installedBundledVersions = getInstalledBundledBibleVersions();
-  const compareVersion =
-    compareVersionOverride &&
-    compareVersionOverride !== version &&
-    installedBundledVersions.includes(compareVersionOverride)
-      ? compareVersionOverride
-      : getAlternateVersion(version);
+  const compareVersions = useMemo(
+    () => normalizeCompareVersions(version, installedBundledVersions, compareVersionOverrides),
+    [compareVersionOverrides, installedBundledVersions, version]
+  );
 
   const setActiveUtilityPane = useCallback((pane: UtilityPane) => {
     setActiveUtilityPaneState(pane);
@@ -473,9 +507,16 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
         setActiveReaderPane("compare");
         setLeftReaderMode("scripture");
       },
-      compareVersion,
-      setCompareVersion: (nextVersion) => {
-        setCompareVersionOverride(nextVersion === version ? getAlternateVersion(version) : nextVersion);
+      compareVersions,
+      setCompareVersions: (nextVersions) => {
+        setCompareVersionOverrides(nextVersions);
+      },
+      setCompareVersionAtIndex: (index, nextVersion) => {
+        setCompareVersionOverrides((current) => {
+          const next = current.slice(0, 2);
+          next[index] = nextVersion;
+          return next;
+        });
       },
       getNotebookDocuments: () => getSortedNotebooks(notebooks),
       getActiveNotebook: () =>
@@ -968,7 +1009,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       activeUtilityPaneState,
       bookmarks,
       closeNotebookWorkspace,
-      compareVersion,
+      compareVersions,
       currentChapterByVersion,
       currentPassage,
       highlights,

@@ -179,7 +179,11 @@ export function ReaderPageContent({
           </div>
         ) : activeReaderPane === "compare" ? (
           <div className="reading-surface reader-notebook-surface">
-            <ReaderComparePanel />
+            <ReaderComparePanel
+              book={book}
+              chaptersByVersion={chaptersByVersion}
+              view="chapter"
+            />
           </div>
         ) : showNotebookInline ? (
           <div className="reading-surface reader-notebook-surface">

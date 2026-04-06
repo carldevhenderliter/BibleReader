@@ -1,4 +1,4 @@
-import { fireEvent, screen, waitFor } from "@testing-library/react";
+import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 
 import { AppSplitLayout } from "@/app/components/AppSplitLayout";
 import { LookupPane } from "@/app/components/LookupPane";
@@ -56,8 +56,25 @@ const kjvChapter: Chapter = {
   bookSlug: "genesis",
   chapterNumber: 1,
   verses: [
-    { number: 1, text: "In the beginning God created the heaven and the earth." },
+    {
+      number: 1,
+      text: "In the beginning God created the heaven and the earth.",
+      tokens: [
+        { text: "In the ", strongsNumbers: [] },
+        { text: "beginning", strongsNumbers: ["G746"] },
+        { text: " God created the heaven and the earth.", strongsNumbers: [] }
+      ]
+    },
     { number: 2, text: "And the earth was without form, and void." }
+  ]
+};
+
+const nltChapter: Chapter = {
+  bookSlug: "genesis",
+  chapterNumber: 1,
+  verses: [
+    { number: 1, text: "In the beginning God created the heavens and the earth." },
+    { number: 2, text: "The earth was formless and empty." }
   ]
 };
 
@@ -272,6 +289,32 @@ describe("ReaderPageContent", () => {
     expect(screen.getByRole("tab", { name: "Compare" })).toHaveAttribute("aria-selected", "true");
     expect(screen.getByText("Parallel Compare")).toBeInTheDocument();
     expect(screen.getByLabelText("Parallel translation comparison")).toBeInTheDocument();
+  });
+
+  it("renders three versions in chapter compare and routes KJV Strongs clicks to study", async () => {
+    setSplitViewActive(true);
+
+    renderWithReaderCustomization(
+      <AppSplitLayout>
+        <ReaderPageContent
+          book={books[0]}
+          books={books}
+          chaptersByVersion={{ web: chapter, kjv: kjvChapter, nlt: nltChapter }}
+        />
+      </AppSplitLayout>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "Compare" }));
+
+    expect(screen.getAllByText("WEB").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("KJV").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("NLT").length).toBeGreaterThan(0);
+
+    fireEvent.click(screen.getByRole("button", { name: /beginning\s+G746/i }));
+
+    const studyPane = screen.getByLabelText("Study pane");
+    expect(await within(studyPane).findByRole("heading", { name: "G746" })).toBeInTheDocument();
   });
 
   it("hides read-aloud controls from the reader toolbar and settings menu", () => {
