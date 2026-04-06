@@ -1,7 +1,7 @@
 import type { BdagArticle, StrongsEntry } from "@/lib/bible/types";
 
 const BDAG_ENTRY_START_PATTERN =
-  /^(?<prefix>[\p{Script=Greek}][^\n⟦]{0,120}?)\s+⟦(?<transliteration>[^\n⟧]{1,80})⟧/gmu;
+  /^([\p{Script=Greek}][^\n⟦]{0,120}?)\s+⟦([^\n⟧]{1,80})⟧/gmu;
 
 export type BdagMergeResult = {
   mergedLexicon: Record<string, StrongsEntry>;
@@ -103,8 +103,8 @@ export function parseBdagPdfText(sourceText: string) {
   const articles: BdagArticle[] = [];
 
   for (const [index, match] of matches.entries()) {
-    const prefix = match.groups?.prefix?.trim() ?? "";
-    const transliteration = match.groups?.transliteration?.trim() ?? "";
+    const prefix = match[1]?.trim() ?? "";
+    const transliteration = match[2]?.trim() ?? "";
     const headword = extractHeadword(prefix);
 
     if (!headword || !transliteration) {
