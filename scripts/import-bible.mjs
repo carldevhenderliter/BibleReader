@@ -135,7 +135,8 @@ const NLT_BOOK_CODE_BY_SLUG = {
  * @typedef {{ id: string, label: string, references: TopicReference[] }} TopicSourceSubtopic
  * @typedef {{ id: string, label: string, aliases: string[], subtopics: TopicSourceSubtopic[] }} TopicSourceEntry
  * @typedef {{ id: string, label: string, aliases: string[], subtopics: { id: string, label: string, verses: Array<{ version: "web" | "kjv" | "nlt" | "esv", bookSlug: string, bookName: string, chapterNumber: number, verseNumber: number, text: string, tokens?: VerseToken[] }> }[] }} TopicSearchEntry
- * @typedef {{ headword: string, transliteration: string, entry: string }} BdagArticle
+ * @typedef {{ plainMeaning: string, commonUse?: string, ntNote?: string }} BdagSummary
+ * @typedef {{ headword: string, transliteration: string, entry: string, summary: BdagSummary }} BdagArticle
  * @typedef {{ id: string, language: "hebrew" | "greek", lemma: string, transliteration: string, definition: string, partOfSpeech: string, rootWord: string, outlineUsage: string, bdagArticles?: BdagArticle[] }} StrongsEntry
  * @typedef {{ strongsNumber: string, bookSlug: string, bookName: string, chapterNumber: number, verseNumber: number, text: string }} StrongsSearchVerseEntry
  */
@@ -898,6 +899,205 @@ function cleanBdagEntryText(rawEntry, headword) {
 }
 
 /**
+ * @param {string} value
+ */
+function cleanSummaryText(value) {
+  return value
+    .replace(/\([^)]{0,200}\)/g, " ")
+    .replace(/\b(?:Hom|Hdt|Jos|Diod|Philo|Just|Polyb|Ael|Test[A-Za-z]+|PGM|LXX|Papias|Herm\.?|AcPl|IG|OGI|SEG|POxy|BGU|P[FILOT][A-Za-z0-9]+)/g, " ")
+    .replace(/\b(?:Mt|Mk|Lk|Jn?|Ac|Ro|1 Cor|2 Cor|Gal|Eph|Phil|Col|1 Th|2 Th|1 Ti|2 Ti|Tit|Phlm|Hb|Js|1 Pt|2 Pt|1J|2J|3J|Jude|Rv)\b\.?/g, " ")
+    .replace(/\b\d+(?::\d+)?(?:[a-z])?\b/g, " ")
+    .replace(/[\p{Script=Greek}]+/gu, " ")
+    .replace(/\s+/g, " ")
+    .replace(/\s*([,;:.!?])\s*/g, "$1 ")
+    .replace(/\s+/g, " ")
+    .replace(/^[,;:.!?()\[\]\-–—\s]+/g, "")
+    .replace(/[,;:.!?()\[\]\-–—\s]+$/g, "")
+    .trim();
+}
+
+/**
+ * @param {string} value
+ */
+function sentenceCase(value) {
+  if (!value) {
+    return value;
+  }
+
+  return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
+/**
+ * @param {string} value
+ */
+function takeLeadSentence(value) {
+  const normalized = value.replace(/\n+/g, " ").trim();
+  const sentence = normalized.match(/^(.{20,260}?[.?!])(?:\s|$)/)?.[1] ?? normalized.slice(0, 220);
+
+  return cleanSummaryText(sentence);
+}
+
+/**
+ * @param {string[]} phrases
+ */
+function uniquePhrases(phrases) {
+  const seen = new Set();
+  const results = [];
+
+  for (const phrase of phrases) {
+    const normalized = phrase.toLowerCase();
+
+    if (!normalized || seen.has(normalized)) {
+      continue;
+    }
+
+    seen.add(normalized);
+    results.push(phrase);
+  }
+
+  return results;
+}
+
+/**
+ * @param {string} outlineUsage
+ */
+function extractOutlinePhrases(outlineUsage) {
+  return uniquePhrases(
+    outlineUsage
+      .split(/[;,]|\s{2,}/)
+      .map((part) => cleanSummaryText(part))
+      .filter((part) => {
+        const wordCount = part.split(/\s+/).filter(Boolean).length;
+
+        if (wordCount === 0 || wordCount > 9) {
+          return false;
+        }
+
+        return !/^(?:of|and|or|the|a|an|to|in|on|with|for|from|by|cp|opp|misc)$/i.test(part);
+      })
+  );
+}
+
+/**
+ * @param {string[]} values
+ */
+function toNaturalList(values) {
+  if (values.length === 0) {
+    return "";
+  }
+
+  if (values.length === 1) {
+    return values[0];
+  }
+
+  if (values.length === 2) {
+    return `${values[0]} or ${values[1]}`;
+  }
+
+  return `${values.slice(0, -1).join(", ")}, or ${values[values.length - 1]}`;
+}
+
+/**
+ * @param {string} articleEntry
+ * @param {StrongsEntry} strongsEntry
+ */
+function buildPlainMeaning(articleEntry, strongsEntry) {
+  const outlinePhrases = extractOutlinePhrases(strongsEntry.outlineUsage);
+  const definitionLead = takeLeadSentence(strongsEntry.definition);
+  const articleLead = takeLeadSentence(
+    articleEntry.replace(/^\([^)]{0,250}\)\.?\s*/, "").replace(/^\d+\s*[a-z]?\s*/, "")
+  );
+
+  if (outlinePhrases.length >= 2) {
+    return `Usually means ${toNaturalList(outlinePhrases.slice(0, 3))}.`;
+  }
+
+  if (definitionLead && definitionLead.split(/\s+/).length >= 3) {
+    return `${sentenceCase(definitionLead)}.`;
+  }
+
+  return `${sentenceCase(articleLead)}.`;
+}
+
+/**
+ * @param {string} articleEntry
+ * @param {StrongsEntry} strongsEntry
+ * @param {string} plainMeaning
+ */
+function buildCommonUse(articleEntry, strongsEntry, plainMeaning) {
+  const articleLead = takeLeadSentence(
+    articleEntry
+      .replace(/^\([^)]{0,250}\)\.?\s*/, "")
+      .replace(/^\d+\s*[a-z]?\s*/, "")
+      .replace(/^[a-zα-ω]\s+/i, "")
+  );
+  const outlinePhrases = extractOutlinePhrases(strongsEntry.outlineUsage);
+  const fallbackUse = outlinePhrases.slice(3, 6);
+
+  if (
+    articleLead &&
+    articleLead.length > 30 &&
+    !plainMeaning.toLowerCase().includes(articleLead.toLowerCase().slice(0, 18))
+  ) {
+    return `${sentenceCase(articleLead)}.`;
+  }
+
+  if (fallbackUse.length > 0) {
+    return `It can also refer to ${toNaturalList(fallbackUse)}.`;
+  }
+
+  return undefined;
+}
+
+/**
+ * @param {string} articleEntry
+ * @param {StrongsEntry} strongsEntry
+ */
+function buildNtNote(articleEntry, strongsEntry) {
+  const ntMatch =
+    strongsEntry.outlineUsage.match(/In John,\s*([^.;]+)/i) ??
+    articleEntry.match(/In John[’']?s? writings?,?\s*([^.;]+)/i) ??
+    articleEntry.match(/New Testament[^.]{0,140}\./i);
+
+  if (!ntMatch) {
+    return undefined;
+  }
+
+  const extracted = cleanSummaryText(
+    Array.isArray(ntMatch) ? ntMatch[1] ?? ntMatch[0] ?? "" : String(ntMatch)
+  );
+
+  if (!extracted) {
+    return undefined;
+  }
+
+  if (/^denotes?\b/i.test(extracted)) {
+    return `In the New Testament, it ${extracted}.`;
+  }
+
+  const normalizedExtracted = extracted.charAt(0).toLowerCase() + extracted.slice(1);
+
+  return `In the New Testament, ${normalizedExtracted}.`;
+}
+
+/**
+ * @param {string} articleEntry
+ * @param {StrongsEntry} strongsEntry
+ * @returns {BdagSummary}
+ */
+function summarizeBdagArticle(articleEntry, strongsEntry) {
+  const plainMeaning = buildPlainMeaning(articleEntry, strongsEntry);
+  const commonUse = buildCommonUse(articleEntry, strongsEntry, plainMeaning);
+  const ntNote = buildNtNote(articleEntry, strongsEntry);
+
+  return {
+    plainMeaning,
+    commonUse,
+    ntNote
+  };
+}
+
+/**
  * @param {string} sourceText
  * @returns {BdagArticle[]}
  */
@@ -931,7 +1131,10 @@ function parseBdagPdfText(sourceText) {
     articles.push({
       headword,
       transliteration,
-      entry
+      entry,
+      summary: {
+        plainMeaning: ""
+      }
     });
   }
 
@@ -996,7 +1199,12 @@ function mergeBdagIntoStrongsLexicon(lexicon, articles) {
       continue;
     }
 
-    entry.bdagArticles = [...(entry.bdagArticles ?? []), article];
+    const summarizedArticle = {
+      ...article,
+      summary: summarizeBdagArticle(article.entry, entry)
+    };
+
+    entry.bdagArticles = [...(entry.bdagArticles ?? []), summarizedArticle];
     matchedArticles += 1;
   }
 

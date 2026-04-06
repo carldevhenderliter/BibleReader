@@ -77,14 +77,46 @@ export function ReaderStrongsPanel() {
               {entry.bdagArticles?.length ? (
                 <div className="strongs-entry-bdag">
                   <p className="strongs-entry-section-label">BDAG</p>
-                  {entry.bdagArticles.map((article) => (
-                    <section className="strongs-entry-bdag-article" key={`${entry.id}:${article.headword}:${article.transliteration}`}>
-                      <p className="strongs-entry-meta">
-                        {article.headword} ({article.transliteration})
-                      </p>
-                      <p className="strongs-entry-copy strongs-entry-copy-bdag">{article.entry}</p>
-                    </section>
-                  ))}
+                  {entry.bdagArticles.map((article) => {
+                    const summary = article.summary ?? { plainMeaning: article.entry };
+
+                    return (
+                      <section
+                        className="strongs-entry-bdag-article"
+                        key={`${entry.id}:${article.headword}:${article.transliteration}`}
+                      >
+                        <p className="strongs-entry-meta">
+                          {article.headword} ({article.transliteration})
+                        </p>
+                        <div className="strongs-entry-bdag-summary">
+                          <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
+                            BDAG Summary
+                          </p>
+                          <p className="strongs-entry-copy strongs-entry-copy-bdag">
+                            {summary.plainMeaning}
+                          </p>
+                          {summary.commonUse ? (
+                            <p className="strongs-entry-copy strongs-entry-copy-bdag">
+                              {summary.commonUse}
+                            </p>
+                          ) : null}
+                          {summary.ntNote ? (
+                            <p className="strongs-entry-copy strongs-entry-copy-bdag">
+                              {summary.ntNote}
+                            </p>
+                          ) : null}
+                        </div>
+                        <div className="strongs-entry-bdag-original">
+                          <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
+                            Original BDAG
+                          </p>
+                          <p className="strongs-entry-copy strongs-entry-copy-bdag strongs-entry-copy-bdag-original">
+                            {article.entry}
+                          </p>
+                        </div>
+                      </section>
+                    );
+                  })}
                 </div>
               ) : null}
             </article>

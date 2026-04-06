@@ -47,6 +47,8 @@ describe("ReaderStrongsPanel", () => {
     const studyPane = screen.getByLabelText("Study pane");
 
     expect(await within(studyPane).findByText("BDAG")).toBeInTheDocument();
+    expect(within(studyPane).getByText("BDAG Summary")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Original BDAG")).toBeInTheDocument();
     expect(within(studyPane).getByRole("heading", { name: "G3056" })).toBeInTheDocument();
   });
 

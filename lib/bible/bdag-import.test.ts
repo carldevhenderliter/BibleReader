@@ -25,12 +25,18 @@ describe("bdag import parser", () => {
       headword: "λόγος",
       transliteration: "lógos",
       entry:
-        "first line of the article. continuation line for logos.\n\nmore content after a page break."
+        "first line of the article. continuation line for logos.\n\nmore content after a page break.",
+      summary: {
+        plainMeaning: ""
+      }
     });
     expect(articles[1]).toEqual({
       headword: "λέγω",
       transliteration: "légō",
-      entry: "to say something clearly."
+      entry: "to say something clearly.",
+      summary: {
+        plainMeaning: ""
+      }
     });
   });
 
@@ -93,17 +99,26 @@ describe("bdag import parser", () => {
         {
           headword: "λόγος",
           transliteration: "lógos",
-          entry: "communication, word, statement"
+          entry: "communication, word, statement",
+          summary: {
+            plainMeaning: ""
+          }
         },
         {
           headword: "ἀγάπη",
           transliteration: "agápē",
-          entry: "love, esteem, affection"
+          entry: "love, esteem, affection",
+          summary: {
+            plainMeaning: ""
+          }
         },
         {
           headword: "ἀββα",
           transliteration: "abba",
-          entry: "father"
+          entry: "father",
+          summary: {
+            plainMeaning: ""
+          }
         }
       ]);
 
@@ -114,10 +129,48 @@ describe("bdag import parser", () => {
       {
         headword: "λόγος",
         transliteration: "lógos",
-        entry: "communication, word, statement"
+        entry: "communication, word, statement",
+        summary: {
+          plainMeaning: "Communication, word, statement.",
+          commonUse: undefined,
+          ntNote: undefined
+        }
       }
     ]);
     expect(mergedLexicon.G26?.bdagArticles).toBeUndefined();
     expect(mergedLexicon.H7225?.bdagArticles).toBeUndefined();
+  });
+
+  it("generates readable BDAG summaries from Strongs definition data", () => {
+    const lexicon: Record<string, StrongsEntry> = {
+      G3056: {
+        id: "G3056",
+        language: "greek",
+        lemma: "λόγος",
+        transliteration: "logos",
+        definition: "something said; by implication, a topic, reasoning, or divine expression",
+        partOfSpeech: "noun",
+        rootWord: "G3004",
+        outlineUsage: "word, saying, message, account, reason"
+      }
+    };
+
+    const { mergedLexicon } = mergeBdagIntoStrongsLexicon(lexicon, [
+      {
+        headword: "λόγος",
+        transliteration: "lógos",
+        entry:
+          "communication, speech, or message in a broad sense. In John's writings, the term can point to God's self-expression.",
+        summary: {
+          plainMeaning: ""
+        }
+      }
+    ]);
+
+    expect(mergedLexicon.G3056?.bdagArticles?.[0]?.summary).toEqual({
+      plainMeaning: "Usually means word, saying, or message.",
+      commonUse: "Communication, speech, or message in a broad sense.",
+      ntNote: "In the New Testament, the term can point to God's self-expression."
+    });
   });
 });
