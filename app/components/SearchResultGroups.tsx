@@ -452,20 +452,7 @@ export function SearchResultGroups({
                       </div>
                     ) : null}
                   </article>
-                ) : (
-                  <article className="search-result search-result-static" key={result.id}>
-                    <div className="search-result-header">
-                      <span className={`search-result-type search-result-type-${result.type}`}>
-                        {getResultTypeLabel(result.type)}
-                      </span>
-                      <strong>{result.label}</strong>
-                    </div>
-                    <p className="search-result-description">{result.description}</p>
-                    {"preview" in result ? (
-                      <p className="search-result-preview">{result.preview}</p>
-                    ) : null}
-                  </article>
-                )
+                ) : null
               ))}
             </div>
           )}
