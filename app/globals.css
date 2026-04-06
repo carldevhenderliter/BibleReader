@@ -2477,11 +2477,17 @@ select {
 .reader-study-sets,
 .reader-sermons,
 .reader-compare-panel,
-.reader-cross-references-panel {
+.reader-cross-references-panel,
+.reader-strongs-panel {
   display: grid;
   gap: 1rem;
   align-content: start;
   min-height: 0;
+}
+
+.reader-strongs-list {
+  display: grid;
+  gap: 0.85rem;
 }
 
 .writing-ai-card,

@@ -177,7 +177,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
   const router = useRouter();
   const pathname = usePathname();
   const { version } = useReaderVersion();
-  const { setActiveStudyVerseNumber } = useReaderWorkspace();
+  const { openStrongs, setActiveStudyVerseNumber } = useReaderWorkspace();
   const [query, setQuery] = useState("");
   const [resultGroups, setResultGroups] = useState<BibleSearchResultGroup[]>([]);
   const [matchMode, setMatchMode] = useState<SearchMatchMode>("partial");
@@ -600,6 +600,19 @@ export function LookupProvider({ children }: PropsWithChildren) {
           return;
         }
 
+        if (result.type === "strongs") {
+          openStrongs(result.strongsNumber, result.label);
+
+          if (isSplitViewActive) {
+            expandSplitPane("study");
+            setIsOpen(true);
+          } else {
+            setIsOpen(false);
+          }
+
+          return;
+        }
+
         if (!("href" in result)) {
           return;
         }
@@ -636,6 +649,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
       queryParts,
       resultGroups,
       router,
+      openStrongs,
       searchPaneWidthRem,
       searchShellLeftOffsetRem,
       searchShellRightOffsetRem,

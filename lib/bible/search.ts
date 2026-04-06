@@ -132,9 +132,7 @@ function getStrongsPreview(
     .map((value) => value.trim())
     .filter(Boolean);
   const header = detailParts.length > 0 ? detailParts.join(" • ") : strongsNumber;
-  const definition = entry.definition || entry.outlineUsage || "No definition available yet.";
-
-  return `${header}\n${definition}\nUsed in ${verseCount} KJV verse${verseCount === 1 ? "" : "s"}.`;
+  return `${header}\nOpen in the Strongs window\nUsed in ${verseCount} KJV verse${verseCount === 1 ? "" : "s"}.`;
 }
 
 function getTopicSuggestionResult(topic: SearchableTopicEntry, version: BundledBibleVersion): BibleSearchTopicSuggestionResult {

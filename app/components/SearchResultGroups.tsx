@@ -377,6 +377,25 @@ export function SearchResultGroups({
                       ))}
                     </div>
                   </article>
+                ) : result.type === "strongs" ? (
+                  <article className="search-result search-result-interactive" key={result.id}>
+                    <button
+                      className="search-result-main"
+                      onClick={() => onSelectResult(result, group.query)}
+                      type="button"
+                    >
+                      <div className="search-result-header">
+                        <span className={`search-result-type search-result-type-${result.type}`}>
+                          {getResultTypeLabel(result.type)}
+                        </span>
+                        <strong>{result.label}</strong>
+                      </div>
+                      <p className="search-result-description">{result.description}</p>
+                      {"preview" in result ? (
+                        <p className="search-result-preview">{result.preview}</p>
+                      ) : null}
+                    </button>
+                  </article>
                 ) : "href" in result ? (
                   <article className="search-result search-result-interactive" key={result.id}>
                     <button

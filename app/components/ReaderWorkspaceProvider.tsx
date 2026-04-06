@@ -61,7 +61,7 @@ import { getInstalledBundledBibleVersions } from "@/lib/bible/version";
 
 type ReaderPane = "reading" | "compare" | "study-sets";
 type LeftReaderMode = "scripture" | "search";
-type UtilityPane = "search" | "cross-references" | "compare" | "notebook" | "sermons";
+type UtilityPane = "search" | "cross-references" | "compare" | "notebook" | "sermons" | "strongs";
 
 type CurrentPassage = {
   bookSlug: string;
@@ -76,6 +76,7 @@ type ReaderWorkspaceContextValue = {
   setLeftReaderMode: (mode: LeftReaderMode) => void;
   activeUtilityPane: UtilityPane;
   setActiveUtilityPane: (pane: UtilityPane) => void;
+  openStrongs: (strongsNumber: string | string[], label?: string | null) => void;
   openNotebook: (reference?: PassageReference | null) => void;
   closeNotebookWorkspace: () => void;
   openSermons: () => void;
@@ -103,6 +104,8 @@ type ReaderWorkspaceContextValue = {
   addReferenceToNotebook: (notebookId: string, reference: PassageReference) => void;
   pendingNotebookReference: PassageReference | null;
   clearPendingNotebookReference: () => void;
+  activeStrongsNumbers: string[];
+  activeStrongsLabel: string | null;
   getHighlight: (bookSlug: string, chapterNumber: number, verseNumber: number) => Highlight | null;
   getHighlightsForPassage: (bookSlug: string, chapterNumber: number) => Highlight[];
   cycleHighlight: (bookSlug: string, chapterNumber: number, verseNumber: number) => void;
@@ -191,6 +194,8 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   const [activeStudyVerseNumber, setActiveStudyVerseNumber] = useState<number | null>(null);
   const [activeNotebookId, setActiveNotebookId] = useState<string | null>(null);
   const [pendingNotebookReference, setPendingNotebookReference] = useState<PassageReference | null>(null);
+  const [activeStrongsNumbers, setActiveStrongsNumbers] = useState<string[]>([]);
+  const [activeStrongsLabel, setActiveStrongsLabel] = useState<string | null>(null);
   const [activeSermonId, setActiveSermonId] = useState<string | null>(null);
   const [compareVersionOverride, setCompareVersionOverride] = useState<BundledBibleVersion | null>(null);
   const isReaderRoute = pathname.startsWith("/read");
@@ -220,6 +225,17 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
     setActiveUtilityPaneState("notebook");
     setLastReaderUtilityPane("notebook");
     setPendingNotebookReference(reference);
+  }, []);
+
+  const openStrongs = useCallback((strongsNumber: string | string[], label: string | null = null) => {
+    const nextNumbers = Array.isArray(strongsNumber) ? strongsNumber : [strongsNumber];
+
+    setActiveReaderPane("reading");
+    setLeftReaderMode("scripture");
+    setActiveUtilityPaneState("strongs");
+    setLastReaderUtilityPane("strongs");
+    setActiveStrongsNumbers(nextNumbers);
+    setActiveStrongsLabel(label);
   }, []);
 
   const openSermons = useCallback(() => {
@@ -408,6 +424,8 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       setCurrentChapterByVersion(null);
       setActiveStudyVerseNumber(null);
       setPendingNotebookReference(null);
+      setActiveStrongsNumbers([]);
+      setActiveStrongsLabel(null);
       setActiveSermonId(null);
     }
   }, [isReaderRoute, pathname]);
@@ -430,6 +448,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       setLeftReaderMode,
       activeUtilityPane,
       setActiveUtilityPane,
+      openStrongs,
       openNotebook,
       closeNotebookWorkspace,
       openSermons,
@@ -526,6 +545,8 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       },
       pendingNotebookReference,
       clearPendingNotebookReference: () => setPendingNotebookReference(null),
+      activeStrongsNumbers,
+      activeStrongsLabel,
       getHighlight: (bookSlug, chapterNumber, verseNumber) =>
         highlights[getVerseKey(version, bookSlug, chapterNumber, verseNumber)] ?? null,
       getHighlightsForPassage: (bookSlug, chapterNumber) =>
@@ -940,6 +961,8 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       activeReaderPane,
       activeNotebookId,
       activeSermonId,
+      activeStrongsLabel,
+      activeStrongsNumbers,
       activeStudyVerseNumber,
       activeUtilityPane,
       activeUtilityPaneState,
@@ -952,6 +975,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       lastReaderUtilityPane,
       leftReaderMode,
       notebooks,
+      openStrongs,
       openNotebook,
       openSermons,
       pendingNotebookReference,

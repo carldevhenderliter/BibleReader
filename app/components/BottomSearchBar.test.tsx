@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor, waitForElementToBeRemoved } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, waitForElementToBeRemoved, within } from "@testing-library/react";
 
 import { BottomSearchBar } from "@/app/components/BottomSearchBar";
 import { LookupPane } from "@/app/components/LookupPane";
@@ -480,7 +480,7 @@ describe("BottomSearchBar", () => {
     expect(screen.getByRole("tab", { name: "Notes" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "WEB search" })).toBeInTheDocument();
     expect(
-      screen.getByText(/Open notes, sermons, or cross references/i)
+      screen.getByText(/Open notes, Strongs, sermons, or cross references/i)
     ).toBeInTheDocument();
   });
 
@@ -511,5 +511,33 @@ describe("BottomSearchBar", () => {
     expect(mockRouter.push).toHaveBeenCalledWith(
       "/read/genesis?version=kjv&highlightChapter=1&highlight=1"
     );
+  });
+
+  it("opens Strongs definitions in the study pane instead of inside search", async () => {
+    setDesktopMode(true);
+    setMockPathname("/read/genesis/1");
+    renderSearchUi();
+
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
+      target: { value: "H7225" }
+    });
+
+    const strongsDescriptions = await screen.findAllByText("Hebrew Strongs");
+    const strongsResult = strongsDescriptions
+      .map((description) =>
+        description.closest(".search-result")?.querySelector<HTMLButtonElement>("button.search-result-main")
+      )
+      .find(Boolean);
+
+    expect(strongsResult).not.toBeNull();
+    fireEvent.click(strongsResult!);
+
+    await waitFor(() => {
+      expect(screen.getByRole("tab", { name: "Strongs" })).toHaveAttribute("aria-selected", "true");
+    });
+    const studyPane = screen.getByLabelText("Study pane");
+
+    expect(within(studyPane).getByRole("heading", { name: "H7225" })).toBeInTheDocument();
+    expect(await within(studyPane).findByText("Hebrew")).toBeInTheDocument();
   });
 });

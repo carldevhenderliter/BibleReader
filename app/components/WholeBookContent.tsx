@@ -9,6 +9,7 @@ import { ReaderComparePanel } from "@/app/components/ReaderComparePanel";
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
 import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
+import { ReaderStrongsPanel } from "@/app/components/ReaderStrongsPanel";
 import { ReaderStudySetsPanel } from "@/app/components/ReaderStudySetsPanel";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
 import { useReaderTts } from "@/app/components/ReaderTtsProvider";
@@ -70,6 +71,7 @@ export function WholeBookContent({
   const versionBadge = getBibleVersionBadge(version);
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
+  const showStrongsInline = !isSplitViewActive && activeUtilityPane === "strongs";
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
   const searchParams = new URLSearchParams(locationSearch);
   const urlFocusedChapterNumber = parsePositiveNumber(searchParams.get("chapter"));
@@ -212,6 +214,10 @@ export function WholeBookContent({
         ) : showNotebookInline ? (
           <div className="reading-surface reader-notebook-surface">
             <ReaderNotebookEditor />
+          </div>
+        ) : showStrongsInline ? (
+          <div className="reading-surface reader-notebook-surface">
+            <ReaderStrongsPanel />
           </div>
         ) : showSermonsInline ? (
           <div className="reading-surface reader-notebook-surface">
