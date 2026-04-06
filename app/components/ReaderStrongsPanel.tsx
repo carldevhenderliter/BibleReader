@@ -74,6 +74,19 @@ export function ReaderStrongsPanel() {
               {entry.rootWord ? (
                 <p className="strongs-entry-meta">Root word: {entry.rootWord}</p>
               ) : null}
+              {entry.bdagArticles?.length ? (
+                <div className="strongs-entry-bdag">
+                  <p className="strongs-entry-section-label">BDAG</p>
+                  {entry.bdagArticles.map((article) => (
+                    <section className="strongs-entry-bdag-article" key={`${entry.id}:${article.headword}:${article.transliteration}`}>
+                      <p className="strongs-entry-meta">
+                        {article.headword} ({article.transliteration})
+                      </p>
+                      <p className="strongs-entry-copy strongs-entry-copy-bdag">{article.entry}</p>
+                    </section>
+                  ))}
+                </div>
+              ) : null}
             </article>
           ))}
         </div>

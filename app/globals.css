@@ -1177,6 +1177,33 @@ select {
   color: rgba(255, 255, 255, 0.84);
 }
 
+.strongs-entry-bdag {
+  display: grid;
+  gap: 0.6rem;
+  margin-top: 0.35rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.strongs-entry-bdag-article {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.strongs-entry-section-label {
+  margin: 0;
+  color: var(--reader-accent);
+  font-family: var(--reader-ui-font);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.strongs-entry-copy-bdag {
+  white-space: pre-line;
+}
+
 .verse-content {
   display: grid;
   gap: 0.6rem;

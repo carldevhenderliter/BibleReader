@@ -1,4 +1,4 @@
-import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { access, cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { execFile as execFileCallback } from "node:child_process";
 import { promisify } from "node:util";
 import path from "node:path";
@@ -20,6 +20,11 @@ const strongsSourceDir = path.join(repoRoot, "data", "source", "strongs-kjv");
 const strongsBooksPath = path.join(strongsSourceDir, "books.json");
 const strongsLexiconPath = path.join(strongsSourceDir, "lexicon.json");
 const nltPdfPath = path.join(repoRoot, "PDF", "New-Living-Translation-NLT.pdf");
+const bdagPdfPath = path.join(
+  repoRoot,
+  "PDF",
+  "BDAG-A-Greek-English-Lexicon-of-the-New-Testament-and-Other-Early-Christian-Literature-Walter-Bauer-Frederick-William-Danker-etc.-z-lib.org_.pdf"
+);
 const ESV_SOURCE_URL = "https://raw.githubusercontent.com/lguenth/mdbible/main/json/ESV.json";
 const ESV_BOOK_NAME_ALIASES = {
   revelation: "revelation of john"
@@ -130,7 +135,8 @@ const NLT_BOOK_CODE_BY_SLUG = {
  * @typedef {{ id: string, label: string, references: TopicReference[] }} TopicSourceSubtopic
  * @typedef {{ id: string, label: string, aliases: string[], subtopics: TopicSourceSubtopic[] }} TopicSourceEntry
  * @typedef {{ id: string, label: string, aliases: string[], subtopics: { id: string, label: string, verses: Array<{ version: "web" | "kjv" | "nlt" | "esv", bookSlug: string, bookName: string, chapterNumber: number, verseNumber: number, text: string, tokens?: VerseToken[] }> }[] }} TopicSearchEntry
- * @typedef {{ id: string, language: "hebrew" | "greek", lemma: string, transliteration: string, definition: string, partOfSpeech: string, rootWord: string, outlineUsage: string }} StrongsEntry
+ * @typedef {{ headword: string, transliteration: string, entry: string }} BdagArticle
+ * @typedef {{ id: string, language: "hebrew" | "greek", lemma: string, transliteration: string, definition: string, partOfSpeech: string, rootWord: string, outlineUsage: string, bdagArticles?: BdagArticle[] }} StrongsEntry
  * @typedef {{ strongsNumber: string, bookSlug: string, bookName: string, chapterNumber: number, verseNumber: number, text: string }} StrongsSearchVerseEntry
  */
 
@@ -795,6 +801,236 @@ function transformKjvBook(sourceBook, sourceCode, verseTextByReference) {
   };
 }
 
+function normalizeBdagGreekHeadword(value) {
+  return value
+    .normalize("NFD")
+    .replace(/\p{M}+/gu, "")
+    .replace(/ς/gu, "σ")
+    .replace(/[^\p{Script=Greek}]+/gu, "")
+    .toLowerCase();
+}
+
+function normalizeBdagTransliteration(value) {
+  return value
+    .normalize("NFD")
+    .replace(/\p{M}+/gu, "")
+    .replace(/\([^)]*\)/g, "")
+    .replace(/[^a-z]+/gi, "")
+    .toLowerCase();
+}
+
+function extractBdagHeadword(prefix) {
+  return prefix.match(/^[\p{Script=Greek}]+/u)?.[0]?.trim() ?? "";
+}
+
+/**
+ * @param {string[]} lines
+ */
+function collapseBdagParagraphs(lines) {
+  /** @type {string[]} */
+  const paragraphs = [];
+  /** @type {string[]} */
+  let currentParagraph = [];
+
+  const flushParagraph = () => {
+    if (currentParagraph.length === 0) {
+      return;
+    }
+
+    paragraphs.push(currentParagraph.join(" ").replace(/\s+/g, " ").trim());
+    currentParagraph = [];
+  };
+
+  for (const line of lines) {
+    if (!line) {
+      flushParagraph();
+      continue;
+    }
+
+    currentParagraph.push(line);
+  }
+
+  flushParagraph();
+
+  return paragraphs.join("\n\n").trim();
+}
+
+/**
+ * @param {string} rawEntry
+ * @param {string} headword
+ */
+function cleanBdagEntryText(rawEntry, headword) {
+  const normalizedHeadword = normalizeBdagGreekHeadword(headword);
+  const rawLines = rawEntry.replace(/\f/g, "\n").split("\n");
+
+  if (rawLines.length > 0 && rawLines[0]?.includes("⟦")) {
+    rawLines[0] = rawLines[0].replace(/^.*?⟧\s*/, "");
+  }
+
+  const normalizedLines = rawLines
+    .map((line) => line.trim())
+    .filter((line) => {
+      if (line.length === 0) {
+        return true;
+      }
+
+      if (line === "A Greek-English Lexicon of the New Testament") {
+        return false;
+      }
+
+      if (/^\d+$/.test(line)) {
+        return false;
+      }
+
+      const normalizedLine = normalizeBdagGreekHeadword(line);
+
+      return !(
+        normalizedLine.length > 0 &&
+        !line.includes(" ") &&
+        (
+          normalizedLine === normalizedHeadword ||
+          (normalizedLine.length >= 3 && normalizedHeadword.startsWith(normalizedLine))
+        )
+      );
+    });
+
+  return collapseBdagParagraphs(normalizedLines);
+}
+
+/**
+ * @param {string} sourceText
+ * @returns {BdagArticle[]}
+ */
+function parseBdagPdfText(sourceText) {
+  const matches = Array.from(
+    sourceText.matchAll(
+      /^(?<prefix>[\p{Script=Greek}][^\n⟦]{0,120}?)\s+⟦(?<transliteration>[^\n⟧]{1,80})⟧/gmu
+    )
+  );
+  /** @type {BdagArticle[]} */
+  const articles = [];
+
+  for (const [index, match] of matches.entries()) {
+    const prefix = match.groups?.prefix?.trim() ?? "";
+    const transliteration = match.groups?.transliteration?.trim() ?? "";
+    const headword = extractBdagHeadword(prefix);
+
+    if (!headword || !transliteration) {
+      continue;
+    }
+
+    const startIndex = match.index ?? 0;
+    const endIndex = matches[index + 1]?.index ?? sourceText.length;
+    const rawEntry = sourceText.slice(startIndex, endIndex).trim();
+    const entry = cleanBdagEntryText(rawEntry, headword);
+
+    if (!entry) {
+      continue;
+    }
+
+    articles.push({
+      headword,
+      transliteration,
+      entry
+    });
+  }
+
+  return articles;
+}
+
+/**
+ * @param {Record<string, StrongsEntry>} lexicon
+ * @param {BdagArticle[]} articles
+ */
+function mergeBdagIntoStrongsLexicon(lexicon, articles) {
+  const greekLemmaIndex = new Map();
+  const greekTransliterationIndex = new Map();
+  let matchedArticles = 0;
+  let ambiguousArticles = 0;
+  let unmatchedArticles = 0;
+
+  for (const entry of Object.values(lexicon)) {
+    if (entry.language !== "greek") {
+      continue;
+    }
+
+    const normalizedLemma = normalizeBdagGreekHeadword(entry.lemma);
+    const normalizedTransliteration = normalizeBdagTransliteration(entry.transliteration);
+
+    if (normalizedLemma) {
+      greekLemmaIndex.set(normalizedLemma, [
+        ...(greekLemmaIndex.get(normalizedLemma) ?? []),
+        entry.id
+      ]);
+    }
+
+    if (normalizedTransliteration) {
+      greekTransliterationIndex.set(normalizedTransliteration, [
+        ...(greekTransliterationIndex.get(normalizedTransliteration) ?? []),
+        entry.id
+      ]);
+    }
+  }
+
+  for (const article of articles) {
+    const candidateIds = new Set([
+      ...(greekLemmaIndex.get(normalizeBdagGreekHeadword(article.headword)) ?? []),
+      ...(greekTransliterationIndex.get(normalizeBdagTransliteration(article.transliteration)) ?? [])
+    ]);
+
+    if (candidateIds.size === 0) {
+      unmatchedArticles += 1;
+      continue;
+    }
+
+    if (candidateIds.size > 1) {
+      ambiguousArticles += 1;
+      continue;
+    }
+
+    const strongsNumber = Array.from(candidateIds)[0];
+    const entry = lexicon[strongsNumber];
+
+    if (!entry) {
+      unmatchedArticles += 1;
+      continue;
+    }
+
+    entry.bdagArticles = [...(entry.bdagArticles ?? []), article];
+    matchedArticles += 1;
+  }
+
+  return {
+    totalArticles: articles.length,
+    matchedArticles,
+    ambiguousArticles,
+    unmatchedArticles
+  };
+}
+
+/**
+ * @param {string} pdfPath
+ */
+async function extractPdfText(pdfPath) {
+  try {
+    await access(pdfPath);
+  } catch {
+    throw new Error(`Missing required PDF source: ${path.relative(repoRoot, pdfPath)}.`);
+  }
+
+  try {
+    const { stdout } = await execFile("pdftotext", [pdfPath, "-"], {
+      maxBuffer: 64 * 1024 * 1024
+    });
+
+    return stdout;
+  } catch (error) {
+    throw new Error(
+      `Failed to extract PDF text from ${path.relative(repoRoot, pdfPath)}: ${String(error)}`
+    );
+  }
+}
+
 /**
  * @param {Record<string, unknown>} lexicon
  */
@@ -831,7 +1067,14 @@ async function writeStrongsLexicon(lexicon) {
     };
   }
 
+  const bdagPdfText = await extractPdfText(bdagPdfPath);
+  const bdagArticles = parseBdagPdfText(bdagPdfText);
+  const bdagMergeResult = mergeBdagIntoStrongsLexicon(normalizedLexicon, bdagArticles);
+
   await writeFile(path.join(strongsDir, "lexicon.json"), `${JSON.stringify(normalizedLexicon, null, 2)}\n`);
+  console.log(
+    `Merged BDAG into Strongs lexicon: ${bdagMergeResult.matchedArticles}/${bdagMergeResult.totalArticles} articles matched, ${bdagMergeResult.ambiguousArticles} ambiguous, ${bdagMergeResult.unmatchedArticles} unmatched.`
+  );
 }
 
 /**

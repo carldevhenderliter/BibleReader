@@ -368,6 +368,12 @@ export type VerseToken = {
 
 export type StrongsLanguage = "hebrew" | "greek";
 
+export type BdagArticle = {
+  headword: string;
+  transliteration: string;
+  entry: string;
+};
+
 export type StrongsEntry = {
   id: string;
   language: StrongsLanguage;
@@ -377,4 +383,5 @@ export type StrongsEntry = {
   partOfSpeech: string;
   rootWord: string;
   outlineUsage: string;
+  bdagArticles?: BdagArticle[];
 };

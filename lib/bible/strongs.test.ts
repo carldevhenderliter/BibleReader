@@ -17,6 +17,8 @@ describe("strongs lexicon", () => {
     expect(entries[0]?.definition).not.toContain("&#");
     expect(entries[1]?.definition).not.toContain("&#");
     expect(entries[1]?.outlineUsage).not.toContain("&quot;");
+    expect(entries[0]?.bdagArticles).toBeUndefined();
+    expect(entries[1]?.bdagArticles?.length).toBeGreaterThan(0);
   });
 
   it("skips missing entries", async () => {
