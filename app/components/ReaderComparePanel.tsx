@@ -68,26 +68,35 @@ export function ReaderComparePanel({
     setCompareVersionAtIndex
   } = useReaderWorkspace();
 
-  const availableVersions = useMemo(() => {
+  const availableVersionOptions = useMemo(() => {
     if (view === "chapter") {
       const chapterMap = chaptersByVersion as BundledChapterMap;
-      return [version, ...compareVersions].filter(
+      return ([version, ...Object.keys(chapterMap)] as BundledBibleVersion[]).filter(
         (candidate, index, versions) =>
           versions.indexOf(candidate) === index && Boolean(chapterMap[candidate])
       );
     }
 
     const bookMap = chaptersByVersion as BundledBookChapterMap;
-    return [version, ...compareVersions].filter(
+    return ([version, ...Object.keys(bookMap)] as BundledBibleVersion[]).filter(
       (candidate, index, versions) =>
         versions.indexOf(candidate) === index && Boolean(bookMap[candidate]?.length)
     );
-  }, [chaptersByVersion, compareVersions, version, view]);
+  }, [chaptersByVersion, version, view]);
 
   const compareVersionOptions = useMemo(
     () =>
-      availableVersions.filter((candidate) => candidate !== version),
-    [availableVersions, version]
+      availableVersionOptions.filter((candidate) => candidate !== version),
+    [availableVersionOptions, version]
+  );
+  const availableVersions = useMemo(
+    () =>
+      [version, ...compareVersions].filter(
+        (candidate, index, versions) =>
+          versions.indexOf(candidate) === index &&
+          (candidate === version || compareVersionOptions.includes(candidate))
+      ),
+    [compareVersionOptions, compareVersions, version]
   );
   const compareSelectors = useMemo(() => {
     const selected = compareVersions
@@ -183,12 +192,6 @@ export function ReaderComparePanel({
         </div>
         <div className="reader-compare-selectors">
           {compareSelectors.map((selectedVersion, index) => {
-            const options = compareVersionOptions.filter(
-              (candidate) =>
-                candidate === selectedVersion ||
-                !compareSelectors.some((value, valueIndex) => valueIndex !== index && value === candidate)
-            );
-
             return (
               <label
                 className="reader-settings-field reader-compare-select"
@@ -204,7 +207,7 @@ export function ReaderComparePanel({
                   }
                   value={selectedVersion}
                 >
-                  {options.map((candidate) => (
+                  {compareVersionOptions.map((candidate) => (
                     <option key={candidate} value={candidate}>
                       {getBibleVersionLabel(candidate)}
                     </option>

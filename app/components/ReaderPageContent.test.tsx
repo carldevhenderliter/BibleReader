@@ -317,6 +317,28 @@ describe("ReaderPageContent", () => {
     expect(await within(studyPane).findByRole("heading", { name: "G746" })).toBeInTheDocument();
   });
 
+  it("lets the compare selectors switch to other available versions", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter, nlt: nltChapter }}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "Compare" }));
+
+    const firstSelector = screen.getByLabelText("Compare with version");
+    expect(within(firstSelector).getByRole("option", { name: "KJV" })).toBeInTheDocument();
+    expect(within(firstSelector).getByRole("option", { name: "NLT" })).toBeInTheDocument();
+
+    fireEvent.change(firstSelector, { target: { value: "nlt" } });
+
+    expect(firstSelector).toHaveValue("nlt");
+    expect(screen.getAllByText("NLT").length).toBeGreaterThan(0);
+  });
+
   it("hides read-aloud controls from the reader toolbar and settings menu", () => {
     installKokoroSupport({ pendingLoad: true });
 
