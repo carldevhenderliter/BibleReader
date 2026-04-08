@@ -9,6 +9,7 @@
     "test": "jest --config jest.config.js",
     "test:watch": "jest --config jest.config.js --watch",
     "import:bible": "node scripts/import-bible.mjs",
+    "import:fathers": "node scripts/import-fathers.mjs",
     "setup:kokoro": "node scripts/setup-kokoro-assets.mjs"
   },
   "dependencies": {

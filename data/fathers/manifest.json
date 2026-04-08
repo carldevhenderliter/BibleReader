@@ -1,0 +1,145 @@
+[
+  {
+    "slug": "1-clement",
+    "title": "1 Clement",
+    "shortTitle": "1 Clem.",
+    "author": "Clement of Rome",
+    "order": 1,
+    "corpus": "apostolic-fathers",
+    "sectionCount": 66,
+    "greekSource": "jtauber/apostolic-fathers:texts/001-i_clement.txt",
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.i.html"
+  },
+  {
+    "slug": "2-clement",
+    "title": "2 Clement",
+    "shortTitle": "2 Clem.",
+    "author": "Pseudo-Clement",
+    "order": 2,
+    "corpus": "apostolic-fathers",
+    "sectionCount": 20,
+    "greekSource": "jtauber/apostolic-fathers:texts/002-ii_clement.txt",
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.ii.html"
+  },
+  {
+    "slug": "ignatius-ephesians",
+    "title": "Ignatius to the Ephesians",
+    "shortTitle": "Ign. Eph.",
+    "author": "Ignatius of Antioch",
+    "order": 3,
+    "corpus": "apostolic-fathers",
+    "sectionCount": 22,
+    "greekSource": "jtauber/apostolic-fathers:texts/003-ignatius-ephesians.txt",
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.iii.html"
+  },
+  {
+    "slug": "ignatius-magnesians",
+    "title": "Ignatius to the Magnesians",
+    "shortTitle": "Ign. Mag.",
+    "author": "Ignatius of Antioch",
+    "order": 4,
+    "corpus": "apostolic-fathers",
+    "sectionCount": 16,
+    "greekSource": "jtauber/apostolic-fathers:texts/004-ignatius-magnesians.txt",
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.iv.html"
+  },
+  {
+    "slug": "ignatius-trallians",
+    "title": "Ignatius to the Trallians",
+    "shortTitle": "Ign. Trall.",
+    "author": "Ignatius of Antioch",
+    "order": 5,
+    "corpus": "apostolic-fathers",
+    "sectionCount": 14,
+    "greekSource": "jtauber/apostolic-fathers:texts/005-ignatius-trallians.txt",
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.v.html"
+  },
+  {
+    "slug": "ignatius-romans",
+    "title": "Ignatius to the Romans",
+    "shortTitle": "Ign. Rom.",
+    "author": "Ignatius of Antioch",
+    "order": 6,
+    "corpus": "apostolic-fathers",
+    "sectionCount": 11,
+    "greekSource": "jtauber/apostolic-fathers:texts/006-ignatius-romans.txt",
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.vi.html"
+  },
+  {
+    "slug": "ignatius-philadelphians",
+    "title": "Ignatius to the Philadelphians",
+    "shortTitle": "Ign. Philad.",
+    "author": "Ignatius of Antioch",
+    "order": 7,
+    "corpus": "apostolic-fathers",
+    "sectionCount": 12,
+    "greekSource": "jtauber/apostolic-fathers:texts/007-ignatius-philadelphians.txt",
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.vii.html"
+  },
+  {
+    "slug": "ignatius-smyrnaeans",
+    "title": "Ignatius to the Smyrnaeans",
+    "shortTitle": "Ign. Smyrn.",
+    "author": "Ignatius of Antioch",
+    "order": 8,
+    "corpus": "apostolic-fathers",
+    "sectionCount": 14,
+    "greekSource": "jtauber/apostolic-fathers:texts/008-ignatius-smyrnaeans.txt",
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.viii.html"
+  },
+  {
+    "slug": "ignatius-polycarp",
+    "title": "Ignatius to Polycarp",
+    "shortTitle": "Ign. Pol.",
+    "author": "Ignatius of Antioch",
+    "order": 9,
+    "corpus": "apostolic-fathers",
+    "sectionCount": 9,
+    "greekSource": "jtauber/apostolic-fathers:texts/009-ignatius-polycarp.txt",
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.ix.html"
+  },
+  {
+    "slug": "polycarp-to-philippians",
+    "title": "Polycarp to the Philippians",
+    "shortTitle": "Pol. Phil.",
+    "author": "Polycarp of Smyrna",
+    "order": 10,
+    "corpus": "apostolic-fathers",
+    "sectionCount": 15,
+    "greekSource": "jtauber/apostolic-fathers:texts/010-polycarp-philippians.txt",
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.x.html"
+  },
+  {
+    "slug": "didache",
+    "title": "Didache",
+    "shortTitle": "Did.",
+    "author": "Anonymous",
+    "order": 11,
+    "corpus": "apostolic-fathers",
+    "sectionCount": 16,
+    "greekSource": "jtauber/apostolic-fathers:texts/011-didache.txt",
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.xii.html"
+  },
+  {
+    "slug": "barnabas",
+    "title": "Barnabas",
+    "shortTitle": "Barn.",
+    "author": "Pseudo-Barnabas",
+    "order": 12,
+    "corpus": "apostolic-fathers",
+    "sectionCount": 21,
+    "greekSource": "jtauber/apostolic-fathers:texts/012-barnabas.txt",
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.xiii.html"
+  },
+  {
+    "slug": "shepherd-of-hermas",
+    "title": "Shepherd of Hermas",
+    "shortTitle": "Herm.",
+    "author": "Hermas",
+    "order": 13,
+    "corpus": "apostolic-fathers",
+    "sectionCount": 27,
+    "greekSource": "jtauber/apostolic-fathers:texts/013-shepherd.txt",
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.xiv.html"
+  }
+]
