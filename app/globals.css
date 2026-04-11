@@ -1298,6 +1298,23 @@ select {
   background: rgba(255, 255, 255, 0.03);
 }
 
+.strongs-entry-fathers-word-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.42rem;
+  align-items: flex-start;
+}
+
+.strongs-entry-fathers-word-pair {
+  display: grid;
+  justify-items: center;
+  gap: 0.12rem;
+  min-width: 2.2rem;
+  padding: 0.18rem 0.22rem;
+  border-radius: 0.45rem;
+  background: rgba(255, 255, 255, 0.025);
+}
+
 .strongs-entry-fathers-greek {
   color: rgba(255, 255, 255, 0.92);
   font-family: var(--reader-body-font);
@@ -1305,6 +1322,13 @@ select {
 
 .strongs-entry-fathers-english {
   color: rgba(255, 255, 255, 0.72);
+}
+
+.strongs-entry-fathers-word-english,
+.strongs-entry-fathers-word-greek {
+  font-size: 0.82rem;
+  line-height: 1.2;
+  text-align: center;
 }
 
 .verse-content {
