@@ -5,21 +5,33 @@ import { useEffect, useState } from "react";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { getStrongsEntries } from "@/lib/bible/strongs";
 import type { StrongsEntry } from "@/lib/bible/types";
+import { findFathersSegmentsByGreekLemma } from "@/lib/fathers/search";
+import type { FathersLemmaMatch } from "@/lib/fathers/types";
+
+type OutsideScriptureLookupState = {
+  status: "loading" | "loaded";
+  matches: FathersLemmaMatch[];
+};
 
 export function ReaderStrongsPanel() {
   const { activeStrongsLabel, activeStrongsNumbers } = useReaderWorkspace();
   const [entries, setEntries] = useState<StrongsEntry[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [outsideScripture, setOutsideScripture] = useState<
+    Record<string, OutsideScriptureLookupState>
+  >({});
 
   useEffect(() => {
     if (activeStrongsNumbers.length === 0) {
       setEntries([]);
       setIsLoading(false);
+      setOutsideScripture({});
       return;
     }
 
     let isCancelled = false;
     setIsLoading(true);
+    setOutsideScripture({});
 
     void getStrongsEntries(activeStrongsNumbers).then((nextEntries) => {
       if (!isCancelled) {
@@ -32,6 +44,26 @@ export function ReaderStrongsPanel() {
       isCancelled = true;
     };
   }, [activeStrongsNumbers]);
+
+  async function handleFindOutsideScripture(entry: StrongsEntry) {
+    setOutsideScripture((current) => ({
+      ...current,
+      [entry.id]: {
+        status: "loading",
+        matches: current[entry.id]?.matches ?? []
+      }
+    }));
+
+    const matches = await findFathersSegmentsByGreekLemma(entry.lemma);
+
+    setOutsideScripture((current) => ({
+      ...current,
+      [entry.id]: {
+        status: "loaded",
+        matches
+      }
+    }));
+  }
 
   return (
     <div className="reader-strongs-panel">
@@ -117,6 +149,68 @@ export function ReaderStrongsPanel() {
                       </section>
                     );
                   })}
+                </div>
+              ) : null}
+              {entry.language === "greek" ? (
+                <div className="strongs-entry-outside-scripture">
+                  <button
+                    className="reader-inline-button strongs-entry-action"
+                    disabled={outsideScripture[entry.id]?.status === "loading"}
+                    onClick={() => void handleFindOutsideScripture(entry)}
+                    type="button"
+                  >
+                    Find this word outside scripture
+                  </button>
+                  {outsideScripture[entry.id]?.status === "loading" ? (
+                    <p className="strongs-entry-meta">
+                      Searching the Apostolic Fathers for this Greek lemma…
+                    </p>
+                  ) : null}
+                  {outsideScripture[entry.id]?.status === "loaded" ? (
+                    <div className="strongs-entry-outside-scripture-results">
+                      <p className="strongs-entry-section-label">Outside Scripture</p>
+                      {outsideScripture[entry.id]?.matches.length ? (
+                        Object.entries(
+                          outsideScripture[entry.id].matches.reduce<
+                            Record<string, FathersLemmaMatch[]>
+                          >((groups, match) => {
+                            groups[match.workTitle] = groups[match.workTitle]
+                              ? [...groups[match.workTitle], match]
+                              : [match];
+
+                            return groups;
+                          }, {})
+                        ).map(([workTitle, matches]) => (
+                          <section className="strongs-entry-fathers-group" key={`${entry.id}:${workTitle}`}>
+                            <h4 className="strongs-entry-fathers-title">{workTitle}</h4>
+                            <div className="strongs-entry-fathers-list">
+                              {matches.map((match) => (
+                                <article
+                                  className="strongs-entry-fathers-hit"
+                                  key={match.segmentId}
+                                >
+                                  <p className="strongs-entry-meta">
+                                    {match.label}
+                                    {match.ref !== match.label ? ` (${match.ref})` : ""}
+                                  </p>
+                                  <p className="strongs-entry-copy strongs-entry-fathers-greek">
+                                    {match.greek}
+                                  </p>
+                                  <p className="strongs-entry-copy strongs-entry-fathers-english">
+                                    {match.english}
+                                  </p>
+                                </article>
+                              ))}
+                            </div>
+                          </section>
+                        ))
+                      ) : (
+                        <p className="strongs-entry-copy">
+                          No Apostolic Fathers matches found for this lemma.
+                        </p>
+                      )}
+                    </div>
+                  ) : null}
                 </div>
               ) : null}
             </article>

@@ -26,3 +26,13 @@ export type FathersWorkPayload = {
   work: FathersWorkMeta;
   segments: FathersSegment[];
 };
+
+export type FathersLemmaMatch = {
+  workSlug: string;
+  workTitle: string;
+  segmentId: string;
+  ref: string;
+  label: string;
+  greek: string;
+  english: string;
+};

@@ -1218,6 +1218,53 @@ select {
   color: rgba(255, 255, 255, 0.68);
 }
 
+.strongs-entry-outside-scripture {
+  display: grid;
+  gap: 0.6rem;
+  margin-top: 0.35rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.strongs-entry-action {
+  justify-self: start;
+}
+
+.strongs-entry-outside-scripture-results,
+.strongs-entry-fathers-group,
+.strongs-entry-fathers-list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.strongs-entry-fathers-group {
+  padding: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.strongs-entry-fathers-title {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.96rem;
+  font-weight: 700;
+}
+
+.strongs-entry-fathers-hit {
+  display: grid;
+  gap: 0.32rem;
+}
+
+.strongs-entry-fathers-greek {
+  color: rgba(255, 255, 255, 0.92);
+  font-family: var(--reader-body-font);
+}
+
+.strongs-entry-fathers-english {
+  color: rgba(255, 255, 255, 0.72);
+}
+
 .verse-content {
   display: grid;
   gap: 0.6rem;
