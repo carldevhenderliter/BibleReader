@@ -20,38 +20,6 @@ type BibleOccurrencesState = {
 
 type StrongsTab = "bible" | "bdag" | "outside-bible";
 
-type InterlinearLinePair = {
-  greek: string;
-  english: string;
-};
-
-function splitInterlinearLines(value: string, pattern: RegExp) {
-  return value
-    .split(pattern)
-    .map((part) => part.trim())
-    .filter(Boolean);
-}
-
-function buildInterlinearLinePairs(greek: string, english: string): InterlinearLinePair[] {
-  const greekLines = splitInterlinearLines(greek, /(?<=[.;·;!?])/u);
-  const englishLines = splitInterlinearLines(english, /(?<=[.!?;:])/);
-
-  if (
-    greekLines.length > 1 &&
-    englishLines.length > 1 &&
-    Math.abs(greekLines.length - englishLines.length) <= 1
-  ) {
-    const lineCount = Math.max(greekLines.length, englishLines.length);
-
-    return Array.from({ length: lineCount }, (_, index) => ({
-      greek: greekLines[index] ?? "",
-      english: englishLines[index] ?? ""
-    })).filter((pair) => pair.greek || pair.english);
-  }
-
-  return [{ greek, english }];
-}
-
 export function ReaderStrongsPanel() {
   const { activeStrongsLabel, activeStrongsNumbers } = useReaderWorkspace();
   const [entries, setEntries] = useState<StrongsEntry[]>([]);
@@ -329,11 +297,6 @@ export function ReaderStrongsPanel() {
                         <h4 className="strongs-entry-fathers-title">{workTitle}</h4>
                         <div className="strongs-entry-fathers-list">
                           {matches.map((match) => {
-                            const linePairs = buildInterlinearLinePairs(
-                              match.greekContext,
-                              match.englishContext
-                            );
-
                             return (
                               <article className="strongs-entry-fathers-hit" key={match.segmentId}>
                                 <p className="strongs-entry-meta">
@@ -341,23 +304,14 @@ export function ReaderStrongsPanel() {
                                   {match.ref !== match.label ? ` (${match.ref})` : ""}
                                 </p>
                                 <div className="strongs-entry-fathers-interlinear">
-                                  {linePairs.map((pair, index) => (
-                                    <div
-                                      className="strongs-entry-fathers-line-pair"
-                                      key={`${match.segmentId}:${index}`}
-                                    >
-                                      {pair.greek ? (
-                                        <p className="strongs-entry-copy strongs-entry-fathers-greek">
-                                          {pair.greek}
-                                        </p>
-                                      ) : null}
-                                      {pair.english ? (
-                                        <p className="strongs-entry-copy strongs-entry-fathers-english">
-                                          {pair.english}
-                                        </p>
-                                      ) : null}
-                                    </div>
-                                  ))}
+                                  <div className="strongs-entry-fathers-line-pair">
+                                    <p className="strongs-entry-copy strongs-entry-fathers-greek">
+                                      {match.greekContext}
+                                    </p>
+                                    <p className="strongs-entry-copy strongs-entry-fathers-english">
+                                      {match.englishContext}
+                                    </p>
+                                  </div>
                                 </div>
                               </article>
                             );
