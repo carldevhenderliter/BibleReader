@@ -101,6 +101,23 @@ export function ReaderStrongsPanel() {
               {entry.partOfSpeech ? (
                 <p className="strongs-entry-meta">Part of speech: {entry.partOfSpeech}</p>
               ) : null}
+              {entry.language === "greek" ? (
+                <div className="strongs-entry-outside-scripture">
+                  <button
+                    className="reader-inline-button strongs-entry-action"
+                    disabled={outsideScripture[entry.id]?.status === "loading"}
+                    onClick={() => void handleFindOutsideScripture(entry)}
+                    type="button"
+                  >
+                    Find this word outside scripture
+                  </button>
+                  {outsideScripture[entry.id]?.status === "loading" ? (
+                    <p className="strongs-entry-meta">
+                      Searching the Apostolic Fathers for this Greek lemma…
+                    </p>
+                  ) : null}
+                </div>
+              ) : null}
               {entry.definition ? <p className="strongs-entry-copy">{entry.definition}</p> : null}
               {entry.outlineUsage ? <p className="strongs-entry-copy">{entry.outlineUsage}</p> : null}
               {entry.rootWord ? (
@@ -151,66 +168,47 @@ export function ReaderStrongsPanel() {
                   })}
                 </div>
               ) : null}
-              {entry.language === "greek" ? (
-                <div className="strongs-entry-outside-scripture">
-                  <button
-                    className="reader-inline-button strongs-entry-action"
-                    disabled={outsideScripture[entry.id]?.status === "loading"}
-                    onClick={() => void handleFindOutsideScripture(entry)}
-                    type="button"
-                  >
-                    Find this word outside scripture
-                  </button>
-                  {outsideScripture[entry.id]?.status === "loading" ? (
-                    <p className="strongs-entry-meta">
-                      Searching the Apostolic Fathers for this Greek lemma…
-                    </p>
-                  ) : null}
-                  {outsideScripture[entry.id]?.status === "loaded" ? (
-                    <div className="strongs-entry-outside-scripture-results">
-                      <p className="strongs-entry-section-label">Outside Scripture</p>
-                      {outsideScripture[entry.id]?.matches.length ? (
-                        Object.entries(
-                          outsideScripture[entry.id].matches.reduce<
-                            Record<string, FathersLemmaMatch[]>
-                          >((groups, match) => {
-                            groups[match.workTitle] = groups[match.workTitle]
-                              ? [...groups[match.workTitle], match]
-                              : [match];
+              {entry.language === "greek" && outsideScripture[entry.id]?.status === "loaded" ? (
+                <div className="strongs-entry-outside-scripture-results">
+                  <p className="strongs-entry-section-label">Outside Scripture</p>
+                  {outsideScripture[entry.id]?.matches.length ? (
+                    Object.entries(
+                      outsideScripture[entry.id].matches.reduce<Record<string, FathersLemmaMatch[]>>(
+                        (groups, match) => {
+                          groups[match.workTitle] = groups[match.workTitle]
+                            ? [...groups[match.workTitle], match]
+                            : [match];
 
-                            return groups;
-                          }, {})
-                        ).map(([workTitle, matches]) => (
-                          <section className="strongs-entry-fathers-group" key={`${entry.id}:${workTitle}`}>
-                            <h4 className="strongs-entry-fathers-title">{workTitle}</h4>
-                            <div className="strongs-entry-fathers-list">
-                              {matches.map((match) => (
-                                <article
-                                  className="strongs-entry-fathers-hit"
-                                  key={match.segmentId}
-                                >
-                                  <p className="strongs-entry-meta">
-                                    {match.label}
-                                    {match.ref !== match.label ? ` (${match.ref})` : ""}
-                                  </p>
-                                  <p className="strongs-entry-copy strongs-entry-fathers-greek">
-                                    {match.greek}
-                                  </p>
-                                  <p className="strongs-entry-copy strongs-entry-fathers-english">
-                                    {match.english}
-                                  </p>
-                                </article>
-                              ))}
-                            </div>
-                          </section>
-                        ))
-                      ) : (
-                        <p className="strongs-entry-copy">
-                          No Apostolic Fathers matches found for this lemma.
-                        </p>
-                      )}
-                    </div>
-                  ) : null}
+                          return groups;
+                        },
+                        {}
+                      )
+                    ).map(([workTitle, matches]) => (
+                      <section className="strongs-entry-fathers-group" key={`${entry.id}:${workTitle}`}>
+                        <h4 className="strongs-entry-fathers-title">{workTitle}</h4>
+                        <div className="strongs-entry-fathers-list">
+                          {matches.map((match) => (
+                            <article className="strongs-entry-fathers-hit" key={match.segmentId}>
+                              <p className="strongs-entry-meta">
+                                {match.label}
+                                {match.ref !== match.label ? ` (${match.ref})` : ""}
+                              </p>
+                              <p className="strongs-entry-copy strongs-entry-fathers-greek">
+                                {match.greek}
+                              </p>
+                              <p className="strongs-entry-copy strongs-entry-fathers-english">
+                                {match.english}
+                              </p>
+                            </article>
+                          ))}
+                        </div>
+                      </section>
+                    ))
+                  ) : (
+                    <p className="strongs-entry-copy">
+                      No Apostolic Fathers matches found for this lemma.
+                    </p>
+                  )}
                 </div>
               ) : null}
             </article>
