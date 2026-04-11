@@ -1185,6 +1185,29 @@ select {
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+.strongs-entry-bdag-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  list-style: none;
+  cursor: pointer;
+}
+
+.strongs-entry-bdag-toggle::-webkit-details-marker {
+  display: none;
+}
+
+.strongs-entry-bdag-toggle-copy {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.82rem;
+}
+
+.strongs-entry-bdag-body {
+  display: grid;
+  gap: 0.6rem;
+}
+
 .strongs-entry-bdag-article {
   display: grid;
   gap: 0.35rem;
@@ -1254,6 +1277,19 @@ select {
 .strongs-entry-fathers-hit {
   display: grid;
   gap: 0.32rem;
+}
+
+.strongs-entry-fathers-interlinear {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.strongs-entry-fathers-line-pair {
+  display: grid;
+  gap: 0.16rem;
+  padding: 0.45rem 0.55rem;
+  border-radius: 0.7rem;
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .strongs-entry-fathers-greek {

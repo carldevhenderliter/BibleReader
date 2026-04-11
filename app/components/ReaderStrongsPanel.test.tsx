@@ -50,12 +50,15 @@ describe("ReaderStrongsPanel", () => {
     const studyPane = screen.getByLabelText("Study pane");
 
     expect(await within(studyPane).findByText("BDAG")).toBeInTheDocument();
-    expect(within(studyPane).getByText("BDAG Summary")).toBeInTheDocument();
-    expect(within(studyPane).getByText("Original BDAG")).toBeInTheDocument();
     expect(within(studyPane).getByRole("heading", { name: "G3056" })).toBeInTheDocument();
     expect(
       within(studyPane).getByRole("button", { name: "Find this word outside scripture" })
     ).toBeInTheDocument();
+
+    fireEvent.click(within(studyPane).getByText("Show or hide BDAG"));
+
+    expect(await within(studyPane).findByText("BDAG Summary")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Original BDAG")).toBeInTheDocument();
   });
 
   it("does not render a BDAG section for Hebrew Strongs entries", async () => {
@@ -87,7 +90,7 @@ describe("ReaderStrongsPanel", () => {
     expect(await within(studyPane).findByText("Outside Scripture")).toBeInTheDocument();
     expect(await within(studyPane).findByRole("heading", { name: "1 Clement" })).toBeInTheDocument();
     expect(within(studyPane).getByText("13")).toBeInTheDocument();
-    expect(within(studyPane).getByText(/Ταπεινοφρονήσωμεν/)).toBeInTheDocument();
+    expect(within(studyPane).getByText(/Ταπεινοφρονήσωμεν οὖν/)).toBeInTheDocument();
     expect(within(studyPane).getByText(/Let us therefore be lowly minded/i)).toBeInTheDocument();
   });
 

@@ -13,6 +13,38 @@ type OutsideScriptureLookupState = {
   matches: FathersLemmaMatch[];
 };
 
+type InterlinearLinePair = {
+  greek: string;
+  english: string;
+};
+
+function splitInterlinearLines(value: string, pattern: RegExp) {
+  return value
+    .split(pattern)
+    .map((part) => part.trim())
+    .filter(Boolean);
+}
+
+function buildInterlinearLinePairs(greek: string, english: string): InterlinearLinePair[] {
+  const greekLines = splitInterlinearLines(greek, /(?<=[.;·;!?])/u);
+  const englishLines = splitInterlinearLines(english, /(?<=[.!?;:])/);
+
+  if (
+    greekLines.length > 1 &&
+    englishLines.length > 1 &&
+    Math.abs(greekLines.length - englishLines.length) <= 1
+  ) {
+    const lineCount = Math.max(greekLines.length, englishLines.length);
+
+    return Array.from({ length: lineCount }, (_, index) => ({
+      greek: greekLines[index] ?? "",
+      english: englishLines[index] ?? ""
+    })).filter((pair) => pair.greek || pair.english);
+  }
+
+  return [{ greek, english }];
+}
+
 export function ReaderStrongsPanel() {
   const { activeStrongsLabel, activeStrongsNumbers } = useReaderWorkspace();
   const [entries, setEntries] = useState<StrongsEntry[]>([]);
@@ -124,49 +156,54 @@ export function ReaderStrongsPanel() {
                 <p className="strongs-entry-meta">Root word: {entry.rootWord}</p>
               ) : null}
               {entry.bdagArticles?.length ? (
-                <div className="strongs-entry-bdag">
-                  <p className="strongs-entry-section-label">BDAG</p>
-                  {entry.bdagArticles.map((article) => {
-                    const summary = article.summary ?? { plainMeaning: article.entry };
+                <details className="strongs-entry-bdag">
+                  <summary className="strongs-entry-bdag-toggle">
+                    <span className="strongs-entry-section-label">BDAG</span>
+                    <span className="strongs-entry-bdag-toggle-copy">Show or hide BDAG</span>
+                  </summary>
+                  <div className="strongs-entry-bdag-body">
+                    {entry.bdagArticles.map((article) => {
+                      const summary = article.summary ?? { plainMeaning: article.entry };
 
-                    return (
-                      <section
-                        className="strongs-entry-bdag-article"
-                        key={`${entry.id}:${article.headword}:${article.transliteration}`}
-                      >
-                        <p className="strongs-entry-meta">
-                          {article.headword} ({article.transliteration})
-                        </p>
-                        <div className="strongs-entry-bdag-summary">
-                          <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
-                            BDAG Summary
+                      return (
+                        <section
+                          className="strongs-entry-bdag-article"
+                          key={`${entry.id}:${article.headword}:${article.transliteration}`}
+                        >
+                          <p className="strongs-entry-meta">
+                            {article.headword} ({article.transliteration})
                           </p>
-                          <p className="strongs-entry-copy strongs-entry-copy-bdag">
-                            {summary.plainMeaning}
-                          </p>
-                          {summary.commonUse ? (
-                            <p className="strongs-entry-copy strongs-entry-copy-bdag">
-                              {summary.commonUse}
+                          <div className="strongs-entry-bdag-summary">
+                            <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
+                              BDAG Summary
                             </p>
-                          ) : null}
-                          {summary.ntNote ? (
                             <p className="strongs-entry-copy strongs-entry-copy-bdag">
-                              {summary.ntNote}
+                              {summary.plainMeaning}
                             </p>
-                          ) : null}
-                        </div>
-                        <div className="strongs-entry-bdag-original">
-                          <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
-                            Original BDAG
-                          </p>
-                          <p className="strongs-entry-copy strongs-entry-copy-bdag strongs-entry-copy-bdag-original">
-                            {article.entry}
-                          </p>
-                        </div>
-                      </section>
-                    );
-                  })}
-                </div>
+                            {summary.commonUse ? (
+                              <p className="strongs-entry-copy strongs-entry-copy-bdag">
+                                {summary.commonUse}
+                              </p>
+                            ) : null}
+                            {summary.ntNote ? (
+                              <p className="strongs-entry-copy strongs-entry-copy-bdag">
+                                {summary.ntNote}
+                              </p>
+                            ) : null}
+                          </div>
+                          <div className="strongs-entry-bdag-original">
+                            <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
+                              Original BDAG
+                            </p>
+                            <p className="strongs-entry-copy strongs-entry-copy-bdag strongs-entry-copy-bdag-original">
+                              {article.entry}
+                            </p>
+                          </div>
+                        </section>
+                      );
+                    })}
+                  </div>
+                </details>
               ) : null}
               {entry.language === "greek" && outsideScripture[entry.id]?.status === "loaded" ? (
                 <div className="strongs-entry-outside-scripture-results">
@@ -187,20 +224,37 @@ export function ReaderStrongsPanel() {
                       <section className="strongs-entry-fathers-group" key={`${entry.id}:${workTitle}`}>
                         <h4 className="strongs-entry-fathers-title">{workTitle}</h4>
                         <div className="strongs-entry-fathers-list">
-                          {matches.map((match) => (
-                            <article className="strongs-entry-fathers-hit" key={match.segmentId}>
-                              <p className="strongs-entry-meta">
-                                {match.label}
-                                {match.ref !== match.label ? ` (${match.ref})` : ""}
-                              </p>
-                              <p className="strongs-entry-copy strongs-entry-fathers-greek">
-                                {match.greek}
-                              </p>
-                              <p className="strongs-entry-copy strongs-entry-fathers-english">
-                                {match.english}
-                              </p>
-                            </article>
-                          ))}
+                          {matches.map((match) => {
+                            const linePairs = buildInterlinearLinePairs(match.greek, match.english);
+
+                            return (
+                              <article className="strongs-entry-fathers-hit" key={match.segmentId}>
+                                <p className="strongs-entry-meta">
+                                  {match.label}
+                                  {match.ref !== match.label ? ` (${match.ref})` : ""}
+                                </p>
+                                <div className="strongs-entry-fathers-interlinear">
+                                  {linePairs.map((pair, index) => (
+                                    <div
+                                      className="strongs-entry-fathers-line-pair"
+                                      key={`${match.segmentId}:${index}`}
+                                    >
+                                      {pair.greek ? (
+                                        <p className="strongs-entry-copy strongs-entry-fathers-greek">
+                                          {pair.greek}
+                                        </p>
+                                      ) : null}
+                                      {pair.english ? (
+                                        <p className="strongs-entry-copy strongs-entry-fathers-english">
+                                          {pair.english}
+                                        </p>
+                                      ) : null}
+                                    </div>
+                                  ))}
+                                </div>
+                              </article>
+                            );
+                          })}
                         </div>
                       </section>
                     ))
