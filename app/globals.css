@@ -1177,30 +1177,27 @@ select {
   color: rgba(255, 255, 255, 0.84);
 }
 
+.strongs-entry-tabs {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 0.45rem;
+  padding: 0.22rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.strongs-entry-tab-panel,
 .strongs-entry-bdag {
   display: grid;
   gap: 0.6rem;
   margin-top: 0.35rem;
   padding-top: 0.8rem;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.strongs-entry-bdag-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  list-style: none;
-  cursor: pointer;
-}
-
-.strongs-entry-bdag-toggle::-webkit-details-marker {
-  display: none;
-}
-
-.strongs-entry-bdag-toggle-copy {
-  color: rgba(255, 255, 255, 0.62);
-  font-size: 0.82rem;
 }
 
 .strongs-entry-bdag-body {
@@ -1241,16 +1238,25 @@ select {
   color: rgba(255, 255, 255, 0.68);
 }
 
-.strongs-entry-outside-scripture {
+.strongs-entry-bible-verses {
   display: grid;
-  gap: 0.6rem;
-  margin-top: 0.35rem;
-  padding-top: 0.8rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 0.55rem;
 }
 
-.strongs-entry-action {
-  justify-self: start;
+.strongs-entry-bible-verse {
+  display: grid;
+  gap: 0.28rem;
+  padding: 0.7rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.strongs-entry-bible-verse:hover,
+.strongs-entry-bible-verse:focus-visible {
+  border-color: rgba(123, 188, 255, 0.24);
+  background: rgba(255, 255, 255, 0.05);
+  outline: none;
 }
 
 .strongs-entry-outside-scripture-results,

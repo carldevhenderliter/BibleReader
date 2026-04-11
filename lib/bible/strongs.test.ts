@@ -1,4 +1,8 @@
-import { getStrongsEntries, normalizeStrongsNumber } from "@/lib/bible/strongs";
+import {
+  getStrongsEntries,
+  getStrongsVerseOccurrences,
+  normalizeStrongsNumber
+} from "@/lib/bible/strongs";
 
 describe("strongs lexicon", () => {
   it("loads normalized lexicon entries by number", async () => {
@@ -31,5 +35,20 @@ describe("strongs lexicon", () => {
   it("normalizes spaced and zero-padded strongs numbers", () => {
     expect(normalizeStrongsNumber(" g 03056 ")).toBe("G3056");
     expect(normalizeStrongsNumber("h7225")).toBe("H7225");
+  });
+
+  it("loads KJV verse occurrences for a Strongs number", async () => {
+    const matches = await getStrongsVerseOccurrences("G3056");
+
+    expect(matches.length).toBeGreaterThan(0);
+    expect(matches[0]).toEqual(
+      expect.objectContaining({
+        strongsNumber: "G3056",
+        bookSlug: expect.any(String),
+        chapterNumber: expect.any(Number),
+        verseNumber: expect.any(Number),
+        href: expect.stringContaining("/read/")
+      })
+    );
   });
 });
