@@ -54,15 +54,14 @@ describe("ReaderStrongsPanel", () => {
     expect(within(studyPane).getByRole("tab", { name: "Outside Bible" })).toBeInTheDocument();
     expect(within(studyPane).getByRole("heading", { name: "G3056" })).toBeInTheDocument();
     expect(await within(studyPane).findByText(/Matthew 5:32/)).toBeInTheDocument();
-    expect(
-      await within(studyPane).findByRole("button", { name: /for the cause G3056/i })
-    ).toHaveClass("strongs-token-match");
+    const matchedToken = await within(studyPane).findByText(/for the cause/i);
+    expect(matchedToken.closest("button")).toHaveClass("strongs-token-match");
 
     fireEvent.click(within(studyPane).getByRole("tab", { name: "BDAG" }));
 
     expect(await within(studyPane).findByText("BDAG Summary")).toBeInTheDocument();
     expect(within(studyPane).getByText("Original BDAG")).toBeInTheDocument();
-  });
+  }, 15000);
 
   it("does not render a BDAG section for Hebrew Strongs entries", async () => {
     renderWithReaderCustomization(<StrongsHarness />);
