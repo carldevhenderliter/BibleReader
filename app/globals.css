@@ -1056,6 +1056,18 @@ select {
   cursor: pointer;
 }
 
+.strongs-token-interlinear {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.06rem;
+  vertical-align: baseline;
+}
+
+.strongs-token-surface {
+  display: inline;
+}
+
 .strongs-token:hover,
 .strongs-token:focus-visible {
   color: var(--reader-accent);
@@ -1070,6 +1082,14 @@ select {
   font-weight: 800;
   letter-spacing: 0.08em;
   vertical-align: super;
+}
+
+.strongs-token-lemma {
+  color: rgba(255, 255, 255, 0.7);
+  font-family: var(--reader-body-font);
+  font-size: 0.56em;
+  line-height: 1.1;
+  text-align: left;
 }
 
 .strongs-popover-backdrop {
@@ -1298,23 +1318,6 @@ select {
   background: rgba(255, 255, 255, 0.03);
 }
 
-.strongs-entry-fathers-word-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem 0.42rem;
-  align-items: flex-start;
-}
-
-.strongs-entry-fathers-word-pair {
-  display: grid;
-  justify-items: center;
-  gap: 0.12rem;
-  min-width: 2.2rem;
-  padding: 0.18rem 0.22rem;
-  border-radius: 0.45rem;
-  background: rgba(255, 255, 255, 0.025);
-}
-
 .strongs-entry-fathers-greek {
   color: rgba(255, 255, 255, 0.92);
   font-family: var(--reader-body-font);
@@ -1322,13 +1325,6 @@ select {
 
 .strongs-entry-fathers-english {
   color: rgba(255, 255, 255, 0.72);
-}
-
-.strongs-entry-fathers-word-english,
-.strongs-entry-fathers-word-greek {
-  font-size: 0.82rem;
-  line-height: 1.2;
-  text-align: center;
 }
 
 .verse-content {

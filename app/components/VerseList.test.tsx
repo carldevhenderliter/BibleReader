@@ -78,4 +78,17 @@ describe("VerseList", () => {
     expect(within(studyPane).getByRole("heading", { name: "H7225" })).toBeInTheDocument();
     expect(await within(studyPane).findByText(/Transliteration:/i)).toBeInTheDocument();
   });
+
+  it("shows the lemma under tagged words in reader view", async () => {
+    renderWithReaderCustomization(
+      <VerseList
+        bookSlug="genesis"
+        chapterNumber={1}
+        showStrongs
+        verses={verses}
+      />
+    );
+
+    expect(await screen.findByText("רֵאשִׁית")).toBeInTheDocument();
+  });
 });

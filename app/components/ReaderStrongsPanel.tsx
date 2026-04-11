@@ -25,11 +25,6 @@ type InterlinearLinePair = {
   english: string;
 };
 
-type InterlinearWordPair = {
-  greek: string;
-  english: string;
-};
-
 function splitInterlinearLines(value: string, pattern: RegExp) {
   return value
     .split(pattern)
@@ -55,24 +50,6 @@ function buildInterlinearLinePairs(greek: string, english: string): InterlinearL
   }
 
   return [{ greek, english }];
-}
-
-function splitInterlinearWords(value: string) {
-  return value
-    .split(/\s+/)
-    .map((part) => part.trim())
-    .filter(Boolean);
-}
-
-function buildInterlinearWordPairs(greek: string, english: string): InterlinearWordPair[] {
-  const greekWords = splitInterlinearWords(greek);
-  const englishWords = splitInterlinearWords(english);
-  const pairCount = Math.max(greekWords.length, englishWords.length);
-
-  return Array.from({ length: pairCount }, (_, index) => ({
-    greek: greekWords[index] ?? "",
-    english: englishWords[index] ?? ""
-  })).filter((pair) => pair.greek || pair.english);
 }
 
 export function ReaderStrongsPanel() {
@@ -369,27 +346,16 @@ export function ReaderStrongsPanel() {
                                       className="strongs-entry-fathers-line-pair"
                                       key={`${match.segmentId}:${index}`}
                                     >
-                                      <div className="strongs-entry-fathers-word-grid">
-                                        {buildInterlinearWordPairs(pair.greek, pair.english).map(
-                                          (wordPair, wordIndex) => (
-                                            <div
-                                              className="strongs-entry-fathers-word-pair"
-                                              key={`${match.segmentId}:${index}:${wordIndex}`}
-                                            >
-                                              {wordPair.english ? (
-                                                <p className="strongs-entry-copy strongs-entry-fathers-english strongs-entry-fathers-word-english">
-                                                  {wordPair.english}
-                                                </p>
-                                              ) : null}
-                                              {wordPair.greek ? (
-                                                <p className="strongs-entry-copy strongs-entry-fathers-greek strongs-entry-fathers-word-greek">
-                                                  {wordPair.greek}
-                                                </p>
-                                              ) : null}
-                                            </div>
-                                          )
-                                        )}
-                                      </div>
+                                      {pair.greek ? (
+                                        <p className="strongs-entry-copy strongs-entry-fathers-greek">
+                                          {pair.greek}
+                                        </p>
+                                      ) : null}
+                                      {pair.english ? (
+                                        <p className="strongs-entry-copy strongs-entry-fathers-english">
+                                          {pair.english}
+                                        </p>
+                                      ) : null}
                                     </div>
                                   ))}
                                 </div>
