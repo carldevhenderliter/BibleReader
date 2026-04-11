@@ -54,6 +54,9 @@ describe("ReaderStrongsPanel", () => {
     expect(within(studyPane).getByRole("tab", { name: "Outside Bible" })).toBeInTheDocument();
     expect(within(studyPane).getByRole("heading", { name: "G3056" })).toBeInTheDocument();
     expect(await within(studyPane).findByText(/Matthew 5:32/)).toBeInTheDocument();
+    expect(
+      await within(studyPane).findByRole("button", { name: /for the cause G3056/i })
+    ).toHaveClass("strongs-token-match");
 
     fireEvent.click(within(studyPane).getByRole("tab", { name: "BDAG" }));
 
@@ -85,7 +88,7 @@ describe("ReaderStrongsPanel", () => {
     expect(await within(studyPane).findByText("Verses Found Outside Bible")).toBeInTheDocument();
     expect(await within(studyPane).findByRole("heading", { name: "1 Clement" })).toBeInTheDocument();
     expect(within(studyPane).getByText("13")).toBeInTheDocument();
-    expect(within(studyPane).getAllByText(/ἅγιος λόγος/).length).toBeGreaterThan(0);
+    expect(within(studyPane).getAllByText("λόγος")[0]?.tagName).toBe("MARK");
     expect(within(studyPane).getAllByText(/the holy word saith/i).length).toBeGreaterThan(0);
   });
 

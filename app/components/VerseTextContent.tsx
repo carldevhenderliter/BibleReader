@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-import { getStrongsEntries } from "@/lib/bible/strongs";
+import { getStrongsEntries, normalizeStrongsNumber } from "@/lib/bible/strongs";
 import type { Verse } from "@/lib/bible/types";
 
 type VerseTextContentProps = {
@@ -10,13 +10,15 @@ type VerseTextContentProps = {
   showStrongs?: boolean;
   onOpenStrongs?: (strongsNumbers: string[]) => void;
   className?: string;
+  highlightedStrongsNumber?: string | null;
 };
 
 export function VerseTextContent({
   verse,
   showStrongs = false,
   onOpenStrongs,
-  className
+  className,
+  highlightedStrongsNumber = null
 }: VerseTextContentProps) {
   const [tokenLemmas, setTokenLemmas] = useState<Record<string, string>>({});
   const strongsNumbers = useMemo(
@@ -71,7 +73,16 @@ export function VerseTextContent({
               return (
                 <button
                   aria-label={`${token.text.trim()} ${token.strongsNumbers.join(" ")}`}
-                  className={`strongs-token${lemma ? " strongs-token-interlinear" : ""}`}
+                  className={`strongs-token${lemma ? " strongs-token-interlinear" : ""}${
+                    highlightedStrongsNumber &&
+                    token.strongsNumbers.some(
+                      (strongsNumber) =>
+                        normalizeStrongsNumber(strongsNumber) ===
+                        normalizeStrongsNumber(highlightedStrongsNumber)
+                    )
+                      ? " strongs-token-match"
+                      : ""
+                  }`}
                   key={`${verse.number}:${index}:${token.text}`}
                   onClick={() => onOpenStrongs(token.strongsNumbers ?? [])}
                   type="button"

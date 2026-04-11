@@ -2,10 +2,14 @@
 
 import { useEffect, useState } from "react";
 
+import { VerseTextContent } from "@/app/components/VerseTextContent";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
-import { getStrongsEntries, getStrongsVerseOccurrences } from "@/lib/bible/strongs";
-import type { BibleSearchStrongsVerseEntry, StrongsEntry } from "@/lib/bible/types";
-import { findFathersSegmentsByGreekLemma } from "@/lib/fathers/search";
+import {
+  getStrongsEntries,
+  getStrongsVerseOccurrencesWithTokens
+} from "@/lib/bible/strongs";
+import type { BibleSearchVerseEntry, StrongsEntry } from "@/lib/bible/types";
+import { findFathersSegmentsByGreekLemma, normalizeFathersGreekText } from "@/lib/fathers/search";
 import type { FathersLemmaMatch } from "@/lib/fathers/types";
 
 type OutsideScriptureLookupState = {
@@ -15,13 +19,13 @@ type OutsideScriptureLookupState = {
 
 type BibleOccurrencesState = {
   status: "loading" | "loaded";
-  matches: Array<BibleSearchStrongsVerseEntry & { href: string }>;
+  matches: Array<BibleSearchVerseEntry & { href: string }>;
 };
 
 type StrongsTab = "bible" | "bdag" | "outside-bible";
 
 export function ReaderStrongsPanel() {
-  const { activeStrongsLabel, activeStrongsNumbers } = useReaderWorkspace();
+  const { activeStrongsLabel, activeStrongsNumbers, openStrongs } = useReaderWorkspace();
   const [entries, setEntries] = useState<StrongsEntry[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [activeTabs, setActiveTabs] = useState<Record<string, StrongsTab>>({});
@@ -78,7 +82,7 @@ export function ReaderStrongsPanel() {
         }
       }));
 
-      void getStrongsVerseOccurrences(entry.id).then((matches) => {
+      void getStrongsVerseOccurrencesWithTokens(entry.id).then((matches) => {
         setBibleOccurrences((current) => ({
           ...current,
           [entry.id]: {
@@ -147,6 +151,25 @@ export function ReaderStrongsPanel() {
     }
   }
 
+  function renderHighlightedGreekContext(context: string, lemma: string) {
+    const normalizedLemma = normalizeFathersGreekText(lemma);
+    const segments = context.match(/[\p{Script=Greek}]+|[^\p{Script=Greek}]+/gu) ?? [context];
+
+    return segments.map((segment, index) => {
+      if (!/[\p{Script=Greek}]/u.test(segment)) {
+        return <span key={`${segment}:${index}`}>{segment}</span>;
+      }
+
+      return normalizeFathersGreekText(segment) === normalizedLemma ? (
+        <mark className="strongs-inline-match" key={`${segment}:${index}`}>
+          {segment}
+        </mark>
+      ) : (
+        <span key={`${segment}:${index}`}>{segment}</span>
+      );
+    });
+  }
+
   return (
     <div className="reader-strongs-panel">
       <div className="reader-notebook-header">
@@ -210,16 +233,27 @@ export function ReaderStrongsPanel() {
                   ) : bibleOccurrences[entry.id]?.matches.length ? (
                     <div className="strongs-entry-bible-verses">
                       {bibleOccurrences[entry.id].matches.map((match) => (
-                        <a
+                        <article
                           className="strongs-entry-bible-verse"
-                          href={match.href}
-                          key={`${match.strongsNumber}:${match.bookSlug}:${match.chapterNumber}:${match.verseNumber}`}
+                          key={`${entry.id}:${match.bookSlug}:${match.chapterNumber}:${match.verseNumber}`}
                         >
-                          <p className="strongs-entry-meta">
+                          <a className="strongs-entry-bible-verse-link" href={match.href}>
                             {match.bookName} {match.chapterNumber}:{match.verseNumber}
-                          </p>
-                          <p className="strongs-entry-copy">{match.text}</p>
-                        </a>
+                          </a>
+                          <VerseTextContent
+                            className="strongs-entry-copy strongs-entry-bible-verse-text"
+                            highlightedStrongsNumber={entry.id}
+                            onOpenStrongs={(strongsNumbers) =>
+                              openStrongs(strongsNumbers, strongsNumbers.join(" "))
+                            }
+                            showStrongs
+                            verse={{
+                              number: match.verseNumber,
+                              text: match.text,
+                              tokens: match.tokens
+                            }}
+                          />
+                        </article>
                       ))}
                     </div>
                   ) : (
@@ -306,7 +340,7 @@ export function ReaderStrongsPanel() {
                                 <div className="strongs-entry-fathers-interlinear">
                                   <div className="strongs-entry-fathers-line-pair">
                                     <p className="strongs-entry-copy strongs-entry-fathers-greek">
-                                      {match.greekContext}
+                                      {renderHighlightedGreekContext(match.greekContext, entry.lemma)}
                                     </p>
                                     <p className="strongs-entry-copy strongs-entry-fathers-english">
                                       {match.englishContext}

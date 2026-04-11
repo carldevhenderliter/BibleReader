@@ -1,8 +1,13 @@
 import { getBookHighlightedVerseHref } from "@/lib/bible/utils";
-import type { BibleSearchStrongsVerseEntry, StrongsEntry } from "@/lib/bible/types";
+import type {
+  BibleSearchStrongsVerseEntry,
+  BibleSearchVerseEntry,
+  StrongsEntry
+} from "@/lib/bible/types";
 
 let strongsLexiconPromise: Promise<Record<string, StrongsEntry>> | null = null;
 let strongsVerseIndexPromise: Promise<BibleSearchStrongsVerseEntry[]> | null = null;
+let kjvVerseSearchPromise: Promise<BibleSearchVerseEntry[]> | null = null;
 
 export function normalizeStrongsNumber(value: string) {
   const match = value.trim().toUpperCase().match(/^([HG])\s*0*(\d+)$/);
@@ -39,6 +44,16 @@ async function loadStrongsVerseIndex() {
   return strongsVerseIndexPromise;
 }
 
+async function loadKjvVerseSearchIndex() {
+  if (!kjvVerseSearchPromise) {
+    kjvVerseSearchPromise = import("@/data/bible/search/kjv.json").then(
+      (module) => ((module.default ?? []) as BibleSearchVerseEntry[])
+    );
+  }
+
+  return kjvVerseSearchPromise;
+}
+
 export async function getStrongsEntries(strongsNumbers: string[]) {
   const lexicon = await loadStrongsLexicon();
 
@@ -59,6 +74,24 @@ export async function getStrongsVerseOccurrences(strongsNumber: string) {
 
   return verseIndex
     .filter((entry) => entry.strongsNumber === normalized)
+    .map((entry) => ({
+      ...entry,
+      href: getBookHighlightedVerseHref(entry.bookSlug, entry.chapterNumber, entry.verseNumber, "kjv")
+    }));
+}
+
+export async function getStrongsVerseOccurrencesWithTokens(strongsNumber: string) {
+  const normalized = normalizeStrongsNumber(strongsNumber);
+  const verseIndex = await loadKjvVerseSearchIndex();
+
+  return verseIndex
+    .filter((entry) =>
+      entry.tokens?.some((token) =>
+        token.strongsNumbers?.some(
+          (tokenStrongsNumber) => normalizeStrongsNumber(tokenStrongsNumber) === normalized
+        )
+      )
+    )
     .map((entry) => ({
       ...entry,
       href: getBookHighlightedVerseHref(entry.bookSlug, entry.chapterNumber, entry.verseNumber, "kjv")
