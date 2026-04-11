@@ -49,6 +49,45 @@ export function normalizeFathersGreekText(value: string) {
     .trim();
 }
 
+function splitGreekSentences(value: string) {
+  return value
+    .split(/(?<=[.;·;!?])/u)
+    .map((part) => part.trim())
+    .filter(Boolean);
+}
+
+function splitEnglishSentences(value: string) {
+  return value
+    .split(/(?<=[.!?;:])/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+}
+
+function getSentenceContext(
+  greek: string,
+  english: string,
+  normalizedLemma: string
+): { greekContext: string; englishContext: string } {
+  const greekSentences = splitGreekSentences(greek);
+  const englishSentences = splitEnglishSentences(english);
+
+  const matchedIndex = greekSentences.findIndex((sentence) =>
+    normalizeFathersGreekText(sentence).split(" ").includes(normalizedLemma)
+  );
+
+  if (matchedIndex === -1) {
+    return { greekContext: greek, englishContext: english };
+  }
+
+  return {
+    greekContext: greekSentences[matchedIndex] ?? greek,
+    englishContext:
+      englishSentences[matchedIndex] ??
+      englishSentences[Math.min(matchedIndex, Math.max(0, englishSentences.length - 1))] ??
+      english
+  };
+}
+
 async function getFathersManifest() {
   if (!manifestPromise) {
     manifestPromise = Promise.resolve(
@@ -103,7 +142,8 @@ export async function findFathersSegmentsByGreekLemma(lemma: string): Promise<Fa
         ref: segment.ref,
         label: segment.label,
         greek: segment.greek,
-        english: segment.english
+        english: segment.english,
+        ...getSentenceContext(segment.greek, segment.english, normalizedLemma)
       });
     }
   }

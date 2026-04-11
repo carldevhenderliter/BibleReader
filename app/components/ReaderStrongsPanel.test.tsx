@@ -85,8 +85,8 @@ describe("ReaderStrongsPanel", () => {
     expect(await within(studyPane).findByText("Verses Found Outside Bible")).toBeInTheDocument();
     expect(await within(studyPane).findByRole("heading", { name: "1 Clement" })).toBeInTheDocument();
     expect(within(studyPane).getByText("13")).toBeInTheDocument();
-    expect(within(studyPane).getByText(/Ταπεινοφρονήσωμεν οὖν/)).toBeInTheDocument();
-    expect(within(studyPane).getByText(/Let us therefore be lowly minded/i)).toBeInTheDocument();
+    expect(within(studyPane).getAllByText(/ὁ ἅγιος λόγος/).length).toBeGreaterThan(0);
+    expect(within(studyPane).getAllByText(/the holy word saith/i).length).toBeGreaterThan(0);
   });
 
   it("renders an empty state when no Apostolic Fathers matches exist", async () => {

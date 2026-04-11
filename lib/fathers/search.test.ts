@@ -18,9 +18,21 @@ describe("fathers lemma search", () => {
         segmentId: expect.any(String),
         label: expect.any(String),
         greek: expect.any(String),
-        english: expect.any(String)
+        english: expect.any(String),
+        greekContext: expect.any(String),
+        englishContext: expect.any(String)
       })
     );
+  });
+
+  it("returns sentence-level context that stays close to the matched Greek word", async () => {
+    const matches = await findFathersSegmentsByGreekLemma("λόγος");
+    const firstClementMatch = matches.find(
+      (match) => match.workSlug === "1-clement" && match.label === "13"
+    );
+
+    expect(firstClementMatch?.greekContext).toContain("ὁ ἅγιος λόγος");
+    expect(firstClementMatch?.englishContext).toContain("the holy word saith");
   });
 
   it("returns the same hits for accentless normalized lemma input", async () => {

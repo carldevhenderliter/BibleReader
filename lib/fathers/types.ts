@@ -35,4 +35,6 @@ export type FathersLemmaMatch = {
   label: string;
   greek: string;
   english: string;
+  greekContext: string;
+  englishContext: string;
 };

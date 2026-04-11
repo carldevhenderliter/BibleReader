@@ -329,7 +329,10 @@ export function ReaderStrongsPanel() {
                         <h4 className="strongs-entry-fathers-title">{workTitle}</h4>
                         <div className="strongs-entry-fathers-list">
                           {matches.map((match) => {
-                            const linePairs = buildInterlinearLinePairs(match.greek, match.english);
+                            const linePairs = buildInterlinearLinePairs(
+                              match.greekContext,
+                              match.englishContext
+                            );
 
                             return (
                               <article className="strongs-entry-fathers-hit" key={match.segmentId}>
