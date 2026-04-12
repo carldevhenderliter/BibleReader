@@ -4,6 +4,8 @@ import {
   createContext,
   type CSSProperties,
   type PropsWithChildren,
+  type Dispatch,
+  type SetStateAction,
   useContext,
   useEffect,
   useMemo,
@@ -20,7 +22,7 @@ import {
 
 type ReaderCustomizationContextValue = {
   isPanelOpen: boolean;
-  setIsPanelOpen: (value: boolean) => void;
+  setIsPanelOpen: Dispatch<SetStateAction<boolean>>;
   settings: ReaderCustomizationSettings;
   updateSettings: (updates: Partial<ReaderCustomizationSettings>) => void;
   resetSettings: () => void;

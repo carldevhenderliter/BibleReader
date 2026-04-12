@@ -214,4 +214,26 @@ describe("Reader customization", () => {
 
     expect(screen.queryByRole("dialog", { name: "Reader controls and settings" })).not.toBeInTheDocument();
   });
+
+  it("reopens the panel after closing it from the backdrop", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={chaptersByVersion}
+      />
+    );
+
+    const trigger = screen.getByRole("button", { name: "Menu" });
+
+    fireEvent.click(trigger);
+    fireEvent.click(document.querySelector(".reader-settings-backdrop") as Element);
+
+    expect(screen.queryByRole("dialog", { name: "Reader controls and settings" })).not.toBeInTheDocument();
+
+    fireEvent.click(trigger);
+
+    expect(screen.getByRole("dialog", { name: "Reader controls and settings" })).toBeVisible();
+    expect(trigger).toHaveAttribute("aria-expanded", "true");
+  });
 });

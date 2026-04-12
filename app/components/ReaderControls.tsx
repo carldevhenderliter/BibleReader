@@ -100,7 +100,7 @@ export function ReaderControls({
             aria-controls="reader-settings-panel"
             aria-expanded={isPanelOpen}
             className="reader-inline-button reader-menu-button"
-            onClick={() => setIsPanelOpen(!isPanelOpen)}
+            onClick={() => setIsPanelOpen((current) => !current)}
             type="button"
           >
             Menu
