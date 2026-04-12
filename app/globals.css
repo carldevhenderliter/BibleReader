@@ -997,12 +997,12 @@ select {
   display: flex;
   flex-wrap: wrap;
   gap: 0.28rem 0.2rem;
-  align-items: end;
+  align-items: flex-start;
 }
 
 .verse-greek-token-wrap {
   display: inline-flex;
-  align-items: end;
+  align-items: flex-start;
   gap: 0.04rem;
 }
 
@@ -1011,6 +1011,7 @@ select {
   display: grid;
   gap: 0.14rem;
   justify-items: center;
+  align-content: start;
 }
 
 .verse-greek-token {
