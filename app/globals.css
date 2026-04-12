@@ -1055,8 +1055,8 @@ select {
   border-radius: 0.56rem;
   background: rgba(255, 255, 255, 0.03);
   color: rgba(224, 235, 248, 0.82);
-  font-size: 0.72rem;
-  line-height: 1.15;
+  font-size: calc(0.95rem * var(--reader-greek-font-scale));
+  line-height: 1.1;
   text-align: center;
   transition:
     border-color 160ms ease,
