@@ -1196,6 +1196,66 @@ select {
   gap: 0.4rem;
 }
 
+.verse-custom-translation {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.72rem 0.78rem;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.verse-custom-translation-header,
+.verse-custom-translation-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.45rem;
+}
+
+.verse-custom-translation-title,
+.verse-custom-translation-status {
+  margin: 0;
+  font-size: 0.78rem;
+}
+
+.verse-custom-translation-title {
+  color: rgba(244, 249, 255, 0.95);
+  font-weight: 700;
+}
+
+.verse-custom-translation-status {
+  color: rgba(186, 217, 248, 0.72);
+}
+
+.verse-custom-translation-field {
+  display: grid;
+}
+
+.verse-custom-translation-field textarea {
+  width: 100%;
+  min-height: 5.4rem;
+  padding: 0.72rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.9rem;
+  background: rgba(10, 18, 31, 0.62);
+  color: rgba(244, 249, 255, 0.96);
+  font: inherit;
+  line-height: 1.45;
+  resize: vertical;
+}
+
+.verse-custom-translation-field textarea::placeholder {
+  color: rgba(180, 198, 220, 0.48);
+}
+
+.verse-custom-translation-field textarea:focus-visible {
+  border-color: rgba(var(--reader-accent-rgb), 0.38);
+  outline: none;
+  box-shadow: 0 0 0 1px rgba(var(--reader-accent-rgb), 0.26);
+}
+
 .verse-study-button {
   min-height: 2rem;
   padding: 0.3rem 0.62rem;

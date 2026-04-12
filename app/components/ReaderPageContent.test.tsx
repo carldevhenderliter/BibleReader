@@ -449,6 +449,19 @@ describe("ReaderPageContent", () => {
     );
   });
 
+  it("renders custom verse translation editors in chapter view", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter }}
+      />
+    );
+
+    expect(screen.getByLabelText("Custom translation for genesis 1:1")).toBeInTheDocument();
+    expect(screen.getByLabelText("Custom translation for genesis 1:2")).toBeInTheDocument();
+  });
+
   it("renders three versions in chapter compare and routes KJV Strongs clicks to study", async () => {
     setSplitViewActive(true);
 

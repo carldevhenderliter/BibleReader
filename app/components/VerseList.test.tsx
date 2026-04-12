@@ -2,6 +2,7 @@ import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 
 import { LookupPane } from "@/app/components/LookupPane";
 import { VerseList } from "@/app/components/VerseList";
+import { VERSE_TRANSLATION_OVERRIDES_STORAGE_KEY } from "@/app/components/VerseTranslationOverridesProvider";
 import type { EsvInterlinearDisplayVerse, Verse } from "@/lib/bible/types";
 import { setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
@@ -90,6 +91,24 @@ describe("VerseList", () => {
 
     expect(screen.getByText("In the beginning God created the heaven and the earth.")).toBeInTheDocument();
     expect(screen.queryByText("H7225")).not.toBeInTheDocument();
+  });
+
+  it("renders a custom translation editor under each verse", () => {
+    renderWithReaderCustomization(
+      <VerseList
+        bookSlug="genesis"
+        chapterNumber={1}
+        showStrongs={false}
+        verses={verses}
+      />
+    );
+
+    expect(
+      screen.getByLabelText("Custom translation for genesis 1:1")
+    ).toBeInTheDocument();
+    expect(
+      screen.getByLabelText("Custom translation for genesis 1:2")
+    ).toBeInTheDocument();
   });
 
   it("opens Strongs details in the study pane from a tagged token", async () => {
@@ -288,5 +307,48 @@ describe("VerseList", () => {
     expect(screen.getByRole("button", { name: "Choose English gloss for ἐγένετο" })).toHaveTextContent(
       "became"
     );
+  });
+
+  it("saves and reloads a custom verse translation for the matching verse only", () => {
+    const { unmount } = renderWithReaderCustomization(
+      <VerseList
+        bookSlug="genesis"
+        chapterNumber={1}
+        showStrongs={false}
+        verses={verses}
+      />
+    );
+
+    fireEvent.change(screen.getByLabelText("Custom translation for genesis 1:1"), {
+      target: {
+        value: "At the first, God made the heavens and the earth."
+      }
+    });
+    fireEvent.click(screen.getAllByRole("button", { name: "Save translation" })[0]);
+
+    expect(screen.getByText("Saved in this app")).toBeInTheDocument();
+    expect(screen.getByLabelText("Custom translation for genesis 1:1")).toHaveValue(
+      "At the first, God made the heavens and the earth."
+    );
+    expect(screen.getByLabelText("Custom translation for genesis 1:2")).toHaveValue("");
+    expect(window.localStorage.getItem(VERSE_TRANSLATION_OVERRIDES_STORAGE_KEY)).toContain(
+      "At the first, God made the heavens and the earth."
+    );
+
+    unmount();
+
+    renderWithReaderCustomization(
+      <VerseList
+        bookSlug="genesis"
+        chapterNumber={1}
+        showStrongs={false}
+        verses={verses}
+      />
+    );
+
+    expect(screen.getByLabelText("Custom translation for genesis 1:1")).toHaveValue(
+      "At the first, God made the heavens and the earth."
+    );
+    expect(screen.getByLabelText("Custom translation for genesis 1:2")).toHaveValue("");
   });
 });

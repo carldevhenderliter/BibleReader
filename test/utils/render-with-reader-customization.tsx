@@ -4,6 +4,7 @@ import { render } from "@testing-library/react";
 import { GreekGlossOverridesProvider } from "@/app/components/GreekGlossOverridesProvider";
 import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderTtsProvider } from "@/app/components/ReaderTtsProvider";
+import { VerseTranslationOverridesProvider } from "@/app/components/VerseTranslationOverridesProvider";
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
 import { LookupProvider } from "@/app/components/LookupProvider";
 import { ReaderVersionProvider } from "@/app/components/ReaderVersionProvider";
@@ -20,13 +21,15 @@ function Wrapper({ children }: WrapperProps) {
       <ReaderWorkspaceProvider>
         <WritingAssistantProvider>
           <LookupProvider>
-            <GreekGlossOverridesProvider>
-              <ReaderCustomizationProvider>
-                <ReaderTtsProvider>
-                  <SearchCustomizationProvider>{children}</SearchCustomizationProvider>
-                </ReaderTtsProvider>
-              </ReaderCustomizationProvider>
-            </GreekGlossOverridesProvider>
+            <VerseTranslationOverridesProvider>
+              <GreekGlossOverridesProvider>
+                <ReaderCustomizationProvider>
+                  <ReaderTtsProvider>
+                    <SearchCustomizationProvider>{children}</SearchCustomizationProvider>
+                  </ReaderTtsProvider>
+                </ReaderCustomizationProvider>
+              </GreekGlossOverridesProvider>
+            </VerseTranslationOverridesProvider>
           </LookupProvider>
         </WritingAssistantProvider>
       </ReaderWorkspaceProvider>

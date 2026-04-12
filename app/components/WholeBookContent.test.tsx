@@ -461,6 +461,23 @@ describe("WholeBookContent", () => {
     );
   });
 
+  it("renders custom verse translation editors in whole-book view", () => {
+    renderWithReaderCustomization(
+      <>
+        <WholeBookContent
+          book={books[0]}
+          books={books}
+          chaptersByVersion={{ web: chapters }}
+        />
+        <SearchPane />
+        <LookupPane />
+      </>
+    );
+
+    expect(screen.getByLabelText("Custom translation for jude 1:1")).toBeInTheDocument();
+    expect(screen.getByLabelText("Custom translation for jude 2:1")).toBeInTheDocument();
+  });
+
   it("hides read-aloud controls in whole-book view", () => {
     installKokoroSupport();
 

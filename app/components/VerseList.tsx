@@ -4,6 +4,7 @@ import { useEffect } from "react";
 
 import { GreekInterlinearLine } from "@/app/components/GreekInterlinearLine";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
+import { VerseTranslationEditor } from "@/app/components/VerseTranslationEditor";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { VerseTextContent } from "@/app/components/VerseTextContent";
 import type { EsvInterlinearDisplayVerse, Verse } from "@/lib/bible/types";
@@ -120,6 +121,11 @@ export function VerseList({
                     verse={interlinearVerseMap[verse.number]}
                   />
                 ) : null}
+                <VerseTranslationEditor
+                  bookSlug={bookSlug}
+                  chapterNumber={chapterNumber}
+                  verseNumber={verse.number}
+                />
                 <div className="verse-study-actions">
                   <button
                     className={`reader-inline-button verse-study-button${
