@@ -18,23 +18,32 @@ export function LookupPane() {
     expandSplitPane,
     isSplitViewActive
   } = useLookup();
-  const { activeUtilityPane, setActiveUtilityPane } = useReaderWorkspace();
+  const { activeUtilityPane, setActiveUtilityPane, utilityPaneRequestKey } = useReaderWorkspace();
   const pathname = usePathname();
   const isReaderRoute = pathname.startsWith("/read");
-  const previousUtilityPaneRef = useRef(activeUtilityPane);
+  const previousUtilityPaneRequestKeyRef = useRef(utilityPaneRequestKey);
 
   useEffect(() => {
-    const previousUtilityPane = previousUtilityPaneRef.current;
-    previousUtilityPaneRef.current = activeUtilityPane;
+    const previousUtilityPaneRequestKey = previousUtilityPaneRequestKeyRef.current;
+    previousUtilityPaneRequestKeyRef.current = utilityPaneRequestKey;
 
     if (!isSplitViewActive || !collapsedSplitPanes.study) {
       return;
     }
 
-    if (activeUtilityPane !== "search" && activeUtilityPane !== previousUtilityPane) {
+    if (
+      activeUtilityPane !== "search" &&
+      utilityPaneRequestKey !== previousUtilityPaneRequestKey
+    ) {
       expandSplitPane("study");
     }
-  }, [activeUtilityPane, collapsedSplitPanes.study, expandSplitPane, isSplitViewActive]);
+  }, [
+    activeUtilityPane,
+    collapsedSplitPanes.study,
+    expandSplitPane,
+    isSplitViewActive,
+    utilityPaneRequestKey
+  ]);
 
   if (!isSplitViewActive) {
     return null;

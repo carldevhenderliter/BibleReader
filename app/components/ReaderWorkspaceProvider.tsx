@@ -75,6 +75,7 @@ type ReaderWorkspaceContextValue = {
   leftReaderMode: LeftReaderMode;
   setLeftReaderMode: (mode: LeftReaderMode) => void;
   activeUtilityPane: UtilityPane;
+  utilityPaneRequestKey: number;
   setActiveUtilityPane: (pane: UtilityPane) => void;
   openStrongs: (strongsNumber: string | string[], label?: string | null) => void;
   openNotebook: (reference?: PassageReference | null) => void;
@@ -234,6 +235,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   const [activeStrongsLabel, setActiveStrongsLabel] = useState<string | null>(null);
   const [activeSermonId, setActiveSermonId] = useState<string | null>(null);
   const [compareVersionOverrides, setCompareVersionOverrides] = useState<BundledBibleVersion[]>([]);
+  const [utilityPaneRequestKey, setUtilityPaneRequestKey] = useState(0);
   const isReaderRoute = pathname.startsWith("/read");
   const activeUtilityPane = activeUtilityPaneState;
   const installedBundledVersions = getInstalledBundledBibleVersions();
@@ -244,6 +246,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
 
   const setActiveUtilityPane = useCallback((pane: UtilityPane) => {
     setActiveUtilityPaneState(pane);
+    setUtilityPaneRequestKey((current) => current + 1);
 
     if (pane !== "search") {
       setLastReaderUtilityPane(pane);
@@ -257,6 +260,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
     setActiveReaderPane("reading");
     setLeftReaderMode("scripture");
     setActiveUtilityPaneState("notebook");
+    setUtilityPaneRequestKey((current) => current + 1);
     setLastReaderUtilityPane("notebook");
     setPendingNotebookReference(reference);
   }, []);
@@ -267,6 +271,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
     setActiveReaderPane("reading");
     setLeftReaderMode("scripture");
     setActiveUtilityPaneState("strongs");
+    setUtilityPaneRequestKey((current) => current + 1);
     setLastReaderUtilityPane("strongs");
     setActiveStrongsNumbers(nextNumbers);
     setActiveStrongsLabel(label);
@@ -276,6 +281,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
     setActiveReaderPane("reading");
     setLeftReaderMode("scripture");
     setActiveUtilityPaneState("sermons");
+    setUtilityPaneRequestKey((current) => current + 1);
     setLastReaderUtilityPane("sermons");
   }, []);
 
@@ -481,6 +487,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       leftReaderMode,
       setLeftReaderMode,
       activeUtilityPane,
+      utilityPaneRequestKey,
       setActiveUtilityPane,
       openStrongs,
       openNotebook,
@@ -1007,6 +1014,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       activeStudyVerseNumber,
       activeUtilityPane,
       activeUtilityPaneState,
+      utilityPaneRequestKey,
       bookmarks,
       closeNotebookWorkspace,
       compareVersions,

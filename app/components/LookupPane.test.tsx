@@ -3,6 +3,7 @@ import { within } from "@testing-library/react";
 
 import { AppSplitLayout } from "@/app/components/AppSplitLayout";
 import { ReaderPageContent } from "@/app/components/ReaderPageContent";
+import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import type { BookMeta, Chapter } from "@/lib/bible/types";
 import { setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
@@ -54,6 +55,16 @@ function renderStudyPane() {
         chaptersByVersion={{ web: chapter, kjv: chapter }}
       />
     </AppSplitLayout>
+  );
+}
+
+function StrongsOpenHarness() {
+  const { openStrongs } = useReaderWorkspace();
+
+  return (
+    <button onClick={() => openStrongs("G746", "G746")} type="button">
+      Open Strongs
+    </button>
   );
 }
 
@@ -119,6 +130,22 @@ describe("LookupPane", () => {
 
     expect(await screen.findByRole("button", { name: "Show study pane" })).toBeInTheDocument();
     expect(screen.queryByLabelText("Study pane")).not.toBeInTheDocument();
+  });
+
+  it("reopens the study pane when strongs is opened while collapsed", async () => {
+    renderWithReaderCustomization(
+      <AppSplitLayout>
+        <StrongsOpenHarness />
+      </AppSplitLayout>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Hide study pane" }));
+    expect(await screen.findByRole("button", { name: "Show study pane" })).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Open Strongs" }));
+
+    expect(await screen.findByLabelText("Study pane")).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Show study pane" })).not.toBeInTheDocument();
   });
 
   it("does not render the study pane in mobile mode", () => {
