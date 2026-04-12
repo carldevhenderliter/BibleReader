@@ -11,6 +11,7 @@ import { createPassageReference } from "@/lib/study-workspace";
 type VerseListProps = {
   bookSlug: string;
   chapterNumber: number;
+  interlinearVerseMap?: Record<number, string>;
   highlightedVerseNumber?: number | null;
   highlightedVerseRange?: {
     start: number;
@@ -23,6 +24,7 @@ type VerseListProps = {
 export function VerseList({
   bookSlug,
   chapterNumber,
+  interlinearVerseMap,
   highlightedVerseNumber,
   highlightedVerseRange,
   showStrongs = false,
@@ -95,6 +97,11 @@ export function VerseList({
                 ) : (
                   <VerseTextContent className="verse-text" verse={verse} />
                 )}
+                {interlinearVerseMap?.[verse.number] ? (
+                  <p className="verse-text verse-interlinear-text" lang="el">
+                    {interlinearVerseMap[verse.number]}
+                  </p>
+                ) : null}
                 <div className="verse-study-actions">
                   <button
                     className={`reader-inline-button verse-study-button${

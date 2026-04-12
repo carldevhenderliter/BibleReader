@@ -20,7 +20,11 @@ import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { VerseList } from "@/app/components/VerseList";
-import type { BookMeta, BundledChapterMap } from "@/lib/bible/types";
+import type {
+  BookMeta,
+  BundledChapterMap,
+  EsvInterlinearDisplayChapter
+} from "@/lib/bible/types";
 import { buildChapterSpeechText } from "@/lib/reader-tts";
 import { getBibleVersionBadge } from "@/lib/bible/version";
 
@@ -37,6 +41,7 @@ type ReaderPageContentProps = {
   books: BookMeta[];
   book: BookMeta;
   chaptersByVersion: BundledChapterMap;
+  esvInterlinearChapter?: EsvInterlinearDisplayChapter | null;
   highlightedVerseNumber?: number | null;
   highlightedVerseRange?: {
     start: number;
@@ -48,6 +53,7 @@ export function ReaderPageContent({
   books,
   book,
   chaptersByVersion,
+  esvInterlinearChapter = null,
   highlightedVerseNumber,
   highlightedVerseRange
 }: ReaderPageContentProps) {
@@ -64,6 +70,16 @@ export function ReaderPageContent({
   } = useReaderWorkspace();
   const chapter = chaptersByVersion[version] ?? Object.values(chaptersByVersion)[0] ?? null;
   const showStrongs = version === "kjv" && settings.showStrongs;
+  const showEsvInterlinear =
+    version === "esv" &&
+    book.testament === "New" &&
+    settings.showEsvInterlinear &&
+    esvInterlinearChapter !== null;
+  const interlinearVerseMap = showEsvInterlinear
+    ? Object.fromEntries(
+        esvInterlinearChapter.verses.map((verse) => [verse.number, verse.greek])
+      )
+    : undefined;
   const versionBadge = getBibleVersionBadge(version);
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
@@ -204,6 +220,7 @@ export function ReaderPageContent({
               chapterNumber={chapter.chapterNumber}
               highlightedVerseNumber={activeHighlightedVerseNumber}
               highlightedVerseRange={activeHighlightedVerseRange}
+              interlinearVerseMap={interlinearVerseMap}
               key={`${version}:${book.slug}:${chapter.chapterNumber}`}
               showStrongs={showStrongs}
               verses={chapter.verses}

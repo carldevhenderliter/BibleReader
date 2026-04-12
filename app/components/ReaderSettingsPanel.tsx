@@ -236,6 +236,21 @@ export function ReaderSettingsPanel({
                     : "Show Strongs"
                   : "Strongs (KJV only)"}
               </button>
+              <button
+                aria-pressed={version === "esv" ? settings.showEsvInterlinear : false}
+                className="reader-inline-button reader-settings-link"
+                disabled={version !== "esv"}
+                onClick={() =>
+                  updateSettings({ showEsvInterlinear: !settings.showEsvInterlinear })
+                }
+                type="button"
+              >
+                {version === "esv"
+                  ? settings.showEsvInterlinear
+                    ? "Hide Greek interlinear"
+                    : "Show Greek interlinear"
+                  : "Greek interlinear (ESV only)"}
+              </button>
               <Link
                 className="reader-inline-action reader-settings-link"
                 href={getViewToggleHref(book.slug, currentChapter, view, version)}

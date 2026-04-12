@@ -1,0 +1,30 @@
+{
+  "bookSlug": "1-peter",
+  "chapters": [
+    {
+      "bookSlug": "1-peter",
+      "chapterNumber": 1,
+      "verses": []
+    },
+    {
+      "bookSlug": "1-peter",
+      "chapterNumber": 2,
+      "verses": []
+    },
+    {
+      "bookSlug": "1-peter",
+      "chapterNumber": 3,
+      "verses": []
+    },
+    {
+      "bookSlug": "1-peter",
+      "chapterNumber": 4,
+      "verses": []
+    },
+    {
+      "bookSlug": "1-peter",
+      "chapterNumber": 5,
+      "verses": []
+    }
+  ]
+}

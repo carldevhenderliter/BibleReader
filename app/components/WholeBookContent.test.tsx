@@ -3,7 +3,7 @@ import { fireEvent, screen, waitFor } from "@testing-library/react";
 import { LookupPane } from "@/app/components/LookupPane";
 import { SearchPane } from "@/app/components/SearchPane";
 import { WholeBookContent } from "@/app/components/WholeBookContent";
-import type { BookMeta, Chapter } from "@/lib/bible/types";
+import type { BookMeta, Chapter, EsvInterlinearDisplayChapter } from "@/lib/bible/types";
 import { setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
 
@@ -86,6 +86,31 @@ const nltChapters: Chapter[] = [
     bookSlug: "jude",
     chapterNumber: 2,
     verses: [{ number: 1, text: "Dear friends, I had been eagerly planning to write to you..." }]
+  }
+];
+
+const ntInterlinearBook: EsvInterlinearDisplayChapter[] = [
+  {
+    bookSlug: "jude",
+    chapterNumber: 1,
+    verses: [
+      {
+        number: 1,
+        baseGreek: "Ἰούδας Ἰησοῦ χριστοῦ δοῦλος ἀδελφὸς δὲ Ἰακώβου.",
+        greek: "Ἰούδας Ἰησοῦ χριστοῦ δοῦλος ἀδελφὸς δὲ Ἰακώβου."
+      }
+    ]
+  },
+  {
+    bookSlug: "jude",
+    chapterNumber: 2,
+    verses: [
+      {
+        number: 1,
+        baseGreek: "Ἀγαπητοί πᾶσαν σπουδὴν ποιούμενος γράφειν ὑμῖν.",
+        greek: "Ἀγαπητοί πᾶσαν σπουδὴν ποιούμενος γράφειν ὑμῖν."
+      }
+    ]
   }
 ];
 
@@ -287,6 +312,39 @@ describe("WholeBookContent", () => {
     expect(screen.getAllByText("NLT").length).toBeGreaterThan(0);
     expect(screen.getAllByRole("heading", { name: /Chapter /i }).length).toBeGreaterThan(1);
     expect(screen.getByText("Dear friends, I had been eagerly planning to write to you...")).toBeInTheDocument();
+  });
+
+  it("shows Greek interlinear lines under ESV New Testament verses in whole-book view", () => {
+    window.localStorage.setItem(
+      "bible-reader:customization",
+      JSON.stringify({
+        showEsvInterlinear: true
+      })
+    );
+
+    renderWithReaderCustomization(
+      <>
+        <WholeBookContent
+          book={books[0]}
+          books={books}
+          chaptersByVersion={{ esv: chapters, web: chapters }}
+          esvInterlinearBook={ntInterlinearBook}
+        />
+        <SearchPane />
+        <LookupPane />
+      </>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: {
+        value: "esv"
+      }
+    });
+
+    expect(
+      screen.getByText("Ἰούδας Ἰησοῦ χριστοῦ δοῦλος ἀδελφὸς δὲ Ἰακώβου.")
+    ).toBeInTheDocument();
   });
 
   it("hides read-aloud controls in whole-book view", () => {

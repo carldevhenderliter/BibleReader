@@ -30,6 +30,23 @@ const chaptersByVersion = {
   kjv: chapter
 } as const;
 
+const esvChapter: Chapter = {
+  bookSlug: "matthew",
+  chapterNumber: 1,
+  verses: [{ number: 1, text: "The book of the genealogy of Jesus Christ, the son of David, the son of Abraham." }]
+};
+
+const ntBooks: BookMeta[] = [
+  {
+    slug: "matthew",
+    name: "Matthew",
+    abbreviation: "Matt",
+    testament: "New",
+    chapterCount: 28,
+    order: 40
+  }
+];
+
 describe("Reader customization", () => {
   beforeEach(() => {
     window.localStorage.clear();
@@ -174,6 +191,28 @@ describe("Reader customization", () => {
     const stored = window.localStorage.getItem(READER_CUSTOMIZATION_STORAGE_KEY) ?? "";
 
     expect(stored).toContain('"showStrongs":true');
+  });
+
+  it("persists the ESV interlinear toggle from the reader menu", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={ntBooks[0]}
+        books={ntBooks}
+        chaptersByVersion={{ esv: esvChapter, web: esvChapter }}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: {
+        value: "esv"
+      }
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Show Greek interlinear" }));
+
+    const stored = window.localStorage.getItem(READER_CUSTOMIZATION_STORAGE_KEY) ?? "";
+
+    expect(stored).toContain('"showEsvInterlinear":true');
   });
 
   it("resets advanced settings to defaults", () => {

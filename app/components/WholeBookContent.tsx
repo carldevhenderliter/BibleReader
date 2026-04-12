@@ -20,7 +20,12 @@ import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { VerseList } from "@/app/components/VerseList";
-import type { BookMeta, BundledBookChapterMap, Chapter } from "@/lib/bible/types";
+import type {
+  BookMeta,
+  BundledBookChapterMap,
+  Chapter,
+  EsvInterlinearDisplayChapter
+} from "@/lib/bible/types";
 import { buildChapterSpeechText } from "@/lib/reader-tts";
 import { getBibleVersionBadge } from "@/lib/bible/version";
 
@@ -37,6 +42,7 @@ type WholeBookContentProps = {
   books: BookMeta[];
   book: BookMeta;
   chaptersByVersion: BundledBookChapterMap;
+  esvInterlinearBook?: EsvInterlinearDisplayChapter[] | null;
   focusedChapterNumber?: number | null;
   highlightedChapterNumber?: number | null;
   highlightedVerseNumber?: number | null;
@@ -50,6 +56,7 @@ export function WholeBookContent({
   books,
   book,
   chaptersByVersion,
+  esvInterlinearBook = null,
   focusedChapterNumber = null,
   highlightedChapterNumber = null,
   highlightedVerseNumber = null,
@@ -68,6 +75,19 @@ export function WholeBookContent({
   } = useReaderWorkspace();
   const chapters = chaptersByVersion[version] ?? Object.values(chaptersByVersion)[0] ?? [];
   const showStrongs = version === "kjv" && settings.showStrongs;
+  const showEsvInterlinear =
+    version === "esv" &&
+    book.testament === "New" &&
+    settings.showEsvInterlinear &&
+    esvInterlinearBook !== null;
+  const interlinearByChapter = showEsvInterlinear
+    ? new Map(
+        (esvInterlinearBook ?? []).map((chapter) => [
+          chapter.chapterNumber,
+          Object.fromEntries(chapter.verses.map((verse) => [verse.number, verse.greek]))
+        ])
+      )
+    : null;
   const versionBadge = getBibleVersionBadge(version);
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
@@ -253,6 +273,7 @@ export function WholeBookContent({
                       ? activeHighlightedVerseRange
                       : null
                   }
+                  interlinearVerseMap={interlinearByChapter?.get(chapter.chapterNumber)}
                   key={`${version}:${book.slug}:${chapter.chapterNumber}`}
                   showStrongs={showStrongs}
                   verses={chapter.verses}

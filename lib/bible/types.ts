@@ -60,6 +60,7 @@ export type ReaderCustomizationSettings = {
   bodyFont: BodyFontOption;
   uiFont: UiFontOption;
   showStrongs: boolean;
+  showEsvInterlinear: boolean;
   textSize: number;
   lineHeight: number;
   contentWidth: number;
@@ -192,6 +193,52 @@ export type BibleSearchStrongsVerseEntry = {
   chapterNumber: number;
   verseNumber: number;
   text: string;
+};
+
+export type EsvInterlinearVerse = {
+  number: number;
+  baseGreek: string;
+  overrideGreek?: string;
+};
+
+export type EsvInterlinearChapter = {
+  bookSlug: string;
+  chapterNumber: number;
+  verses: EsvInterlinearVerse[];
+};
+
+export type EsvInterlinearBookPayload = {
+  bookSlug: string;
+  chapters: EsvInterlinearChapter[];
+};
+
+export type EsvInterlinearOverrideVerse = {
+  number: number;
+  overrideGreek: string;
+};
+
+export type EsvInterlinearOverrideChapter = {
+  bookSlug: string;
+  chapterNumber: number;
+  verses: EsvInterlinearOverrideVerse[];
+};
+
+export type EsvInterlinearOverrideBookPayload = {
+  bookSlug: string;
+  chapters: EsvInterlinearOverrideChapter[];
+};
+
+export type EsvInterlinearDisplayVerse = {
+  number: number;
+  greek: string;
+  baseGreek: string;
+  overrideGreek?: string;
+};
+
+export type EsvInterlinearDisplayChapter = {
+  bookSlug: string;
+  chapterNumber: number;
+  verses: EsvInterlinearDisplayVerse[];
 };
 
 export type BibleTopicReference = {

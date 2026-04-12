@@ -4,7 +4,7 @@ import { AppSplitLayout } from "@/app/components/AppSplitLayout";
 import { LookupPane } from "@/app/components/LookupPane";
 import { ReaderPageContent } from "@/app/components/ReaderPageContent";
 import { SearchPane } from "@/app/components/SearchPane";
-import type { BookMeta, Chapter } from "@/lib/bible/types";
+import type { BookMeta, Chapter, EsvInterlinearDisplayChapter } from "@/lib/bible/types";
 import { PASSAGE_NOTEBOOK_STORAGE_KEY } from "@/lib/passage-notebooks";
 import { mockRouter, setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
@@ -75,6 +75,40 @@ const nltChapter: Chapter = {
   verses: [
     { number: 1, text: "In the beginning God created the heavens and the earth." },
     { number: 2, text: "The earth was formless and empty." }
+  ]
+};
+
+const ntBooks: BookMeta[] = [
+  {
+    slug: "matthew",
+    name: "Matthew",
+    abbreviation: "Matt",
+    testament: "New",
+    chapterCount: 28,
+    order: 40
+  }
+];
+
+const esvNtChapter: Chapter = {
+  bookSlug: "matthew",
+  chapterNumber: 1,
+  verses: [
+    {
+      number: 1,
+      text: "The book of the genealogy of Jesus Christ, the son of David, the son of Abraham."
+    }
+  ]
+};
+
+const esvNtInterlinearChapter: EsvInterlinearDisplayChapter = {
+  bookSlug: "matthew",
+  chapterNumber: 1,
+  verses: [
+    {
+      number: 1,
+      baseGreek: "Βίβλος γενέσεως Ἰησοῦ χριστοῦ υἱοῦ Δαυὶδ υἱοῦ Ἀβραάμ.",
+      greek: "Βίβλος γενέσεως Ἰησοῦ χριστοῦ υἱοῦ Δαυὶδ υἱοῦ Ἀβραάμ."
+    }
   ]
 };
 
@@ -289,6 +323,35 @@ describe("ReaderPageContent", () => {
     expect(screen.getByRole("tab", { name: "Compare" })).toHaveAttribute("aria-selected", "true");
     expect(screen.getByText("Parallel Compare")).toBeInTheDocument();
     expect(screen.getByLabelText("Parallel translation comparison")).toBeInTheDocument();
+  });
+
+  it("shows Greek interlinear lines under ESV New Testament verses when enabled", () => {
+    window.localStorage.setItem(
+      "bible-reader:customization",
+      JSON.stringify({
+        showEsvInterlinear: true
+      })
+    );
+
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={ntBooks[0]}
+        books={ntBooks}
+        chaptersByVersion={{ esv: esvNtChapter, web: esvNtChapter }}
+        esvInterlinearChapter={esvNtInterlinearChapter}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: {
+        value: "esv"
+      }
+    });
+
+    expect(
+      screen.getByText("Βίβλος γενέσεως Ἰησοῦ χριστοῦ υἱοῦ Δαυὶδ υἱοῦ Ἀβραάμ.")
+    ).toBeInTheDocument();
   });
 
   it("renders three versions in chapter compare and routes KJV Strongs clicks to study", async () => {

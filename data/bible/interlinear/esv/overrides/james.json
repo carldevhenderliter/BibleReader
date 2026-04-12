@@ -1,0 +1,30 @@
+{
+  "bookSlug": "james",
+  "chapters": [
+    {
+      "bookSlug": "james",
+      "chapterNumber": 1,
+      "verses": []
+    },
+    {
+      "bookSlug": "james",
+      "chapterNumber": 2,
+      "verses": []
+    },
+    {
+      "bookSlug": "james",
+      "chapterNumber": 3,
+      "verses": []
+    },
+    {
+      "bookSlug": "james",
+      "chapterNumber": 4,
+      "verses": []
+    },
+    {
+      "bookSlug": "james",
+      "chapterNumber": 5,
+      "verses": []
+    }
+  ]
+}

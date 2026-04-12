@@ -85,6 +85,7 @@ export const DEFAULT_READER_CUSTOMIZATION: ReaderCustomizationSettings = {
   bodyFont: "serif",
   uiFont: "sans",
   showStrongs: false,
+  showEsvInterlinear: false,
   textSize: 1.08,
   lineHeight: 1.95,
   contentWidth: 46,
@@ -160,6 +161,10 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
       typeof candidate.showStrongs === "boolean"
         ? candidate.showStrongs
         : DEFAULT_READER_CUSTOMIZATION.showStrongs,
+    showEsvInterlinear:
+      typeof candidate.showEsvInterlinear === "boolean"
+        ? candidate.showEsvInterlinear
+        : DEFAULT_READER_CUSTOMIZATION.showEsvInterlinear,
     textSize:
       typeof candidate.textSize === "number"
         ? clamp(candidate.textSize, TEXT_SIZE_RANGE.min, TEXT_SIZE_RANGE.max)

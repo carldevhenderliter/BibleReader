@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 
 import { ReaderPageContent } from "@/app/components/ReaderPageContent";
 import { getBookBySlug, getBooks, getChapter } from "@/lib/bible/data";
+import { getEsvInterlinearChapter } from "@/lib/bible/esv-interlinear";
 import { isValidChapter, parseChapterParam } from "@/lib/bible/utils";
 import { getInstalledBundledBibleVersions } from "@/lib/bible/version";
 
@@ -34,9 +35,10 @@ export default async function ReaderChapterPage({ params }: ReaderChapterPagePro
   }
 
   const installedBundledVersions = getInstalledBundledBibleVersions();
-  const [books, book, ...chapters] = await Promise.all([
+  const [books, book, esvInterlinearChapter, ...chapters] = await Promise.all([
     getBooks("web"),
     getBookBySlug(bookSlug, "web"),
+    getEsvInterlinearChapter(bookSlug, chapterNumber),
     ...installedBundledVersions.map((version) => getChapter(bookSlug, chapterNumber, version))
   ]);
   const chaptersByVersion = Object.fromEntries(
@@ -56,6 +58,7 @@ export default async function ReaderChapterPage({ params }: ReaderChapterPagePro
       book={book}
       books={books}
       chaptersByVersion={chaptersByVersion}
+      esvInterlinearChapter={esvInterlinearChapter}
     />
   );
 }

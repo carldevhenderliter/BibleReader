@@ -13,6 +13,9 @@ const legacyBooksDir = path.join(bibleDir, "books");
 const versionsDir = path.join(bibleDir, "versions");
 const searchDir = path.join(bibleDir, "search");
 const strongsDir = path.join(bibleDir, "strongs");
+const esvInterlinearDir = path.join(bibleDir, "interlinear", "esv");
+const esvInterlinearBaseDir = path.join(esvInterlinearDir, "base");
+const esvInterlinearOverridesDir = path.join(esvInterlinearDir, "overrides");
 const installedVersionsPath = path.join(bibleDir, "installed-versions.json");
 const sourceBooksPath = path.join(repoRoot, "data", "source", "books.json");
 const topicsSourcePath = path.join(repoRoot, "data", "source", "topics.json");
@@ -26,8 +29,39 @@ const bdagPdfPath = path.join(
   "BDAG-A-Greek-English-Lexicon-of-the-New-Testament-and-Other-Early-Christian-Literature-Walter-Bauer-Frederick-William-Danker-etc.-z-lib.org_.pdf"
 );
 const ESV_SOURCE_URL = "https://raw.githubusercontent.com/lguenth/mdbible/main/json/ESV.json";
+const DEFAULT_SBLGNT_SOURCE_DIR = path.join(repoRoot, "data", "source", "sblgnt");
 const ESV_BOOK_NAME_ALIASES = {
   revelation: "revelation of john"
+};
+
+const SBLGNT_FILE_BY_SLUG = {
+  matthew: "61-Mt-morphgnt.txt",
+  mark: "62-Mk-morphgnt.txt",
+  luke: "63-Lk-morphgnt.txt",
+  john: "64-Jn-morphgnt.txt",
+  acts: "65-Ac-morphgnt.txt",
+  romans: "66-Ro-morphgnt.txt",
+  "1-corinthians": "67-1Co-morphgnt.txt",
+  "2-corinthians": "68-2Co-morphgnt.txt",
+  galatians: "69-Ga-morphgnt.txt",
+  ephesians: "70-Eph-morphgnt.txt",
+  philippians: "71-Php-morphgnt.txt",
+  colossians: "72-Col-morphgnt.txt",
+  "1-thessalonians": "73-1Th-morphgnt.txt",
+  "2-thessalonians": "74-2Th-morphgnt.txt",
+  "1-timothy": "75-1Ti-morphgnt.txt",
+  "2-timothy": "76-2Ti-morphgnt.txt",
+  titus: "77-Tit-morphgnt.txt",
+  philemon: "78-Phm-morphgnt.txt",
+  hebrews: "79-Heb-morphgnt.txt",
+  james: "80-Jas-morphgnt.txt",
+  "1-peter": "81-1Pe-morphgnt.txt",
+  "2-peter": "82-2Pe-morphgnt.txt",
+  "1-john": "83-1Jn-morphgnt.txt",
+  "2-john": "84-2Jn-morphgnt.txt",
+  "3-john": "85-3Jn-morphgnt.txt",
+  jude: "86-Jud-morphgnt.txt",
+  revelation: "87-Re-morphgnt.txt"
 };
 
 const STRONGS_BOOK_NAME_BY_SLUG = {
@@ -139,12 +173,20 @@ const NLT_BOOK_CODE_BY_SLUG = {
  * @typedef {{ headword: string, transliteration: string, entry: string, summary: BdagSummary }} BdagArticle
  * @typedef {{ id: string, language: "hebrew" | "greek", lemma: string, transliteration: string, definition: string, partOfSpeech: string, rootWord: string, outlineUsage: string, bdagArticles?: BdagArticle[] }} StrongsEntry
  * @typedef {{ strongsNumber: string, bookSlug: string, bookName: string, chapterNumber: number, verseNumber: number, text: string }} StrongsSearchVerseEntry
+ * @typedef {{ number: number, baseGreek: string }} EsvInterlinearVerse
+ * @typedef {{ number: number, overrideGreek: string }} EsvInterlinearOverrideVerse
+ * @typedef {{ bookSlug: string, chapterNumber: number, verses: EsvInterlinearVerse[] }} EsvInterlinearChapter
+ * @typedef {{ bookSlug: string, chapterNumber: number, verses: EsvInterlinearOverrideVerse[] }} EsvInterlinearOverrideChapter
+ * @typedef {{ bookSlug: string, chapters: EsvInterlinearChapter[] }} EsvInterlinearBookPayload
+ * @typedef {{ bookSlug: string, chapters: EsvInterlinearOverrideChapter[] }} EsvInterlinearOverrideBookPayload
  */
 
 async function main() {
   const shouldIncludeNlt = process.argv.includes("--include-nlt");
   const shouldIncludeEsv = process.argv.includes("--include-esv");
+  const shouldIncludeEsvInterlinear = process.argv.includes("--include-esv-interlinear");
   const esvSourcePath = getArgValue("--esv-source");
+  const sblgntSourceDir = getArgValue("--sblgnt-source") ?? DEFAULT_SBLGNT_SOURCE_DIR;
   const sourceBooks = /** @type {SourceBook[]} */ (
     JSON.parse(await readFile(sourceBooksPath, "utf8"))
   );
@@ -171,6 +213,10 @@ async function main() {
   if (shouldIncludeEsv) {
     esvPayloadBySlug = await importEsvVersion(sourceBooks, esvSourcePath);
     validateOutput("esv", sourceBooks, esvPayloadBySlug);
+  }
+
+  if (shouldIncludeEsvInterlinear) {
+    await importEsvInterlinear(sourceBooks, sblgntSourceDir);
   }
 
   await buildSearchIndex("web", webPayloadBySlug);
@@ -1447,6 +1493,111 @@ async function buildTopicSearchIndex(version, topicsSource, sourceBooks, payload
     path.join(searchDir, `topics-${version}.json`),
     `${JSON.stringify(entries, null, 2)}\n`
   );
+}
+
+async function importEsvInterlinear(sourceBooks, sblgntSourceDir) {
+  await access(sblgntSourceDir);
+  await mkdir(esvInterlinearDir, { recursive: true });
+  await rm(esvInterlinearBaseDir, { recursive: true, force: true });
+  await mkdir(esvInterlinearBaseDir, { recursive: true });
+  await mkdir(esvInterlinearOverridesDir, { recursive: true });
+
+  const ntBooks = sourceBooks.filter((book) => book.testament === "New");
+
+  for (const book of ntBooks) {
+    const sourceFile = SBLGNT_FILE_BY_SLUG[book.slug];
+
+    if (!sourceFile) {
+      throw new Error(`Missing SBLGNT source mapping for ${book.slug}.`);
+    }
+
+    const sourceText = await readFile(path.join(sblgntSourceDir, sourceFile), "utf8");
+    const payload = buildEsvInterlinearPayload(book, sourceText);
+
+    await writeFile(
+      path.join(esvInterlinearBaseDir, `${book.slug}.json`),
+      `${JSON.stringify(payload, null, 2)}\n`
+    );
+
+    const overridePath = path.join(esvInterlinearOverridesDir, `${book.slug}.json`);
+
+    try {
+      await access(overridePath);
+    } catch {
+      await writeFile(
+        overridePath,
+        `${JSON.stringify(createEmptyEsvInterlinearOverridePayload(payload), null, 2)}\n`
+      );
+    }
+  }
+}
+
+function buildEsvInterlinearPayload(book, sourceText) {
+  /** @type {Map<number, Map<number, string[]>>} */
+  const wordsByChapterAndVerse = new Map();
+
+  for (const rawLine of sourceText.split(/\r?\n/)) {
+    const line = rawLine.trim();
+
+    if (!line) {
+      continue;
+    }
+
+    const parts = line.split(/\s+/);
+    const reference = parts[0] ?? "";
+    const surface = parts[3] ?? "";
+
+    if (!/^\d{6}$/.test(reference) || !surface) {
+      continue;
+    }
+
+    const chapterNumber = Number(reference.slice(2, 4));
+    const verseNumber = Number(reference.slice(4, 6));
+
+    if (!wordsByChapterAndVerse.has(chapterNumber)) {
+      wordsByChapterAndVerse.set(chapterNumber, new Map());
+    }
+
+    const verses = wordsByChapterAndVerse.get(chapterNumber);
+    const existingWords = verses.get(verseNumber) ?? [];
+    existingWords.push(surface);
+    verses.set(verseNumber, existingWords);
+  }
+
+  const chapters = [...wordsByChapterAndVerse.entries()]
+    .sort(([leftChapter], [rightChapter]) => leftChapter - rightChapter)
+    .map(([chapterNumber, verses]) => ({
+      bookSlug: book.slug,
+      chapterNumber,
+      verses: [...verses.entries()]
+        .sort(([leftVerse], [rightVerse]) => leftVerse - rightVerse)
+        .map(([verseNumber, words]) => ({
+          number: verseNumber,
+          baseGreek: words.join(" ").replace(/\s+/g, " ").trim()
+        }))
+    }));
+
+  if (chapters.length !== book.chapterCount) {
+    throw new Error(
+      `SBLGNT chapter count mismatch for ${book.slug}: expected ${book.chapterCount}, received ${chapters.length}.`
+    );
+  }
+
+  return {
+    bookSlug: book.slug,
+    chapters
+  };
+}
+
+function createEmptyEsvInterlinearOverridePayload(basePayload) {
+  return {
+    bookSlug: basePayload.bookSlug,
+    chapters: basePayload.chapters.map((chapter) => ({
+      bookSlug: chapter.bookSlug,
+      chapterNumber: chapter.chapterNumber,
+      verses: []
+    }))
+  };
 }
 
 main().catch((error) => {
