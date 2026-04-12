@@ -112,6 +112,15 @@ describe("LookupPane", () => {
     expect(screen.queryByRole("button", { name: "Show study pane" })).not.toBeInTheDocument();
   });
 
+  it("keeps the study pane closed after hide is clicked", async () => {
+    renderStudyPane();
+
+    fireEvent.click(screen.getByRole("button", { name: "Hide study pane" }));
+
+    expect(await screen.findByRole("button", { name: "Show study pane" })).toBeInTheDocument();
+    expect(screen.queryByLabelText("Study pane")).not.toBeInTheDocument();
+  });
+
   it("does not render the study pane in mobile mode", () => {
     setSplitViewActive(false);
 

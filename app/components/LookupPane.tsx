@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 
 import { ReaderCrossReferencesPanel } from "@/app/components/ReaderCrossReferencesPanel";
@@ -21,13 +21,17 @@ export function LookupPane() {
   const { activeUtilityPane, setActiveUtilityPane } = useReaderWorkspace();
   const pathname = usePathname();
   const isReaderRoute = pathname.startsWith("/read");
+  const previousUtilityPaneRef = useRef(activeUtilityPane);
 
   useEffect(() => {
+    const previousUtilityPane = previousUtilityPaneRef.current;
+    previousUtilityPaneRef.current = activeUtilityPane;
+
     if (!isSplitViewActive || !collapsedSplitPanes.study) {
       return;
     }
 
-    if (activeUtilityPane !== "search") {
+    if (activeUtilityPane !== "search" && activeUtilityPane !== previousUtilityPane) {
       expandSplitPane("study");
     }
   }, [activeUtilityPane, collapsedSplitPanes.study, expandSplitPane, isSplitViewActive]);
