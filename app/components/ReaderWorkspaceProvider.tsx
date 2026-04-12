@@ -17,6 +17,7 @@ import type {
   BundledChapterMap,
   BundledBibleVersion,
   Chapter,
+  GreekDictionarySelection,
   Highlight,
   NotebookDocument,
   PassageReference,
@@ -78,6 +79,7 @@ type ReaderWorkspaceContextValue = {
   utilityPaneRequestKey: number;
   setActiveUtilityPane: (pane: UtilityPane) => void;
   openStrongs: (strongsNumber: string | string[], label?: string | null) => void;
+  openGreekDictionary: (selection: GreekDictionarySelection) => void;
   openNotebook: (reference?: PassageReference | null) => void;
   closeNotebookWorkspace: () => void;
   openSermons: () => void;
@@ -108,6 +110,7 @@ type ReaderWorkspaceContextValue = {
   clearPendingNotebookReference: () => void;
   activeStrongsNumbers: string[];
   activeStrongsLabel: string | null;
+  activeGreekSelection: GreekDictionarySelection | null;
   getHighlight: (bookSlug: string, chapterNumber: number, verseNumber: number) => Highlight | null;
   getHighlightsForPassage: (bookSlug: string, chapterNumber: number) => Highlight[];
   cycleHighlight: (bookSlug: string, chapterNumber: number, verseNumber: number) => void;
@@ -233,6 +236,9 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   const [pendingNotebookReference, setPendingNotebookReference] = useState<PassageReference | null>(null);
   const [activeStrongsNumbers, setActiveStrongsNumbers] = useState<string[]>([]);
   const [activeStrongsLabel, setActiveStrongsLabel] = useState<string | null>(null);
+  const [activeGreekSelection, setActiveGreekSelection] = useState<GreekDictionarySelection | null>(
+    null
+  );
   const [activeSermonId, setActiveSermonId] = useState<string | null>(null);
   const [compareVersionOverrides, setCompareVersionOverrides] = useState<BundledBibleVersion[]>([]);
   const [utilityPaneRequestKey, setUtilityPaneRequestKey] = useState(0);
@@ -275,6 +281,20 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
     setLastReaderUtilityPane("strongs");
     setActiveStrongsNumbers(nextNumbers);
     setActiveStrongsLabel(label);
+    setActiveGreekSelection(null);
+  }, []);
+
+  const openGreekDictionary = useCallback((selection: GreekDictionarySelection) => {
+    const normalizedLabel = selection.label?.trim() || selection.lemma;
+
+    setActiveReaderPane("reading");
+    setLeftReaderMode("scripture");
+    setActiveUtilityPaneState("strongs");
+    setUtilityPaneRequestKey((current) => current + 1);
+    setLastReaderUtilityPane("strongs");
+    setActiveStrongsNumbers(selection.strongs ? [selection.strongs] : []);
+    setActiveStrongsLabel(normalizedLabel || null);
+    setActiveGreekSelection(selection);
   }, []);
 
   const openSermons = useCallback(() => {
@@ -466,6 +486,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       setPendingNotebookReference(null);
       setActiveStrongsNumbers([]);
       setActiveStrongsLabel(null);
+      setActiveGreekSelection(null);
       setActiveSermonId(null);
     }
   }, [isReaderRoute, pathname]);
@@ -490,6 +511,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       utilityPaneRequestKey,
       setActiveUtilityPane,
       openStrongs,
+      openGreekDictionary,
       openNotebook,
       closeNotebookWorkspace,
       openSermons,
@@ -595,6 +617,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       clearPendingNotebookReference: () => setPendingNotebookReference(null),
       activeStrongsNumbers,
       activeStrongsLabel,
+      activeGreekSelection,
       getHighlight: (bookSlug, chapterNumber, verseNumber) =>
         highlights[getVerseKey(version, bookSlug, chapterNumber, verseNumber)] ?? null,
       getHighlightsForPassage: (bookSlug, chapterNumber) =>
@@ -1011,6 +1034,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       activeSermonId,
       activeStrongsLabel,
       activeStrongsNumbers,
+      activeGreekSelection,
       activeStudyVerseNumber,
       activeUtilityPane,
       activeUtilityPaneState,
@@ -1025,6 +1049,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       leftReaderMode,
       notebooks,
       openStrongs,
+      openGreekDictionary,
       openNotebook,
       openSermons,
       pendingNotebookReference,

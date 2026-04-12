@@ -177,7 +177,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
   const router = useRouter();
   const pathname = usePathname();
   const { version } = useReaderVersion();
-  const { openStrongs, setActiveStudyVerseNumber } = useReaderWorkspace();
+  const { openGreekDictionary, openStrongs, setActiveStudyVerseNumber } = useReaderWorkspace();
   const [query, setQuery] = useState("");
   const [resultGroups, setResultGroups] = useState<BibleSearchResultGroup[]>([]);
   const [matchMode, setMatchMode] = useState<SearchMatchMode>("partial");
@@ -613,6 +613,25 @@ export function LookupProvider({ children }: PropsWithChildren) {
           return;
         }
 
+        if (result.type === "greek-lemma") {
+          openGreekDictionary({
+            strongs: result.strongs,
+            lemma: result.lemma,
+            label: result.lemma,
+            selectedForm: result.selectedForm,
+            matchedQuery: groupQuery ?? query
+          });
+
+          if (isSplitViewActive) {
+            expandSplitPane("study");
+            setIsOpen(true);
+          } else {
+            setIsOpen(false);
+          }
+
+          return;
+        }
+
         if (!("href" in result)) {
           return;
         }
@@ -650,6 +669,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
       resultGroups,
       router,
       openStrongs,
+      openGreekDictionary,
       searchPaneWidthRem,
       searchShellLeftOffsetRem,
       searchShellRightOffsetRem,

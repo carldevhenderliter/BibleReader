@@ -198,6 +198,7 @@ export type BibleSearchStrongsVerseEntry = {
 export type EsvInterlinearVerse = {
   number: number;
   baseGreek: string;
+  tokens?: GreekToken[];
   overrideGreek?: string;
 };
 
@@ -232,6 +233,7 @@ export type EsvInterlinearDisplayVerse = {
   number: number;
   greek: string;
   baseGreek: string;
+  tokens?: GreekToken[];
   overrideGreek?: string;
 };
 
@@ -329,6 +331,27 @@ export type BibleSearchTopicSuggestionResult = {
   preview: string;
 };
 
+export type GreekDictionarySelection = {
+  strongs: string;
+  lemma: string;
+  label?: string | null;
+  selectedForm?: string | null;
+  selectedFormMorphology?: string | null;
+  matchedQuery?: string | null;
+};
+
+export type BibleSearchGreekLemmaResult = {
+  type: "greek-lemma";
+  id: string;
+  strongs: string;
+  lemma: string;
+  transliteration: string;
+  label: string;
+  description: string;
+  preview: string;
+  selectedForm?: string;
+};
+
 export type BibleSearchResult =
   | BibleSearchBookResult
   | BibleSearchChapterResult
@@ -341,6 +364,7 @@ export type BibleSearchResult =
       description: string;
       preview: string;
     }
+  | BibleSearchGreekLemmaResult
   | {
       type: "range";
       id: string;
@@ -411,6 +435,33 @@ export type AiWritingResult = {
 export type VerseToken = {
   text: string;
   strongsNumbers?: string[];
+};
+
+export type GreekToken = {
+  surface: string;
+  lemma: string;
+  strongs: string;
+  morphology?: string;
+  decodedMorphology?: string;
+  gloss?: string;
+  trailingPunctuation?: string;
+};
+
+export type GreekInflectedForm = {
+  form: string;
+  morphology: string;
+  decodedMorphology?: string;
+  definition?: string;
+};
+
+export type GreekLemmaEntry = {
+  lemma: string;
+  strongs: string;
+  transliteration: string;
+  pronunciation?: string;
+  shortDefinition: string;
+  longDefinition?: string;
+  forms: GreekInflectedForm[];
 };
 
 export type StrongsLanguage = "hebrew" | "greek";

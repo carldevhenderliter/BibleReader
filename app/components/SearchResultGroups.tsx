@@ -31,6 +31,10 @@ function getResultTypeLabel(type: BibleSearchResultGroup["results"][number]["typ
     return "Strongs";
   }
 
+  if (type === "greek-lemma") {
+    return "Greek";
+  }
+
   if (type === "topic") {
     return "Topic";
   }
@@ -377,7 +381,7 @@ export function SearchResultGroups({
                       ))}
                     </div>
                   </article>
-                ) : result.type === "strongs" ? (
+                ) : result.type === "strongs" || result.type === "greek-lemma" ? (
                   <article className="search-result search-result-interactive" key={result.id}>
                     <button
                       className="search-result-main"

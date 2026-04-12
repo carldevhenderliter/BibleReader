@@ -24,7 +24,7 @@ function SearchHarness() {
 }
 
 const SEARCH_INPUT_LABEL =
-  "Search books, references, Strongs numbers, Greek words, phrases, or use Topic: or Greek:";
+  "Search books, references, Strong’s numbers, Greek lemmas, inflected forms, glosses, phrases, or use Topic: or Greek:";
 
 function renderSearchUi(ui?: React.ReactNode) {
   return render(
@@ -180,6 +180,10 @@ describe("BottomSearchBar", () => {
       target: { value: "gen" }
     });
 
+    await waitForElementToBeRemoved(() => screen.queryByText("Searching scripture…"), {
+      timeout: 10000
+    });
+
     const result = await screen.findByRole("button", { name: /Book Genesis/i });
     fireEvent.click(result);
 
@@ -273,12 +277,11 @@ describe("BottomSearchBar", () => {
       timeout: 10000
     });
 
-    const resultLabel = await screen.findByText("G3056");
-    fireEvent.click(resultLabel.closest("button") as HTMLButtonElement);
+    fireEvent.click(await screen.findByRole("button", { name: /G3056/i }));
 
     const studyPane = screen.getByLabelText("Study pane");
-    expect(await within(studyPane).findByRole("heading", { name: "G3056" })).toBeInTheDocument();
-    expect(await within(studyPane).findByText("λόγος")).toBeInTheDocument();
+    expect(await within(studyPane).findByRole("heading", { name: /λ.γος/ })).toBeInTheDocument();
+    expect(await within(studyPane).findByText("G3056")).toBeInTheDocument();
   });
 
   it("shows Strongs numbers beside KJV word-search hits only when the search toggle is on", async () => {

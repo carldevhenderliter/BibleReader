@@ -7,55 +7,2071 @@
       "verses": [
         {
           "number": 1,
-          "baseGreek": "Ὁ πρεσβύτερος ἐκλεκτῇ κυρίᾳ καὶ τοῖς τέκνοις αὐτῆς, οὓς ἐγὼ ἀγαπῶ ἐν ἀληθείᾳ, καὶ οὐκ ἐγὼ μόνος ἀλλὰ καὶ πάντες οἱ ἐγνωκότες τὴν ἀλήθειαν,"
+          "baseGreek": "Ὁ πρεσβύτερος ἐκλεκτῇ κυρίᾳ καὶ τοῖς τέκνοις αὐτῆς, οὓς ἐγὼ ἀγαπῶ ἐν ἀληθείᾳ, καὶ οὐκ ἐγὼ μόνος ἀλλὰ καὶ πάντες οἱ ἐγνωκότες τὴν ἀλήθειαν,",
+          "tokens": [
+            {
+              "surface": "Ὁ",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-NSM",
+              "decodedMorphology": "article nominative singular masculine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "πρεσβύτερος",
+              "lemma": "πρεσβύτερος",
+              "strongs": "G4245",
+              "morphology": "A-NSM",
+              "decodedMorphology": "adjective nominative singular masculine",
+              "gloss": "elder, of age, or the elder of two people"
+            },
+            {
+              "surface": "ἐκλεκτῇ",
+              "lemma": "ἐκλεκτός",
+              "strongs": "G1588",
+              "morphology": "A-DSF",
+              "decodedMorphology": "adjective dative singular feminine",
+              "gloss": "picked out, chosen, or chosen by God"
+            },
+            {
+              "surface": "κυρίᾳ",
+              "lemma": "κυρία",
+              "strongs": "G2959",
+              "morphology": "N-DSF",
+              "decodedMorphology": "noun dative singular feminine"
+            },
+            {
+              "surface": "καὶ",
+              "lemma": "καί",
+              "strongs": "G2532",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "τοῖς",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-DPN",
+              "decodedMorphology": "article dative plural neuter",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "τέκνοις",
+              "lemma": "τέκνον",
+              "strongs": "G5043",
+              "morphology": "N-DPN",
+              "decodedMorphology": "noun dative plural neuter",
+              "gloss": "offspring, children, or child"
+            },
+            {
+              "surface": "αὐτῆς",
+              "lemma": "αὐτός",
+              "strongs": "G846",
+              "morphology": "RP-GSF",
+              "decodedMorphology": "pronoun genitive singular feminine",
+              "gloss": "himself, herself, or themselves",
+              "trailingPunctuation": ","
+            },
+            {
+              "surface": "οὓς",
+              "lemma": "ὅς",
+              "strongs": "G3739",
+              "morphology": "RR-APM",
+              "decodedMorphology": "relative pronoun accusative plural masculine",
+              "gloss": "who, which, what, that"
+            },
+            {
+              "surface": "ἐγὼ",
+              "lemma": "ἐγώ",
+              "strongs": "G1473",
+              "morphology": "RP-NS",
+              "decodedMorphology": "pronoun nominative singular",
+              "gloss": "I, me, or my"
+            },
+            {
+              "surface": "ἀγαπῶ",
+              "lemma": "ἀγαπάω",
+              "strongs": "G25",
+              "morphology": "V-1PAI-S",
+              "decodedMorphology": "verb present active indicative first person singular",
+              "gloss": "of persons, to welcome, or to entertain"
+            },
+            {
+              "surface": "ἐν",
+              "lemma": "ἐν",
+              "strongs": "G1722",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "in, by, with etc"
+            },
+            {
+              "surface": "ἀληθείᾳ",
+              "lemma": "ἀλήθεια",
+              "strongs": "G225",
+              "morphology": "N-DSF",
+              "decodedMorphology": "noun dative singular feminine",
+              "gloss": "objectively, what is true in any matter under consideration, or truly",
+              "trailingPunctuation": ","
+            },
+            {
+              "surface": "καὶ",
+              "lemma": "καί",
+              "strongs": "G2532",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "οὐκ",
+              "lemma": "οὐ",
+              "strongs": "G3756",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "no, not in direct questions expecting an affirmative answer"
+            },
+            {
+              "surface": "ἐγὼ",
+              "lemma": "ἐγώ",
+              "strongs": "G1473",
+              "morphology": "RP-NS",
+              "decodedMorphology": "pronoun nominative singular",
+              "gloss": "I, me, or my"
+            },
+            {
+              "surface": "μόνος",
+              "lemma": "μόνος",
+              "strongs": "G3441",
+              "morphology": "A-NSM",
+              "decodedMorphology": "adjective nominative singular masculine",
+              "gloss": "alone, forsaken, or destitute of help"
+            },
+            {
+              "surface": "ἀλλὰ",
+              "lemma": "ἀλλά",
+              "strongs": "G235",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "but, nevertheless, or notwithstanding"
+            },
+            {
+              "surface": "καὶ",
+              "lemma": "καί",
+              "strongs": "G2532",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "πάντες",
+              "lemma": "πᾶς",
+              "strongs": "G3956",
+              "morphology": "A-NPM",
+              "decodedMorphology": "adjective nominative plural masculine",
+              "gloss": "individually, each, or every"
+            },
+            {
+              "surface": "οἱ",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-NPM",
+              "decodedMorphology": "article nominative plural masculine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "ἐγνωκότες",
+              "lemma": "γινώσκω",
+              "strongs": "G1097",
+              "morphology": "V-XAPN-P",
+              "decodedMorphology": "verb perfect active participle nominative plural masculine",
+              "gloss": "to learn to know, come to know, or get a knowledge of perceive"
+            },
+            {
+              "surface": "τὴν",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-ASF",
+              "decodedMorphology": "article accusative singular feminine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "ἀλήθειαν",
+              "lemma": "ἀλήθεια",
+              "strongs": "G225",
+              "morphology": "N-ASF",
+              "decodedMorphology": "noun accusative singular feminine",
+              "gloss": "objectively, what is true in any matter under consideration, or truly",
+              "trailingPunctuation": ","
+            }
+          ]
         },
         {
           "number": 2,
-          "baseGreek": "διὰ τὴν ἀλήθειαν τὴν μένουσαν ἐν ἡμῖν, καὶ μεθ’ ἡμῶν ἔσται εἰς τὸν αἰῶνα·"
+          "baseGreek": "διὰ τὴν ἀλήθειαν τὴν μένουσαν ἐν ἡμῖν, καὶ μεθ’ ἡμῶν ἔσται εἰς τὸν αἰῶνα·",
+          "tokens": [
+            {
+              "surface": "διὰ",
+              "lemma": "διά",
+              "strongs": "G1223",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "through, of place, or of time"
+            },
+            {
+              "surface": "τὴν",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-ASF",
+              "decodedMorphology": "article accusative singular feminine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "ἀλήθειαν",
+              "lemma": "ἀλήθεια",
+              "strongs": "G225",
+              "morphology": "N-ASF",
+              "decodedMorphology": "noun accusative singular feminine",
+              "gloss": "objectively, what is true in any matter under consideration, or truly"
+            },
+            {
+              "surface": "τὴν",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-ASF",
+              "decodedMorphology": "article accusative singular feminine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "μένουσαν",
+              "lemma": "μένω",
+              "strongs": "G3306",
+              "morphology": "V-PAPASF",
+              "decodedMorphology": "verb present active participle accusative singular feminine",
+              "gloss": "to remain, abide, or in reference to place"
+            },
+            {
+              "surface": "ἐν",
+              "lemma": "ἐν",
+              "strongs": "G1722",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "in, by, with etc"
+            },
+            {
+              "surface": "ἡμῖν",
+              "lemma": "ἐγώ",
+              "strongs": "G1473",
+              "morphology": "RP-DP",
+              "decodedMorphology": "pronoun dative plural",
+              "gloss": "I, me, or my",
+              "trailingPunctuation": ","
+            },
+            {
+              "surface": "καὶ",
+              "lemma": "καί",
+              "strongs": "G2532",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "μεθ’",
+              "lemma": "μετά",
+              "strongs": "G3326",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "after or behind"
+            },
+            {
+              "surface": "ἡμῶν",
+              "lemma": "ἐγώ",
+              "strongs": "G1473",
+              "morphology": "RP-GP",
+              "decodedMorphology": "pronoun genitive plural",
+              "gloss": "I, me, or my"
+            },
+            {
+              "surface": "ἔσται",
+              "lemma": "εἰμί",
+              "strongs": "G1510",
+              "morphology": "V-3FMI-S",
+              "decodedMorphology": "verb future middle indicative third person singular",
+              "gloss": "to be, to exist, or to happen"
+            },
+            {
+              "surface": "εἰς",
+              "lemma": "εἰς",
+              "strongs": "G1519",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "into, unto, to, towards, for, among"
+            },
+            {
+              "surface": "τὸν",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-ASM",
+              "decodedMorphology": "article accusative singular masculine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "αἰῶνα",
+              "lemma": "αἰών",
+              "strongs": "G165",
+              "morphology": "N-ASM",
+              "decodedMorphology": "noun accusative singular masculine",
+              "gloss": "for ever, an unbroken age, or perpetuity of time",
+              "trailingPunctuation": "·"
+            }
+          ]
         },
         {
           "number": 3,
-          "baseGreek": "ἔσται μεθ’ ἡμῶν χάρις ἔλεος εἰρήνη παρὰ θεοῦ πατρός, καὶ ⸀παρὰ Ἰησοῦ Χριστοῦ τοῦ υἱοῦ τοῦ πατρός, ἐν ἀληθείᾳ καὶ ἀγάπῃ."
+          "baseGreek": "ἔσται μεθ’ ἡμῶν χάρις ἔλεος εἰρήνη παρὰ θεοῦ πατρός, καὶ ⸀παρὰ Ἰησοῦ Χριστοῦ τοῦ υἱοῦ τοῦ πατρός, ἐν ἀληθείᾳ καὶ ἀγάπῃ.",
+          "tokens": [
+            {
+              "surface": "ἔσται",
+              "lemma": "εἰμί",
+              "strongs": "G1510",
+              "morphology": "V-3FMI-S",
+              "decodedMorphology": "verb future middle indicative third person singular",
+              "gloss": "to be, to exist, or to happen"
+            },
+            {
+              "surface": "μεθ’",
+              "lemma": "μετά",
+              "strongs": "G3326",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "after or behind"
+            },
+            {
+              "surface": "ἡμῶν",
+              "lemma": "ἐγώ",
+              "strongs": "G1473",
+              "morphology": "RP-GP",
+              "decodedMorphology": "pronoun genitive plural",
+              "gloss": "I, me, or my"
+            },
+            {
+              "surface": "χάρις",
+              "lemma": "χάρις",
+              "strongs": "G5485",
+              "morphology": "N-NSF",
+              "decodedMorphology": "noun nominative singular feminine",
+              "gloss": "grace, that which affords joy, or pleasure"
+            },
+            {
+              "surface": "ἔλεος",
+              "lemma": "ἔλεος",
+              "strongs": "G1656",
+              "morphology": "N-NSN",
+              "decodedMorphology": "noun nominative singular neuter",
+              "gloss": "joined with a desire to help them, show one' s self merciful, or of God towards men in general providence"
+            },
+            {
+              "surface": "εἰρήνη",
+              "lemma": "εἰρήνη",
+              "strongs": "G1515",
+              "morphology": "N-NSF",
+              "decodedMorphology": "noun nominative singular feminine",
+              "gloss": "a state of national tranquillity, exemption from the rage and havoc of war, or peace between individuals"
+            },
+            {
+              "surface": "παρὰ",
+              "lemma": "παρά",
+              "strongs": "G3844",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "of at, besides, or near"
+            },
+            {
+              "surface": "θεοῦ",
+              "lemma": "θεός",
+              "strongs": "G2316",
+              "morphology": "N-GSM",
+              "decodedMorphology": "noun genitive singular masculine",
+              "gloss": "a god or goddess, a general name of deities or divinities, or the Godhead"
+            },
+            {
+              "surface": "πατρός",
+              "lemma": "πατήρ",
+              "strongs": "G3962",
+              "morphology": "N-GSM",
+              "decodedMorphology": "noun genitive singular masculine",
+              "gloss": "generator or male ancestor, either the nearest ancestor father of the corporeal nature, or natural fathers",
+              "trailingPunctuation": ","
+            },
+            {
+              "surface": "καὶ",
+              "lemma": "καί",
+              "strongs": "G2532",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "παρὰ",
+              "lemma": "παρά",
+              "strongs": "G3844",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "of at, besides, or near"
+            },
+            {
+              "surface": "Ἰησοῦ",
+              "lemma": "Ἰησοῦς",
+              "strongs": "G2424",
+              "morphology": "N-GSM",
+              "decodedMorphology": "noun genitive singular masculine",
+              "gloss": "Jesus = \" Jehovah is salvation\", Jesus, or the Son of God"
+            },
+            {
+              "surface": "Χριστοῦ",
+              "lemma": "Χριστός",
+              "strongs": "G5547",
+              "morphology": "N-GSM",
+              "decodedMorphology": "noun genitive singular masculine",
+              "gloss": "Christ = \" anointed\", Christ was [and is, or anointed"
+            },
+            {
+              "surface": "τοῦ",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-GSM",
+              "decodedMorphology": "article genitive singular masculine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "υἱοῦ",
+              "lemma": "υἱός",
+              "strongs": "G5207",
+              "morphology": "N-GSM",
+              "decodedMorphology": "noun genitive singular masculine",
+              "gloss": "a son, rarely used for the young of animals, or generally used of the offspring of men"
+            },
+            {
+              "surface": "τοῦ",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-GSM",
+              "decodedMorphology": "article genitive singular masculine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "πατρός",
+              "lemma": "πατήρ",
+              "strongs": "G3962",
+              "morphology": "N-GSM",
+              "decodedMorphology": "noun genitive singular masculine",
+              "gloss": "generator or male ancestor, either the nearest ancestor father of the corporeal nature, or natural fathers",
+              "trailingPunctuation": ","
+            },
+            {
+              "surface": "ἐν",
+              "lemma": "ἐν",
+              "strongs": "G1722",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "in, by, with etc"
+            },
+            {
+              "surface": "ἀληθείᾳ",
+              "lemma": "ἀλήθεια",
+              "strongs": "G225",
+              "morphology": "N-DSF",
+              "decodedMorphology": "noun dative singular feminine",
+              "gloss": "objectively, what is true in any matter under consideration, or truly"
+            },
+            {
+              "surface": "καὶ",
+              "lemma": "καί",
+              "strongs": "G2532",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "ἀγάπῃ",
+              "lemma": "ἀγάπη",
+              "strongs": "G26",
+              "morphology": "N-DSF",
+              "decodedMorphology": "noun dative singular feminine",
+              "gloss": "affection, good will, or love",
+              "trailingPunctuation": "."
+            }
+          ]
         },
         {
           "number": 4,
-          "baseGreek": "Ἐχάρην λίαν ὅτι εὕρηκα ἐκ τῶν τέκνων σου περιπατοῦντας ἐν ἀληθείᾳ, καθὼς ἐντολὴν ἐλάβομεν παρὰ τοῦ πατρός."
+          "baseGreek": "Ἐχάρην λίαν ὅτι εὕρηκα ἐκ τῶν τέκνων σου περιπατοῦντας ἐν ἀληθείᾳ, καθὼς ἐντολὴν ἐλάβομεν παρὰ τοῦ πατρός.",
+          "tokens": [
+            {
+              "surface": "Ἐχάρην",
+              "lemma": "χαίρω",
+              "strongs": "G5463",
+              "morphology": "V-1API-S",
+              "decodedMorphology": "verb aorist passive indicative first person singular",
+              "gloss": "to rejoice, be glad, to rejoice exceedingly, to be well, thrive, in salutations, hail!, at the beginning of letters to give one greeting, salute"
+            },
+            {
+              "surface": "λίαν",
+              "lemma": "λίαν",
+              "strongs": "G3029",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "greatly, exceedingly, or exceedingly beyond measure"
+            },
+            {
+              "surface": "ὅτι",
+              "lemma": "ὅτι",
+              "strongs": "G3754",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "that, because, or since"
+            },
+            {
+              "surface": "εὕρηκα",
+              "lemma": "εὑρίσκω",
+              "strongs": "G2147",
+              "morphology": "V-1XAI-S",
+              "decodedMorphology": "verb perfect active indicative first person singular",
+              "gloss": "to come upon, hit upon, or to meet with"
+            },
+            {
+              "surface": "ἐκ",
+              "lemma": "ἐκ",
+              "strongs": "G1537",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "out of or away from"
+            },
+            {
+              "surface": "τῶν",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-GPN",
+              "decodedMorphology": "article genitive plural neuter",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "τέκνων",
+              "lemma": "τέκνον",
+              "strongs": "G5043",
+              "morphology": "N-GPN",
+              "decodedMorphology": "noun genitive plural neuter",
+              "gloss": "offspring, children, or child"
+            },
+            {
+              "surface": "σου",
+              "lemma": "σύ",
+              "strongs": "G4771",
+              "morphology": "RP-GS",
+              "decodedMorphology": "pronoun genitive singular",
+              "gloss": "Personal pron"
+            },
+            {
+              "surface": "περιπατοῦντας",
+              "lemma": "περιπατέω",
+              "strongs": "G4043",
+              "morphology": "V-PAPAPM",
+              "decodedMorphology": "verb present active participle accusative plural masculine",
+              "gloss": "to walk, to make one' s way, or progress"
+            },
+            {
+              "surface": "ἐν",
+              "lemma": "ἐν",
+              "strongs": "G1722",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "in, by, with etc"
+            },
+            {
+              "surface": "ἀληθείᾳ",
+              "lemma": "ἀλήθεια",
+              "strongs": "G225",
+              "morphology": "N-DSF",
+              "decodedMorphology": "noun dative singular feminine",
+              "gloss": "objectively, what is true in any matter under consideration, or truly",
+              "trailingPunctuation": ","
+            },
+            {
+              "surface": "καθὼς",
+              "lemma": "καθώς",
+              "strongs": "G2531",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "according as, just as, or even as"
+            },
+            {
+              "surface": "ἐντολὴν",
+              "lemma": "ἐντολή",
+              "strongs": "G1785",
+              "morphology": "N-ASF",
+              "decodedMorphology": "noun accusative singular feminine",
+              "gloss": "an order, command, or charge"
+            },
+            {
+              "surface": "ἐλάβομεν",
+              "lemma": "λαμβάνω",
+              "strongs": "G2983",
+              "morphology": "V-1AAI-P",
+              "decodedMorphology": "verb aorist active indicative first person plural",
+              "gloss": "to take, to take with the hand, or lay hold of"
+            },
+            {
+              "surface": "παρὰ",
+              "lemma": "παρά",
+              "strongs": "G3844",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "of at, besides, or near"
+            },
+            {
+              "surface": "τοῦ",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-GSM",
+              "decodedMorphology": "article genitive singular masculine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "πατρός",
+              "lemma": "πατήρ",
+              "strongs": "G3962",
+              "morphology": "N-GSM",
+              "decodedMorphology": "noun genitive singular masculine",
+              "gloss": "generator or male ancestor, either the nearest ancestor father of the corporeal nature, or natural fathers",
+              "trailingPunctuation": "."
+            }
+          ]
         },
         {
           "number": 5,
-          "baseGreek": "καὶ νῦν ἐρωτῶ σε, κυρία, οὐχ ὡς ἐντολὴν ⸂καινὴν γράφων σοι⸃ ἀλλὰ ἣν εἴχομεν ἀπ’ ἀρχῆς, ἵνα ἀγαπῶμεν ἀλλήλους."
+          "baseGreek": "καὶ νῦν ἐρωτῶ σε, κυρία, οὐχ ὡς ἐντολὴν ⸂καινὴν γράφων σοι⸃ ἀλλὰ ἣν εἴχομεν ἀπ’ ἀρχῆς, ἵνα ἀγαπῶμεν ἀλλήλους.",
+          "tokens": [
+            {
+              "surface": "καὶ",
+              "lemma": "καί",
+              "strongs": "G2532",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "νῦν",
+              "lemma": "νῦν",
+              "strongs": "G3568",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "at this time, the present, or now"
+            },
+            {
+              "surface": "ἐρωτῶ",
+              "lemma": "ἐρωτάω",
+              "strongs": "G2065",
+              "morphology": "V-1PAI-S",
+              "decodedMorphology": "verb present active indicative first person singular",
+              "gloss": "to question, to ask, or to request"
+            },
+            {
+              "surface": "σε",
+              "lemma": "σύ",
+              "strongs": "G4771",
+              "morphology": "RP-AS",
+              "decodedMorphology": "pronoun accusative singular",
+              "gloss": "Personal pron",
+              "trailingPunctuation": ","
+            },
+            {
+              "surface": "κυρία",
+              "lemma": "κυρία",
+              "strongs": "G2959",
+              "morphology": "N-VSF",
+              "decodedMorphology": "noun vocative singular feminine",
+              "trailingPunctuation": ","
+            },
+            {
+              "surface": "οὐχ",
+              "lemma": "οὐ",
+              "strongs": "G3756",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "no, not in direct questions expecting an affirmative answer"
+            },
+            {
+              "surface": "ὡς",
+              "lemma": "ὡς",
+              "strongs": "G5613",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "as, like, or even as"
+            },
+            {
+              "surface": "ἐντολὴν",
+              "lemma": "ἐντολή",
+              "strongs": "G1785",
+              "morphology": "N-ASF",
+              "decodedMorphology": "noun accusative singular feminine",
+              "gloss": "an order, command, or charge"
+            },
+            {
+              "surface": "καινὴν",
+              "lemma": "καινός",
+              "strongs": "G2537",
+              "morphology": "A-ASF",
+              "decodedMorphology": "adjective accusative singular feminine",
+              "gloss": "new, as respects form, or recently made"
+            },
+            {
+              "surface": "γράφων",
+              "lemma": "γράφω",
+              "strongs": "G1125",
+              "morphology": "V-PAPNSM",
+              "decodedMorphology": "verb present active participle nominative singular masculine",
+              "gloss": "to write, with reference to the form of the letters, or to delineate letters on a tablet"
+            },
+            {
+              "surface": "σοι",
+              "lemma": "σύ",
+              "strongs": "G4771",
+              "morphology": "RP-DS",
+              "decodedMorphology": "pronoun dative singular",
+              "gloss": "Personal pron"
+            },
+            {
+              "surface": "ἀλλὰ",
+              "lemma": "ἀλλά",
+              "strongs": "G235",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "but, nevertheless, or notwithstanding"
+            },
+            {
+              "surface": "ἣν",
+              "lemma": "ὅς",
+              "strongs": "G3739",
+              "morphology": "RR-ASF",
+              "decodedMorphology": "relative pronoun accusative singular feminine",
+              "gloss": "who, which, what, that"
+            },
+            {
+              "surface": "εἴχομεν",
+              "lemma": "ἔχω",
+              "strongs": "G2192",
+              "morphology": "V-1IAI-P",
+              "decodedMorphology": "verb imperfect active indicative first person plural",
+              "gloss": "to have, i"
+            },
+            {
+              "surface": "ἀπ’",
+              "lemma": "ἀπό",
+              "strongs": "G575",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "of separation, of local separation, or of fleeing"
+            },
+            {
+              "surface": "ἀρχῆς",
+              "lemma": "ἀρχή",
+              "strongs": "G746",
+              "morphology": "N-GSF",
+              "decodedMorphology": "noun genitive singular feminine",
+              "gloss": "beginning, origin, or the person or thing that commences",
+              "trailingPunctuation": ","
+            },
+            {
+              "surface": "ἵνα",
+              "lemma": "ἵνα",
+              "strongs": "G2443",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "that, in order that, or so that"
+            },
+            {
+              "surface": "ἀγαπῶμεν",
+              "lemma": "ἀγαπάω",
+              "strongs": "G25",
+              "morphology": "V-1PAS-P",
+              "decodedMorphology": "verb present active subjunctive first person plural",
+              "gloss": "of persons, to welcome, or to entertain"
+            },
+            {
+              "surface": "ἀλλήλους",
+              "lemma": "ἀλλήλων",
+              "strongs": "G240",
+              "morphology": "RP-APM",
+              "decodedMorphology": "pronoun accusative plural masculine",
+              "gloss": "one another, reciprocally, or mutually",
+              "trailingPunctuation": "."
+            }
+          ]
         },
         {
           "number": 6,
-          "baseGreek": "καὶ αὕτη ἐστὶν ἡ ἀγάπη, ἵνα περιπατῶμεν κατὰ τὰς ἐντολὰς αὐτοῦ· αὕτη ⸂ἡ ἐντολή ἐστιν⸃, καθὼς ἠκούσατε ἀπ’ ἀρχῆς, ἵνα ἐν αὐτῇ περιπατῆτε."
+          "baseGreek": "καὶ αὕτη ἐστὶν ἡ ἀγάπη, ἵνα περιπατῶμεν κατὰ τὰς ἐντολὰς αὐτοῦ· αὕτη ⸂ἡ ἐντολή ἐστιν⸃, καθὼς ἠκούσατε ἀπ’ ἀρχῆς, ἵνα ἐν αὐτῇ περιπατῆτε.",
+          "tokens": [
+            {
+              "surface": "καὶ",
+              "lemma": "καί",
+              "strongs": "G2532",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "αὕτη",
+              "lemma": "οὗτος",
+              "strongs": "G3778",
+              "morphology": "RD-NSF",
+              "decodedMorphology": "demonstrative pronoun nominative singular feminine",
+              "gloss": "this, these, or etc"
+            },
+            {
+              "surface": "ἐστὶν",
+              "lemma": "εἰμί",
+              "strongs": "G1510",
+              "morphology": "V-3PAI-S",
+              "decodedMorphology": "verb present active indicative third person singular",
+              "gloss": "to be, to exist, or to happen"
+            },
+            {
+              "surface": "ἡ",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-NSF",
+              "decodedMorphology": "article nominative singular feminine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "ἀγάπη",
+              "lemma": "ἀγάπη",
+              "strongs": "G26",
+              "morphology": "N-NSF",
+              "decodedMorphology": "noun nominative singular feminine",
+              "gloss": "affection, good will, or love",
+              "trailingPunctuation": ","
+            },
+            {
+              "surface": "ἵνα",
+              "lemma": "ἵνα",
+              "strongs": "G2443",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "that, in order that, or so that"
+            },
+            {
+              "surface": "περιπατῶμεν",
+              "lemma": "περιπατέω",
+              "strongs": "G4043",
+              "morphology": "V-1PAS-P",
+              "decodedMorphology": "verb present active subjunctive first person plural",
+              "gloss": "to walk, to make one' s way, or progress"
+            },
+            {
+              "surface": "κατὰ",
+              "lemma": "κατά",
+              "strongs": "G2596",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "down from, through out, or according to"
+            },
+            {
+              "surface": "τὰς",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-APF",
+              "decodedMorphology": "article accusative plural feminine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "ἐντολὰς",
+              "lemma": "ἐντολή",
+              "strongs": "G1785",
+              "morphology": "N-APF",
+              "decodedMorphology": "noun accusative plural feminine",
+              "gloss": "an order, command, or charge"
+            },
+            {
+              "surface": "αὐτοῦ",
+              "lemma": "αὐτός",
+              "strongs": "G846",
+              "morphology": "RP-GSM",
+              "decodedMorphology": "pronoun genitive singular masculine",
+              "gloss": "himself, herself, or themselves",
+              "trailingPunctuation": "·"
+            },
+            {
+              "surface": "αὕτη",
+              "lemma": "οὗτος",
+              "strongs": "G3778",
+              "morphology": "RD-NSF",
+              "decodedMorphology": "demonstrative pronoun nominative singular feminine",
+              "gloss": "this, these, or etc"
+            },
+            {
+              "surface": "ἡ",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-NSF",
+              "decodedMorphology": "article nominative singular feminine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "ἐντολή",
+              "lemma": "ἐντολή",
+              "strongs": "G1785",
+              "morphology": "N-NSF",
+              "decodedMorphology": "noun nominative singular feminine",
+              "gloss": "an order, command, or charge"
+            },
+            {
+              "surface": "ἐστιν",
+              "lemma": "εἰμί",
+              "strongs": "G1510",
+              "morphology": "V-3PAI-S",
+              "decodedMorphology": "verb present active indicative third person singular",
+              "gloss": "to be, to exist, or to happen",
+              "trailingPunctuation": ","
+            },
+            {
+              "surface": "καθὼς",
+              "lemma": "καθώς",
+              "strongs": "G2531",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "according as, just as, or even as"
+            },
+            {
+              "surface": "ἠκούσατε",
+              "lemma": "ἀκούω",
+              "strongs": "G191",
+              "morphology": "V-2AAI-P",
+              "decodedMorphology": "verb aorist active indicative second person plural",
+              "gloss": "to be endowed with the faculty of hearing, not deaf, or to hear"
+            },
+            {
+              "surface": "ἀπ’",
+              "lemma": "ἀπό",
+              "strongs": "G575",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "of separation, of local separation, or of fleeing"
+            },
+            {
+              "surface": "ἀρχῆς",
+              "lemma": "ἀρχή",
+              "strongs": "G746",
+              "morphology": "N-GSF",
+              "decodedMorphology": "noun genitive singular feminine",
+              "gloss": "beginning, origin, or the person or thing that commences",
+              "trailingPunctuation": ","
+            },
+            {
+              "surface": "ἵνα",
+              "lemma": "ἵνα",
+              "strongs": "G2443",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "that, in order that, or so that"
+            },
+            {
+              "surface": "ἐν",
+              "lemma": "ἐν",
+              "strongs": "G1722",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "in, by, with etc"
+            },
+            {
+              "surface": "αὐτῇ",
+              "lemma": "αὐτός",
+              "strongs": "G846",
+              "morphology": "RP-DSF",
+              "decodedMorphology": "pronoun dative singular feminine",
+              "gloss": "himself, herself, or themselves"
+            },
+            {
+              "surface": "περιπατῆτε",
+              "lemma": "περιπατέω",
+              "strongs": "G4043",
+              "morphology": "V-2PAS-P",
+              "decodedMorphology": "verb present active subjunctive second person plural",
+              "gloss": "to walk, to make one' s way, or progress",
+              "trailingPunctuation": "."
+            }
+          ]
         },
         {
           "number": 7,
-          "baseGreek": "ὅτι πολλοὶ πλάνοι ⸀ἐξῆλθον εἰς τὸν κόσμον, οἱ μὴ ὁμολογοῦντες Ἰησοῦν Χριστὸν ἐρχόμενον ἐν σαρκί· οὗτός ἐστιν ὁ πλάνος καὶ ὁ ἀντίχριστος."
+          "baseGreek": "ὅτι πολλοὶ πλάνοι ⸀ἐξῆλθον εἰς τὸν κόσμον, οἱ μὴ ὁμολογοῦντες Ἰησοῦν Χριστὸν ἐρχόμενον ἐν σαρκί· οὗτός ἐστιν ὁ πλάνος καὶ ὁ ἀντίχριστος.",
+          "tokens": [
+            {
+              "surface": "ὅτι",
+              "lemma": "ὅτι",
+              "strongs": "G3754",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "that, because, or since"
+            },
+            {
+              "surface": "πολλοὶ",
+              "lemma": "πολύς",
+              "strongs": "G4183",
+              "morphology": "A-NPM",
+              "decodedMorphology": "adjective nominative plural masculine",
+              "gloss": "many, much, or large"
+            },
+            {
+              "surface": "πλάνοι",
+              "lemma": "πλάνος",
+              "strongs": "G4108",
+              "morphology": "A-NPM",
+              "decodedMorphology": "adjective nominative plural masculine",
+              "gloss": "wandering, roving, or misleading"
+            },
+            {
+              "surface": "ἐξῆλθον",
+              "lemma": "ἐξέρχομαι",
+              "strongs": "G1831",
+              "morphology": "V-3AAI-P",
+              "decodedMorphology": "verb aorist active indicative third person plural",
+              "gloss": "to go or come forth of, or the point from which he departs, or of those who are expelled or cast out"
+            },
+            {
+              "surface": "εἰς",
+              "lemma": "εἰς",
+              "strongs": "G1519",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "into, unto, to, towards, for, among"
+            },
+            {
+              "surface": "τὸν",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-ASM",
+              "decodedMorphology": "article accusative singular masculine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "κόσμον",
+              "lemma": "κόσμος",
+              "strongs": "G2889",
+              "morphology": "N-ASM",
+              "decodedMorphology": "noun accusative singular masculine",
+              "gloss": "an apt and harmonious arrangement or constitution, order, or government",
+              "trailingPunctuation": ","
+            },
+            {
+              "surface": "οἱ",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-NPM",
+              "decodedMorphology": "article nominative plural masculine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "μὴ",
+              "lemma": "μή",
+              "strongs": "G3361",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "no or not lest"
+            },
+            {
+              "surface": "ὁμολογοῦντες",
+              "lemma": "ὁμολογέω",
+              "strongs": "G3670",
+              "morphology": "V-PAPNPM",
+              "decodedMorphology": "verb present active participle nominative plural masculine",
+              "gloss": "to say the same thing as another, i"
+            },
+            {
+              "surface": "Ἰησοῦν",
+              "lemma": "Ἰησοῦς",
+              "strongs": "G2424",
+              "morphology": "N-ASM",
+              "decodedMorphology": "noun accusative singular masculine",
+              "gloss": "Jesus = \" Jehovah is salvation\", Jesus, or the Son of God"
+            },
+            {
+              "surface": "Χριστὸν",
+              "lemma": "Χριστός",
+              "strongs": "G5547",
+              "morphology": "N-ASM",
+              "decodedMorphology": "noun accusative singular masculine",
+              "gloss": "Christ = \" anointed\", Christ was [and is, or anointed"
+            },
+            {
+              "surface": "ἐρχόμενον",
+              "lemma": "ἔρχομαι",
+              "strongs": "G2064",
+              "morphology": "V-PMPASM",
+              "decodedMorphology": "verb present middle participle accusative singular masculine",
+              "gloss": "to come, of persons, or to come from one place to another"
+            },
+            {
+              "surface": "ἐν",
+              "lemma": "ἐν",
+              "strongs": "G1722",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "in, by, with etc"
+            },
+            {
+              "surface": "σαρκί",
+              "lemma": "σάρξ",
+              "strongs": "G4561",
+              "morphology": "N-DSF",
+              "decodedMorphology": "noun dative singular feminine",
+              "gloss": "flesh the soft substance of the living body, the body, or the body of a man",
+              "trailingPunctuation": "·"
+            },
+            {
+              "surface": "οὗτός",
+              "lemma": "οὗτος",
+              "strongs": "G3778",
+              "morphology": "RD-NSM",
+              "decodedMorphology": "demonstrative pronoun nominative singular masculine",
+              "gloss": "this, these, or etc"
+            },
+            {
+              "surface": "ἐστιν",
+              "lemma": "εἰμί",
+              "strongs": "G1510",
+              "morphology": "V-3PAI-S",
+              "decodedMorphology": "verb present active indicative third person singular",
+              "gloss": "to be, to exist, or to happen"
+            },
+            {
+              "surface": "ὁ",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-NSM",
+              "decodedMorphology": "article nominative singular masculine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "πλάνος",
+              "lemma": "πλάνος",
+              "strongs": "G4108",
+              "morphology": "A-NSM",
+              "decodedMorphology": "adjective nominative singular masculine",
+              "gloss": "wandering, roving, or misleading"
+            },
+            {
+              "surface": "καὶ",
+              "lemma": "καί",
+              "strongs": "G2532",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "ὁ",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-NSM",
+              "decodedMorphology": "article nominative singular masculine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "ἀντίχριστος",
+              "lemma": "ἀντίχριστος",
+              "strongs": "G500",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "trailingPunctuation": "."
+            }
+          ]
         },
         {
           "number": 8,
-          "baseGreek": "βλέπετε ἑαυτούς, ἵνα μὴ ⸀ἀπολέσητε ἃ ⸀εἰργασάμεθα, ἀλλὰ μισθὸν πλήρη ⸀ἀπολάβητε."
+          "baseGreek": "βλέπετε ἑαυτούς, ἵνα μὴ ⸀ἀπολέσητε ἃ ⸀εἰργασάμεθα, ἀλλὰ μισθὸν πλήρη ⸀ἀπολάβητε.",
+          "tokens": [
+            {
+              "surface": "βλέπετε",
+              "lemma": "βλέπω",
+              "strongs": "G991",
+              "morphology": "V-2PAD-P",
+              "decodedMorphology": "verb present active second person plural",
+              "gloss": "to see, discern, or of the bodily eye"
+            },
+            {
+              "surface": "ἑαυτούς",
+              "lemma": "ἑαυτοῦ",
+              "strongs": "G1438",
+              "morphology": "RP-APM",
+              "decodedMorphology": "pronoun accusative plural masculine",
+              "gloss": "himself, herself, or itself",
+              "trailingPunctuation": ","
+            },
+            {
+              "surface": "ἵνα",
+              "lemma": "ἵνα",
+              "strongs": "G2443",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "that, in order that, or so that"
+            },
+            {
+              "surface": "μὴ",
+              "lemma": "μή",
+              "strongs": "G3361",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "no or not lest"
+            },
+            {
+              "surface": "ἀπολέσητε",
+              "lemma": "ἀπόλλυμι",
+              "strongs": "G622",
+              "morphology": "V-2AAS-P",
+              "decodedMorphology": "verb aorist active subjunctive second person plural",
+              "gloss": "to destroy, to put out of the way entirely, or abolish"
+            },
+            {
+              "surface": "ἃ",
+              "lemma": "ὅς",
+              "strongs": "G3739",
+              "morphology": "RR-APN",
+              "decodedMorphology": "relative pronoun accusative plural neuter",
+              "gloss": "who, which, what, that"
+            },
+            {
+              "surface": "εἰργασάμεθα",
+              "lemma": "ἐργάζομαι",
+              "strongs": "G2038",
+              "morphology": "V-1AMI-P",
+              "decodedMorphology": "verb aorist middle indicative first person plural",
+              "gloss": "to work, labour, or do work",
+              "trailingPunctuation": ","
+            },
+            {
+              "surface": "ἀλλὰ",
+              "lemma": "ἀλλά",
+              "strongs": "G235",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "but, nevertheless, or notwithstanding"
+            },
+            {
+              "surface": "μισθὸν",
+              "lemma": "μισθός",
+              "strongs": "G3408",
+              "morphology": "N-ASM",
+              "decodedMorphology": "noun accusative singular masculine",
+              "gloss": "dues paid for work, wages, or hire"
+            },
+            {
+              "surface": "πλήρη",
+              "lemma": "πλήρης",
+              "strongs": "G4134",
+              "morphology": "A-ASM",
+              "decodedMorphology": "adjective accusative singular masculine",
+              "gloss": "full, i"
+            },
+            {
+              "surface": "ἀπολάβητε",
+              "lemma": "ἀπολαμβάνω",
+              "strongs": "G618",
+              "morphology": "V-2AAS-P",
+              "decodedMorphology": "verb aorist active subjunctive second person plural",
+              "gloss": "to receive, of what is due or promised, or to take again or back",
+              "trailingPunctuation": "."
+            }
+          ]
         },
         {
           "number": 9,
-          "baseGreek": "πᾶς ὁ ⸀προάγων καὶ μὴ μένων ἐν τῇ διδαχῇ τοῦ Χριστοῦ θεὸν οὐκ ἔχει· ὁ μένων ἐν τῇ ⸀διδαχῇ, οὗτος καὶ τὸν πατέρα καὶ τὸν υἱὸν ἔχει."
+          "baseGreek": "πᾶς ὁ ⸀προάγων καὶ μὴ μένων ἐν τῇ διδαχῇ τοῦ Χριστοῦ θεὸν οὐκ ἔχει· ὁ μένων ἐν τῇ ⸀διδαχῇ, οὗτος καὶ τὸν πατέρα καὶ τὸν υἱὸν ἔχει.",
+          "tokens": [
+            {
+              "surface": "πᾶς",
+              "lemma": "πᾶς",
+              "strongs": "G3956",
+              "morphology": "A-NSM",
+              "decodedMorphology": "adjective nominative singular masculine",
+              "gloss": "individually, each, or every"
+            },
+            {
+              "surface": "ὁ",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-NSM",
+              "decodedMorphology": "article nominative singular masculine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "προάγων",
+              "lemma": "προάγω",
+              "strongs": "G4254",
+              "morphology": "V-PAPNSM",
+              "decodedMorphology": "verb present active participle nominative singular masculine",
+              "gloss": "to lead forward, lead forth, or as from a prison"
+            },
+            {
+              "surface": "καὶ",
+              "lemma": "καί",
+              "strongs": "G2532",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "μὴ",
+              "lemma": "μή",
+              "strongs": "G3361",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "no or not lest"
+            },
+            {
+              "surface": "μένων",
+              "lemma": "μένω",
+              "strongs": "G3306",
+              "morphology": "V-PAPNSM",
+              "decodedMorphology": "verb present active participle nominative singular masculine",
+              "gloss": "to remain, abide, or in reference to place"
+            },
+            {
+              "surface": "ἐν",
+              "lemma": "ἐν",
+              "strongs": "G1722",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "in, by, with etc"
+            },
+            {
+              "surface": "τῇ",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-DSF",
+              "decodedMorphology": "article dative singular feminine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "διδαχῇ",
+              "lemma": "διδαχή",
+              "strongs": "G1322",
+              "morphology": "N-DSF",
+              "decodedMorphology": "noun dative singular feminine",
+              "gloss": "teaching, that which is taught, or doctrine"
+            },
+            {
+              "surface": "τοῦ",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-GSM",
+              "decodedMorphology": "article genitive singular masculine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "Χριστοῦ",
+              "lemma": "Χριστός",
+              "strongs": "G5547",
+              "morphology": "N-GSM",
+              "decodedMorphology": "noun genitive singular masculine",
+              "gloss": "Christ = \" anointed\", Christ was [and is, or anointed"
+            },
+            {
+              "surface": "θεὸν",
+              "lemma": "θεός",
+              "strongs": "G2316",
+              "morphology": "N-ASM",
+              "decodedMorphology": "noun accusative singular masculine",
+              "gloss": "a god or goddess, a general name of deities or divinities, or the Godhead"
+            },
+            {
+              "surface": "οὐκ",
+              "lemma": "οὐ",
+              "strongs": "G3756",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "no, not in direct questions expecting an affirmative answer"
+            },
+            {
+              "surface": "ἔχει",
+              "lemma": "ἔχω",
+              "strongs": "G2192",
+              "morphology": "V-3PAI-S",
+              "decodedMorphology": "verb present active indicative third person singular",
+              "gloss": "to have, i",
+              "trailingPunctuation": "·"
+            },
+            {
+              "surface": "ὁ",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-NSM",
+              "decodedMorphology": "article nominative singular masculine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "μένων",
+              "lemma": "μένω",
+              "strongs": "G3306",
+              "morphology": "V-PAPNSM",
+              "decodedMorphology": "verb present active participle nominative singular masculine",
+              "gloss": "to remain, abide, or in reference to place"
+            },
+            {
+              "surface": "ἐν",
+              "lemma": "ἐν",
+              "strongs": "G1722",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "in, by, with etc"
+            },
+            {
+              "surface": "τῇ",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-DSF",
+              "decodedMorphology": "article dative singular feminine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "διδαχῇ",
+              "lemma": "διδαχή",
+              "strongs": "G1322",
+              "morphology": "N-DSF",
+              "decodedMorphology": "noun dative singular feminine",
+              "gloss": "teaching, that which is taught, or doctrine",
+              "trailingPunctuation": ","
+            },
+            {
+              "surface": "οὗτος",
+              "lemma": "οὗτος",
+              "strongs": "G3778",
+              "morphology": "RD-NSM",
+              "decodedMorphology": "demonstrative pronoun nominative singular masculine",
+              "gloss": "this, these, or etc"
+            },
+            {
+              "surface": "καὶ",
+              "lemma": "καί",
+              "strongs": "G2532",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "τὸν",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-ASM",
+              "decodedMorphology": "article accusative singular masculine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "πατέρα",
+              "lemma": "πατήρ",
+              "strongs": "G3962",
+              "morphology": "N-ASM",
+              "decodedMorphology": "noun accusative singular masculine",
+              "gloss": "generator or male ancestor, either the nearest ancestor father of the corporeal nature, or natural fathers"
+            },
+            {
+              "surface": "καὶ",
+              "lemma": "καί",
+              "strongs": "G2532",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "τὸν",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-ASM",
+              "decodedMorphology": "article accusative singular masculine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "υἱὸν",
+              "lemma": "υἱός",
+              "strongs": "G5207",
+              "morphology": "N-ASM",
+              "decodedMorphology": "noun accusative singular masculine",
+              "gloss": "a son, rarely used for the young of animals, or generally used of the offspring of men"
+            },
+            {
+              "surface": "ἔχει",
+              "lemma": "ἔχω",
+              "strongs": "G2192",
+              "morphology": "V-3PAI-S",
+              "decodedMorphology": "verb present active indicative third person singular",
+              "gloss": "to have, i",
+              "trailingPunctuation": "."
+            }
+          ]
         },
         {
           "number": 10,
-          "baseGreek": "εἴ τις ἔρχεται πρὸς ὑμᾶς καὶ ταύτην τὴν διδαχὴν οὐ φέρει, μὴ λαμβάνετε αὐτὸν εἰς οἰκίαν καὶ χαίρειν αὐτῷ μὴ λέγετε·"
+          "baseGreek": "εἴ τις ἔρχεται πρὸς ὑμᾶς καὶ ταύτην τὴν διδαχὴν οὐ φέρει, μὴ λαμβάνετε αὐτὸν εἰς οἰκίαν καὶ χαίρειν αὐτῷ μὴ λέγετε·",
+          "tokens": [
+            {
+              "surface": "εἴ",
+              "lemma": "εἰ",
+              "strongs": "G1487",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "if, whether"
+            },
+            {
+              "surface": "τις",
+              "lemma": "τις",
+              "strongs": "G5100",
+              "morphology": "RI-NSM",
+              "decodedMorphology": "interrogative pronoun nominative singular masculine",
+              "gloss": "a certain, a certain one, some, some time, a while"
+            },
+            {
+              "surface": "ἔρχεται",
+              "lemma": "ἔρχομαι",
+              "strongs": "G2064",
+              "morphology": "V-3PMI-S",
+              "decodedMorphology": "verb present middle indicative third person singular",
+              "gloss": "to come, of persons, or to come from one place to another"
+            },
+            {
+              "surface": "πρὸς",
+              "lemma": "πρός",
+              "strongs": "G4314",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "to the advantage of, at, or near"
+            },
+            {
+              "surface": "ὑμᾶς",
+              "lemma": "σύ",
+              "strongs": "G4771",
+              "morphology": "RP-AP",
+              "decodedMorphology": "pronoun accusative plural",
+              "gloss": "Personal pron"
+            },
+            {
+              "surface": "καὶ",
+              "lemma": "καί",
+              "strongs": "G2532",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "ταύτην",
+              "lemma": "οὗτος",
+              "strongs": "G3778",
+              "morphology": "RD-ASF",
+              "decodedMorphology": "demonstrative pronoun accusative singular feminine",
+              "gloss": "this, these, or etc"
+            },
+            {
+              "surface": "τὴν",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-ASF",
+              "decodedMorphology": "article accusative singular feminine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "διδαχὴν",
+              "lemma": "διδαχή",
+              "strongs": "G1322",
+              "morphology": "N-ASF",
+              "decodedMorphology": "noun accusative singular feminine",
+              "gloss": "teaching, that which is taught, or doctrine"
+            },
+            {
+              "surface": "οὐ",
+              "lemma": "οὐ",
+              "strongs": "G3756",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "no, not in direct questions expecting an affirmative answer"
+            },
+            {
+              "surface": "φέρει",
+              "lemma": "φέρω",
+              "strongs": "G5342",
+              "morphology": "V-3PAI-S",
+              "decodedMorphology": "verb present active indicative third person singular",
+              "gloss": "to carry, to carry some burden, or to bear with one' s self",
+              "trailingPunctuation": ","
+            },
+            {
+              "surface": "μὴ",
+              "lemma": "μή",
+              "strongs": "G3361",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "no or not lest"
+            },
+            {
+              "surface": "λαμβάνετε",
+              "lemma": "λαμβάνω",
+              "strongs": "G2983",
+              "morphology": "V-2PAD-P",
+              "decodedMorphology": "verb present active second person plural",
+              "gloss": "to take, to take with the hand, or lay hold of"
+            },
+            {
+              "surface": "αὐτὸν",
+              "lemma": "αὐτός",
+              "strongs": "G846",
+              "morphology": "RP-ASM",
+              "decodedMorphology": "pronoun accusative singular masculine",
+              "gloss": "himself, herself, or themselves"
+            },
+            {
+              "surface": "εἰς",
+              "lemma": "εἰς",
+              "strongs": "G1519",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "into, unto, to, towards, for, among"
+            },
+            {
+              "surface": "οἰκίαν",
+              "lemma": "οἰκία",
+              "strongs": "G3614",
+              "morphology": "N-ASF",
+              "decodedMorphology": "noun accusative singular feminine",
+              "gloss": "a house, an inhabited edifice, or a dwelling"
+            },
+            {
+              "surface": "καὶ",
+              "lemma": "καί",
+              "strongs": "G2532",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "χαίρειν",
+              "lemma": "χαίρω",
+              "strongs": "G5463",
+              "morphology": "V-PAN",
+              "decodedMorphology": "verb present active infinitive",
+              "gloss": "to rejoice, be glad, to rejoice exceedingly, to be well, thrive, in salutations, hail!, at the beginning of letters to give one greeting, salute"
+            },
+            {
+              "surface": "αὐτῷ",
+              "lemma": "αὐτός",
+              "strongs": "G846",
+              "morphology": "RP-DSM",
+              "decodedMorphology": "pronoun dative singular masculine",
+              "gloss": "himself, herself, or themselves"
+            },
+            {
+              "surface": "μὴ",
+              "lemma": "μή",
+              "strongs": "G3361",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "no or not lest"
+            },
+            {
+              "surface": "λέγετε",
+              "lemma": "λέγω",
+              "strongs": "G3004",
+              "morphology": "V-2PAD-P",
+              "decodedMorphology": "verb present active second person plural",
+              "gloss": "to say, to speak, or affirm over",
+              "trailingPunctuation": "·"
+            }
+          ]
         },
         {
           "number": 11,
-          "baseGreek": "ὁ ⸂λέγων γὰρ⸃ αὐτῷ χαίρειν κοινωνεῖ τοῖς ἔργοις αὐτοῦ τοῖς πονηροῖς."
+          "baseGreek": "ὁ ⸂λέγων γὰρ⸃ αὐτῷ χαίρειν κοινωνεῖ τοῖς ἔργοις αὐτοῦ τοῖς πονηροῖς.",
+          "tokens": [
+            {
+              "surface": "ὁ",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-NSM",
+              "decodedMorphology": "article nominative singular masculine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "λέγων",
+              "lemma": "λέγω",
+              "strongs": "G3004",
+              "morphology": "V-PAPNSM",
+              "decodedMorphology": "verb present active participle nominative singular masculine",
+              "gloss": "to say, to speak, or affirm over"
+            },
+            {
+              "surface": "γὰρ",
+              "lemma": "γάρ",
+              "strongs": "G1063",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "Nullg r, gar a primary particle properly, assigning a reason — and, as, because, but, even, for, indeed, no doubt, seeing, then, therefo"
+            },
+            {
+              "surface": "αὐτῷ",
+              "lemma": "αὐτός",
+              "strongs": "G846",
+              "morphology": "RP-DSM",
+              "decodedMorphology": "pronoun dative singular masculine",
+              "gloss": "himself, herself, or themselves"
+            },
+            {
+              "surface": "χαίρειν",
+              "lemma": "χαίρω",
+              "strongs": "G5463",
+              "morphology": "V-PAN",
+              "decodedMorphology": "verb present active infinitive",
+              "gloss": "to rejoice, be glad, to rejoice exceedingly, to be well, thrive, in salutations, hail!, at the beginning of letters to give one greeting, salute"
+            },
+            {
+              "surface": "κοινωνεῖ",
+              "lemma": "κοινωνέω",
+              "strongs": "G2841",
+              "morphology": "V-3PAI-S",
+              "decodedMorphology": "verb present active indicative third person singular",
+              "gloss": "to come into communion or fellowship with, to become a sharer, or be made a partner"
+            },
+            {
+              "surface": "τοῖς",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-DPN",
+              "decodedMorphology": "article dative plural neuter",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "ἔργοις",
+              "lemma": "ἔργον",
+              "strongs": "G2041",
+              "morphology": "N-DPN",
+              "decodedMorphology": "noun dative plural neuter",
+              "gloss": "business, employment, or that which any one is occupied"
+            },
+            {
+              "surface": "αὐτοῦ",
+              "lemma": "αὐτός",
+              "strongs": "G846",
+              "morphology": "RP-GSM",
+              "decodedMorphology": "pronoun genitive singular masculine",
+              "gloss": "himself, herself, or themselves"
+            },
+            {
+              "surface": "τοῖς",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-DPN",
+              "decodedMorphology": "article dative plural neuter",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "πονηροῖς",
+              "lemma": "πονηρός",
+              "strongs": "G4190",
+              "morphology": "A-DPN",
+              "decodedMorphology": "adjective dative plural neuter",
+              "gloss": "full of labours, annoyances, or hardships",
+              "trailingPunctuation": "."
+            }
+          ]
         },
         {
           "number": 12,
-          "baseGreek": "Πολλὰ ἔχων ὑμῖν γράφειν οὐκ ἐβουλήθην διὰ χάρτου καὶ μέλανος, ἀλλὰ ἐλπίζω ⸀γενέσθαι πρὸς ὑμᾶς καὶ στόμα πρὸς στόμα λαλῆσαι, ἵνα ἡ χαρὰ ⸀ὑμῶν ⸂πεπληρωμένη ᾖ⸃."
+          "baseGreek": "Πολλὰ ἔχων ὑμῖν γράφειν οὐκ ἐβουλήθην διὰ χάρτου καὶ μέλανος, ἀλλὰ ἐλπίζω ⸀γενέσθαι πρὸς ὑμᾶς καὶ στόμα πρὸς στόμα λαλῆσαι, ἵνα ἡ χαρὰ ⸀ὑμῶν ⸂πεπληρωμένη ᾖ⸃.",
+          "tokens": [
+            {
+              "surface": "Πολλὰ",
+              "lemma": "πολύς",
+              "strongs": "G4183",
+              "morphology": "A-APN",
+              "decodedMorphology": "adjective accusative plural neuter",
+              "gloss": "many, much, or large"
+            },
+            {
+              "surface": "ἔχων",
+              "lemma": "ἔχω",
+              "strongs": "G2192",
+              "morphology": "V-PAPNSM",
+              "decodedMorphology": "verb present active participle nominative singular masculine",
+              "gloss": "to have, i"
+            },
+            {
+              "surface": "ὑμῖν",
+              "lemma": "σύ",
+              "strongs": "G4771",
+              "morphology": "RP-DP",
+              "decodedMorphology": "pronoun dative plural",
+              "gloss": "Personal pron"
+            },
+            {
+              "surface": "γράφειν",
+              "lemma": "γράφω",
+              "strongs": "G1125",
+              "morphology": "V-PAN",
+              "decodedMorphology": "verb present active infinitive",
+              "gloss": "to write, with reference to the form of the letters, or to delineate letters on a tablet"
+            },
+            {
+              "surface": "οὐκ",
+              "lemma": "οὐ",
+              "strongs": "G3756",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "no, not in direct questions expecting an affirmative answer"
+            },
+            {
+              "surface": "ἐβουλήθην",
+              "lemma": "βούλομαι",
+              "strongs": "G1014",
+              "morphology": "V-1API-S",
+              "decodedMorphology": "verb aorist passive indicative first person singular",
+              "gloss": "to will deliberately, have a purpose, or be minded"
+            },
+            {
+              "surface": "διὰ",
+              "lemma": "διά",
+              "strongs": "G1223",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "through, of place, or of time"
+            },
+            {
+              "surface": "χάρτου",
+              "lemma": "χάρτης",
+              "strongs": "G5489",
+              "morphology": "N-GSM",
+              "decodedMorphology": "noun genitive singular masculine"
+            },
+            {
+              "surface": "καὶ",
+              "lemma": "καί",
+              "strongs": "G2532",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "μέλανος",
+              "lemma": "μέλαν",
+              "strongs": "G3188",
+              "morphology": "N-GSN",
+              "decodedMorphology": "noun genitive singular neuter",
+              "trailingPunctuation": ","
+            },
+            {
+              "surface": "ἀλλὰ",
+              "lemma": "ἀλλά",
+              "strongs": "G235",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "but, nevertheless, or notwithstanding"
+            },
+            {
+              "surface": "ἐλπίζω",
+              "lemma": "ἐλπίζω",
+              "strongs": "G1679",
+              "morphology": "V-1PAI-S",
+              "decodedMorphology": "verb present active indicative first person singular",
+              "gloss": "to hope, in a religious sense, or to wait for salvation with joy and full confidence"
+            },
+            {
+              "surface": "γενέσθαι",
+              "lemma": "γίνομαι",
+              "strongs": "G1096",
+              "morphology": "V-AMN",
+              "decodedMorphology": "verb aorist middle infinitive",
+              "gloss": "to become, i"
+            },
+            {
+              "surface": "πρὸς",
+              "lemma": "πρός",
+              "strongs": "G4314",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "to the advantage of, at, or near"
+            },
+            {
+              "surface": "ὑμᾶς",
+              "lemma": "σύ",
+              "strongs": "G4771",
+              "morphology": "RP-AP",
+              "decodedMorphology": "pronoun accusative plural",
+              "gloss": "Personal pron"
+            },
+            {
+              "surface": "καὶ",
+              "lemma": "καί",
+              "strongs": "G2532",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "στόμα",
+              "lemma": "στόμα",
+              "strongs": "G4750",
+              "morphology": "N-ASN",
+              "decodedMorphology": "noun accusative singular neuter",
+              "gloss": "the mouth, as part of the body of man, or of animals"
+            },
+            {
+              "surface": "πρὸς",
+              "lemma": "πρός",
+              "strongs": "G4314",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "to the advantage of, at, or near"
+            },
+            {
+              "surface": "στόμα",
+              "lemma": "στόμα",
+              "strongs": "G4750",
+              "morphology": "N-ASN",
+              "decodedMorphology": "noun accusative singular neuter",
+              "gloss": "the mouth, as part of the body of man, or of animals"
+            },
+            {
+              "surface": "λαλῆσαι",
+              "lemma": "λαλέω",
+              "strongs": "G2980",
+              "morphology": "V-AAN",
+              "decodedMorphology": "verb aorist active infinitive",
+              "gloss": "to utter a voice or emit a sound, to speak, or to use the tongue or the faculty of speech",
+              "trailingPunctuation": ","
+            },
+            {
+              "surface": "ἵνα",
+              "lemma": "ἵνα",
+              "strongs": "G2443",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "that, in order that, or so that"
+            },
+            {
+              "surface": "ἡ",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-NSF",
+              "decodedMorphology": "article nominative singular feminine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "χαρὰ",
+              "lemma": "χαρά",
+              "strongs": "G5479",
+              "morphology": "N-NSF",
+              "decodedMorphology": "noun nominative singular feminine",
+              "gloss": "joy, gladness, or the joy received from you"
+            },
+            {
+              "surface": "ὑμῶν",
+              "lemma": "σύ",
+              "strongs": "G4771",
+              "morphology": "RP-GP",
+              "decodedMorphology": "pronoun genitive plural",
+              "gloss": "Personal pron"
+            },
+            {
+              "surface": "πεπληρωμένη",
+              "lemma": "πληρόω",
+              "strongs": "G4137",
+              "morphology": "V-XPPN-S",
+              "decodedMorphology": "verb perfect passive participle nominative singular feminine",
+              "gloss": "to make full, to fill up, or i"
+            },
+            {
+              "surface": "ᾖ",
+              "lemma": "εἰμί",
+              "strongs": "G1510",
+              "morphology": "V-3PAS-S",
+              "decodedMorphology": "verb present active subjunctive third person singular",
+              "gloss": "to be, to exist, or to happen",
+              "trailingPunctuation": "."
+            }
+          ]
         },
         {
           "number": 13,
-          "baseGreek": "Ἀσπάζεταί σε τὰ τέκνα τῆς ἀδελφῆς σου τῆς ⸀ἐκλεκτῆς."
+          "baseGreek": "Ἀσπάζεταί σε τὰ τέκνα τῆς ἀδελφῆς σου τῆς ⸀ἐκλεκτῆς.",
+          "tokens": [
+            {
+              "surface": "Ἀσπάζεταί",
+              "lemma": "ἀσπάζομαι",
+              "strongs": "G782",
+              "morphology": "V-3PMI-S",
+              "decodedMorphology": "verb present middle indicative third person singular",
+              "gloss": "to draw to one' s self, to salute one, or greet"
+            },
+            {
+              "surface": "σε",
+              "lemma": "σύ",
+              "strongs": "G4771",
+              "morphology": "RP-AS",
+              "decodedMorphology": "pronoun accusative singular",
+              "gloss": "Personal pron"
+            },
+            {
+              "surface": "τὰ",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-NPN",
+              "decodedMorphology": "article nominative plural neuter",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "τέκνα",
+              "lemma": "τέκνον",
+              "strongs": "G5043",
+              "morphology": "N-NPN",
+              "decodedMorphology": "noun nominative plural neuter",
+              "gloss": "offspring, children, or child"
+            },
+            {
+              "surface": "τῆς",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-GSF",
+              "decodedMorphology": "article genitive singular feminine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "ἀδελφῆς",
+              "lemma": "ἀδελφή",
+              "strongs": "G79",
+              "morphology": "N-GSF",
+              "decodedMorphology": "noun genitive singular feminine",
+              "gloss": "a full, own sister, or one connected by the tie of the Christian religion"
+            },
+            {
+              "surface": "σου",
+              "lemma": "σύ",
+              "strongs": "G4771",
+              "morphology": "RP-GS",
+              "decodedMorphology": "pronoun genitive singular",
+              "gloss": "Personal pron"
+            },
+            {
+              "surface": "τῆς",
+              "lemma": "ὁ",
+              "strongs": "G3588",
+              "morphology": "RA-GSF",
+              "decodedMorphology": "article genitive singular feminine",
+              "gloss": "this, that, or these"
+            },
+            {
+              "surface": "ἐκλεκτῆς",
+              "lemma": "ἐκλεκτός",
+              "strongs": "G1588",
+              "morphology": "A-GSF",
+              "decodedMorphology": "adjective genitive singular feminine",
+              "gloss": "picked out, chosen, or chosen by God",
+              "trailingPunctuation": "."
+            }
+          ]
         }
       ]
     }

@@ -64,6 +64,7 @@ function mergeInterlinearChapter(
       return {
         number: verse.number,
         baseGreek: verse.baseGreek,
+        tokens: verse.tokens,
         overrideGreek: overrideGreek ? overrideGreek : undefined,
         greek: overrideGreek || verse.baseGreek
       };

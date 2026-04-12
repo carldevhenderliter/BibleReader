@@ -6,7 +6,7 @@ import { setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
 
 function StrongsHarness() {
-  const { openStrongs } = useReaderWorkspace();
+  const { openGreekDictionary, openStrongs } = useReaderWorkspace();
 
   return (
     <>
@@ -18,6 +18,21 @@ function StrongsHarness() {
       </button>
       <button onClick={() => openStrongs("H7225", "H7225")} type="button">
         Open Hebrew
+      </button>
+      <button
+        onClick={() =>
+          openGreekDictionary({
+            strongs: "G746",
+            lemma: "ἀρχή",
+            label: "ἀρχή",
+            selectedForm: "ἀρχῆς",
+            selectedFormMorphology: "N-GSF",
+            matchedQuery: "ἀρχῆς"
+          })
+        }
+        type="button"
+      >
+        Open Greek Dictionary
       </button>
       <LookupPane />
     </>
@@ -102,5 +117,25 @@ describe("ReaderStrongsPanel", () => {
     expect(
       await within(studyPane).findByText("No Apostolic Fathers matches found for this lemma.")
     ).toBeInTheDocument();
+  });
+
+  it("renders a lemma-centered Greek dictionary card with the selected form highlighted", async () => {
+    renderWithReaderCustomization(<StrongsHarness />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Open Greek Dictionary" }));
+
+    const studyPane = screen.getByLabelText("Study pane");
+
+    expect(await within(studyPane).findByRole("heading", { name: "ἀρχή" })).toBeInTheDocument();
+    expect(within(studyPane).getByText("Greek Dictionary")).toBeInTheDocument();
+    expect(await within(studyPane).findByText("Transliteration: archē")).toBeInTheDocument();
+    expect(await within(studyPane).findByText("Selected Form")).toBeInTheDocument();
+    expect((await within(studyPane).findAllByText("ἀρχῆς")).length).toBeGreaterThan(0);
+
+    const selectedFormRow = within(studyPane)
+      .getAllByText("ἀρχῆς")
+      .find((node) => node.closest(".greek-dictionary-form-row"));
+
+    expect(selectedFormRow?.closest(".greek-dictionary-form-row")).toHaveClass("is-selected");
   });
 });

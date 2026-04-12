@@ -2,7 +2,7 @@ import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 
 import { LookupPane } from "@/app/components/LookupPane";
 import { VerseList } from "@/app/components/VerseList";
-import type { Verse } from "@/lib/bible/types";
+import type { EsvInterlinearDisplayVerse, Verse } from "@/lib/bible/types";
 import { setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
 
@@ -21,6 +21,24 @@ const verses: Verse[] = [
     ]
   }
 ];
+
+const interlinearVerseMap: Record<number, EsvInterlinearDisplayVerse> = {
+  1: {
+    number: 1,
+    baseGreek: "ἀρχῆς",
+    greek: "ἀρχῆς",
+    tokens: [
+      {
+        surface: "ἀρχῆς",
+        lemma: "ἀρχή",
+        strongs: "G746",
+        morphology: "N-GSF",
+        decodedMorphology: "noun genitive singular feminine",
+        gloss: "beginning"
+      }
+    ]
+  }
+};
 
 describe("VerseList", () => {
   beforeEach(() => {
@@ -90,5 +108,31 @@ describe("VerseList", () => {
     );
 
     expect(await screen.findByText("רֵאשִׁית")).toBeInTheDocument();
+  });
+
+  it("renders Greek interlinear tokens and opens the Greek dictionary from a clicked form", async () => {
+    renderWithReaderCustomization(
+      <>
+        <VerseList
+          bookSlug="john"
+          chapterNumber={1}
+          interlinearVerseMap={interlinearVerseMap}
+          verses={verses}
+        />
+        <LookupPane />
+      </>
+    );
+
+    expect(screen.getByText("ἀρχῆς")).toBeInTheDocument();
+    expect(screen.getByText("ἀρχή")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: /ἀρχῆς ἀρχή G746/i }));
+
+    const studyPane = screen.getByLabelText("Study pane");
+    expect(await within(studyPane).findByRole("heading", { name: "ἀρχή" })).toBeInTheDocument();
+    expect(await within(studyPane).findByText("Selected Form")).toBeInTheDocument();
+    expect(
+      await within(studyPane).findByText(/noun genitive singular feminine \(N-GSF\)/i)
+    ).toBeInTheDocument();
   });
 });

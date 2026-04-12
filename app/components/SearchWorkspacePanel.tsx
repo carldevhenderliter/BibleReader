@@ -65,9 +65,9 @@ export function SearchWorkspacePanel({
       </div>
       {!query.trim() ? (
         <p className="search-empty-copy">
-          Search for a book, reference, Strongs number, Greek word, transliteration, word,
-          phrase, or comma-separated list. Use `Topic:` for study topics and `Greek:` for
-          transliterated Greek lookup.
+          Search for a book, reference, Strong’s number, Greek lemma or inflected form,
+          transliteration, gloss, word, phrase, or comma-separated list. Use `Topic:` for study
+          topics and `Greek:` to force a Greek lookup.
         </p>
       ) : (
         <SearchResultGroups

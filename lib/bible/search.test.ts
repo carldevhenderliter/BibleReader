@@ -206,32 +206,56 @@ describe("Bible search", () => {
     const results = await searchBible("g 03056", "kjv");
 
     expect(results[0]).toMatchObject({
-      type: "strongs",
-      strongsNumber: "G3056"
+      type: "greek-lemma",
+      strongs: "G3056"
     });
   });
 
-  it("finds greek Strongs entries from greek text lookups", async () => {
+  it("finds greek lemma dictionary entries from greek text lookups", async () => {
     const results = await searchBible("λογος", "web");
 
     expect(results[0]).toMatchObject({
-      type: "strongs",
-      strongsNumber: "G3056",
-      description: "Greek Strongs"
+      type: "greek-lemma",
+      strongs: "G3056",
+      lemma: "λόγος"
     });
     expect(results[0]).toHaveProperty("preview");
     expect((results[0] as { preview: string }).preview).toContain("logos");
   });
 
-  it("finds greek Strongs entries from transliterated greek lookups", async () => {
+  it("finds greek lemma dictionary entries from transliterated greek lookups", async () => {
     const results = await searchBible("Greek: agape", "web");
 
     expect(results[0]).toMatchObject({
-      type: "strongs",
-      strongsNumber: "G26",
-      description: "Greek Strongs"
+      type: "greek-lemma",
+      strongs: "G26",
+      lemma: "ἀγάπη"
     });
-    expect((results[0] as { preview: string }).preview).toContain("ἀγάπη");
+    expect((results[0] as { preview: string }).preview).toContain("ἀγάπη");
+  });
+
+  it("resolves inflected form searches to the same lemma entry and preserves the selected form", async () => {
+    const results = await searchBible("ἀρχῆς", "web");
+
+    expect(results[0]).toMatchObject({
+      type: "greek-lemma",
+      strongs: "G746",
+      lemma: "ἀρχή",
+      selectedForm: "ἀρχῆς"
+    });
+  });
+
+  it("finds greek lemma entries from gloss lookups", async () => {
+    const results = await searchBible("beginning", "web");
+
+    expect(
+      results.some(
+        (result) =>
+          result.type === "greek-lemma" &&
+          result.strongs === "G746" &&
+          result.lemma === "ἀρχή"
+      )
+    ).toBe(true);
   });
 
   it("returns starter topic suggestions for a bare Topic query", async () => {

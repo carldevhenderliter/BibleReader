@@ -2,16 +2,17 @@
 
 import { useEffect } from "react";
 
+import { GreekInterlinearLine } from "@/app/components/GreekInterlinearLine";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { VerseTextContent } from "@/app/components/VerseTextContent";
-import type { Verse } from "@/lib/bible/types";
+import type { EsvInterlinearDisplayVerse, Verse } from "@/lib/bible/types";
 import { createPassageReference } from "@/lib/study-workspace";
 
 type VerseListProps = {
   bookSlug: string;
   chapterNumber: number;
-  interlinearVerseMap?: Record<number, string>;
+  interlinearVerseMap?: Record<number, EsvInterlinearDisplayVerse>;
   highlightedVerseNumber?: number | null;
   highlightedVerseRange?: {
     start: number;
@@ -35,6 +36,7 @@ export function VerseList({
     cycleHighlight,
     getBookmark,
     getHighlight,
+    openGreekDictionary,
     openNotebook,
     openCrossReferences,
     openStrongs,
@@ -98,9 +100,19 @@ export function VerseList({
                   <VerseTextContent className="verse-text" verse={verse} />
                 )}
                 {interlinearVerseMap?.[verse.number] ? (
-                  <p className="verse-text verse-interlinear-text" lang="el">
-                    {interlinearVerseMap[verse.number]}
-                  </p>
+                  <GreekInterlinearLine
+                    onOpenGreekDictionary={(token) =>
+                      openGreekDictionary({
+                        strongs: token.strongs,
+                        lemma: token.lemma,
+                        label: token.lemma,
+                        selectedForm: token.surface,
+                        selectedFormMorphology: token.morphology ?? null,
+                        matchedQuery: token.surface
+                      })
+                    }
+                    verse={interlinearVerseMap[verse.number]}
+                  />
                 ) : null}
                 <div className="verse-study-actions">
                   <button

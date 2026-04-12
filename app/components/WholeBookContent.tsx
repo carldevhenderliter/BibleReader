@@ -84,7 +84,7 @@ export function WholeBookContent({
     ? new Map(
         (esvInterlinearBook ?? []).map((chapter) => [
           chapter.chapterNumber,
-          Object.fromEntries(chapter.verses.map((verse) => [verse.number, verse.greek]))
+          Object.fromEntries(chapter.verses.map((verse) => [verse.number, verse]))
         ])
       )
     : null;

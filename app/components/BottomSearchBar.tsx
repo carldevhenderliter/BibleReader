@@ -106,9 +106,9 @@ export function BottomSearchBar() {
             </div>
             {!query.trim() ? (
               <p className="search-empty-copy">
-                Search for a book, reference, Strongs number, Greek word, transliteration, word,
-                phrase, or comma-separated list. Use `Topic:` for study topics and `Greek:` for
-                transliterated Greek lookup.
+                Search for a book, reference, Strong’s number, Greek lemma or inflected form,
+                transliteration, gloss, word, phrase, or comma-separated list. Use `Topic:` for
+                study topics and `Greek:` to force a Greek lookup.
               </p>
             ) : (
               <SearchResultGroups
@@ -130,7 +130,8 @@ export function BottomSearchBar() {
         ) : null}
         <div className="search-bar" role="search">
           <label className="sr-only" htmlFor={inputId}>
-            Search books, references, Strongs numbers, Greek words, phrases, or use Topic: or Greek:
+            Search books, references, Strong’s numbers, Greek lemmas, inflected forms, glosses,
+            phrases, or use Topic: or Greek:
           </label>
           <input
             aria-controls={trayId}
@@ -142,7 +143,7 @@ export function BottomSearchBar() {
               setQuery(event.target.value);
             }}
             onFocus={openSearch}
-            placeholder="Search books, references, Strongs numbers, Greek words, phrases, or Topic:/Greek:"
+            placeholder="Search references, Strong’s, Greek lemmas/forms, glosses, or Topic:/Greek:"
             ref={inputRef}
             type="search"
             value={query}

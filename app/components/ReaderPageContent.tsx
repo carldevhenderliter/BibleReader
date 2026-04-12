@@ -77,7 +77,7 @@ export function ReaderPageContent({
     esvInterlinearChapter !== null;
   const interlinearVerseMap = showEsvInterlinear
     ? Object.fromEntries(
-        esvInterlinearChapter.verses.map((verse) => [verse.number, verse.greek])
+        esvInterlinearChapter.verses.map((verse) => [verse.number, verse])
       )
     : undefined;
   const versionBadge = getBibleVersionBadge(version);
