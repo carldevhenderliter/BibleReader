@@ -8,6 +8,7 @@ describe("esv interlinear data", () => {
     expect(chapter?.verses[0]?.number).toBe(1);
     expect(chapter?.verses[0]?.greek.length).toBeGreaterThan(10);
     expect(chapter?.verses[0]?.baseGreek.length).toBeGreaterThan(10);
+    expect(chapter?.verses[0]?.tokens?.[0]?.occurrenceKey).toBe("matthew:1:1:0");
   });
 
   it("loads a full ESV interlinear New Testament book", async () => {

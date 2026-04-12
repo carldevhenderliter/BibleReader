@@ -105,6 +105,8 @@ export function VerseList({
                   : null}
                 {interlinearVerseMap?.[verse.number] ? (
                   <GreekInterlinearLine
+                    bookSlug={bookSlug}
+                    chapterNumber={chapterNumber}
                     onOpenGreekDictionary={(token) =>
                       openGreekDictionary({
                         strongs: token.strongs,

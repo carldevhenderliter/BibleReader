@@ -114,6 +114,49 @@ const ntInterlinearBook: EsvInterlinearDisplayChapter[] = [
   }
 ];
 
+const ntInterlinearBookWithTokenGlosses: EsvInterlinearDisplayChapter[] = [
+  {
+    bookSlug: "jude",
+    chapterNumber: 1,
+    verses: [
+      {
+        number: 1,
+        baseGreek: "Ἰούδας",
+        greek: "Ἰούδας",
+        tokens: [
+          {
+            surface: "Ἰούδας",
+            lemma: "Ἰούδας",
+            strongs: "G2455",
+            occurrenceKey: "jude:1:1:0",
+            gloss: "Jude"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    bookSlug: "jude",
+    chapterNumber: 2,
+    verses: [
+      {
+        number: 1,
+        baseGreek: "Ἀγαπητοί",
+        greek: "Ἀγαπητοί",
+        tokens: [
+          {
+            surface: "Ἀγαπητοί",
+            lemma: "ἀγαπητός",
+            strongs: "G27",
+            occurrenceKey: "jude:2:1:0",
+            gloss: "beloved"
+          }
+        ]
+      }
+    ]
+  }
+];
+
 function setSplitViewActive(isActive: boolean) {
   Object.defineProperty(window, "matchMedia", {
     writable: true,
@@ -380,6 +423,42 @@ describe("WholeBookContent", () => {
       screen.getByText("Ἰούδας Ἰησοῦ χριστοῦ δοῦλος ἀδελφὸς δὲ Ἰακώβου.")
     ).toBeInTheDocument();
     expect(screen.queryByText("Jude, a servant of Jesus Christ...")).not.toBeInTheDocument();
+  });
+
+  it("shows selectable English gloss lines in whole-book ESV interlinear mode", () => {
+    window.localStorage.setItem(
+      "bible-reader:customization",
+      JSON.stringify({
+        showEsvInterlinear: true
+      })
+    );
+
+    renderWithReaderCustomization(
+      <>
+        <WholeBookContent
+          book={books[0]}
+          books={books}
+          chaptersByVersion={{ esv: chapters, web: chapters }}
+          esvInterlinearBook={ntInterlinearBookWithTokenGlosses}
+        />
+        <SearchPane />
+        <LookupPane />
+      </>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: {
+        value: "esv"
+      }
+    });
+
+    expect(screen.getByRole("button", { name: "Choose English gloss for Ἰούδας" })).toHaveTextContent(
+      "Jude"
+    );
+    expect(screen.getByRole("button", { name: "Choose English gloss for Ἀγαπητοί" })).toHaveTextContent(
+      "beloved"
+    );
   });
 
   it("hides read-aloud controls in whole-book view", () => {

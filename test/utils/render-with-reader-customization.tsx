@@ -1,6 +1,7 @@
 import type { ReactElement, ReactNode } from "react";
 import { render } from "@testing-library/react";
 
+import { GreekGlossOverridesProvider } from "@/app/components/GreekGlossOverridesProvider";
 import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderTtsProvider } from "@/app/components/ReaderTtsProvider";
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
@@ -19,11 +20,13 @@ function Wrapper({ children }: WrapperProps) {
       <ReaderWorkspaceProvider>
         <WritingAssistantProvider>
           <LookupProvider>
-            <ReaderCustomizationProvider>
-              <ReaderTtsProvider>
-                <SearchCustomizationProvider>{children}</SearchCustomizationProvider>
-              </ReaderTtsProvider>
-            </ReaderCustomizationProvider>
+            <GreekGlossOverridesProvider>
+              <ReaderCustomizationProvider>
+                <ReaderTtsProvider>
+                  <SearchCustomizationProvider>{children}</SearchCustomizationProvider>
+                </ReaderTtsProvider>
+              </ReaderCustomizationProvider>
+            </GreekGlossOverridesProvider>
           </LookupProvider>
         </WritingAssistantProvider>
       </ReaderWorkspaceProvider>

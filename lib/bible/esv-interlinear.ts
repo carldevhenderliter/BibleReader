@@ -3,6 +3,9 @@ import path from "node:path";
 import { cache } from "react";
 
 import { getBookBySlug } from "@/lib/bible/data";
+import {
+  getGreekTokenOccurrenceKey
+} from "@/lib/bible/greek";
 import type {
   EsvInterlinearBookPayload,
   EsvInterlinearChapter,
@@ -64,7 +67,15 @@ function mergeInterlinearChapter(
       return {
         number: verse.number,
         baseGreek: verse.baseGreek,
-        tokens: verse.tokens,
+        tokens: verse.tokens?.map((token, tokenIndex) => ({
+          ...token,
+          occurrenceKey: getGreekTokenOccurrenceKey(
+            baseChapter.bookSlug,
+            baseChapter.chapterNumber,
+            verse.number,
+            tokenIndex
+          )
+        })),
         overrideGreek: overrideGreek ? overrideGreek : undefined,
         greek: overrideGreek || verse.baseGreek
       };

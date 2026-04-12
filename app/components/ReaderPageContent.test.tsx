@@ -112,6 +112,34 @@ const esvNtInterlinearChapter: EsvInterlinearDisplayChapter = {
   ]
 };
 
+const esvNtInterlinearChapterWithTokenGlosses: EsvInterlinearDisplayChapter = {
+  bookSlug: "matthew",
+  chapterNumber: 1,
+  verses: [
+    {
+      number: 1,
+      baseGreek: "Βίβλος γενέσεως",
+      greek: "Βίβλος γενέσεως",
+      tokens: [
+        {
+          surface: "Βίβλος",
+          lemma: "βίβλος",
+          strongs: "G976",
+          occurrenceKey: "matthew:1:1:0",
+          gloss: "book"
+        },
+        {
+          surface: "γενέσεως",
+          lemma: "γένεσις",
+          strongs: "G1078",
+          occurrenceKey: "matthew:1:1:1",
+          gloss: "genealogy"
+        }
+      ]
+    }
+  ]
+};
+
 function setSplitViewActive(isActive: boolean) {
   Object.defineProperty(window, "matchMedia", {
     writable: true,
@@ -387,6 +415,38 @@ describe("ReaderPageContent", () => {
         "The book of the genealogy of Jesus Christ, the son of David, the son of Abraham."
       )
     ).not.toBeInTheDocument();
+  });
+
+  it("shows selectable English gloss lines under Greek tokens in chapter view", () => {
+    window.localStorage.setItem(
+      "bible-reader:customization",
+      JSON.stringify({
+        showEsvInterlinear: true
+      })
+    );
+
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={ntBooks[0]}
+        books={ntBooks}
+        chaptersByVersion={{ esv: esvNtChapter, web: esvNtChapter }}
+        esvInterlinearChapter={esvNtInterlinearChapterWithTokenGlosses}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: {
+        value: "esv"
+      }
+    });
+
+    expect(screen.getByRole("button", { name: "Choose English gloss for Βίβλος" })).toHaveTextContent(
+      "book"
+    );
+    expect(screen.getByRole("button", { name: "Choose English gloss for γενέσεως" })).toHaveTextContent(
+      "genealogy"
+    );
   });
 
   it("renders three versions in chapter compare and routes KJV Strongs clicks to study", async () => {

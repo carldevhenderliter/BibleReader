@@ -2,6 +2,7 @@
 
 import type { PropsWithChildren } from "react";
 
+import { GreekGlossOverridesProvider } from "@/app/components/GreekGlossOverridesProvider";
 import { LookupProvider } from "@/app/components/LookupProvider";
 import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderTtsProvider } from "@/app/components/ReaderTtsProvider";
@@ -16,11 +17,13 @@ export function AppProviders({ children }: PropsWithChildren) {
       <ReaderWorkspaceProvider>
         <WritingAssistantProvider>
           <LookupProvider>
-            <ReaderCustomizationProvider>
-              <ReaderTtsProvider>
-                <SearchCustomizationProvider>{children}</SearchCustomizationProvider>
-              </ReaderTtsProvider>
-            </ReaderCustomizationProvider>
+            <GreekGlossOverridesProvider>
+              <ReaderCustomizationProvider>
+                <ReaderTtsProvider>
+                  <SearchCustomizationProvider>{children}</SearchCustomizationProvider>
+                </ReaderTtsProvider>
+              </ReaderCustomizationProvider>
+            </GreekGlossOverridesProvider>
           </LookupProvider>
         </WritingAssistantProvider>
       </ReaderWorkspaceProvider>

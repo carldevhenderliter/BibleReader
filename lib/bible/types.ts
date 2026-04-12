@@ -443,6 +443,7 @@ export type GreekToken = {
   surface: string;
   lemma: string;
   strongs: string;
+  occurrenceKey?: string;
   morphology?: string;
   decodedMorphology?: string;
   gloss?: string;
@@ -456,6 +457,12 @@ export type GreekInflectedForm = {
   definition?: string;
 };
 
+export type GreekGlossOption = {
+  id: string;
+  label: string;
+  source: "token" | "short-definition" | "long-definition";
+};
+
 export type GreekLemmaEntry = {
   lemma: string;
   strongs: string;
@@ -464,6 +471,15 @@ export type GreekLemmaEntry = {
   shortDefinition: string;
   longDefinition?: string;
   forms: GreekInflectedForm[];
+};
+
+export type GreekTokenGlossOverride = {
+  occurrenceKey: string;
+  strongs: string;
+  lemma: string;
+  selectedGloss: string;
+  optionId?: string;
+  source: "lemma-option" | "custom";
 };
 
 export type StrongsLanguage = "hebrew" | "greek";

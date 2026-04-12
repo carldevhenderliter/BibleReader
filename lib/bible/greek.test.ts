@@ -1,8 +1,11 @@
 import {
+  getGreekGlossOptions,
   getGreekLemmaEntry,
+  getGreekTokenOccurrenceKey,
   lookupGreekDictionary,
   normalizeGreekFormLookupValue,
-  normalizeGreekLookupValue
+  normalizeGreekLookupValue,
+  resolveGreekTokenGloss
 } from "@/lib/bible/greek";
 
 describe("Greek dictionary lookup", () => {
@@ -59,5 +62,39 @@ describe("Greek dictionary lookup", () => {
 
     expect(transliterationResults.some((result) => result.entry.strongs === "G746")).toBe(true);
     expect(glossResults.some((result) => result.entry.strongs === "G746")).toBe(true);
+  });
+
+  it("builds stable occurrence keys for repeated Greek tokens", () => {
+    expect(getGreekTokenOccurrenceKey("john", 1, 1, 3)).toBe("john:1:1:3");
+  });
+
+  it("builds readable gloss options from lemma data", async () => {
+    const entry = await getGreekLemmaEntry("G746");
+    const options = getGreekGlossOptions(entry!, "beginning");
+
+    expect(options.map((option) => option.label)).toEqual(
+      expect.arrayContaining(["beginning", "origin"])
+    );
+  });
+
+  it("prefers stored per-token gloss overrides over generated defaults", async () => {
+    const entry = await getGreekLemmaEntry("G746");
+    const token = {
+      surface: "ἀρχῆς",
+      lemma: "ἀρχή",
+      strongs: "G746",
+      gloss: "beginning"
+    };
+
+    expect(resolveGreekTokenGloss(token, entry, null)).toBe("beginning");
+    expect(
+      resolveGreekTokenGloss(token, entry, {
+        occurrenceKey: "john:1:1:1",
+        strongs: "G746",
+        lemma: "ἀρχή",
+        selectedGloss: "origin",
+        source: "lemma-option"
+      })
+    ).toBe("origin");
   });
 });

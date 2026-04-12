@@ -1,6 +1,8 @@
 import type {
+  GreekGlossOption,
   GreekInflectedForm,
   GreekLemmaEntry,
+  GreekTokenGlossOverride,
   GreekToken
 } from "@/lib/bible/types";
 import { normalizeStrongsNumber } from "@/lib/bible/strongs";
@@ -17,6 +19,15 @@ export type GreekDictionaryMatch = {
   selectedFormValue?: string;
   matchType: "strongs" | "lemma" | "form" | "transliteration" | "gloss";
 };
+
+function normalizeGlossValue(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/[’']/g, "")
+    .replace(/[^a-z0-9\s/]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
 
 type GreekFormIndexValue = Array<{
   strongs: string;
@@ -131,6 +142,125 @@ function dedupeMatches(matches: GreekDictionaryMatch[]) {
     seen.add(key);
     return true;
   });
+}
+
+function sanitizeGlossCandidate(value: string) {
+  return value
+    .replace(/\s+/g, " ")
+    .replace(/^[-,:;.\s]+/g, "")
+    .replace(/[-,:;.\s]+$/g, "")
+    .trim();
+}
+
+function isReadableGlossCandidate(value: string) {
+  const normalized = normalizeGlossValue(value);
+
+  return (
+    normalized.length >= 3 &&
+    value.length <= 72 &&
+    !/\d/.test(value) &&
+    !/null/i.test(value) &&
+    !/\bfrom\b/i.test(value) &&
+    !/^[a-z]?\s*gos/i.test(normalized)
+  );
+}
+
+function splitGlossDefinitionIntoCandidates(value: string) {
+  return value
+    .split(/\n+/)
+    .flatMap((line) => line.split(/[;,]/))
+    .flatMap((part) => {
+      const trimmedPart = sanitizeGlossCandidate(part);
+
+      if (!trimmedPart) {
+        return [];
+      }
+
+      return trimmedPart
+        .split(/\s+or\s+/i)
+        .map((candidate) => sanitizeGlossCandidate(candidate))
+        .filter((candidate) => candidate && isReadableGlossCandidate(candidate));
+    });
+}
+
+export function getGreekTokenOccurrenceKey(
+  bookSlug: string,
+  chapterNumber: number,
+  verseNumber: number,
+  tokenIndex: number
+) {
+  return `${bookSlug}:${chapterNumber}:${verseNumber}:${tokenIndex}`;
+}
+
+export function getGreekGlossOptions(
+  entry: GreekLemmaEntry,
+  tokenGloss?: string | null
+): GreekGlossOption[] {
+  const candidates: Array<Pick<GreekGlossOption, "label" | "source">> = [];
+
+  if (tokenGloss?.trim()) {
+    candidates.push({
+      label: tokenGloss.trim(),
+      source: "token"
+    });
+  }
+
+  if (entry.shortDefinition.trim()) {
+    candidates.push(
+      ...splitGlossDefinitionIntoCandidates(entry.shortDefinition).map((label) => ({
+        label,
+        source: "short-definition" as const
+      }))
+    );
+  }
+
+  if (entry.longDefinition?.trim()) {
+    candidates.push(
+      ...splitGlossDefinitionIntoCandidates(entry.longDefinition)
+        .slice(0, 12)
+        .map((label) => ({
+          label,
+          source: "long-definition" as const
+        }))
+    );
+  }
+
+  const seen = new Set<string>();
+
+  return candidates
+    .map((candidate) => ({
+      id: `${candidate.source}:${normalizeGlossValue(candidate.label)}`,
+      ...candidate
+    }))
+    .filter((candidate) => {
+      const normalized = normalizeGlossValue(candidate.label);
+
+      if (!normalized || seen.has(normalized)) {
+        return false;
+      }
+
+      seen.add(normalized);
+      return true;
+    })
+    .slice(0, 12);
+}
+
+export function resolveGreekTokenGloss(
+  token: Pick<GreekToken, "gloss">,
+  entry: GreekLemmaEntry | null,
+  override?: GreekTokenGlossOverride | null
+) {
+  if (override?.selectedGloss?.trim()) {
+    return override.selectedGloss.trim();
+  }
+
+  if (token.gloss?.trim()) {
+    return token.gloss.trim();
+  }
+
+  const firstOption = entry ? getGreekGlossOptions(entry, null)[0] : null;
+
+  return firstOption?.label ?? "";
 }
 
 export async function getGreekLemmaEntry(strongsNumber: string) {
