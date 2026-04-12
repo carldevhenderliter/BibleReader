@@ -211,6 +211,29 @@ describe("Bible search", () => {
     });
   });
 
+  it("finds greek Strongs entries from greek text lookups", async () => {
+    const results = await searchBible("λογος", "web");
+
+    expect(results[0]).toMatchObject({
+      type: "strongs",
+      strongsNumber: "G3056",
+      description: "Greek Strongs"
+    });
+    expect(results[0]).toHaveProperty("preview");
+    expect((results[0] as { preview: string }).preview).toContain("logos");
+  });
+
+  it("finds greek Strongs entries from transliterated greek lookups", async () => {
+    const results = await searchBible("Greek: agape", "web");
+
+    expect(results[0]).toMatchObject({
+      type: "strongs",
+      strongsNumber: "G26",
+      description: "Greek Strongs"
+    });
+    expect((results[0] as { preview: string }).preview).toContain("ἀγάπη");
+  });
+
   it("returns starter topic suggestions for a bare Topic query", async () => {
     const results = await searchBible("Topic:", "web");
 

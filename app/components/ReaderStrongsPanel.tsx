@@ -183,7 +183,8 @@ export function ReaderStrongsPanel() {
 
       {activeStrongsNumbers.length === 0 ? (
         <p className="reader-notebook-empty">
-          Search for a Strongs number or open a tagged KJV word to study its definition here.
+          Search for a Strongs number or Greek word, or open a tagged KJV word to study its
+          definition here.
         </p>
       ) : isLoading ? (
         <p className="reader-notebook-empty">Loading Strongs details…</p>

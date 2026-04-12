@@ -1,7 +1,9 @@
 import {
   getStrongsEntries,
   getStrongsVerseOccurrences,
-  normalizeStrongsNumber
+  normalizeGreekWordLookupValue,
+  normalizeStrongsNumber,
+  searchGreekStrongsEntries
 } from "@/lib/bible/strongs";
 
 describe("strongs lexicon", () => {
@@ -35,6 +37,20 @@ describe("strongs lexicon", () => {
   it("normalizes spaced and zero-padded strongs numbers", () => {
     expect(normalizeStrongsNumber(" g 03056 ")).toBe("G3056");
     expect(normalizeStrongsNumber("h7225")).toBe("H7225");
+  });
+
+  it("normalizes greek lookup values without accents", () => {
+    expect(normalizeGreekWordLookupValue(" λόγος ")).toBe("λογοσ");
+    expect(normalizeGreekWordLookupValue("agapē")).toBe("agape");
+  });
+
+  it("finds greek Strongs entries by lemma and transliteration", async () => {
+    await expect(searchGreekStrongsEntries("λογος")).resolves.toEqual(
+      expect.arrayContaining([expect.objectContaining({ id: "G3056", lemma: "λόγος" })])
+    );
+    await expect(searchGreekStrongsEntries("agape")).resolves.toEqual(
+      expect.arrayContaining([expect.objectContaining({ id: "G26", lemma: "ἀγάπη" })])
+    );
   });
 
   it("loads KJV verse occurrences for a Strongs number", async () => {

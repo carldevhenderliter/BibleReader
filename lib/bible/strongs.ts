@@ -5,9 +5,15 @@ import type {
   StrongsEntry
 } from "@/lib/bible/types";
 
+type SearchableGreekStrongsEntry = StrongsEntry & {
+  normalizedLemma: string;
+  normalizedTransliteration: string;
+};
+
 let strongsLexiconPromise: Promise<Record<string, StrongsEntry>> | null = null;
 let strongsVerseIndexPromise: Promise<BibleSearchStrongsVerseEntry[]> | null = null;
 let kjvVerseSearchPromise: Promise<BibleSearchVerseEntry[]> | null = null;
+let searchableGreekEntriesPromise: Promise<SearchableGreekStrongsEntry[]> | null = null;
 
 export function normalizeStrongsNumber(value: string) {
   const match = value.trim().toUpperCase().match(/^([HG])\s*0*(\d+)$/);
@@ -24,6 +30,17 @@ export function normalizeStrongsNumber(value: string) {
     : `${prefix}${digits}`;
 }
 
+export function normalizeGreekWordLookupValue(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/\p{M}+/gu, "")
+    .replace(/ς/g, "σ")
+    .toLowerCase()
+    .replace(/[^\p{Script=Greek}a-z0-9\s]+/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 async function loadStrongsLexicon() {
   if (!strongsLexiconPromise) {
     strongsLexiconPromise = import("@/data/bible/strongs/lexicon.json").then(
@@ -32,6 +49,22 @@ async function loadStrongsLexicon() {
   }
 
   return strongsLexiconPromise;
+}
+
+async function loadSearchableGreekEntries() {
+  if (!searchableGreekEntriesPromise) {
+    searchableGreekEntriesPromise = loadStrongsLexicon().then((lexicon) =>
+      Object.values(lexicon)
+        .filter((entry) => entry.language === "greek")
+        .map((entry) => ({
+          ...entry,
+          normalizedLemma: normalizeGreekWordLookupValue(entry.lemma),
+          normalizedTransliteration: normalizeGreekWordLookupValue(entry.transliteration)
+        }))
+    );
+  }
+
+  return searchableGreekEntriesPromise;
 }
 
 async function loadStrongsVerseIndex() {
@@ -54,6 +87,27 @@ async function loadKjvVerseSearchIndex() {
   return kjvVerseSearchPromise;
 }
 
+function getGreekSearchScore(
+  entry: Pick<SearchableGreekStrongsEntry, "normalizedLemma" | "normalizedTransliteration">,
+  normalizedQuery: string
+) {
+  const candidates = [entry.normalizedLemma, entry.normalizedTransliteration].filter(Boolean);
+
+  if (candidates.some((candidate) => candidate === normalizedQuery)) {
+    return 0;
+  }
+
+  if (candidates.some((candidate) => candidate.startsWith(normalizedQuery))) {
+    return 1;
+  }
+
+  if (candidates.some((candidate) => candidate.includes(normalizedQuery))) {
+    return 2;
+  }
+
+  return null;
+}
+
 export async function getStrongsEntries(strongsNumbers: string[]) {
   const lexicon = await loadStrongsLexicon();
 
@@ -66,6 +120,32 @@ export async function getStrongsEntry(strongsNumber: string) {
   const lexicon = await loadStrongsLexicon();
 
   return lexicon[normalizeStrongsNumber(strongsNumber)] ?? null;
+}
+
+export async function searchGreekStrongsEntries(query: string, limit = 8) {
+  const normalizedQuery = normalizeGreekWordLookupValue(query);
+
+  if (!normalizedQuery || normalizedQuery.length < 2) {
+    return [];
+  }
+
+  const entries = await loadSearchableGreekEntries();
+
+  return entries
+    .map((entry) => ({
+      entry,
+      score: getGreekSearchScore(entry, normalizedQuery)
+    }))
+    .filter((entry): entry is { entry: SearchableGreekStrongsEntry; score: number } => entry.score !== null)
+    .sort((left, right) => {
+      if (left.score !== right.score) {
+        return left.score - right.score;
+      }
+
+      return Number.parseInt(left.entry.id.slice(1), 10) - Number.parseInt(right.entry.id.slice(1), 10);
+    })
+    .slice(0, limit)
+    .map(({ entry }) => entry);
 }
 
 export async function getStrongsVerseOccurrences(strongsNumber: string) {

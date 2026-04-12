@@ -23,7 +23,8 @@ function SearchHarness() {
   );
 }
 
-const SEARCH_INPUT_LABEL = "Search books, words, phrases, or Strongs numbers, or use Topic:";
+const SEARCH_INPUT_LABEL =
+  "Search books, references, Strongs numbers, Greek words, phrases, or use Topic: or Greek:";
 
 function renderSearchUi(ui?: React.ReactNode) {
   return render(
@@ -257,6 +258,27 @@ describe("BottomSearchBar", () => {
 
     expect(resultButton).toHaveTextContent(/without form/i);
     expect(resultButton).toHaveTextContent(/Spirit/i);
+  });
+
+  it("opens a Greek word lookup from search results", async () => {
+    setDesktopMode(true);
+
+    renderSearchUi();
+
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
+      target: { value: "Greek: logos" }
+    });
+
+    await waitForElementToBeRemoved(() => screen.queryByText("Searching scripture…"), {
+      timeout: 10000
+    });
+
+    const resultLabel = await screen.findByText("G3056");
+    fireEvent.click(resultLabel.closest("button") as HTMLButtonElement);
+
+    const studyPane = screen.getByLabelText("Study pane");
+    expect(await within(studyPane).findByRole("heading", { name: "G3056" })).toBeInTheDocument();
+    expect(await within(studyPane).findByText("λόγος")).toBeInTheDocument();
   });
 
   it("shows Strongs numbers beside KJV word-search hits only when the search toggle is on", async () => {
