@@ -1064,6 +1064,31 @@ select {
     color 160ms ease;
 }
 
+.verse-greek-case {
+  padding: 0.12rem 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(207, 229, 255, 0.84);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-align: center;
+  text-transform: uppercase;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    color 160ms ease;
+}
+
+.verse-greek-case:hover,
+.verse-greek-case:focus-visible {
+  border-color: rgba(var(--reader-accent-rgb), 0.38);
+  background: rgba(var(--reader-accent-rgb), 0.1);
+  color: rgba(246, 250, 255, 0.98);
+  outline: none;
+}
+
 .verse-greek-gloss:hover,
 .verse-greek-gloss:focus-visible,
 .verse-greek-gloss.is-overridden {
@@ -1073,6 +1098,7 @@ select {
   outline: none;
 }
 
+.verse-greek-case-picker,
 .verse-greek-gloss-picker {
   position: absolute;
   top: calc(100% + 0.42rem);
@@ -1087,6 +1113,18 @@ select {
   background: rgba(10, 18, 31, 0.97);
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
   transform: translateX(-50%);
+}
+
+.verse-greek-case-copy,
+.verse-greek-case-meta {
+  margin: 0;
+  color: rgba(232, 242, 255, 0.88);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.verse-greek-case-meta {
+  color: rgba(196, 214, 236, 0.74);
 }
 
 .verse-greek-gloss-picker-header {
@@ -1603,6 +1641,7 @@ select {
     max-width: 7.8rem;
   }
 
+  .verse-greek-case-picker,
   .verse-greek-gloss-picker {
     position: fixed;
     right: 0.75rem;

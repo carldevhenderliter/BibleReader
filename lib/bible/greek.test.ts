@@ -1,4 +1,5 @@
 import {
+  getGreekCaseDetails,
   getGreekGlossOptions,
   getGreekLemmaEntry,
   getGreekTokenOccurrenceKey,
@@ -96,5 +97,29 @@ describe("Greek dictionary lookup", () => {
         source: "lemma-option"
       })
     ).toBe("origin");
+  });
+
+  it("reduces multi-word default glosses to a single head word until overridden", async () => {
+    const entry = await getGreekLemmaEntry("G746");
+    const token = {
+      surface: "ἀρχῆς",
+      lemma: "ἀρχή",
+      strongs: "G746",
+      gloss: "of the beginning"
+    };
+
+    expect(resolveGreekTokenGloss(token, entry, null)).toBe("beginning");
+  });
+
+  it("extracts Greek case details from morphology", () => {
+    expect(
+      getGreekCaseDetails({
+        morphology: "N-GSF",
+        decodedMorphology: "noun genitive singular feminine"
+      })
+    ).toMatchObject({
+      key: "genitive",
+      label: "Genitive"
+    });
   });
 });

@@ -20,6 +20,42 @@ export type GreekDictionaryMatch = {
   matchType: "strongs" | "lemma" | "form" | "transliteration" | "gloss";
 };
 
+type GreekCaseKey = "nominative" | "genitive" | "dative" | "accusative" | "vocative";
+
+export type GreekCaseDetails = {
+  key: GreekCaseKey;
+  label: string;
+  definition: string;
+};
+
+const GREEK_CASE_DETAILS: Record<GreekCaseKey, GreekCaseDetails> = {
+  nominative: {
+    key: "nominative",
+    label: "Nominative",
+    definition: "Usually marks the subject of the sentence or renames the subject."
+  },
+  genitive: {
+    key: "genitive",
+    label: "Genitive",
+    definition: "Usually shows possession, source, relationship, description, or separation."
+  },
+  dative: {
+    key: "dative",
+    label: "Dative",
+    definition: "Usually marks the indirect object, means, location, association, or advantage."
+  },
+  accusative: {
+    key: "accusative",
+    label: "Accusative",
+    definition: "Usually marks the direct object, extent, goal, or direction of an action."
+  },
+  vocative: {
+    key: "vocative",
+    label: "Vocative",
+    definition: "Used for direct address when someone or something is being spoken to."
+  }
+};
+
 function normalizeGlossValue(value: string) {
   return value
     .toLowerCase()
@@ -183,6 +219,118 @@ function splitGlossDefinitionIntoCandidates(value: string) {
     });
 }
 
+function extractSingleWordGlossCandidate(value: string) {
+  const candidates = splitGlossDefinitionIntoCandidates(value);
+  const glossStopWords = new Set([
+    "a",
+    "an",
+    "the",
+    "of",
+    "to",
+    "in",
+    "on",
+    "at",
+    "for",
+    "with",
+    "by",
+    "from",
+    "into",
+    "unto",
+    "upon",
+    "through",
+    "and",
+    "or"
+  ]);
+
+  for (const candidate of candidates) {
+    const words = Array.from(
+      candidate.matchAll(/\b[\p{L}]+(?:[’'][\p{L}]+)?\b/gu),
+      (match) => match[0]
+    );
+    const contentWords = words.filter((word) => {
+      const normalizedWord = word.toLowerCase();
+
+      return !glossStopWords.has(normalizedWord);
+    });
+
+    if (contentWords.length === 1) {
+      return contentWords[0];
+    }
+  }
+
+  for (const candidate of candidates) {
+    const words = Array.from(
+      candidate.matchAll(/\b[\p{L}]+(?:[’'][\p{L}]+)?\b/gu),
+      (match) => match[0]
+    );
+    const contentWords = words.filter((word) => {
+      const normalizedWord = word.toLowerCase();
+
+      return !glossStopWords.has(normalizedWord);
+    });
+
+    if (contentWords.length > 0) {
+      const startsWithStopWord = words[0] ? glossStopWords.has(words[0].toLowerCase()) : false;
+
+      return startsWithStopWord ? contentWords[contentWords.length - 1] : contentWords[0];
+    }
+  }
+
+  return null;
+}
+
+function getGreekCaseKeyFromDecodedMorphology(value?: string | null): GreekCaseKey | null {
+  const normalizedValue = value?.toLowerCase() ?? "";
+
+  if (normalizedValue.includes("nominative")) {
+    return "nominative";
+  }
+
+  if (normalizedValue.includes("genitive")) {
+    return "genitive";
+  }
+
+  if (normalizedValue.includes("dative")) {
+    return "dative";
+  }
+
+  if (normalizedValue.includes("accusative")) {
+    return "accusative";
+  }
+
+  if (normalizedValue.includes("vocative")) {
+    return "vocative";
+  }
+
+  return null;
+}
+
+function getGreekCaseKeyFromMorphologyCode(value?: string | null): GreekCaseKey | null {
+  const caseLetter = value?.match(/([NGDAV])[SP][MFN]?$/i)?.[1]?.toUpperCase();
+
+  if (caseLetter === "N") {
+    return "nominative";
+  }
+
+  if (caseLetter === "G") {
+    return "genitive";
+  }
+
+  if (caseLetter === "D") {
+    return "dative";
+  }
+
+  if (caseLetter === "A") {
+    return "accusative";
+  }
+
+  if (caseLetter === "V") {
+    return "vocative";
+  }
+
+  return null;
+}
+
 export function getGreekTokenOccurrenceKey(
   bookSlug: string,
   chapterNumber: number,
@@ -245,6 +393,16 @@ export function getGreekGlossOptions(
     .slice(0, 12);
 }
 
+export function getGreekCaseDetails(
+  token: Pick<GreekToken, "decodedMorphology" | "morphology">
+): GreekCaseDetails | null {
+  const caseKey =
+    getGreekCaseKeyFromDecodedMorphology(token.decodedMorphology) ??
+    getGreekCaseKeyFromMorphologyCode(token.morphology);
+
+  return caseKey ? GREEK_CASE_DETAILS[caseKey] : null;
+}
+
 export function resolveGreekTokenGloss(
   token: Pick<GreekToken, "gloss">,
   entry: GreekLemmaEntry | null,
@@ -254,13 +412,27 @@ export function resolveGreekTokenGloss(
     return override.selectedGloss.trim();
   }
 
-  if (token.gloss?.trim()) {
-    return token.gloss.trim();
+  const singleWordTokenGloss = token.gloss?.trim()
+    ? extractSingleWordGlossCandidate(token.gloss)
+    : null;
+
+  if (singleWordTokenGloss) {
+    return singleWordTokenGloss;
+  }
+
+  if (entry) {
+    const singleWordEntryGloss =
+      extractSingleWordGlossCandidate(entry.shortDefinition) ??
+      (entry.longDefinition ? extractSingleWordGlossCandidate(entry.longDefinition) : null);
+
+    if (singleWordEntryGloss) {
+      return singleWordEntryGloss;
+    }
   }
 
   const firstOption = entry ? getGreekGlossOptions(entry, null)[0] : null;
 
-  return firstOption?.label ?? "";
+  return token.gloss?.trim() ?? firstOption?.label ?? "";
 }
 
 export async function getGreekLemmaEntry(strongsNumber: string) {

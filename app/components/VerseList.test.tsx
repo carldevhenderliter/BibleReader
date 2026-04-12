@@ -38,7 +38,7 @@ const interlinearVerseMap: Record<number, EsvInterlinearDisplayVerse> = {
         strongs: "G746",
         morphology: "N-GSF",
         decodedMorphology: "noun genitive singular feminine",
-        gloss: "beginning"
+        gloss: "of the beginning"
       }
     ]
   },
@@ -149,6 +149,7 @@ describe("VerseList", () => {
     expect(screen.getByText("ἀρχῆς")).toBeInTheDocument();
     expect(screen.getAllByText("ἀρχή").length).toBeGreaterThan(0);
     expect(screen.getAllByText("beginning").length).toBeGreaterThan(0);
+    expect(screen.getByRole("button", { name: "Explain genitive case for ἀρχῆς" })).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: /ἀρχῆς ἀρχή G746/i }));
 
@@ -182,6 +183,38 @@ describe("VerseList", () => {
     const glossButtons = screen.getAllByRole("button", { name: /Choose English gloss for ἀρχ/i });
     expect(glossButtons[0]).toHaveTextContent("origin");
     expect(glossButtons[1]).toHaveTextContent("beginning");
+  });
+
+  it("shows a single-word default gloss until a different gloss is selected", async () => {
+    renderWithReaderCustomization(
+      <VerseList
+        bookSlug="john"
+        chapterNumber={1}
+        interlinearVerseMap={interlinearVerseMap}
+        verses={verses}
+      />
+    );
+
+    expect(
+      await screen.findByRole("button", { name: "Choose English gloss for ἀρχῆς" })
+    ).toHaveTextContent("beginning");
+  });
+
+  it("opens a case explainer from the morphology line", async () => {
+    renderWithReaderCustomization(
+      <VerseList
+        bookSlug="john"
+        chapterNumber={1}
+        interlinearVerseMap={interlinearVerseMap}
+        verses={verses}
+      />
+    );
+
+    fireEvent.click(await screen.findByRole("button", { name: "Explain genitive case for ἀρχῆς" }));
+
+    expect(await screen.findByRole("dialog", { name: "Genitive case for ἀρχῆς" })).toBeInTheDocument();
+    expect(screen.getByText(/Usually shows possession, source, relationship, description, or separation\./i)).toBeInTheDocument();
+    expect(screen.getByText(/noun genitive singular feminine \(N-GSF\)/i)).toBeInTheDocument();
   });
 
   it("persists a custom gloss for a single occurrence across reloads", async () => {
