@@ -20,39 +20,297 @@ export type GreekDictionaryMatch = {
   matchType: "strongs" | "lemma" | "form" | "transliteration" | "gloss";
 };
 
-type GreekCaseKey = "nominative" | "genitive" | "dative" | "accusative" | "vocative";
+type GreekMorphologyTermKey =
+  | "verb"
+  | "noun"
+  | "adjective"
+  | "article"
+  | "pronoun"
+  | "adverb"
+  | "conjunction"
+  | "preposition"
+  | "particle"
+  | "interjection"
+  | "present"
+  | "imperfect"
+  | "future"
+  | "aorist"
+  | "perfect"
+  | "pluperfect"
+  | "active"
+  | "middle"
+  | "passive"
+  | "indicative"
+  | "subjunctive"
+  | "imperative"
+  | "optative"
+  | "infinitive"
+  | "participle"
+  | "nominative"
+  | "genitive"
+  | "dative"
+  | "accusative"
+  | "vocative"
+  | "singular"
+  | "plural"
+  | "masculine"
+  | "feminine"
+  | "neuter"
+  | "first-person"
+  | "second-person"
+  | "third-person";
 
-export type GreekCaseDetails = {
-  key: GreekCaseKey;
+type GreekMorphologyGroup =
+  | "part-of-speech"
+  | "tense"
+  | "voice"
+  | "mood"
+  | "case"
+  | "number"
+  | "gender"
+  | "person";
+
+export type GreekMorphologyTermDetails = {
+  key: GreekMorphologyTermKey;
+  group: GreekMorphologyGroup;
   label: string;
   definition: string;
 };
 
-const GREEK_CASE_DETAILS: Record<GreekCaseKey, GreekCaseDetails> = {
+export type GreekMorphologyDetails = {
+  label: string;
+  terms: GreekMorphologyTermDetails[];
+  fullDescription?: string;
+};
+
+const GREEK_MORPHOLOGY_DETAILS: Record<GreekMorphologyTermKey, GreekMorphologyTermDetails> = {
+  verb: {
+    key: "verb",
+    group: "part-of-speech",
+    label: "Verb",
+    definition: "A word that expresses action, process, or state of being."
+  },
+  noun: {
+    key: "noun",
+    group: "part-of-speech",
+    label: "Noun",
+    definition: "A word that names a person, place, thing, idea, or quality."
+  },
+  adjective: {
+    key: "adjective",
+    group: "part-of-speech",
+    label: "Adjective",
+    definition: "A word that describes or qualifies a noun or pronoun."
+  },
+  article: {
+    key: "article",
+    group: "part-of-speech",
+    label: "Article",
+    definition: "A word like 'the' that marks or identifies a noun."
+  },
+  pronoun: {
+    key: "pronoun",
+    group: "part-of-speech",
+    label: "Pronoun",
+    definition: "A word that stands in the place of a noun."
+  },
+  adverb: {
+    key: "adverb",
+    group: "part-of-speech",
+    label: "Adverb",
+    definition: "A word that modifies a verb, adjective, or another adverb."
+  },
+  conjunction: {
+    key: "conjunction",
+    group: "part-of-speech",
+    label: "Conjunction",
+    definition: "A word that connects words, phrases, clauses, or sentences."
+  },
+  preposition: {
+    key: "preposition",
+    group: "part-of-speech",
+    label: "Preposition",
+    definition: "A word that shows the relationship of a noun or pronoun to another word."
+  },
+  particle: {
+    key: "particle",
+    group: "part-of-speech",
+    label: "Particle",
+    definition: "A small function word that adds nuance, emphasis, or connection."
+  },
+  interjection: {
+    key: "interjection",
+    group: "part-of-speech",
+    label: "Interjection",
+    definition: "A word used as an exclamation or sudden expression."
+  },
+  present: {
+    key: "present",
+    group: "tense",
+    label: "Present",
+    definition: "Usually portrays action as ongoing, repeated, or in progress."
+  },
+  imperfect: {
+    key: "imperfect",
+    group: "tense",
+    label: "Imperfect",
+    definition: "Usually portrays past action as ongoing, repeated, or unfolding."
+  },
+  future: {
+    key: "future",
+    group: "tense",
+    label: "Future",
+    definition: "Usually portrays action that will happen."
+  },
+  aorist: {
+    key: "aorist",
+    group: "tense",
+    label: "Aorist",
+    definition: "Usually presents an action as a whole or as a simple event."
+  },
+  perfect: {
+    key: "perfect",
+    group: "tense",
+    label: "Perfect",
+    definition: "Usually portrays a completed action with continuing results."
+  },
+  pluperfect: {
+    key: "pluperfect",
+    group: "tense",
+    label: "Pluperfect",
+    definition: "Usually portrays a past completed action with results already in effect."
+  },
+  active: {
+    key: "active",
+    group: "voice",
+    label: "Active",
+    definition: "The subject performs the action."
+  },
+  middle: {
+    key: "middle",
+    group: "voice",
+    label: "Middle",
+    definition: "The subject participates in or is closely involved in the action."
+  },
+  passive: {
+    key: "passive",
+    group: "voice",
+    label: "Passive",
+    definition: "The subject receives the action."
+  },
+  indicative: {
+    key: "indicative",
+    group: "mood",
+    label: "Indicative",
+    definition: "Usually states something as a fact or straightforward assertion."
+  },
+  subjunctive: {
+    key: "subjunctive",
+    group: "mood",
+    label: "Subjunctive",
+    definition: "Usually expresses possibility, purpose, or contingency."
+  },
+  imperative: {
+    key: "imperative",
+    group: "mood",
+    label: "Imperative",
+    definition: "Usually gives a command, exhortation, or request."
+  },
+  optative: {
+    key: "optative",
+    group: "mood",
+    label: "Optative",
+    definition: "Usually expresses wish or potential in a more remote way."
+  },
+  infinitive: {
+    key: "infinitive",
+    group: "mood",
+    label: "Infinitive",
+    definition: "A verbal form functioning like a verbal noun."
+  },
+  participle: {
+    key: "participle",
+    group: "mood",
+    label: "Participle",
+    definition: "A verbal adjective sharing features of both verbs and adjectives."
+  },
   nominative: {
     key: "nominative",
+    group: "case",
     label: "Nominative",
     definition: "Usually marks the subject of the sentence or renames the subject."
   },
   genitive: {
     key: "genitive",
+    group: "case",
     label: "Genitive",
     definition: "Usually shows possession, source, relationship, description, or separation."
   },
   dative: {
     key: "dative",
+    group: "case",
     label: "Dative",
     definition: "Usually marks the indirect object, means, location, association, or advantage."
   },
   accusative: {
     key: "accusative",
+    group: "case",
     label: "Accusative",
     definition: "Usually marks the direct object, extent, goal, or direction of an action."
   },
   vocative: {
     key: "vocative",
+    group: "case",
     label: "Vocative",
     definition: "Used for direct address when someone or something is being spoken to."
+  },
+  singular: {
+    key: "singular",
+    group: "number",
+    label: "Singular",
+    definition: "Refers to one person or thing."
+  },
+  plural: {
+    key: "plural",
+    group: "number",
+    label: "Plural",
+    definition: "Refers to more than one person or thing."
+  },
+  masculine: {
+    key: "masculine",
+    group: "gender",
+    label: "Masculine",
+    definition: "The masculine grammatical gender."
+  },
+  feminine: {
+    key: "feminine",
+    group: "gender",
+    label: "Feminine",
+    definition: "The feminine grammatical gender."
+  },
+  neuter: {
+    key: "neuter",
+    group: "gender",
+    label: "Neuter",
+    definition: "The neuter grammatical gender."
+  },
+  "first-person": {
+    key: "first-person",
+    group: "person",
+    label: "First Person",
+    definition: "Refers to the speaker or speakers."
+  },
+  "second-person": {
+    key: "second-person",
+    group: "person",
+    label: "Second Person",
+    definition: "Refers to the one or ones being addressed."
+  },
+  "third-person": {
+    key: "third-person",
+    group: "person",
+    label: "Third Person",
+    definition: "Refers to someone or something other than the speaker or addressee."
   }
 };
 
@@ -279,56 +537,147 @@ function extractSingleWordGlossCandidate(value: string) {
   return null;
 }
 
-function getGreekCaseKeyFromDecodedMorphology(value?: string | null): GreekCaseKey | null {
+const GREEK_MORPHOLOGY_TERM_MATCHERS: Array<{
+  key: GreekMorphologyTermKey;
+  match: RegExp;
+}> = [
+  { key: "verb", match: /\bverb\b/i },
+  { key: "noun", match: /\bnoun\b/i },
+  { key: "adjective", match: /\badjective\b/i },
+  { key: "article", match: /\barticle\b/i },
+  { key: "pronoun", match: /\bpronoun\b/i },
+  { key: "adverb", match: /\badverb\b/i },
+  { key: "conjunction", match: /\bconjunction\b/i },
+  { key: "preposition", match: /\bpreposition\b/i },
+  { key: "particle", match: /\bparticle\b/i },
+  { key: "interjection", match: /\binterjection\b/i },
+  { key: "present", match: /\bpresent\b/i },
+  { key: "imperfect", match: /\bimperfect\b/i },
+  { key: "future", match: /\bfuture\b/i },
+  { key: "aorist", match: /\baorist\b/i },
+  { key: "perfect", match: /\bperfect\b/i },
+  { key: "pluperfect", match: /\bpluperfect\b/i },
+  { key: "active", match: /\bactive\b/i },
+  { key: "middle", match: /\bmiddle\b/i },
+  { key: "passive", match: /\bpassive\b/i },
+  { key: "indicative", match: /\bindicative\b/i },
+  { key: "subjunctive", match: /\bsubjunctive\b/i },
+  { key: "imperative", match: /\bimperative\b/i },
+  { key: "optative", match: /\boptative\b/i },
+  { key: "infinitive", match: /\binfinitive\b/i },
+  { key: "participle", match: /\bparticiple\b/i },
+  { key: "nominative", match: /\bnominative\b/i },
+  { key: "genitive", match: /\bgenitive\b/i },
+  { key: "dative", match: /\bdative\b/i },
+  { key: "accusative", match: /\baccusative\b/i },
+  { key: "vocative", match: /\bvocative\b/i },
+  { key: "singular", match: /\bsingular\b/i },
+  { key: "plural", match: /\bplural\b/i },
+  { key: "masculine", match: /\bmasculine\b/i },
+  { key: "feminine", match: /\bfeminine\b/i },
+  { key: "neuter", match: /\bneuter\b/i },
+  { key: "first-person", match: /\bfirst person\b/i },
+  { key: "second-person", match: /\bsecond person\b/i },
+  { key: "third-person", match: /\bthird person\b/i }
+];
+
+function getGreekMorphologyTermsFromDecodedMorphology(value?: string | null) {
   const normalizedValue = value?.toLowerCase() ?? "";
 
-  if (normalizedValue.includes("nominative")) {
-    return "nominative";
-  }
-
-  if (normalizedValue.includes("genitive")) {
-    return "genitive";
-  }
-
-  if (normalizedValue.includes("dative")) {
-    return "dative";
-  }
-
-  if (normalizedValue.includes("accusative")) {
-    return "accusative";
-  }
-
-  if (normalizedValue.includes("vocative")) {
-    return "vocative";
-  }
-
-  return null;
+  return GREEK_MORPHOLOGY_TERM_MATCHERS.flatMap(({ key, match }) =>
+    match.test(normalizedValue) ? [GREEK_MORPHOLOGY_DETAILS[key]] : []
+  );
 }
 
-function getGreekCaseKeyFromMorphologyCode(value?: string | null): GreekCaseKey | null {
-  const caseLetter = value?.match(/([NGDAV])[SP][MFN]?$/i)?.[1]?.toUpperCase();
+function getGreekMorphologyTermsFromMorphologyCode(value?: string | null) {
+  const normalizedValue = value?.toUpperCase() ?? "";
+  const terms: GreekMorphologyTermDetails[] = [];
+  const seen = new Set<string>();
+  const addTerm = (key: GreekMorphologyTermKey) => {
+    if (seen.has(key)) {
+      return;
+    }
+
+    seen.add(key);
+    terms.push(GREEK_MORPHOLOGY_DETAILS[key]);
+  };
+
+  const partOfSpeechCode = normalizedValue.split("-")[0] ?? "";
+
+  if (partOfSpeechCode.startsWith("V")) {
+    addTerm("verb");
+  } else if (partOfSpeechCode.startsWith("N")) {
+    addTerm("noun");
+  } else if (partOfSpeechCode.startsWith("A")) {
+    addTerm("adjective");
+  } else if (partOfSpeechCode.startsWith("T")) {
+    addTerm("article");
+  } else if (partOfSpeechCode.startsWith("P")) {
+    addTerm("pronoun");
+  } else if (partOfSpeechCode.startsWith("D")) {
+    addTerm("adverb");
+  } else if (partOfSpeechCode.startsWith("C")) {
+    addTerm("conjunction");
+  } else if (partOfSpeechCode.startsWith("PREP")) {
+    addTerm("preposition");
+  } else if (partOfSpeechCode === "X") {
+    addTerm("particle");
+  }
+
+  const caseLetter = normalizedValue.match(/([NGDAV])[SP][MFN]?$/)?.[1];
 
   if (caseLetter === "N") {
-    return "nominative";
+    addTerm("nominative");
+  } else if (caseLetter === "G") {
+    addTerm("genitive");
+  } else if (caseLetter === "D") {
+    addTerm("dative");
+  } else if (caseLetter === "A") {
+    addTerm("accusative");
+  } else if (caseLetter === "V") {
+    addTerm("vocative");
   }
 
-  if (caseLetter === "G") {
-    return "genitive";
+  if (/[SP][MFN]?$/.test(normalizedValue)) {
+    const numberLetter = normalizedValue.match(/([SP])[MFN]?$/)?.[1];
+    if (numberLetter === "S") {
+      addTerm("singular");
+    } else if (numberLetter === "P") {
+      addTerm("plural");
+    }
   }
 
-  if (caseLetter === "D") {
-    return "dative";
+  const genderLetter = normalizedValue.match(/[SP]([MFN])$/)?.[1];
+
+  if (genderLetter === "M") {
+    addTerm("masculine");
+  } else if (genderLetter === "F") {
+    addTerm("feminine");
+  } else if (genderLetter === "N") {
+    addTerm("neuter");
   }
 
-  if (caseLetter === "A") {
-    return "accusative";
+  return terms;
+}
+
+function pickGreekMorphologySummaryTerms(terms: GreekMorphologyTermDetails[]) {
+  const partOfSpeech = terms.find((term) => term.group === "part-of-speech") ?? null;
+
+  if (partOfSpeech?.key === "verb") {
+    return [
+      partOfSpeech,
+      terms.find((term) => term.group === "tense"),
+      terms.find((term) => term.group === "voice"),
+      terms.find((term) => term.group === "mood")
+    ].filter((term): term is GreekMorphologyTermDetails => term !== undefined);
   }
 
-  if (caseLetter === "V") {
-    return "vocative";
-  }
-
-  return null;
+  return [
+    partOfSpeech,
+    terms.find((term) => term.group === "case"),
+    terms.find((term) => term.group === "number"),
+    terms.find((term) => term.group === "gender")
+  ].filter((term): term is GreekMorphologyTermDetails => term !== undefined);
 }
 
 export function getGreekTokenOccurrenceKey(
@@ -393,14 +742,32 @@ export function getGreekGlossOptions(
     .slice(0, 12);
 }
 
-export function getGreekCaseDetails(
+export function getGreekMorphologyDetails(
   token: Pick<GreekToken, "decodedMorphology" | "morphology">
-): GreekCaseDetails | null {
-  const caseKey =
-    getGreekCaseKeyFromDecodedMorphology(token.decodedMorphology) ??
-    getGreekCaseKeyFromMorphologyCode(token.morphology);
+): GreekMorphologyDetails | null {
+  const termsFromDecoded = getGreekMorphologyTermsFromDecodedMorphology(token.decodedMorphology);
+  const terms = termsFromDecoded.length > 0
+    ? termsFromDecoded
+    : getGreekMorphologyTermsFromMorphologyCode(token.morphology);
 
-  return caseKey ? GREEK_CASE_DETAILS[caseKey] : null;
+  if (terms.length === 0) {
+    return null;
+  }
+
+  const summaryTerms = pickGreekMorphologySummaryTerms(terms);
+  const partOfSpeech = summaryTerms.find((term) => term.group === "part-of-speech") ?? null;
+  const otherTerms = summaryTerms.filter((term) => term.group !== "part-of-speech");
+
+  return {
+    label: [
+      partOfSpeech?.label ?? null,
+      otherTerms.length > 0 ? otherTerms.map((term) => term.label).join(" ") : null
+    ]
+      .filter(Boolean)
+      .join(" · "),
+    terms,
+    fullDescription: token.decodedMorphology ?? token.morphology ?? undefined
+  };
 }
 
 export function resolveGreekTokenGloss(

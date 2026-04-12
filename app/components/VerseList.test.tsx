@@ -44,16 +44,16 @@ const interlinearVerseMap: Record<number, EsvInterlinearDisplayVerse> = {
   },
   2: {
     number: 2,
-    baseGreek: "ἀρχή",
-    greek: "ἀρχή",
+    baseGreek: "ἐγένετο",
+    greek: "ἐγένετο",
     tokens: [
       {
-        surface: "ἀρχή",
-        lemma: "ἀρχή",
-        strongs: "G746",
-        morphology: "N-NSF",
-        decodedMorphology: "noun nominative singular feminine",
-        gloss: "beginning"
+        surface: "ἐγένετο",
+        lemma: "γίνομαι",
+        strongs: "G1096",
+        morphology: "V-3AAI-S",
+        decodedMorphology: "verb aorist active indicative third person singular",
+        gloss: "became"
       }
     ]
   }
@@ -149,7 +149,11 @@ describe("VerseList", () => {
     expect(screen.getByText("ἀρχῆς")).toBeInTheDocument();
     expect(screen.getAllByText("ἀρχή").length).toBeGreaterThan(0);
     expect(screen.getAllByText("beginning").length).toBeGreaterThan(0);
-    expect(screen.getByRole("button", { name: "Explain genitive case for ἀρχῆς" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", {
+        name: "Explain morphology for ἀρχῆς: Noun · Genitive Singular Feminine"
+      })
+    ).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: /ἀρχῆς ἀρχή G746/i }));
 
@@ -182,7 +186,9 @@ describe("VerseList", () => {
 
     const glossButtons = screen.getAllByRole("button", { name: /Choose English gloss for ἀρχ/i });
     expect(glossButtons[0]).toHaveTextContent("origin");
-    expect(glossButtons[1]).toHaveTextContent("beginning");
+    expect(screen.getByRole("button", { name: "Choose English gloss for ἐγένετο" })).toHaveTextContent(
+      "became"
+    );
   });
 
   it("shows a single-word default gloss until a different gloss is selected", async () => {
@@ -210,11 +216,33 @@ describe("VerseList", () => {
       />
     );
 
-    fireEvent.click(await screen.findByRole("button", { name: "Explain genitive case for ἀρχῆς" }));
+    fireEvent.click(
+      await screen.findByRole("button", {
+        name: "Explain morphology for ἀρχῆς: Noun · Genitive Singular Feminine"
+      })
+    );
 
-    expect(await screen.findByRole("dialog", { name: "Genitive case for ἀρχῆς" })).toBeInTheDocument();
-    expect(screen.getByText(/Usually shows possession, source, relationship, description, or separation\./i)).toBeInTheDocument();
+    expect(await screen.findByRole("dialog", { name: "Morphology for ἀρχῆς" })).toBeInTheDocument();
+    expect(screen.getByText("Noun")).toBeInTheDocument();
+    expect(screen.getByText("Genitive")).toBeInTheDocument();
     expect(screen.getByText(/noun genitive singular feminine \(N-GSF\)/i)).toBeInTheDocument();
+  });
+
+  it("shows verb morphology under verbal forms", async () => {
+    renderWithReaderCustomization(
+      <VerseList
+        bookSlug="john"
+        chapterNumber={1}
+        interlinearVerseMap={interlinearVerseMap}
+        verses={verses}
+      />
+    );
+
+    expect(
+      await screen.findByRole("button", {
+        name: "Explain morphology for ἐγένετο: Verb · Aorist Active Indicative"
+      })
+    ).toBeInTheDocument();
   });
 
   it("persists a custom gloss for a single occurrence across reloads", async () => {
@@ -257,8 +285,8 @@ describe("VerseList", () => {
     expect(screen.getByRole("button", { name: "Choose English gloss for ἀρχῆς" })).toHaveTextContent(
       "first cause"
     );
-    expect(screen.getByRole("button", { name: "Choose English gloss for ἀρχή" })).toHaveTextContent(
-      "beginning"
+    expect(screen.getByRole("button", { name: "Choose English gloss for ἐγένετο" })).toHaveTextContent(
+      "became"
     );
   });
 });

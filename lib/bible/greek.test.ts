@@ -1,7 +1,7 @@
 import {
-  getGreekCaseDetails,
   getGreekGlossOptions,
   getGreekLemmaEntry,
+  getGreekMorphologyDetails,
   getGreekTokenOccurrenceKey,
   lookupGreekDictionary,
   normalizeGreekFormLookupValue,
@@ -111,15 +111,25 @@ describe("Greek dictionary lookup", () => {
     expect(resolveGreekTokenGloss(token, entry, null)).toBe("beginning");
   });
 
-  it("extracts Greek case details from morphology", () => {
+  it("extracts compact noun morphology details", () => {
     expect(
-      getGreekCaseDetails({
+      getGreekMorphologyDetails({
         morphology: "N-GSF",
         decodedMorphology: "noun genitive singular feminine"
       })
     ).toMatchObject({
-      key: "genitive",
-      label: "Genitive"
+      label: "Noun · Genitive Singular Feminine"
+    });
+  });
+
+  it("extracts compact verb morphology details", () => {
+    expect(
+      getGreekMorphologyDetails({
+        morphology: "V-3AAI-S",
+        decodedMorphology: "verb aorist active indicative third person singular"
+      })
+    ).toMatchObject({
+      label: "Verb · Aorist Active Indicative"
     });
   });
 });

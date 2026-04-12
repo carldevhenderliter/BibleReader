@@ -4,9 +4,9 @@ import { useEffect, useMemo, useState } from "react";
 
 import { useGreekGlossOverrides } from "@/app/components/GreekGlossOverridesProvider";
 import {
-  getGreekCaseDetails,
   getGreekGlossOptions,
   getGreekLemmaEntry,
+  getGreekMorphologyDetails,
   getGreekTokenOccurrenceKey,
   resolveGreekTokenGloss
 } from "@/lib/bible/greek";
@@ -28,7 +28,7 @@ export function GreekInterlinearLine({
   const { clearOverride, getOverride, saveOverride } = useGreekGlossOverrides();
   const [entriesByStrongs, setEntriesByStrongs] = useState<Record<string, GreekLemmaEntry>>({});
   const [openOccurrenceKey, setOpenOccurrenceKey] = useState<string | null>(null);
-  const [openCaseOccurrenceKey, setOpenCaseOccurrenceKey] = useState<string | null>(null);
+  const [openMorphologyOccurrenceKey, setOpenMorphologyOccurrenceKey] = useState<string | null>(null);
   const [isCustomMode, setIsCustomMode] = useState(false);
   const [customDraft, setCustomDraft] = useState("");
   const tokenEntries = useMemo(
@@ -42,7 +42,7 @@ export function GreekInterlinearLine({
         const glossOptions = entry ? getGreekGlossOptions(entry, token.gloss) : [];
         const defaultGloss = resolveGreekTokenGloss(token, entry, null);
         const effectiveGloss = resolveGreekTokenGloss(token, entry, override);
-        const caseDetails = getGreekCaseDetails(token);
+        const morphologyDetails = getGreekMorphologyDetails(token);
 
         return {
           token,
@@ -53,7 +53,7 @@ export function GreekInterlinearLine({
           glossOptions,
           defaultGloss,
           effectiveGloss,
-          caseDetails
+          morphologyDetails
         };
       }) ?? [],
     [bookSlug, chapterNumber, entriesByStrongs, getOverride, verse]
@@ -121,7 +121,7 @@ export function GreekInterlinearLine({
     }
 
     setOpenOccurrenceKey(null);
-    setOpenCaseOccurrenceKey(null);
+    setOpenMorphologyOccurrenceKey(null);
     setIsCustomMode(false);
     setCustomDraft("");
   }
@@ -141,7 +141,7 @@ export function GreekInterlinearLine({
       source: "custom"
     });
     setOpenOccurrenceKey(null);
-    setOpenCaseOccurrenceKey(null);
+    setOpenMorphologyOccurrenceKey(null);
     setIsCustomMode(false);
     setCustomDraft("");
   }
@@ -151,17 +151,17 @@ export function GreekInterlinearLine({
     effectiveGloss: string,
     overrideSource?: "lemma-option" | "custom"
   ) {
-    setOpenCaseOccurrenceKey(null);
+    setOpenMorphologyOccurrenceKey(null);
     setOpenOccurrenceKey((current) => (current === occurrenceKey ? null : occurrenceKey));
     setIsCustomMode(overrideSource === "custom");
     setCustomDraft(overrideSource === "custom" ? effectiveGloss : "");
   }
 
-  function handleOpenCaseInfo(occurrenceKey: string) {
+  function handleOpenMorphologyInfo(occurrenceKey: string) {
     setOpenOccurrenceKey(null);
     setIsCustomMode(false);
     setCustomDraft("");
-    setOpenCaseOccurrenceKey((current) => (current === occurrenceKey ? null : occurrenceKey));
+    setOpenMorphologyOccurrenceKey((current) => (current === occurrenceKey ? null : occurrenceKey));
   }
 
   return (
@@ -175,7 +175,7 @@ export function GreekInterlinearLine({
           defaultGloss,
           effectiveGloss,
           override,
-          caseDetails
+          morphologyDetails
         }) => (
           <span
             className="verse-greek-token-wrap"
@@ -191,38 +191,48 @@ export function GreekInterlinearLine({
                 <span className="verse-greek-surface">{token.surface}</span>
                 <span className="verse-greek-lemma">{token.lemma}</span>
               </button>
-              {caseDetails ? (
+              {morphologyDetails ? (
                 <>
                   <button
-                    aria-expanded={openCaseOccurrenceKey === occurrenceKey}
-                    aria-label={`Explain ${caseDetails.label.toLowerCase()} case for ${token.surface}`}
-                    className="verse-greek-case"
-                    onClick={() => handleOpenCaseInfo(occurrenceKey)}
+                    aria-expanded={openMorphologyOccurrenceKey === occurrenceKey}
+                    aria-label={`Explain morphology for ${token.surface}: ${morphologyDetails.label}`}
+                    className="verse-greek-morphology"
+                    onClick={() => handleOpenMorphologyInfo(occurrenceKey)}
                     type="button"
                   >
-                    {caseDetails.label}
+                    {morphologyDetails.label}
                   </button>
-                  {openCaseOccurrenceKey === occurrenceKey ? (
+                  {openMorphologyOccurrenceKey === occurrenceKey ? (
                     <div
-                      aria-label={`${caseDetails.label} case for ${token.surface}`}
-                      className="verse-greek-case-picker"
+                      aria-label={`Morphology for ${token.surface}`}
+                      className="verse-greek-morphology-picker"
                       role="dialog"
                     >
                       <div className="verse-greek-gloss-picker-header">
-                        <p className="verse-greek-gloss-picker-title">{caseDetails.label}</p>
+                        <p className="verse-greek-gloss-picker-title">{morphologyDetails.label}</p>
                         <button
-                          aria-label="Close case definition"
+                          aria-label="Close morphology details"
                           className="reader-inline-button"
-                          onClick={() => setOpenCaseOccurrenceKey(null)}
+                          onClick={() => setOpenMorphologyOccurrenceKey(null)}
                           type="button"
                         >
                           Close
                         </button>
                       </div>
-                      <p className="verse-greek-case-copy">{caseDetails.definition}</p>
-                      {token.decodedMorphology || token.morphology ? (
-                        <p className="verse-greek-case-meta">
-                          {token.decodedMorphology ?? token.morphology}
+                      <div className="verse-greek-morphology-list">
+                        {morphologyDetails.terms.map((term) => (
+                          <article
+                            className="verse-greek-morphology-item"
+                            key={`${occurrenceKey}:${term.key}`}
+                          >
+                            <p className="verse-greek-morphology-term">{term.label}</p>
+                            <p className="verse-greek-morphology-copy">{term.definition}</p>
+                          </article>
+                        ))}
+                      </div>
+                      {morphologyDetails.fullDescription ? (
+                        <p className="verse-greek-morphology-meta">
+                          {morphologyDetails.fullDescription}
                           {token.decodedMorphology && token.morphology
                             ? ` (${token.morphology})`
                             : ""}
@@ -256,7 +266,7 @@ export function GreekInterlinearLine({
                       className="reader-inline-button"
                       onClick={() => {
                         setOpenOccurrenceKey(null);
-                        setOpenCaseOccurrenceKey(null);
+                        setOpenMorphologyOccurrenceKey(null);
                         setIsCustomMode(false);
                         setCustomDraft("");
                       }}
@@ -296,7 +306,7 @@ export function GreekInterlinearLine({
                         onClick={() => {
                           clearOverride(occurrenceKey);
                           setOpenOccurrenceKey(null);
-                          setOpenCaseOccurrenceKey(null);
+                          setOpenMorphologyOccurrenceKey(null);
                           setIsCustomMode(false);
                           setCustomDraft("");
                         }}

@@ -1064,7 +1064,7 @@ select {
     color 160ms ease;
 }
 
-.verse-greek-case {
+.verse-greek-morphology {
   padding: 0.12rem 0.5rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 999px;
@@ -1081,8 +1081,8 @@ select {
     color 160ms ease;
 }
 
-.verse-greek-case:hover,
-.verse-greek-case:focus-visible {
+.verse-greek-morphology:hover,
+.verse-greek-morphology:focus-visible {
   border-color: rgba(var(--reader-accent-rgb), 0.38);
   background: rgba(var(--reader-accent-rgb), 0.1);
   color: rgba(246, 250, 255, 0.98);
@@ -1098,7 +1098,7 @@ select {
   outline: none;
 }
 
-.verse-greek-case-picker,
+.verse-greek-morphology-picker,
 .verse-greek-gloss-picker {
   position: absolute;
   top: calc(100% + 0.42rem);
@@ -1115,15 +1115,31 @@ select {
   transform: translateX(-50%);
 }
 
-.verse-greek-case-copy,
-.verse-greek-case-meta {
+.verse-greek-morphology-list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.verse-greek-morphology-item {
+  display: grid;
+  gap: 0.18rem;
+}
+
+.verse-greek-morphology-term,
+.verse-greek-morphology-copy,
+.verse-greek-morphology-meta {
   margin: 0;
   color: rgba(232, 242, 255, 0.88);
   font-size: 0.82rem;
   line-height: 1.4;
 }
 
-.verse-greek-case-meta {
+.verse-greek-morphology-term {
+  color: rgba(246, 250, 255, 0.98);
+  font-weight: 700;
+}
+
+.verse-greek-morphology-meta {
   color: rgba(196, 214, 236, 0.74);
 }
 
@@ -1641,7 +1657,7 @@ select {
     max-width: 7.8rem;
   }
 
-  .verse-greek-case-picker,
+  .verse-greek-morphology-picker,
   .verse-greek-gloss-picker {
     position: fixed;
     right: 0.75rem;
