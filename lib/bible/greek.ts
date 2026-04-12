@@ -206,24 +206,27 @@ export async function lookupGreekDictionary(query: string, limit = 12): Promise<
     );
   }
 
-  const formMatches = (formIndex[normalizedFormQuery] ?? [])
-    .map((item) => {
+  const formMatches = (formIndex[normalizedFormQuery] ?? []).reduce<GreekDictionaryMatch[]>(
+    (matches, item) => {
       const entry = lexicon[item.strongs] ?? null;
 
       if (!entry) {
-        return null;
+        return matches;
       }
 
       const selectedForm = findSelectedForm(entry, item.form);
 
-      return {
+      matches.push({
         entry,
         selectedForm,
         selectedFormValue: item.form,
         matchType: "form" as const
-      };
-    })
-    .filter((entry): entry is GreekDictionaryMatch => entry !== null);
+      });
+
+      return matches;
+    },
+    []
+  );
 
   if (formMatches.length > 0) {
     return dedupeMatches(formMatches);
