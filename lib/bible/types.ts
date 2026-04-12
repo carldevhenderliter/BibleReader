@@ -61,6 +61,8 @@ export type ReaderCustomizationSettings = {
   uiFont: UiFontOption;
   showStrongs: boolean;
   showEsvInterlinear: boolean;
+  showEsvGreekOnly: boolean;
+  greekFontScale: number;
   textSize: number;
   lineHeight: number;
   contentWidth: number;

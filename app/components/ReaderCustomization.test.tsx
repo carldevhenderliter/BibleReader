@@ -209,10 +209,18 @@ describe("Reader customization", () => {
       }
     });
     fireEvent.click(screen.getByRole("button", { name: "Show Greek interlinear" }));
+    fireEvent.change(screen.getByLabelText("Greek size"), {
+      target: {
+        value: "2.1"
+      }
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Show Greek only" }));
 
     const stored = window.localStorage.getItem(READER_CUSTOMIZATION_STORAGE_KEY) ?? "";
 
     expect(stored).toContain('"showEsvInterlinear":true');
+    expect(stored).toContain('"showEsvGreekOnly":true');
+    expect(stored).toContain('"greekFontScale":2.1');
   });
 
   it("resets advanced settings to defaults", () => {

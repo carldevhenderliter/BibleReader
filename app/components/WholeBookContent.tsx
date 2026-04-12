@@ -80,6 +80,7 @@ export function WholeBookContent({
     book.testament === "New" &&
     settings.showEsvInterlinear &&
     esvInterlinearBook !== null;
+  const showGreekOnly = showEsvInterlinear && settings.showEsvGreekOnly;
   const interlinearByChapter = showEsvInterlinear
     ? new Map(
         (esvInterlinearBook ?? []).map((chapter) => [
@@ -275,6 +276,7 @@ export function WholeBookContent({
                   }
                   interlinearVerseMap={interlinearByChapter?.get(chapter.chapterNumber)}
                   key={`${version}:${book.slug}:${chapter.chapterNumber}`}
+                  showInterlinearOnly={showGreekOnly}
                   showStrongs={showStrongs}
                   verses={chapter.verses}
                 />

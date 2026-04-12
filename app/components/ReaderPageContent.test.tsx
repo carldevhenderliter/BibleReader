@@ -354,6 +354,41 @@ describe("ReaderPageContent", () => {
     ).toBeInTheDocument();
   });
 
+  it("can show only Greek without the English verse text in ESV interlinear mode", () => {
+    window.localStorage.setItem(
+      "bible-reader:customization",
+      JSON.stringify({
+        showEsvInterlinear: true,
+        showEsvGreekOnly: true
+      })
+    );
+
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={ntBooks[0]}
+        books={ntBooks}
+        chaptersByVersion={{ esv: esvNtChapter, web: esvNtChapter }}
+        esvInterlinearChapter={esvNtInterlinearChapter}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: {
+        value: "esv"
+      }
+    });
+
+    expect(
+      screen.getByText("Βίβλος γενέσεως Ἰησοῦ χριστοῦ υἱοῦ Δαυὶδ υἱοῦ Ἀβραάμ.")
+    ).toBeInTheDocument();
+    expect(
+      screen.queryByText(
+        "The book of the genealogy of Jesus Christ, the son of David, the son of Abraham."
+      )
+    ).not.toBeInTheDocument();
+  });
+
   it("renders three versions in chapter compare and routes KJV Strongs clicks to study", async () => {
     setSplitViewActive(true);
 

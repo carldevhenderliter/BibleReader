@@ -75,6 +75,7 @@ export function ReaderPageContent({
     book.testament === "New" &&
     settings.showEsvInterlinear &&
     esvInterlinearChapter !== null;
+  const showGreekOnly = showEsvInterlinear && settings.showEsvGreekOnly;
   const interlinearVerseMap = showEsvInterlinear
     ? Object.fromEntries(
         esvInterlinearChapter.verses.map((verse) => [verse.number, verse])
@@ -222,6 +223,7 @@ export function ReaderPageContent({
               highlightedVerseRange={activeHighlightedVerseRange}
               interlinearVerseMap={interlinearVerseMap}
               key={`${version}:${book.slug}:${chapter.chapterNumber}`}
+              showInterlinearOnly={showGreekOnly}
               showStrongs={showStrongs}
               verses={chapter.verses}
             />

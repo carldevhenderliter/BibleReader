@@ -347,6 +347,41 @@ describe("WholeBookContent", () => {
     ).toBeInTheDocument();
   });
 
+  it("can show only Greek in whole-book ESV interlinear mode", () => {
+    window.localStorage.setItem(
+      "bible-reader:customization",
+      JSON.stringify({
+        showEsvInterlinear: true,
+        showEsvGreekOnly: true
+      })
+    );
+
+    renderWithReaderCustomization(
+      <>
+        <WholeBookContent
+          book={books[0]}
+          books={books}
+          chaptersByVersion={{ esv: chapters, web: chapters }}
+          esvInterlinearBook={ntInterlinearBook}
+        />
+        <SearchPane />
+        <LookupPane />
+      </>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: {
+        value: "esv"
+      }
+    });
+
+    expect(
+      screen.getByText("Ἰούδας Ἰησοῦ χριστοῦ δοῦλος ἀδελφὸς δὲ Ἰακώβου.")
+    ).toBeInTheDocument();
+    expect(screen.queryByText("Jude, a servant of Jesus Christ...")).not.toBeInTheDocument();
+  });
+
   it("hides read-aloud controls in whole-book view", () => {
     installKokoroSupport();
 

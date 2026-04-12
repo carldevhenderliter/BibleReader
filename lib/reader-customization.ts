@@ -86,6 +86,8 @@ export const DEFAULT_READER_CUSTOMIZATION: ReaderCustomizationSettings = {
   uiFont: "sans",
   showStrongs: false,
   showEsvInterlinear: false,
+  showEsvGreekOnly: false,
+  greekFontScale: 1.55,
   textSize: 1.08,
   lineHeight: 1.95,
   contentWidth: 46,
@@ -113,6 +115,7 @@ const CONTRAST_RANGE = { min: 0.9, max: 1.25 };
 const GLOW_RANGE = { min: 0, max: 1.8 };
 const BACKGROUND_INTENSITY_RANGE = { min: 0.03, max: 0.3 };
 const SURFACE_DEPTH_RANGE = { min: 0.8, max: 1.3 };
+const GREEK_FONT_SCALE_RANGE = { min: 1, max: 2.4 };
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));
@@ -165,6 +168,14 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
       typeof candidate.showEsvInterlinear === "boolean"
         ? candidate.showEsvInterlinear
         : DEFAULT_READER_CUSTOMIZATION.showEsvInterlinear,
+    showEsvGreekOnly:
+      typeof candidate.showEsvGreekOnly === "boolean"
+        ? candidate.showEsvGreekOnly
+        : DEFAULT_READER_CUSTOMIZATION.showEsvGreekOnly,
+    greekFontScale:
+      typeof candidate.greekFontScale === "number"
+        ? clamp(candidate.greekFontScale, GREEK_FONT_SCALE_RANGE.min, GREEK_FONT_SCALE_RANGE.max)
+        : DEFAULT_READER_CUSTOMIZATION.greekFontScale,
     textSize:
       typeof candidate.textSize === "number"
         ? clamp(candidate.textSize, TEXT_SIZE_RANGE.min, TEXT_SIZE_RANGE.max)
@@ -269,6 +280,7 @@ export function getReaderCustomizationVariables(
     "--reader-ui-font": getUiFontValue(settings.uiFont),
     "--reader-body-font": getBodyFontValue(settings.bodyFont),
     "--reader-text-size": `${settings.textSize}rem`,
+    "--reader-greek-font-scale": String(settings.greekFontScale),
     "--reader-line-height": String(settings.lineHeight),
     "--reader-content-width": `${settings.contentWidth}rem`,
     "--reader-verse-spacing": `${settings.verseSpacing}rem`,

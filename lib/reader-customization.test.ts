@@ -14,10 +14,12 @@ describe("reader customization", () => {
     expect(
       normalizeReaderCustomization({
         themePreset: "ember",
-        bodyFont: "mono",
-        uiFont: "technical",
-        showStrongs: true,
-        textSize: 9,
+      bodyFont: "mono",
+      uiFont: "technical",
+      showStrongs: true,
+      showEsvGreekOnly: true,
+      greekFontScale: 4,
+      textSize: 9,
         lineHeight: 0,
         contentWidth: 200,
         verseSpacing: 9,
@@ -37,6 +39,8 @@ describe("reader customization", () => {
       uiFont: "technical",
       showStrongs: true,
       showEsvInterlinear: false,
+      showEsvGreekOnly: true,
+      greekFontScale: 2.4,
       textSize: 1.8,
       lineHeight: 1.6,
       contentWidth: 60,
@@ -60,6 +64,8 @@ describe("reader customization", () => {
       uiFont: "technical",
       showStrongs: true,
       showEsvInterlinear: false,
+      showEsvGreekOnly: false,
+      greekFontScale: 1.8,
       textSize: 1.2,
       lineHeight: 2,
       contentWidth: 50,
@@ -76,6 +82,7 @@ describe("reader customization", () => {
     });
 
     expect(variables["--reader-text-size"]).toBe("1.2rem");
+    expect(variables["--reader-greek-font-scale"]).toBe("1.8");
     expect(variables["--reader-line-height"]).toBe("2");
     expect(variables["--reader-content-width"]).toBe("50rem");
     expect(variables["--reader-verse-spacing"]).toBe("1.4rem");
@@ -101,6 +108,8 @@ describe("reader customization", () => {
       bodyFont: "serif",
       uiFont: "sans",
       showStrongs: true,
+      showEsvGreekOnly: false,
+      greekFontScale: DEFAULT_READER_CUSTOMIZATION.greekFontScale,
       textSize: 1.1,
       lineHeight: 2,
       contentWidth: 48

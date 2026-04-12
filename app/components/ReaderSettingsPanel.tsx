@@ -202,6 +202,47 @@ export function ReaderSettingsPanel({
             </div>
           </div>
           <div className="reader-settings-subsection">
+            <div className="reader-settings-field-grid">
+              <label className="reader-settings-field" htmlFor="reader-menu-greek-size">
+                <span>Greek size</span>
+                <input
+                  aria-label="Greek size"
+                  disabled={version !== "esv"}
+                  id="reader-menu-greek-size"
+                  max="2.4"
+                  min="1"
+                  onChange={(event) =>
+                    updateSettings({ greekFontScale: Number(event.target.value) })
+                  }
+                  step="0.05"
+                  type="range"
+                  value={settings.greekFontScale}
+                />
+                <strong>{settings.greekFontScale.toFixed(2)}x</strong>
+              </label>
+              <div className="reader-settings-field">
+                <span>Greek display</span>
+                <button
+                  aria-pressed={version === "esv" ? settings.showEsvGreekOnly : false}
+                  className="reader-inline-button reader-settings-link"
+                  disabled={version !== "esv" || !settings.showEsvInterlinear}
+                  onClick={() =>
+                    updateSettings({ showEsvGreekOnly: !settings.showEsvGreekOnly })
+                  }
+                  type="button"
+                >
+                  {version === "esv"
+                    ? settings.showEsvInterlinear
+                      ? settings.showEsvGreekOnly
+                        ? "Show English + Greek"
+                        : "Show Greek only"
+                      : "Enable Greek interlinear first"
+                    : "Greek display (ESV only)"}
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="reader-settings-subsection">
             <p className="reader-settings-subsection-label">Quick controls</p>
             <div className="reader-settings-shortcuts">
               <div className="reader-size-controls" role="group" aria-label="Text size controls">

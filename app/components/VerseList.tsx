@@ -13,6 +13,7 @@ type VerseListProps = {
   bookSlug: string;
   chapterNumber: number;
   interlinearVerseMap?: Record<number, EsvInterlinearDisplayVerse>;
+  showInterlinearOnly?: boolean;
   highlightedVerseNumber?: number | null;
   highlightedVerseRange?: {
     start: number;
@@ -26,6 +27,7 @@ export function VerseList({
   bookSlug,
   chapterNumber,
   interlinearVerseMap,
+  showInterlinearOnly = false,
   highlightedVerseNumber,
   highlightedVerseRange,
   showStrongs = false,
@@ -87,18 +89,20 @@ export function VerseList({
                 {verse.number}
               </span>
               <div className="verse-content">
-                {showStrongs && verse.tokens?.length ? (
-                  <VerseTextContent
-                    className="verse-text verse-text-rich"
-                    onOpenStrongs={(strongsNumbers) =>
-                      openStrongs(strongsNumbers, strongsNumbers.join(" "))
-                    }
-                    showStrongs
-                    verse={verse}
-                  />
-                ) : (
-                  <VerseTextContent className="verse-text" verse={verse} />
-                )}
+                {!showInterlinearOnly
+                  ? showStrongs && verse.tokens?.length ? (
+                      <VerseTextContent
+                        className="verse-text verse-text-rich"
+                        onOpenStrongs={(strongsNumbers) =>
+                          openStrongs(strongsNumbers, strongsNumbers.join(" "))
+                        }
+                        showStrongs
+                        verse={verse}
+                      />
+                    ) : (
+                      <VerseTextContent className="verse-text" verse={verse} />
+                    )
+                  : null}
                 {interlinearVerseMap?.[verse.number] ? (
                   <GreekInterlinearLine
                     onOpenGreekDictionary={(token) =>
