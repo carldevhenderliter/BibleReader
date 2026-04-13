@@ -225,7 +225,6 @@ export function ReaderPageContent({
               showCustomVerseTranslation={settings.showCustomVerseTranslation}
               showGreekGloss={settings.showGreekGloss}
               showGreekLemma={settings.showGreekLemma}
-              showGreekMorphology={settings.showGreekMorphology}
               showGreekSurface={settings.showGreekSurface}
               showGreekTransliteration={settings.showGreekTransliteration}
               showStrongs={showStrongs}

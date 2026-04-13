@@ -130,6 +130,9 @@ describe("ReaderStrongsPanel", () => {
     expect(within(studyPane).getByText("Greek Dictionary")).toBeInTheDocument();
     expect(await within(studyPane).findByText("Transliteration: archē")).toBeInTheDocument();
     expect(await within(studyPane).findByText("Selected Form")).toBeInTheDocument();
+    expect(await within(studyPane).findByText("Noun")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Genitive")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Example: λογου = of the word")).toBeInTheDocument();
     expect((await within(studyPane).findAllByText("ἀρχῆς")).length).toBeGreaterThan(0);
 
     const selectedFormRow = within(studyPane)

@@ -74,7 +74,6 @@ export function ReaderSettingsPanel({
       | "showGreekSurface"
       | "showGreekLemma"
       | "showGreekTransliteration"
-      | "showGreekMorphology"
       | "showGreekGloss"
   ) => {
     updateSettings({
@@ -91,7 +90,6 @@ export function ReaderSettingsPanel({
       showGreekSurface: true,
       showGreekLemma: true,
       showGreekTransliteration: true,
-      showGreekMorphology: true,
       showGreekGloss: true,
       showCustomVerseTranslation: true
     });
@@ -105,7 +103,6 @@ export function ReaderSettingsPanel({
       showGreekSurface: false,
       showGreekLemma: false,
       showGreekTransliteration: false,
-      showGreekMorphology: false,
       showGreekGloss: false,
       showCustomVerseTranslation: false
     });
@@ -119,7 +116,6 @@ export function ReaderSettingsPanel({
       showGreekSurface: true,
       showGreekLemma: false,
       showGreekTransliteration: false,
-      showGreekMorphology: false,
       showGreekGloss: false,
       showCustomVerseTranslation: false
     });
@@ -368,18 +364,6 @@ export function ReaderSettingsPanel({
               >
                 <strong>Transliteration</strong>
                 <span>Show the English-letter pronunciation line.</span>
-              </button>
-              <button
-                className={`settings-option-card${
-                  settings.showGreekMorphology ? " is-active" : ""
-                }`}
-                disabled={version !== "esv" || !settings.showEsvInterlinear}
-                key="showGreekMorphology"
-                onClick={() => toggleLayer("showGreekMorphology")}
-                type="button"
-              >
-                <strong>Morphology</strong>
-                <span>Show case, tense, voice, mood, and part of speech.</span>
               </button>
               <button
                 className={`settings-option-card${settings.showGreekGloss ? " is-active" : ""}`}

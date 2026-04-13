@@ -278,7 +278,6 @@ export function WholeBookContent({
                   showCustomVerseTranslation={settings.showCustomVerseTranslation}
                   showGreekGloss={settings.showGreekGloss}
                   showGreekLemma={settings.showGreekLemma}
-                  showGreekMorphology={settings.showGreekMorphology}
                   showGreekSurface={settings.showGreekSurface}
                   showGreekTransliteration={settings.showGreekTransliteration}
                   showStrongs={showStrongs}

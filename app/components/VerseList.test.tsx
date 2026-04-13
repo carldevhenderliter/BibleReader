@@ -120,7 +120,6 @@ describe("VerseList", () => {
         showCustomVerseTranslation={false}
         showGreekGloss={false}
         showGreekLemma={false}
-        showGreekMorphology={false}
         showGreekTransliteration={false}
         showVerseText={false}
         verses={verses}
@@ -201,10 +200,10 @@ describe("VerseList", () => {
     expect(await screen.findByText("archēs")).toBeInTheDocument();
     expect(screen.getAllByText("beginning").length).toBeGreaterThan(0);
     expect(
-      screen.getByRole("button", {
+      screen.queryByRole("button", {
         name: "Explain morphology for ἀρχῆς: Noun · Genitive Singular Feminine"
       })
-    ).toBeInTheDocument();
+    ).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: /ἀρχῆς ἀρχή G746/i }));
 
@@ -214,6 +213,8 @@ describe("VerseList", () => {
     expect(
       await within(studyPane).findByText(/noun genitive singular feminine \(N-GSF\)/i)
     ).toBeInTheDocument();
+    expect(within(studyPane).getByText("Genitive")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Example: λογου = of the word")).toBeInTheDocument();
   });
 
   it("opens a gloss picker from the English line and updates only that occurrence", async () => {
@@ -257,54 +258,62 @@ describe("VerseList", () => {
     ).toHaveTextContent("beginning");
   });
 
-  it("opens a case explainer from the morphology line", async () => {
+  it("shows noun morphology in the Greek dictionary panel instead of inline in the reader", async () => {
     renderWithReaderCustomization(
-      <VerseList
-        bookSlug="john"
-        chapterNumber={1}
-        interlinearVerseMap={interlinearVerseMap}
-        verses={verses}
-      />
-    );
-
-    fireEvent.click(
-      await screen.findByRole("button", {
-        name: "Explain morphology for ἀρχῆς: Noun · Genitive Singular Feminine"
-      })
-    );
-
-    expect(await screen.findByRole("dialog", { name: "Morphology for ἀρχῆς" })).toBeInTheDocument();
-    expect(screen.getByText("Noun")).toBeInTheDocument();
-    expect(screen.getByText("Genitive")).toBeInTheDocument();
-    expect(screen.getByText("Example: λογου = of the word")).toBeInTheDocument();
-    expect(screen.getByText(/noun genitive singular feminine \(N-GSF\)/i)).toBeInTheDocument();
-  });
-
-  it("shows verb morphology under verbal forms", async () => {
-    renderWithReaderCustomization(
-      <VerseList
-        bookSlug="john"
-        chapterNumber={1}
-        interlinearVerseMap={interlinearVerseMap}
-        verses={verses}
-      />
+      <>
+        <VerseList
+          bookSlug="john"
+          chapterNumber={1}
+          interlinearVerseMap={interlinearVerseMap}
+          verses={verses}
+        />
+        <LookupPane />
+      </>
     );
 
     expect(
-      await screen.findByRole("button", {
-        name: "Explain morphology for ἐγένετο: Verb · Aorist Active Indicative"
+      screen.queryByRole("button", {
+        name: "Explain morphology for ἀρχῆς: Noun · Genitive Singular Feminine"
       })
-    ).toBeInTheDocument();
+    ).not.toBeInTheDocument();
 
-    fireEvent.click(
-      screen.getByRole("button", {
-        name: "Explain morphology for ἐγένετο: Verb · Aorist Active Indicative"
-      })
+    fireEvent.click(await screen.findByRole("button", { name: /ἀρχῆς ἀρχή G746/i }));
+
+    const studyPane = screen.getByLabelText("Study pane");
+    expect(await within(studyPane).findByText("Noun")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Genitive")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Example: λογου = of the word")).toBeInTheDocument();
+    expect(within(studyPane).getByText(/noun genitive singular feminine \(N-GSF\)/i)).toBeInTheDocument();
+  });
+
+  it("shows verb morphology in the Greek dictionary panel", async () => {
+    renderWithReaderCustomization(
+      <>
+        <VerseList
+          bookSlug="john"
+          chapterNumber={1}
+          interlinearVerseMap={interlinearVerseMap}
+          verses={verses}
+        />
+        <LookupPane />
+      </>
     );
 
-    expect(await screen.findByText("Example: ειπεν = he said")).toBeInTheDocument();
-    expect(screen.getByText("Example: λυει = he loosens")).toBeInTheDocument();
-    expect(screen.getAllByText("Example: λεγει = he says").length).toBeGreaterThan(0);
+    expect(
+      screen.queryByRole("button", {
+        name: "Explain morphology for ἐγένετο: Verb · Aorist Active Indicative"
+      })
+    ).not.toBeInTheDocument();
+
+    fireEvent.click(await screen.findByRole("button", { name: /ἐγένετο γίνομαι G1096/i }));
+
+    const studyPane = screen.getByLabelText("Study pane");
+    expect(await within(studyPane).findByText("Aorist")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Middle")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Indicative")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Example: ειπεν = he said")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Example: λυεται = he loosens for himself")).toBeInTheDocument();
+    expect(within(studyPane).getAllByText("Example: λεγει = he says").length).toBeGreaterThan(0);
   });
 
   it("persists a custom gloss for a single occurrence across reloads", async () => {

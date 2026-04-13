@@ -20,7 +20,6 @@ type VerseListProps = {
   showGreekSurface?: boolean;
   showGreekLemma?: boolean;
   showGreekTransliteration?: boolean;
-  showGreekMorphology?: boolean;
   showGreekGloss?: boolean;
   highlightedVerseNumber?: number | null;
   highlightedVerseRange?: {
@@ -41,7 +40,6 @@ export function VerseList({
   showGreekSurface = true,
   showGreekLemma = true,
   showGreekTransliteration = true,
-  showGreekMorphology = true,
   showGreekGloss = true,
   highlightedVerseNumber,
   highlightedVerseRange,
@@ -69,7 +67,6 @@ export function VerseList({
     showGreekSurface ||
     showGreekLemma ||
     showGreekTransliteration ||
-    showGreekMorphology ||
     showGreekGloss;
 
   useEffect(() => {
@@ -141,7 +138,6 @@ export function VerseList({
                     }
                     showGloss={showGreekGloss}
                     showLemma={showGreekLemma}
-                    showMorphology={showGreekMorphology}
                     showSurface={showGreekSurface}
                     showTransliteration={showGreekTransliteration}
                     verse={interlinearVerseMap[verse.number]}

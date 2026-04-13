@@ -6,6 +6,7 @@ import { VerseTextContent } from "@/app/components/VerseTextContent";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import {
   getGreekLemmaEntry,
+  getGreekMorphologyDetails,
   normalizeGreekFormLookupValue
 } from "@/lib/bible/greek";
 import {
@@ -190,6 +191,16 @@ export function ReaderStrongsPanel() {
     activeGreekSelection?.selectedFormMorphology,
     selectedGreekForm
   ]);
+  const selectedGreekMorphologyDetails = useMemo(() => {
+    if (!selectedGreekFormDetails?.morphology && !selectedGreekFormDetails?.decodedMorphology) {
+      return null;
+    }
+
+    return getGreekMorphologyDetails({
+      morphology: selectedGreekFormDetails?.morphology,
+      decodedMorphology: selectedGreekFormDetails?.decodedMorphology
+    });
+  }, [selectedGreekFormDetails?.decodedMorphology, selectedGreekFormDetails?.morphology]);
 
   useEffect(() => {
     if (!isGreekDictionaryMode) {
@@ -457,15 +468,6 @@ export function ReaderStrongsPanel() {
             <p className="strongs-entry-meta">Pronunciation: {entry.pronunciation}</p>
           ) : null}
         </div>
-        <div className="greek-dictionary-definition">
-          <p className="strongs-entry-section-label">Lemma Definition</p>
-          <p className="strongs-entry-copy">{entry.shortDefinition}</p>
-          {entry.longDefinition ? (
-            <p className="strongs-entry-copy greek-dictionary-long-definition">
-              {entry.longDefinition}
-            </p>
-          ) : null}
-        </div>
         {selectedGreekFormDetails ? (
           <section className="greek-dictionary-selected-form">
             <p className="strongs-entry-section-label">Selected Form</p>
@@ -488,12 +490,37 @@ export function ReaderStrongsPanel() {
                     : selectedGreekFormDetails.morphology}
                 </p>
               ) : null}
+              {selectedGreekMorphologyDetails ? (
+                <div className="verse-greek-morphology-list">
+                  {selectedGreekMorphologyDetails.terms.map((term) => (
+                    <article
+                      className="verse-greek-morphology-item"
+                      key={`${entry.strongs}:${selectedGreekFormDetails.form}:${term.key}`}
+                    >
+                      <p className="verse-greek-morphology-term">{term.label}</p>
+                      <p className="verse-greek-morphology-copy">{term.definition}</p>
+                      {term.example ? (
+                        <p className="verse-greek-morphology-copy">{term.example}</p>
+                      ) : null}
+                    </article>
+                  ))}
+                </div>
+              ) : null}
               {selectedGreekFormDetails.definition ? (
                 <p className="strongs-entry-copy">{selectedGreekFormDetails.definition}</p>
               ) : null}
             </div>
           </section>
         ) : null}
+        <div className="greek-dictionary-definition">
+          <p className="strongs-entry-section-label">Lemma Definition</p>
+          <p className="strongs-entry-copy">{entry.shortDefinition}</p>
+          {entry.longDefinition ? (
+            <p className="strongs-entry-copy greek-dictionary-long-definition">
+              {entry.longDefinition}
+            </p>
+          ) : null}
+        </div>
         <section className="greek-dictionary-forms">
           <p className="strongs-entry-section-label">Inflected Forms</p>
           <div className="greek-dictionary-form-list">
