@@ -425,7 +425,7 @@ describe("WholeBookContent", () => {
     expect(screen.queryByText("Jude, a servant of Jesus Christ...")).not.toBeInTheDocument();
   });
 
-  it("shows selectable English gloss lines in whole-book ESV interlinear mode", () => {
+  it("shows selectable English gloss lines in whole-book ESV interlinear mode", async () => {
     window.localStorage.setItem(
       "bible-reader:customization",
       JSON.stringify({
@@ -459,6 +459,8 @@ describe("WholeBookContent", () => {
     expect(screen.getByRole("button", { name: "Choose English gloss for Ἀγαπητοί" })).toHaveTextContent(
       "beloved"
     );
+    expect(await screen.findByText("ioudas")).toBeInTheDocument();
+    expect(await screen.findByText("agapētos")).toBeInTheDocument();
   });
 
   it("renders custom verse translation editors in whole-book view", () => {

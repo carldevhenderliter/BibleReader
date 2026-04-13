@@ -171,6 +171,7 @@ export function GreekInterlinearLine({
           token,
           tokenIndex,
           occurrenceKey,
+          entry,
           glossOptions,
           defaultGloss,
           effectiveGloss,
@@ -190,6 +191,9 @@ export function GreekInterlinearLine({
               >
                 <span className="verse-greek-surface">{token.surface}</span>
                 <span className="verse-greek-lemma">{token.lemma}</span>
+                {entry?.transliteration ? (
+                  <span className="verse-greek-transliteration">{entry.transliteration}</span>
+                ) : null}
               </button>
               {morphologyDetails ? (
                 <>

@@ -417,7 +417,7 @@ describe("ReaderPageContent", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("shows selectable English gloss lines under Greek tokens in chapter view", () => {
+  it("shows selectable English gloss lines under Greek tokens in chapter view", async () => {
     window.localStorage.setItem(
       "bible-reader:customization",
       JSON.stringify({
@@ -447,6 +447,8 @@ describe("ReaderPageContent", () => {
     expect(screen.getByRole("button", { name: "Choose English gloss for γενέσεως" })).toHaveTextContent(
       "genealogy"
     );
+    expect(await screen.findByText("biblos")).toBeInTheDocument();
+    expect(await screen.findByText("genesis")).toBeInTheDocument();
   });
 
   it("renders custom verse translation editors in chapter view", () => {
