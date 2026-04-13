@@ -1205,6 +1205,10 @@ select {
   background: rgba(255, 255, 255, 0.03);
 }
 
+.verse-custom-translation.is-saved {
+  background: rgba(255, 255, 255, 0.02);
+}
+
 .verse-custom-translation-header,
 .verse-custom-translation-actions {
   display: flex;
@@ -1231,6 +1235,10 @@ select {
 
 .verse-custom-translation-field {
   display: grid;
+}
+
+.verse-custom-translation-copy {
+  margin: 0;
 }
 
 .verse-custom-translation-field textarea {

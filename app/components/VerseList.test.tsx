@@ -327,11 +327,17 @@ describe("VerseList", () => {
     fireEvent.click(screen.getAllByRole("button", { name: "Save translation" })[0]);
 
     expect(screen.getByText("Saved in this app")).toBeInTheDocument();
-    expect(screen.getByLabelText("Custom translation for genesis 1:1")).toHaveValue(
-      "At the first, God made the heavens and the earth."
-    );
+    expect(screen.queryByLabelText("Custom translation for genesis 1:1")).not.toBeInTheDocument();
+    expect(
+      screen.getByText("At the first, God made the heavens and the earth.")
+    ).toBeInTheDocument();
     expect(screen.getByLabelText("Custom translation for genesis 1:2")).toHaveValue("");
     expect(window.localStorage.getItem(VERSE_TRANSLATION_OVERRIDES_STORAGE_KEY)).toContain(
+      "At the first, God made the heavens and the earth."
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Edit translation" }));
+    expect(screen.getByLabelText("Custom translation for genesis 1:1")).toHaveValue(
       "At the first, God made the heavens and the earth."
     );
 
@@ -346,9 +352,10 @@ describe("VerseList", () => {
       />
     );
 
-    expect(screen.getByLabelText("Custom translation for genesis 1:1")).toHaveValue(
-      "At the first, God made the heavens and the earth."
-    );
+    expect(screen.queryByLabelText("Custom translation for genesis 1:1")).not.toBeInTheDocument();
+    expect(
+      screen.getByText("At the first, God made the heavens and the earth.")
+    ).toBeInTheDocument();
     expect(screen.getByLabelText("Custom translation for genesis 1:2")).toHaveValue("");
   });
 });
