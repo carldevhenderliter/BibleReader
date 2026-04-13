@@ -276,6 +276,7 @@ describe("VerseList", () => {
     expect(await screen.findByRole("dialog", { name: "Morphology for ἀρχῆς" })).toBeInTheDocument();
     expect(screen.getByText("Noun")).toBeInTheDocument();
     expect(screen.getByText("Genitive")).toBeInTheDocument();
+    expect(screen.getByText("Example: λογου = of the word")).toBeInTheDocument();
     expect(screen.getByText(/noun genitive singular feminine \(N-GSF\)/i)).toBeInTheDocument();
   });
 
@@ -294,6 +295,16 @@ describe("VerseList", () => {
         name: "Explain morphology for ἐγένετο: Verb · Aorist Active Indicative"
       })
     ).toBeInTheDocument();
+
+    fireEvent.click(
+      screen.getByRole("button", {
+        name: "Explain morphology for ἐγένετο: Verb · Aorist Active Indicative"
+      })
+    );
+
+    expect(await screen.findByText("Example: ειπεν = he said")).toBeInTheDocument();
+    expect(screen.getByText("Example: λυει = he loosens")).toBeInTheDocument();
+    expect(screen.getAllByText("Example: λεγει = he says").length).toBeGreaterThan(0);
   });
 
   it("persists a custom gloss for a single occurrence across reloads", async () => {

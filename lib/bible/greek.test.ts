@@ -119,7 +119,17 @@ describe("Greek dictionary lookup", () => {
         decodedMorphology: "noun genitive singular feminine"
       })
     ).toMatchObject({
-      label: "Noun · Genitive Singular Feminine"
+      label: "Noun · Genitive Singular Feminine",
+      terms: expect.arrayContaining([
+        expect.objectContaining({
+          label: "Genitive",
+          example: "Example: λογου = of the word"
+        }),
+        expect.objectContaining({
+          label: "Singular",
+          example: "Example: λογος = one word"
+        })
+      ])
     });
   });
 
@@ -130,7 +140,21 @@ describe("Greek dictionary lookup", () => {
         decodedMorphology: "verb aorist active indicative third person singular"
       })
     ).toMatchObject({
-      label: "Verb · Aorist Active Indicative"
+      label: "Verb · Aorist Active Indicative",
+      terms: expect.arrayContaining([
+        expect.objectContaining({
+          label: "Aorist",
+          example: "Example: ειπεν = he said"
+        }),
+        expect.objectContaining({
+          label: "Active",
+          example: "Example: λυει = he loosens"
+        }),
+        expect.objectContaining({
+          label: "Indicative",
+          example: "Example: λεγει = he says"
+        })
+      ])
     });
   });
 

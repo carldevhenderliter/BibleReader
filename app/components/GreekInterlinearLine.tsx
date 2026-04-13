@@ -250,6 +250,9 @@ export function GreekInterlinearLine({
                           >
                             <p className="verse-greek-morphology-term">{term.label}</p>
                             <p className="verse-greek-morphology-copy">{term.definition}</p>
+                            {term.example ? (
+                              <p className="verse-greek-morphology-copy">{term.example}</p>
+                            ) : null}
                           </article>
                         ))}
                       </div>

@@ -75,6 +75,7 @@ export type GreekMorphologyTermDetails = {
   group: GreekMorphologyGroup;
   label: string;
   definition: string;
+  example?: string;
 };
 
 export type GreekMorphologyDetails = {
@@ -88,229 +89,267 @@ const GREEK_MORPHOLOGY_DETAILS: Record<GreekMorphologyTermKey, GreekMorphologyTe
     key: "verb",
     group: "part-of-speech",
     label: "Verb",
-    definition: "A word that expresses action, process, or state of being."
+    definition: "A word that expresses action, process, or state of being.",
+    example: "Example: λεγει = he says"
   },
   noun: {
     key: "noun",
     group: "part-of-speech",
     label: "Noun",
-    definition: "A word that names a person, place, thing, idea, or quality."
+    definition: "A word that names a person, place, thing, idea, or quality.",
+    example: "Example: λογος = word"
   },
   adjective: {
     key: "adjective",
     group: "part-of-speech",
     label: "Adjective",
-    definition: "A word that describes or qualifies a noun or pronoun."
+    definition: "A word that describes or qualifies a noun or pronoun.",
+    example: "Example: αγαθος = good"
   },
   article: {
     key: "article",
     group: "part-of-speech",
     label: "Article",
-    definition: "A word like 'the' that marks or identifies a noun."
+    definition: "A word like 'the' that marks or identifies a noun.",
+    example: "Example: ο = the"
   },
   pronoun: {
     key: "pronoun",
     group: "part-of-speech",
     label: "Pronoun",
-    definition: "A word that stands in the place of a noun."
+    definition: "A word that stands in the place of a noun.",
+    example: "Example: αυτος = he / she / it"
   },
   adverb: {
     key: "adverb",
     group: "part-of-speech",
     label: "Adverb",
-    definition: "A word that modifies a verb, adjective, or another adverb."
+    definition: "A word that modifies a verb, adjective, or another adverb.",
+    example: "Example: νυν = now"
   },
   conjunction: {
     key: "conjunction",
     group: "part-of-speech",
     label: "Conjunction",
-    definition: "A word that connects words, phrases, clauses, or sentences."
+    definition: "A word that connects words, phrases, clauses, or sentences.",
+    example: "Example: και = and"
   },
   preposition: {
     key: "preposition",
     group: "part-of-speech",
     label: "Preposition",
-    definition: "A word that shows the relationship of a noun or pronoun to another word."
+    definition: "A word that shows the relationship of a noun or pronoun to another word.",
+    example: "Example: εν = in"
   },
   particle: {
     key: "particle",
     group: "part-of-speech",
     label: "Particle",
-    definition: "A small function word that adds nuance, emphasis, or connection."
+    definition: "A small function word that adds nuance, emphasis, or connection.",
+    example: "Example: γε = indeed"
   },
   interjection: {
     key: "interjection",
     group: "part-of-speech",
     label: "Interjection",
-    definition: "A word used as an exclamation or sudden expression."
+    definition: "A word used as an exclamation or sudden expression.",
+    example: "Example: ουαι = woe"
   },
   present: {
     key: "present",
     group: "tense",
     label: "Present",
-    definition: "Usually portrays action as ongoing, repeated, or in progress."
+    definition: "Usually portrays action as ongoing, repeated, or in progress.",
+    example: "Example: λεγει = he says / is saying"
   },
   imperfect: {
     key: "imperfect",
     group: "tense",
     label: "Imperfect",
-    definition: "Usually portrays past action as ongoing, repeated, or unfolding."
+    definition: "Usually portrays past action as ongoing, repeated, or unfolding.",
+    example: "Example: ελεγεν = he was saying"
   },
   future: {
     key: "future",
     group: "tense",
     label: "Future",
-    definition: "Usually portrays action that will happen."
+    definition: "Usually portrays action that will happen.",
+    example: "Example: ερει = he will say"
   },
   aorist: {
     key: "aorist",
     group: "tense",
     label: "Aorist",
-    definition: "Usually presents an action as a whole or as a simple event."
+    definition: "Usually presents an action as a whole or as a simple event.",
+    example: "Example: ειπεν = he said"
   },
   perfect: {
     key: "perfect",
     group: "tense",
     label: "Perfect",
-    definition: "Usually portrays a completed action with continuing results."
+    definition: "Usually portrays a completed action with continuing results.",
+    example: "Example: γεγραπται = it has been written"
   },
   pluperfect: {
     key: "pluperfect",
     group: "tense",
     label: "Pluperfect",
-    definition: "Usually portrays a past completed action with results already in effect."
+    definition: "Usually portrays a past completed action with results already in effect.",
+    example: "Example: εγεγραπτο = it had been written"
   },
   active: {
     key: "active",
     group: "voice",
     label: "Active",
-    definition: "The subject performs the action."
+    definition: "The subject performs the action.",
+    example: "Example: λυει = he loosens"
   },
   middle: {
     key: "middle",
     group: "voice",
     label: "Middle",
-    definition: "The subject participates in or is closely involved in the action."
+    definition: "The subject participates in or is closely involved in the action.",
+    example: "Example: λυεται = he loosens for himself"
   },
   passive: {
     key: "passive",
     group: "voice",
     label: "Passive",
-    definition: "The subject receives the action."
+    definition: "The subject receives the action.",
+    example: "Example: ελυθη = he was loosed"
   },
   indicative: {
     key: "indicative",
     group: "mood",
     label: "Indicative",
-    definition: "Usually states something as a fact or straightforward assertion."
+    definition: "Usually states something as a fact or straightforward assertion.",
+    example: "Example: λεγει = he says"
   },
   subjunctive: {
     key: "subjunctive",
     group: "mood",
     label: "Subjunctive",
-    definition: "Usually expresses possibility, purpose, or contingency."
+    definition: "Usually expresses possibility, purpose, or contingency.",
+    example: "Example: λεγη = he may say"
   },
   imperative: {
     key: "imperative",
     group: "mood",
     label: "Imperative",
-    definition: "Usually gives a command, exhortation, or request."
+    definition: "Usually gives a command, exhortation, or request.",
+    example: "Example: λυε = loosen!"
   },
   optative: {
     key: "optative",
     group: "mood",
     label: "Optative",
-    definition: "Usually expresses wish or potential in a more remote way."
+    definition: "Usually expresses wish or potential in a more remote way.",
+    example: "Example: λυσαιμι = may I loosen"
   },
   infinitive: {
     key: "infinitive",
     group: "mood",
     label: "Infinitive",
-    definition: "A verbal form functioning like a verbal noun."
+    definition: "A verbal form functioning like a verbal noun.",
+    example: "Example: λυειν = to loosen"
   },
   participle: {
     key: "participle",
     group: "mood",
     label: "Participle",
-    definition: "A verbal adjective sharing features of both verbs and adjectives."
+    definition: "A verbal adjective sharing features of both verbs and adjectives.",
+    example: "Example: λυων = loosening / one who loosens"
   },
   nominative: {
     key: "nominative",
     group: "case",
     label: "Nominative",
-    definition: "Usually marks the subject of the sentence or renames the subject."
+    definition: "Usually marks the subject of the sentence or renames the subject.",
+    example: "Example: λογος = word (subject)"
   },
   genitive: {
     key: "genitive",
     group: "case",
     label: "Genitive",
-    definition: "Usually shows possession, source, relationship, description, or separation."
+    definition: "Usually shows possession, source, relationship, description, or separation.",
+    example: "Example: λογου = of the word"
   },
   dative: {
     key: "dative",
     group: "case",
     label: "Dative",
-    definition: "Usually marks the indirect object, means, location, association, or advantage."
+    definition: "Usually marks the indirect object, means, location, association, or advantage.",
+    example: "Example: λογῳ = to / for the word"
   },
   accusative: {
     key: "accusative",
     group: "case",
     label: "Accusative",
-    definition: "Usually marks the direct object, extent, goal, or direction of an action."
+    definition: "Usually marks the direct object, extent, goal, or direction of an action.",
+    example: "Example: λογον = word (object)"
   },
   vocative: {
     key: "vocative",
     group: "case",
     label: "Vocative",
-    definition: "Used for direct address when someone or something is being spoken to."
+    definition: "Used for direct address when someone or something is being spoken to.",
+    example: "Example: κυριε = O Lord"
   },
   singular: {
     key: "singular",
     group: "number",
     label: "Singular",
-    definition: "Refers to one person or thing."
+    definition: "Refers to one person or thing.",
+    example: "Example: λογος = one word"
   },
   plural: {
     key: "plural",
     group: "number",
     label: "Plural",
-    definition: "Refers to more than one person or thing."
+    definition: "Refers to more than one person or thing.",
+    example: "Example: λογοι = words"
   },
   masculine: {
     key: "masculine",
     group: "gender",
     label: "Masculine",
-    definition: "The masculine grammatical gender."
+    definition: "The masculine grammatical gender.",
+    example: "Example: λογος = masculine noun"
   },
   feminine: {
     key: "feminine",
     group: "gender",
     label: "Feminine",
-    definition: "The feminine grammatical gender."
+    definition: "The feminine grammatical gender.",
+    example: "Example: ημερα = feminine noun"
   },
   neuter: {
     key: "neuter",
     group: "gender",
     label: "Neuter",
-    definition: "The neuter grammatical gender."
+    definition: "The neuter grammatical gender.",
+    example: "Example: τεκνον = neuter noun"
   },
   "first-person": {
     key: "first-person",
     group: "person",
     label: "First Person",
-    definition: "Refers to the speaker or speakers."
+    definition: "Refers to the speaker or speakers.",
+    example: "Example: λεγω = I say"
   },
   "second-person": {
     key: "second-person",
     group: "person",
     label: "Second Person",
-    definition: "Refers to the one or ones being addressed."
+    definition: "Refers to the one or ones being addressed.",
+    example: "Example: λυεις = you loosen"
   },
   "third-person": {
     key: "third-person",
     group: "person",
     label: "Third Person",
-    definition: "Refers to someone or something other than the speaker or addressee."
+    definition: "Refers to someone or something other than the speaker or addressee.",
+    example: "Example: λυει = he / she / it loosens"
   }
 };
 
