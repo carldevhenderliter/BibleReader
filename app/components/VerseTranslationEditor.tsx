@@ -47,7 +47,7 @@ export function VerseTranslationEditor({
           <span className="verse-custom-translation-status">Saved in this app</span>
         ) : null}
       </div>
-      {hasSavedTranslation && !isEditing ? (
+      {hasSavedTranslation && savedTranslation && !isEditing ? (
         <p className="verse-text verse-custom-translation-copy">{savedTranslation.text}</p>
       ) : (
         <label className="verse-custom-translation-field" htmlFor={`verse-translation:${referenceKey}`}>
