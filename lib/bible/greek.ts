@@ -334,6 +334,52 @@ let formIndexPromise: Promise<Record<string, GreekFormIndexValue>> | null = null
 let searchableGreekEntriesPromise: Promise<SearchableGreekEntry[]> | null = null;
 
 const CRITICAL_MARKS_PATTERN = /[⸀-⸟]/gu;
+const ROUGH_BREATHING_MARK = "\u0314";
+const DIAERESIS_MARK = "\u0308";
+const GREEK_VOWELS = new Set(["α", "ε", "η", "ι", "ο", "υ", "ω"]);
+const GREEK_DIPHTHONG_TRANSLITERATION_MAP: Record<string, string> = {
+  αι: "ai",
+  ει: "ei",
+  οι: "oi",
+  υι: "yi",
+  αυ: "au",
+  ευ: "eu",
+  ηυ: "ēu",
+  ου: "ou"
+};
+const GREEK_SINGLE_LETTER_TRANSLITERATION_MAP: Record<string, string> = {
+  α: "a",
+  β: "b",
+  γ: "g",
+  δ: "d",
+  ε: "e",
+  ζ: "z",
+  η: "ē",
+  θ: "th",
+  ι: "i",
+  κ: "k",
+  λ: "l",
+  μ: "m",
+  ν: "n",
+  ξ: "x",
+  ο: "o",
+  π: "p",
+  ρ: "r",
+  σ: "s",
+  ς: "s",
+  τ: "t",
+  υ: "y",
+  φ: "ph",
+  χ: "ch",
+  ψ: "ps",
+  ω: "ō"
+};
+
+type GreekTransliterationUnit = {
+  base: string;
+  marks: string;
+  uppercase: boolean;
+};
 
 function normalizeAsciiLookupValue(value: string) {
   return value
@@ -360,6 +406,65 @@ export function normalizeGreekLookupValue(value: string) {
 
 export function normalizeGreekFormLookupValue(value: string) {
   return normalizeGreekLookupValue(value).replace(/[^a-z0-9\p{Script=Greek}]+/gu, "");
+}
+
+export function transliterateGreekSurface(value: string) {
+  const units: GreekTransliterationUnit[] = [];
+
+  for (const char of value.normalize("NFD")) {
+    if (/\p{Script=Greek}/u.test(char) && !/\p{M}/u.test(char)) {
+      units.push({
+        base: char.toLowerCase(),
+        marks: "",
+        uppercase: char !== char.toLowerCase()
+      });
+      continue;
+    }
+
+    if (/\p{M}/u.test(char) && units.length > 0) {
+      units[units.length - 1]!.marks += char;
+    }
+  }
+
+  let transliteration = "";
+
+  for (let index = 0; index < units.length; index += 1) {
+    const unit = units[index]!;
+    const nextUnit = units[index + 1];
+    const hasRoughBreathing = unit.marks.includes(ROUGH_BREATHING_MARK);
+    const canUseDiphthong =
+      nextUnit &&
+      !unit.marks.includes(DIAERESIS_MARK) &&
+      !nextUnit.marks.includes(DIAERESIS_MARK);
+    const diphthongKey = canUseDiphthong ? `${unit.base}${nextUnit.base}` : "";
+    const diphthongTransliteration =
+      diphthongKey.length > 0 ? GREEK_DIPHTHONG_TRANSLITERATION_MAP[diphthongKey] : undefined;
+
+    if (diphthongTransliteration) {
+      const rendered = `${hasRoughBreathing ? "h" : ""}${diphthongTransliteration}`;
+      transliteration += unit.uppercase
+        ? rendered[0]!.toUpperCase() + rendered.slice(1)
+        : rendered;
+      index += 1;
+      continue;
+    }
+
+    let rendered = GREEK_SINGLE_LETTER_TRANSLITERATION_MAP[unit.base] ?? unit.base;
+
+    if (unit.base === "γ" && nextUnit && ["γ", "κ", "ξ", "χ"].includes(nextUnit.base)) {
+      rendered = "n";
+    } else if (unit.base === "ρ" && hasRoughBreathing) {
+      rendered = "rh";
+    } else if (hasRoughBreathing && GREEK_VOWELS.has(unit.base)) {
+      rendered = `h${rendered}`;
+    }
+
+    transliteration += unit.uppercase
+      ? rendered[0]!.toUpperCase() + rendered.slice(1)
+      : rendered;
+  }
+
+  return transliteration;
 }
 
 async function loadGreekLexicon() {

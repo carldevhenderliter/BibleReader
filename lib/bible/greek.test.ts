@@ -6,7 +6,8 @@ import {
   lookupGreekDictionary,
   normalizeGreekFormLookupValue,
   normalizeGreekLookupValue,
-  resolveGreekTokenGloss
+  resolveGreekTokenGloss,
+  transliterateGreekSurface
 } from "@/lib/bible/greek";
 
 describe("Greek dictionary lookup", () => {
@@ -131,5 +132,12 @@ describe("Greek dictionary lookup", () => {
     ).toMatchObject({
       label: "Verb · Aorist Active Indicative"
     });
+  });
+
+  it("transliterates displayed Greek word forms instead of only lemmas", () => {
+    expect(transliterateGreekSurface("ἀρχῆς")).toBe("archēs");
+    expect(transliterateGreekSurface("ἐγένετο")).toBe("egeneto");
+    expect(transliterateGreekSurface("Ἰούδας")).toBe("Ioudas");
+    expect(transliterateGreekSurface("Ἀγαπητοί")).toBe("Agapētoi");
   });
 });

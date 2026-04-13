@@ -8,7 +8,8 @@ import {
   getGreekLemmaEntry,
   getGreekMorphologyDetails,
   getGreekTokenOccurrenceKey,
-  resolveGreekTokenGloss
+  resolveGreekTokenGloss,
+  transliterateGreekSurface
 } from "@/lib/bible/greek";
 import type { EsvInterlinearDisplayVerse, GreekGlossOption, GreekLemmaEntry, GreekToken } from "@/lib/bible/types";
 
@@ -191,9 +192,9 @@ export function GreekInterlinearLine({
               >
                 <span className="verse-greek-surface">{token.surface}</span>
                 <span className="verse-greek-lemma">{token.lemma}</span>
-                {entry?.transliteration ? (
-                  <span className="verse-greek-transliteration">{entry.transliteration}</span>
-                ) : null}
+                <span className="verse-greek-transliteration">
+                  {transliterateGreekSurface(token.surface)}
+                </span>
               </button>
               {morphologyDetails ? (
                 <>

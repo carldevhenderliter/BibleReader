@@ -167,7 +167,7 @@ describe("VerseList", () => {
     ).toBeInTheDocument();
     expect(screen.getByText("ἀρχῆς")).toBeInTheDocument();
     expect(screen.getAllByText("ἀρχή").length).toBeGreaterThan(0);
-    expect(await screen.findByText("archē")).toBeInTheDocument();
+    expect(await screen.findByText("archēs")).toBeInTheDocument();
     expect(screen.getAllByText("beginning").length).toBeGreaterThan(0);
     expect(
       screen.getByRole("button", {

@@ -459,8 +459,8 @@ describe("WholeBookContent", () => {
     expect(screen.getByRole("button", { name: "Choose English gloss for Ἀγαπητοί" })).toHaveTextContent(
       "beloved"
     );
-    expect(await screen.findByText("ioudas")).toBeInTheDocument();
-    expect(await screen.findByText("agapētos")).toBeInTheDocument();
+    expect(await screen.findByText("Ioudas")).toBeInTheDocument();
+    expect(await screen.findByText("Agapētoi")).toBeInTheDocument();
   });
 
   it("renders custom verse translation editors in whole-book view", () => {

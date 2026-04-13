@@ -447,8 +447,8 @@ describe("ReaderPageContent", () => {
     expect(screen.getByRole("button", { name: "Choose English gloss for γενέσεως" })).toHaveTextContent(
       "genealogy"
     );
-    expect(await screen.findByText("biblos")).toBeInTheDocument();
-    expect(await screen.findByText("genesis")).toBeInTheDocument();
+    expect(await screen.findByText("Biblos")).toBeInTheDocument();
+    expect(await screen.findByText("geneseōs")).toBeInTheDocument();
   });
 
   it("renders custom verse translation editors in chapter view", () => {
