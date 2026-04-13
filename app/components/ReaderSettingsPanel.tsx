@@ -8,7 +8,12 @@ import { createPortal } from "react-dom";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
-import type { BookMeta, ReadingView, ThemePreset } from "@/lib/bible/types";
+import type {
+  BookMeta,
+  ReaderCustomizationSettings,
+  ReadingView,
+  ThemePreset
+} from "@/lib/bible/types";
 import { BODY_FONT_OPTIONS, UI_FONT_OPTIONS } from "@/lib/reader-customization";
 import { THEME_PRESETS } from "@/lib/reader-customization";
 import { getViewToggleHref } from "@/lib/bible/utils";
@@ -59,6 +64,64 @@ export function ReaderSettingsPanel({
   const handleTextSizeShift = (delta: number) => {
     updateSettings({
       textSize: Number((settings.textSize + delta).toFixed(2))
+    });
+  };
+
+  const toggleLayer = (
+    key:
+      | "showVerseText"
+      | "showCustomVerseTranslation"
+      | "showGreekSurface"
+      | "showGreekLemma"
+      | "showGreekTransliteration"
+      | "showGreekMorphology"
+      | "showGreekGloss"
+  ) => {
+    updateSettings({
+      [key]: !settings[key],
+      showEsvGreekOnly: false
+    } as Partial<ReaderCustomizationSettings>);
+  };
+
+  const applyEverythingOnPreset = () => {
+    updateSettings({
+      showEsvInterlinear: version === "esv" ? true : settings.showEsvInterlinear,
+      showEsvGreekOnly: false,
+      showVerseText: true,
+      showGreekSurface: true,
+      showGreekLemma: true,
+      showGreekTransliteration: true,
+      showGreekMorphology: true,
+      showGreekGloss: true,
+      showCustomVerseTranslation: true
+    });
+  };
+
+  const applyEverythingOffPreset = () => {
+    updateSettings({
+      showEsvInterlinear: version === "esv" ? false : settings.showEsvInterlinear,
+      showEsvGreekOnly: false,
+      showVerseText: false,
+      showGreekSurface: false,
+      showGreekLemma: false,
+      showGreekTransliteration: false,
+      showGreekMorphology: false,
+      showGreekGloss: false,
+      showCustomVerseTranslation: false
+    });
+  };
+
+  const applyGreekOnlyPreset = () => {
+    updateSettings({
+      showEsvInterlinear: true,
+      showEsvGreekOnly: true,
+      showVerseText: false,
+      showGreekSurface: true,
+      showGreekLemma: false,
+      showGreekTransliteration: false,
+      showGreekMorphology: false,
+      showGreekGloss: false,
+      showCustomVerseTranslation: false
     });
   };
 
@@ -221,25 +284,113 @@ export function ReaderSettingsPanel({
                 <strong>{settings.greekFontScale.toFixed(2)}x</strong>
               </label>
               <div className="reader-settings-field">
-                <span>Greek display</span>
-                <button
-                  aria-pressed={version === "esv" ? settings.showEsvGreekOnly : false}
-                  className="reader-inline-button reader-settings-link"
-                  disabled={version !== "esv" || !settings.showEsvInterlinear}
-                  onClick={() =>
-                    updateSettings({ showEsvGreekOnly: !settings.showEsvGreekOnly })
-                  }
-                  type="button"
-                >
-                  {version === "esv"
-                    ? settings.showEsvInterlinear
-                      ? settings.showEsvGreekOnly
-                        ? "Show English + Greek"
-                        : "Show Greek only"
-                      : "Enable Greek interlinear first"
-                    : "Greek display (ESV only)"}
-                </button>
+                <span>Display presets</span>
+                <div className="reader-settings-shortcuts">
+                  <button
+                    className="reader-inline-button reader-settings-link"
+                    disabled={version !== "esv"}
+                    onClick={applyGreekOnlyPreset}
+                    type="button"
+                  >
+                    Greek only
+                  </button>
+                  <button
+                    className="reader-inline-button reader-settings-link"
+                    onClick={applyEverythingOnPreset}
+                    type="button"
+                  >
+                    Everything on
+                  </button>
+                  <button
+                    className="reader-inline-button reader-settings-link"
+                    onClick={applyEverythingOffPreset}
+                    type="button"
+                  >
+                    Everything off
+                  </button>
+                </div>
               </div>
+            </div>
+          </div>
+          <div className="reader-settings-subsection">
+            <p className="reader-settings-subsection-label">Verse display</p>
+            <div className="settings-option-grid settings-option-grid-compact">
+              <button
+                className={`settings-option-card${settings.showVerseText ? " is-active" : ""}`}
+                key="showVerseText"
+                onClick={() => toggleLayer("showVerseText")}
+                type="button"
+              >
+                <strong>Verse text</strong>
+                <span>Show the translation line for the verse.</span>
+              </button>
+              <button
+                className={`settings-option-card${
+                  settings.showCustomVerseTranslation ? " is-active" : ""
+                }`}
+                key="showCustomVerseTranslation"
+                onClick={() => toggleLayer("showCustomVerseTranslation")}
+                type="button"
+              >
+                <strong>Your translation</strong>
+                <span>Show your saved custom verse under the text.</span>
+              </button>
+              <button
+                className={`settings-option-card${
+                  settings.showGreekSurface ? " is-active" : ""
+                }`}
+                disabled={version !== "esv" || !settings.showEsvInterlinear}
+                key="showGreekSurface"
+                onClick={() => toggleLayer("showGreekSurface")}
+                type="button"
+              >
+                <strong>Greek words</strong>
+                <span>Show the actual Greek word forms.</span>
+              </button>
+              <button
+                className={`settings-option-card${settings.showGreekLemma ? " is-active" : ""}`}
+                disabled={version !== "esv" || !settings.showEsvInterlinear}
+                key="showGreekLemma"
+                onClick={() => toggleLayer("showGreekLemma")}
+                type="button"
+              >
+                <strong>Greek lemma</strong>
+                <span>Show the dictionary form under each word.</span>
+              </button>
+              <button
+                className={`settings-option-card${
+                  settings.showGreekTransliteration ? " is-active" : ""
+                }`}
+                disabled={version !== "esv" || !settings.showEsvInterlinear}
+                key="showGreekTransliteration"
+                onClick={() => toggleLayer("showGreekTransliteration")}
+                type="button"
+              >
+                <strong>Transliteration</strong>
+                <span>Show the English-letter pronunciation line.</span>
+              </button>
+              <button
+                className={`settings-option-card${
+                  settings.showGreekMorphology ? " is-active" : ""
+                }`}
+                disabled={version !== "esv" || !settings.showEsvInterlinear}
+                key="showGreekMorphology"
+                onClick={() => toggleLayer("showGreekMorphology")}
+                type="button"
+              >
+                <strong>Morphology</strong>
+                <span>Show case, tense, voice, mood, and part of speech.</span>
+              </button>
+              <button
+                className={`settings-option-card${settings.showGreekGloss ? " is-active" : ""}`}
+                disabled={version !== "esv" || !settings.showEsvInterlinear}
+                key="showGreekGloss"
+                onClick={() => toggleLayer("showGreekGloss")}
+                type="button"
+              >
+                <strong>English gloss</strong>
+                <span>Show the editable one-word gloss line.</span>
+              </button>
             </div>
           </div>
           <div className="reader-settings-subsection">
@@ -282,7 +433,10 @@ export function ReaderSettingsPanel({
                 className="reader-inline-button reader-settings-link"
                 disabled={version !== "esv"}
                 onClick={() =>
-                  updateSettings({ showEsvInterlinear: !settings.showEsvInterlinear })
+                  updateSettings({
+                    showEsvInterlinear: !settings.showEsvInterlinear,
+                    showEsvGreekOnly: false
+                  })
                 }
                 type="button"
               >

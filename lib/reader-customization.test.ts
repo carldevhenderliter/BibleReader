@@ -14,12 +14,18 @@ describe("reader customization", () => {
     expect(
       normalizeReaderCustomization({
         themePreset: "ember",
-      bodyFont: "mono",
-      uiFont: "technical",
-      showStrongs: true,
-      showEsvGreekOnly: true,
-      greekFontScale: 4,
-      textSize: 9,
+        bodyFont: "mono",
+        uiFont: "technical",
+        showStrongs: true,
+        showEsvGreekOnly: true,
+        showGreekSurface: false,
+        showGreekLemma: false,
+        showGreekTransliteration: false,
+        showGreekMorphology: false,
+        showGreekGloss: false,
+        showCustomVerseTranslation: false,
+        greekFontScale: 4,
+        textSize: 9,
         lineHeight: 0,
         contentWidth: 200,
         verseSpacing: 9,
@@ -40,6 +46,13 @@ describe("reader customization", () => {
       showStrongs: true,
       showEsvInterlinear: false,
       showEsvGreekOnly: true,
+      showVerseText: false,
+      showGreekSurface: false,
+      showGreekLemma: false,
+      showGreekTransliteration: false,
+      showGreekMorphology: false,
+      showGreekGloss: false,
+      showCustomVerseTranslation: false,
       greekFontScale: 2.4,
       textSize: 1.8,
       lineHeight: 1.6,
@@ -65,6 +78,13 @@ describe("reader customization", () => {
       showStrongs: true,
       showEsvInterlinear: false,
       showEsvGreekOnly: false,
+      showVerseText: true,
+      showGreekSurface: true,
+      showGreekLemma: true,
+      showGreekTransliteration: true,
+      showGreekMorphology: true,
+      showGreekGloss: true,
+      showCustomVerseTranslation: true,
       greekFontScale: 1.8,
       textSize: 1.2,
       lineHeight: 2,
@@ -108,11 +128,27 @@ describe("reader customization", () => {
       bodyFont: "serif",
       uiFont: "sans",
       showStrongs: true,
+      showVerseText: true,
       showEsvGreekOnly: false,
       greekFontScale: DEFAULT_READER_CUSTOMIZATION.greekFontScale,
       textSize: 1.1,
       lineHeight: 2,
       contentWidth: 48
+    });
+  });
+
+  it("maps legacy Greek-only settings onto the new granular fields", () => {
+    expect(
+      normalizeReaderCustomization({
+        showEsvInterlinear: true,
+        showEsvGreekOnly: true
+      })
+    ).toEqual({
+      ...DEFAULT_READER_CUSTOMIZATION,
+      showEsvInterlinear: true,
+      showEsvGreekOnly: true,
+      showVerseText: false,
+      showCustomVerseTranslation: false
     });
   });
 });

@@ -80,7 +80,6 @@ export function WholeBookContent({
     book.testament === "New" &&
     settings.showEsvInterlinear &&
     esvInterlinearBook !== null;
-  const showGreekOnly = showEsvInterlinear && settings.showEsvGreekOnly;
   const interlinearByChapter = showEsvInterlinear
     ? new Map(
         (esvInterlinearBook ?? []).map((chapter) => [
@@ -276,8 +275,14 @@ export function WholeBookContent({
                   }
                   interlinearVerseMap={interlinearByChapter?.get(chapter.chapterNumber)}
                   key={`${version}:${book.slug}:${chapter.chapterNumber}`}
-                  showInterlinearOnly={showGreekOnly}
+                  showCustomVerseTranslation={settings.showCustomVerseTranslation}
+                  showGreekGloss={settings.showGreekGloss}
+                  showGreekLemma={settings.showGreekLemma}
+                  showGreekMorphology={settings.showGreekMorphology}
+                  showGreekSurface={settings.showGreekSurface}
+                  showGreekTransliteration={settings.showGreekTransliteration}
                   showStrongs={showStrongs}
+                  showVerseText={settings.showVerseText}
                   verses={chapter.verses}
                 />
               </section>

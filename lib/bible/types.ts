@@ -62,6 +62,13 @@ export type ReaderCustomizationSettings = {
   showStrongs: boolean;
   showEsvInterlinear: boolean;
   showEsvGreekOnly: boolean;
+  showVerseText: boolean;
+  showGreekSurface: boolean;
+  showGreekLemma: boolean;
+  showGreekTransliteration: boolean;
+  showGreekMorphology: boolean;
+  showGreekGloss: boolean;
+  showCustomVerseTranslation: boolean;
   greekFontScale: number;
   textSize: number;
   lineHeight: number;

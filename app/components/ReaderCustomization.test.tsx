@@ -214,13 +214,39 @@ describe("Reader customization", () => {
         value: "2.1"
       }
     });
-    fireEvent.click(screen.getByRole("button", { name: "Show Greek only" }));
+    fireEvent.click(screen.getByRole("button", { name: "Greek only" }));
 
     const stored = window.localStorage.getItem(READER_CUSTOMIZATION_STORAGE_KEY) ?? "";
 
     expect(stored).toContain('"showEsvInterlinear":true');
     expect(stored).toContain('"showEsvGreekOnly":true');
+    expect(stored).toContain('"showVerseText":false');
     expect(stored).toContain('"greekFontScale":2.1');
+  });
+
+  it("persists individual verse display toggles from the reader menu", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={ntBooks[0]}
+        books={ntBooks}
+        chaptersByVersion={{ esv: esvChapter, web: esvChapter }}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: {
+        value: "esv"
+      }
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Show Greek interlinear" }));
+    fireEvent.click(screen.getByRole("button", { name: /Greek lemma/i }));
+    fireEvent.click(screen.getByRole("button", { name: /Your translation/i }));
+
+    const stored = window.localStorage.getItem(READER_CUSTOMIZATION_STORAGE_KEY) ?? "";
+
+    expect(stored).toContain('"showGreekLemma":false');
+    expect(stored).toContain('"showCustomVerseTranslation":false');
   });
 
   it("resets advanced settings to defaults", () => {

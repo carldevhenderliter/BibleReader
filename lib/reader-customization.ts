@@ -87,6 +87,13 @@ export const DEFAULT_READER_CUSTOMIZATION: ReaderCustomizationSettings = {
   showStrongs: false,
   showEsvInterlinear: false,
   showEsvGreekOnly: false,
+  showVerseText: true,
+  showGreekSurface: true,
+  showGreekLemma: true,
+  showGreekTransliteration: true,
+  showGreekMorphology: true,
+  showGreekGloss: true,
+  showCustomVerseTranslation: true,
   greekFontScale: 1.55,
   textSize: 1.08,
   lineHeight: 1.95,
@@ -149,6 +156,15 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
   }
 
   const candidate = value as Partial<ReaderCustomizationSettings>;
+  const hasGranularVerseText = typeof candidate.showVerseText === "boolean";
+  const hasGranularGreekSurface = typeof candidate.showGreekSurface === "boolean";
+  const hasGranularGreekLemma = typeof candidate.showGreekLemma === "boolean";
+  const hasGranularGreekTransliteration =
+    typeof candidate.showGreekTransliteration === "boolean";
+  const hasGranularGreekMorphology = typeof candidate.showGreekMorphology === "boolean";
+  const hasGranularGreekGloss = typeof candidate.showGreekGloss === "boolean";
+  const hasGranularCustomVerseTranslation =
+    typeof candidate.showCustomVerseTranslation === "boolean";
 
   return {
     themePreset: isThemePreset(candidate.themePreset)
@@ -172,6 +188,45 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
       typeof candidate.showEsvGreekOnly === "boolean"
         ? candidate.showEsvGreekOnly
         : DEFAULT_READER_CUSTOMIZATION.showEsvGreekOnly,
+    showVerseText:
+      typeof candidate.showVerseText === "boolean"
+        ? candidate.showVerseText
+        : candidate.showEsvGreekOnly === true
+          ? false
+          : DEFAULT_READER_CUSTOMIZATION.showVerseText,
+    showGreekSurface:
+      typeof candidate.showGreekSurface === "boolean"
+        ? candidate.showGreekSurface
+        : DEFAULT_READER_CUSTOMIZATION.showGreekSurface,
+    showGreekLemma:
+      typeof candidate.showGreekLemma === "boolean"
+        ? candidate.showGreekLemma
+        : DEFAULT_READER_CUSTOMIZATION.showGreekLemma,
+    showGreekTransliteration:
+      typeof candidate.showGreekTransliteration === "boolean"
+        ? candidate.showGreekTransliteration
+        : DEFAULT_READER_CUSTOMIZATION.showGreekTransliteration,
+    showGreekMorphology:
+      typeof candidate.showGreekMorphology === "boolean"
+        ? candidate.showGreekMorphology
+        : DEFAULT_READER_CUSTOMIZATION.showGreekMorphology,
+    showGreekGloss:
+      typeof candidate.showGreekGloss === "boolean"
+        ? candidate.showGreekGloss
+        : DEFAULT_READER_CUSTOMIZATION.showGreekGloss,
+    showCustomVerseTranslation:
+      typeof candidate.showCustomVerseTranslation === "boolean"
+        ? candidate.showCustomVerseTranslation
+        : candidate.showEsvGreekOnly === true &&
+            !hasGranularVerseText &&
+            !hasGranularGreekSurface &&
+            !hasGranularGreekLemma &&
+            !hasGranularGreekTransliteration &&
+            !hasGranularGreekMorphology &&
+            !hasGranularGreekGloss &&
+            !hasGranularCustomVerseTranslation
+          ? false
+          : DEFAULT_READER_CUSTOMIZATION.showCustomVerseTranslation,
     greekFontScale:
       typeof candidate.greekFontScale === "number"
         ? clamp(candidate.greekFontScale, GREEK_FONT_SCALE_RANGE.min, GREEK_FONT_SCALE_RANGE.max)

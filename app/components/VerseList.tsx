@@ -15,6 +15,13 @@ type VerseListProps = {
   chapterNumber: number;
   interlinearVerseMap?: Record<number, EsvInterlinearDisplayVerse>;
   showInterlinearOnly?: boolean;
+  showVerseText?: boolean;
+  showCustomVerseTranslation?: boolean;
+  showGreekSurface?: boolean;
+  showGreekLemma?: boolean;
+  showGreekTransliteration?: boolean;
+  showGreekMorphology?: boolean;
+  showGreekGloss?: boolean;
   highlightedVerseNumber?: number | null;
   highlightedVerseRange?: {
     start: number;
@@ -29,6 +36,13 @@ export function VerseList({
   chapterNumber,
   interlinearVerseMap,
   showInterlinearOnly = false,
+  showVerseText,
+  showCustomVerseTranslation = true,
+  showGreekSurface = true,
+  showGreekLemma = true,
+  showGreekTransliteration = true,
+  showGreekMorphology = true,
+  showGreekGloss = true,
   highlightedVerseNumber,
   highlightedVerseRange,
   showStrongs = false,
@@ -50,6 +64,13 @@ export function VerseList({
   } = useReaderWorkspace();
   const activeHighlightedVerseNumber = highlightedVerseNumber ?? null;
   const activeHighlightedVerseRange = highlightedVerseRange ?? null;
+  const shouldShowVerseText = showVerseText ?? !showInterlinearOnly;
+  const shouldShowGreekTokens =
+    showGreekSurface ||
+    showGreekLemma ||
+    showGreekTransliteration ||
+    showGreekMorphology ||
+    showGreekGloss;
 
   useEffect(() => {
     const scrollTargetVerseNumber =
@@ -90,7 +111,7 @@ export function VerseList({
                 {verse.number}
               </span>
               <div className="verse-content">
-                {!showInterlinearOnly
+                {shouldShowVerseText
                   ? showStrongs && verse.tokens?.length ? (
                       <VerseTextContent
                         className="verse-text verse-text-rich"
@@ -104,7 +125,7 @@ export function VerseList({
                       <VerseTextContent className="verse-text" verse={verse} />
                     )
                   : null}
-                {interlinearVerseMap?.[verse.number] ? (
+                {interlinearVerseMap?.[verse.number] && shouldShowGreekTokens ? (
                   <GreekInterlinearLine
                     bookSlug={bookSlug}
                     chapterNumber={chapterNumber}
@@ -118,14 +139,21 @@ export function VerseList({
                         matchedQuery: token.surface
                       })
                     }
+                    showGloss={showGreekGloss}
+                    showLemma={showGreekLemma}
+                    showMorphology={showGreekMorphology}
+                    showSurface={showGreekSurface}
+                    showTransliteration={showGreekTransliteration}
                     verse={interlinearVerseMap[verse.number]}
                   />
                 ) : null}
-                <VerseTranslationEditor
-                  bookSlug={bookSlug}
-                  chapterNumber={chapterNumber}
-                  verseNumber={verse.number}
-                />
+                {showCustomVerseTranslation ? (
+                  <VerseTranslationEditor
+                    bookSlug={bookSlug}
+                    chapterNumber={chapterNumber}
+                    verseNumber={verse.number}
+                  />
+                ) : null}
                 <div className="verse-study-actions">
                   <button
                     className={`reader-inline-button verse-study-button${

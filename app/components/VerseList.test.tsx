@@ -111,6 +111,37 @@ describe("VerseList", () => {
     ).toBeInTheDocument();
   });
 
+  it("can hide verse text, custom verse translation, and selected Greek sub-lines independently", async () => {
+    renderWithReaderCustomization(
+      <VerseList
+        bookSlug="john"
+        chapterNumber={1}
+        interlinearVerseMap={interlinearVerseMap}
+        showCustomVerseTranslation={false}
+        showGreekGloss={false}
+        showGreekLemma={false}
+        showGreekMorphology={false}
+        showGreekTransliteration={false}
+        showVerseText={false}
+        verses={verses}
+      />
+    );
+
+    expect(screen.queryByText("In the beginning God created the heaven and the earth.")).not.toBeInTheDocument();
+    expect(screen.queryByLabelText("Custom translation for john 1:1")).not.toBeInTheDocument();
+    expect(await screen.findByText("ἀρχῆς")).toBeInTheDocument();
+    expect(screen.queryByText("ἀρχή")).not.toBeInTheDocument();
+    expect(screen.queryByText("archēs")).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Choose English gloss for ἀρχῆς" })
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", {
+        name: "Explain morphology for ἀρχῆς: Noun · Genitive Singular Feminine"
+      })
+    ).not.toBeInTheDocument();
+  });
+
   it("opens Strongs details in the study pane from a tagged token", async () => {
     renderWithReaderCustomization(
       <>

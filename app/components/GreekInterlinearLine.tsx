@@ -18,13 +18,23 @@ type GreekInterlinearLineProps = {
   chapterNumber: number;
   verse: EsvInterlinearDisplayVerse;
   onOpenGreekDictionary: (token: GreekToken) => void;
+  showSurface?: boolean;
+  showLemma?: boolean;
+  showTransliteration?: boolean;
+  showMorphology?: boolean;
+  showGloss?: boolean;
 };
 
 export function GreekInterlinearLine({
   bookSlug,
   chapterNumber,
   verse,
-  onOpenGreekDictionary
+  onOpenGreekDictionary,
+  showSurface = true,
+  showLemma = true,
+  showTransliteration = true,
+  showMorphology = true,
+  showGloss = true
 }: GreekInterlinearLineProps) {
   const { clearOverride, getOverride, saveOverride } = useGreekGlossOverrides();
   const [entriesByStrongs, setEntriesByStrongs] = useState<Record<string, GreekLemmaEntry>>({});
@@ -93,6 +103,10 @@ export function GreekInterlinearLine({
   }, [verse.tokens]);
 
   if (!verse.tokens?.length) {
+    if (!showSurface) {
+      return null;
+    }
+
     return (
       <p className="verse-text verse-interlinear-text" lang="el">
         {verse.greek}
@@ -190,13 +204,17 @@ export function GreekInterlinearLine({
                 onClick={() => onOpenGreekDictionary(token)}
                 type="button"
               >
-                <span className="verse-greek-surface">{token.surface}</span>
-                <span className="verse-greek-lemma">{token.lemma}</span>
-                <span className="verse-greek-transliteration">
-                  {transliterateGreekSurface(token.surface)}
-                </span>
+                {showSurface ? (
+                  <span className="verse-greek-surface">{token.surface}</span>
+                ) : null}
+                {showLemma ? <span className="verse-greek-lemma">{token.lemma}</span> : null}
+                {showTransliteration ? (
+                  <span className="verse-greek-transliteration">
+                    {transliterateGreekSurface(token.surface)}
+                  </span>
+                ) : null}
               </button>
-              {morphologyDetails ? (
+              {showMorphology && morphologyDetails ? (
                 <>
                   <button
                     aria-expanded={openMorphologyOccurrenceKey === occurrenceKey}
@@ -247,102 +265,111 @@ export function GreekInterlinearLine({
                   ) : null}
                 </>
               ) : null}
-              <button
-                aria-expanded={openOccurrenceKey === occurrenceKey}
-                aria-label={`Choose English gloss for ${token.surface}`}
-                className={`verse-greek-gloss${override ? " is-overridden" : ""}`}
-                onClick={() =>
-                  handleOpenGlossPicker(occurrenceKey, effectiveGloss, override?.source)
-                }
-                type="button"
-              >
-                {effectiveGloss || "Choose gloss"}
-              </button>
-              {openOccurrenceKey === occurrenceKey ? (
-                <div
-                  aria-label={`English gloss choices for ${token.surface}`}
-                  className="verse-greek-gloss-picker"
-                  role="dialog"
-                >
-                  <div className="verse-greek-gloss-picker-header">
-                    <p className="verse-greek-gloss-picker-title">{token.surface}</p>
-                    <button
-                      aria-label="Close gloss picker"
-                      className="reader-inline-button"
-                      onClick={() => {
-                        setOpenOccurrenceKey(null);
-                        setOpenMorphologyOccurrenceKey(null);
-                        setIsCustomMode(false);
-                        setCustomDraft("");
-                      }}
-                      type="button"
+              {showGloss ? (
+                <>
+                  <button
+                    aria-expanded={openOccurrenceKey === occurrenceKey}
+                    aria-label={`Choose English gloss for ${token.surface}`}
+                    className={`verse-greek-gloss${override ? " is-overridden" : ""}`}
+                    onClick={() =>
+                      handleOpenGlossPicker(occurrenceKey, effectiveGloss, override?.source)
+                    }
+                    type="button"
+                  >
+                    {effectiveGloss || "Choose gloss"}
+                  </button>
+                  {openOccurrenceKey === occurrenceKey ? (
+                    <div
+                      aria-label={`English gloss choices for ${token.surface}`}
+                      className="verse-greek-gloss-picker"
+                      role="dialog"
                     >
-                      Close
-                    </button>
-                  </div>
-                  <div className="verse-greek-gloss-options">
-                    {glossOptions.map((option) => (
-                      <button
-                        aria-pressed={effectiveGloss === option.label}
-                        className={`verse-greek-gloss-option${
-                          effectiveGloss === option.label ? " is-active" : ""
-                        }`}
-                        key={`${occurrenceKey}:${option.id}`}
-                        onClick={() => handleSelectGloss(occurrenceKey, token, option.label, option)}
-                        type="button"
-                      >
-                        {option.label}
-                      </button>
-                    ))}
-                    <button
-                      aria-pressed={isCustomMode}
-                      className={`verse-greek-gloss-option${isCustomMode ? " is-active" : ""}`}
-                      onClick={() => {
-                        setIsCustomMode(true);
-                        setCustomDraft(override?.source === "custom" ? effectiveGloss : "");
-                      }}
-                      type="button"
-                    >
-                      Custom…
-                    </button>
-                    {override ? (
-                      <button
-                        className="verse-greek-gloss-option"
-                        onClick={() => {
-                          clearOverride(occurrenceKey);
-                          setOpenOccurrenceKey(null);
-                          setOpenMorphologyOccurrenceKey(null);
-                          setIsCustomMode(false);
-                          setCustomDraft("");
-                        }}
-                        type="button"
-                      >
-                        Reset to default
-                      </button>
-                    ) : null}
-                  </div>
-                  {isCustomMode ? (
-                    <div className="verse-greek-gloss-custom">
-                      <label className="reader-settings-field" htmlFor={`custom-gloss:${occurrenceKey}`}>
-                        <span>Custom gloss</span>
-                        <input
-                          id={`custom-gloss:${occurrenceKey}`}
-                          onChange={(event) => setCustomDraft(event.target.value)}
-                          placeholder={defaultGloss || "Enter English gloss"}
-                          type="text"
-                          value={customDraft}
-                        />
-                      </label>
-                      <button
-                        className="reader-inline-button"
-                        onClick={() => handleSaveCustomGloss(occurrenceKey, token)}
-                        type="button"
-                      >
-                        Save gloss
-                      </button>
+                      <div className="verse-greek-gloss-picker-header">
+                        <p className="verse-greek-gloss-picker-title">{token.surface}</p>
+                        <button
+                          aria-label="Close gloss picker"
+                          className="reader-inline-button"
+                          onClick={() => {
+                            setOpenOccurrenceKey(null);
+                            setOpenMorphologyOccurrenceKey(null);
+                            setIsCustomMode(false);
+                            setCustomDraft("");
+                          }}
+                          type="button"
+                        >
+                          Close
+                        </button>
+                      </div>
+                      <div className="verse-greek-gloss-options">
+                        {glossOptions.map((option) => (
+                          <button
+                            aria-pressed={effectiveGloss === option.label}
+                            className={`verse-greek-gloss-option${
+                              effectiveGloss === option.label ? " is-active" : ""
+                            }`}
+                            key={`${occurrenceKey}:${option.id}`}
+                            onClick={() =>
+                              handleSelectGloss(occurrenceKey, token, option.label, option)
+                            }
+                            type="button"
+                          >
+                            {option.label}
+                          </button>
+                        ))}
+                        <button
+                          aria-pressed={isCustomMode}
+                          className={`verse-greek-gloss-option${isCustomMode ? " is-active" : ""}`}
+                          onClick={() => {
+                            setIsCustomMode(true);
+                            setCustomDraft(override?.source === "custom" ? effectiveGloss : "");
+                          }}
+                          type="button"
+                        >
+                          Custom…
+                        </button>
+                        {override ? (
+                          <button
+                            className="verse-greek-gloss-option"
+                            onClick={() => {
+                              clearOverride(occurrenceKey);
+                              setOpenOccurrenceKey(null);
+                              setOpenMorphologyOccurrenceKey(null);
+                              setIsCustomMode(false);
+                              setCustomDraft("");
+                            }}
+                            type="button"
+                          >
+                            Reset to default
+                          </button>
+                        ) : null}
+                      </div>
+                      {isCustomMode ? (
+                        <div className="verse-greek-gloss-custom">
+                          <label
+                            className="reader-settings-field"
+                            htmlFor={`custom-gloss:${occurrenceKey}`}
+                          >
+                            <span>Custom gloss</span>
+                            <input
+                              id={`custom-gloss:${occurrenceKey}`}
+                              onChange={(event) => setCustomDraft(event.target.value)}
+                              placeholder={defaultGloss || "Enter English gloss"}
+                              type="text"
+                              value={customDraft}
+                            />
+                          </label>
+                          <button
+                            className="reader-inline-button"
+                            onClick={() => handleSaveCustomGloss(occurrenceKey, token)}
+                            type="button"
+                          >
+                            Save gloss
+                          </button>
+                        </div>
+                      ) : null}
                     </div>
                   ) : null}
-                </div>
+                </>
               ) : null}
             </span>
             {token.trailingPunctuation ? (
