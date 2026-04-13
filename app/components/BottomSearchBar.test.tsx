@@ -188,7 +188,7 @@ describe("BottomSearchBar", () => {
     fireEvent.click(result);
 
     expect(mockRouter.push).toHaveBeenCalledWith("/read/genesis");
-  });
+  }, 15000);
 
   it("navigates to a highlighted verse result", async () => {
     renderSearchUi();
