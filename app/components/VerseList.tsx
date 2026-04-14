@@ -91,6 +91,17 @@ export function VerseList({
         {verses.map((verse) => {
           const highlight = getHighlight(bookSlug, chapterNumber, verse.number);
           const bookmark = getBookmark(bookSlug, chapterNumber, verse.number);
+          const greekVersionInterlinearVerse =
+            version === "greek" && verse.greekTokens?.length
+              ? {
+                  number: verse.number,
+                  baseGreek: verse.text,
+                  greek: verse.text,
+                  tokens: verse.greekTokens
+                }
+              : null;
+          const activeGreekVerse =
+            greekVersionInterlinearVerse ?? interlinearVerseMap?.[verse.number] ?? null;
           const isHighlighted =
             activeHighlightedVerseRange !== null
               ? verse.number >= activeHighlightedVerseRange.start &&
@@ -129,27 +140,27 @@ export function VerseList({
                       <VerseTextContent className="verse-text" verse={verse} />
                     )
                   : null}
-                {interlinearVerseMap?.[verse.number] && shouldShowGreekTokens ? (
-                      <GreekInterlinearLine
-                        bookSlug={bookSlug}
-                        chapterNumber={chapterNumber}
-                        onOpenGreekDictionary={(token) =>
-                          openGreekDictionary({
-                            entryKey: token.entryKey ?? token.strongs ?? token.lemma,
-                            strongs: token.strongs ?? null,
-                            lemma: token.lemma,
-                            label: token.lemma,
-                            selectedForm: token.surface,
-                            selectedFormMorphology: token.morphology ?? null,
-                            selectedFormDecodedMorphology: token.decodedMorphology ?? null,
-                            matchedQuery: token.surface
-                          })
-                        }
+                {activeGreekVerse && shouldShowGreekTokens ? (
+                  <GreekInterlinearLine
+                    bookSlug={bookSlug}
+                    chapterNumber={chapterNumber}
+                    onOpenGreekDictionary={(token) =>
+                      openGreekDictionary({
+                        entryKey: token.entryKey ?? token.strongs ?? token.lemma,
+                        strongs: token.strongs ?? null,
+                        lemma: token.lemma,
+                        label: token.lemma,
+                        selectedForm: token.surface,
+                        selectedFormMorphology: token.morphology ?? null,
+                        selectedFormDecodedMorphology: token.decodedMorphology ?? null,
+                        matchedQuery: token.surface
+                      })
+                    }
                     showGloss={showGreekGloss}
                     showLemma={showGreekLemma}
                     showSurface={showGreekSurface}
                     showTransliteration={showGreekTransliteration}
-                    verse={interlinearVerseMap[verse.number]}
+                    verse={activeGreekVerse}
                   />
                 ) : null}
                 {showCustomVerseTranslation ? (

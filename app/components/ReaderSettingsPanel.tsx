@@ -54,6 +54,8 @@ export function ReaderSettingsPanel({
   const isReaderRoute = pathname.startsWith("/read");
   const supportsGreekReading = version === "esv" || version === "greek";
   const supportsEsvInterlinear = version === "esv";
+  const supportsGreekStudyLayers = version === "esv" || version === "greek";
+  const greekStudyLayersEnabled = version === "greek" || settings.showEsvInterlinear;
 
   const handleVersionChange = (nextVersion: string) => {
     if (!isInstalledBundledBibleVersion(nextVersion) || nextVersion === version) {
@@ -349,7 +351,7 @@ export function ReaderSettingsPanel({
                 className={`settings-option-card${
                   settings.showGreekSurface ? " is-active" : ""
                 }`}
-                disabled={!supportsEsvInterlinear || !settings.showEsvInterlinear}
+                disabled={!supportsGreekStudyLayers || !greekStudyLayersEnabled}
                 key="showGreekSurface"
                 onClick={() => toggleLayer("showGreekSurface")}
                 type="button"
@@ -359,7 +361,7 @@ export function ReaderSettingsPanel({
               </button>
               <button
                 className={`settings-option-card${settings.showGreekLemma ? " is-active" : ""}`}
-                disabled={!supportsEsvInterlinear || !settings.showEsvInterlinear}
+                disabled={!supportsGreekStudyLayers || !greekStudyLayersEnabled}
                 key="showGreekLemma"
                 onClick={() => toggleLayer("showGreekLemma")}
                 type="button"
@@ -371,7 +373,7 @@ export function ReaderSettingsPanel({
                 className={`settings-option-card${
                   settings.showGreekTransliteration ? " is-active" : ""
                 }`}
-                disabled={!supportsEsvInterlinear || !settings.showEsvInterlinear}
+                disabled={!supportsGreekStudyLayers || !greekStudyLayersEnabled}
                 key="showGreekTransliteration"
                 onClick={() => toggleLayer("showGreekTransliteration")}
                 type="button"
@@ -381,7 +383,7 @@ export function ReaderSettingsPanel({
               </button>
               <button
                 className={`settings-option-card${settings.showGreekGloss ? " is-active" : ""}`}
-                disabled={!supportsEsvInterlinear || !settings.showEsvInterlinear}
+                disabled={!supportsGreekStudyLayers || !greekStudyLayersEnabled}
                 key="showGreekGloss"
                 onClick={() => toggleLayer("showGreekGloss")}
                 type="button"

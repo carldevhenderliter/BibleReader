@@ -3,6 +3,7 @@ import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 import { LookupPane } from "@/app/components/LookupPane";
 import { VerseList } from "@/app/components/VerseList";
 import { VERSE_TRANSLATION_OVERRIDES_STORAGE_KEY } from "@/app/components/VerseTranslationOverridesProvider";
+import { READER_VERSION_STORAGE_KEY } from "@/lib/bible/constants";
 import type { EsvInterlinearDisplayVerse, Verse } from "@/lib/bible/types";
 import { setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
@@ -215,6 +216,38 @@ describe("VerseList", () => {
     ).toBeInTheDocument();
     expect(within(studyPane).getByText("Genitive")).toBeInTheDocument();
     expect(within(studyPane).getByText("Example: λογου = of the word")).toBeInTheDocument();
+  });
+
+  it("shows transliteration and gloss lines for the standalone Greek version", async () => {
+    window.localStorage.setItem(READER_VERSION_STORAGE_KEY, "greek");
+
+    renderWithReaderCustomization(
+      <VerseList
+        bookSlug="genesis"
+        chapterNumber={1}
+        verses={[
+          {
+            number: 1,
+            text: "ἐν ἀρχῇ",
+            greekTokens: [
+              {
+                surface: "ἀρχῇ",
+                lemma: "ἀρχή",
+                entryKey: "G746",
+                strongs: "G746",
+                gloss: "beginning"
+              }
+            ]
+          }
+        ]}
+      />
+    );
+
+    expect((await screen.findAllByText("ἀρχῇ")).length).toBeGreaterThan(0);
+    expect(await screen.findByText("archē")).toBeInTheDocument();
+    expect(
+      await screen.findByRole("button", { name: "Choose English gloss for ἀρχῇ" })
+    ).toBeInTheDocument();
   });
 
   it("opens a gloss picker from the English line and updates only that occurrence", async () => {
