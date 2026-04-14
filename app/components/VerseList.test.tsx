@@ -1,6 +1,7 @@
 import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 
 import { LookupPane } from "@/app/components/LookupPane";
+import { GREEK_GLOSS_DEFAULTS_STORAGE_KEY } from "@/app/components/GreekGlossOverridesProvider";
 import { VerseList } from "@/app/components/VerseList";
 import { VERSE_TRANSLATION_OVERRIDES_STORAGE_KEY } from "@/app/components/VerseTranslationOverridesProvider";
 import { READER_VERSION_STORAGE_KEY } from "@/lib/bible/constants";
@@ -56,6 +57,39 @@ const interlinearVerseMap: Record<number, EsvInterlinearDisplayVerse> = {
         morphology: "V-3AAI-S",
         decodedMorphology: "verb aorist active indicative third person singular",
         gloss: "became"
+      }
+    ]
+  }
+};
+
+const repeatedLemmaInterlinearVerseMap: Record<number, EsvInterlinearDisplayVerse> = {
+  1: {
+    number: 1,
+    baseGreek: "ἀρχῆς",
+    greek: "ἀρχῆς",
+    tokens: [
+      {
+        surface: "ἀρχῆς",
+        lemma: "ἀρχή",
+        strongs: "G746",
+        morphology: "N-GSF",
+        decodedMorphology: "noun genitive singular feminine",
+        gloss: "beginning"
+      }
+    ]
+  },
+  2: {
+    number: 2,
+    baseGreek: "ἀρχῇ",
+    greek: "ἀρχῇ",
+    tokens: [
+      {
+        surface: "ἀρχῇ",
+        lemma: "ἀρχή",
+        strongs: "G746",
+        morphology: "N-DSF",
+        decodedMorphology: "noun dative singular feminine",
+        gloss: "beginning"
       }
     ]
   }
@@ -425,6 +459,64 @@ describe("VerseList", () => {
     expect(screen.getByRole("button", { name: "Choose English gloss for ἐγένετο" })).toHaveTextContent(
       "became"
     );
+  });
+
+  it("lets a lemma default apply across occurrences while preserving one-off token changes", async () => {
+    const { unmount } = renderWithReaderCustomization(
+      <VerseList
+        bookSlug="john"
+        chapterNumber={1}
+        interlinearVerseMap={repeatedLemmaInterlinearVerseMap}
+        verses={verses}
+      />
+    );
+
+    fireEvent.click(await screen.findByRole("button", { name: "Choose English gloss for ἀρχῆς" }));
+
+    const picker = await screen.findByRole("dialog", { name: "English gloss choices for ἀρχῆς" });
+    const originButton = within(picker).getByRole("button", { name: "origin" });
+    const originRow = originButton.closest(".verse-greek-gloss-option-row") as HTMLElement;
+    fireEvent.click(within(originRow).getByRole("button", { name: "Make default" }));
+
+    expect(window.localStorage.getItem(GREEK_GLOSS_DEFAULTS_STORAGE_KEY)).toContain("origin");
+    await waitFor(() => {
+      expect(
+        screen.getByRole("button", { name: "Choose English gloss for ἀρχῆς" })
+      ).toHaveTextContent("origin");
+      expect(
+        screen.getByRole("button", { name: "Choose English gloss for ἀρχῇ" })
+      ).toHaveTextContent("origin");
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: "Choose English gloss for ἀρχῇ" }));
+    fireEvent.click(await screen.findByRole("button", { name: "beginning" }));
+
+    expect(screen.getByRole("button", { name: "Choose English gloss for ἀρχῆς" })).toHaveTextContent(
+      "origin"
+    );
+    expect(screen.getByRole("button", { name: "Choose English gloss for ἀρχῇ" })).toHaveTextContent(
+      "beginning"
+    );
+
+    unmount();
+
+    renderWithReaderCustomization(
+      <VerseList
+        bookSlug="john"
+        chapterNumber={1}
+        interlinearVerseMap={repeatedLemmaInterlinearVerseMap}
+        verses={verses}
+      />
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole("button", { name: "Choose English gloss for ἀρχῆς" })
+      ).toHaveTextContent("origin");
+      expect(
+        screen.getByRole("button", { name: "Choose English gloss for ἀρχῇ" })
+      ).toHaveTextContent("beginning");
+    });
   });
 
   it("saves and reloads a custom verse translation for the matching verse only", () => {

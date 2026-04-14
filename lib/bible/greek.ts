@@ -2,6 +2,7 @@ import type {
   BibleSearchVerseEntry,
   GreekGlossOption,
   GreekInflectedForm,
+  GreekLemmaGlossPreference,
   GreekLemmaEntry,
   GreekTokenGlossOverride,
   GreekToken
@@ -992,10 +993,15 @@ export function getGreekMorphologyDetails(
 export function resolveGreekTokenGloss(
   token: Pick<GreekToken, "gloss">,
   entry: GreekLemmaEntry | null,
-  override?: GreekTokenGlossOverride | null
+  override?: GreekTokenGlossOverride | null,
+  lemmaPreference?: GreekLemmaGlossPreference | null
 ) {
   if (override?.selectedGloss?.trim()) {
     return override.selectedGloss.trim();
+  }
+
+  if (lemmaPreference?.selectedGloss?.trim()) {
+    return lemmaPreference.selectedGloss.trim();
   }
 
   const singleWordTokenGloss = getPreferredSingleWordGlossCandidate(token.gloss, {

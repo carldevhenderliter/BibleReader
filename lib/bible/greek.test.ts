@@ -98,6 +98,19 @@ describe("Greek dictionary lookup", () => {
         source: "lemma-option"
       })
     ).toBe("origin");
+    expect(
+      resolveGreekTokenGloss(
+        token,
+        entry,
+        null,
+        {
+          strongs: "G746",
+          lemma: "ἀρχή",
+          selectedGloss: "origin",
+          source: "lemma-option"
+        }
+      )
+    ).toBe("origin");
   });
 
   it("reduces multi-word default glosses to a single head word until overridden", async () => {

@@ -10,7 +10,12 @@ import {
   resolveGreekTokenGloss,
   transliterateGreekSurface
 } from "@/lib/bible/greek";
-import type { EsvInterlinearDisplayVerse, GreekGlossOption, GreekLemmaEntry, GreekToken } from "@/lib/bible/types";
+import type {
+  EsvInterlinearDisplayVerse,
+  GreekGlossOption,
+  GreekLemmaEntry,
+  GreekToken
+} from "@/lib/bible/types";
 
 type GreekInterlinearLineProps = {
   bookSlug: string;
@@ -33,11 +38,19 @@ export function GreekInterlinearLine({
   showTransliteration = true,
   showGloss = true
 }: GreekInterlinearLineProps) {
-  const { clearOverride, getOverride, saveOverride } = useGreekGlossOverrides();
+  const {
+    clearLemmaDefault,
+    clearOverride,
+    getLemmaDefault,
+    getOverride,
+    saveLemmaDefault,
+    saveOverride
+  } = useGreekGlossOverrides();
   const [entriesByKey, setEntriesByKey] = useState<Record<string, GreekLemmaEntry>>({});
   const [openOccurrenceKey, setOpenOccurrenceKey] = useState<string | null>(null);
   const [isCustomMode, setIsCustomMode] = useState(false);
   const [customDraft, setCustomDraft] = useState("");
+
   const tokenEntries = useMemo(
     () =>
       verse.tokens?.map((token, tokenIndex) => {
@@ -47,9 +60,15 @@ export function GreekInterlinearLine({
         const tokenEntryKey = token.entryKey ?? token.strongs ?? null;
         const entry = tokenEntryKey ? entriesByKey[tokenEntryKey] ?? null : null;
         const override = getOverride(occurrenceKey);
+        const lemmaDefault = getLemmaDefault({
+          entryKey: token.entryKey ?? entry?.entryKey ?? null,
+          strongs: token.strongs ?? entry?.strongs ?? null,
+          lemma: token.lemma
+        });
         const glossOptions = entry ? getGreekGlossOptions(entry, token.gloss) : [];
-        const defaultGloss = resolveGreekTokenGloss(token, entry, null);
-        const effectiveGloss = resolveGreekTokenGloss(token, entry, override);
+        const generatedGloss = resolveGreekTokenGloss(token, entry, null, null);
+        const defaultGloss = resolveGreekTokenGloss(token, entry, null, lemmaDefault);
+        const effectiveGloss = resolveGreekTokenGloss(token, entry, override, lemmaDefault);
 
         return {
           token,
@@ -57,12 +76,14 @@ export function GreekInterlinearLine({
           occurrenceKey,
           entry,
           override,
+          lemmaDefault,
           glossOptions,
+          generatedGloss,
           defaultGloss,
           effectiveGloss
         };
       }) ?? [],
-    [bookSlug, chapterNumber, entriesByKey, getOverride, verse]
+    [bookSlug, chapterNumber, entriesByKey, getLemmaDefault, getOverride, verse]
   );
 
   useEffect(() => {
@@ -79,7 +100,6 @@ export function GreekInterlinearLine({
     void Promise.all(
       uniqueEntryKeys.map(async (entryKey) => {
         const entry = await getGreekLemmaEntry(entryKey);
-
         return entry ? ([entryKey, entry] as const) : null;
       })
     ).then((results) => {
@@ -120,8 +140,13 @@ export function GreekInterlinearLine({
     option?: GreekGlossOption
   ) {
     const tokenEntry = tokenEntries.find((entry) => entry.occurrenceKey === occurrenceKey);
+    const trimmedGloss = selectedGloss.trim();
 
-    if (tokenEntry && selectedGloss.trim() === tokenEntry.defaultGloss.trim()) {
+    if (!trimmedGloss) {
+      return;
+    }
+
+    if (tokenEntry && trimmedGloss === tokenEntry.defaultGloss.trim()) {
       clearOverride(occurrenceKey);
     } else {
       saveOverride({
@@ -129,7 +154,7 @@ export function GreekInterlinearLine({
         entryKey: token.entryKey,
         strongs: token.strongs,
         lemma: token.lemma,
-        selectedGloss: selectedGloss.trim(),
+        selectedGloss: trimmedGloss,
         optionId: option?.id,
         source: "lemma-option"
       });
@@ -140,10 +165,58 @@ export function GreekInterlinearLine({
     setCustomDraft("");
   }
 
-  function handleSaveCustomGloss(occurrenceKey: string, token: GreekToken) {
+  function handleSelectLemmaDefault(
+    occurrenceKey: string,
+    token: GreekToken,
+    selectedGloss: string,
+    option?: GreekGlossOption
+  ) {
+    const tokenEntry = tokenEntries.find((entry) => entry.occurrenceKey === occurrenceKey);
+    const trimmedGloss = selectedGloss.trim();
+
+    if (!trimmedGloss || !tokenEntry) {
+      return;
+    }
+
+    if (trimmedGloss === tokenEntry.generatedGloss.trim()) {
+      clearLemmaDefault({
+        entryKey: token.entryKey ?? tokenEntry.entry?.entryKey ?? null,
+        strongs: token.strongs ?? tokenEntry.entry?.strongs ?? null,
+        lemma: token.lemma
+      });
+    } else {
+      saveLemmaDefault({
+        entryKey: token.entryKey ?? tokenEntry.entry?.entryKey,
+        strongs: token.strongs ?? tokenEntry.entry?.strongs,
+        lemma: token.lemma,
+        selectedGloss: trimmedGloss,
+        optionId: option?.id,
+        source: option ? "lemma-option" : "custom"
+      });
+    }
+
+    if (tokenEntry.override?.selectedGloss?.trim() === trimmedGloss) {
+      clearOverride(occurrenceKey);
+    }
+
+    setOpenOccurrenceKey(null);
+    setIsCustomMode(false);
+    setCustomDraft("");
+  }
+
+  function handleSaveCustomGloss(
+    occurrenceKey: string,
+    token: GreekToken,
+    saveAsLemmaDefault = false
+  ) {
     const trimmedDraft = customDraft.trim();
 
     if (!trimmedDraft) {
+      return;
+    }
+
+    if (saveAsLemmaDefault) {
+      handleSelectLemmaDefault(occurrenceKey, token, trimmedDraft);
       return;
     }
 
@@ -163,11 +236,11 @@ export function GreekInterlinearLine({
   function handleOpenGlossPicker(
     occurrenceKey: string,
     effectiveGloss: string,
-    overrideSource?: "lemma-option" | "custom"
+    activeSource?: "lemma-option" | "custom"
   ) {
     setOpenOccurrenceKey((current) => (current === occurrenceKey ? null : occurrenceKey));
-    setIsCustomMode(overrideSource === "custom");
-    setCustomDraft(overrideSource === "custom" ? effectiveGloss : "");
+    setIsCustomMode(activeSource === "custom");
+    setCustomDraft(activeSource === "custom" ? effectiveGloss : "");
   }
 
   return (
@@ -178,10 +251,12 @@ export function GreekInterlinearLine({
           tokenIndex,
           occurrenceKey,
           entry,
+          override,
+          lemmaDefault,
           glossOptions,
+          generatedGloss,
           defaultGloss,
-          effectiveGloss,
-          override
+          effectiveGloss
         }) => (
           <span
             className="verse-greek-token-wrap"
@@ -209,9 +284,15 @@ export function GreekInterlinearLine({
                   <button
                     aria-expanded={openOccurrenceKey === occurrenceKey}
                     aria-label={`Choose English gloss for ${token.surface}`}
-                    className={`verse-greek-gloss${override ? " is-overridden" : ""}`}
+                    className={`verse-greek-gloss${
+                      override ? " is-overridden" : lemmaDefault ? " is-lemma-default" : ""
+                    }`}
                     onClick={() =>
-                      handleOpenGlossPicker(occurrenceKey, effectiveGloss, override?.source)
+                      handleOpenGlossPicker(
+                        occurrenceKey,
+                        effectiveGloss,
+                        override?.source ?? lemmaDefault?.source
+                      )
                     }
                     type="button"
                   >
@@ -224,7 +305,15 @@ export function GreekInterlinearLine({
                       role="dialog"
                     >
                       <div className="verse-greek-gloss-picker-header">
-                        <p className="verse-greek-gloss-picker-title">{token.surface}</p>
+                        <div>
+                          <p className="verse-greek-gloss-picker-title">{token.surface}</p>
+                          <p className="verse-greek-gloss-picker-meta">
+                            {token.lemma}
+                            {lemmaDefault?.selectedGloss?.trim()
+                              ? ` · lemma default: ${lemmaDefault.selectedGloss}`
+                              : " · using generated default"}
+                          </p>
+                        </div>
                         <button
                           aria-label="Close gloss picker"
                           className="reader-inline-button"
@@ -240,31 +329,70 @@ export function GreekInterlinearLine({
                       </div>
                       <div className="verse-greek-gloss-options">
                         {glossOptions.map((option) => (
-                          <button
-                            aria-pressed={effectiveGloss === option.label}
-                            className={`verse-greek-gloss-option${
-                              effectiveGloss === option.label ? " is-active" : ""
-                            }`}
-                            key={`${occurrenceKey}:${option.id}`}
-                            onClick={() =>
-                              handleSelectGloss(occurrenceKey, token, option.label, option)
-                            }
-                            type="button"
-                          >
-                            {option.label}
-                          </button>
+                          <div className="verse-greek-gloss-option-row" key={`${occurrenceKey}:${option.id}`}>
+                            <button
+                              aria-pressed={effectiveGloss === option.label}
+                              className={`verse-greek-gloss-option${
+                                effectiveGloss === option.label ? " is-active" : ""
+                              }`}
+                              onClick={() =>
+                                handleSelectGloss(occurrenceKey, token, option.label, option)
+                              }
+                              type="button"
+                            >
+                              {option.label}
+                            </button>
+                            <button
+                              className={`verse-greek-gloss-option verse-greek-gloss-default-action${
+                                lemmaDefault?.selectedGloss === option.label ? " is-active" : ""
+                              }`}
+                              onClick={() =>
+                                handleSelectLemmaDefault(
+                                  occurrenceKey,
+                                  token,
+                                  option.label,
+                                  option
+                                )
+                              }
+                              type="button"
+                            >
+                              {lemmaDefault?.selectedGloss === option.label ? "Default" : "Make default"}
+                            </button>
+                          </div>
                         ))}
                         <button
                           aria-pressed={isCustomMode}
                           className={`verse-greek-gloss-option${isCustomMode ? " is-active" : ""}`}
                           onClick={() => {
                             setIsCustomMode(true);
-                            setCustomDraft(override?.source === "custom" ? effectiveGloss : "");
+                            setCustomDraft(
+                              override?.source === "custom" || lemmaDefault?.source === "custom"
+                                ? effectiveGloss
+                                : ""
+                            );
                           }}
                           type="button"
                         >
                           Custom…
                         </button>
+                        {lemmaDefault ? (
+                          <button
+                            className="verse-greek-gloss-option"
+                            onClick={() => {
+                              clearLemmaDefault({
+                                entryKey: token.entryKey ?? entry?.entryKey ?? null,
+                                strongs: token.strongs ?? entry?.strongs ?? null,
+                                lemma: token.lemma
+                              });
+                              setOpenOccurrenceKey(null);
+                              setIsCustomMode(false);
+                              setCustomDraft("");
+                            }}
+                            type="button"
+                          >
+                            Clear lemma default
+                          </button>
+                        ) : null}
                         {override ? (
                           <button
                             className="verse-greek-gloss-option"
@@ -272,7 +400,9 @@ export function GreekInterlinearLine({
                               clearOverride(occurrenceKey);
                               setOpenOccurrenceKey(null);
                               setIsCustomMode(false);
-                              setCustomDraft("");
+                              setCustomDraft(
+                                lemmaDefault?.source === "custom" ? lemmaDefault.selectedGloss : ""
+                              );
                             }}
                             type="button"
                           >
@@ -290,18 +420,27 @@ export function GreekInterlinearLine({
                             <input
                               id={`custom-gloss:${occurrenceKey}`}
                               onChange={(event) => setCustomDraft(event.target.value)}
-                              placeholder={defaultGloss || "Enter English gloss"}
+                              placeholder={defaultGloss || generatedGloss || "Enter English gloss"}
                               type="text"
                               value={customDraft}
                             />
                           </label>
-                          <button
-                            className="reader-inline-button"
-                            onClick={() => handleSaveCustomGloss(occurrenceKey, token)}
-                            type="button"
-                          >
-                            Save gloss
-                          </button>
+                          <div className="verse-greek-gloss-custom-actions">
+                            <button
+                              className="reader-inline-button"
+                              onClick={() => handleSaveCustomGloss(occurrenceKey, token)}
+                              type="button"
+                            >
+                              Save gloss
+                            </button>
+                            <button
+                              className="reader-inline-button"
+                              onClick={() => handleSaveCustomGloss(occurrenceKey, token, true)}
+                              type="button"
+                            >
+                              Save as lemma default
+                            </button>
+                          </div>
                         </div>
                       ) : null}
                     </div>

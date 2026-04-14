@@ -504,6 +504,15 @@ export type GreekTokenGlossOverride = {
   source: "lemma-option" | "custom";
 };
 
+export type GreekLemmaGlossPreference = {
+  entryKey?: string;
+  strongs?: string;
+  lemma: string;
+  selectedGloss: string;
+  optionId?: string;
+  source: "lemma-option" | "custom";
+};
+
 export type StrongsLanguage = "hebrew" | "greek";
 
 export type BdagSummary = {
