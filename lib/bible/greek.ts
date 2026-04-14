@@ -916,18 +916,25 @@ export function getGreekGlossOptions(
   const candidates: Array<Pick<GreekGlossOption, "label" | "source">> = [];
 
   if (tokenGloss?.trim()) {
-    candidates.push({
-      label: tokenGloss.trim(),
-      source: "token"
-    });
+    const singleWordTokenGloss = getPreferredSingleWordGlossCandidate(tokenGloss);
+
+    if (singleWordTokenGloss) {
+      candidates.push({
+        label: singleWordTokenGloss,
+        source: "token"
+      });
+    }
   }
 
   if (entry.shortDefinition.trim()) {
     candidates.push(
-      ...splitGlossDefinitionIntoCandidates(entry.shortDefinition).map((label) => ({
-        label,
-        source: "short-definition" as const
-      }))
+      ...splitGlossDefinitionIntoCandidates(entry.shortDefinition)
+        .map((label) => getPreferredSingleWordGlossCandidate(label))
+        .filter((label): label is string => Boolean(label))
+        .map((label) => ({
+          label,
+          source: "short-definition" as const
+        }))
     );
   }
 
@@ -935,6 +942,8 @@ export function getGreekGlossOptions(
     candidates.push(
       ...splitGlossDefinitionIntoCandidates(entry.longDefinition)
         .slice(0, 12)
+        .map((label) => getPreferredSingleWordGlossCandidate(label))
+        .filter((label): label is string => Boolean(label))
         .map((label) => ({
           label,
           source: "long-definition" as const

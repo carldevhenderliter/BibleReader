@@ -77,6 +77,7 @@ describe("Greek dictionary lookup", () => {
     expect(options.map((option) => option.label)).toEqual(
       expect.arrayContaining(["beginning", "origin"])
     );
+    expect(options.every((option) => !/\s/.test(option.label))).toBe(true);
   });
 
   it("prefers stored per-token gloss overrides over generated defaults", async () => {
