@@ -987,6 +987,12 @@ select {
   white-space: normal;
 }
 
+.verse-text-companion-translation {
+  color: rgba(214, 229, 246, 0.88);
+  font-size: 0.96em;
+  line-height: 1.7;
+}
+
 .verse-greek-inline-wrap {
   display: inline;
 }

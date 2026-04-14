@@ -249,6 +249,28 @@ describe("Reader customization", () => {
     expect(stored).toContain('"showCustomVerseTranslation":false');
   });
 
+  it("persists the English companion toggle for the standalone Greek version", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ greek: chapter, web: chapter }}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: {
+        value: "greek"
+      }
+    });
+    fireEvent.click(screen.getByRole("button", { name: /English companion/i }));
+
+    const stored = window.localStorage.getItem(READER_CUSTOMIZATION_STORAGE_KEY) ?? "";
+
+    expect(stored).toContain('"showCompanionVerseTranslation":false');
+  });
+
   it("resets advanced settings to defaults", () => {
     renderWithReaderCustomization(
       <ReaderPageContent

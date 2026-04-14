@@ -229,6 +229,7 @@ describe("VerseList", () => {
           {
             number: 1,
             text: "ἐν ἀρχῇ",
+            translationText: "In the beginning",
             greekTokens: [
               {
                 surface: "ἀρχῇ",
@@ -244,10 +245,42 @@ describe("VerseList", () => {
     );
 
     expect((await screen.findAllByText("ἀρχῇ")).length).toBeGreaterThan(0);
+    expect(screen.getByText("In the beginning")).toBeInTheDocument();
     expect(await screen.findByText("archē")).toBeInTheDocument();
     expect(
       await screen.findByRole("button", { name: "Choose English gloss for ἀρχῇ" })
     ).toBeInTheDocument();
+  });
+
+  it("can hide the standalone Greek English companion line independently", () => {
+    window.localStorage.setItem(READER_VERSION_STORAGE_KEY, "greek");
+
+    renderWithReaderCustomization(
+      <VerseList
+        bookSlug="genesis"
+        chapterNumber={1}
+        showCompanionVerseTranslation={false}
+        verses={[
+          {
+            number: 1,
+            text: "ἐν ἀρχῇ",
+            translationText: "In the beginning",
+            greekTokens: [
+              {
+                surface: "ἀρχῇ",
+                lemma: "ἀρχή",
+                entryKey: "G746",
+                strongs: "G746",
+                gloss: "beginning"
+              }
+            ]
+          }
+        ]}
+      />
+    );
+
+    expect(screen.getAllByText("ἀρχῇ").length).toBeGreaterThan(0);
+    expect(screen.queryByText("In the beginning")).not.toBeInTheDocument();
   });
 
   it("opens a gloss picker from the English line and updates only that occurrence", async () => {

@@ -88,6 +88,7 @@ export const DEFAULT_READER_CUSTOMIZATION: ReaderCustomizationSettings = {
   showEsvInterlinear: false,
   showEsvGreekOnly: false,
   showVerseText: true,
+  showCompanionVerseTranslation: true,
   showGreekSurface: true,
   showGreekLemma: true,
   showGreekTransliteration: true,
@@ -157,6 +158,8 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
 
   const candidate = value as Partial<ReaderCustomizationSettings>;
   const hasGranularVerseText = typeof candidate.showVerseText === "boolean";
+  const hasGranularCompanionVerseTranslation =
+    typeof candidate.showCompanionVerseTranslation === "boolean";
   const hasGranularGreekSurface = typeof candidate.showGreekSurface === "boolean";
   const hasGranularGreekLemma = typeof candidate.showGreekLemma === "boolean";
   const hasGranularGreekTransliteration =
@@ -194,6 +197,20 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
         : candidate.showEsvGreekOnly === true
           ? false
           : DEFAULT_READER_CUSTOMIZATION.showVerseText,
+    showCompanionVerseTranslation:
+      typeof candidate.showCompanionVerseTranslation === "boolean"
+        ? candidate.showCompanionVerseTranslation
+        : candidate.showEsvGreekOnly === true &&
+            !hasGranularVerseText &&
+            !hasGranularCompanionVerseTranslation &&
+            !hasGranularGreekSurface &&
+            !hasGranularGreekLemma &&
+            !hasGranularGreekTransliteration &&
+            !hasGranularGreekMorphology &&
+            !hasGranularGreekGloss &&
+            !hasGranularCustomVerseTranslation
+          ? false
+          : DEFAULT_READER_CUSTOMIZATION.showCompanionVerseTranslation,
     showGreekSurface:
       typeof candidate.showGreekSurface === "boolean"
         ? candidate.showGreekSurface

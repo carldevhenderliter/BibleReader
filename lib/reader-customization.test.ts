@@ -47,6 +47,7 @@ describe("reader customization", () => {
       showEsvInterlinear: false,
       showEsvGreekOnly: true,
       showVerseText: false,
+      showCompanionVerseTranslation: true,
       showGreekSurface: false,
       showGreekLemma: false,
       showGreekTransliteration: false,
@@ -79,6 +80,7 @@ describe("reader customization", () => {
       showEsvInterlinear: false,
       showEsvGreekOnly: false,
       showVerseText: true,
+      showCompanionVerseTranslation: true,
       showGreekSurface: true,
       showGreekLemma: true,
       showGreekTransliteration: true,
@@ -148,6 +150,7 @@ describe("reader customization", () => {
       showEsvInterlinear: true,
       showEsvGreekOnly: true,
       showVerseText: false,
+      showCompanionVerseTranslation: false,
       showCustomVerseTranslation: false
     });
   });

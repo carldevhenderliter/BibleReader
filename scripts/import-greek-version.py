@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import unicodedata
+import xml.etree.ElementTree as ET
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
@@ -16,11 +17,13 @@ LXX_ROOT = Path("/tmp/CenterBLC-LXX")
 LXX_MODULE = "tf/1935"
 VERSION_DIR = REPO_ROOT / "data" / "bible" / "versions" / "greek"
 VERSION_BOOKS_DIR = VERSION_DIR / "books"
+ESV_VERSION_BOOKS_DIR = REPO_ROOT / "data" / "bible" / "versions" / "esv" / "books"
 GREEK_DATA_DIR = REPO_ROOT / "data" / "bible" / "greek"
 SEARCH_DIR = REPO_ROOT / "data" / "bible" / "search"
 WEB_BOOKS_PATH = REPO_ROOT / "data" / "bible" / "versions" / "web" / "books.json"
 INTERLINEAR_DIR = REPO_ROOT / "data" / "bible" / "interlinear" / "esv" / "base"
 NT_LEXICON_PATH = GREEK_DATA_DIR / "lexicon.json"
+ENGLISH_LXX_USFX_PATH = Path("/tmp/englxxup/englxxup_usfx.xml")
 
 OT_BOOK_CODE_BY_SLUG = {
     "genesis": "Gen",
@@ -64,6 +67,48 @@ OT_BOOK_CODE_BY_SLUG = {
     "malachi": "Mal",
 }
 
+OT_ENGLISH_BOOK_ID_BY_SLUG = {
+    "genesis": "GEN",
+    "exodus": "EXO",
+    "leviticus": "LEV",
+    "numbers": "NUM",
+    "deuteronomy": "DEU",
+    "joshua": "JOS",
+    "judges": "JDG",
+    "ruth": "RUT",
+    "1-samuel": "1SA",
+    "2-samuel": "2SA",
+    "1-kings": "1KI",
+    "2-kings": "2KI",
+    "1-chronicles": "1CH",
+    "2-chronicles": "2CH",
+    "ezra": "EZR",
+    "nehemiah": "EZR",
+    "esther": "ESG",
+    "job": "JOB",
+    "psalms": "PSA",
+    "proverbs": "PRO",
+    "ecclesiastes": "ECC",
+    "song-of-solomon": "SNG",
+    "isaiah": "ISA",
+    "jeremiah": "JER",
+    "lamentations": "LAM",
+    "ezekiel": "EZK",
+    "daniel": "DAG",
+    "hosea": "HOS",
+    "joel": "JOL",
+    "amos": "AMO",
+    "obadiah": "OBA",
+    "jonah": "JON",
+    "micah": "MIC",
+    "nahum": "NAM",
+    "habakkuk": "HAB",
+    "zephaniah": "ZEP",
+    "haggai": "HAG",
+    "zechariah": "ZEC",
+    "malachi": "MAL",
+}
+
 NT_SLUGS = {
     "matthew",
     "mark",
@@ -95,6 +140,7 @@ NT_SLUGS = {
 }
 
 SOURCE_LABEL_BY_TESTAMENT = {"Old": "Rahlfs LXX", "New": "SBLGNT"}
+USFX_NOTE_TAGS = {"f", "fe", "x", "fig", "fm", "fk", "fq", "fr", "ft", "xo", "xt"}
 
 
 def read_json(path: Path) -> Any:
@@ -113,6 +159,21 @@ def normalize_space(value: Any) -> str:
     if value is None:
         return ""
     return " ".join(str(value).replace("\u00A0", " ").split()).strip()
+
+
+def strip_xml_tag(tag: str) -> str:
+    return tag.split("}", 1)[-1]
+
+
+def parse_reference_number(value: Any) -> int | None:
+    cleaned = normalize_space(value)
+    digits: list[str] = []
+    for char in cleaned:
+        if char.isdigit():
+            digits.append(char)
+            continue
+        break
+    return int("".join(digits)) if digits else None
 
 
 def clean_greek(value: Any) -> str:
@@ -263,6 +324,108 @@ def build_text_from_tokens(tokens: list[dict[str, Any]]) -> str:
     return " ".join(part for part in parts if part).strip()
 
 
+def collect_usfx_book_verses(book_element: ET.Element) -> dict[int, dict[int, str]]:
+    verses: dict[int, dict[int, list[str]]] = defaultdict(lambda: defaultdict(list))
+    current_chapter: int | None = None
+    current_verse: int | None = None
+
+    def add_text(text: str | None) -> None:
+        cleaned = normalize_space(text)
+        if current_chapter is None or current_verse is None or not cleaned:
+            return
+        verses[current_chapter][current_verse].append(cleaned)
+
+    def walk(node: ET.Element, skip: bool = False) -> None:
+        nonlocal current_chapter, current_verse
+
+        tag = strip_xml_tag(node.tag)
+        next_skip = skip or tag in USFX_NOTE_TAGS
+
+        if tag == "c":
+            current_chapter = parse_reference_number(node.attrib.get("id"))
+            current_verse = None
+        elif tag == "v":
+            current_verse = parse_reference_number(node.attrib.get("id"))
+        elif not next_skip:
+            add_text(node.text)
+
+        for child in node:
+            walk(child, next_skip)
+            if not next_skip:
+                add_text(child.tail)
+
+    for child in book_element:
+        walk(child)
+
+    return {
+        chapter_number: {
+            verse_number: normalize_space(" ".join(parts))
+            for verse_number, parts in chapter_verses.items()
+            if normalize_space(" ".join(parts))
+        }
+        for chapter_number, chapter_verses in verses.items()
+    }
+
+
+def build_ot_english_translation_map() -> dict[str, dict[int, dict[int, str]]]:
+    if not ENGLISH_LXX_USFX_PATH.exists():
+        raise SystemExit(
+            "Expected Updated Brenton USFX at /tmp/englxxup/englxxup_usfx.xml."
+        )
+
+    root = ET.parse(ENGLISH_LXX_USFX_PATH).getroot()
+    books_by_id = {
+        book.attrib["id"]: book for book in root.findall("book") if book.attrib.get("id")
+    }
+    english_map: dict[str, dict[int, dict[int, str]]] = defaultdict(
+        lambda: defaultdict(dict)
+    )
+
+    for slug, book_id in OT_ENGLISH_BOOK_ID_BY_SLUG.items():
+        book_element = books_by_id.get(book_id)
+        if book_element is None:
+            raise SystemExit(f"Missing English LXX book {book_id} for {slug}.")
+
+        for source_chapter, source_verses in collect_usfx_book_verses(book_element).items():
+            for source_verse, verse_text in source_verses.items():
+                mapped_reference = map_ot_reference(slug, source_chapter, source_verse)
+                if not mapped_reference:
+                    continue
+
+                mapped_chapter, mapped_verse = mapped_reference
+                existing_text = english_map[slug][mapped_chapter].get(mapped_verse)
+                english_map[slug][mapped_chapter][mapped_verse] = (
+                    f"{existing_text} {verse_text}".strip()
+                    if existing_text
+                    else verse_text
+                )
+
+    return {
+        slug: {
+            chapter_number: dict(sorted(verses.items()))
+            for chapter_number, verses in sorted(chapters.items())
+        }
+        for slug, chapters in sorted(english_map.items())
+    }
+
+
+def build_nt_esv_translation_map() -> dict[str, dict[int, dict[int, str]]]:
+    translations: dict[str, dict[int, dict[int, str]]] = {}
+
+    for slug in NT_SLUGS:
+        esv_book = read_json(ESV_VERSION_BOOKS_DIR / f"{slug}.json")
+        translations[slug] = {
+            chapter["chapterNumber"]: {
+                verse["number"]: normalize_space(verse.get("text"))
+                for verse in chapter.get("verses", [])
+                if normalize_space(verse.get("text"))
+            }
+            for chapter in esv_book.get("chapters", [])
+        }
+
+    return translations
+
+
 def sort_forms(forms: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return sorted(
         forms,
@@ -280,6 +443,8 @@ def main() -> None:
 
     web_books = read_json(WEB_BOOKS_PATH)
     books_by_slug = {book["slug"]: book for book in web_books}
+    ot_english_translation_map = build_ot_english_translation_map()
+    nt_esv_translation_map = build_nt_esv_translation_map()
 
     existing_nt_lexicon = read_json(NT_LEXICON_PATH)
     lexicon_entries: dict[str, dict[str, Any]] = {}
@@ -424,8 +589,22 @@ def main() -> None:
                 for verse_number in sorted(ot_book_verses[slug][chapter_number]):
                     greek_tokens = ot_book_verses[slug][chapter_number][verse_number]
                     text = build_text_from_tokens(greek_tokens)
+                    translation_text = (
+                        ot_english_translation_map.get(slug, {})
+                        .get(chapter_number, {})
+                        .get(verse_number)
+                    )
                     verses_payload.append(
-                        {"number": verse_number, "text": text, "greekTokens": greek_tokens}
+                        {
+                            "number": verse_number,
+                            "text": text,
+                            **(
+                                {"translationText": translation_text}
+                                if translation_text
+                                else {}
+                            ),
+                            "greekTokens": greek_tokens,
+                        }
                     )
                     search_entries.append(
                         {
@@ -435,6 +614,11 @@ def main() -> None:
                             "chapterNumber": chapter_number,
                             "verseNumber": verse_number,
                             "text": text,
+                            **(
+                                {"translationText": translation_text}
+                                if translation_text
+                                else {}
+                            ),
                             "greekEntryKeys": sorted(
                                 {
                                     token.get("entryKey") or token.get("strongs")
@@ -474,10 +658,20 @@ def main() -> None:
                     greek_tokens.append(greek_token)
 
                 text = verse.get("baseGreek") or build_text_from_tokens(greek_tokens)
+                translation_text = (
+                    nt_esv_translation_map.get(slug, {})
+                    .get(chapter["chapterNumber"], {})
+                    .get(verse["number"])
+                )
                 verses_payload.append(
                     {
                         "number": verse["number"],
                         "text": text,
+                        **(
+                            {"translationText": translation_text}
+                            if translation_text
+                            else {}
+                        ),
                         "greekTokens": greek_tokens,
                     }
                 )
@@ -489,6 +683,11 @@ def main() -> None:
                         "chapterNumber": chapter["chapterNumber"],
                         "verseNumber": verse["number"],
                         "text": text,
+                        **(
+                            {"translationText": translation_text}
+                            if translation_text
+                            else {}
+                        ),
                         "greekEntryKeys": sorted(
                             {
                                 token.get("entryKey") or token.get("strongs")

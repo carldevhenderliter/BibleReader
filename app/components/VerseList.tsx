@@ -17,6 +17,7 @@ type VerseListProps = {
   interlinearVerseMap?: Record<number, EsvInterlinearDisplayVerse>;
   showInterlinearOnly?: boolean;
   showVerseText?: boolean;
+  showCompanionVerseTranslation?: boolean;
   showCustomVerseTranslation?: boolean;
   showGreekSurface?: boolean;
   showGreekLemma?: boolean;
@@ -37,6 +38,7 @@ export function VerseList({
   interlinearVerseMap,
   showInterlinearOnly = false,
   showVerseText,
+  showCompanionVerseTranslation = true,
   showCustomVerseTranslation = true,
   showGreekSurface = true,
   showGreekLemma = true,
@@ -120,26 +122,37 @@ export function VerseList({
                 {verse.number}
               </span>
               <div className="verse-content">
-                {shouldShowVerseText
-                  ? version === "greek" && verse.greekTokens?.length ? (
-                      <GreekVerseTextContent
-                        className="verse-text verse-text-greek"
-                        onOpenGreekDictionary={openGreekDictionary}
-                        verse={verse}
-                      />
-                    ) : showStrongs && verse.tokens?.length ? (
-                      <VerseTextContent
-                        className="verse-text verse-text-rich"
-                        onOpenStrongs={(strongsNumbers) =>
-                          openStrongs(strongsNumbers, strongsNumbers.join(" "))
-                        }
-                        showStrongs
-                        verse={verse}
-                      />
-                    ) : (
-                      <VerseTextContent className="verse-text" verse={verse} />
-                    )
-                  : null}
+                {shouldShowVerseText || (version === "greek" && showCompanionVerseTranslation) ? (
+                  <>
+                    {shouldShowVerseText
+                      ? version === "greek" && verse.greekTokens?.length ? (
+                          <GreekVerseTextContent
+                            className="verse-text verse-text-greek"
+                            onOpenGreekDictionary={openGreekDictionary}
+                            verse={verse}
+                          />
+                        ) : showStrongs && verse.tokens?.length ? (
+                          <VerseTextContent
+                            className="verse-text verse-text-rich"
+                            onOpenStrongs={(strongsNumbers) =>
+                              openStrongs(strongsNumbers, strongsNumbers.join(" "))
+                            }
+                            showStrongs
+                            verse={verse}
+                          />
+                        ) : (
+                          <VerseTextContent className="verse-text" verse={verse} />
+                        )
+                      : null}
+                    {version === "greek" &&
+                    showCompanionVerseTranslation &&
+                    verse.translationText?.trim() ? (
+                      <p className="verse-text verse-text-companion-translation">
+                        {verse.translationText}
+                      </p>
+                    ) : null}
+                  </>
+                ) : null}
                 {activeGreekVerse && shouldShowGreekTokens ? (
                   <GreekInterlinearLine
                     bookSlug={bookSlug}

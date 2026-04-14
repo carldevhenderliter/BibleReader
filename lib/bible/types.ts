@@ -12,6 +12,7 @@ export type BookMeta = {
 export type Verse = {
   number: number;
   text: string;
+  translationText?: string;
   tokens?: VerseToken[];
   greekTokens?: GreekToken[];
 };
@@ -64,6 +65,7 @@ export type ReaderCustomizationSettings = {
   showEsvInterlinear: boolean;
   showEsvGreekOnly: boolean;
   showVerseText: boolean;
+  showCompanionVerseTranslation: boolean;
   showGreekSurface: boolean;
   showGreekLemma: boolean;
   showGreekTransliteration: boolean;
@@ -193,6 +195,7 @@ export type BibleSearchVerseEntry = {
   chapterNumber: number;
   verseNumber: number;
   text: string;
+  translationText?: string;
   tokens?: VerseToken[];
   greekTokens?: GreekToken[];
   greekEntryKeys?: string[];

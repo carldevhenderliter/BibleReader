@@ -275,6 +275,7 @@ export function WholeBookContent({
                   }
                   interlinearVerseMap={interlinearByChapter?.get(chapter.chapterNumber)}
                   key={`${version}:${book.slug}:${chapter.chapterNumber}`}
+                  showCompanionVerseTranslation={settings.showCompanionVerseTranslation}
                   showCustomVerseTranslation={settings.showCustomVerseTranslation}
                   showGreekGloss={settings.showGreekGloss}
                   showGreekLemma={settings.showGreekLemma}

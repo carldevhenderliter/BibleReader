@@ -74,6 +74,7 @@ export function ReaderSettingsPanel({
   const toggleLayer = (
     key:
       | "showVerseText"
+      | "showCompanionVerseTranslation"
       | "showCustomVerseTranslation"
       | "showGreekSurface"
       | "showGreekLemma"
@@ -91,6 +92,7 @@ export function ReaderSettingsPanel({
       showEsvInterlinear: version === "esv" ? true : settings.showEsvInterlinear,
       showEsvGreekOnly: false,
       showVerseText: true,
+      showCompanionVerseTranslation: version === "greek",
       showGreekSurface: true,
       showGreekLemma: true,
       showGreekTransliteration: true,
@@ -104,6 +106,7 @@ export function ReaderSettingsPanel({
       showEsvInterlinear: version === "esv" ? false : settings.showEsvInterlinear,
       showEsvGreekOnly: false,
       showVerseText: false,
+      showCompanionVerseTranslation: false,
       showGreekSurface: false,
       showGreekLemma: false,
       showGreekTransliteration: false,
@@ -116,6 +119,7 @@ export function ReaderSettingsPanel({
     if (version === "greek") {
       updateSettings({
         showVerseText: true,
+        showCompanionVerseTranslation: false,
         showCustomVerseTranslation: false,
         showGreekSurface: false,
         showGreekLemma: false,
@@ -334,8 +338,25 @@ export function ReaderSettingsPanel({
                 type="button"
               >
                 <strong>Verse text</strong>
-                <span>Show the translation line for the verse.</span>
+                <span>
+                  {version === "greek"
+                    ? "Show the main Greek verse line."
+                    : "Show the translation line for the verse."}
+                </span>
               </button>
+              {version === "greek" ? (
+                <button
+                  className={`settings-option-card${
+                    settings.showCompanionVerseTranslation ? " is-active" : ""
+                  }`}
+                  key="showCompanionVerseTranslation"
+                  onClick={() => toggleLayer("showCompanionVerseTranslation")}
+                  type="button"
+                >
+                  <strong>English companion</strong>
+                  <span>Show the English verse line under the Greek text.</span>
+                </button>
+              ) : null}
               <button
                 className={`settings-option-card${
                   settings.showCustomVerseTranslation ? " is-active" : ""
