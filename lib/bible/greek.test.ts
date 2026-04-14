@@ -112,6 +112,30 @@ describe("Greek dictionary lookup", () => {
     expect(resolveGreekTokenGloss(token, entry, null)).toBe("beginning");
   });
 
+  it("prefers a cleaner lemma gloss when a token gloss is just a list of alternatives", async () => {
+    const entry = await getGreekLemmaEntry("G746");
+    const token = {
+      surface: "ἀρχῇ",
+      lemma: "ἀρχή",
+      strongs: "G746",
+      gloss: "origin; beginning"
+    };
+
+    expect(resolveGreekTokenGloss(token, entry, null)).toBe("beginning");
+  });
+
+  it("keeps proper names as the displayed one-word gloss", async () => {
+    const entry = await getGreekLemmaEntry("G11");
+    const token = {
+      surface: "Ἀβραάμ",
+      lemma: "Ἀβραάμ",
+      strongs: "G11",
+      gloss: 'Abraham, the Hebrew patriarch — Abraham'
+    };
+
+    expect(resolveGreekTokenGloss(token, entry, null)).toBe("Abraham");
+  });
+
   it("extracts compact noun morphology details", () => {
     expect(
       getGreekMorphologyDetails({

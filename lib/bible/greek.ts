@@ -621,9 +621,16 @@ function dedupeMatches(matches: GreekDictionaryMatch[]) {
 function sanitizeGlossCandidate(value: string) {
   return value
     .replace(/\s+/g, " ")
+    .replace(/[“”"]/g, "")
     .replace(/^[-,:;.\s]+/g, "")
     .replace(/[-,:;.\s]+$/g, "")
     .trim();
+}
+
+function isPlaceholderGlossText(value: string) {
+  const normalized = normalizeGlossValue(value);
+
+  return normalized === "greek lemma" || normalized === "lemma" || normalized === "greek";
 }
 
 function isReadableGlossCandidate(value: string) {
@@ -635,8 +642,17 @@ function isReadableGlossCandidate(value: string) {
     !/\d/.test(value) &&
     !/null/i.test(value) &&
     !/\bfrom\b/i.test(value) &&
-    !/^[a-z]?\s*gos/i.test(normalized)
+    !/^[a-z]?\s*gos/i.test(normalized) &&
+    !isPlaceholderGlossText(value)
   );
+}
+
+function glossContainsMultipleMeanings(value?: string | null) {
+  if (!value?.trim()) {
+    return false;
+  }
+
+  return /[;,/]|(?:\s+\bor\b\s+)/i.test(value);
 }
 
 function splitGlossDefinitionIntoCandidates(value: string) {
@@ -715,6 +731,29 @@ function extractSingleWordGlossCandidate(value: string) {
   }
 
   return null;
+}
+
+function getPreferredSingleWordGlossCandidate(
+  value: string | null | undefined,
+  options?: {
+    preferSingleMeaning?: boolean;
+  }
+) {
+  if (!value?.trim()) {
+    return null;
+  }
+
+  const singleWordCandidate = extractSingleWordGlossCandidate(value);
+
+  if (!singleWordCandidate || isPlaceholderGlossText(singleWordCandidate)) {
+    return null;
+  }
+
+  if (options?.preferSingleMeaning && glossContainsMultipleMeanings(value)) {
+    return null;
+  }
+
+  return singleWordCandidate;
 }
 
 const GREEK_MORPHOLOGY_TERM_MATCHERS: Array<{
@@ -959,9 +998,9 @@ export function resolveGreekTokenGloss(
     return override.selectedGloss.trim();
   }
 
-  const singleWordTokenGloss = token.gloss?.trim()
-    ? extractSingleWordGlossCandidate(token.gloss)
-    : null;
+  const singleWordTokenGloss = getPreferredSingleWordGlossCandidate(token.gloss, {
+    preferSingleMeaning: true
+  });
 
   if (singleWordTokenGloss) {
     return singleWordTokenGloss;
@@ -969,8 +1008,9 @@ export function resolveGreekTokenGloss(
 
   if (entry) {
     const singleWordEntryGloss =
-      extractSingleWordGlossCandidate(entry.shortDefinition) ??
-      (entry.longDefinition ? extractSingleWordGlossCandidate(entry.longDefinition) : null);
+      getPreferredSingleWordGlossCandidate(entry.shortDefinition) ??
+      getPreferredSingleWordGlossCandidate(token.gloss) ??
+      getPreferredSingleWordGlossCandidate(entry.longDefinition);
 
     if (singleWordEntryGloss) {
       return singleWordEntryGloss;
@@ -979,7 +1019,13 @@ export function resolveGreekTokenGloss(
 
   const firstOption = entry ? getGreekGlossOptions(entry, null)[0] : null;
 
-  return token.gloss?.trim() ?? firstOption?.label ?? "";
+  return (
+    getPreferredSingleWordGlossCandidate(token.gloss) ??
+    getPreferredSingleWordGlossCandidate(firstOption?.label) ??
+    token.gloss?.trim() ??
+    firstOption?.label ??
+    ""
+  );
 }
 
 export async function getGreekLemmaEntry(strongsNumber: string) {
