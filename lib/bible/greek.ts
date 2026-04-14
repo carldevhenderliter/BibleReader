@@ -1,4 +1,5 @@
 import type {
+  BibleSearchVerseEntry,
   GreekGlossOption,
   GreekInflectedForm,
   GreekLemmaEntry,
@@ -363,7 +364,8 @@ function normalizeGlossValue(value: string) {
 }
 
 type GreekFormIndexValue = Array<{
-  strongs: string;
+  entryKey: string;
+  strongs?: string;
   form: string;
 }>;
 
@@ -371,6 +373,7 @@ let greekLexiconPromise: Promise<Record<string, GreekLemmaEntry>> | null = null;
 let lemmaIndexPromise: Promise<Record<string, string[]>> | null = null;
 let formIndexPromise: Promise<Record<string, GreekFormIndexValue>> | null = null;
 let searchableGreekEntriesPromise: Promise<SearchableGreekEntry[]> | null = null;
+let greekVerseIndexPromise: Promise<BibleSearchVerseEntry[]> | null = null;
 
 const CRITICAL_MARKS_PATTERN = /[⸀-⸟]/gu;
 const ROUGH_BREATHING_MARK = "\u0314";
@@ -509,7 +512,18 @@ export function transliterateGreekSurface(value: string) {
 async function loadGreekLexicon() {
   if (!greekLexiconPromise) {
     greekLexiconPromise = import("@/data/bible/greek/lexicon.json").then(
-      (module) => (module.default ?? {}) as Record<string, GreekLemmaEntry>
+      (module) =>
+        Object.fromEntries(
+          Object.entries((module.default ?? {}) as Record<string, GreekLemmaEntry>).map(
+            ([entryKey, entry]) => [
+              entryKey,
+              {
+                ...entry,
+                entryKey: entry.entryKey ?? entryKey
+              }
+            ]
+          )
+        ) as Record<string, GreekLemmaEntry>
     );
   }
 
@@ -529,7 +543,19 @@ async function loadGreekLemmaIndex() {
 async function loadGreekFormIndex() {
   if (!formIndexPromise) {
     formIndexPromise = import("@/data/bible/greek/form-index.json").then(
-      (module) => (module.default ?? {}) as Record<string, GreekFormIndexValue>
+      (module) =>
+        Object.fromEntries(
+          Object.entries((module.default ?? {}) as Record<string, Array<{ entryKey?: string; strongs?: string; form: string }>>).map(
+            ([key, items]) => [
+              key,
+              items.map((item) => ({
+                entryKey: item.entryKey ?? item.strongs ?? "",
+                strongs: item.strongs,
+                form: item.form
+              }))
+            ]
+          )
+        ) as Record<string, GreekFormIndexValue>
     );
   }
 
@@ -555,6 +581,16 @@ async function loadSearchableGreekEntries() {
   return searchableGreekEntriesPromise;
 }
 
+async function loadGreekVerseIndex() {
+  if (!greekVerseIndexPromise) {
+    greekVerseIndexPromise = import("@/data/bible/search/greek.json").then(
+      (module) => (module.default ?? []) as BibleSearchVerseEntry[]
+    );
+  }
+
+  return greekVerseIndexPromise;
+}
+
 function findSelectedForm(entry: GreekLemmaEntry, selectedFormValue: string | undefined) {
   if (!selectedFormValue) {
     return undefined;
@@ -571,7 +607,7 @@ function dedupeMatches(matches: GreekDictionaryMatch[]) {
   const seen = new Set<string>();
 
   return matches.filter((match) => {
-    const key = `${match.entry.strongs}:${match.selectedForm?.form ?? ""}:${match.matchType}`;
+    const key = `${match.entry.entryKey}:${match.selectedForm?.form ?? ""}:${match.matchType}`;
 
     if (seen.has(key)) {
       return false;
@@ -948,12 +984,19 @@ export function resolveGreekTokenGloss(
 
 export async function getGreekLemmaEntry(strongsNumber: string) {
   const lexicon = await loadGreekLexicon();
+  const normalizedKey = strongsNumber.trim();
 
-  return lexicon[normalizeStrongsNumber(strongsNumber)] ?? null;
+  return lexicon[normalizedKey] ?? lexicon[normalizeStrongsNumber(normalizedKey)] ?? null;
 }
 
 export async function getGreekDictionaryMatchForToken(token: GreekToken): Promise<GreekDictionaryMatch | null> {
-  const entry = await getGreekLemmaEntry(token.strongs);
+  const entryKey = token.entryKey ?? token.strongs;
+
+  if (!entryKey) {
+    return null;
+  }
+
+  const entry = await getGreekLemmaEntry(entryKey);
 
   if (!entry) {
     return null;
@@ -1007,7 +1050,7 @@ export async function lookupGreekDictionary(query: string, limit = 12): Promise<
   }
 
   const lemmaMatches = (lemmaIndex[normalizedLemmaQuery] ?? [])
-    .map((strongs) => lexicon[strongs] ?? null)
+    .map((entryKey) => lexicon[entryKey] ?? null)
     .filter((entry): entry is GreekLemmaEntry => entry !== null);
 
   if (lemmaMatches.length > 0) {
@@ -1021,7 +1064,7 @@ export async function lookupGreekDictionary(query: string, limit = 12): Promise<
 
   const formMatches = (formIndex[normalizedFormQuery] ?? []).reduce<GreekDictionaryMatch[]>(
     (matches, item) => {
-      const entry = lexicon[item.strongs] ?? null;
+      const entry = lexicon[item.entryKey] ?? lexicon[item.strongs ?? ""] ?? null;
 
       if (!entry) {
         return matches;
@@ -1093,8 +1136,12 @@ export async function lookupGreekDictionary(query: string, limit = 12): Promise<
     )
     .sort((left, right) =>
       left.score === right.score
-        ? Number.parseInt(left.entry.strongs.slice(1), 10) -
-          Number.parseInt(right.entry.strongs.slice(1), 10)
+        ? (left.entry.strongs
+            ? Number.parseInt(left.entry.strongs.slice(1), 10)
+            : Number.POSITIVE_INFINITY) -
+          (right.entry.strongs
+            ? Number.parseInt(right.entry.strongs.slice(1), 10)
+            : Number.POSITIVE_INFINITY)
         : left.score - right.score
     )
     .slice(0, limit);
@@ -1104,5 +1151,18 @@ export async function lookupGreekDictionary(query: string, limit = 12): Promise<
       entry: match.entry,
       matchType: match.matchType
     }))
+  );
+}
+
+export async function getGreekVerseOccurrences(entryKey: string) {
+  const verses = await loadGreekVerseIndex();
+
+  return verses.filter((entry) =>
+    (entry.greekEntryKeys ?? []).includes(entryKey) ||
+    (entry.greekTokens ?? []).some((token) => {
+      const tokenEntryKey = token.entryKey ?? token.strongs ?? null;
+
+      return tokenEntryKey === entryKey;
+    })
   );
 }

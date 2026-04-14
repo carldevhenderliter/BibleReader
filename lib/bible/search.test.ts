@@ -109,6 +109,21 @@ describe("Bible search", () => {
     ).toBe(true);
   });
 
+  it("loads standalone Greek verse search results from bundled indexes", async () => {
+    const results = await searchBible("ἀρχη", "greek");
+
+    expect(
+      results.some(
+        (result) =>
+          result.type === "verse" &&
+          result.bookSlug === "genesis" &&
+          result.chapterNumber === 1 &&
+          result.verseNumber === 1 &&
+          result.preview.includes("ἀρχῇ")
+      )
+    ).toBe(true);
+  });
+
   it("limits search results to the old testament scope", async () => {
     const results = await searchBible("light", "web", "partial", undefined, "old-testament");
 

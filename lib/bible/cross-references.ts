@@ -39,7 +39,8 @@ const verseIndexLoaders: Record<BundledBibleVersion, () => Promise<unknown>> = {
   web: () => import("@/data/bible/search/web.json"),
   kjv: () => import("@/data/bible/search/kjv.json"),
   nlt: () => import("@/data/bible/search/nlt.json"),
-  esv: () => import("@/data/bible/search/esv.json")
+  esv: () => import("@/data/bible/search/esv.json"),
+  greek: () => import("@/data/bible/search/greek.json")
 };
 
 let crossReferencePromise: Promise<SourceCrossReferenceEntry[]> | null = null;

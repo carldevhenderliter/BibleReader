@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 
 import { GreekInterlinearLine } from "@/app/components/GreekInterlinearLine";
+import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { VerseTranslationEditor } from "@/app/components/VerseTranslationEditor";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
@@ -109,7 +110,13 @@ export function VerseList({
               </span>
               <div className="verse-content">
                 {shouldShowVerseText
-                  ? showStrongs && verse.tokens?.length ? (
+                  ? version === "greek" && verse.greekTokens?.length ? (
+                      <GreekVerseTextContent
+                        className="verse-text verse-text-greek"
+                        onOpenGreekDictionary={openGreekDictionary}
+                        verse={verse}
+                      />
+                    ) : showStrongs && verse.tokens?.length ? (
                       <VerseTextContent
                         className="verse-text verse-text-rich"
                         onOpenStrongs={(strongsNumbers) =>
@@ -123,19 +130,21 @@ export function VerseList({
                     )
                   : null}
                 {interlinearVerseMap?.[verse.number] && shouldShowGreekTokens ? (
-                  <GreekInterlinearLine
-                    bookSlug={bookSlug}
-                    chapterNumber={chapterNumber}
-                    onOpenGreekDictionary={(token) =>
-                      openGreekDictionary({
-                        strongs: token.strongs,
-                        lemma: token.lemma,
-                        label: token.lemma,
-                        selectedForm: token.surface,
-                        selectedFormMorphology: token.morphology ?? null,
-                        matchedQuery: token.surface
-                      })
-                    }
+                      <GreekInterlinearLine
+                        bookSlug={bookSlug}
+                        chapterNumber={chapterNumber}
+                        onOpenGreekDictionary={(token) =>
+                          openGreekDictionary({
+                            entryKey: token.entryKey ?? token.strongs ?? token.lemma,
+                            strongs: token.strongs ?? null,
+                            lemma: token.lemma,
+                            label: token.lemma,
+                            selectedForm: token.surface,
+                            selectedFormMorphology: token.morphology ?? null,
+                            selectedFormDecodedMorphology: token.decodedMorphology ?? null,
+                            matchedQuery: token.surface
+                          })
+                        }
                     showGloss={showGreekGloss}
                     showLemma={showGreekLemma}
                     showSurface={showGreekSurface}

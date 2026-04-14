@@ -980,6 +980,49 @@ select {
   white-space: normal;
 }
 
+.verse-text-greek {
+  font-size: calc(1rem * var(--reader-greek-font-scale));
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+  white-space: normal;
+}
+
+.verse-greek-inline-wrap {
+  display: inline;
+}
+
+.verse-greek-inline-wrap + .verse-greek-inline-wrap::before {
+  content: " ";
+}
+
+.verse-greek-inline-token,
+.verse-greek-inline-token-text {
+  display: inline;
+  color: rgba(240, 247, 255, 0.98);
+}
+
+.verse-greek-inline-token {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+  transition:
+    color 160ms ease,
+    text-shadow 160ms ease;
+}
+
+.verse-greek-inline-token:hover,
+.verse-greek-inline-token:focus-visible {
+  color: rgba(var(--reader-accent-rgb), 1);
+  outline: none;
+  text-shadow: 0 0 0.7rem rgba(var(--reader-accent-rgb), 0.35);
+}
+
+.verse-greek-inline-punctuation {
+  color: rgba(240, 247, 255, 0.88);
+}
+
 .verse-content {
   display: grid;
   gap: 0.55rem;

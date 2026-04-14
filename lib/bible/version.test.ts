@@ -15,14 +15,17 @@ describe("bible version helpers", () => {
     expect(resolveBibleVersion("nrsv")).toBeNull();
   });
 
-  it("allows installed bundled versions including ESV", () => {
+  it("allows installed bundled versions including ESV and Greek", () => {
     expect(resolveBibleVersion("esv")).toBe("esv");
     expect(normalizeBibleVersion("esv")).toBe("esv");
+    expect(resolveBibleVersion("greek")).toBe("greek");
+    expect(normalizeBibleVersion("greek")).toBe("greek");
   });
 
-  it("lists ESV as an enabled option", () => {
+  it("lists ESV and Greek as enabled options", () => {
     const options = getBibleVersionOptions();
 
     expect(options.find((option) => option.id === "esv")?.disabled).toBe(false);
+    expect(options.find((option) => option.id === "greek")?.disabled).toBe(false);
   });
 });

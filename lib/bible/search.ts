@@ -1,5 +1,10 @@
 import { DEFAULT_BIBLE_VERSION } from "@/lib/bible/constants";
-import { lookupGreekDictionary, type GreekDictionaryMatch } from "@/lib/bible/greek";
+import {
+  getGreekVerseOccurrences,
+  lookupGreekDictionary,
+  normalizeGreekLookupValue,
+  type GreekDictionaryMatch
+} from "@/lib/bible/greek";
 import {
   getStrongsEntry,
   normalizeStrongsNumber
@@ -69,13 +74,15 @@ const verseIndexLoaders: Record<BundledBibleVersion, () => Promise<unknown>> = {
   web: () => import("@/data/bible/search/web.json"),
   kjv: () => import("@/data/bible/search/kjv.json"),
   nlt: () => import("@/data/bible/search/nlt.json"),
-  esv: () => import("@/data/bible/search/esv.json")
+  esv: () => import("@/data/bible/search/esv.json"),
+  greek: () => import("@/data/bible/search/greek.json")
 };
 const topicIndexLoaders: Record<BundledBibleVersion, () => Promise<unknown>> = {
   web: () => import("@/data/bible/search/topics-web.json"),
   kjv: () => import("@/data/bible/search/topics-kjv.json"),
   nlt: () => import("@/data/bible/search/topics-nlt.json"),
-  esv: () => import("@/data/bible/search/topics-esv.json")
+  esv: () => import("@/data/bible/search/topics-esv.json"),
+  greek: () => import("@/data/bible/search/topics-web.json")
 };
 
 let booksPromise: Promise<SearchableBook[]> | null = null;
@@ -96,9 +103,13 @@ function normalizeTopicValue(value: string) {
 }
 
 function normalizeVerseValue(value: string) {
-  return normalizeValue(value)
+  return value
+    .normalize("NFD")
+    .replace(/\p{M}+/gu, "")
     .replace(/[’']/g, "")
-    .replace(/[^a-z0-9\s]+/g, " ")
+    .replace(/ς/g, "σ")
+    .toLowerCase()
+    .replace(/[^\p{L}0-9\s]+/gu, " ")
     .replace(/\s+/g, " ")
     .trim();
 }
@@ -219,7 +230,8 @@ function getGreekLemmaResult(
 ): BibleSearchGreekLemmaResult {
   return {
     type: "greek-lemma",
-    id: `greek-lemma:${match.entry.strongs}:${match.selectedForm?.form ?? match.selectedFormValue ?? "lemma"}`,
+    id: `greek-lemma:${match.entry.entryKey}:${match.selectedForm?.form ?? match.selectedFormValue ?? "lemma"}`,
+    entryKey: match.entry.entryKey,
     strongs: match.entry.strongs,
     lemma: match.entry.lemma,
     transliteration: match.entry.transliteration,
@@ -612,24 +624,27 @@ async function getGreekLookupResults(
   booksBySlug: Map<string, SearchableBook>,
   scope: SearchScope
 ): Promise<BibleSearchResult[]> {
-  const [matches, strongsVerseIndex, kjvVerseIndex] = await Promise.all([
-    lookupGreekDictionary(rawFilter, MAX_GREEK_LEMMA_RESULTS),
-    loadStrongsVerseIndex(),
-    loadVerseIndex("kjv")
-  ]);
+  const matches = await lookupGreekDictionary(rawFilter, MAX_GREEK_LEMMA_RESULTS);
 
   if (matches.length === 0) {
     return [];
   }
 
-  const scopedMatchesByEntry = new Map(
-    matches.map((match) => [
-      match.entry.strongs,
-      getScopedStrongsVerseMatches(match.entry.strongs, strongsVerseIndex, booksBySlug, scope)
-    ])
+  const scopedMatchesByEntry = new Map<string, BibleSearchVerseEntry[]>(
+    await Promise.all(
+      matches.map(async (match) => {
+        const verseEntries = (await getGreekVerseOccurrences(match.entry.entryKey)).filter((entry) => {
+          const book = booksBySlug.get(entry.bookSlug);
+
+          return book ? matchesSearchScopeBook(book, scope) : false;
+        });
+
+        return [match.entry.entryKey, verseEntries] as const;
+      })
+    )
   );
   const greekResults = matches.map((match) =>
-    getGreekLemmaResult(match, scopedMatchesByEntry.get(match.entry.strongs)?.length ?? 0)
+    getGreekLemmaResult(match, scopedMatchesByEntry.get(match.entry.entryKey)?.length ?? 0)
   );
 
   if (matches.length !== 1) {
@@ -637,16 +652,14 @@ async function getGreekLookupResults(
   }
 
   const selectedEntry = matches[0];
-  const verseResults = getStrongsVerseResults(
-    selectedEntry.entry.strongs,
-    scopedMatchesByEntry.get(selectedEntry.entry.strongs) ?? [],
-    kjvVerseIndex
-  );
+  const verseResults = (scopedMatchesByEntry.get(selectedEntry.entry.entryKey) ?? [])
+    .slice(0, MAX_VERSE_RESULTS)
+    .map<BibleSearchResult>((entry) => getVerseResult(entry, "greek", "Greek"));
 
   return dedupeSearchResults([
     getGreekLemmaResult(
       selectedEntry,
-      scopedMatchesByEntry.get(selectedEntry.entry.strongs)?.length ?? 0
+      scopedMatchesByEntry.get(selectedEntry.entry.entryKey)?.length ?? 0
     ),
     ...verseResults
   ]);

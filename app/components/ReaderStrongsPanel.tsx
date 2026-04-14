@@ -2,11 +2,13 @@
 
 import { useEffect, useMemo, useState } from "react";
 
+import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
 import { VerseTextContent } from "@/app/components/VerseTextContent";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import {
   getGreekLemmaEntry,
   getGreekMorphologyDetails,
+  getGreekVerseOccurrences,
   normalizeGreekFormLookupValue
 } from "@/lib/bible/greek";
 import {
@@ -20,6 +22,7 @@ import type {
   GreekLemmaEntry,
   StrongsEntry
 } from "@/lib/bible/types";
+import { getBookHighlightedVerseHref } from "@/lib/bible/utils";
 import { findFathersSegmentsByGreekLemma, normalizeFathersGreekText } from "@/lib/fathers/search";
 import type { FathersLemmaMatch } from "@/lib/fathers/types";
 
@@ -30,7 +33,7 @@ type OutsideScriptureLookupState = {
 
 type BibleOccurrencesState = {
   status: "loading" | "loaded";
-  matches: Array<BibleSearchVerseEntry & { href: string }>;
+  matches: Array<BibleSearchVerseEntry & { href?: string }>;
 };
 
 type StrongsTab = "bible" | "bdag" | "outside-bible";
@@ -141,6 +144,7 @@ export function ReaderStrongsPanel() {
     activeGreekSelection,
     activeStrongsLabel,
     activeStrongsNumbers,
+    openGreekDictionary,
     openStrongs
   } = useReaderWorkspace();
   const [entries, setEntries] = useState<StrongsEntry[]>([]);
@@ -153,7 +157,7 @@ export function ReaderStrongsPanel() {
     Record<string, OutsideScriptureLookupState>
   >({});
   const isGreekDictionaryMode = activeGreekSelection !== null;
-  const activeGreekStrongs = activeGreekSelection?.strongs ?? null;
+  const activeGreekEntryKey = activeGreekSelection?.entryKey ?? activeGreekSelection?.strongs ?? null;
   const activePanelTitle =
     activeGreekSelection?.lemma ??
     activeStrongsLabel?.trim() ??
@@ -184,9 +188,11 @@ export function ReaderStrongsPanel() {
     return {
       form: activeGreekSelection.selectedForm,
       morphology: activeGreekSelection.selectedFormMorphology ?? "",
+      decodedMorphology: activeGreekSelection.selectedFormDecodedMorphology ?? undefined,
       definition: undefined
     };
   }, [
+    activeGreekSelection?.selectedFormDecodedMorphology,
     activeGreekSelection?.selectedForm,
     activeGreekSelection?.selectedFormMorphology,
     selectedGreekForm
@@ -209,7 +215,7 @@ export function ReaderStrongsPanel() {
       return;
     }
 
-    if (!activeGreekStrongs) {
+    if (!activeGreekEntryKey) {
       setGreekEntry(null);
       setGreekStrongsEntry(null);
       setIsLoading(false);
@@ -223,8 +229,10 @@ export function ReaderStrongsPanel() {
     setBibleOccurrences({});
     setOutsideScripture({});
 
-    void Promise.all([getGreekLemmaEntry(activeGreekStrongs), getStrongsEntry(activeGreekStrongs)]).then(
-      ([nextGreekEntry, nextGreekStrongsEntry]) => {
+    void Promise.all([
+      getGreekLemmaEntry(activeGreekEntryKey),
+      activeGreekSelection?.strongs ? getStrongsEntry(activeGreekSelection.strongs) : Promise.resolve(null)
+    ]).then(([nextGreekEntry, nextGreekStrongsEntry]) => {
         if (isCancelled) {
           return;
         }
@@ -234,7 +242,7 @@ export function ReaderStrongsPanel() {
         setIsLoading(false);
         if (nextGreekEntry) {
           setActiveTabs({
-            [nextGreekEntry.strongs]: "bible"
+            [nextGreekEntry.entryKey]: "bible"
           });
         }
       }
@@ -243,7 +251,7 @@ export function ReaderStrongsPanel() {
     return () => {
       isCancelled = true;
     };
-  }, [activeGreekStrongs, isGreekDictionaryMode]);
+  }, [activeGreekEntryKey, activeGreekSelection?.strongs, isGreekDictionaryMode]);
 
   useEffect(() => {
     if (isGreekDictionaryMode) {
@@ -284,28 +292,30 @@ export function ReaderStrongsPanel() {
   }, [activeStrongsNumbers, isGreekDictionaryMode]);
 
   useEffect(() => {
-    const activeStrongsIds = [
-      ...entries.map((entry) => entry.id),
-      ...(greekEntry?.strongs ? [greekEntry.strongs] : [])
-    ];
+    const activeIds = [...entries.map((entry) => entry.id), ...(greekEntry ? [greekEntry.entryKey] : [])];
 
-    activeStrongsIds.forEach((strongsNumber) => {
-      if (bibleOccurrences[strongsNumber]) {
+    activeIds.forEach((entryId) => {
+      if (bibleOccurrences[entryId]) {
         return;
       }
 
       setBibleOccurrences((current) => ({
         ...current,
-        [strongsNumber]: {
+        [entryId]: {
           status: "loading",
           matches: []
         }
       }));
 
-      void getStrongsVerseOccurrencesWithTokens(strongsNumber).then((matches) => {
+      const lookupPromise =
+        greekEntry?.entryKey === entryId
+          ? getGreekVerseOccurrences(entryId)
+          : getStrongsVerseOccurrencesWithTokens(entryId);
+
+      void lookupPromise.then((matches) => {
         setBibleOccurrences((current) => ({
           ...current,
-          [strongsNumber]: {
+          [entryId]: {
             status: "loaded",
             matches
           }
@@ -345,17 +355,23 @@ export function ReaderStrongsPanel() {
     }
   }
 
-  function renderBibleOccurrences(strongsNumber: string) {
-    const occurrences = bibleOccurrences[strongsNumber];
+  function renderBibleOccurrences(entryId: string, mode: "strongs" | "greek") {
+    const occurrences = bibleOccurrences[entryId];
 
     if (occurrences?.status === "loading") {
-      return <p className="strongs-entry-meta">Loading KJV verse occurrences…</p>;
+      return (
+        <p className="strongs-entry-meta">
+          {mode === "greek" ? "Loading Greek verse occurrences…" : "Loading KJV verse occurrences…"}
+        </p>
+      );
     }
 
     if (!occurrences?.matches.length) {
       return (
         <p className="strongs-entry-copy">
-          No KJV verse occurrences were found for this Strong’s number.
+          {mode === "greek"
+            ? "No Greek Bible occurrences were found for this entry."
+            : "No KJV verse occurrences were found for this Strong’s number."}
         </p>
       );
     }
@@ -365,24 +381,48 @@ export function ReaderStrongsPanel() {
         {occurrences.matches.map((match) => (
           <article
             className="strongs-entry-bible-verse"
-            key={`${strongsNumber}:${match.bookSlug}:${match.chapterNumber}:${match.verseNumber}`}
+            key={`${entryId}:${match.bookSlug}:${match.chapterNumber}:${match.verseNumber}`}
           >
-            <a className="strongs-entry-bible-verse-link" href={match.href}>
+            <a
+              className="strongs-entry-bible-verse-link"
+              href={
+                "href" in match && typeof match.href === "string"
+                  ? match.href
+                  : getBookHighlightedVerseHref(
+                      match.bookSlug,
+                      match.chapterNumber,
+                      match.verseNumber,
+                      mode === "greek" ? "greek" : "kjv"
+                    )
+              }
+            >
               {match.bookName} {match.chapterNumber}:{match.verseNumber}
             </a>
-            <VerseTextContent
-              className="strongs-entry-copy strongs-entry-bible-verse-text"
-              highlightedStrongsNumber={strongsNumber}
-              onOpenStrongs={(strongsNumbers) =>
-                openStrongs(strongsNumbers, strongsNumbers.join(" "))
-              }
-              showStrongs
-              verse={{
-                number: match.verseNumber,
-                text: match.text,
-                tokens: match.tokens
-              }}
-            />
+            {mode === "greek" ? (
+              <GreekVerseTextContent
+                className="strongs-entry-copy strongs-entry-bible-verse-text verse-text-greek"
+                onOpenGreekDictionary={openGreekDictionary}
+                verse={{
+                  number: match.verseNumber,
+                  text: match.text,
+                  greekTokens: match.greekTokens
+                }}
+              />
+            ) : (
+              <VerseTextContent
+                className="strongs-entry-copy strongs-entry-bible-verse-text"
+                highlightedStrongsNumber={entryId}
+                onOpenStrongs={(strongsNumbers) =>
+                  openStrongs(strongsNumbers, strongsNumbers.join(" "))
+                }
+                showStrongs
+                verse={{
+                  number: match.verseNumber,
+                  text: match.text,
+                  tokens: match.tokens
+                }}
+              />
+            )}
           </article>
         ))}
       </div>
@@ -448,7 +488,7 @@ export function ReaderStrongsPanel() {
   }
 
   function renderGreekDictionaryCard(entry: GreekLemmaEntry) {
-    const strongsKey = entry.strongs;
+    const strongsKey = entry.entryKey;
     const activeTab = activeTabs[strongsKey] ?? "bible";
     const selectedFormValue = activeGreekSelection?.selectedForm ?? null;
     const normalizedSelectedForm = selectedFormValue
@@ -456,9 +496,9 @@ export function ReaderStrongsPanel() {
       : null;
 
     return (
-      <article className="strongs-entry-card greek-dictionary-card" key={entry.strongs}>
+      <article className="strongs-entry-card greek-dictionary-card" key={entry.entryKey}>
         <div className="strongs-entry-header">
-          <span className="strongs-entry-number">{entry.strongs}</span>
+          <span className="strongs-entry-number">{entry.strongs ?? entry.entryKey}</span>
           <span className="strongs-entry-language">Greek dictionary</span>
         </div>
         <p className="strongs-entry-lemma greek-dictionary-lemma">{entry.lemma}</p>
@@ -476,11 +516,9 @@ export function ReaderStrongsPanel() {
                 {selectedGreekFormDetails.form}
               </p>
               <p className="strongs-entry-meta">
-                Lemma: {entry.lemma}
-                <span className="reader-meta-separator" aria-hidden="true">
-                  ·
-                </span>
-                Strong’s: {entry.strongs}
+                {["Lemma: " + entry.lemma, entry.strongs ? `Strong’s: ${entry.strongs}` : null]
+                  .filter(Boolean)
+                  .join(" · ")}
               </p>
               {selectedGreekFormDetails.morphology ? (
                 <p className="strongs-entry-meta">
@@ -495,7 +533,7 @@ export function ReaderStrongsPanel() {
                   {selectedGreekMorphologyDetails.terms.map((term) => (
                     <article
                       className="verse-greek-morphology-item"
-                      key={`${entry.strongs}:${selectedGreekFormDetails.form}:${term.key}`}
+                      key={`${entry.entryKey}:${selectedGreekFormDetails.form}:${term.key}`}
                     >
                       <p className="verse-greek-morphology-term">{term.label}</p>
                       <p className="verse-greek-morphology-copy">{term.definition}</p>
@@ -532,7 +570,7 @@ export function ReaderStrongsPanel() {
               return (
                 <article
                   className={`greek-dictionary-form-row${isSelected ? " is-selected" : ""}`}
-                  key={`${entry.strongs}:${form.form}:${form.morphology}`}
+                  key={`${entry.entryKey}:${form.form}:${form.morphology}`}
                 >
                   <p className="greek-dictionary-form-line">
                     <span className="greek-dictionary-form-text">{form.form}</span>
@@ -560,13 +598,17 @@ export function ReaderStrongsPanel() {
             })}
           </div>
         </section>
-        <div className="strongs-entry-tabs" role="tablist" aria-label={`${entry.strongs} study tabs`}>
+        <div
+          className="strongs-entry-tabs"
+          role="tablist"
+          aria-label={`${entry.strongs ?? entry.entryKey} study tabs`}
+        >
           {getGreekAvailableTabs(greekStrongsEntry).map((tab) => (
             <button
               aria-selected={activeTab === tab}
               className={`lookup-pane-tab${activeTab === tab ? " is-active" : ""}`}
-              key={`${entry.strongs}:${tab}`}
-              onClick={() => handleSelectTab(entry.strongs, tab, entry.lemma)}
+              key={`${entry.entryKey}:${tab}`}
+              onClick={() => handleSelectTab(entry.entryKey, tab, entry.lemma)}
               role="tab"
               type="button"
             >
@@ -577,7 +619,7 @@ export function ReaderStrongsPanel() {
         {activeTab === "bible" ? (
           <div className="strongs-entry-tab-panel">
             <p className="strongs-entry-section-label">Verses In Bible</p>
-            {renderBibleOccurrences(entry.strongs)}
+            {renderBibleOccurrences(entry.entryKey, "greek")}
           </div>
         ) : null}
         {activeTab === "bdag" ? (
@@ -591,7 +633,7 @@ export function ReaderStrongsPanel() {
         {activeTab === "outside-bible" ? (
           <div className="strongs-entry-tab-panel strongs-entry-outside-scripture-results">
             <p className="strongs-entry-section-label">Verses Found Outside Bible</p>
-            {renderOutsideBibleSection(entry.strongs, entry.lemma)}
+            {renderOutsideBibleSection(entry.entryKey, entry.lemma)}
           </div>
         ) : null}
       </article>
@@ -638,7 +680,7 @@ export function ReaderStrongsPanel() {
         {activeTab === "bible" ? (
           <div className="strongs-entry-tab-panel">
             <p className="strongs-entry-section-label">Verses In Bible</p>
-            {renderBibleOccurrences(entry.id)}
+            {renderBibleOccurrences(entry.id, "strongs")}
           </div>
         ) : null}
         {activeTab === "bdag" && entry.bdagArticles?.length ? (

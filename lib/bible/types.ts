@@ -13,6 +13,7 @@ export type Verse = {
   number: number;
   text: string;
   tokens?: VerseToken[];
+  greekTokens?: GreekToken[];
 };
 
 export type Chapter = {
@@ -31,9 +32,9 @@ export type BookPayload = {
 
 export type ReadingView = "chapter" | "book";
 
-export type BibleVersion = "web" | "kjv" | "nlt" | "esv";
+export type BibleVersion = "web" | "kjv" | "nlt" | "esv" | "greek";
 
-export type BundledBibleVersion = Extract<BibleVersion, "web" | "kjv" | "nlt" | "esv">;
+export type BundledBibleVersion = Extract<BibleVersion, "web" | "kjv" | "nlt" | "esv" | "greek">;
 
 export type ReadingLocation = {
   book: string;
@@ -193,6 +194,8 @@ export type BibleSearchVerseEntry = {
   verseNumber: number;
   text: string;
   tokens?: VerseToken[];
+  greekTokens?: GreekToken[];
+  greekEntryKeys?: string[];
 };
 
 export type BibleSearchStrongsVerseEntry = {
@@ -341,18 +344,21 @@ export type BibleSearchTopicSuggestionResult = {
 };
 
 export type GreekDictionarySelection = {
-  strongs: string;
+  entryKey: string;
+  strongs?: string | null;
   lemma: string;
   label?: string | null;
   selectedForm?: string | null;
   selectedFormMorphology?: string | null;
+  selectedFormDecodedMorphology?: string | null;
   matchedQuery?: string | null;
 };
 
 export type BibleSearchGreekLemmaResult = {
   type: "greek-lemma";
   id: string;
-  strongs: string;
+  entryKey: string;
+  strongs?: string | null;
   lemma: string;
   transliteration: string;
   label: string;
@@ -449,10 +455,12 @@ export type VerseToken = {
 export type GreekToken = {
   surface: string;
   lemma: string;
-  strongs: string;
+  entryKey?: string;
+  strongs?: string;
   occurrenceKey?: string;
   morphology?: string;
   decodedMorphology?: string;
+  transliteration?: string;
   gloss?: string;
   trailingPunctuation?: string;
 };
@@ -471,18 +479,22 @@ export type GreekGlossOption = {
 };
 
 export type GreekLemmaEntry = {
+  entryKey: string;
   lemma: string;
-  strongs: string;
+  strongs?: string;
   transliteration: string;
   pronunciation?: string;
   shortDefinition: string;
   longDefinition?: string;
   forms: GreekInflectedForm[];
+  testaments?: Testament[];
+  sources?: string[];
 };
 
 export type GreekTokenGlossOverride = {
   occurrenceKey: string;
-  strongs: string;
+  entryKey?: string;
+  strongs?: string;
   lemma: string;
   selectedGloss: string;
   optionId?: string;

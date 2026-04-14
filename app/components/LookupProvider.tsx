@@ -615,6 +615,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
 
         if (result.type === "greek-lemma") {
           openGreekDictionary({
+            entryKey: result.entryKey,
             strongs: result.strongs,
             lemma: result.lemma,
             label: result.lemma,

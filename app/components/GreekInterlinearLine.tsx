@@ -34,7 +34,7 @@ export function GreekInterlinearLine({
   showGloss = true
 }: GreekInterlinearLineProps) {
   const { clearOverride, getOverride, saveOverride } = useGreekGlossOverrides();
-  const [entriesByStrongs, setEntriesByStrongs] = useState<Record<string, GreekLemmaEntry>>({});
+  const [entriesByKey, setEntriesByKey] = useState<Record<string, GreekLemmaEntry>>({});
   const [openOccurrenceKey, setOpenOccurrenceKey] = useState<string | null>(null);
   const [isCustomMode, setIsCustomMode] = useState(false);
   const [customDraft, setCustomDraft] = useState("");
@@ -44,7 +44,8 @@ export function GreekInterlinearLine({
         const occurrenceKey =
           token.occurrenceKey ??
           getGreekTokenOccurrenceKey(bookSlug, chapterNumber, verse.number, tokenIndex);
-        const entry = entriesByStrongs[token.strongs] ?? null;
+        const tokenEntryKey = token.entryKey ?? token.strongs ?? null;
+        const entry = tokenEntryKey ? entriesByKey[tokenEntryKey] ?? null : null;
         const override = getOverride(occurrenceKey);
         const glossOptions = entry ? getGreekGlossOptions(entry, token.gloss) : [];
         const defaultGloss = resolveGreekTokenGloss(token, entry, null);
@@ -61,32 +62,36 @@ export function GreekInterlinearLine({
           effectiveGloss
         };
       }) ?? [],
-    [bookSlug, chapterNumber, entriesByStrongs, getOverride, verse]
+    [bookSlug, chapterNumber, entriesByKey, getOverride, verse]
   );
 
   useEffect(() => {
     if (!verse.tokens?.length) {
-      setEntriesByStrongs({});
+      setEntriesByKey({});
       return;
     }
 
     let isCancelled = false;
-    const uniqueStrongs = Array.from(new Set(verse.tokens.map((token) => token.strongs).filter(Boolean)));
+    const uniqueEntryKeys = Array.from(
+      new Set(verse.tokens.map((token) => token.entryKey ?? token.strongs).filter(Boolean))
+    ).filter((entryKey): entryKey is string => typeof entryKey === "string" && entryKey.length > 0);
 
     void Promise.all(
-      uniqueStrongs.map(async (strongs) => {
-        const entry = await getGreekLemmaEntry(strongs);
+      uniqueEntryKeys.map(async (entryKey) => {
+        const entry = await getGreekLemmaEntry(entryKey);
 
-        return entry ? ([strongs, entry] as const) : null;
+        return entry ? ([entryKey, entry] as const) : null;
       })
     ).then((results) => {
       if (isCancelled) {
         return;
       }
 
-      setEntriesByStrongs(
+      setEntriesByKey(
         Object.fromEntries(
-          results.filter((result): result is readonly [string, GreekLemmaEntry] => result !== null)
+          results.filter(
+            (result): result is readonly [string, GreekLemmaEntry] => result !== null
+          )
         )
       );
     });
@@ -121,6 +126,7 @@ export function GreekInterlinearLine({
     } else {
       saveOverride({
         occurrenceKey,
+        entryKey: token.entryKey,
         strongs: token.strongs,
         lemma: token.lemma,
         selectedGloss: selectedGloss.trim(),
@@ -143,6 +149,7 @@ export function GreekInterlinearLine({
 
     saveOverride({
       occurrenceKey,
+      entryKey: token.entryKey,
       strongs: token.strongs,
       lemma: token.lemma,
       selectedGloss: trimmedDraft,
@@ -182,7 +189,7 @@ export function GreekInterlinearLine({
           >
             <span className="verse-greek-token-stack">
               <button
-                aria-label={`${token.surface} ${token.lemma} ${token.strongs}`}
+                aria-label={`${token.surface} ${token.lemma} ${token.strongs ?? ""}`.trim()}
                 className="verse-greek-token"
                 onClick={() => onOpenGreekDictionary(token)}
                 type="button"

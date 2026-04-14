@@ -52,6 +52,8 @@ export function ReaderSettingsPanel({
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   const versionOptions = getBibleVersionOptions();
   const isReaderRoute = pathname.startsWith("/read");
+  const supportsGreekReading = version === "esv" || version === "greek";
+  const supportsEsvInterlinear = version === "esv";
 
   const handleVersionChange = (nextVersion: string) => {
     if (!isInstalledBundledBibleVersion(nextVersion) || nextVersion === version) {
@@ -109,6 +111,18 @@ export function ReaderSettingsPanel({
   };
 
   const applyGreekOnlyPreset = () => {
+    if (version === "greek") {
+      updateSettings({
+        showVerseText: true,
+        showCustomVerseTranslation: false,
+        showGreekSurface: false,
+        showGreekLemma: false,
+        showGreekTransliteration: false,
+        showGreekGloss: false
+      });
+      return;
+    }
+
     updateSettings({
       showEsvInterlinear: true,
       showEsvGreekOnly: true,
@@ -266,7 +280,7 @@ export function ReaderSettingsPanel({
                 <span>Greek size</span>
                 <input
                   aria-label="Greek size"
-                  disabled={version !== "esv"}
+                  disabled={!supportsGreekReading}
                   id="reader-menu-greek-size"
                   max="2.4"
                   min="1"
@@ -284,7 +298,7 @@ export function ReaderSettingsPanel({
                 <div className="reader-settings-shortcuts">
                   <button
                     className="reader-inline-button reader-settings-link"
-                    disabled={version !== "esv"}
+                    disabled={!supportsGreekReading}
                     onClick={applyGreekOnlyPreset}
                     type="button"
                   >
@@ -335,7 +349,7 @@ export function ReaderSettingsPanel({
                 className={`settings-option-card${
                   settings.showGreekSurface ? " is-active" : ""
                 }`}
-                disabled={version !== "esv" || !settings.showEsvInterlinear}
+                disabled={!supportsEsvInterlinear || !settings.showEsvInterlinear}
                 key="showGreekSurface"
                 onClick={() => toggleLayer("showGreekSurface")}
                 type="button"
@@ -345,7 +359,7 @@ export function ReaderSettingsPanel({
               </button>
               <button
                 className={`settings-option-card${settings.showGreekLemma ? " is-active" : ""}`}
-                disabled={version !== "esv" || !settings.showEsvInterlinear}
+                disabled={!supportsEsvInterlinear || !settings.showEsvInterlinear}
                 key="showGreekLemma"
                 onClick={() => toggleLayer("showGreekLemma")}
                 type="button"
@@ -357,7 +371,7 @@ export function ReaderSettingsPanel({
                 className={`settings-option-card${
                   settings.showGreekTransliteration ? " is-active" : ""
                 }`}
-                disabled={version !== "esv" || !settings.showEsvInterlinear}
+                disabled={!supportsEsvInterlinear || !settings.showEsvInterlinear}
                 key="showGreekTransliteration"
                 onClick={() => toggleLayer("showGreekTransliteration")}
                 type="button"
@@ -367,7 +381,7 @@ export function ReaderSettingsPanel({
               </button>
               <button
                 className={`settings-option-card${settings.showGreekGloss ? " is-active" : ""}`}
-                disabled={version !== "esv" || !settings.showEsvInterlinear}
+                disabled={!supportsEsvInterlinear || !settings.showEsvInterlinear}
                 key="showGreekGloss"
                 onClick={() => toggleLayer("showGreekGloss")}
                 type="button"
@@ -413,9 +427,9 @@ export function ReaderSettingsPanel({
                   : "Strongs (KJV only)"}
               </button>
               <button
-                aria-pressed={version === "esv" ? settings.showEsvInterlinear : false}
+                aria-pressed={supportsEsvInterlinear ? settings.showEsvInterlinear : false}
                 className="reader-inline-button reader-settings-link"
-                disabled={version !== "esv"}
+                disabled={!supportsEsvInterlinear}
                 onClick={() =>
                   updateSettings({
                     showEsvInterlinear: !settings.showEsvInterlinear,
@@ -424,7 +438,7 @@ export function ReaderSettingsPanel({
                 }
                 type="button"
               >
-                {version === "esv"
+                {supportsEsvInterlinear
                   ? settings.showEsvInterlinear
                     ? "Hide Greek interlinear"
                     : "Show Greek interlinear"
