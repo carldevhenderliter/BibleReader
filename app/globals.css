@@ -1050,10 +1050,10 @@ select {
 }
 
 .verse-greek-token-wrap {
-  display: inline-flex;
+  display: inline-block;
   flex: 0 0 auto;
-  align-items: flex-start;
-  gap: 0.16rem;
+  vertical-align: top;
+  padding-inline: 0.12rem;
 }
 
 .verse-greek-token-stack {
@@ -1062,12 +1062,16 @@ select {
   gap: 0.3rem;
   justify-items: center;
   align-content: start;
+  width: max-content;
+  min-width: max(5.35rem, calc(3.35rem * var(--reader-greek-font-scale)));
+  max-width: 100%;
 }
 
 .verse-greek-token {
   display: inline-grid;
   gap: 0.12rem;
-  min-width: max(5rem, calc(3.1rem * var(--reader-greek-font-scale)));
+  width: 100%;
+  min-width: 100%;
   padding: 0.42rem 0.5rem 0.32rem;
   border: 1px solid rgba(123, 188, 255, 0.12);
   border-radius: 0.72rem;
@@ -1113,8 +1117,10 @@ select {
 }
 
 .verse-greek-gloss {
-  max-width: 10rem;
-  min-width: max(5rem, calc(3.1rem * var(--reader-greek-font-scale)));
+  display: block;
+  width: 100%;
+  min-width: 100%;
+  max-width: none;
   padding: 0.22rem 0.44rem 0.28rem;
   border: 1px dashed rgba(var(--reader-accent-rgb), 0.18);
   border-radius: 0.56rem;
@@ -1801,17 +1807,15 @@ select {
   }
 
   .verse-greek-token-wrap {
-    gap: 0.1rem;
+    padding-inline: 0.08rem;
+  }
+
+  .verse-greek-token-stack {
+    min-width: max(4.75rem, calc(2.95rem * var(--reader-greek-font-scale)));
   }
 
   .verse-greek-token {
-    min-width: max(4.45rem, calc(2.75rem * var(--reader-greek-font-scale)));
     padding-inline: 0.3rem;
-  }
-
-  .verse-greek-gloss {
-    min-width: max(4.45rem, calc(2.75rem * var(--reader-greek-font-scale)));
-    max-width: 7.8rem;
   }
 
   .verse-greek-morphology-picker,
