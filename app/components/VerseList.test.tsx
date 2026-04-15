@@ -264,13 +264,6 @@ describe("VerseList", () => {
             number: 1,
             text: "ἐν ἀρχῇ",
             translationText: "In the beginning",
-            alignedEnglishPhrases: [
-              {
-                startToken: 0,
-                endToken: 0,
-                text: "In the beginning"
-              }
-            ],
             greekTokens: [
               {
                 surface: "ἀρχῇ",
@@ -286,56 +279,11 @@ describe("VerseList", () => {
     );
 
     expect((await screen.findAllByText("ἀρχῇ")).length).toBeGreaterThan(0);
+    expect(screen.getByText("In the beginning")).toBeInTheDocument();
     expect(await screen.findByText("archē")).toBeInTheDocument();
-    expect(screen.getAllByText("In the beginning").length).toBeGreaterThan(1);
-    expect(
-      screen
-        .getAllByText("In the beginning")
-        .some((element) => element.classList.contains("verse-aligned-english-phrase"))
-    ).toBe(true);
     expect(
       await screen.findByRole("button", { name: "Choose English gloss for ἀρχῇ" })
     ).toBeInTheDocument();
-  });
-
-  it("can hide the standalone Greek aligned English line independently", () => {
-    window.localStorage.setItem(READER_VERSION_STORAGE_KEY, "greek");
-
-    renderWithReaderCustomization(
-      <VerseList
-        bookSlug="genesis"
-        chapterNumber={1}
-        showAlignedEnglishPhrases={false}
-        showCompanionVerseTranslation
-        verses={[
-          {
-            number: 1,
-            text: "ἐν ἀρχῇ",
-            translationText: "In the beginning",
-            alignedEnglishPhrases: [
-              {
-                startToken: 0,
-                endToken: 0,
-                text: "At the start"
-              }
-            ],
-            greekTokens: [
-              {
-                surface: "ἀρχῇ",
-                lemma: "ἀρχή",
-                entryKey: "G746",
-                strongs: "G746",
-                gloss: "beginning"
-              }
-            ]
-          }
-        ]}
-      />
-    );
-
-    expect(screen.getAllByText("ἀρχῇ").length).toBeGreaterThan(0);
-    expect(screen.getByText("In the beginning")).toBeInTheDocument();
-    expect(screen.queryByText("At the start")).not.toBeInTheDocument();
   });
 
   it("can hide the standalone Greek English companion line independently", () => {
@@ -351,13 +299,6 @@ describe("VerseList", () => {
             number: 1,
             text: "ἐν ἀρχῇ",
             translationText: "In the beginning",
-            alignedEnglishPhrases: [
-              {
-                startToken: 0,
-                endToken: 0,
-                text: "At the start"
-              }
-            ],
             greekTokens: [
               {
                 surface: "ἀρχῇ",
@@ -374,7 +315,6 @@ describe("VerseList", () => {
 
     expect(screen.getAllByText("ἀρχῇ").length).toBeGreaterThan(0);
     expect(screen.queryByText("In the beginning")).not.toBeInTheDocument();
-    expect(screen.getByText("At the start")).toBeInTheDocument();
   });
 
   it("opens a gloss picker from the English line and updates only that occurrence", async () => {

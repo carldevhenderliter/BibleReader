@@ -17,7 +17,6 @@ type VerseListProps = {
   interlinearVerseMap?: Record<number, EsvInterlinearDisplayVerse>;
   showInterlinearOnly?: boolean;
   showVerseText?: boolean;
-  showAlignedEnglishPhrases?: boolean;
   showCompanionVerseTranslation?: boolean;
   showCustomVerseTranslation?: boolean;
   showGreekSurface?: boolean;
@@ -39,7 +38,6 @@ export function VerseList({
   interlinearVerseMap,
   showInterlinearOnly = false,
   showVerseText,
-  showAlignedEnglishPhrases = true,
   showCompanionVerseTranslation = true,
   showCustomVerseTranslation = true,
   showGreekSurface = true,
@@ -68,8 +66,7 @@ export function VerseList({
   const activeHighlightedVerseNumber = highlightedVerseNumber ?? null;
   const activeHighlightedVerseRange = highlightedVerseRange ?? null;
   const shouldShowVerseText = showVerseText ?? !showInterlinearOnly;
-  const shouldShowGreekStudyLayers =
-    showAlignedEnglishPhrases ||
+  const shouldShowGreekTokens =
     showGreekSurface ||
     showGreekLemma ||
     showGreekTransliteration ||
@@ -102,8 +99,7 @@ export function VerseList({
                   number: verse.number,
                   baseGreek: verse.text,
                   greek: verse.text,
-                  tokens: verse.greekTokens,
-                  alignedEnglishPhrases: verse.alignedEnglishPhrases
+                  tokens: verse.greekTokens
                 }
               : null;
           const activeGreekVerse =
@@ -126,7 +122,7 @@ export function VerseList({
                 {verse.number}
               </span>
               <div className="verse-content">
-                {shouldShowVerseText ? (
+                {shouldShowVerseText || (version === "greek" && showCompanionVerseTranslation) ? (
                   <>
                     {shouldShowVerseText
                       ? version === "greek" && verse.greekTokens?.length ? (
@@ -148,11 +144,17 @@ export function VerseList({
                           <VerseTextContent className="verse-text" verse={verse} />
                         )
                       : null}
+                    {version === "greek" &&
+                    showCompanionVerseTranslation &&
+                    verse.translationText?.trim() ? (
+                      <p className="verse-text verse-text-companion-translation">
+                        {verse.translationText}
+                      </p>
+                    ) : null}
                   </>
                 ) : null}
-                {activeGreekVerse && shouldShowGreekStudyLayers ? (
+                {activeGreekVerse && shouldShowGreekTokens ? (
                   <GreekInterlinearLine
-                    alignedEnglishPhrases={showAlignedEnglishPhrases}
                     bookSlug={bookSlug}
                     chapterNumber={chapterNumber}
                     onOpenGreekDictionary={(token) =>
@@ -173,13 +175,6 @@ export function VerseList({
                     showTransliteration={showGreekTransliteration}
                     verse={activeGreekVerse}
                   />
-                ) : null}
-                {version === "greek" &&
-                showCompanionVerseTranslation &&
-                verse.translationText?.trim() ? (
-                  <p className="verse-text verse-text-companion-translation">
-                    {verse.translationText}
-                  </p>
                 ) : null}
                 {showCustomVerseTranslation ? (
                   <VerseTranslationEditor

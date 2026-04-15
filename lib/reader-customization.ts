@@ -89,7 +89,6 @@ export const DEFAULT_READER_CUSTOMIZATION: ReaderCustomizationSettings = {
   showEsvGreekOnly: false,
   showVerseText: true,
   showCompanionVerseTranslation: true,
-  showAlignedEnglishPhrases: true,
   showGreekSurface: true,
   showGreekLemma: true,
   showGreekTransliteration: true,
@@ -161,8 +160,6 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
   const hasGranularVerseText = typeof candidate.showVerseText === "boolean";
   const hasGranularCompanionVerseTranslation =
     typeof candidate.showCompanionVerseTranslation === "boolean";
-  const hasGranularAlignedEnglishPhrases =
-    typeof candidate.showAlignedEnglishPhrases === "boolean";
   const hasGranularGreekSurface = typeof candidate.showGreekSurface === "boolean";
   const hasGranularGreekLemma = typeof candidate.showGreekLemma === "boolean";
   const hasGranularGreekTransliteration =
@@ -214,21 +211,6 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
             !hasGranularCustomVerseTranslation
           ? false
           : DEFAULT_READER_CUSTOMIZATION.showCompanionVerseTranslation,
-    showAlignedEnglishPhrases:
-      typeof candidate.showAlignedEnglishPhrases === "boolean"
-        ? candidate.showAlignedEnglishPhrases
-        : candidate.showEsvGreekOnly === true &&
-            !hasGranularVerseText &&
-            !hasGranularCompanionVerseTranslation &&
-            !hasGranularAlignedEnglishPhrases &&
-            !hasGranularGreekSurface &&
-            !hasGranularGreekLemma &&
-            !hasGranularGreekTransliteration &&
-            !hasGranularGreekMorphology &&
-            !hasGranularGreekGloss &&
-            !hasGranularCustomVerseTranslation
-          ? false
-          : DEFAULT_READER_CUSTOMIZATION.showAlignedEnglishPhrases,
     showGreekSurface:
       typeof candidate.showGreekSurface === "boolean"
         ? candidate.showGreekSurface

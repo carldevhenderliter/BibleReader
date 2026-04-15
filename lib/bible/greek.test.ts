@@ -1,5 +1,4 @@
 import {
-  buildGreekAlignedPhraseSpans,
   getGreekGlossOptions,
   getGreekLemmaEntry,
   getGreekMorphologyDetails,
@@ -69,43 +68,6 @@ describe("Greek dictionary lookup", () => {
 
   it("builds stable occurrence keys for repeated Greek tokens", () => {
     expect(getGreekTokenOccurrenceKey("john", 1, 1, 3)).toBe("john:1:1:3");
-  });
-
-  it("builds non-overlapping aligned phrase spans and fills uncovered tokens", () => {
-    expect(
-      buildGreekAlignedPhraseSpans(5, [
-        {
-          startToken: 0,
-          endToken: 1,
-          text: "In the beginning"
-        },
-        {
-          startToken: 3,
-          endToken: 4,
-          text: "the heavens and the earth"
-        },
-        {
-          startToken: 1,
-          endToken: 2,
-          text: "overlap"
-        }
-      ])
-    ).toEqual([
-      {
-        startToken: 0,
-        endToken: 1,
-        text: "In the beginning"
-      },
-      {
-        startToken: 2,
-        endToken: 2
-      },
-      {
-        startToken: 3,
-        endToken: 4,
-        text: "the heavens and the earth"
-      }
-    ]);
   });
 
   it("builds readable gloss options from lemma data", async () => {

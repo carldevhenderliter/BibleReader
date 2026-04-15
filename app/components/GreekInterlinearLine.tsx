@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from "react";
 
 import { useGreekGlossOverrides } from "@/app/components/GreekGlossOverridesProvider";
 import {
-  buildGreekAlignedPhraseSpans,
   getGreekGlossOptions,
   getGreekLemmaEntry,
   getGreekTokenOccurrenceKey,
@@ -23,7 +22,6 @@ type GreekInterlinearLineProps = {
   chapterNumber: number;
   verse: EsvInterlinearDisplayVerse;
   onOpenGreekDictionary: (token: GreekToken) => void;
-  alignedEnglishPhrases?: boolean;
   showSurface?: boolean;
   showLemma?: boolean;
   showTransliteration?: boolean;
@@ -35,7 +33,6 @@ export function GreekInterlinearLine({
   chapterNumber,
   verse,
   onOpenGreekDictionary,
-  alignedEnglishPhrases = true,
   showSurface = true,
   showLemma = true,
   showTransliteration = true,
@@ -88,11 +85,6 @@ export function GreekInterlinearLine({
       }) ?? [],
     [bookSlug, chapterNumber, entriesByKey, getLemmaDefault, getOverride, verse]
   );
-  const alignedPhraseSpans = useMemo(
-    () => buildGreekAlignedPhraseSpans(tokenEntries.length, verse.alignedEnglishPhrases),
-    [tokenEntries.length, verse.alignedEnglishPhrases]
-  );
-  const showTokenDetails = showSurface || showLemma || showTransliteration || showGloss;
 
   useEffect(() => {
     if (!verse.tokens?.length) {
@@ -253,281 +245,217 @@ export function GreekInterlinearLine({
 
   return (
     <div className="verse-interlinear" lang="el">
-      {alignedPhraseSpans.map((phraseSpan) => {
-        const phraseTokenEntries = tokenEntries.slice(
-          phraseSpan.startToken,
-          phraseSpan.endToken + 1
-        );
-
-        if (!showTokenDetails && !(alignedEnglishPhrases && phraseSpan.text)) {
-          return null;
-        }
-
-        return (
+      {tokenEntries.map(
+        ({
+          token,
+          tokenIndex,
+          occurrenceKey,
+          entry,
+          override,
+          lemmaDefault,
+          glossOptions,
+          generatedGloss,
+          defaultGloss,
+          effectiveGloss
+        }) => (
           <span
-            className={`verse-greek-phrase-group${
-              phraseSpan.text && alignedEnglishPhrases ? " has-aligned-english" : ""
-            }`}
-            key={`${verse.number}:${phraseSpan.startToken}:${phraseSpan.endToken}:${phraseSpan.text ?? ""}`}
+            className="verse-greek-token-wrap"
+            key={`${verse.number}:${tokenIndex}:${token.surface}`}
           >
-            {showTokenDetails ? (
-              <span className="verse-greek-phrase-tokens">
-                {phraseTokenEntries.map(
-                  ({
-                    token,
-                    tokenIndex,
-                    occurrenceKey,
-                    entry,
-                    override,
-                    lemmaDefault,
-                    glossOptions,
-                    generatedGloss,
-                    defaultGloss,
-                    effectiveGloss
-                  }) => (
-                    <span
-                      className="verse-greek-token-wrap"
-                      key={`${verse.number}:${tokenIndex}:${token.surface}`}
+            <span className="verse-greek-token-stack">
+              <button
+                aria-label={`${token.surface} ${token.lemma} ${token.strongs ?? ""}`.trim()}
+                className="verse-greek-token"
+                onClick={() => onOpenGreekDictionary(token)}
+                type="button"
+              >
+                {showSurface ? (
+                  <span className="verse-greek-surface">{token.surface}</span>
+                ) : null}
+                {showLemma ? <span className="verse-greek-lemma">{token.lemma}</span> : null}
+                {showTransliteration ? (
+                  <span className="verse-greek-transliteration">
+                    {transliterateGreekSurface(token.surface)}
+                  </span>
+                ) : null}
+              </button>
+              {showGloss ? (
+                <>
+                  <button
+                    aria-expanded={openOccurrenceKey === occurrenceKey}
+                    aria-label={`Choose English gloss for ${token.surface}`}
+                    className={`verse-greek-gloss${
+                      override ? " is-overridden" : lemmaDefault ? " is-lemma-default" : ""
+                    }`}
+                    onClick={() =>
+                      handleOpenGlossPicker(
+                        occurrenceKey,
+                        effectiveGloss,
+                        override?.source ?? lemmaDefault?.source
+                      )
+                    }
+                    type="button"
+                  >
+                    {effectiveGloss || "Choose gloss"}
+                  </button>
+                  {openOccurrenceKey === occurrenceKey ? (
+                    <div
+                      aria-label={`English gloss choices for ${token.surface}`}
+                      className="verse-greek-gloss-picker"
+                      role="dialog"
                     >
-                      <span className="verse-greek-token-stack">
-                        {(showSurface || showLemma || showTransliteration) ? (
-                          <button
-                            aria-label={`${token.surface} ${token.lemma} ${token.strongs ?? ""}`.trim()}
-                            className="verse-greek-token"
-                            onClick={() => onOpenGreekDictionary(token)}
-                            type="button"
-                          >
-                            {showSurface ? (
-                              <span className="verse-greek-surface">{token.surface}</span>
-                            ) : null}
-                            {showLemma ? (
-                              <span className="verse-greek-lemma">{token.lemma}</span>
-                            ) : null}
-                            {showTransliteration ? (
-                              <span className="verse-greek-transliteration">
-                                {transliterateGreekSurface(token.surface)}
-                              </span>
-                            ) : null}
-                          </button>
-                        ) : null}
-                        {showGloss ? (
-                          <>
+                      <div className="verse-greek-gloss-picker-header">
+                        <div>
+                          <p className="verse-greek-gloss-picker-title">{token.surface}</p>
+                          <p className="verse-greek-gloss-picker-meta">
+                            {token.lemma}
+                            {lemmaDefault?.selectedGloss?.trim()
+                              ? ` · lemma default: ${lemmaDefault.selectedGloss}`
+                              : " · using generated default"}
+                          </p>
+                        </div>
+                        <button
+                          aria-label="Close gloss picker"
+                          className="reader-inline-button"
+                          onClick={() => {
+                            setOpenOccurrenceKey(null);
+                            setIsCustomMode(false);
+                            setCustomDraft("");
+                          }}
+                          type="button"
+                        >
+                          Close
+                        </button>
+                      </div>
+                      <div className="verse-greek-gloss-options">
+                        {glossOptions.map((option) => (
+                          <div className="verse-greek-gloss-option-row" key={`${occurrenceKey}:${option.id}`}>
                             <button
-                              aria-expanded={openOccurrenceKey === occurrenceKey}
-                              aria-label={`Choose English gloss for ${token.surface}`}
-                              className={`verse-greek-gloss${
-                                override
-                                  ? " is-overridden"
-                                  : lemmaDefault
-                                    ? " is-lemma-default"
-                                    : ""
+                              aria-pressed={effectiveGloss === option.label}
+                              className={`verse-greek-gloss-option${
+                                effectiveGloss === option.label ? " is-active" : ""
                               }`}
                               onClick={() =>
-                                handleOpenGlossPicker(
+                                handleSelectGloss(occurrenceKey, token, option.label, option)
+                              }
+                              type="button"
+                            >
+                              {option.label}
+                            </button>
+                            <button
+                              className={`verse-greek-gloss-option verse-greek-gloss-default-action${
+                                lemmaDefault?.selectedGloss === option.label ? " is-active" : ""
+                              }`}
+                              onClick={() =>
+                                handleSelectLemmaDefault(
                                   occurrenceKey,
-                                  effectiveGloss,
-                                  override?.source ?? lemmaDefault?.source
+                                  token,
+                                  option.label,
+                                  option
                                 )
                               }
                               type="button"
                             >
-                              {effectiveGloss || "Choose gloss"}
+                              {lemmaDefault?.selectedGloss === option.label ? "Default" : "Make default"}
                             </button>
-                            {openOccurrenceKey === occurrenceKey ? (
-                              <div
-                                aria-label={`English gloss choices for ${token.surface}`}
-                                className="verse-greek-gloss-picker"
-                                role="dialog"
-                              >
-                                <div className="verse-greek-gloss-picker-header">
-                                  <div>
-                                    <p className="verse-greek-gloss-picker-title">
-                                      {token.surface}
-                                    </p>
-                                    <p className="verse-greek-gloss-picker-meta">
-                                      {token.lemma}
-                                      {lemmaDefault?.selectedGloss?.trim()
-                                        ? ` · lemma default: ${lemmaDefault.selectedGloss}`
-                                        : " · using generated default"}
-                                    </p>
-                                  </div>
-                                  <button
-                                    aria-label="Close gloss picker"
-                                    className="reader-inline-button"
-                                    onClick={() => {
-                                      setOpenOccurrenceKey(null);
-                                      setIsCustomMode(false);
-                                      setCustomDraft("");
-                                    }}
-                                    type="button"
-                                  >
-                                    Close
-                                  </button>
-                                </div>
-                                <div className="verse-greek-gloss-options">
-                                  {glossOptions.map((option) => (
-                                    <div
-                                      className="verse-greek-gloss-option-row"
-                                      key={`${occurrenceKey}:${option.id}`}
-                                    >
-                                      <button
-                                        aria-pressed={effectiveGloss === option.label}
-                                        className={`verse-greek-gloss-option${
-                                          effectiveGloss === option.label ? " is-active" : ""
-                                        }`}
-                                        onClick={() =>
-                                          handleSelectGloss(
-                                            occurrenceKey,
-                                            token,
-                                            option.label,
-                                            option
-                                          )
-                                        }
-                                        type="button"
-                                      >
-                                        {option.label}
-                                      </button>
-                                      <button
-                                        className={`verse-greek-gloss-option verse-greek-gloss-default-action${
-                                          lemmaDefault?.selectedGloss === option.label
-                                            ? " is-active"
-                                            : ""
-                                        }`}
-                                        onClick={() =>
-                                          handleSelectLemmaDefault(
-                                            occurrenceKey,
-                                            token,
-                                            option.label,
-                                            option
-                                          )
-                                        }
-                                        type="button"
-                                      >
-                                        {lemmaDefault?.selectedGloss === option.label
-                                          ? "Default"
-                                          : "Make default"}
-                                      </button>
-                                    </div>
-                                  ))}
-                                  <button
-                                    aria-pressed={isCustomMode}
-                                    className={`verse-greek-gloss-option${
-                                      isCustomMode ? " is-active" : ""
-                                    }`}
-                                    onClick={() => {
-                                      setIsCustomMode(true);
-                                      setCustomDraft(
-                                        override?.source === "custom" ||
-                                          lemmaDefault?.source === "custom"
-                                          ? effectiveGloss
-                                          : ""
-                                      );
-                                    }}
-                                    type="button"
-                                  >
-                                    Custom…
-                                  </button>
-                                  {lemmaDefault ? (
-                                    <button
-                                      className="verse-greek-gloss-option"
-                                      onClick={() => {
-                                        clearLemmaDefault({
-                                          entryKey: token.entryKey ?? entry?.entryKey ?? null,
-                                          strongs: token.strongs ?? entry?.strongs ?? null,
-                                          lemma: token.lemma
-                                        });
-                                        setOpenOccurrenceKey(null);
-                                        setIsCustomMode(false);
-                                        setCustomDraft("");
-                                      }}
-                                      type="button"
-                                    >
-                                      Clear lemma default
-                                    </button>
-                                  ) : null}
-                                  {override ? (
-                                    <button
-                                      className="verse-greek-gloss-option"
-                                      onClick={() => {
-                                        clearOverride(occurrenceKey);
-                                        setOpenOccurrenceKey(null);
-                                        setIsCustomMode(false);
-                                        setCustomDraft(
-                                          lemmaDefault?.source === "custom"
-                                            ? lemmaDefault.selectedGloss
-                                            : ""
-                                        );
-                                      }}
-                                      type="button"
-                                    >
-                                      Reset to default
-                                    </button>
-                                  ) : null}
-                                </div>
-                                {isCustomMode ? (
-                                  <div className="verse-greek-gloss-custom">
-                                    <label
-                                      className="reader-settings-field"
-                                      htmlFor={`custom-gloss:${occurrenceKey}`}
-                                    >
-                                      <span>Custom gloss</span>
-                                      <input
-                                        id={`custom-gloss:${occurrenceKey}`}
-                                        onChange={(event) => setCustomDraft(event.target.value)}
-                                        placeholder={
-                                          defaultGloss || generatedGloss || "Enter English gloss"
-                                        }
-                                        type="text"
-                                        value={customDraft}
-                                      />
-                                    </label>
-                                    <div className="verse-greek-gloss-custom-actions">
-                                      <button
-                                        className="reader-inline-button"
-                                        onClick={() =>
-                                          handleSaveCustomGloss(occurrenceKey, token)
-                                        }
-                                        type="button"
-                                      >
-                                        Save gloss
-                                      </button>
-                                      <button
-                                        className="reader-inline-button"
-                                        onClick={() =>
-                                          handleSaveCustomGloss(
-                                            occurrenceKey,
-                                            token,
-                                            true
-                                          )
-                                        }
-                                        type="button"
-                                      >
-                                        Save as lemma default
-                                      </button>
-                                    </div>
-                                  </div>
-                                ) : null}
-                              </div>
-                            ) : null}
-                          </>
+                          </div>
+                        ))}
+                        <button
+                          aria-pressed={isCustomMode}
+                          className={`verse-greek-gloss-option${isCustomMode ? " is-active" : ""}`}
+                          onClick={() => {
+                            setIsCustomMode(true);
+                            setCustomDraft(
+                              override?.source === "custom" || lemmaDefault?.source === "custom"
+                                ? effectiveGloss
+                                : ""
+                            );
+                          }}
+                          type="button"
+                        >
+                          Custom…
+                        </button>
+                        {lemmaDefault ? (
+                          <button
+                            className="verse-greek-gloss-option"
+                            onClick={() => {
+                              clearLemmaDefault({
+                                entryKey: token.entryKey ?? entry?.entryKey ?? null,
+                                strongs: token.strongs ?? entry?.strongs ?? null,
+                                lemma: token.lemma
+                              });
+                              setOpenOccurrenceKey(null);
+                              setIsCustomMode(false);
+                              setCustomDraft("");
+                            }}
+                            type="button"
+                          >
+                            Clear lemma default
+                          </button>
                         ) : null}
-                      </span>
-                      {token.trailingPunctuation ? (
-                        <span aria-hidden="true" className="verse-greek-punctuation">
-                          {token.trailingPunctuation}
-                        </span>
+                        {override ? (
+                          <button
+                            className="verse-greek-gloss-option"
+                            onClick={() => {
+                              clearOverride(occurrenceKey);
+                              setOpenOccurrenceKey(null);
+                              setIsCustomMode(false);
+                              setCustomDraft(
+                                lemmaDefault?.source === "custom" ? lemmaDefault.selectedGloss : ""
+                              );
+                            }}
+                            type="button"
+                          >
+                            Reset to default
+                          </button>
+                        ) : null}
+                      </div>
+                      {isCustomMode ? (
+                        <div className="verse-greek-gloss-custom">
+                          <label
+                            className="reader-settings-field"
+                            htmlFor={`custom-gloss:${occurrenceKey}`}
+                          >
+                            <span>Custom gloss</span>
+                            <input
+                              id={`custom-gloss:${occurrenceKey}`}
+                              onChange={(event) => setCustomDraft(event.target.value)}
+                              placeholder={defaultGloss || generatedGloss || "Enter English gloss"}
+                              type="text"
+                              value={customDraft}
+                            />
+                          </label>
+                          <div className="verse-greek-gloss-custom-actions">
+                            <button
+                              className="reader-inline-button"
+                              onClick={() => handleSaveCustomGloss(occurrenceKey, token)}
+                              type="button"
+                            >
+                              Save gloss
+                            </button>
+                            <button
+                              className="reader-inline-button"
+                              onClick={() => handleSaveCustomGloss(occurrenceKey, token, true)}
+                              type="button"
+                            >
+                              Save as lemma default
+                            </button>
+                          </div>
+                        </div>
                       ) : null}
-                    </span>
-                  )
-                )}
+                    </div>
+                  ) : null}
+                </>
+              ) : null}
+            </span>
+            {token.trailingPunctuation ? (
+              <span aria-hidden="true" className="verse-greek-punctuation">
+                {token.trailingPunctuation}
               </span>
             ) : null}
-            {alignedEnglishPhrases && phraseSpan.text ? (
-              <span className="verse-aligned-english-phrase">{phraseSpan.text}</span>
-            ) : null}
           </span>
-        );
-      })}
+        )
+      )}
     </div>
   );
 }
