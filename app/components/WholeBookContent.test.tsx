@@ -49,6 +49,29 @@ const chapters: Chapter[] = [
   }
 ];
 
+const manyChapters: Chapter[] = [
+  {
+    bookSlug: "jude",
+    chapterNumber: 1,
+    verses: [{ number: 1, text: "Chapter one opening." }]
+  },
+  {
+    bookSlug: "jude",
+    chapterNumber: 2,
+    verses: [{ number: 1, text: "Chapter two opening." }]
+  },
+  {
+    bookSlug: "jude",
+    chapterNumber: 3,
+    verses: [{ number: 1, text: "Chapter three opening." }]
+  },
+  {
+    bookSlug: "jude",
+    chapterNumber: 4,
+    verses: [{ number: 1, text: "Chapter four opening." }]
+  }
+];
+
 const kjvChapters: Chapter[] = [
   {
     bookSlug: "jude",
@@ -277,6 +300,54 @@ function installKokoroSupport() {
   return { sourceNodes };
 }
 
+function installIntersectionObserverMock() {
+  const callbackByElement = new Map<Element, IntersectionObserverCallback>();
+
+  class MockIntersectionObserver {
+    constructor(private readonly callback: IntersectionObserverCallback) {}
+
+    observe = (element: Element) => {
+      callbackByElement.set(element, this.callback);
+    };
+
+    unobserve = (element: Element) => {
+      callbackByElement.delete(element);
+    };
+
+    disconnect = () => {
+      callbackByElement.clear();
+    };
+
+    takeRecords = () => [];
+  }
+
+  Object.defineProperty(window, "IntersectionObserver", {
+    configurable: true,
+    writable: true,
+    value: MockIntersectionObserver
+  });
+
+  return {
+    trigger(element: Element) {
+      const callback = callbackByElement.get(element);
+
+      if (!callback) {
+        return;
+      }
+
+      callback(
+        [
+          {
+            isIntersecting: true,
+            target: element
+          } as IntersectionObserverEntry
+        ],
+        {} as IntersectionObserver
+      );
+    }
+  };
+}
+
 describe("WholeBookContent", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -314,6 +385,35 @@ describe("WholeBookContent", () => {
     expect(screen.getByRole("heading", { name: "Chapter 1" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Chapter 2" })).toBeInTheDocument();
     expect(screen.getByText("Mercy to you and peace and love be multiplied.")).toBeInTheDocument();
+  });
+
+  it("lazy loads distant chapter verse content in whole-book view", async () => {
+    const intersectionObserver = installIntersectionObserverMock();
+    const largerBook: BookMeta = {
+      ...books[0],
+      chapterCount: 4
+    };
+
+    renderWithReaderCustomization(
+      <WholeBookContent
+        book={largerBook}
+        books={[largerBook]}
+        chaptersByVersion={{ web: manyChapters }}
+        focusedChapterNumber={1}
+      />
+    );
+
+    expect(screen.getByRole("heading", { name: "Chapter 4" })).toBeInTheDocument();
+    expect(screen.queryByText("Chapter four opening.")).not.toBeInTheDocument();
+
+    const chapterFourSection = document.getElementById("chapter-jude-4");
+    expect(chapterFourSection).not.toBeNull();
+
+    intersectionObserver.trigger(chapterFourSection!);
+
+    await waitFor(() => {
+      expect(screen.getByText("Chapter four opening.")).toBeInTheDocument();
+    });
   });
 
   it("switches whole-book content between bundled versions", () => {

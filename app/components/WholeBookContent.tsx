@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
@@ -24,7 +24,8 @@ import type {
   BookMeta,
   BundledBookChapterMap,
   Chapter,
-  EsvInterlinearDisplayChapter
+  EsvInterlinearDisplayChapter,
+  EsvInterlinearDisplayVerse
 } from "@/lib/bible/types";
 import { buildChapterSpeechText } from "@/lib/reader-tts";
 import { getBibleVersionBadge } from "@/lib/bible/version";
@@ -51,6 +52,126 @@ type WholeBookContentProps = {
     end: number;
   } | null;
 };
+
+type LazyBookChapterSectionProps = {
+  bookSlug: string;
+  chapter: Chapter;
+  initialRender: boolean;
+  highlightedVerseNumber: number | null;
+  highlightedVerseRange: {
+    start: number;
+    end: number;
+  } | null;
+  interlinearVerseMap?: Record<number, EsvInterlinearDisplayVerse>;
+  showCompanionVerseTranslation: boolean;
+  showCustomVerseTranslation: boolean;
+  showGreekGloss: boolean;
+  showGreekLemma: boolean;
+  showGreekSurface: boolean;
+  showGreekTransliteration: boolean;
+  showStrongs: boolean;
+  showVerseText: boolean;
+  version: string;
+};
+
+function LazyBookChapterSection({
+  bookSlug,
+  chapter,
+  initialRender,
+  highlightedVerseNumber,
+  highlightedVerseRange,
+  interlinearVerseMap,
+  showCompanionVerseTranslation,
+  showCustomVerseTranslation,
+  showGreekGloss,
+  showGreekLemma,
+  showGreekSurface,
+  showGreekTransliteration,
+  showStrongs,
+  showVerseText,
+  version
+}: LazyBookChapterSectionProps) {
+  const [shouldRenderChapter, setShouldRenderChapter] = useState(initialRender);
+  const sectionRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (initialRender) {
+      setShouldRenderChapter(true);
+    }
+  }, [initialRender]);
+
+  useEffect(() => {
+    if (shouldRenderChapter) {
+      return;
+    }
+
+    const sectionElement = sectionRef.current;
+
+    if (!sectionElement) {
+      return;
+    }
+
+    if (typeof IntersectionObserver === "undefined") {
+      setShouldRenderChapter(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setShouldRenderChapter(true);
+        }
+      },
+      {
+        rootMargin: "1400px 0px"
+      }
+    );
+
+    observer.observe(sectionElement);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [shouldRenderChapter]);
+
+  return (
+    <section
+      className="book-section"
+      id={`chapter-${bookSlug}-${chapter.chapterNumber}`}
+      key={chapter.chapterNumber}
+      ref={sectionRef}
+    >
+      <div className="book-section-header">
+        <h2 className="book-section-title">Chapter {chapter.chapterNumber}</h2>
+        <p className="book-section-subtitle">{chapter.verses.length} verses</p>
+      </div>
+      {shouldRenderChapter ? (
+        <VerseList
+          bookSlug={bookSlug}
+          chapterNumber={chapter.chapterNumber}
+          highlightedVerseNumber={highlightedVerseNumber}
+          highlightedVerseRange={highlightedVerseRange}
+          interlinearVerseMap={interlinearVerseMap}
+          key={`${version}:${bookSlug}:${chapter.chapterNumber}`}
+          showCompanionVerseTranslation={showCompanionVerseTranslation}
+          showCustomVerseTranslation={showCustomVerseTranslation}
+          showGreekGloss={showGreekGloss}
+          showGreekLemma={showGreekLemma}
+          showGreekSurface={showGreekSurface}
+          showGreekTransliteration={showGreekTransliteration}
+          showStrongs={showStrongs}
+          showVerseText={showVerseText}
+          verses={chapter.verses}
+        />
+      ) : (
+        <div
+          aria-label={`Loading chapter ${chapter.chapterNumber}`}
+          className="book-section-placeholder"
+        />
+      )}
+    </section>
+  );
+}
 
 export function WholeBookContent({
   books,
@@ -251,41 +372,35 @@ export function WholeBookContent({
         ) : (
           <div className="reading-surface chapter-stack">
             {chapters.map((chapter) => (
-              <section
-                className="book-section"
-                id={`chapter-${book.slug}-${chapter.chapterNumber}`}
+              <LazyBookChapterSection
+                bookSlug={book.slug}
+                chapter={chapter}
+                highlightedVerseNumber={
+                  chapter.chapterNumber === activeHighlightedChapterNumber
+                    ? activeHighlightedVerseNumber
+                    : null
+                }
+                highlightedVerseRange={
+                  chapter.chapterNumber === activeHighlightedChapterNumber
+                    ? activeHighlightedVerseRange
+                    : null
+                }
+                initialRender={
+                  Math.abs(chapter.chapterNumber - activeFocusedChapterNumber) <= 1 ||
+                  chapter.chapterNumber === activeHighlightedChapterNumber
+                }
+                interlinearVerseMap={interlinearByChapter?.get(chapter.chapterNumber)}
                 key={chapter.chapterNumber}
-              >
-                <div className="book-section-header">
-                  <h2 className="book-section-title">Chapter {chapter.chapterNumber}</h2>
-                  <p className="book-section-subtitle">{chapter.verses.length} verses</p>
-                </div>
-                <VerseList
-                  bookSlug={book.slug}
-                  chapterNumber={chapter.chapterNumber}
-                  highlightedVerseNumber={
-                    chapter.chapterNumber === activeHighlightedChapterNumber
-                      ? activeHighlightedVerseNumber
-                      : null
-                  }
-                  highlightedVerseRange={
-                    chapter.chapterNumber === activeHighlightedChapterNumber
-                      ? activeHighlightedVerseRange
-                      : null
-                  }
-                  interlinearVerseMap={interlinearByChapter?.get(chapter.chapterNumber)}
-                  key={`${version}:${book.slug}:${chapter.chapterNumber}`}
-                  showCompanionVerseTranslation={settings.showCompanionVerseTranslation}
-                  showCustomVerseTranslation={settings.showCustomVerseTranslation}
-                  showGreekGloss={settings.showGreekGloss}
-                  showGreekLemma={settings.showGreekLemma}
-                  showGreekSurface={settings.showGreekSurface}
-                  showGreekTransliteration={settings.showGreekTransliteration}
-                  showStrongs={showStrongs}
-                  showVerseText={settings.showVerseText}
-                  verses={chapter.verses}
-                />
-              </section>
+                showCompanionVerseTranslation={settings.showCompanionVerseTranslation}
+                showCustomVerseTranslation={settings.showCustomVerseTranslation}
+                showGreekGloss={settings.showGreekGloss}
+                showGreekLemma={settings.showGreekLemma}
+                showGreekSurface={settings.showGreekSurface}
+                showGreekTransliteration={settings.showGreekTransliteration}
+                showStrongs={showStrongs}
+                showVerseText={settings.showVerseText}
+                version={version}
+              />
             ))}
           </div>
         )}
