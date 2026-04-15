@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import math
+import re
 import unicodedata
 import xml.etree.ElementTree as ET
 from collections import Counter, defaultdict
@@ -20,6 +22,7 @@ VERSION_BOOKS_DIR = VERSION_DIR / "books"
 ESV_VERSION_BOOKS_DIR = REPO_ROOT / "data" / "bible" / "versions" / "esv" / "books"
 GREEK_DATA_DIR = REPO_ROOT / "data" / "bible" / "greek"
 SEARCH_DIR = REPO_ROOT / "data" / "bible" / "search"
+ALIGNED_ENGLISH_OVERRIDES_PATH = VERSION_DIR / "aligned-english-overrides.json"
 WEB_BOOKS_PATH = REPO_ROOT / "data" / "bible" / "versions" / "web" / "books.json"
 INTERLINEAR_DIR = REPO_ROOT / "data" / "bible" / "interlinear" / "esv" / "base"
 NT_LEXICON_PATH = GREEK_DATA_DIR / "lexicon.json"
@@ -141,6 +144,7 @@ NT_SLUGS = {
 
 SOURCE_LABEL_BY_TESTAMENT = {"Old": "Rahlfs LXX", "New": "SBLGNT"}
 USFX_NOTE_TAGS = {"f", "fe", "x", "fig", "fm", "fk", "fq", "fr", "ft", "xo", "xt"}
+PHRASE_BOUNDARY_PUNCTUATION = {".", ",", ";", ":", "?", "!", "·"}
 
 
 def read_json(path: Path) -> Any:
@@ -216,6 +220,193 @@ def make_entry_key(lemma: str, strongs: str | None) -> str:
         return strongs
     normalized = normalize_greek_form_lookup(lemma)
     return f"lemma:{normalized or lemma.lower()}"
+
+
+def make_verse_key(book_slug: str, chapter_number: int, verse_number: int) -> str:
+    return f"{book_slug}:{chapter_number}:{verse_number}"
+
+
+def clean_phrase_text(value: Any) -> str:
+    cleaned = normalize_space(value).replace("—", " ").replace("–", " ")
+    cleaned = re.sub(r"\s+", " ", cleaned).strip()
+    cleaned = cleaned.strip(" ,;:.!?")
+    return normalize_space(cleaned)
+
+
+def sanitize_aligned_phrase_entries(
+    token_count: int, phrases: list[dict[str, Any]] | None
+) -> list[dict[str, Any]]:
+    if token_count <= 0 or not phrases:
+        return []
+
+    sanitized: list[dict[str, Any]] = []
+    next_start = 0
+
+    for phrase in sorted(
+        phrases,
+        key=lambda item: (
+            int(item.get("startToken", -1)),
+            int(item.get("endToken", -1)),
+        ),
+    ):
+        start_token = int(phrase.get("startToken", -1))
+        end_token = int(phrase.get("endToken", -1))
+        text = clean_phrase_text(phrase.get("text"))
+
+        if (
+            not text
+            or start_token < 0
+            or end_token < start_token
+            or end_token >= token_count
+            or start_token < next_start
+        ):
+            continue
+
+        sanitized.append(
+            {
+                "startToken": start_token,
+                "endToken": end_token,
+                "text": text,
+            }
+        )
+        next_start = end_token + 1
+
+    return sanitized
+
+
+def build_even_token_spans(start_token: int, end_token: int, phrase_count: int) -> list[tuple[int, int]]:
+    token_count = end_token - start_token + 1
+    if token_count <= 0:
+        return []
+
+    bounded_phrase_count = max(1, min(phrase_count, token_count))
+    base_size, remainder = divmod(token_count, bounded_phrase_count)
+    spans: list[tuple[int, int]] = []
+    cursor = start_token
+
+    for phrase_index in range(bounded_phrase_count):
+        span_size = base_size + (1 if phrase_index < remainder else 0)
+        span_end = cursor + span_size - 1
+        spans.append((cursor, span_end))
+        cursor = span_end + 1
+
+    return spans
+
+
+def split_translation_into_phrases(
+    translation_text: str, spans: list[tuple[int, int]]
+) -> list[str]:
+    cleaned_text = clean_phrase_text(translation_text)
+    if not cleaned_text or not spans:
+        return []
+
+    words = cleaned_text.split(" ")
+    if not words:
+        return []
+
+    total_weight = sum(end - start + 1 for start, end in spans)
+    raw_word_counts = [
+        (len(words) * (end - start + 1)) / total_weight for start, end in spans
+    ]
+    word_counts = [max(1, int(math.floor(count))) for count in raw_word_counts]
+
+    while sum(word_counts) > len(words):
+        adjusted = False
+        for index in range(len(word_counts) - 1, -1, -1):
+            if word_counts[index] > 1:
+                word_counts[index] -= 1
+                adjusted = True
+                if sum(word_counts) <= len(words):
+                    break
+        if not adjusted:
+            break
+
+    remaining_words = len(words) - sum(word_counts)
+    if remaining_words > 0:
+        remainders = sorted(
+            range(len(raw_word_counts)),
+            key=lambda index: raw_word_counts[index] - math.floor(raw_word_counts[index]),
+            reverse=True,
+        )
+        for index in remainders:
+            if remaining_words <= 0:
+                break
+            word_counts[index] += 1
+            remaining_words -= 1
+
+    phrases: list[str] = []
+    cursor = 0
+    for index, word_count in enumerate(word_counts):
+        if cursor >= len(words):
+            break
+        if index == len(word_counts) - 1:
+            phrase_words = words[cursor:]
+        else:
+            phrase_words = words[cursor : cursor + word_count]
+        phrase_text = clean_phrase_text(" ".join(phrase_words))
+        if phrase_text:
+            phrases.append(phrase_text)
+        cursor += word_count
+
+    return phrases
+
+
+def build_generated_aligned_phrases(
+    greek_tokens: list[dict[str, Any]], translation_text: str | None
+) -> list[dict[str, Any]]:
+    if not greek_tokens or not translation_text:
+        return []
+
+    clause_spans: list[tuple[int, int]] = []
+    clause_start = 0
+
+    for token_index, token in enumerate(greek_tokens):
+        trailing_punctuation = normalize_space(token.get("trailingPunctuation"))
+        if any(character in trailing_punctuation for character in PHRASE_BOUNDARY_PUNCTUATION):
+            clause_spans.append((clause_start, token_index))
+            clause_start = token_index + 1
+
+    if clause_start < len(greek_tokens):
+        clause_spans.append((clause_start, len(greek_tokens) - 1))
+
+    phrase_spans: list[tuple[int, int]] = []
+    for clause_start, clause_end in clause_spans:
+        clause_token_count = clause_end - clause_start + 1
+        phrase_count = min(6, max(1, math.ceil(clause_token_count / 2.5)))
+        phrase_spans.extend(build_even_token_spans(clause_start, clause_end, phrase_count))
+
+    phrase_texts = split_translation_into_phrases(translation_text, phrase_spans)
+
+    return sanitize_aligned_phrase_entries(
+        len(greek_tokens),
+        [
+            {
+                "startToken": start_token,
+                "endToken": end_token,
+                "text": phrase_texts[index] if index < len(phrase_texts) else "",
+            }
+            for index, (start_token, end_token) in enumerate(phrase_spans)
+        ],
+    )
+
+
+def load_aligned_english_overrides() -> dict[str, list[dict[str, Any]]]:
+    if not ALIGNED_ENGLISH_OVERRIDES_PATH.exists():
+        return {}
+
+    raw_payload = read_json(ALIGNED_ENGLISH_OVERRIDES_PATH)
+    if not isinstance(raw_payload, dict):
+        return {}
+
+    overrides: dict[str, list[dict[str, Any]]] = {}
+    for verse_key, phrases in raw_payload.items():
+        if not isinstance(verse_key, str) or not isinstance(phrases, list):
+            continue
+        overrides[verse_key] = [
+            phrase for phrase in phrases if isinstance(phrase, dict)
+        ]
+
+    return overrides
 
 
 def map_ot_reference(slug: str, chapter_number: int, verse_number: int) -> tuple[int, int] | None:
@@ -442,6 +633,7 @@ def main() -> None:
         raise SystemExit("Expected LXX source at /tmp/CenterBLC-LXX.")
 
     web_books = read_json(WEB_BOOKS_PATH)
+    aligned_english_overrides = load_aligned_english_overrides()
     books_by_slug = {book["slug"]: book for book in web_books}
     ot_english_translation_map = build_ot_english_translation_map()
     nt_esv_translation_map = build_nt_esv_translation_map()
@@ -594,6 +786,11 @@ def main() -> None:
                         .get(chapter_number, {})
                         .get(verse_number)
                     )
+                    verse_key = make_verse_key(slug, chapter_number, verse_number)
+                    aligned_english_phrases = sanitize_aligned_phrase_entries(
+                        len(greek_tokens),
+                        aligned_english_overrides.get(verse_key),
+                    ) or build_generated_aligned_phrases(greek_tokens, translation_text)
                     verses_payload.append(
                         {
                             "number": verse_number,
@@ -601,6 +798,11 @@ def main() -> None:
                             **(
                                 {"translationText": translation_text}
                                 if translation_text
+                                else {}
+                            ),
+                            **(
+                                {"alignedEnglishPhrases": aligned_english_phrases}
+                                if aligned_english_phrases
                                 else {}
                             ),
                             "greekTokens": greek_tokens,
@@ -663,6 +865,11 @@ def main() -> None:
                     .get(chapter["chapterNumber"], {})
                     .get(verse["number"])
                 )
+                verse_key = make_verse_key(slug, chapter["chapterNumber"], verse["number"])
+                aligned_english_phrases = sanitize_aligned_phrase_entries(
+                    len(greek_tokens),
+                    aligned_english_overrides.get(verse_key),
+                ) or build_generated_aligned_phrases(greek_tokens, translation_text)
                 verses_payload.append(
                     {
                         "number": verse["number"],
@@ -670,6 +877,11 @@ def main() -> None:
                         **(
                             {"translationText": translation_text}
                             if translation_text
+                            else {}
+                        ),
+                        **(
+                            {"alignedEnglishPhrases": aligned_english_phrases}
+                            if aligned_english_phrases
                             else {}
                         ),
                         "greekTokens": greek_tokens,

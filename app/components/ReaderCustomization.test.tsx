@@ -271,6 +271,28 @@ describe("Reader customization", () => {
     expect(stored).toContain('"showCompanionVerseTranslation":false');
   });
 
+  it("persists the aligned English toggle for the standalone Greek version", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ greek: chapter, web: chapter }}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: {
+        value: "greek"
+      }
+    });
+    fireEvent.click(screen.getByRole("button", { name: /Aligned English/i }));
+
+    const stored = window.localStorage.getItem(READER_CUSTOMIZATION_STORAGE_KEY) ?? "";
+
+    expect(stored).toContain('"showAlignedEnglishPhrases":false');
+  });
+
   it("resets advanced settings to defaults", () => {
     renderWithReaderCustomization(
       <ReaderPageContent

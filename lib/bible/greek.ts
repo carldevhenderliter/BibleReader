@@ -1,5 +1,6 @@
 import type {
   BibleSearchVerseEntry,
+  GreekAlignedPhrase,
   GreekGlossOption,
   GreekInflectedForm,
   GreekLemmaGlossPreference,
@@ -20,6 +21,12 @@ export type GreekDictionaryMatch = {
   selectedForm?: GreekInflectedForm;
   selectedFormValue?: string;
   matchType: "strongs" | "lemma" | "form" | "transliteration" | "gloss";
+};
+
+export type GreekAlignedPhraseSpan = {
+  startToken: number;
+  endToken: number;
+  text?: string;
 };
 
 type GreekMorphologyTermKey =
@@ -907,6 +914,62 @@ export function getGreekTokenOccurrenceKey(
   tokenIndex: number
 ) {
   return `${bookSlug}:${chapterNumber}:${verseNumber}:${tokenIndex}`;
+}
+
+export function buildGreekAlignedPhraseSpans(
+  tokenCount: number,
+  phrases?: GreekAlignedPhrase[] | null
+) {
+  if (tokenCount <= 0) {
+    return [] as GreekAlignedPhraseSpan[];
+  }
+
+  const validPhrases = (phrases ?? [])
+    .map((phrase) => ({
+      startToken: Number.isInteger(phrase.startToken) ? phrase.startToken : -1,
+      endToken: Number.isInteger(phrase.endToken) ? phrase.endToken : -1,
+      text: phrase.text.trim()
+    }))
+    .filter(
+      (phrase) =>
+        phrase.text.length > 0 &&
+        phrase.startToken >= 0 &&
+        phrase.endToken >= phrase.startToken &&
+        phrase.endToken < tokenCount
+    )
+    .sort((left, right) => left.startToken - right.startToken || left.endToken - right.endToken);
+
+  const spans: GreekAlignedPhraseSpan[] = [];
+  let nextTokenIndex = 0;
+
+  for (const phrase of validPhrases) {
+    if (phrase.startToken < nextTokenIndex) {
+      continue;
+    }
+
+    for (let tokenIndex = nextTokenIndex; tokenIndex < phrase.startToken; tokenIndex += 1) {
+      spans.push({
+        startToken: tokenIndex,
+        endToken: tokenIndex
+      });
+    }
+
+    spans.push({
+      startToken: phrase.startToken,
+      endToken: phrase.endToken,
+      text: phrase.text
+    });
+    nextTokenIndex = phrase.endToken + 1;
+  }
+
+  for (let tokenIndex = nextTokenIndex; tokenIndex < tokenCount; tokenIndex += 1) {
+    spans.push({
+      startToken: tokenIndex,
+      endToken: tokenIndex
+    });
+  }
+
+  return spans;
 }
 
 export function getGreekGlossOptions(

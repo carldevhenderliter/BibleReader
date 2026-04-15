@@ -13,6 +13,7 @@ export type Verse = {
   number: number;
   text: string;
   translationText?: string;
+  alignedEnglishPhrases?: GreekAlignedPhrase[];
   tokens?: VerseToken[];
   greekTokens?: GreekToken[];
 };
@@ -66,6 +67,7 @@ export type ReaderCustomizationSettings = {
   showEsvGreekOnly: boolean;
   showVerseText: boolean;
   showCompanionVerseTranslation: boolean;
+  showAlignedEnglishPhrases: boolean;
   showGreekSurface: boolean;
   showGreekLemma: boolean;
   showGreekTransliteration: boolean;
@@ -249,6 +251,7 @@ export type EsvInterlinearDisplayVerse = {
   greek: string;
   baseGreek: string;
   tokens?: GreekToken[];
+  alignedEnglishPhrases?: GreekAlignedPhrase[];
   overrideGreek?: string;
 };
 
@@ -473,6 +476,12 @@ export type GreekInflectedForm = {
   morphology: string;
   decodedMorphology?: string;
   definition?: string;
+};
+
+export type GreekAlignedPhrase = {
+  startToken: number;
+  endToken: number;
+  text: string;
 };
 
 export type GreekGlossOption = {

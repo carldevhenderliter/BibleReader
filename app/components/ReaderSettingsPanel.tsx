@@ -75,6 +75,7 @@ export function ReaderSettingsPanel({
     key:
       | "showVerseText"
       | "showCompanionVerseTranslation"
+      | "showAlignedEnglishPhrases"
       | "showCustomVerseTranslation"
       | "showGreekSurface"
       | "showGreekLemma"
@@ -93,6 +94,7 @@ export function ReaderSettingsPanel({
       showEsvGreekOnly: false,
       showVerseText: true,
       showCompanionVerseTranslation: version === "greek",
+      showAlignedEnglishPhrases: version === "greek",
       showGreekSurface: true,
       showGreekLemma: true,
       showGreekTransliteration: true,
@@ -107,6 +109,7 @@ export function ReaderSettingsPanel({
       showEsvGreekOnly: false,
       showVerseText: false,
       showCompanionVerseTranslation: false,
+      showAlignedEnglishPhrases: false,
       showGreekSurface: false,
       showGreekLemma: false,
       showGreekTransliteration: false,
@@ -120,6 +123,7 @@ export function ReaderSettingsPanel({
       updateSettings({
         showVerseText: true,
         showCompanionVerseTranslation: false,
+        showAlignedEnglishPhrases: false,
         showCustomVerseTranslation: false,
         showGreekSurface: false,
         showGreekLemma: false,
@@ -133,6 +137,7 @@ export function ReaderSettingsPanel({
       showEsvInterlinear: true,
       showEsvGreekOnly: true,
       showVerseText: false,
+      showAlignedEnglishPhrases: false,
       showGreekSurface: true,
       showGreekLemma: false,
       showGreekTransliteration: false,
@@ -344,6 +349,19 @@ export function ReaderSettingsPanel({
                     : "Show the translation line for the verse."}
                 </span>
               </button>
+              {version === "greek" ? (
+                <button
+                  className={`settings-option-card${
+                    settings.showAlignedEnglishPhrases ? " is-active" : ""
+                  }`}
+                  key="showAlignedEnglishPhrases"
+                  onClick={() => toggleLayer("showAlignedEnglishPhrases")}
+                  type="button"
+                >
+                  <strong>Aligned English</strong>
+                  <span>Show short English phrases under the matching Greek spans.</span>
+                </button>
+              ) : null}
               {version === "greek" ? (
                 <button
                   className={`settings-option-card${

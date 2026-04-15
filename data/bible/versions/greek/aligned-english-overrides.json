@@ -1,0 +1,24 @@
+{
+  "matthew:1:1": [
+    {
+      "startToken": 0,
+      "endToken": 1,
+      "text": "The book of the genealogy"
+    },
+    {
+      "startToken": 2,
+      "endToken": 3,
+      "text": "of Jesus Christ"
+    },
+    {
+      "startToken": 4,
+      "endToken": 5,
+      "text": "the son of David"
+    },
+    {
+      "startToken": 6,
+      "endToken": 7,
+      "text": "the son of Abraham"
+    }
+  ]
+}

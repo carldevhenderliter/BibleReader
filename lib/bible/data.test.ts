@@ -59,4 +59,33 @@ describe("bible data", () => {
     expect(chapter?.verses[0]?.text).toContain("In the beginning, God created the heavens");
     expect(chapter?.verses[0]?.tokens).toBeUndefined();
   });
+
+  it("loads aligned English phrases for the standalone Greek version", async () => {
+    const chapter = await getChapter("matthew", 1, "greek");
+
+    expect(chapter?.verses[0]?.text).toContain("Βίβλος");
+    expect(chapter?.verses[0]?.translationText).toContain("The book of the genealogy");
+    expect(chapter?.verses[0]?.alignedEnglishPhrases).toEqual([
+      {
+        startToken: 0,
+        endToken: 1,
+        text: "The book of the genealogy"
+      },
+      {
+        startToken: 2,
+        endToken: 3,
+        text: "of Jesus Christ"
+      },
+      {
+        startToken: 4,
+        endToken: 5,
+        text: "the son of David"
+      },
+      {
+        startToken: 6,
+        endToken: 7,
+        text: "the son of Abraham"
+      }
+    ]);
+  });
 });

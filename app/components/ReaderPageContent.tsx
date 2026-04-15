@@ -222,6 +222,7 @@ export function ReaderPageContent({
               highlightedVerseRange={activeHighlightedVerseRange}
               interlinearVerseMap={interlinearVerseMap}
               key={`${version}:${book.slug}:${chapter.chapterNumber}`}
+              showAlignedEnglishPhrases={settings.showAlignedEnglishPhrases}
               showCompanionVerseTranslation={settings.showCompanionVerseTranslation}
               showCustomVerseTranslation={settings.showCustomVerseTranslation}
               showGreekGloss={settings.showGreekGloss}
