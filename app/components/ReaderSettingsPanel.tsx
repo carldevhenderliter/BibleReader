@@ -45,13 +45,14 @@ export function ReaderSettingsPanel({
 }: ReaderSettingsPanelProps) {
   const { isPanelOpen, resetSettings, setIsPanelOpen, settings, updateSettings } =
     useReaderCustomization();
-  const { openCompare, openCrossReferences, openNotebook, openSermons, setActiveReaderPane } =
+  const { openCompare, openCrossReferences, openNotebook, openOtCompare, openSermons, setActiveReaderPane } =
     useReaderWorkspace();
   const { version, setVersion } = useReaderVersion();
   const pathname = usePathname();
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   const versionOptions = getBibleVersionOptions();
   const isReaderRoute = pathname.startsWith("/read");
+  const isOldTestament = book.testament === "Old";
   const supportsGreekReading = version === "esv" || version === "greek";
   const supportsEsvInterlinear = version === "esv";
   const supportsGreekStudyLayers = version === "esv" || version === "greek";
@@ -153,6 +154,11 @@ export function ReaderSettingsPanel({
 
   const handleCompareOpen = () => {
     openCompare();
+    setIsPanelOpen(false);
+  };
+
+  const handleOtCompareOpen = () => {
+    openOtCompare();
     setIsPanelOpen(false);
   };
 
@@ -515,6 +521,15 @@ export function ReaderSettingsPanel({
                 >
                   Compare
                 </button>
+                {isOldTestament ? (
+                  <button
+                    className="reader-inline-button reader-settings-link"
+                    onClick={handleOtCompareOpen}
+                    type="button"
+                  >
+                    OT Compare
+                  </button>
+                ) : null}
               </div>
             </div>
           ) : null}

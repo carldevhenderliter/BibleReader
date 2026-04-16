@@ -78,6 +78,44 @@ const nltChapter: Chapter = {
   ]
 };
 
+const greekOtChapter: Chapter = {
+  bookSlug: "genesis",
+  chapterNumber: 1,
+  verses: [
+    {
+      number: 1,
+      text: "ἐν ἀρχῇ ἐποίησεν ὁ θεὸς τὸν οὐρανὸν καὶ τὴν γῆν"
+    }
+  ]
+};
+
+const masoreticChapter: Chapter = {
+  bookSlug: "genesis",
+  chapterNumber: 1,
+  verses: [
+    {
+      number: 1,
+      text: "בראשית ברא אלהים את השמים ואת הארץ",
+      hebrewTokens: [
+        {
+          surface: "בראשית",
+          lemma: "רֵאשִׁית",
+          strongs: "H7225",
+          transliteration: "re'shiyth",
+          gloss: "beginning"
+        },
+        {
+          surface: "ברא",
+          lemma: "בָּרָא",
+          strongs: "H1254",
+          transliteration: "bara'",
+          gloss: "create"
+        }
+      ]
+    }
+  ]
+};
+
 const ntBooks: BookMeta[] = [
   {
     slug: "matthew",
@@ -351,6 +389,38 @@ describe("ReaderPageContent", () => {
     expect(screen.getByRole("tab", { name: "Compare" })).toHaveAttribute("aria-selected", "true");
     expect(screen.getByText("Parallel Compare")).toBeInTheDocument();
     expect(screen.getByLabelText("Parallel translation comparison")).toBeInTheDocument();
+  });
+
+  it("opens OT compare from the menu for Old Testament passages", () => {
+    renderWithReaderCustomization(
+      <>
+        <ReaderPageContent
+          book={books[0]}
+          books={books}
+          chaptersByVersion={{ web: chapter, greek: greekOtChapter }}
+          masoreticChapter={masoreticChapter}
+        />
+        <LookupPane />
+      </>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "OT Compare" }));
+
+    expect(screen.getByRole("tab", { name: "OT Compare" })).toHaveAttribute(
+      "aria-selected",
+      "true"
+    );
+    expect(screen.getByText("OT Textual Compare")).toBeInTheDocument();
+    expect(screen.getByText("LXX Greek")).toBeInTheDocument();
+    expect(screen.getByText("Masoretic Hebrew")).toBeInTheDocument();
+    expect(screen.getByText("ἐν ἀρχῇ ἐποίησεν ὁ θεὸς τὸν οὐρανὸν καὶ τὴν γῆν")).toBeInTheDocument();
+    expect(screen.getByText("בראשית")).toBeInTheDocument();
+    expect(screen.getByText(/רֵאשִׁית · re'shiyth · beginning/i)).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "בראשית" }));
+
+    expect(screen.getByText("Loading Strongs details…")).toBeInTheDocument();
   });
 
   it("shows Greek interlinear lines under ESV New Testament verses when enabled", () => {

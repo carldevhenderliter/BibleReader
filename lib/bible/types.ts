@@ -15,6 +15,7 @@ export type Verse = {
   translationText?: string;
   tokens?: VerseToken[];
   greekTokens?: GreekToken[];
+  hebrewTokens?: HebrewToken[];
 };
 
 export type Chapter = {
@@ -466,6 +467,16 @@ export type GreekToken = {
   transliteration?: string;
   gloss?: string;
   trailingPunctuation?: string;
+};
+
+export type HebrewToken = {
+  surface: string;
+  lemma: string;
+  strongs?: string;
+  morphology?: string;
+  decodedMorphology?: string;
+  transliteration?: string;
+  gloss?: string;
 };
 
 export type GreekInflectedForm = {

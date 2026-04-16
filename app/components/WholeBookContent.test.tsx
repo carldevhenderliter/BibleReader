@@ -112,6 +112,71 @@ const nltChapters: Chapter[] = [
   }
 ];
 
+const otBooks: BookMeta[] = [
+  {
+    slug: "genesis",
+    name: "Genesis",
+    abbreviation: "Gen",
+    testament: "Old",
+    chapterCount: 2,
+    order: 1
+  }
+];
+
+const greekOtChapters: Chapter[] = [
+  {
+    bookSlug: "genesis",
+    chapterNumber: 1,
+    verses: [{ number: 1, text: "ἐν ἀρχῇ ἐποίησεν ὁ θεὸς" }]
+  },
+  {
+    bookSlug: "genesis",
+    chapterNumber: 2,
+    verses: [{ number: 1, text: "καὶ συνετελέσθησαν ὁ οὐρανὸς καὶ ἡ γῆ" }]
+  }
+];
+
+const masoreticOtChapters: Chapter[] = [
+  {
+    bookSlug: "genesis",
+    chapterNumber: 1,
+    verses: [
+      {
+        number: 1,
+        text: "בראשית ברא אלהים",
+        hebrewTokens: [
+          {
+            surface: "בראשית",
+            lemma: "רֵאשִׁית",
+            strongs: "H7225",
+            transliteration: "re'shiyth",
+            gloss: "beginning"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    bookSlug: "genesis",
+    chapterNumber: 2,
+    verses: [
+      {
+        number: 1,
+        text: "ויכלו השמים והארץ",
+        hebrewTokens: [
+          {
+            surface: "ויכלו",
+            lemma: "כָּלָה",
+            strongs: "H3615",
+            transliteration: "kalah",
+            gloss: "finish"
+          }
+        ]
+      }
+    ]
+  }
+];
+
 const ntInterlinearBook: EsvInterlinearDisplayChapter[] = [
   {
     bookSlug: "jude",
@@ -455,6 +520,25 @@ describe("WholeBookContent", () => {
     expect(screen.getAllByText("NLT").length).toBeGreaterThan(0);
     expect(screen.getAllByRole("heading", { name: /Chapter /i }).length).toBeGreaterThan(1);
     expect(screen.getByText("Dear friends, I had been eagerly planning to write to you...")).toBeInTheDocument();
+  });
+
+  it("renders OT compare sections in whole-book view", () => {
+    renderWithReaderCustomization(
+      <WholeBookContent
+        book={otBooks[0]}
+        books={otBooks}
+        chaptersByVersion={{ web: greekOtChapters, greek: greekOtChapters }}
+        focusedChapterNumber={2}
+        masoreticBookChapters={masoreticOtChapters}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("tab", { name: "OT Compare" }));
+
+    expect(screen.getByText("OT Textual Compare")).toBeInTheDocument();
+    expect(screen.getAllByRole("heading", { name: /Chapter /i }).length).toBeGreaterThan(1);
+    expect(screen.getByText("ἐν ἀρχῇ ἐποίησεν ὁ θεὸς")).toBeInTheDocument();
+    expect(screen.getByText("בראשית")).toBeInTheDocument();
   });
 
   it("shows Greek interlinear lines under ESV New Testament verses in whole-book view", () => {

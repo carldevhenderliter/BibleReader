@@ -8,6 +8,7 @@ import { ReaderContentTabs } from "@/app/components/ReaderContentTabs";
 import { ReaderComparePanel } from "@/app/components/ReaderComparePanel";
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
+import { ReaderOtComparePanel } from "@/app/components/ReaderOtComparePanel";
 import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
 import { ReaderStrongsPanel } from "@/app/components/ReaderStrongsPanel";
 import { ReaderStudySetsPanel } from "@/app/components/ReaderStudySetsPanel";
@@ -43,6 +44,7 @@ type WholeBookContentProps = {
   books: BookMeta[];
   book: BookMeta;
   chaptersByVersion: BundledBookChapterMap;
+  masoreticBookChapters?: Chapter[] | null;
   esvInterlinearBook?: EsvInterlinearDisplayChapter[] | null;
   focusedChapterNumber?: number | null;
   highlightedChapterNumber?: number | null;
@@ -177,6 +179,7 @@ export function WholeBookContent({
   books,
   book,
   chaptersByVersion,
+  masoreticBookChapters = null,
   esvInterlinearBook = null,
   focusedChapterNumber = null,
   highlightedChapterNumber = null,
@@ -191,6 +194,7 @@ export function WholeBookContent({
   const {
     activeReaderPane,
     activeUtilityPane,
+    setActiveReaderPane,
     setActiveStudyVerseNumber,
     syncCurrentChapterData
   } = useReaderWorkspace();
@@ -246,6 +250,7 @@ export function WholeBookContent({
     chapters.find((chapter) => chapter.chapterNumber === activeFocusedChapterNumber) ??
     chapters[0] ??
     null;
+  const isOldTestament = book.testament === "Old";
 
   useEffect(() => {
     syncCurrentChapterData(book.slug, focusedChapter?.chapterNumber ?? 1, null);
@@ -302,6 +307,12 @@ export function WholeBookContent({
     setReadingSource
   ]);
 
+  useEffect(() => {
+    if (!isOldTestament && activeReaderPane === "ot-compare") {
+      setActiveReaderPane("reading");
+    }
+  }, [activeReaderPane, isOldTestament, setActiveReaderPane]);
+
   return (
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
       <ReadingSessionSync book={book.slug} chapter={1} view="book" />
@@ -343,7 +354,7 @@ export function WholeBookContent({
             </div>
           </div>
         </div>
-        <ReaderContentTabs />
+        <ReaderContentTabs showOtCompare={isOldTestament} />
         {activeReaderPane === "study-sets" ? (
           <div className="reading-surface reader-notebook-surface">
             <ReaderStudySetsPanel bookSlug={book.slug} chapterNumber={1} />
@@ -354,6 +365,16 @@ export function WholeBookContent({
               book={book}
               chaptersByVersion={chaptersByVersion}
               focusedChapterNumber={activeFocusedChapterNumber}
+              view="book"
+            />
+          </div>
+        ) : activeReaderPane === "ot-compare" ? (
+          <div className="reading-surface reader-notebook-surface">
+            <ReaderOtComparePanel
+              book={book}
+              focusedChapterNumber={activeFocusedChapterNumber}
+              greekChapters={chaptersByVersion.greek ?? null}
+              masoreticChapters={masoreticBookChapters}
               view="book"
             />
           </div>

@@ -8,6 +8,7 @@ import { ReaderContentTabs } from "@/app/components/ReaderContentTabs";
 import { ReaderComparePanel } from "@/app/components/ReaderComparePanel";
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
+import { ReaderOtComparePanel } from "@/app/components/ReaderOtComparePanel";
 import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
 import { ReaderStrongsPanel } from "@/app/components/ReaderStrongsPanel";
 import { ReaderStudySetsPanel } from "@/app/components/ReaderStudySetsPanel";
@@ -23,6 +24,7 @@ import { VerseList } from "@/app/components/VerseList";
 import type {
   BookMeta,
   BundledChapterMap,
+  Chapter,
   EsvInterlinearDisplayChapter
 } from "@/lib/bible/types";
 import { buildChapterSpeechText } from "@/lib/reader-tts";
@@ -41,6 +43,7 @@ type ReaderPageContentProps = {
   books: BookMeta[];
   book: BookMeta;
   chaptersByVersion: BundledChapterMap;
+  masoreticChapter?: Chapter | null;
   esvInterlinearChapter?: EsvInterlinearDisplayChapter | null;
   highlightedVerseNumber?: number | null;
   highlightedVerseRange?: {
@@ -53,6 +56,7 @@ export function ReaderPageContent({
   books,
   book,
   chaptersByVersion,
+  masoreticChapter = null,
   esvInterlinearChapter = null,
   highlightedVerseNumber,
   highlightedVerseRange
@@ -65,6 +69,7 @@ export function ReaderPageContent({
   const {
     activeReaderPane,
     activeUtilityPane,
+    setActiveReaderPane,
     setActiveStudyVerseNumber,
     syncCurrentChapterData
   } = useReaderWorkspace();
@@ -101,6 +106,7 @@ export function ReaderPageContent({
   const activeHighlightedVerseRange = highlightedVerseRange ?? urlHighlightedVerseRange;
   const activeHighlightedVerseNumber =
     activeHighlightedVerseRange !== null ? null : (highlightedVerseNumber ?? urlHighlightedVerseNumber);
+  const isOldTestament = book.testament === "Old";
 
   if (!chapter) {
     return null;
@@ -145,6 +151,12 @@ export function ReaderPageContent({
     };
   }, [book.chapterCount, book.name, book.slug, chapter.chapterNumber, chapter.verses, setReadingSource]);
 
+  useEffect(() => {
+    if (!isOldTestament && activeReaderPane === "ot-compare") {
+      setActiveReaderPane("reading");
+    }
+  }, [activeReaderPane, isOldTestament, setActiveReaderPane]);
+
   return (
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
       <ReadingSessionSync book={book.slug} chapter={chapter.chapterNumber} view="chapter" />
@@ -188,7 +200,7 @@ export function ReaderPageContent({
             </div>
           </div>
         </div>
-        <ReaderContentTabs />
+        <ReaderContentTabs showOtCompare={isOldTestament} />
         {activeReaderPane === "study-sets" ? (
           <div className="reading-surface reader-notebook-surface">
             <ReaderStudySetsPanel bookSlug={book.slug} chapterNumber={chapter.chapterNumber} />
@@ -198,6 +210,16 @@ export function ReaderPageContent({
             <ReaderComparePanel
               book={book}
               chaptersByVersion={chaptersByVersion}
+              view="chapter"
+            />
+          </div>
+        ) : activeReaderPane === "ot-compare" ? (
+          <div className="reading-surface reader-notebook-surface">
+            <ReaderOtComparePanel
+              book={book}
+              focusedChapterNumber={chapter.chapterNumber}
+              greekChapters={chaptersByVersion.greek ? [chaptersByVersion.greek] : null}
+              masoreticChapters={masoreticChapter ? [masoreticChapter] : null}
               view="chapter"
             />
           </div>

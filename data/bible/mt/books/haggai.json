@@ -1,0 +1,5629 @@
+{
+  "book": {
+    "name": "Haggai",
+    "slug": "haggai",
+    "abbreviation": "Hag",
+    "testament": "Old",
+    "chapterCount": 2,
+    "order": 37
+  },
+  "chapters": [
+    {
+      "bookSlug": "haggai",
+      "chapterNumber": 1,
+      "verses": [
+        {
+          "number": 1,
+          "text": "בשנת שתים לדריוש המלך בחדש הששי ביום אחד לחדש היה דבר יהוה ביד חגי הנביא אל זרבבל בן שאלתיאל פחת יהודה ואל יהושע בן יהוצדק הכהן הגדול לאמר",
+          "hebrewTokens": [
+            {
+              "surface": "בשנת",
+              "lemma": "שָׁנָה",
+              "strongs": "H8141",
+              "morphology": "Ncfsc",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "šānâ",
+              "gloss": "nullshâneh"
+            },
+            {
+              "surface": "שתים",
+              "lemma": "שְׁנַיִם",
+              "strongs": "H8147",
+              "morphology": "Acfda",
+              "decodedMorphology": "adjective, dual masculine/feminine noun",
+              "transliteration": "šᵊnayim",
+              "gloss": "feminine שְׁתַּיִם sh ttayim two also twofold — both"
+            },
+            {
+              "surface": "לדריוש",
+              "lemma": "דַּרְיָוֶשׁ",
+              "strongs": "H1867",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "daryāveš",
+              "gloss": "."
+            },
+            {
+              "surface": "המלך",
+              "lemma": "מֶלֶךְ",
+              "strongs": "H4428",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "meleḵ",
+              "gloss": "a king — king"
+            },
+            {
+              "surface": "בחדש",
+              "lemma": "חֹדֶשׁ",
+              "strongs": "H2320",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ḥōḏeš",
+              "gloss": "new moon by implication"
+            },
+            {
+              "surface": "הששי",
+              "lemma": "שִׁשִּׁי",
+              "strongs": "H8345",
+              "morphology": "Aomsa",
+              "decodedMorphology": "adjective, masculine/feminine noun",
+              "transliteration": "šiššî",
+              "gloss": "sixth"
+            },
+            {
+              "surface": "ביום",
+              "lemma": "יוֹם",
+              "strongs": "H3117",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "yôm",
+              "gloss": "nullyome from an unused root meaning be hot a day"
+            },
+            {
+              "surface": "אחד",
+              "lemma": "אֶחָד",
+              "strongs": "H259",
+              "morphology": "Acmsa",
+              "decodedMorphology": "adjective",
+              "transliteration": "'eḥāḏ",
+              "gloss": "properly"
+            },
+            {
+              "surface": "לחדש",
+              "lemma": "חֹדֶשׁ",
+              "strongs": "H2320",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ḥōḏeš",
+              "gloss": "new moon by implication"
+            },
+            {
+              "surface": "היה",
+              "lemma": "הָיָה",
+              "strongs": "H1961",
+              "morphology": "Vqp3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "hāyâ",
+              "gloss": "nullhâyâh"
+            },
+            {
+              "surface": "דבר",
+              "lemma": "דָּבָר",
+              "strongs": "H1697",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "dāḇār",
+              "gloss": "nulldâbâr"
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "ביד",
+              "lemma": "יָד",
+              "strongs": "H3027",
+              "morphology": "Ncbsc",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "yāḏ",
+              "gloss": "."
+            },
+            {
+              "surface": "חגי",
+              "lemma": "חַגַּי",
+              "strongs": "H2292",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "ḥagay",
+              "gloss": "festive Chaggai"
+            },
+            {
+              "surface": "הנביא",
+              "lemma": "נָבִיא",
+              "strongs": "H5030",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "nāḇî'",
+              "gloss": "a prophet or inspired man — prophecy"
+            },
+            {
+              "surface": "אל",
+              "lemma": "אֵל",
+              "strongs": "H413",
+              "morphology": "R",
+              "decodedMorphology": "preposition",
+              "transliteration": "'ēl",
+              "gloss": "nullale a primitive particle properly"
+            },
+            {
+              "surface": "זרבבל",
+              "lemma": "זְרֻבָּבֶל",
+              "strongs": "H2216",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "zᵊrubāḇel",
+              "gloss": "descended of Babylon"
+            },
+            {
+              "surface": "בן",
+              "lemma": "בֵּן",
+              "strongs": "H1121",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "bēn",
+              "gloss": "nullbên"
+            },
+            {
+              "surface": "שאלתיאל",
+              "lemma": "שְׁאַלְתִּיאֵל",
+              "strongs": "H7597",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "šᵊ'altî'ēl",
+              "gloss": "I have asked God Shealtiel"
+            },
+            {
+              "surface": "פחת",
+              "lemma": "פֶּחָה",
+              "strongs": "H6346",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "peḥâ",
+              "gloss": "."
+            },
+            {
+              "surface": "יהודה",
+              "lemma": "יְהוּדָה",
+              "strongs": "H3063",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "yᵊhûḏâ",
+              "gloss": "celebrated Jehudah"
+            },
+            {
+              "surface": "ואל",
+              "lemma": "אֵל",
+              "strongs": "H413",
+              "morphology": "R",
+              "decodedMorphology": "preposition",
+              "transliteration": "'ēl",
+              "gloss": "nullale a primitive particle properly"
+            },
+            {
+              "surface": "יהושע",
+              "lemma": "יְהוֹשׁוּעַ",
+              "strongs": "H3091",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "yᵊhôšûaʿ",
+              "gloss": "."
+            },
+            {
+              "surface": "בן",
+              "lemma": "בֵּן",
+              "strongs": "H1121",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "bēn",
+              "gloss": "nullbên"
+            },
+            {
+              "surface": "יהוצדק",
+              "lemma": "יְהוֹצָדָק",
+              "strongs": "H3087",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "yᵊhôṣāḏāq",
+              "gloss": "."
+            },
+            {
+              "surface": "הכהן",
+              "lemma": "כֹּהֵן",
+              "strongs": "H3548",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "kōhēn",
+              "gloss": "."
+            },
+            {
+              "surface": "הגדול",
+              "lemma": "גָּדוֹל",
+              "strongs": "H1419",
+              "morphology": "Aamsa",
+              "decodedMorphology": "adjective, proper masculine noun, substantive",
+              "transliteration": "gāḏôl",
+              "gloss": "nullgâdôwl"
+            },
+            {
+              "surface": "לאמר",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqc",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "text": "כה אמר יהוה צבאות לאמר העם הזה אמרו לא עת בא עת בית יהוה להבנות",
+          "hebrewTokens": [
+            {
+              "surface": "כה",
+              "lemma": "כֹּה",
+              "strongs": "H3541",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "transliteration": "kô",
+              "gloss": "properly"
+            },
+            {
+              "surface": "אמר",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqp3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "צבאות",
+              "lemma": "צָבָא",
+              "strongs": "H6635",
+              "morphology": "Ncbpa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ṣāḇā'",
+              "gloss": "nulltsâbâʼ"
+            },
+            {
+              "surface": "לאמר",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqc",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            },
+            {
+              "surface": "העם",
+              "lemma": "עַם",
+              "strongs": "H5971",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ʿam",
+              "gloss": "a people specifically"
+            },
+            {
+              "surface": "הזה",
+              "lemma": "זֶה",
+              "strongs": "H2088",
+              "morphology": "Pdxms",
+              "decodedMorphology": "demonstrative pronoun",
+              "transliteration": "zê",
+              "gloss": "."
+            },
+            {
+              "surface": "אמרו",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqp3cp",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            },
+            {
+              "surface": "לא",
+              "lemma": "לֹא",
+              "strongs": "H3808",
+              "morphology": "Tn",
+              "decodedMorphology": "adverb",
+              "transliteration": "lō'",
+              "gloss": "nulllo or לוֹא lôwʼ or לֹה lôh"
+            },
+            {
+              "surface": "עת",
+              "lemma": "עֵת",
+              "strongs": "H6256",
+              "morphology": "Ncbsc",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "ʿēṯ",
+              "gloss": "nullʻêth"
+            },
+            {
+              "surface": "בא",
+              "lemma": "בּוֹא",
+              "strongs": "H935",
+              "morphology": "Vqc",
+              "decodedMorphology": "verb",
+              "transliteration": "bô'",
+              "gloss": "nullbo a primitive root go or come — abide"
+            },
+            {
+              "surface": "עת",
+              "lemma": "עֵת",
+              "strongs": "H6256",
+              "morphology": "Ncbsc",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "ʿēṯ",
+              "gloss": "nullʻêth"
+            },
+            {
+              "surface": "בית",
+              "lemma": "בַּיִת",
+              "strongs": "H1004",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "proper patrial adjective, adverb, masculine noun",
+              "transliteration": "bayiṯ",
+              "gloss": "nullbayith"
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "להבנות",
+              "lemma": "בָּנָה",
+              "strongs": "H1129",
+              "morphology": "VNc",
+              "decodedMorphology": "verb",
+              "transliteration": "bānâ",
+              "gloss": "nullbaw-naw' a primitive root build — build"
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "text": "ויהי דבר יהוה ביד חגי הנביא לאמר",
+          "hebrewTokens": [
+            {
+              "surface": "ויהי",
+              "lemma": "הָיָה",
+              "strongs": "H1961",
+              "morphology": "Vqw3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "hāyâ",
+              "gloss": "nullhâyâh"
+            },
+            {
+              "surface": "דבר",
+              "lemma": "דָּבָר",
+              "strongs": "H1697",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "dāḇār",
+              "gloss": "nulldâbâr"
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "ביד",
+              "lemma": "יָד",
+              "strongs": "H3027",
+              "morphology": "Ncbsc",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "yāḏ",
+              "gloss": "."
+            },
+            {
+              "surface": "חגי",
+              "lemma": "חַגַּי",
+              "strongs": "H2292",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "ḥagay",
+              "gloss": "festive Chaggai"
+            },
+            {
+              "surface": "הנביא",
+              "lemma": "נָבִיא",
+              "strongs": "H5030",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "nāḇî'",
+              "gloss": "a prophet or inspired man — prophecy"
+            },
+            {
+              "surface": "לאמר",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqc",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "text": "העת לכם אתם לשבת בבתיכם ספונים והבית הזה חרב",
+          "hebrewTokens": [
+            {
+              "surface": "העת",
+              "lemma": "עֵת",
+              "strongs": "H6256",
+              "morphology": "Ncbsa",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "ʿēṯ",
+              "gloss": "nullʻêth"
+            },
+            {
+              "surface": "לכם",
+              "lemma": "לכם",
+              "morphology": "Sp2mp"
+            },
+            {
+              "surface": "אתם",
+              "lemma": "אַתָּה",
+              "strongs": "H859",
+              "morphology": "Pp2mp",
+              "decodedMorphology": "personal pronoun",
+              "transliteration": "'atâ",
+              "gloss": "."
+            },
+            {
+              "surface": "לשבת",
+              "lemma": "יָשַׁב",
+              "strongs": "H3427",
+              "morphology": "Vqc",
+              "decodedMorphology": "verb",
+              "transliteration": "yāšaḇ",
+              "gloss": "."
+            },
+            {
+              "surface": "בבתיכם",
+              "lemma": "בַּיִת",
+              "strongs": "H1004",
+              "morphology": "Sp2mp",
+              "decodedMorphology": "proper patrial adjective, adverb, masculine noun",
+              "transliteration": "bayiṯ",
+              "gloss": "nullbayith"
+            },
+            {
+              "surface": "ספונים",
+              "lemma": "סָפַן",
+              "strongs": "H5603",
+              "morphology": "Vqsmpa",
+              "decodedMorphology": "verb",
+              "transliteration": "sāp̄an",
+              "gloss": "nullçâphan"
+            },
+            {
+              "surface": "והבית",
+              "lemma": "בַּיִת",
+              "strongs": "H1004",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "proper patrial adjective, adverb, masculine noun",
+              "transliteration": "bayiṯ",
+              "gloss": "nullbayith"
+            },
+            {
+              "surface": "הזה",
+              "lemma": "זֶה",
+              "strongs": "H2088",
+              "morphology": "Pdxms",
+              "decodedMorphology": "demonstrative pronoun",
+              "transliteration": "zê",
+              "gloss": "."
+            },
+            {
+              "surface": "חרב",
+              "lemma": "חָרֵב",
+              "strongs": "H2720",
+              "morphology": "Aamsa",
+              "decodedMorphology": "adjective",
+              "transliteration": "ḥārēḇ",
+              "gloss": "parched or ruined — desolate"
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "text": "ועתה כה אמר יהוה צבאות שימו לבבכם על דרכיכם",
+          "hebrewTokens": [
+            {
+              "surface": "ועתה",
+              "lemma": "עַתָּה",
+              "strongs": "H6258",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "transliteration": "ʿatâ",
+              "gloss": "at this time"
+            },
+            {
+              "surface": "כה",
+              "lemma": "כֹּה",
+              "strongs": "H3541",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "transliteration": "kô",
+              "gloss": "properly"
+            },
+            {
+              "surface": "אמר",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqp3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "צבאות",
+              "lemma": "צָבָא",
+              "strongs": "H6635",
+              "morphology": "Ncbpa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ṣāḇā'",
+              "gloss": "nulltsâbâʼ"
+            },
+            {
+              "surface": "שימו",
+              "lemma": "שׂוּם",
+              "strongs": "H7760",
+              "morphology": "Vqv2mp",
+              "decodedMorphology": "verb",
+              "transliteration": "śûm",
+              "gloss": "."
+            },
+            {
+              "surface": "לבבכם",
+              "lemma": "לֵבָב",
+              "strongs": "H3824",
+              "morphology": "Sp2mp",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "lēḇāḇ",
+              "gloss": "."
+            },
+            {
+              "surface": "על",
+              "lemma": "עַל",
+              "strongs": "H5921",
+              "morphology": "R",
+              "decodedMorphology": "conjunction, preposition",
+              "transliteration": "ʿal",
+              "gloss": "nullʻal"
+            },
+            {
+              "surface": "דרכיכם",
+              "lemma": "דֶּרֶךְ",
+              "strongs": "H1870",
+              "morphology": "Sp2mp",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "dereḵ",
+              "gloss": "a road figuratively"
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "text": "זרעתם הרבה והבא מעט אכול ואין לשבעה שתו ואין לשכרה לבוש ואין לחם לו והמשתכר משתכר אל צרור נקוב",
+          "hebrewTokens": [
+            {
+              "surface": "זרעתם",
+              "lemma": "זָרַע",
+              "strongs": "H2232",
+              "morphology": "Vqp2mp",
+              "decodedMorphology": "verb",
+              "transliteration": "zāraʿ",
+              "gloss": "nullzâraʻ"
+            },
+            {
+              "surface": "הרבה",
+              "lemma": "רָבָה",
+              "strongs": "H7235",
+              "morphology": "Vha",
+              "decodedMorphology": "verb",
+              "transliteration": "rāḇâ",
+              "gloss": "."
+            },
+            {
+              "surface": "והבא",
+              "lemma": "בּוֹא",
+              "strongs": "H935",
+              "morphology": "Vha",
+              "decodedMorphology": "verb",
+              "transliteration": "bô'",
+              "gloss": "nullbo a primitive root go or come — abide"
+            },
+            {
+              "surface": "מעט",
+              "lemma": "מְעַט",
+              "strongs": "H4592",
+              "morphology": "Aamsa",
+              "decodedMorphology": "substantive",
+              "transliteration": "mᵊʿaṭ",
+              "gloss": "nullmᵉʻaṭ"
+            },
+            {
+              "surface": "אכול",
+              "lemma": "אָכַל",
+              "strongs": "H398",
+              "morphology": "Vqa",
+              "decodedMorphology": "verb",
+              "transliteration": "'āḵal",
+              "gloss": "nullaw-kal' a primitive root eat — aw-kal' a primitive root eat —"
+            },
+            {
+              "surface": "ואין",
+              "lemma": "אִין",
+              "strongs": "H369",
+              "morphology": "Tn",
+              "decodedMorphology": "adverb, noun, negation",
+              "transliteration": "'în",
+              "gloss": "."
+            },
+            {
+              "surface": "לשבעה",
+              "lemma": "שָׂבְעָה",
+              "strongs": "H7654",
+              "morphology": "Ncfsa",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "śāḇʿâ",
+              "gloss": "nullsobʻâh"
+            },
+            {
+              "surface": "שתו",
+              "lemma": "שָׁתָה",
+              "strongs": "H8354",
+              "morphology": "Vqa",
+              "decodedMorphology": "verb",
+              "transliteration": "šāṯâ",
+              "gloss": ".)"
+            },
+            {
+              "surface": "ואין",
+              "lemma": "אִין",
+              "strongs": "H369",
+              "morphology": "Tn",
+              "decodedMorphology": "adverb, noun, negation",
+              "transliteration": "'în",
+              "gloss": "."
+            },
+            {
+              "surface": "לשכרה",
+              "lemma": "שָׁכַר",
+              "strongs": "H7937",
+              "morphology": "Vqc",
+              "decodedMorphology": "verb",
+              "transliteration": "šāḵar",
+              "gloss": ".)"
+            },
+            {
+              "surface": "לבוש",
+              "lemma": "לָבַשׁ",
+              "strongs": "H3847",
+              "morphology": "Vqa",
+              "decodedMorphology": "verb",
+              "transliteration": "lāḇaš",
+              "gloss": "."
+            },
+            {
+              "surface": "ואין",
+              "lemma": "אִין",
+              "strongs": "H369",
+              "morphology": "Tn",
+              "decodedMorphology": "adverb, noun, negation",
+              "transliteration": "'în",
+              "gloss": "."
+            },
+            {
+              "surface": "לחם",
+              "lemma": "חֹם",
+              "strongs": "H2527",
+              "morphology": "Vqc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ḥōm",
+              "gloss": "heat — heat"
+            },
+            {
+              "surface": "לו",
+              "lemma": "לו",
+              "morphology": "Sp3ms"
+            },
+            {
+              "surface": "והמשתכר",
+              "lemma": "שָׂכַר",
+              "strongs": "H7936",
+              "morphology": "Vtrmsa",
+              "decodedMorphology": "verb",
+              "transliteration": "śāḵar",
+              "gloss": "nullsâkar"
+            },
+            {
+              "surface": "משתכר",
+              "lemma": "שָׂכַר",
+              "strongs": "H7936",
+              "morphology": "Vtrmsa",
+              "decodedMorphology": "verb",
+              "transliteration": "śāḵar",
+              "gloss": "nullsâkar"
+            },
+            {
+              "surface": "אל",
+              "lemma": "אֵל",
+              "strongs": "H413",
+              "morphology": "R",
+              "decodedMorphology": "preposition",
+              "transliteration": "'ēl",
+              "gloss": "nullale a primitive particle properly"
+            },
+            {
+              "surface": "צרור",
+              "lemma": "צְרוֹר",
+              "strongs": "H6872",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ṣᵊrôr",
+              "gloss": "nulltsᵉrôwr"
+            },
+            {
+              "surface": "נקוב",
+              "lemma": "נָקַב",
+              "strongs": "H5344",
+              "morphology": "Vqsmsa",
+              "decodedMorphology": "verb",
+              "transliteration": "nāqaḇ",
+              "gloss": "nullnâqab"
+            }
+          ]
+        },
+        {
+          "number": 7,
+          "text": "כה אמר יהוה צבאות שימו לבבכם על דרכיכם",
+          "hebrewTokens": [
+            {
+              "surface": "כה",
+              "lemma": "כֹּה",
+              "strongs": "H3541",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "transliteration": "kô",
+              "gloss": "properly"
+            },
+            {
+              "surface": "אמר",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqp3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "צבאות",
+              "lemma": "צָבָא",
+              "strongs": "H6635",
+              "morphology": "Ncbpa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ṣāḇā'",
+              "gloss": "nulltsâbâʼ"
+            },
+            {
+              "surface": "שימו",
+              "lemma": "שׂוּם",
+              "strongs": "H7760",
+              "morphology": "Vqv2mp",
+              "decodedMorphology": "verb",
+              "transliteration": "śûm",
+              "gloss": "."
+            },
+            {
+              "surface": "לבבכם",
+              "lemma": "לֵבָב",
+              "strongs": "H3824",
+              "morphology": "Sp2mp",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "lēḇāḇ",
+              "gloss": "."
+            },
+            {
+              "surface": "על",
+              "lemma": "עַל",
+              "strongs": "H5921",
+              "morphology": "R",
+              "decodedMorphology": "conjunction, preposition",
+              "transliteration": "ʿal",
+              "gloss": "nullʻal"
+            },
+            {
+              "surface": "דרכיכם",
+              "lemma": "דֶּרֶךְ",
+              "strongs": "H1870",
+              "morphology": "Sp2mp",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "dereḵ",
+              "gloss": "a road figuratively"
+            }
+          ]
+        },
+        {
+          "number": 8,
+          "text": "עלו ההר והבאתם עץ ובנו הבית וארצה בו ואכבד ואכבדה אמר יהוה",
+          "hebrewTokens": [
+            {
+              "surface": "עלו",
+              "lemma": "עָלָה",
+              "strongs": "H5927",
+              "morphology": "Vqv2mp",
+              "decodedMorphology": "verb",
+              "transliteration": "ʿālâ",
+              "gloss": "nullaw-law' a primitive root ascend"
+            },
+            {
+              "surface": "ההר",
+              "lemma": "הַר",
+              "strongs": "H2022",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "har",
+              "gloss": "nullhar"
+            },
+            {
+              "surface": "והבאתם",
+              "lemma": "בּוֹא",
+              "strongs": "H935",
+              "morphology": "Vhq2mp",
+              "decodedMorphology": "verb",
+              "transliteration": "bô'",
+              "gloss": "nullbo a primitive root go or come — abide"
+            },
+            {
+              "surface": "עץ",
+              "lemma": "עֵץ",
+              "strongs": "H6086",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ʿēṣ",
+              "gloss": "a tree hence"
+            },
+            {
+              "surface": "ובנו",
+              "lemma": "בָּנָה",
+              "strongs": "H1129",
+              "morphology": "Vqv2mp",
+              "decodedMorphology": "verb",
+              "transliteration": "bānâ",
+              "gloss": "nullbaw-naw' a primitive root build — build"
+            },
+            {
+              "surface": "הבית",
+              "lemma": "בַּיִת",
+              "strongs": "H1004",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "proper patrial adjective, adverb, masculine noun",
+              "transliteration": "bayiṯ",
+              "gloss": "nullbayith"
+            },
+            {
+              "surface": "וארצה",
+              "lemma": "רָצָה",
+              "strongs": "H7521",
+              "morphology": "Vqi1cs",
+              "decodedMorphology": "verb",
+              "transliteration": "rāṣâ",
+              "gloss": "nullrâtsâh"
+            },
+            {
+              "surface": "בו",
+              "lemma": "בו",
+              "morphology": "Sp3ms"
+            },
+            {
+              "surface": "ואכבד",
+              "lemma": "כָּבַד",
+              "strongs": "H3513",
+              "morphology": "VNi1cs",
+              "decodedMorphology": "verb",
+              "transliteration": "kāḇaḏ",
+              "gloss": "nullkaw-bad' or כָּבֵד k b d a primitive root be heavy"
+            },
+            {
+              "surface": "ואכבדה",
+              "lemma": "כָּבַד",
+              "strongs": "H3513",
+              "morphology": "VNh1cs",
+              "decodedMorphology": "verb",
+              "transliteration": "kāḇaḏ",
+              "gloss": "nullkaw-bad' or כָּבֵד k b d a primitive root be heavy"
+            },
+            {
+              "surface": "אמר",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqp3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            }
+          ]
+        },
+        {
+          "number": 9,
+          "text": "פנה אל הרבה והנה למעט והבאתם הבית ונפחתי בו יען מה נאם יהוה צבאות יען ביתי אשר הוא חרב ואתם רצים איש לביתו",
+          "hebrewTokens": [
+            {
+              "surface": "פנה",
+              "lemma": "פָּנָה",
+              "strongs": "H6437",
+              "morphology": "Vqa",
+              "decodedMorphology": "verb",
+              "transliteration": "pānâ",
+              "gloss": "nullpaw-naw' a primitive root turn by implication"
+            },
+            {
+              "surface": "אל",
+              "lemma": "אֵל",
+              "strongs": "H413",
+              "morphology": "R",
+              "decodedMorphology": "preposition",
+              "transliteration": "'ēl",
+              "gloss": "nullale a primitive particle properly"
+            },
+            {
+              "surface": "הרבה",
+              "lemma": "רָבָה",
+              "strongs": "H7235",
+              "morphology": "Vha",
+              "decodedMorphology": "verb",
+              "transliteration": "rāḇâ",
+              "gloss": "."
+            },
+            {
+              "surface": "והנה",
+              "lemma": "הִנֵּה",
+              "strongs": "H2009",
+              "morphology": "Tm",
+              "decodedMorphology": "demonstrative particle",
+              "transliteration": "hinnê",
+              "gloss": "lo! — behold"
+            },
+            {
+              "surface": "למעט",
+              "lemma": "מְעַט",
+              "strongs": "H4592",
+              "morphology": "Aamsa",
+              "decodedMorphology": "substantive",
+              "transliteration": "mᵊʿaṭ",
+              "gloss": "nullmᵉʻaṭ"
+            },
+            {
+              "surface": "והבאתם",
+              "lemma": "בּוֹא",
+              "strongs": "H935",
+              "morphology": "Vhp2mp",
+              "decodedMorphology": "verb",
+              "transliteration": "bô'",
+              "gloss": "nullbo a primitive root go or come — abide"
+            },
+            {
+              "surface": "הבית",
+              "lemma": "בַּיִת",
+              "strongs": "H1004",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "proper patrial adjective, adverb, masculine noun",
+              "transliteration": "bayiṯ",
+              "gloss": "nullbayith"
+            },
+            {
+              "surface": "ונפחתי",
+              "lemma": "נָפַח",
+              "strongs": "H5301",
+              "morphology": "Vqp1cs",
+              "decodedMorphology": "verb",
+              "transliteration": "nāp̄aḥ",
+              "gloss": "nullnâphach"
+            },
+            {
+              "surface": "בו",
+              "lemma": "בו",
+              "morphology": "Sp3ms"
+            },
+            {
+              "surface": "יען",
+              "lemma": "יַעַן",
+              "strongs": "H3282",
+              "morphology": "C",
+              "decodedMorphology": "conjunction, preposition",
+              "transliteration": "yaʿan",
+              "gloss": "nullyah'-an from an unused root meaning pay attention properly"
+            },
+            {
+              "surface": "מה",
+              "lemma": "מָה",
+              "strongs": "H4100",
+              "morphology": "Ti",
+              "decodedMorphology": "indefinite pronoun, interrogative pronoun",
+              "transliteration": "mâ",
+              "gloss": "."
+            },
+            {
+              "surface": "נאם",
+              "lemma": "נְאֻם",
+              "strongs": "H5002",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "nᵊ'um",
+              "gloss": "an oracle — said"
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "צבאות",
+              "lemma": "צָבָא",
+              "strongs": "H6635",
+              "morphology": "Ncbpa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ṣāḇā'",
+              "gloss": "nulltsâbâʼ"
+            },
+            {
+              "surface": "יען",
+              "lemma": "יַעַן",
+              "strongs": "H3282",
+              "morphology": "C",
+              "decodedMorphology": "conjunction, preposition",
+              "transliteration": "yaʿan",
+              "gloss": "nullyah'-an from an unused root meaning pay attention properly"
+            },
+            {
+              "surface": "ביתי",
+              "lemma": "בַּיִת",
+              "strongs": "H1004",
+              "morphology": "Sp1cs",
+              "decodedMorphology": "proper patrial adjective, adverb, masculine noun",
+              "transliteration": "bayiṯ",
+              "gloss": "nullbayith"
+            },
+            {
+              "surface": "אשר",
+              "lemma": "אֲשֶׁר",
+              "strongs": "H834",
+              "morphology": "Tr",
+              "decodedMorphology": "conjunction, relative pronoun",
+              "transliteration": "'ăšer",
+              "gloss": "."
+            },
+            {
+              "surface": "הוא",
+              "lemma": "הוּא",
+              "strongs": "H1931",
+              "morphology": "Pp3ms",
+              "decodedMorphology": "demonstrative pronoun, third person singular personal pronoun",
+              "transliteration": "hû'",
+              "gloss": "nullhûwʼ"
+            },
+            {
+              "surface": "חרב",
+              "lemma": "חָרֵב",
+              "strongs": "H2720",
+              "morphology": "Aamsa",
+              "decodedMorphology": "adjective",
+              "transliteration": "ḥārēḇ",
+              "gloss": "parched or ruined — desolate"
+            },
+            {
+              "surface": "ואתם",
+              "lemma": "אַתָּה",
+              "strongs": "H859",
+              "morphology": "Pp2mp",
+              "decodedMorphology": "personal pronoun",
+              "transliteration": "'atâ",
+              "gloss": "."
+            },
+            {
+              "surface": "רצים",
+              "lemma": "רוּץ",
+              "strongs": "H7323",
+              "morphology": "Vqrmpa",
+              "decodedMorphology": "verb",
+              "transliteration": "rûṣ",
+              "gloss": "nullrûwts"
+            },
+            {
+              "surface": "איש",
+              "lemma": "אִישׁ",
+              "strongs": "H376",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "'îš",
+              "gloss": "."
+            },
+            {
+              "surface": "לביתו",
+              "lemma": "בַּיִת",
+              "strongs": "H1004",
+              "morphology": "Sp3ms",
+              "decodedMorphology": "proper patrial adjective, adverb, masculine noun",
+              "transliteration": "bayiṯ",
+              "gloss": "nullbayith"
+            }
+          ]
+        },
+        {
+          "number": 10,
+          "text": "על כן עליכם כלאו שמים מטל והארץ כלאה יבולה",
+          "hebrewTokens": [
+            {
+              "surface": "על",
+              "lemma": "עַל",
+              "strongs": "H5921",
+              "morphology": "R",
+              "decodedMorphology": "conjunction, preposition",
+              "transliteration": "ʿal",
+              "gloss": "nullʻal"
+            },
+            {
+              "surface": "כן",
+              "lemma": "כֵּן",
+              "strongs": "H3651",
+              "morphology": "Tm",
+              "decodedMorphology": "adjective, adverb",
+              "transliteration": "kēn",
+              "gloss": "."
+            },
+            {
+              "surface": "עליכם",
+              "lemma": "עַל",
+              "strongs": "H5921",
+              "morphology": "Sp2mp",
+              "decodedMorphology": "conjunction, preposition",
+              "transliteration": "ʿal",
+              "gloss": "nullʻal"
+            },
+            {
+              "surface": "כלאו",
+              "lemma": "כָּלָא",
+              "strongs": "H3607",
+              "morphology": "Vqp3cp",
+              "decodedMorphology": "verb",
+              "transliteration": "kālā'",
+              "gloss": "nullkâlâʼ"
+            },
+            {
+              "surface": "שמים",
+              "lemma": "שָׁמַיִם",
+              "strongs": "H8064",
+              "morphology": "Ncmpa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "šāmayim",
+              "gloss": "."
+            },
+            {
+              "surface": "מטל",
+              "lemma": "טַל",
+              "strongs": "H2919",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ṭal",
+              "gloss": "dew — dew."
+            },
+            {
+              "surface": "והארץ",
+              "lemma": "אֶרֶץ",
+              "strongs": "H776",
+              "morphology": "Ncbsa",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "'ereṣ",
+              "gloss": "nulleh' -rets from an unused root probably meaning be firm earth (at large"
+            },
+            {
+              "surface": "כלאה",
+              "lemma": "כָּלָא",
+              "strongs": "H3607",
+              "morphology": "Vqp3fs",
+              "decodedMorphology": "verb",
+              "transliteration": "kālā'",
+              "gloss": "nullkâlâʼ"
+            },
+            {
+              "surface": "יבולה",
+              "lemma": "יְבוּל",
+              "strongs": "H2981",
+              "morphology": "Sp3fs",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "yᵊḇûl",
+              "gloss": "produce"
+            }
+          ]
+        },
+        {
+          "number": 11,
+          "text": "ואקרא חרב על הארץ ועל ההרים ועל הדגן ועל התירוש ועל היצהר ועל אשר תוציא האדמה ועל האדם ועל הבהמה ועל כל יגיע כפים",
+          "hebrewTokens": [
+            {
+              "surface": "ואקרא",
+              "lemma": "קָרָא",
+              "strongs": "H7121",
+              "morphology": "Vqw1cs",
+              "decodedMorphology": "verb",
+              "transliteration": "qārā'",
+              "gloss": "through idea of accosting a person met) call out (i.e. properly"
+            },
+            {
+              "surface": "חרב",
+              "lemma": "חֹרֶב",
+              "strongs": "H2721",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ḥōreḇ",
+              "gloss": "nullchôreb"
+            },
+            {
+              "surface": "על",
+              "lemma": "עַל",
+              "strongs": "H5921",
+              "morphology": "R",
+              "decodedMorphology": "conjunction, preposition",
+              "transliteration": "ʿal",
+              "gloss": "nullʻal"
+            },
+            {
+              "surface": "הארץ",
+              "lemma": "אֶרֶץ",
+              "strongs": "H776",
+              "morphology": "Ncbsa",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "'ereṣ",
+              "gloss": "nulleh' -rets from an unused root probably meaning be firm earth (at large"
+            },
+            {
+              "surface": "ועל",
+              "lemma": "עַל",
+              "strongs": "H5921",
+              "morphology": "R",
+              "decodedMorphology": "conjunction, preposition",
+              "transliteration": "ʿal",
+              "gloss": "nullʻal"
+            },
+            {
+              "surface": "ההרים",
+              "lemma": "הַר",
+              "strongs": "H2022",
+              "morphology": "Ncmpa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "har",
+              "gloss": "nullhar"
+            },
+            {
+              "surface": "ועל",
+              "lemma": "עַל",
+              "strongs": "H5921",
+              "morphology": "R",
+              "decodedMorphology": "conjunction, preposition",
+              "transliteration": "ʿal",
+              "gloss": "nullʻal"
+            },
+            {
+              "surface": "הדגן",
+              "lemma": "דָּגָן",
+              "strongs": "H1715",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "dāḡān",
+              "gloss": "properly"
+            },
+            {
+              "surface": "ועל",
+              "lemma": "עַל",
+              "strongs": "H5921",
+              "morphology": "R",
+              "decodedMorphology": "conjunction, preposition",
+              "transliteration": "ʿal",
+              "gloss": "nullʻal"
+            },
+            {
+              "surface": "התירוש",
+              "lemma": "תִּירוֹשׁ",
+              "strongs": "H8492",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "tîrôš",
+              "gloss": "in sense of expulsion must or fresh grape-juice by implication fermented wine — (new"
+            },
+            {
+              "surface": "ועל",
+              "lemma": "עַל",
+              "strongs": "H5921",
+              "morphology": "R",
+              "decodedMorphology": "conjunction, preposition",
+              "transliteration": "ʿal",
+              "gloss": "nullʻal"
+            },
+            {
+              "surface": "היצהר",
+              "lemma": "יִצְהָר",
+              "strongs": "H3323",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "yiṣhār",
+              "gloss": "oil figuratively"
+            },
+            {
+              "surface": "ועל",
+              "lemma": "עַל",
+              "strongs": "H5921",
+              "morphology": "R",
+              "decodedMorphology": "conjunction, preposition",
+              "transliteration": "ʿal",
+              "gloss": "nullʻal"
+            },
+            {
+              "surface": "אשר",
+              "lemma": "אֲשֶׁר",
+              "strongs": "H834",
+              "morphology": "Tr",
+              "decodedMorphology": "conjunction, relative pronoun",
+              "transliteration": "'ăšer",
+              "gloss": "."
+            },
+            {
+              "surface": "תוציא",
+              "lemma": "יָצָא",
+              "strongs": "H3318",
+              "morphology": "Vhi3fs",
+              "decodedMorphology": "verb",
+              "transliteration": "yāṣā'",
+              "gloss": "nullyaw-tsaw' a primitive root go (causatively"
+            },
+            {
+              "surface": "האדמה",
+              "lemma": "אֲדָמָה",
+              "strongs": "H127",
+              "morphology": "Ncfsa",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "'ăḏāmâ",
+              "gloss": "soil — country"
+            },
+            {
+              "surface": "ועל",
+              "lemma": "עַל",
+              "strongs": "H5921",
+              "morphology": "R",
+              "decodedMorphology": "conjunction, preposition",
+              "transliteration": "ʿal",
+              "gloss": "nullʻal"
+            },
+            {
+              "surface": "האדם",
+              "lemma": "אָדָם",
+              "strongs": "H120",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "'āḏām",
+              "gloss": "nullʼâdam"
+            },
+            {
+              "surface": "ועל",
+              "lemma": "עַל",
+              "strongs": "H5921",
+              "morphology": "R",
+              "decodedMorphology": "conjunction, preposition",
+              "transliteration": "ʿal",
+              "gloss": "nullʻal"
+            },
+            {
+              "surface": "הבהמה",
+              "lemma": "בְּהֵמָה",
+              "strongs": "H929",
+              "morphology": "Ncfsa",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "bᵊhēmâ",
+              "gloss": "nullbᵉhêmâh"
+            },
+            {
+              "surface": "ועל",
+              "lemma": "עַל",
+              "strongs": "H5921",
+              "morphology": "R",
+              "decodedMorphology": "conjunction, preposition",
+              "transliteration": "ʿal",
+              "gloss": "nullʻal"
+            },
+            {
+              "surface": "כל",
+              "lemma": "כֹּל",
+              "strongs": "H3605",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "kōl",
+              "gloss": "properly"
+            },
+            {
+              "surface": "יגיע",
+              "lemma": "יְגִיעַ",
+              "strongs": "H3018",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "yᵊḡîaʿ",
+              "gloss": "toil hence"
+            },
+            {
+              "surface": "כפים",
+              "lemma": "כַּף",
+              "strongs": "H3709",
+              "morphology": "Ncfda",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "kap̄",
+              "gloss": "hollow hand or palm (so of paw of an animal"
+            }
+          ]
+        },
+        {
+          "number": 12,
+          "text": "וישמע זרבבל בן שלתיאל ויהושע בן יהוצדק הכהן הגדול וכל שארית העם בקול יהוה אלהיהם ועל דברי חגי הנביא כאשר שלחו יהוה אלהיהם וייראו העם מפני יהוה",
+          "hebrewTokens": [
+            {
+              "surface": "וישמע",
+              "lemma": "שָׁמַע",
+              "strongs": "H8085",
+              "morphology": "Vqw3ms",
+              "decodedMorphology": "masculine noun, verb",
+              "transliteration": "šāmaʿ",
+              "gloss": "."
+            },
+            {
+              "surface": "זרבבל",
+              "lemma": "זְרֻבָּבֶל",
+              "strongs": "H2216",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "zᵊrubāḇel",
+              "gloss": "descended of Babylon"
+            },
+            {
+              "surface": "בן",
+              "lemma": "בֵּן",
+              "strongs": "H1121",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "bēn",
+              "gloss": "nullbên"
+            },
+            {
+              "surface": "שלתיאל",
+              "lemma": "שְׁאַלְתִּיאֵל",
+              "strongs": "H7597",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "šᵊ'altî'ēl",
+              "gloss": "I have asked God Shealtiel"
+            },
+            {
+              "surface": "ויהושע",
+              "lemma": "יְהוֹשׁוּעַ",
+              "strongs": "H3091",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "yᵊhôšûaʿ",
+              "gloss": "."
+            },
+            {
+              "surface": "בן",
+              "lemma": "בֵּן",
+              "strongs": "H1121",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "bēn",
+              "gloss": "nullbên"
+            },
+            {
+              "surface": "יהוצדק",
+              "lemma": "יְהוֹצָדָק",
+              "strongs": "H3087",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "yᵊhôṣāḏāq",
+              "gloss": "."
+            },
+            {
+              "surface": "הכהן",
+              "lemma": "כֹּהֵן",
+              "strongs": "H3548",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "kōhēn",
+              "gloss": "."
+            },
+            {
+              "surface": "הגדול",
+              "lemma": "גָּדוֹל",
+              "strongs": "H1419",
+              "morphology": "Aamsa",
+              "decodedMorphology": "adjective, proper masculine noun, substantive",
+              "transliteration": "gāḏôl",
+              "gloss": "nullgâdôwl"
+            },
+            {
+              "surface": "וכל",
+              "lemma": "כֹּל",
+              "strongs": "H3605",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "kōl",
+              "gloss": "properly"
+            },
+            {
+              "surface": "שארית",
+              "lemma": "שְׁאֵרִית",
+              "strongs": "H7611",
+              "morphology": "Ncfsc",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "šᵊ'ērîṯ",
+              "gloss": "a remainder or residual (surviving"
+            },
+            {
+              "surface": "העם",
+              "lemma": "עַם",
+              "strongs": "H5971",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ʿam",
+              "gloss": "a people specifically"
+            },
+            {
+              "surface": "בקול",
+              "lemma": "קוֹל",
+              "strongs": "H6963",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "qôl",
+              "gloss": "nullkole or קֹל qôl from an unused root meaning call aloud a voice or sound — kole or קֹל qôl from an unused root meaning call aloud a voice or sound —"
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "אלהיהם",
+              "lemma": "אֱלֹהִים",
+              "strongs": "H430",
+              "morphology": "Sp3mp",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "'ĕlōhîm",
+              "gloss": "nullʼĕlôhîym"
+            },
+            {
+              "surface": "ועל",
+              "lemma": "עַל",
+              "strongs": "H5921",
+              "morphology": "R",
+              "decodedMorphology": "conjunction, preposition",
+              "transliteration": "ʿal",
+              "gloss": "nullʻal"
+            },
+            {
+              "surface": "דברי",
+              "lemma": "דָּבָר",
+              "strongs": "H1697",
+              "morphology": "Ncmpc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "dāḇār",
+              "gloss": "nulldâbâr"
+            },
+            {
+              "surface": "חגי",
+              "lemma": "חַגַּי",
+              "strongs": "H2292",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "ḥagay",
+              "gloss": "festive Chaggai"
+            },
+            {
+              "surface": "הנביא",
+              "lemma": "נָבִיא",
+              "strongs": "H5030",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "nāḇî'",
+              "gloss": "a prophet or inspired man — prophecy"
+            },
+            {
+              "surface": "כאשר",
+              "lemma": "אֲשֶׁר",
+              "strongs": "H834",
+              "morphology": "Tr",
+              "decodedMorphology": "conjunction, relative pronoun",
+              "transliteration": "'ăšer",
+              "gloss": "."
+            },
+            {
+              "surface": "שלחו",
+              "lemma": "שָׁלַח",
+              "strongs": "H7971",
+              "morphology": "Sp3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "šālaḥ",
+              "gloss": "."
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "אלהיהם",
+              "lemma": "אֱלֹהִים",
+              "strongs": "H430",
+              "morphology": "Sp3mp",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "'ĕlōhîm",
+              "gloss": "nullʼĕlôhîym"
+            },
+            {
+              "surface": "וייראו",
+              "lemma": "יָרֵא",
+              "strongs": "H3372",
+              "morphology": "Vqw3mp",
+              "decodedMorphology": "verb",
+              "transliteration": "yārē'",
+              "gloss": "nullyaw-ray' a primitive root fear morally revere causatively frighten — affright"
+            },
+            {
+              "surface": "העם",
+              "lemma": "עַם",
+              "strongs": "H5971",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ʿam",
+              "gloss": "a people specifically"
+            },
+            {
+              "surface": "מפני",
+              "lemma": "פָּנִים",
+              "strongs": "H6440",
+              "morphology": "Ncbpc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "pānîm",
+              "gloss": "nullpânîym"
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            }
+          ]
+        },
+        {
+          "number": 13,
+          "text": "ויאמר חגי מלאך יהוה במלאכות יהוה לעם לאמר אני אתכם נאם יהוה",
+          "hebrewTokens": [
+            {
+              "surface": "ויאמר",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqw3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            },
+            {
+              "surface": "חגי",
+              "lemma": "חַגַּי",
+              "strongs": "H2292",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "ḥagay",
+              "gloss": "festive Chaggai"
+            },
+            {
+              "surface": "מלאך",
+              "lemma": "מַלְאָךְ",
+              "strongs": "H4397",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "mal'āḵ",
+              "gloss": "nullmălʼâk"
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "במלאכות",
+              "lemma": "מַלְאָכוּת",
+              "strongs": "H4400",
+              "morphology": "Ncfsc",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "mal'āḵûṯ",
+              "gloss": "a message — message."
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "לעם",
+              "lemma": "עַם",
+              "strongs": "H5971",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ʿam",
+              "gloss": "a people specifically"
+            },
+            {
+              "surface": "לאמר",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqc",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            },
+            {
+              "surface": "אני",
+              "lemma": "אֲנִי",
+              "strongs": "H589",
+              "morphology": "Pp1cs",
+              "decodedMorphology": "personal pronoun",
+              "transliteration": "'ănî",
+              "gloss": "nullʼănîy"
+            },
+            {
+              "surface": "אתכם",
+              "lemma": "אֵת",
+              "strongs": "H854",
+              "morphology": "Sp2mp",
+              "decodedMorphology": "preposition",
+              "transliteration": "'ēṯ",
+              "gloss": "properly"
+            },
+            {
+              "surface": "נאם",
+              "lemma": "נְאֻם",
+              "strongs": "H5002",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "nᵊ'um",
+              "gloss": "an oracle — said"
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            }
+          ]
+        },
+        {
+          "number": 14,
+          "text": "ויער יהוה את רוח זרבבל בן שלתיאל פחת יהודה ואת רוח יהושע בן יהוצדק הכהן הגדול ואת רוח כל שארית העם ויבאו ויעשו מלאכה בבית יהוה צבאות אלהיהם",
+          "hebrewTokens": [
+            {
+              "surface": "ויער",
+              "lemma": "עוּר",
+              "strongs": "H5782",
+              "morphology": "Vhw3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "ʿûr",
+              "gloss": "."
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "את",
+              "lemma": "אֵת",
+              "strongs": "H853",
+              "morphology": "To",
+              "decodedMorphology": "particle",
+              "transliteration": "'ēṯ",
+              "gloss": "in demonstrative sense of entity properly"
+            },
+            {
+              "surface": "רוח",
+              "lemma": "רוּחַ",
+              "strongs": "H7307",
+              "morphology": "Ncbsc",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "rûaḥ",
+              "gloss": "nullrûwach"
+            },
+            {
+              "surface": "זרבבל",
+              "lemma": "זְרֻבָּבֶל",
+              "strongs": "H2216",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "zᵊrubāḇel",
+              "gloss": "descended of Babylon"
+            },
+            {
+              "surface": "בן",
+              "lemma": "בֵּן",
+              "strongs": "H1121",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "bēn",
+              "gloss": "nullbên"
+            },
+            {
+              "surface": "שלתיאל",
+              "lemma": "שְׁאַלְתִּיאֵל",
+              "strongs": "H7597",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "šᵊ'altî'ēl",
+              "gloss": "I have asked God Shealtiel"
+            },
+            {
+              "surface": "פחת",
+              "lemma": "פֶּחָה",
+              "strongs": "H6346",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "peḥâ",
+              "gloss": "."
+            },
+            {
+              "surface": "יהודה",
+              "lemma": "יְהוּדָה",
+              "strongs": "H3063",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "yᵊhûḏâ",
+              "gloss": "celebrated Jehudah"
+            },
+            {
+              "surface": "ואת",
+              "lemma": "אֵת",
+              "strongs": "H853",
+              "morphology": "To",
+              "decodedMorphology": "particle",
+              "transliteration": "'ēṯ",
+              "gloss": "in demonstrative sense of entity properly"
+            },
+            {
+              "surface": "רוח",
+              "lemma": "רוּחַ",
+              "strongs": "H7307",
+              "morphology": "Ncbsc",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "rûaḥ",
+              "gloss": "nullrûwach"
+            },
+            {
+              "surface": "יהושע",
+              "lemma": "יְהוֹשׁוּעַ",
+              "strongs": "H3091",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "yᵊhôšûaʿ",
+              "gloss": "."
+            },
+            {
+              "surface": "בן",
+              "lemma": "בֵּן",
+              "strongs": "H1121",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "bēn",
+              "gloss": "nullbên"
+            },
+            {
+              "surface": "יהוצדק",
+              "lemma": "יְהוֹצָדָק",
+              "strongs": "H3087",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "yᵊhôṣāḏāq",
+              "gloss": "."
+            },
+            {
+              "surface": "הכהן",
+              "lemma": "כֹּהֵן",
+              "strongs": "H3548",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "kōhēn",
+              "gloss": "."
+            },
+            {
+              "surface": "הגדול",
+              "lemma": "גָּדוֹל",
+              "strongs": "H1419",
+              "morphology": "Aamsa",
+              "decodedMorphology": "adjective, proper masculine noun, substantive",
+              "transliteration": "gāḏôl",
+              "gloss": "nullgâdôwl"
+            },
+            {
+              "surface": "ואת",
+              "lemma": "אֵת",
+              "strongs": "H853",
+              "morphology": "To",
+              "decodedMorphology": "particle",
+              "transliteration": "'ēṯ",
+              "gloss": "in demonstrative sense of entity properly"
+            },
+            {
+              "surface": "רוח",
+              "lemma": "רוּחַ",
+              "strongs": "H7307",
+              "morphology": "Ncbsc",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "rûaḥ",
+              "gloss": "nullrûwach"
+            },
+            {
+              "surface": "כל",
+              "lemma": "כֹּל",
+              "strongs": "H3605",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "kōl",
+              "gloss": "properly"
+            },
+            {
+              "surface": "שארית",
+              "lemma": "שְׁאֵרִית",
+              "strongs": "H7611",
+              "morphology": "Ncfsc",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "šᵊ'ērîṯ",
+              "gloss": "a remainder or residual (surviving"
+            },
+            {
+              "surface": "העם",
+              "lemma": "עַם",
+              "strongs": "H5971",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ʿam",
+              "gloss": "a people specifically"
+            },
+            {
+              "surface": "ויבאו",
+              "lemma": "בּוֹא",
+              "strongs": "H935",
+              "morphology": "Vqw3mp",
+              "decodedMorphology": "verb",
+              "transliteration": "bô'",
+              "gloss": "nullbo a primitive root go or come — abide"
+            },
+            {
+              "surface": "ויעשו",
+              "lemma": "עָשָׂה",
+              "strongs": "H6213",
+              "morphology": "Vqw3mp",
+              "decodedMorphology": "verb",
+              "transliteration": "ʿāśâ",
+              "gloss": "nullaw-saw' a primitive root do or make"
+            },
+            {
+              "surface": "מלאכה",
+              "lemma": "מְלָאכָה",
+              "strongs": "H4399",
+              "morphology": "Ncfsa",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "mᵊlā'ḵâ",
+              "gloss": "properly"
+            },
+            {
+              "surface": "בבית",
+              "lemma": "בַּיִת",
+              "strongs": "H1004",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "proper patrial adjective, adverb, masculine noun",
+              "transliteration": "bayiṯ",
+              "gloss": "nullbayith"
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "צבאות",
+              "lemma": "צָבָא",
+              "strongs": "H6635",
+              "morphology": "Ncbpa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ṣāḇā'",
+              "gloss": "nulltsâbâʼ"
+            },
+            {
+              "surface": "אלהיהם",
+              "lemma": "אֱלֹהִים",
+              "strongs": "H430",
+              "morphology": "Sp3mp",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "'ĕlōhîm",
+              "gloss": "nullʼĕlôhîym"
+            }
+          ]
+        },
+        {
+          "number": 15,
+          "text": "ביום עשרים וארבעה לחדש בששי בשנת שתים לדריוש המלך",
+          "hebrewTokens": [
+            {
+              "surface": "ביום",
+              "lemma": "יוֹם",
+              "strongs": "H3117",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "yôm",
+              "gloss": "nullyome from an unused root meaning be hot a day"
+            },
+            {
+              "surface": "עשרים",
+              "lemma": "עֶשְׂרִים",
+              "strongs": "H6242",
+              "morphology": "Acbpa",
+              "decodedMorphology": "masculine/feminine noun",
+              "transliteration": "ʿeśrîm",
+              "gloss": "twenty also twentieth — score"
+            },
+            {
+              "surface": "וארבעה",
+              "lemma": "אַרְבַּע",
+              "strongs": "H702",
+              "morphology": "Acmsa",
+              "decodedMorphology": "masculine/feminine adjective, noun",
+              "transliteration": "'arbaʿ",
+              "gloss": "four — four."
+            },
+            {
+              "surface": "לחדש",
+              "lemma": "חֹדֶשׁ",
+              "strongs": "H2320",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ḥōḏeš",
+              "gloss": "new moon by implication"
+            },
+            {
+              "surface": "בששי",
+              "lemma": "שִׁשִּׁי",
+              "strongs": "H8345",
+              "morphology": "Aomsa",
+              "decodedMorphology": "adjective, masculine/feminine noun",
+              "transliteration": "šiššî",
+              "gloss": "sixth"
+            },
+            {
+              "surface": "בשנת",
+              "lemma": "שָׁנָה",
+              "strongs": "H8141",
+              "morphology": "Ncfsc",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "šānâ",
+              "gloss": "nullshâneh"
+            },
+            {
+              "surface": "שתים",
+              "lemma": "שְׁנַיִם",
+              "strongs": "H8147",
+              "morphology": "Acfda",
+              "decodedMorphology": "adjective, dual masculine/feminine noun",
+              "transliteration": "šᵊnayim",
+              "gloss": "feminine שְׁתַּיִם sh ttayim two also twofold — both"
+            },
+            {
+              "surface": "לדריוש",
+              "lemma": "דַּרְיָוֶשׁ",
+              "strongs": "H1867",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "daryāveš",
+              "gloss": "."
+            },
+            {
+              "surface": "המלך",
+              "lemma": "מֶלֶךְ",
+              "strongs": "H4428",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "meleḵ",
+              "gloss": "a king — king"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "bookSlug": "haggai",
+      "chapterNumber": 2,
+      "verses": [
+        {
+          "number": 1,
+          "text": "בשביעי בעשרים ואחד לחדש היה דבר יהוה ביד חגי הנביא לאמר",
+          "hebrewTokens": [
+            {
+              "surface": "בשביעי",
+              "lemma": "שְׁבִיעִי",
+              "strongs": "H7637",
+              "morphology": "Aomsa",
+              "decodedMorphology": "masculine/feminine adjective",
+              "transliteration": "šᵊḇîʿî",
+              "gloss": "seventh — seventh ."
+            },
+            {
+              "surface": "בעשרים",
+              "lemma": "עֶשְׂרִים",
+              "strongs": "H6242",
+              "morphology": "Acbpa",
+              "decodedMorphology": "masculine/feminine noun",
+              "transliteration": "ʿeśrîm",
+              "gloss": "twenty also twentieth — score"
+            },
+            {
+              "surface": "ואחד",
+              "lemma": "אֶחָד",
+              "strongs": "H259",
+              "morphology": "Acmsa",
+              "decodedMorphology": "adjective",
+              "transliteration": "'eḥāḏ",
+              "gloss": "properly"
+            },
+            {
+              "surface": "לחדש",
+              "lemma": "חֹדֶשׁ",
+              "strongs": "H2320",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ḥōḏeš",
+              "gloss": "new moon by implication"
+            },
+            {
+              "surface": "היה",
+              "lemma": "הָיָה",
+              "strongs": "H1961",
+              "morphology": "Vqp3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "hāyâ",
+              "gloss": "nullhâyâh"
+            },
+            {
+              "surface": "דבר",
+              "lemma": "דָּבָר",
+              "strongs": "H1697",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "dāḇār",
+              "gloss": "nulldâbâr"
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "ביד",
+              "lemma": "יָד",
+              "strongs": "H3027",
+              "morphology": "Ncbsc",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "yāḏ",
+              "gloss": "."
+            },
+            {
+              "surface": "חגי",
+              "lemma": "חַגַּי",
+              "strongs": "H2292",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "ḥagay",
+              "gloss": "festive Chaggai"
+            },
+            {
+              "surface": "הנביא",
+              "lemma": "נָבִיא",
+              "strongs": "H5030",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "nāḇî'",
+              "gloss": "a prophet or inspired man — prophecy"
+            },
+            {
+              "surface": "לאמר",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqc",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            }
+          ]
+        },
+        {
+          "number": 2,
+          "text": "אמר נא אל זרבבל בן שלתיאל פחת יהודה ואל יהושע בן יהוצדק הכהן הגדול ואל שארית העם לאמר",
+          "hebrewTokens": [
+            {
+              "surface": "אמר",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqv2ms",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            },
+            {
+              "surface": "נא",
+              "lemma": "נָא",
+              "strongs": "H4994",
+              "morphology": "Te",
+              "decodedMorphology": "particle",
+              "transliteration": "nā'",
+              "gloss": "nullnâʼ"
+            },
+            {
+              "surface": "אל",
+              "lemma": "אֵל",
+              "strongs": "H413",
+              "morphology": "R",
+              "decodedMorphology": "preposition",
+              "transliteration": "'ēl",
+              "gloss": "nullale a primitive particle properly"
+            },
+            {
+              "surface": "זרבבל",
+              "lemma": "זְרֻבָּבֶל",
+              "strongs": "H2216",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "zᵊrubāḇel",
+              "gloss": "descended of Babylon"
+            },
+            {
+              "surface": "בן",
+              "lemma": "בֵּן",
+              "strongs": "H1121",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "bēn",
+              "gloss": "nullbên"
+            },
+            {
+              "surface": "שלתיאל",
+              "lemma": "שְׁאַלְתִּיאֵל",
+              "strongs": "H7597",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "šᵊ'altî'ēl",
+              "gloss": "I have asked God Shealtiel"
+            },
+            {
+              "surface": "פחת",
+              "lemma": "פֶּחָה",
+              "strongs": "H6346",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "peḥâ",
+              "gloss": "."
+            },
+            {
+              "surface": "יהודה",
+              "lemma": "יְהוּדָה",
+              "strongs": "H3063",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "yᵊhûḏâ",
+              "gloss": "celebrated Jehudah"
+            },
+            {
+              "surface": "ואל",
+              "lemma": "אֵל",
+              "strongs": "H413",
+              "morphology": "R",
+              "decodedMorphology": "preposition",
+              "transliteration": "'ēl",
+              "gloss": "nullale a primitive particle properly"
+            },
+            {
+              "surface": "יהושע",
+              "lemma": "יְהוֹשׁוּעַ",
+              "strongs": "H3091",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "yᵊhôšûaʿ",
+              "gloss": "."
+            },
+            {
+              "surface": "בן",
+              "lemma": "בֵּן",
+              "strongs": "H1121",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "bēn",
+              "gloss": "nullbên"
+            },
+            {
+              "surface": "יהוצדק",
+              "lemma": "יְהוֹצָדָק",
+              "strongs": "H3087",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "yᵊhôṣāḏāq",
+              "gloss": "."
+            },
+            {
+              "surface": "הכהן",
+              "lemma": "כֹּהֵן",
+              "strongs": "H3548",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "kōhēn",
+              "gloss": "."
+            },
+            {
+              "surface": "הגדול",
+              "lemma": "גָּדוֹל",
+              "strongs": "H1419",
+              "morphology": "Aamsa",
+              "decodedMorphology": "adjective, proper masculine noun, substantive",
+              "transliteration": "gāḏôl",
+              "gloss": "nullgâdôwl"
+            },
+            {
+              "surface": "ואל",
+              "lemma": "אֵל",
+              "strongs": "H413",
+              "morphology": "R",
+              "decodedMorphology": "preposition",
+              "transliteration": "'ēl",
+              "gloss": "nullale a primitive particle properly"
+            },
+            {
+              "surface": "שארית",
+              "lemma": "שְׁאֵרִית",
+              "strongs": "H7611",
+              "morphology": "Ncfsc",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "šᵊ'ērîṯ",
+              "gloss": "a remainder or residual (surviving"
+            },
+            {
+              "surface": "העם",
+              "lemma": "עַם",
+              "strongs": "H5971",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ʿam",
+              "gloss": "a people specifically"
+            },
+            {
+              "surface": "לאמר",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqc",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "text": "מי בכם הנשאר אשר ראה את הבית הזה בכבודו הראשון ומה אתם ראים אתו עתה הלוא כמהו כאין בעיניכם",
+          "hebrewTokens": [
+            {
+              "surface": "מי",
+              "lemma": "מִי",
+              "strongs": "H4310",
+              "morphology": "Ti",
+              "decodedMorphology": "interrogative pronoun",
+              "transliteration": "mî",
+              "gloss": "."
+            },
+            {
+              "surface": "בכם",
+              "lemma": "בכם",
+              "morphology": "Sp2mp"
+            },
+            {
+              "surface": "הנשאר",
+              "lemma": "שָׁאַר",
+              "strongs": "H7604",
+              "morphology": "VNrmsa",
+              "decodedMorphology": "verb",
+              "transliteration": "šā'ar",
+              "gloss": "nullshâʼar"
+            },
+            {
+              "surface": "אשר",
+              "lemma": "אֲשֶׁר",
+              "strongs": "H834",
+              "morphology": "Tr",
+              "decodedMorphology": "conjunction, relative pronoun",
+              "transliteration": "'ăšer",
+              "gloss": "."
+            },
+            {
+              "surface": "ראה",
+              "lemma": "רָאָה",
+              "strongs": "H7200",
+              "morphology": "Vqp3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "rā'â",
+              "gloss": "nullraw-aw' a primitive root see"
+            },
+            {
+              "surface": "את",
+              "lemma": "אֵת",
+              "strongs": "H853",
+              "morphology": "To",
+              "decodedMorphology": "particle",
+              "transliteration": "'ēṯ",
+              "gloss": "in demonstrative sense of entity properly"
+            },
+            {
+              "surface": "הבית",
+              "lemma": "בַּיִת",
+              "strongs": "H1004",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "proper patrial adjective, adverb, masculine noun",
+              "transliteration": "bayiṯ",
+              "gloss": "nullbayith"
+            },
+            {
+              "surface": "הזה",
+              "lemma": "זֶה",
+              "strongs": "H2088",
+              "morphology": "Pdxms",
+              "decodedMorphology": "demonstrative pronoun",
+              "transliteration": "zê",
+              "gloss": "."
+            },
+            {
+              "surface": "בכבודו",
+              "lemma": "כָּבוֹד",
+              "strongs": "H3519",
+              "morphology": "Sp3ms",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "kāḇôḏ",
+              "gloss": "properly"
+            },
+            {
+              "surface": "הראשון",
+              "lemma": "רִאשׁוֹן",
+              "strongs": "H7223",
+              "morphology": "Aomsa",
+              "decodedMorphology": "adjective, adverb",
+              "transliteration": "ri'šôn",
+              "gloss": "first"
+            },
+            {
+              "surface": "ומה",
+              "lemma": "מָה",
+              "strongs": "H4100",
+              "morphology": "Ti",
+              "decodedMorphology": "indefinite pronoun, interrogative pronoun",
+              "transliteration": "mâ",
+              "gloss": "."
+            },
+            {
+              "surface": "אתם",
+              "lemma": "אַתָּה",
+              "strongs": "H859",
+              "morphology": "Pp2mp",
+              "decodedMorphology": "personal pronoun",
+              "transliteration": "'atâ",
+              "gloss": "."
+            },
+            {
+              "surface": "ראים",
+              "lemma": "רָאָה",
+              "strongs": "H7200",
+              "morphology": "Vqrmpa",
+              "decodedMorphology": "verb",
+              "transliteration": "rā'â",
+              "gloss": "nullraw-aw' a primitive root see"
+            },
+            {
+              "surface": "אתו",
+              "lemma": "אֵת",
+              "strongs": "H853",
+              "morphology": "Sp3ms",
+              "decodedMorphology": "particle",
+              "transliteration": "'ēṯ",
+              "gloss": "in demonstrative sense of entity properly"
+            },
+            {
+              "surface": "עתה",
+              "lemma": "עַתָּה",
+              "strongs": "H6258",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "transliteration": "ʿatâ",
+              "gloss": "at this time"
+            },
+            {
+              "surface": "הלוא",
+              "lemma": "לֹא",
+              "strongs": "H3808",
+              "morphology": "Tn",
+              "decodedMorphology": "adverb",
+              "transliteration": "lō'",
+              "gloss": "nulllo or לוֹא lôwʼ or לֹה lôh"
+            },
+            {
+              "surface": "כמהו",
+              "lemma": "כְּמוֹ",
+              "strongs": "H3644",
+              "morphology": "Sp3ms",
+              "decodedMorphology": "adverb, conjunction",
+              "transliteration": "kᵊmô",
+              "gloss": "] as"
+            },
+            {
+              "surface": "כאין",
+              "lemma": "אִין",
+              "strongs": "H369",
+              "morphology": "Tn",
+              "decodedMorphology": "adverb, noun, negation",
+              "transliteration": "'în",
+              "gloss": "."
+            },
+            {
+              "surface": "בעיניכם",
+              "lemma": "עַיִן",
+              "strongs": "H5869",
+              "morphology": "Sp2mp",
+              "decodedMorphology": "masculine/feminine noun",
+              "transliteration": "ʿayin",
+              "gloss": "<span class=\"Hb maroon\">שַׁעַר"
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "text": "ועתה חזק זרבבל נאם יהוה וחזק יהושע בן יהוצדק הכהן הגדול וחזק כל עם הארץ נאם יהוה ועשו כי אני אתכם נאם יהוה צבאות",
+          "hebrewTokens": [
+            {
+              "surface": "ועתה",
+              "lemma": "עַתָּה",
+              "strongs": "H6258",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "transliteration": "ʿatâ",
+              "gloss": "at this time"
+            },
+            {
+              "surface": "חזק",
+              "lemma": "חָזַק",
+              "strongs": "H2388",
+              "morphology": "Vqv2ms",
+              "decodedMorphology": "verb",
+              "transliteration": "ḥāzaq",
+              "gloss": "nullkhaw-zak' a primitive root fasten upon hence"
+            },
+            {
+              "surface": "זרבבל",
+              "lemma": "זְרֻבָּבֶל",
+              "strongs": "H2216",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "zᵊrubāḇel",
+              "gloss": "descended of Babylon"
+            },
+            {
+              "surface": "נאם",
+              "lemma": "נְאֻם",
+              "strongs": "H5002",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "nᵊ'um",
+              "gloss": "an oracle — said"
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "וחזק",
+              "lemma": "חָזַק",
+              "strongs": "H2388",
+              "morphology": "Vqv2ms",
+              "decodedMorphology": "verb",
+              "transliteration": "ḥāzaq",
+              "gloss": "nullkhaw-zak' a primitive root fasten upon hence"
+            },
+            {
+              "surface": "יהושע",
+              "lemma": "יְהוֹשׁוּעַ",
+              "strongs": "H3091",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "yᵊhôšûaʿ",
+              "gloss": "."
+            },
+            {
+              "surface": "בן",
+              "lemma": "בֵּן",
+              "strongs": "H1121",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "bēn",
+              "gloss": "nullbên"
+            },
+            {
+              "surface": "יהוצדק",
+              "lemma": "יְהוֹצָדָק",
+              "strongs": "H3087",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "yᵊhôṣāḏāq",
+              "gloss": "."
+            },
+            {
+              "surface": "הכהן",
+              "lemma": "כֹּהֵן",
+              "strongs": "H3548",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "kōhēn",
+              "gloss": "."
+            },
+            {
+              "surface": "הגדול",
+              "lemma": "גָּדוֹל",
+              "strongs": "H1419",
+              "morphology": "Aamsa",
+              "decodedMorphology": "adjective, proper masculine noun, substantive",
+              "transliteration": "gāḏôl",
+              "gloss": "nullgâdôwl"
+            },
+            {
+              "surface": "וחזק",
+              "lemma": "חָזַק",
+              "strongs": "H2388",
+              "morphology": "Vqv2ms",
+              "decodedMorphology": "verb",
+              "transliteration": "ḥāzaq",
+              "gloss": "nullkhaw-zak' a primitive root fasten upon hence"
+            },
+            {
+              "surface": "כל",
+              "lemma": "כֹּל",
+              "strongs": "H3605",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "kōl",
+              "gloss": "properly"
+            },
+            {
+              "surface": "עם",
+              "lemma": "עַם",
+              "strongs": "H5971",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ʿam",
+              "gloss": "a people specifically"
+            },
+            {
+              "surface": "הארץ",
+              "lemma": "אֶרֶץ",
+              "strongs": "H776",
+              "morphology": "Ncbsa",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "'ereṣ",
+              "gloss": "nulleh' -rets from an unused root probably meaning be firm earth (at large"
+            },
+            {
+              "surface": "נאם",
+              "lemma": "נְאֻם",
+              "strongs": "H5002",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "nᵊ'um",
+              "gloss": "an oracle — said"
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "ועשו",
+              "lemma": "עָשָׂה",
+              "strongs": "H6213",
+              "morphology": "Vqv2mp",
+              "decodedMorphology": "verb",
+              "transliteration": "ʿāśâ",
+              "gloss": "nullaw-saw' a primitive root do or make"
+            },
+            {
+              "surface": "כי",
+              "lemma": "כִּי",
+              "strongs": "H3588",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "transliteration": "kî",
+              "gloss": "nullkîy"
+            },
+            {
+              "surface": "אני",
+              "lemma": "אֲנִי",
+              "strongs": "H589",
+              "morphology": "Pp1cs",
+              "decodedMorphology": "personal pronoun",
+              "transliteration": "'ănî",
+              "gloss": "nullʼănîy"
+            },
+            {
+              "surface": "אתכם",
+              "lemma": "אֵת",
+              "strongs": "H854",
+              "morphology": "Sp2mp",
+              "decodedMorphology": "preposition",
+              "transliteration": "'ēṯ",
+              "gloss": "properly"
+            },
+            {
+              "surface": "נאם",
+              "lemma": "נְאֻם",
+              "strongs": "H5002",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "nᵊ'um",
+              "gloss": "an oracle — said"
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "צבאות",
+              "lemma": "צָבָא",
+              "strongs": "H6635",
+              "morphology": "Ncbpa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ṣāḇā'",
+              "gloss": "nulltsâbâʼ"
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "text": "את הדבר אשר כרתי אתכם בצאתכם ממצרים ורוחי עמדת בתוככם אל תיראו",
+          "hebrewTokens": [
+            {
+              "surface": "את",
+              "lemma": "אֵת",
+              "strongs": "H853",
+              "morphology": "To",
+              "decodedMorphology": "particle",
+              "transliteration": "'ēṯ",
+              "gloss": "in demonstrative sense of entity properly"
+            },
+            {
+              "surface": "הדבר",
+              "lemma": "דָּבָר",
+              "strongs": "H1697",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "dāḇār",
+              "gloss": "nulldâbâr"
+            },
+            {
+              "surface": "אשר",
+              "lemma": "אֲשֶׁר",
+              "strongs": "H834",
+              "morphology": "Tr",
+              "decodedMorphology": "conjunction, relative pronoun",
+              "transliteration": "'ăšer",
+              "gloss": "."
+            },
+            {
+              "surface": "כרתי",
+              "lemma": "כָּרַת",
+              "strongs": "H3772",
+              "morphology": "Vqp1cs",
+              "decodedMorphology": "verb",
+              "transliteration": "kāraṯ",
+              "gloss": "cut"
+            },
+            {
+              "surface": "אתכם",
+              "lemma": "אֵת",
+              "strongs": "H854",
+              "morphology": "Sp2mp",
+              "decodedMorphology": "preposition",
+              "transliteration": "'ēṯ",
+              "gloss": "properly"
+            },
+            {
+              "surface": "בצאתכם",
+              "lemma": "יָצָא",
+              "strongs": "H3318",
+              "morphology": "Sp2mp",
+              "decodedMorphology": "verb",
+              "transliteration": "yāṣā'",
+              "gloss": "nullyaw-tsaw' a primitive root go (causatively"
+            },
+            {
+              "surface": "ממצרים",
+              "lemma": "מִצְרַיִם",
+              "strongs": "H4714",
+              "morphology": "Np",
+              "decodedMorphology": "adjective, proper locative noun",
+              "transliteration": "miṣrayim",
+              "gloss": "Mitsrajim"
+            },
+            {
+              "surface": "ורוחי",
+              "lemma": "רוּחַ",
+              "strongs": "H7307",
+              "morphology": "Sp1cs",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "rûaḥ",
+              "gloss": "nullrûwach"
+            },
+            {
+              "surface": "עמדת",
+              "lemma": "עָמַד",
+              "strongs": "H5975",
+              "morphology": "Vqrfsa",
+              "decodedMorphology": "verb",
+              "transliteration": "ʿāmaḏ",
+              "gloss": "nullʻâmad"
+            },
+            {
+              "surface": "בתוככם",
+              "lemma": "תָּוֶךְ",
+              "strongs": "H8432",
+              "morphology": "Sp2mp",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "tāveḵ",
+              "gloss": "nulltaw' -vek from an unused root meaning sever a bisection"
+            },
+            {
+              "surface": "אל",
+              "lemma": "אַל",
+              "strongs": "H408",
+              "morphology": "Tn",
+              "decodedMorphology": "adverb of negation",
+              "transliteration": "'al",
+              "gloss": "nullʼal"
+            },
+            {
+              "surface": "תיראו",
+              "lemma": "יָרֵא",
+              "strongs": "H3372",
+              "morphology": "Vqj2mp",
+              "decodedMorphology": "verb",
+              "transliteration": "yārē'",
+              "gloss": "nullyaw-ray' a primitive root fear morally revere causatively frighten — affright"
+            }
+          ]
+        },
+        {
+          "number": 6,
+          "text": "כי כה אמר יהוה צבאות עוד אחת מעט היא ואני מרעיש את השמים ואת הארץ ואת הים ואת החרבה",
+          "hebrewTokens": [
+            {
+              "surface": "כי",
+              "lemma": "כִּי",
+              "strongs": "H3588",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "transliteration": "kî",
+              "gloss": "nullkîy"
+            },
+            {
+              "surface": "כה",
+              "lemma": "כֹּה",
+              "strongs": "H3541",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "transliteration": "kô",
+              "gloss": "properly"
+            },
+            {
+              "surface": "אמר",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqp3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "צבאות",
+              "lemma": "צָבָא",
+              "strongs": "H6635",
+              "morphology": "Ncbpa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ṣāḇā'",
+              "gloss": "nulltsâbâʼ"
+            },
+            {
+              "surface": "עוד",
+              "lemma": "עוֹד",
+              "strongs": "H5750",
+              "morphology": "D",
+              "decodedMorphology": "adverb, substantive",
+              "transliteration": "ʿôḏ",
+              "gloss": "."
+            },
+            {
+              "surface": "אחת",
+              "lemma": "אֶחָד",
+              "strongs": "H259",
+              "morphology": "Acfsa",
+              "decodedMorphology": "adjective",
+              "transliteration": "'eḥāḏ",
+              "gloss": "properly"
+            },
+            {
+              "surface": "מעט",
+              "lemma": "מְעַט",
+              "strongs": "H4592",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "substantive",
+              "transliteration": "mᵊʿaṭ",
+              "gloss": "nullmᵉʻaṭ"
+            },
+            {
+              "surface": "היא",
+              "lemma": "הוּא",
+              "strongs": "H1931",
+              "morphology": "Pp3fs",
+              "decodedMorphology": "demonstrative pronoun, third person singular personal pronoun",
+              "transliteration": "hû'",
+              "gloss": "nullhûwʼ"
+            },
+            {
+              "surface": "ואני",
+              "lemma": "אֲנִי",
+              "strongs": "H589",
+              "morphology": "Pp1cs",
+              "decodedMorphology": "personal pronoun",
+              "transliteration": "'ănî",
+              "gloss": "nullʼănîy"
+            },
+            {
+              "surface": "מרעיש",
+              "lemma": "רָעַשׁ",
+              "strongs": "H7493",
+              "morphology": "Vhrmsa",
+              "decodedMorphology": "verb",
+              "transliteration": "rāʿaš",
+              "gloss": "nullrâʻash"
+            },
+            {
+              "surface": "את",
+              "lemma": "אֵת",
+              "strongs": "H853",
+              "morphology": "To",
+              "decodedMorphology": "particle",
+              "transliteration": "'ēṯ",
+              "gloss": "in demonstrative sense of entity properly"
+            },
+            {
+              "surface": "השמים",
+              "lemma": "שָׁמַיִם",
+              "strongs": "H8064",
+              "morphology": "Ncmpa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "šāmayim",
+              "gloss": "."
+            },
+            {
+              "surface": "ואת",
+              "lemma": "אֵת",
+              "strongs": "H853",
+              "morphology": "To",
+              "decodedMorphology": "particle",
+              "transliteration": "'ēṯ",
+              "gloss": "in demonstrative sense of entity properly"
+            },
+            {
+              "surface": "הארץ",
+              "lemma": "אֶרֶץ",
+              "strongs": "H776",
+              "morphology": "Ncbsa",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "'ereṣ",
+              "gloss": "nulleh' -rets from an unused root probably meaning be firm earth (at large"
+            },
+            {
+              "surface": "ואת",
+              "lemma": "אֵת",
+              "strongs": "H853",
+              "morphology": "To",
+              "decodedMorphology": "particle",
+              "transliteration": "'ēṯ",
+              "gloss": "in demonstrative sense of entity properly"
+            },
+            {
+              "surface": "הים",
+              "lemma": "יָם",
+              "strongs": "H3220",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "yām",
+              "gloss": "."
+            },
+            {
+              "surface": "ואת",
+              "lemma": "אֵת",
+              "strongs": "H853",
+              "morphology": "To",
+              "decodedMorphology": "particle",
+              "transliteration": "'ēṯ",
+              "gloss": "in demonstrative sense of entity properly"
+            },
+            {
+              "surface": "החרבה",
+              "lemma": "חָרָבָה",
+              "strongs": "H2724",
+              "morphology": "Ncfsa",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "ḥārāḇâ",
+              "gloss": "a desert — dry (ground"
+            }
+          ]
+        },
+        {
+          "number": 7,
+          "text": "והרעשתי את כל הגוים ובאו חמדת כל הגוים ומלאתי את הבית הזה כבוד אמר יהוה צבאות",
+          "hebrewTokens": [
+            {
+              "surface": "והרעשתי",
+              "lemma": "רָעַשׁ",
+              "strongs": "H7493",
+              "morphology": "Vhp1cs",
+              "decodedMorphology": "verb",
+              "transliteration": "rāʿaš",
+              "gloss": "nullrâʻash"
+            },
+            {
+              "surface": "את",
+              "lemma": "אֵת",
+              "strongs": "H853",
+              "morphology": "To",
+              "decodedMorphology": "particle",
+              "transliteration": "'ēṯ",
+              "gloss": "in demonstrative sense of entity properly"
+            },
+            {
+              "surface": "כל",
+              "lemma": "כֹּל",
+              "strongs": "H3605",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "kōl",
+              "gloss": "properly"
+            },
+            {
+              "surface": "הגוים",
+              "lemma": "גּוֹי",
+              "strongs": "H1471",
+              "morphology": "Ncmpa",
+              "decodedMorphology": "masculine noun, proper masculine noun",
+              "transliteration": "gôy",
+              "gloss": "a foreign nation hence"
+            },
+            {
+              "surface": "ובאו",
+              "lemma": "בּוֹא",
+              "strongs": "H935",
+              "morphology": "Vqp3cp",
+              "decodedMorphology": "verb",
+              "transliteration": "bô'",
+              "gloss": "nullbo a primitive root go or come — abide"
+            },
+            {
+              "surface": "חמדת",
+              "lemma": "חֶמְדָּה",
+              "strongs": "H2532",
+              "morphology": "Ncfsc",
+              "decodedMorphology": "adjective, feminine noun",
+              "transliteration": "ḥemdâ",
+              "gloss": "delight — desire"
+            },
+            {
+              "surface": "כל",
+              "lemma": "כֹּל",
+              "strongs": "H3605",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "kōl",
+              "gloss": "properly"
+            },
+            {
+              "surface": "הגוים",
+              "lemma": "גּוֹי",
+              "strongs": "H1471",
+              "morphology": "Ncmpa",
+              "decodedMorphology": "masculine noun, proper masculine noun",
+              "transliteration": "gôy",
+              "gloss": "a foreign nation hence"
+            },
+            {
+              "surface": "ומלאתי",
+              "lemma": "מָלָא",
+              "strongs": "H4390",
+              "morphology": "Vpp1cs",
+              "decodedMorphology": "verb",
+              "transliteration": "mālā'",
+              "gloss": "."
+            },
+            {
+              "surface": "את",
+              "lemma": "אֵת",
+              "strongs": "H853",
+              "morphology": "To",
+              "decodedMorphology": "particle",
+              "transliteration": "'ēṯ",
+              "gloss": "in demonstrative sense of entity properly"
+            },
+            {
+              "surface": "הבית",
+              "lemma": "בַּיִת",
+              "strongs": "H1004",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "proper patrial adjective, adverb, masculine noun",
+              "transliteration": "bayiṯ",
+              "gloss": "nullbayith"
+            },
+            {
+              "surface": "הזה",
+              "lemma": "זֶה",
+              "strongs": "H2088",
+              "morphology": "Pdxms",
+              "decodedMorphology": "demonstrative pronoun",
+              "transliteration": "zê",
+              "gloss": "."
+            },
+            {
+              "surface": "כבוד",
+              "lemma": "כָּבוֹד",
+              "strongs": "H3519",
+              "morphology": "Ncbsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "kāḇôḏ",
+              "gloss": "properly"
+            },
+            {
+              "surface": "אמר",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqp3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "צבאות",
+              "lemma": "צָבָא",
+              "strongs": "H6635",
+              "morphology": "Ncbpa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ṣāḇā'",
+              "gloss": "nulltsâbâʼ"
+            }
+          ]
+        },
+        {
+          "number": 8,
+          "text": "לי הכסף ולי הזהב נאם יהוה צבאות",
+          "hebrewTokens": [
+            {
+              "surface": "לי",
+              "lemma": "לי",
+              "morphology": "Sp1cs"
+            },
+            {
+              "surface": "הכסף",
+              "lemma": "כֶּסֶף",
+              "strongs": "H3701",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "kesep̄",
+              "gloss": "silver by implication"
+            },
+            {
+              "surface": "ולי",
+              "lemma": "ולי",
+              "morphology": "Sp1cs"
+            },
+            {
+              "surface": "הזהב",
+              "lemma": "זָהָב",
+              "strongs": "H2091",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "zāhāḇ",
+              "gloss": "nullzâhâb"
+            },
+            {
+              "surface": "נאם",
+              "lemma": "נְאֻם",
+              "strongs": "H5002",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "nᵊ'um",
+              "gloss": "an oracle — said"
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "צבאות",
+              "lemma": "צָבָא",
+              "strongs": "H6635",
+              "morphology": "Ncbpa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ṣāḇā'",
+              "gloss": "nulltsâbâʼ"
+            }
+          ]
+        },
+        {
+          "number": 9,
+          "text": "גדול יהיה כבוד הבית הזה האחרון מן הראשון אמר יהוה צבאות ובמקום הזה אתן שלום נאם יהוה צבאות",
+          "hebrewTokens": [
+            {
+              "surface": "גדול",
+              "lemma": "גָּדוֹל",
+              "strongs": "H1419",
+              "morphology": "Aamsa",
+              "decodedMorphology": "adjective, proper masculine noun, substantive",
+              "transliteration": "gāḏôl",
+              "gloss": "nullgâdôwl"
+            },
+            {
+              "surface": "יהיה",
+              "lemma": "הָיָה",
+              "strongs": "H1961",
+              "morphology": "Vqi3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "hāyâ",
+              "gloss": "nullhâyâh"
+            },
+            {
+              "surface": "כבוד",
+              "lemma": "כָּבוֹד",
+              "strongs": "H3519",
+              "morphology": "Ncbsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "kāḇôḏ",
+              "gloss": "properly"
+            },
+            {
+              "surface": "הבית",
+              "lemma": "בַּיִת",
+              "strongs": "H1004",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "proper patrial adjective, adverb, masculine noun",
+              "transliteration": "bayiṯ",
+              "gloss": "nullbayith"
+            },
+            {
+              "surface": "הזה",
+              "lemma": "זֶה",
+              "strongs": "H2088",
+              "morphology": "Pdxms",
+              "decodedMorphology": "demonstrative pronoun",
+              "transliteration": "zê",
+              "gloss": "."
+            },
+            {
+              "surface": "האחרון",
+              "lemma": "אַחֲרוֹן",
+              "strongs": "H314",
+              "morphology": "Aamsa",
+              "decodedMorphology": "adjective",
+              "transliteration": "'aḥărôn",
+              "gloss": "hinder generally"
+            },
+            {
+              "surface": "מן",
+              "lemma": "מִן",
+              "strongs": "H4480",
+              "morphology": "R",
+              "decodedMorphology": "conjunction, preposition",
+              "transliteration": "min",
+              "gloss": "nullmin"
+            },
+            {
+              "surface": "הראשון",
+              "lemma": "רִאשׁוֹן",
+              "strongs": "H7223",
+              "morphology": "Aomsa",
+              "decodedMorphology": "adjective, adverb",
+              "transliteration": "ri'šôn",
+              "gloss": "first"
+            },
+            {
+              "surface": "אמר",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqp3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "צבאות",
+              "lemma": "צָבָא",
+              "strongs": "H6635",
+              "morphology": "Ncbpa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ṣāḇā'",
+              "gloss": "nulltsâbâʼ"
+            },
+            {
+              "surface": "ובמקום",
+              "lemma": "מָקוֹם",
+              "strongs": "H4725",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "māqôm",
+              "gloss": "nullmâqôwm"
+            },
+            {
+              "surface": "הזה",
+              "lemma": "זֶה",
+              "strongs": "H2088",
+              "morphology": "Pdxms",
+              "decodedMorphology": "demonstrative pronoun",
+              "transliteration": "zê",
+              "gloss": "."
+            },
+            {
+              "surface": "אתן",
+              "lemma": "נָתַן",
+              "strongs": "H5414",
+              "morphology": "Vqi1cs",
+              "decodedMorphology": "verb",
+              "transliteration": "nāṯan",
+              "gloss": "."
+            },
+            {
+              "surface": "שלום",
+              "lemma": "שָׁלוֹם",
+              "strongs": "H7965",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "šālôm",
+              "gloss": "nullshâlôwm"
+            },
+            {
+              "surface": "נאם",
+              "lemma": "נְאֻם",
+              "strongs": "H5002",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "nᵊ'um",
+              "gloss": "an oracle — said"
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "צבאות",
+              "lemma": "צָבָא",
+              "strongs": "H6635",
+              "morphology": "Ncbpa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ṣāḇā'",
+              "gloss": "nulltsâbâʼ"
+            }
+          ]
+        },
+        {
+          "number": 10,
+          "text": "בעשרים וארבעה לתשיעי בשנת שתים לדריוש היה דבר יהוה אל חגי הנביא לאמר",
+          "hebrewTokens": [
+            {
+              "surface": "בעשרים",
+              "lemma": "עֶשְׂרִים",
+              "strongs": "H6242",
+              "morphology": "Acbpa",
+              "decodedMorphology": "masculine/feminine noun",
+              "transliteration": "ʿeśrîm",
+              "gloss": "twenty also twentieth — score"
+            },
+            {
+              "surface": "וארבעה",
+              "lemma": "אַרְבַּע",
+              "strongs": "H702",
+              "morphology": "Acmsa",
+              "decodedMorphology": "masculine/feminine adjective, noun",
+              "transliteration": "'arbaʿ",
+              "gloss": "four — four."
+            },
+            {
+              "surface": "לתשיעי",
+              "lemma": "תְּשִׁיעִי",
+              "strongs": "H8671",
+              "morphology": "Aomsa",
+              "decodedMorphology": "masculine/feminine adjective",
+              "transliteration": "tᵊšîʿî",
+              "gloss": "ninth — ninth."
+            },
+            {
+              "surface": "בשנת",
+              "lemma": "שָׁנָה",
+              "strongs": "H8141",
+              "morphology": "Ncfsc",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "šānâ",
+              "gloss": "nullshâneh"
+            },
+            {
+              "surface": "שתים",
+              "lemma": "שְׁנַיִם",
+              "strongs": "H8147",
+              "morphology": "Acfda",
+              "decodedMorphology": "adjective, dual masculine/feminine noun",
+              "transliteration": "šᵊnayim",
+              "gloss": "feminine שְׁתַּיִם sh ttayim two also twofold — both"
+            },
+            {
+              "surface": "לדריוש",
+              "lemma": "דַּרְיָוֶשׁ",
+              "strongs": "H1867",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "daryāveš",
+              "gloss": "."
+            },
+            {
+              "surface": "היה",
+              "lemma": "הָיָה",
+              "strongs": "H1961",
+              "morphology": "Vqp3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "hāyâ",
+              "gloss": "nullhâyâh"
+            },
+            {
+              "surface": "דבר",
+              "lemma": "דָּבָר",
+              "strongs": "H1697",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "dāḇār",
+              "gloss": "nulldâbâr"
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "אל",
+              "lemma": "אֵל",
+              "strongs": "H413",
+              "morphology": "R",
+              "decodedMorphology": "preposition",
+              "transliteration": "'ēl",
+              "gloss": "nullale a primitive particle properly"
+            },
+            {
+              "surface": "חגי",
+              "lemma": "חַגַּי",
+              "strongs": "H2292",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "ḥagay",
+              "gloss": "festive Chaggai"
+            },
+            {
+              "surface": "הנביא",
+              "lemma": "נָבִיא",
+              "strongs": "H5030",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "nāḇî'",
+              "gloss": "a prophet or inspired man — prophecy"
+            },
+            {
+              "surface": "לאמר",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqc",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            }
+          ]
+        },
+        {
+          "number": 11,
+          "text": "כה אמר יהוה צבאות שאל נא את הכהנים תורה לאמר",
+          "hebrewTokens": [
+            {
+              "surface": "כה",
+              "lemma": "כֹּה",
+              "strongs": "H3541",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "transliteration": "kô",
+              "gloss": "properly"
+            },
+            {
+              "surface": "אמר",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqp3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "צבאות",
+              "lemma": "צָבָא",
+              "strongs": "H6635",
+              "morphology": "Ncbpa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ṣāḇā'",
+              "gloss": "nulltsâbâʼ"
+            },
+            {
+              "surface": "שאל",
+              "lemma": "שָׁאַל",
+              "strongs": "H7592",
+              "morphology": "Vqv2ms",
+              "decodedMorphology": "verb",
+              "transliteration": "šā'al",
+              "gloss": "."
+            },
+            {
+              "surface": "נא",
+              "lemma": "נָא",
+              "strongs": "H4994",
+              "morphology": "Te",
+              "decodedMorphology": "particle",
+              "transliteration": "nā'",
+              "gloss": "nullnâʼ"
+            },
+            {
+              "surface": "את",
+              "lemma": "אֵת",
+              "strongs": "H853",
+              "morphology": "To",
+              "decodedMorphology": "particle",
+              "transliteration": "'ēṯ",
+              "gloss": "in demonstrative sense of entity properly"
+            },
+            {
+              "surface": "הכהנים",
+              "lemma": "כֹּהֵן",
+              "strongs": "H3548",
+              "morphology": "Ncmpa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "kōhēn",
+              "gloss": "."
+            },
+            {
+              "surface": "תורה",
+              "lemma": "תּוֹרָה",
+              "strongs": "H8451",
+              "morphology": "Ncfsa",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "tôrâ",
+              "gloss": "a precept or statute"
+            },
+            {
+              "surface": "לאמר",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqc",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            }
+          ]
+        },
+        {
+          "number": 12,
+          "text": "הן ישא איש בשר קדש בכנף בגדו ונגע בכנפו אל הלחם ואל הנזיד ואל היין ואל שמן ואל כל מאכל היקדש ויענו הכהנים ויאמרו לא",
+          "hebrewTokens": [
+            {
+              "surface": "הן",
+              "lemma": "הֵן",
+              "strongs": "H2005",
+              "morphology": "Tm",
+              "decodedMorphology": "hypothetical participle, interjection",
+              "transliteration": "hēn",
+              "gloss": "nullhên"
+            },
+            {
+              "surface": "ישא",
+              "lemma": "נָשָׂא",
+              "strongs": "H5375",
+              "morphology": "Vqi3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "nāśā'",
+              "gloss": "nullnaw-saw' or נָסָה n h"
+            },
+            {
+              "surface": "איש",
+              "lemma": "אִישׁ",
+              "strongs": "H376",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "'îš",
+              "gloss": "."
+            },
+            {
+              "surface": "בשר",
+              "lemma": "בָּשָׂר",
+              "strongs": "H1320",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "bāśār",
+              "gloss": "flesh by extension"
+            },
+            {
+              "surface": "קדש",
+              "lemma": "קֹדֶשׁ",
+              "strongs": "H6944",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "qōḏeš",
+              "gloss": "1. c.])."
+            },
+            {
+              "surface": "בכנף",
+              "lemma": "כָּנָף",
+              "strongs": "H3671",
+              "morphology": "Ncfsc",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "kānāp̄",
+              "gloss": "nullkânâph"
+            },
+            {
+              "surface": "בגדו",
+              "lemma": "בֶּגֶד",
+              "strongs": "H899",
+              "morphology": "Sp3ms",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "beḡeḏ",
+              "gloss": "nullbeged"
+            },
+            {
+              "surface": "ונגע",
+              "lemma": "נָגַע",
+              "strongs": "H5060",
+              "morphology": "Vqp3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "nāḡaʿ",
+              "gloss": "nullnaw-gah' a primitive root properly"
+            },
+            {
+              "surface": "בכנפו",
+              "lemma": "כָּנָף",
+              "strongs": "H3671",
+              "morphology": "Sp3ms",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "kānāp̄",
+              "gloss": "nullkânâph"
+            },
+            {
+              "surface": "אל",
+              "lemma": "אֵל",
+              "strongs": "H413",
+              "morphology": "R",
+              "decodedMorphology": "preposition",
+              "transliteration": "'ēl",
+              "gloss": "nullale a primitive particle properly"
+            },
+            {
+              "surface": "הלחם",
+              "lemma": "לֶחֶם",
+              "strongs": "H3899",
+              "morphology": "Ncbsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "leḥem",
+              "gloss": "."
+            },
+            {
+              "surface": "ואל",
+              "lemma": "אֵל",
+              "strongs": "H413",
+              "morphology": "R",
+              "decodedMorphology": "preposition",
+              "transliteration": "'ēl",
+              "gloss": "nullale a primitive particle properly"
+            },
+            {
+              "surface": "הנזיד",
+              "lemma": "נָזִיד",
+              "strongs": "H5138",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "nāzîḏ",
+              "gloss": "something boiled"
+            },
+            {
+              "surface": "ואל",
+              "lemma": "אֵל",
+              "strongs": "H413",
+              "morphology": "R",
+              "decodedMorphology": "preposition",
+              "transliteration": "'ēl",
+              "gloss": "nullale a primitive particle properly"
+            },
+            {
+              "surface": "היין",
+              "lemma": "יַיִן",
+              "strongs": "H3196",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "yayin",
+              "gloss": "nullyayin"
+            },
+            {
+              "surface": "ואל",
+              "lemma": "אֵל",
+              "strongs": "H413",
+              "morphology": "R",
+              "decodedMorphology": "preposition",
+              "transliteration": "'ēl",
+              "gloss": "nullale a primitive particle properly"
+            },
+            {
+              "surface": "שמן",
+              "lemma": "שֶׁמֶן",
+              "strongs": "H8081",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "šemen",
+              "gloss": "nullshemen"
+            },
+            {
+              "surface": "ואל",
+              "lemma": "אֵל",
+              "strongs": "H413",
+              "morphology": "R",
+              "decodedMorphology": "preposition",
+              "transliteration": "'ēl",
+              "gloss": "nullale a primitive particle properly"
+            },
+            {
+              "surface": "כל",
+              "lemma": "כֹּל",
+              "strongs": "H3605",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "kōl",
+              "gloss": "properly"
+            },
+            {
+              "surface": "מאכל",
+              "lemma": "מַאֲכָל",
+              "strongs": "H3978",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ma'ăḵāl",
+              "gloss": "an eatable (includ. provender"
+            },
+            {
+              "surface": "היקדש",
+              "lemma": "קָדַשׁ",
+              "strongs": "H6942",
+              "morphology": "Vqi3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "qāḏaš",
+              "gloss": "nullkaw-dash' a primitive root be (causatively"
+            },
+            {
+              "surface": "ויענו",
+              "lemma": "עָנָה",
+              "strongs": "H6030",
+              "morphology": "Vqw3mp",
+              "decodedMorphology": "verb",
+              "transliteration": "ʿānâ",
+              "gloss": "."
+            },
+            {
+              "surface": "הכהנים",
+              "lemma": "כֹּהֵן",
+              "strongs": "H3548",
+              "morphology": "Ncmpa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "kōhēn",
+              "gloss": "."
+            },
+            {
+              "surface": "ויאמרו",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqw3mp",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            },
+            {
+              "surface": "לא",
+              "lemma": "לֹא",
+              "strongs": "H3808",
+              "morphology": "Tn",
+              "decodedMorphology": "adverb",
+              "transliteration": "lō'",
+              "gloss": "nulllo or לוֹא lôwʼ or לֹה lôh"
+            }
+          ]
+        },
+        {
+          "number": 13,
+          "text": "ויאמר חגי אם יגע טמא נפש בכל אלה היטמא ויענו הכהנים ויאמרו יטמא",
+          "hebrewTokens": [
+            {
+              "surface": "ויאמר",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqw3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            },
+            {
+              "surface": "חגי",
+              "lemma": "חַגַּי",
+              "strongs": "H2292",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "ḥagay",
+              "gloss": "festive Chaggai"
+            },
+            {
+              "surface": "אם",
+              "lemma": "אִם",
+              "strongs": "H518",
+              "morphology": "C",
+              "decodedMorphology": "particle",
+              "transliteration": "'im",
+              "gloss": "nulleem a primitive particle used very widely as demonstrative"
+            },
+            {
+              "surface": "יגע",
+              "lemma": "נָגַע",
+              "strongs": "H5060",
+              "morphology": "Vqi3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "nāḡaʿ",
+              "gloss": "nullnaw-gah' a primitive root properly"
+            },
+            {
+              "surface": "טמא",
+              "lemma": "טָמֵא",
+              "strongs": "H2931",
+              "morphology": "Aamsc",
+              "decodedMorphology": "adjective",
+              "transliteration": "ṭāmē'",
+              "gloss": "foul in a religious sense — defiled"
+            },
+            {
+              "surface": "נפש",
+              "lemma": "נֶפֶשׁ",
+              "strongs": "H5315",
+              "morphology": "Ncbsa",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "nep̄eš",
+              "gloss": "nullnephesh"
+            },
+            {
+              "surface": "בכל",
+              "lemma": "כֹּל",
+              "strongs": "H3605",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "kōl",
+              "gloss": "properly"
+            },
+            {
+              "surface": "אלה",
+              "lemma": "אֵלֶּה",
+              "strongs": "H428",
+              "morphology": "Pdxcp",
+              "decodedMorphology": "demonstrative particle",
+              "transliteration": "'ēllê",
+              "gloss": "these or those — an- other one sort"
+            },
+            {
+              "surface": "היטמא",
+              "lemma": "טָמֵא",
+              "strongs": "H2930",
+              "morphology": "Vqi3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "ṭāmē'",
+              "gloss": "nulltaw-may' a primitive root be foul"
+            },
+            {
+              "surface": "ויענו",
+              "lemma": "עָנָה",
+              "strongs": "H6030",
+              "morphology": "Vqw3mp",
+              "decodedMorphology": "verb",
+              "transliteration": "ʿānâ",
+              "gloss": "."
+            },
+            {
+              "surface": "הכהנים",
+              "lemma": "כֹּהֵן",
+              "strongs": "H3548",
+              "morphology": "Ncmpa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "kōhēn",
+              "gloss": "."
+            },
+            {
+              "surface": "ויאמרו",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqw3mp",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            },
+            {
+              "surface": "יטמא",
+              "lemma": "טָמֵא",
+              "strongs": "H2930",
+              "morphology": "Vqi3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "ṭāmē'",
+              "gloss": "nulltaw-may' a primitive root be foul"
+            }
+          ]
+        },
+        {
+          "number": 14,
+          "text": "ויען חגי ויאמר כן העם הזה וכן הגוי הזה לפני נאם יהוה וכן כל מעשה ידיהם ואשר יקריבו שם טמא הוא",
+          "hebrewTokens": [
+            {
+              "surface": "ויען",
+              "lemma": "עָנָה",
+              "strongs": "H6030",
+              "morphology": "Vqw3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "ʿānâ",
+              "gloss": "."
+            },
+            {
+              "surface": "חגי",
+              "lemma": "חַגַּי",
+              "strongs": "H2292",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "ḥagay",
+              "gloss": "festive Chaggai"
+            },
+            {
+              "surface": "ויאמר",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqw3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            },
+            {
+              "surface": "כן",
+              "lemma": "כֵּן",
+              "strongs": "H3651",
+              "morphology": "Tm",
+              "decodedMorphology": "adjective, adverb",
+              "transliteration": "kēn",
+              "gloss": "."
+            },
+            {
+              "surface": "העם",
+              "lemma": "עַם",
+              "strongs": "H5971",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ʿam",
+              "gloss": "a people specifically"
+            },
+            {
+              "surface": "הזה",
+              "lemma": "זֶה",
+              "strongs": "H2088",
+              "morphology": "Pdxms",
+              "decodedMorphology": "demonstrative pronoun",
+              "transliteration": "zê",
+              "gloss": "."
+            },
+            {
+              "surface": "וכן",
+              "lemma": "כֵּן",
+              "strongs": "H3651",
+              "morphology": "Tm",
+              "decodedMorphology": "adjective, adverb",
+              "transliteration": "kēn",
+              "gloss": "."
+            },
+            {
+              "surface": "הגוי",
+              "lemma": "גּוֹי",
+              "strongs": "H1471",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun, proper masculine noun",
+              "transliteration": "gôy",
+              "gloss": "a foreign nation hence"
+            },
+            {
+              "surface": "הזה",
+              "lemma": "זֶה",
+              "strongs": "H2088",
+              "morphology": "Pdxms",
+              "decodedMorphology": "demonstrative pronoun",
+              "transliteration": "zê",
+              "gloss": "."
+            },
+            {
+              "surface": "לפני",
+              "lemma": "פָּנִים",
+              "strongs": "H6440",
+              "morphology": "Sp1cs",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "pānîm",
+              "gloss": "nullpânîym"
+            },
+            {
+              "surface": "נאם",
+              "lemma": "נְאֻם",
+              "strongs": "H5002",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "nᵊ'um",
+              "gloss": "an oracle — said"
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "וכן",
+              "lemma": "כֵּן",
+              "strongs": "H3651",
+              "morphology": "Tm",
+              "decodedMorphology": "adjective, adverb",
+              "transliteration": "kēn",
+              "gloss": "."
+            },
+            {
+              "surface": "כל",
+              "lemma": "כֹּל",
+              "strongs": "H3605",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "kōl",
+              "gloss": "properly"
+            },
+            {
+              "surface": "מעשה",
+              "lemma": "מַעֲשֶׂה",
+              "strongs": "H4639",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "maʿăśê",
+              "gloss": "nullmaʻăseh"
+            },
+            {
+              "surface": "ידיהם",
+              "lemma": "יָד",
+              "strongs": "H3027",
+              "morphology": "Sp3mp",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "yāḏ",
+              "gloss": "."
+            },
+            {
+              "surface": "ואשר",
+              "lemma": "אֲשֶׁר",
+              "strongs": "H834",
+              "morphology": "Tr",
+              "decodedMorphology": "conjunction, relative pronoun",
+              "transliteration": "'ăšer",
+              "gloss": "."
+            },
+            {
+              "surface": "יקריבו",
+              "lemma": "קָרַב",
+              "strongs": "H7126",
+              "morphology": "Vhi3mp",
+              "decodedMorphology": "verb",
+              "transliteration": "qāraḇ",
+              "gloss": "."
+            },
+            {
+              "surface": "שם",
+              "lemma": "שָׁם",
+              "strongs": "H8033",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "transliteration": "šām",
+              "gloss": "there then often thither"
+            },
+            {
+              "surface": "טמא",
+              "lemma": "טָמֵא",
+              "strongs": "H2931",
+              "morphology": "Aamsa",
+              "decodedMorphology": "adjective",
+              "transliteration": "ṭāmē'",
+              "gloss": "foul in a religious sense — defiled"
+            },
+            {
+              "surface": "הוא",
+              "lemma": "הוּא",
+              "strongs": "H1931",
+              "morphology": "Pp3ms",
+              "decodedMorphology": "demonstrative pronoun, third person singular personal pronoun",
+              "transliteration": "hû'",
+              "gloss": "nullhûwʼ"
+            }
+          ]
+        },
+        {
+          "number": 15,
+          "text": "ועתה שימו נא לבבכם מן היום הזה ומעלה מטרם שום אבן אל אבן בהיכל יהוה",
+          "hebrewTokens": [
+            {
+              "surface": "ועתה",
+              "lemma": "עַתָּה",
+              "strongs": "H6258",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "transliteration": "ʿatâ",
+              "gloss": "at this time"
+            },
+            {
+              "surface": "שימו",
+              "lemma": "שׂוּם",
+              "strongs": "H7760",
+              "morphology": "Vqv2mp",
+              "decodedMorphology": "verb",
+              "transliteration": "śûm",
+              "gloss": "."
+            },
+            {
+              "surface": "נא",
+              "lemma": "נָא",
+              "strongs": "H4994",
+              "morphology": "Te",
+              "decodedMorphology": "particle",
+              "transliteration": "nā'",
+              "gloss": "nullnâʼ"
+            },
+            {
+              "surface": "לבבכם",
+              "lemma": "לֵבָב",
+              "strongs": "H3824",
+              "morphology": "Sp2mp",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "lēḇāḇ",
+              "gloss": "."
+            },
+            {
+              "surface": "מן",
+              "lemma": "מִן",
+              "strongs": "H4480",
+              "morphology": "R",
+              "decodedMorphology": "conjunction, preposition",
+              "transliteration": "min",
+              "gloss": "nullmin"
+            },
+            {
+              "surface": "היום",
+              "lemma": "יוֹם",
+              "strongs": "H3117",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "yôm",
+              "gloss": "nullyome from an unused root meaning be hot a day"
+            },
+            {
+              "surface": "הזה",
+              "lemma": "זֶה",
+              "strongs": "H2088",
+              "morphology": "Pdxms",
+              "decodedMorphology": "demonstrative pronoun",
+              "transliteration": "zê",
+              "gloss": "."
+            },
+            {
+              "surface": "ומעלה",
+              "lemma": "מַעַל",
+              "strongs": "H4605",
+              "morphology": "Sd",
+              "decodedMorphology": "adjective, adverb, substantive",
+              "transliteration": "maʿal",
+              "gloss": "nullmaʻal"
+            },
+            {
+              "surface": "מטרם",
+              "lemma": "טֶרֶם",
+              "strongs": "H2962",
+              "morphology": "D",
+              "decodedMorphology": "preposition",
+              "transliteration": "ṭerem",
+              "gloss": "nullṭerem"
+            },
+            {
+              "surface": "שום",
+              "lemma": "שׂוּם",
+              "strongs": "H7760",
+              "morphology": "Vqc",
+              "decodedMorphology": "verb",
+              "transliteration": "śûm",
+              "gloss": "."
+            },
+            {
+              "surface": "אבן",
+              "lemma": "אֶבֶן",
+              "strongs": "H68",
+              "morphology": "Ncfsa",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "'eḇen",
+              "gloss": "through meaning build a stone — carbuncle"
+            },
+            {
+              "surface": "אל",
+              "lemma": "אֵל",
+              "strongs": "H413",
+              "morphology": "R",
+              "decodedMorphology": "preposition",
+              "transliteration": "'ēl",
+              "gloss": "nullale a primitive particle properly"
+            },
+            {
+              "surface": "אבן",
+              "lemma": "אֶבֶן",
+              "strongs": "H68",
+              "morphology": "Ncfsa",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "'eḇen",
+              "gloss": "through meaning build a stone — carbuncle"
+            },
+            {
+              "surface": "בהיכל",
+              "lemma": "הֵיכָל",
+              "strongs": "H1964",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "hêḵāl",
+              "gloss": "a large public building"
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            }
+          ]
+        },
+        {
+          "number": 16,
+          "text": "מהיותם בא אל ערמת עשרים והיתה עשרה בא אל היקב לחשף חמשים פורה והיתה עשרים",
+          "hebrewTokens": [
+            {
+              "surface": "מהיותם",
+              "lemma": "הָיָה",
+              "strongs": "H1961",
+              "morphology": "Sp3mp",
+              "decodedMorphology": "verb",
+              "transliteration": "hāyâ",
+              "gloss": "nullhâyâh"
+            },
+            {
+              "surface": "בא",
+              "lemma": "בּוֹא",
+              "strongs": "H935",
+              "morphology": "Vqp3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "bô'",
+              "gloss": "nullbo a primitive root go or come — abide"
+            },
+            {
+              "surface": "אל",
+              "lemma": "אֵל",
+              "strongs": "H413",
+              "morphology": "R",
+              "decodedMorphology": "preposition",
+              "transliteration": "'ēl",
+              "gloss": "nullale a primitive particle properly"
+            },
+            {
+              "surface": "ערמת",
+              "lemma": "עֲרֵמָה",
+              "strongs": "H6194",
+              "morphology": "Ncfsc",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "ʿărēmâ",
+              "gloss": "a heap specifically"
+            },
+            {
+              "surface": "עשרים",
+              "lemma": "עֶשְׂרִים",
+              "strongs": "H6242",
+              "morphology": "Acbpa",
+              "decodedMorphology": "masculine/feminine noun",
+              "transliteration": "ʿeśrîm",
+              "gloss": "twenty also twentieth — score"
+            },
+            {
+              "surface": "והיתה",
+              "lemma": "הָיָה",
+              "strongs": "H1961",
+              "morphology": "Vqp3fs",
+              "decodedMorphology": "verb",
+              "transliteration": "hāyâ",
+              "gloss": "nullhâyâh"
+            },
+            {
+              "surface": "עשרה",
+              "lemma": "עֶשֶׂר",
+              "strongs": "H6235",
+              "morphology": "Acmsa",
+              "decodedMorphology": "masculine/feminine noun",
+              "transliteration": "ʿeśer",
+              "gloss": "ten — ten"
+            },
+            {
+              "surface": "בא",
+              "lemma": "בּוֹא",
+              "strongs": "H935",
+              "morphology": "Vqp3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "bô'",
+              "gloss": "nullbo a primitive root go or come — abide"
+            },
+            {
+              "surface": "אל",
+              "lemma": "אֵל",
+              "strongs": "H413",
+              "morphology": "R",
+              "decodedMorphology": "preposition",
+              "transliteration": "'ēl",
+              "gloss": "nullale a primitive particle properly"
+            },
+            {
+              "surface": "היקב",
+              "lemma": "יֶקֶב",
+              "strongs": "H3342",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "yeqeḇ",
+              "gloss": "nullyeqeb"
+            },
+            {
+              "surface": "לחשף",
+              "lemma": "חָשַׂף",
+              "strongs": "H2834",
+              "morphology": "Vqc",
+              "decodedMorphology": "verb",
+              "transliteration": "ḥāśap̄",
+              "gloss": "nullchâsaph"
+            },
+            {
+              "surface": "חמשים",
+              "lemma": "חֲמִשִּים",
+              "strongs": "H2572",
+              "morphology": "Acbpa",
+              "decodedMorphology": "numeral",
+              "transliteration": "ḥămiששîm",
+              "gloss": "fifty — fifty."
+            },
+            {
+              "surface": "פורה",
+              "lemma": "פּוּרָה",
+              "strongs": "H6333",
+              "morphology": "Ncfsa",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "pûrâ",
+              "gloss": "a wine-press — winepress."
+            },
+            {
+              "surface": "והיתה",
+              "lemma": "הָיָה",
+              "strongs": "H1961",
+              "morphology": "Vqp3fs",
+              "decodedMorphology": "verb",
+              "transliteration": "hāyâ",
+              "gloss": "nullhâyâh"
+            },
+            {
+              "surface": "עשרים",
+              "lemma": "עֶשְׂרִים",
+              "strongs": "H6242",
+              "morphology": "Acbpa",
+              "decodedMorphology": "masculine/feminine noun",
+              "transliteration": "ʿeśrîm",
+              "gloss": "twenty also twentieth — score"
+            }
+          ]
+        },
+        {
+          "number": 17,
+          "text": "הכיתי אתכם בשדפון ובירקון ובברד את כל מעשה ידיכם ואין אתכם אלי נאם יהוה",
+          "hebrewTokens": [
+            {
+              "surface": "הכיתי",
+              "lemma": "נָכָה",
+              "strongs": "H5221",
+              "morphology": "Vhp1cs",
+              "decodedMorphology": "verb",
+              "transliteration": "nāḵâ",
+              "gloss": "nullnaw-kaw' a primitive root strike (lightly or severely"
+            },
+            {
+              "surface": "אתכם",
+              "lemma": "אֵת",
+              "strongs": "H853",
+              "morphology": "Sp2mp",
+              "decodedMorphology": "particle",
+              "transliteration": "'ēṯ",
+              "gloss": "in demonstrative sense of entity properly"
+            },
+            {
+              "surface": "בשדפון",
+              "lemma": "שְׁדֵפָה",
+              "strongs": "H7711",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine/feminine noun",
+              "transliteration": "šᵊḏēp̄â",
+              "gloss": "blight — blasted."
+            },
+            {
+              "surface": "ובירקון",
+              "lemma": "יֵרָקוֹן",
+              "strongs": "H3420",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "yērāqôn",
+              "gloss": "paleness"
+            },
+            {
+              "surface": "ובברד",
+              "lemma": "בָּרָד",
+              "strongs": "H1259",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "bārāḏ",
+              "gloss": "hail — hail."
+            },
+            {
+              "surface": "את",
+              "lemma": "אֵת",
+              "strongs": "H853",
+              "morphology": "To",
+              "decodedMorphology": "particle",
+              "transliteration": "'ēṯ",
+              "gloss": "in demonstrative sense of entity properly"
+            },
+            {
+              "surface": "כל",
+              "lemma": "כֹּל",
+              "strongs": "H3605",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "kōl",
+              "gloss": "properly"
+            },
+            {
+              "surface": "מעשה",
+              "lemma": "מַעֲשֶׂה",
+              "strongs": "H4639",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "maʿăśê",
+              "gloss": "nullmaʻăseh"
+            },
+            {
+              "surface": "ידיכם",
+              "lemma": "יָד",
+              "strongs": "H3027",
+              "morphology": "Sp2mp",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "yāḏ",
+              "gloss": "."
+            },
+            {
+              "surface": "ואין",
+              "lemma": "אִין",
+              "strongs": "H369",
+              "morphology": "Tn",
+              "decodedMorphology": "adverb, noun, negation",
+              "transliteration": "'în",
+              "gloss": "."
+            },
+            {
+              "surface": "אתכם",
+              "lemma": "אֵת",
+              "strongs": "H853",
+              "morphology": "Sp2mp",
+              "decodedMorphology": "particle",
+              "transliteration": "'ēṯ",
+              "gloss": "in demonstrative sense of entity properly"
+            },
+            {
+              "surface": "אלי",
+              "lemma": "אֵל",
+              "strongs": "H413",
+              "morphology": "Sp1cs",
+              "decodedMorphology": "preposition",
+              "transliteration": "'ēl",
+              "gloss": "nullale a primitive particle properly"
+            },
+            {
+              "surface": "נאם",
+              "lemma": "נְאֻם",
+              "strongs": "H5002",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "nᵊ'um",
+              "gloss": "an oracle — said"
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            }
+          ]
+        },
+        {
+          "number": 18,
+          "text": "שימו נא לבבכם מן היום הזה ומעלה מיום עשרים וארבעה לתשיעי למן היום אשר יסד היכל יהוה שימו לבבכם",
+          "hebrewTokens": [
+            {
+              "surface": "שימו",
+              "lemma": "שׂוּם",
+              "strongs": "H7760",
+              "morphology": "Vqv2mp",
+              "decodedMorphology": "verb",
+              "transliteration": "śûm",
+              "gloss": "."
+            },
+            {
+              "surface": "נא",
+              "lemma": "נָא",
+              "strongs": "H4994",
+              "morphology": "Te",
+              "decodedMorphology": "particle",
+              "transliteration": "nā'",
+              "gloss": "nullnâʼ"
+            },
+            {
+              "surface": "לבבכם",
+              "lemma": "לֵבָב",
+              "strongs": "H3824",
+              "morphology": "Sp2mp",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "lēḇāḇ",
+              "gloss": "."
+            },
+            {
+              "surface": "מן",
+              "lemma": "מִן",
+              "strongs": "H4480",
+              "morphology": "R",
+              "decodedMorphology": "conjunction, preposition",
+              "transliteration": "min",
+              "gloss": "nullmin"
+            },
+            {
+              "surface": "היום",
+              "lemma": "יוֹם",
+              "strongs": "H3117",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "yôm",
+              "gloss": "nullyome from an unused root meaning be hot a day"
+            },
+            {
+              "surface": "הזה",
+              "lemma": "זֶה",
+              "strongs": "H2088",
+              "morphology": "Pdxms",
+              "decodedMorphology": "demonstrative pronoun",
+              "transliteration": "zê",
+              "gloss": "."
+            },
+            {
+              "surface": "ומעלה",
+              "lemma": "מַעַל",
+              "strongs": "H4605",
+              "morphology": "Sd",
+              "decodedMorphology": "adjective, adverb, substantive",
+              "transliteration": "maʿal",
+              "gloss": "nullmaʻal"
+            },
+            {
+              "surface": "מיום",
+              "lemma": "יוֹם",
+              "strongs": "H3117",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "yôm",
+              "gloss": "nullyome from an unused root meaning be hot a day"
+            },
+            {
+              "surface": "עשרים",
+              "lemma": "עֶשְׂרִים",
+              "strongs": "H6242",
+              "morphology": "Acbpa",
+              "decodedMorphology": "masculine/feminine noun",
+              "transliteration": "ʿeśrîm",
+              "gloss": "twenty also twentieth — score"
+            },
+            {
+              "surface": "וארבעה",
+              "lemma": "אַרְבַּע",
+              "strongs": "H702",
+              "morphology": "Acmsa",
+              "decodedMorphology": "masculine/feminine adjective, noun",
+              "transliteration": "'arbaʿ",
+              "gloss": "four — four."
+            },
+            {
+              "surface": "לתשיעי",
+              "lemma": "תְּשִׁיעִי",
+              "strongs": "H8671",
+              "morphology": "Aomsa",
+              "decodedMorphology": "masculine/feminine adjective",
+              "transliteration": "tᵊšîʿî",
+              "gloss": "ninth — ninth."
+            },
+            {
+              "surface": "למן",
+              "lemma": "מִן",
+              "strongs": "H4480",
+              "morphology": "R",
+              "decodedMorphology": "conjunction, preposition",
+              "transliteration": "min",
+              "gloss": "nullmin"
+            },
+            {
+              "surface": "היום",
+              "lemma": "יוֹם",
+              "strongs": "H3117",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "yôm",
+              "gloss": "nullyome from an unused root meaning be hot a day"
+            },
+            {
+              "surface": "אשר",
+              "lemma": "אֲשֶׁר",
+              "strongs": "H834",
+              "morphology": "Tr",
+              "decodedMorphology": "conjunction, relative pronoun",
+              "transliteration": "'ăšer",
+              "gloss": "."
+            },
+            {
+              "surface": "יסד",
+              "lemma": "יָסַד",
+              "strongs": "H3245",
+              "morphology": "VPp3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "yāsaḏ",
+              "gloss": "nullyaw-sad' a primitive root set intensively"
+            },
+            {
+              "surface": "היכל",
+              "lemma": "הֵיכָל",
+              "strongs": "H1964",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "hêḵāl",
+              "gloss": "a large public building"
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "שימו",
+              "lemma": "שׂוּם",
+              "strongs": "H7760",
+              "morphology": "Vqv2mp",
+              "decodedMorphology": "verb",
+              "transliteration": "śûm",
+              "gloss": "."
+            },
+            {
+              "surface": "לבבכם",
+              "lemma": "לֵבָב",
+              "strongs": "H3824",
+              "morphology": "Sp2mp",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "lēḇāḇ",
+              "gloss": "."
+            }
+          ]
+        },
+        {
+          "number": 19,
+          "text": "העוד הזרע במגורה ועד הגפן והתאנה והרמון ועץ הזית לא נשא מן היום הזה אברך",
+          "hebrewTokens": [
+            {
+              "surface": "העוד",
+              "lemma": "עוֹד",
+              "strongs": "H5750",
+              "morphology": "D",
+              "decodedMorphology": "adverb, substantive",
+              "transliteration": "ʿôḏ",
+              "gloss": "."
+            },
+            {
+              "surface": "הזרע",
+              "lemma": "זֶרַע",
+              "strongs": "H2233",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "zeraʿ",
+              "gloss": "nullzeraʻ"
+            },
+            {
+              "surface": "במגורה",
+              "lemma": "מְגוּרָה",
+              "strongs": "H4035",
+              "morphology": "Ncfsa",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "mᵊḡûrâ",
+              "gloss": "a fright also a granary — barn"
+            },
+            {
+              "surface": "ועד",
+              "lemma": "עַד",
+              "strongs": "H5704",
+              "morphology": "R",
+              "decodedMorphology": "conjunction, preposition",
+              "transliteration": "ʿaḏ",
+              "gloss": "."
+            },
+            {
+              "surface": "הגפן",
+              "lemma": "גֶּפֶן",
+              "strongs": "H1612",
+              "morphology": "Ncbsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "gep̄en",
+              "gloss": "nullgephen"
+            },
+            {
+              "surface": "והתאנה",
+              "lemma": "תְּאֵנָה",
+              "strongs": "H8384",
+              "morphology": "Ncfsa",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "tᵊ'ēnâ",
+              "gloss": "nulltᵉʼên"
+            },
+            {
+              "surface": "והרמון",
+              "lemma": "רִמּוֹן",
+              "strongs": "H7416",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "rimmôn",
+              "gloss": "a pomegranate"
+            },
+            {
+              "surface": "ועץ",
+              "lemma": "עֵץ",
+              "strongs": "H6086",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ʿēṣ",
+              "gloss": "a tree hence"
+            },
+            {
+              "surface": "הזית",
+              "lemma": "זַיִת",
+              "strongs": "H2132",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun, proper locative noun",
+              "transliteration": "zayiṯ",
+              "gloss": "an olive"
+            },
+            {
+              "surface": "לא",
+              "lemma": "לֹא",
+              "strongs": "H3808",
+              "morphology": "Tn",
+              "decodedMorphology": "adverb",
+              "transliteration": "lō'",
+              "gloss": "nulllo or לוֹא lôwʼ or לֹה lôh"
+            },
+            {
+              "surface": "נשא",
+              "lemma": "נָשָׂא",
+              "strongs": "H5375",
+              "morphology": "Vqp3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "nāśā'",
+              "gloss": "nullnaw-saw' or נָסָה n h"
+            },
+            {
+              "surface": "מן",
+              "lemma": "מִן",
+              "strongs": "H4480",
+              "morphology": "R",
+              "decodedMorphology": "conjunction, preposition",
+              "transliteration": "min",
+              "gloss": "nullmin"
+            },
+            {
+              "surface": "היום",
+              "lemma": "יוֹם",
+              "strongs": "H3117",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "yôm",
+              "gloss": "nullyome from an unused root meaning be hot a day"
+            },
+            {
+              "surface": "הזה",
+              "lemma": "זֶה",
+              "strongs": "H2088",
+              "morphology": "Pdxms",
+              "decodedMorphology": "demonstrative pronoun",
+              "transliteration": "zê",
+              "gloss": "."
+            },
+            {
+              "surface": "אברך",
+              "lemma": "בָּרַךְ",
+              "strongs": "H1288",
+              "morphology": "Vpi1cs",
+              "decodedMorphology": "verb",
+              "transliteration": "bāraḵ",
+              "gloss": "nullbaw-rak' a primitive root kneel by implication bless God"
+            }
+          ]
+        },
+        {
+          "number": 20,
+          "text": "ויהי דבר יהוה שנית אל חגי בעשרים וארבעה לחדש לאמר",
+          "hebrewTokens": [
+            {
+              "surface": "ויהי",
+              "lemma": "הָיָה",
+              "strongs": "H1961",
+              "morphology": "Vqw3ms",
+              "decodedMorphology": "verb",
+              "transliteration": "hāyâ",
+              "gloss": "nullhâyâh"
+            },
+            {
+              "surface": "דבר",
+              "lemma": "דָּבָר",
+              "strongs": "H1697",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "dāḇār",
+              "gloss": "nulldâbâr"
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "שנית",
+              "lemma": "שֵׁנִי",
+              "strongs": "H8145",
+              "morphology": "Aofsa",
+              "decodedMorphology": "adjective, masculine/feminine noun",
+              "transliteration": "šēnî",
+              "gloss": "properly"
+            },
+            {
+              "surface": "אל",
+              "lemma": "אֵל",
+              "strongs": "H413",
+              "morphology": "R",
+              "decodedMorphology": "preposition",
+              "transliteration": "'ēl",
+              "gloss": "nullale a primitive particle properly"
+            },
+            {
+              "surface": "חגי",
+              "lemma": "חַגַּי",
+              "strongs": "H2292",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "ḥagay",
+              "gloss": "festive Chaggai"
+            },
+            {
+              "surface": "בעשרים",
+              "lemma": "עֶשְׂרִים",
+              "strongs": "H6242",
+              "morphology": "Acbpa",
+              "decodedMorphology": "masculine/feminine noun",
+              "transliteration": "ʿeśrîm",
+              "gloss": "twenty also twentieth — score"
+            },
+            {
+              "surface": "וארבעה",
+              "lemma": "אַרְבַּע",
+              "strongs": "H702",
+              "morphology": "Acmsa",
+              "decodedMorphology": "masculine/feminine adjective, noun",
+              "transliteration": "'arbaʿ",
+              "gloss": "four — four."
+            },
+            {
+              "surface": "לחדש",
+              "lemma": "חֹדֶשׁ",
+              "strongs": "H2320",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ḥōḏeš",
+              "gloss": "new moon by implication"
+            },
+            {
+              "surface": "לאמר",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqc",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            }
+          ]
+        },
+        {
+          "number": 21,
+          "text": "אמר אל זרבבל פחת יהודה לאמר אני מרעיש את השמים ואת הארץ",
+          "hebrewTokens": [
+            {
+              "surface": "אמר",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqv2ms",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            },
+            {
+              "surface": "אל",
+              "lemma": "אֵל",
+              "strongs": "H413",
+              "morphology": "R",
+              "decodedMorphology": "preposition",
+              "transliteration": "'ēl",
+              "gloss": "nullale a primitive particle properly"
+            },
+            {
+              "surface": "זרבבל",
+              "lemma": "זְרֻבָּבֶל",
+              "strongs": "H2216",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "zᵊrubāḇel",
+              "gloss": "descended of Babylon"
+            },
+            {
+              "surface": "פחת",
+              "lemma": "פֶּחָה",
+              "strongs": "H6346",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "peḥâ",
+              "gloss": "."
+            },
+            {
+              "surface": "יהודה",
+              "lemma": "יְהוּדָה",
+              "strongs": "H3063",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "yᵊhûḏâ",
+              "gloss": "celebrated Jehudah"
+            },
+            {
+              "surface": "לאמר",
+              "lemma": "אָמַר",
+              "strongs": "H559",
+              "morphology": "Vqc",
+              "decodedMorphology": "verb",
+              "transliteration": "'āmar",
+              "gloss": "."
+            },
+            {
+              "surface": "אני",
+              "lemma": "אֲנִי",
+              "strongs": "H589",
+              "morphology": "Pp1cs",
+              "decodedMorphology": "personal pronoun",
+              "transliteration": "'ănî",
+              "gloss": "nullʼănîy"
+            },
+            {
+              "surface": "מרעיש",
+              "lemma": "רָעַשׁ",
+              "strongs": "H7493",
+              "morphology": "Vhrmsa",
+              "decodedMorphology": "verb",
+              "transliteration": "rāʿaš",
+              "gloss": "nullrâʻash"
+            },
+            {
+              "surface": "את",
+              "lemma": "אֵת",
+              "strongs": "H853",
+              "morphology": "To",
+              "decodedMorphology": "particle",
+              "transliteration": "'ēṯ",
+              "gloss": "in demonstrative sense of entity properly"
+            },
+            {
+              "surface": "השמים",
+              "lemma": "שָׁמַיִם",
+              "strongs": "H8064",
+              "morphology": "Ncmpa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "šāmayim",
+              "gloss": "."
+            },
+            {
+              "surface": "ואת",
+              "lemma": "אֵת",
+              "strongs": "H853",
+              "morphology": "To",
+              "decodedMorphology": "particle",
+              "transliteration": "'ēṯ",
+              "gloss": "in demonstrative sense of entity properly"
+            },
+            {
+              "surface": "הארץ",
+              "lemma": "אֶרֶץ",
+              "strongs": "H776",
+              "morphology": "Ncbsa",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "'ereṣ",
+              "gloss": "nulleh' -rets from an unused root probably meaning be firm earth (at large"
+            }
+          ]
+        },
+        {
+          "number": 22,
+          "text": "והפכתי כסא ממלכות והשמדתי חזק ממלכות הגוים והפכתי מרכבה ורכביה וירדו סוסים ורכביהם איש בחרב אחיו",
+          "hebrewTokens": [
+            {
+              "surface": "והפכתי",
+              "lemma": "הָפַךְ",
+              "strongs": "H2015",
+              "morphology": "Vqq1cs",
+              "decodedMorphology": "verb",
+              "transliteration": "hāp̄aḵ",
+              "gloss": "nullhaw-fak' a primitive root turn about or over by implication"
+            },
+            {
+              "surface": "כסא",
+              "lemma": "כִּסֵּא",
+              "strongs": "H3678",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "kissē'",
+              "gloss": "properly"
+            },
+            {
+              "surface": "ממלכות",
+              "lemma": "מַמְלָכָה",
+              "strongs": "H4467",
+              "morphology": "Ncfpa",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "mamlāḵâ",
+              "gloss": "dominion"
+            },
+            {
+              "surface": "והשמדתי",
+              "lemma": "שָׁמַד",
+              "strongs": "H8045",
+              "morphology": "Vhq1cs",
+              "decodedMorphology": "verb",
+              "transliteration": "šāmaḏ",
+              "gloss": "."
+            },
+            {
+              "surface": "חזק",
+              "lemma": "חֹזֶק",
+              "strongs": "H2392",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ḥōzeq",
+              "gloss": "power — strength."
+            },
+            {
+              "surface": "ממלכות",
+              "lemma": "מַמְלָכָה",
+              "strongs": "H4467",
+              "morphology": "Ncfpc",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "mamlāḵâ",
+              "gloss": "dominion"
+            },
+            {
+              "surface": "הגוים",
+              "lemma": "גּוֹי",
+              "strongs": "H1471",
+              "morphology": "Ncmpa",
+              "decodedMorphology": "masculine noun, proper masculine noun",
+              "transliteration": "gôy",
+              "gloss": "a foreign nation hence"
+            },
+            {
+              "surface": "והפכתי",
+              "lemma": "הָפַךְ",
+              "strongs": "H2015",
+              "morphology": "Vqq1cs",
+              "decodedMorphology": "verb",
+              "transliteration": "hāp̄aḵ",
+              "gloss": "nullhaw-fak' a primitive root turn about or over by implication"
+            },
+            {
+              "surface": "מרכבה",
+              "lemma": "מֶרְכָּבָה",
+              "strongs": "H4818",
+              "morphology": "Ncfsa",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "merkāḇâ",
+              "gloss": "."
+            },
+            {
+              "surface": "ורכביה",
+              "lemma": "רָכַב",
+              "strongs": "H7392",
+              "morphology": "Sp3fs",
+              "decodedMorphology": "verb",
+              "transliteration": "rāḵaḇ",
+              "gloss": "nullrâkab"
+            },
+            {
+              "surface": "וירדו",
+              "lemma": "יָרַד",
+              "strongs": "H3381",
+              "morphology": "Vqq3cp",
+              "decodedMorphology": "verb",
+              "transliteration": "yāraḏ",
+              "gloss": "nullyaw-rad' a primitive root descend (literally"
+            },
+            {
+              "surface": "סוסים",
+              "lemma": "סוּס",
+              "strongs": "H5483",
+              "morphology": "Ncmpa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "sûs",
+              "gloss": "."
+            },
+            {
+              "surface": "ורכביהם",
+              "lemma": "רָכַב",
+              "strongs": "H7392",
+              "morphology": "Sp3mp",
+              "decodedMorphology": "verb",
+              "transliteration": "rāḵaḇ",
+              "gloss": "nullrâkab"
+            },
+            {
+              "surface": "איש",
+              "lemma": "אִישׁ",
+              "strongs": "H376",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "'îš",
+              "gloss": "."
+            },
+            {
+              "surface": "בחרב",
+              "lemma": "חֶרֶב",
+              "strongs": "H2719",
+              "morphology": "Ncfsc",
+              "decodedMorphology": "feminine noun",
+              "transliteration": "ḥereḇ",
+              "gloss": "drought also a cutting instrument"
+            },
+            {
+              "surface": "אחיו",
+              "lemma": "אָח",
+              "strongs": "H251",
+              "morphology": "Sp3ms",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "'āḥ",
+              "gloss": "]) — another"
+            }
+          ]
+        },
+        {
+          "number": 23,
+          "text": "ביום ההוא נאם יהוה צבאות אקחך זרבבל בן שאלתיאל עבדי נאם יהוה ושמתיך כחותם כי בך בחרתי נאם יהוה צבאות",
+          "hebrewTokens": [
+            {
+              "surface": "ביום",
+              "lemma": "יוֹם",
+              "strongs": "H3117",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "yôm",
+              "gloss": "nullyome from an unused root meaning be hot a day"
+            },
+            {
+              "surface": "ההוא",
+              "lemma": "הוּא",
+              "strongs": "H1931",
+              "morphology": "Pp3ms",
+              "decodedMorphology": "demonstrative pronoun, third person singular personal pronoun",
+              "transliteration": "hû'",
+              "gloss": "nullhûwʼ"
+            },
+            {
+              "surface": "נאם",
+              "lemma": "נְאֻם",
+              "strongs": "H5002",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "nᵊ'um",
+              "gloss": "an oracle — said"
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "צבאות",
+              "lemma": "צָבָא",
+              "strongs": "H6635",
+              "morphology": "Ncbpa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ṣāḇā'",
+              "gloss": "nulltsâbâʼ"
+            },
+            {
+              "surface": "אקחך",
+              "lemma": "לָקַח",
+              "strongs": "H3947",
+              "morphology": "Sp2ms",
+              "decodedMorphology": "verb",
+              "transliteration": "lāqaḥ",
+              "gloss": "nulllaw-kakh' a primitive root take — accept"
+            },
+            {
+              "surface": "זרבבל",
+              "lemma": "זְרֻבָּבֶל",
+              "strongs": "H2216",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "zᵊrubāḇel",
+              "gloss": "descended of Babylon"
+            },
+            {
+              "surface": "בן",
+              "lemma": "בֵּן",
+              "strongs": "H1121",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "bēn",
+              "gloss": "nullbên"
+            },
+            {
+              "surface": "שאלתיאל",
+              "lemma": "שְׁאַלְתִּיאֵל",
+              "strongs": "H7597",
+              "morphology": "Np",
+              "decodedMorphology": "proper masculine noun",
+              "transliteration": "šᵊ'altî'ēl",
+              "gloss": "I have asked God Shealtiel"
+            },
+            {
+              "surface": "עבדי",
+              "lemma": "עֶבֶד",
+              "strongs": "H5650",
+              "morphology": "Sp1cs",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ʿeḇeḏ",
+              "gloss": "."
+            },
+            {
+              "surface": "נאם",
+              "lemma": "נְאֻם",
+              "strongs": "H5002",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "nᵊ'um",
+              "gloss": "an oracle — said"
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "ושמתיך",
+              "lemma": "שׂוּם",
+              "strongs": "H7760",
+              "morphology": "Sp2ms",
+              "decodedMorphology": "verb",
+              "transliteration": "śûm",
+              "gloss": "."
+            },
+            {
+              "surface": "כחותם",
+              "lemma": "חוֹתָם",
+              "strongs": "H2368",
+              "morphology": "Ncmsa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ḥôṯām",
+              "gloss": "a signature-ring — seal"
+            },
+            {
+              "surface": "כי",
+              "lemma": "כִּי",
+              "strongs": "H3588",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "transliteration": "kî",
+              "gloss": "nullkîy"
+            },
+            {
+              "surface": "בך",
+              "lemma": "בך",
+              "morphology": "Sp2ms"
+            },
+            {
+              "surface": "בחרתי",
+              "lemma": "בָּחַר",
+              "strongs": "H977",
+              "morphology": "Vqp1cs",
+              "decodedMorphology": "verb",
+              "transliteration": "bāḥar",
+              "gloss": "nullbâchar"
+            },
+            {
+              "surface": "נאם",
+              "lemma": "נְאֻם",
+              "strongs": "H5002",
+              "morphology": "Ncmsc",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "nᵊ'um",
+              "gloss": "an oracle — said"
+            },
+            {
+              "surface": "יהוה",
+              "lemma": "יְהֹוָה",
+              "strongs": "H3068",
+              "morphology": "Np",
+              "decodedMorphology": "proper noun with reference to deity",
+              "transliteration": "Yᵊhōvâ",
+              "gloss": "<div class=\"row show-for-medium\">"
+            },
+            {
+              "surface": "צבאות",
+              "lemma": "צָבָא",
+              "strongs": "H6635",
+              "morphology": "Ncbpa",
+              "decodedMorphology": "masculine noun",
+              "transliteration": "ṣāḇā'",
+              "gloss": "nulltsâbâʼ"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

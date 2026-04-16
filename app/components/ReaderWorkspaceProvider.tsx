@@ -60,7 +60,7 @@ import {
 } from "@/lib/study-workspace";
 import { getInstalledBundledBibleVersions } from "@/lib/bible/version";
 
-type ReaderPane = "reading" | "compare" | "study-sets";
+type ReaderPane = "reading" | "compare" | "ot-compare" | "study-sets";
 type LeftReaderMode = "scripture" | "search";
 type UtilityPane = "search" | "cross-references" | "compare" | "notebook" | "sermons" | "strongs";
 
@@ -95,6 +95,7 @@ type ReaderWorkspaceContextValue = {
   setActiveStudyVerseNumber: (value: number | null) => void;
   openCrossReferences: (verseNumber?: number | null) => void;
   openCompare: (verseNumber?: number | null) => void;
+  openOtCompare: (verseNumber?: number | null) => void;
   compareVersions: BundledBibleVersion[];
   setCompareVersions: (values: BundledBibleVersion[]) => void;
   setCompareVersionAtIndex: (index: number, value: BundledBibleVersion) => void;
@@ -497,7 +498,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       setActiveReaderPane: (tab) => {
         setActiveReaderPane(tab);
 
-        if (tab === "compare" || tab === "study-sets") {
+        if (tab === "compare" || tab === "ot-compare" || tab === "study-sets") {
           setLeftReaderMode("scripture");
         }
 
@@ -534,6 +535,14 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
         }
 
         setActiveReaderPane("compare");
+        setLeftReaderMode("scripture");
+      },
+      openOtCompare: (verseNumber = null) => {
+        if (verseNumber != null) {
+          setActiveStudyVerseNumber(verseNumber);
+        }
+
+        setActiveReaderPane("ot-compare");
         setLeftReaderMode("scripture");
       },
       compareVersions,

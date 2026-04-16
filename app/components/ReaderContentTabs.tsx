@@ -2,7 +2,11 @@
 
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 
-export function ReaderContentTabs() {
+type ReaderContentTabsProps = {
+  showOtCompare?: boolean;
+};
+
+export function ReaderContentTabs({ showOtCompare = false }: ReaderContentTabsProps) {
   const { activeReaderPane, setActiveReaderPane } = useReaderWorkspace();
 
   return (
@@ -25,6 +29,17 @@ export function ReaderContentTabs() {
       >
         Compare
       </button>
+      {showOtCompare ? (
+        <button
+          aria-selected={activeReaderPane === "ot-compare"}
+          className={`reader-content-tab${activeReaderPane === "ot-compare" ? " is-active" : ""}`}
+          onClick={() => setActiveReaderPane("ot-compare")}
+          role="tab"
+          type="button"
+        >
+          OT Compare
+        </button>
+      ) : null}
       <button
         aria-selected={activeReaderPane === "study-sets"}
         className={`reader-content-tab${activeReaderPane === "study-sets" ? " is-active" : ""}`}
