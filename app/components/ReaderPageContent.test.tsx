@@ -84,7 +84,25 @@ const greekOtChapter: Chapter = {
   verses: [
     {
       number: 1,
-      text: "ἐν ἀρχῇ ἐποίησεν ὁ θεὸς τὸν οὐρανὸν καὶ τὴν γῆν"
+      text: "ἐν ἀρχῇ ἐποίησεν ὁ θεὸς τὸν οὐρανὸν καὶ τὴν γῆν",
+      greekTokens: [
+        {
+          surface: "ἀρχῇ",
+          lemma: "ἀρχή",
+          entryKey: "G746",
+          strongs: "G746",
+          gloss: "beginning",
+          transliteration: "archē"
+        },
+        {
+          surface: "θεὸς",
+          lemma: "θεός",
+          entryKey: "G2316",
+          strongs: "G2316",
+          gloss: "God",
+          transliteration: "theos"
+        }
+      ]
     }
   ]
 };
@@ -391,7 +409,7 @@ describe("ReaderPageContent", () => {
     expect(screen.getByLabelText("Parallel translation comparison")).toBeInTheDocument();
   });
 
-  it("opens OT compare from the menu for Old Testament passages", () => {
+  it("opens OT compare from the menu for Old Testament passages", async () => {
     renderWithReaderCustomization(
       <>
         <ReaderPageContent
@@ -414,13 +432,29 @@ describe("ReaderPageContent", () => {
     expect(screen.getByText("OT Textual Compare")).toBeInTheDocument();
     expect(screen.getByText("LXX Greek")).toBeInTheDocument();
     expect(screen.getByText("Masoretic Hebrew")).toBeInTheDocument();
-    expect(screen.getByText("ἐν ἀρχῇ ἐποίησεν ὁ θεὸς τὸν οὐρανὸν καὶ τὴν γῆν")).toBeInTheDocument();
+    expect(screen.getByText("ἀρχῇ")).toBeInTheDocument();
+    expect(screen.getByText("archē")).toBeInTheDocument();
+    expect(screen.getByText("ἀρχή")).toBeInTheDocument();
+    expect(screen.getAllByText("beginning").length).toBeGreaterThan(0);
     expect(screen.getByText("בראשית")).toBeInTheDocument();
-    expect(screen.getByText(/רֵאשִׁית · re'shiyth · beginning/i)).toBeInTheDocument();
+    expect(screen.getByText("re'shiyth")).toBeInTheDocument();
+    expect(screen.getByText("רֵאשִׁית")).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole("button", { name: "בראשית" }));
+    fireEvent.click(screen.getByRole("button", { name: /בראשית רֵאשִׁית H7225/i }));
 
-    expect(screen.getByText("Loading Strongs details…")).toBeInTheDocument();
+    expect(screen.getByRole("tab", { name: "OT Compare" })).toHaveAttribute(
+      "aria-selected",
+      "true"
+    );
+    expect(await screen.findByText("Hebrew")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: /ἀρχῇ ἀρχή G746/i }));
+
+    expect(screen.getByRole("tab", { name: "OT Compare" })).toHaveAttribute(
+      "aria-selected",
+      "true"
+    );
+    expect(await screen.findByText("Greek Dictionary")).toBeInTheDocument();
   });
 
   it("shows Greek interlinear lines under ESV New Testament verses when enabled", () => {

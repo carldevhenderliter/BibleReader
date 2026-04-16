@@ -1,8 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
-
-import type { HebrewToken, Verse } from "@/lib/bible/types";
+import type { Verse } from "@/lib/bible/types";
 
 type HebrewVerseTextContentProps = {
   verse: Verse | null;
@@ -10,29 +8,16 @@ type HebrewVerseTextContentProps = {
   onOpenStrongs?: (strongsNumbers: string[], label?: string | null) => void;
 };
 
-function getTokenSummary(token: HebrewToken) {
-  return [token.lemma, token.transliteration, token.gloss].filter(Boolean).join(" · ");
-}
-
 export function HebrewVerseTextContent({
   verse,
   className,
   onOpenStrongs
 }: HebrewVerseTextContentProps) {
-  const [selectedTokenIndex, setSelectedTokenIndex] = useState<number | null>(0);
-  const selectedToken = useMemo(() => {
-    if (!verse?.hebrewTokens?.length) {
-      return null;
-    }
-
-    return verse.hebrewTokens[selectedTokenIndex ?? 0] ?? verse.hebrewTokens[0] ?? null;
-  }, [selectedTokenIndex, verse?.hebrewTokens]);
-
   if (!verse) {
     return <div className={className ?? "verse-text verse-text-hebrew"} dir="rtl" lang="he" />;
   }
 
-  if (!verse.hebrewTokens?.length) {
+  if (!verse.hebrewTokens?.length || !onOpenStrongs) {
     return (
       <div className={className ?? "verse-text verse-text-hebrew"} dir="rtl" lang="he">
         {verse.text}
@@ -41,45 +26,38 @@ export function HebrewVerseTextContent({
   }
 
   return (
-    <div className={className ?? "verse-text verse-text-hebrew"}>
-      <p className="verse-text-hebrew-line" dir="rtl" lang="he">
-        {verse.hebrewTokens.map((token, index) => {
-          const buttonClassName = `verse-hebrew-inline-token${
-            selectedTokenIndex === index ? " is-active" : ""
-          }`;
-
-          return token.strongs && onOpenStrongs ? (
+    <div className={className ?? "verse-text verse-text-hebrew"} dir="rtl" lang="he">
+      <div className="verse-interlinear verse-compare-token-line verse-compare-token-line-hebrew">
+        {verse.hebrewTokens.map((token, index) => (
+          <span className="verse-greek-token-wrap verse-compare-token-wrap" key={`${verse.number}:${index}:${token.surface}`}>
             <button
-              className={buttonClassName}
-              key={`${verse.number}:${index}:${token.surface}`}
+              aria-label={`${token.surface} ${token.lemma} ${token.strongs ?? ""}`.trim()}
+              className="verse-greek-token verse-compare-token verse-compare-token-hebrew"
               onClick={() => {
-                setSelectedTokenIndex(index);
-                onOpenStrongs([token.strongs ?? ""], token.lemma);
+                if (!token.strongs) {
+                  return;
+                }
+
+                onOpenStrongs([token.strongs], token.lemma);
               }}
               type="button"
             >
-              {token.surface}
+              <span className="verse-greek-surface verse-compare-token-surface verse-compare-token-surface-hebrew">
+                {token.surface}
+              </span>
+              {token.transliteration ? (
+                <span className="verse-greek-transliteration verse-compare-token-transliteration">
+                  {token.transliteration}
+                </span>
+              ) : null}
+              <span className="verse-greek-lemma verse-compare-token-lemma">{token.lemma}</span>
+              {token.gloss ? (
+                <span className="verse-greek-gloss verse-compare-token-gloss">{token.gloss}</span>
+              ) : null}
             </button>
-          ) : (
-            <button
-              className={buttonClassName}
-              key={`${verse.number}:${index}:${token.surface}`}
-              onClick={() => setSelectedTokenIndex(index)}
-              type="button"
-            >
-              {token.surface}
-            </button>
-          );
-        })}
-      </p>
-      {selectedToken ? (
-        <p className="hebrew-verse-reading-aids">
-          {getTokenSummary(selectedToken)}
-          {selectedToken.morphology ? (
-            <span className="hebrew-verse-reading-aids-code"> ({selectedToken.morphology})</span>
-          ) : null}
-        </p>
-      ) : null}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }

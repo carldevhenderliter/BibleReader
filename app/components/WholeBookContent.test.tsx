@@ -127,12 +127,41 @@ const greekOtChapters: Chapter[] = [
   {
     bookSlug: "genesis",
     chapterNumber: 1,
-    verses: [{ number: 1, text: "ἐν ἀρχῇ ἐποίησεν ὁ θεὸς" }]
+    verses: [
+      {
+        number: 1,
+        text: "ἐν ἀρχῇ ἐποίησεν ὁ θεὸς",
+        greekTokens: [
+          {
+            surface: "ἀρχῇ",
+            lemma: "ἀρχή",
+            entryKey: "G746",
+            strongs: "G746",
+            gloss: "beginning",
+            transliteration: "archē"
+          }
+        ]
+      }
+    ]
   },
   {
     bookSlug: "genesis",
     chapterNumber: 2,
-    verses: [{ number: 1, text: "καὶ συνετελέσθησαν ὁ οὐρανὸς καὶ ἡ γῆ" }]
+    verses: [
+      {
+        number: 1,
+        text: "καὶ συνετελέσθησαν ὁ οὐρανὸς καὶ ἡ γῆ",
+        greekTokens: [
+          {
+            surface: "συνετελέσθησαν",
+            lemma: "συντελέω",
+            entryKey: "lemma:συντελεω",
+            gloss: "finish",
+            transliteration: "synetelesthēsan"
+          }
+        ]
+      }
+    ]
   }
 ];
 
@@ -537,7 +566,8 @@ describe("WholeBookContent", () => {
 
     expect(screen.getByText("OT Textual Compare")).toBeInTheDocument();
     expect(screen.getAllByRole("heading", { name: /Chapter /i }).length).toBeGreaterThan(1);
-    expect(screen.getByText("ἐν ἀρχῇ ἐποίησεν ὁ θεὸς")).toBeInTheDocument();
+    expect(screen.getByText("archē")).toBeInTheDocument();
+    expect(screen.getByText("ἀρχή")).toBeInTheDocument();
     expect(screen.getByText("בראשית")).toBeInTheDocument();
   });
 

@@ -1,10 +1,12 @@
 "use client";
 
+import { transliterateGreekSurface } from "@/lib/bible/greek";
 import type { Verse } from "@/lib/bible/types";
 
 type GreekVerseTextContentProps = {
   verse: Verse | null;
   className?: string;
+  displayMode?: "inline" | "stacked";
   onOpenGreekDictionary?: NonNullable<{
     (
       selection: {
@@ -24,6 +26,7 @@ type GreekVerseTextContentProps = {
 export function GreekVerseTextContent({
   verse,
   className,
+  displayMode = "inline",
   onOpenGreekDictionary
 }: GreekVerseTextContentProps) {
   if (!verse) {
@@ -35,6 +38,53 @@ export function GreekVerseTextContent({
       <p className={className ?? "verse-text verse-text-greek"} lang="el">
         {verse.text}
       </p>
+    );
+  }
+
+  if (displayMode === "stacked") {
+    return (
+      <div className={className ?? "verse-text verse-text-greek"} lang="el">
+        <div className="verse-interlinear verse-compare-token-line">
+          {verse.greekTokens.map((token, index) => {
+            const entryKey = token.entryKey ?? token.strongs ?? null;
+
+            return (
+              <span className="verse-greek-token-wrap verse-compare-token-wrap" key={`${verse.number}:${index}:${token.surface}`}>
+                <button
+                  aria-label={`${token.surface} ${token.lemma} ${token.strongs ?? ""}`.trim()}
+                  className="verse-greek-token verse-compare-token"
+                  onClick={() => {
+                    if (!entryKey) {
+                      return;
+                    }
+
+                    onOpenGreekDictionary({
+                      entryKey,
+                      strongs: token.strongs ?? null,
+                      lemma: token.lemma,
+                      label: token.lemma,
+                      selectedForm: token.surface,
+                      selectedFormMorphology: token.morphology ?? null,
+                      selectedFormDecodedMorphology: token.decodedMorphology ?? null,
+                      matchedQuery: token.surface
+                    });
+                  }}
+                  type="button"
+                >
+                  <span className="verse-greek-surface verse-compare-token-surface">{token.surface}</span>
+                  <span className="verse-greek-transliteration verse-compare-token-transliteration">
+                    {token.transliteration ?? transliterateGreekSurface(token.surface)}
+                  </span>
+                  <span className="verse-greek-lemma verse-compare-token-lemma">{token.lemma}</span>
+                  {token.gloss ? (
+                    <span className="verse-greek-gloss verse-compare-token-gloss">{token.gloss}</span>
+                  ) : null}
+                </button>
+              </span>
+            );
+          })}
+        </div>
+      </div>
     );
   }
 

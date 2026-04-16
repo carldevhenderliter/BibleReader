@@ -79,7 +79,9 @@ type ReaderWorkspaceContextValue = {
   utilityPaneRequestKey: number;
   setActiveUtilityPane: (pane: UtilityPane) => void;
   openStrongs: (strongsNumber: string | string[], label?: string | null) => void;
+  openStrongsInCurrentPane: (strongsNumber: string | string[], label?: string | null) => void;
   openGreekDictionary: (selection: GreekDictionarySelection) => void;
+  openGreekDictionaryInCurrentPane: (selection: GreekDictionarySelection) => void;
   openNotebook: (reference?: PassageReference | null) => void;
   closeNotebookWorkspace: () => void;
   openSermons: () => void;
@@ -217,6 +219,10 @@ function normalizeCompareVersions(
   return uniqueSelections.slice(0, Math.min(2, Math.max(0, installedVersions.length - 1)));
 }
 
+function shouldPreserveReaderPane(activeReaderPane: ReaderPane) {
+  return activeReaderPane === "compare" || activeReaderPane === "ot-compare";
+}
+
 export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   const pathname = usePathname();
   const { version } = useReaderVersion();
@@ -285,6 +291,25 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
     setActiveGreekSelection(null);
   }, []);
 
+  const openStrongsInCurrentPane = useCallback(
+    (strongsNumber: string | string[], label: string | null = null) => {
+      const nextNumbers = Array.isArray(strongsNumber) ? strongsNumber : [strongsNumber];
+
+      if (!shouldPreserveReaderPane(activeReaderPane)) {
+        setActiveReaderPane("reading");
+      }
+
+      setLeftReaderMode("scripture");
+      setActiveUtilityPaneState("strongs");
+      setUtilityPaneRequestKey((current) => current + 1);
+      setLastReaderUtilityPane("strongs");
+      setActiveStrongsNumbers(nextNumbers);
+      setActiveStrongsLabel(label);
+      setActiveGreekSelection(null);
+    },
+    [activeReaderPane]
+  );
+
   const openGreekDictionary = useCallback((selection: GreekDictionarySelection) => {
     const normalizedLabel = selection.label?.trim() || selection.lemma;
 
@@ -297,6 +322,25 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
     setActiveStrongsLabel(normalizedLabel || null);
     setActiveGreekSelection(selection);
   }, []);
+
+  const openGreekDictionaryInCurrentPane = useCallback(
+    (selection: GreekDictionarySelection) => {
+      const normalizedLabel = selection.label?.trim() || selection.lemma;
+
+      if (!shouldPreserveReaderPane(activeReaderPane)) {
+        setActiveReaderPane("reading");
+      }
+
+      setLeftReaderMode("scripture");
+      setActiveUtilityPaneState("strongs");
+      setUtilityPaneRequestKey((current) => current + 1);
+      setLastReaderUtilityPane("strongs");
+      setActiveStrongsNumbers(selection.strongs ? [selection.strongs] : []);
+      setActiveStrongsLabel(normalizedLabel || null);
+      setActiveGreekSelection(selection);
+    },
+    [activeReaderPane]
+  );
 
   const openSermons = useCallback(() => {
     setActiveReaderPane("reading");
@@ -512,7 +556,9 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       utilityPaneRequestKey,
       setActiveUtilityPane,
       openStrongs,
+      openStrongsInCurrentPane,
       openGreekDictionary,
+      openGreekDictionaryInCurrentPane,
       openNotebook,
       closeNotebookWorkspace,
       openSermons,
@@ -1058,7 +1104,9 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       leftReaderMode,
       notebooks,
       openStrongs,
+      openStrongsInCurrentPane,
       openGreekDictionary,
+      openGreekDictionaryInCurrentPane,
       openNotebook,
       openSermons,
       pendingNotebookReference,

@@ -222,6 +222,11 @@ export function ReaderPageContent({
               masoreticChapters={masoreticChapter ? [masoreticChapter] : null}
               view="chapter"
             />
+            {!isSplitViewActive && activeUtilityPane === "strongs" ? (
+              <div className="reader-ot-compare-study-panel">
+                <ReaderStrongsPanel />
+              </div>
+            ) : null}
           </div>
         ) : showNotebookInline ? (
           <div className="reading-surface reader-notebook-surface">

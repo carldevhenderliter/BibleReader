@@ -377,6 +377,11 @@ export function WholeBookContent({
               masoreticChapters={masoreticBookChapters}
               view="book"
             />
+            {!isSplitViewActive && activeUtilityPane === "strongs" ? (
+              <div className="reader-ot-compare-study-panel">
+                <ReaderStrongsPanel />
+              </div>
+            ) : null}
           </div>
         ) : showNotebookInline ? (
           <div className="reading-surface reader-notebook-surface">

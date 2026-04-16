@@ -57,7 +57,8 @@ function LazyOtCompareSection({
   initialRender,
   isFocused
 }: LazyOtCompareSectionProps) {
-  const { activeStudyVerseNumber, openGreekDictionary, openStrongs } = useReaderWorkspace();
+  const { activeStudyVerseNumber, openGreekDictionaryInCurrentPane, openStrongsInCurrentPane } =
+    useReaderWorkspace();
   const [shouldRenderSection, setShouldRenderSection] = useState(initialRender);
   const sectionRef = useRef<HTMLElement | null>(null);
   const gridStyle: CSSProperties = {
@@ -131,7 +132,8 @@ function LazyOtCompareSection({
                 <div className="reader-compare-cell reader-ot-compare-cell">
                   <GreekVerseTextContent
                     className="verse-text verse-text-greek reader-compare-text"
-                    onOpenGreekDictionary={openGreekDictionary}
+                    displayMode="stacked"
+                    onOpenGreekDictionary={openGreekDictionaryInCurrentPane}
                     verse={row.greekVerse}
                   />
                 </div>
@@ -139,7 +141,7 @@ function LazyOtCompareSection({
                   <HebrewVerseTextContent
                     className="verse-text reader-compare-text"
                     onOpenStrongs={(strongsNumbers, label) =>
-                      openStrongs(strongsNumbers, label ?? strongsNumbers.join(" "))
+                      openStrongsInCurrentPane(strongsNumbers, label ?? strongsNumbers.join(" "))
                     }
                     verse={row.masoreticVerse}
                   />

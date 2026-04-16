@@ -1068,6 +1068,55 @@ select {
   color: rgba(216, 229, 242, 0.56);
 }
 
+.verse-compare-token-line {
+  width: 100%;
+}
+
+.verse-compare-token-wrap {
+  padding-inline: 0.2rem;
+}
+
+.verse-compare-token {
+  align-content: start;
+  gap: 0.18rem;
+}
+
+.verse-compare-token-surface {
+  font-size: calc(0.95rem * var(--reader-greek-font-scale));
+}
+
+.verse-compare-token-surface-hebrew {
+  line-height: 1.22;
+}
+
+.verse-compare-token-transliteration {
+  order: 2;
+}
+
+.verse-compare-token-lemma {
+  order: 3;
+}
+
+.verse-compare-token-gloss {
+  order: 4;
+  margin-top: 0.08rem;
+  font-size: calc(0.82rem * min(var(--reader-greek-font-scale), 1.35));
+}
+
+.verse-compare-token-hebrew {
+  direction: rtl;
+}
+
+.verse-compare-token-hebrew .verse-compare-token-transliteration,
+.verse-compare-token-hebrew .verse-compare-token-lemma,
+.verse-compare-token-hebrew .verse-compare-token-gloss {
+  direction: ltr;
+}
+
+.verse-compare-token-line-hebrew {
+  justify-content: flex-end;
+}
+
 .verse-content {
   display: grid;
   gap: 0.55rem;
@@ -3488,6 +3537,10 @@ select {
 
 .reader-ot-compare-cell {
   gap: 0.5rem;
+}
+
+.reader-ot-compare-study-panel {
+  margin-top: 1rem;
 }
 
 .reader-compare-verse-number {
