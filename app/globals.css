@@ -3454,6 +3454,17 @@ select {
   justify-content: flex-end;
 }
 
+.reader-compare-selector-row {
+  display: flex;
+  align-items: end;
+  gap: 0.45rem;
+}
+
+.reader-compare-add,
+.reader-compare-remove {
+  white-space: nowrap;
+}
+
 .reader-compare-section {
   display: grid;
   gap: 0.75rem;
@@ -3467,6 +3478,14 @@ select {
 .reader-compare-columns {
   display: grid;
   gap: 0.75rem;
+  width: max-content;
+  min-width: 100%;
+}
+
+.reader-compare-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 0.35rem;
 }
 
 .reader-compare-columns-header,
@@ -3527,6 +3546,7 @@ select {
 
 .reader-compare-text {
   min-width: 0;
+  white-space: nowrap;
 }
 
 .reader-ot-compare-summary {
@@ -4338,18 +4358,6 @@ select {
     left: 0;
     right: auto;
     width: min(100%, 24rem);
-  }
-
-  .reader-compare-row {
-    grid-template-columns: auto 1fr;
-  }
-
-  .reader-compare-row > :not(:first-child) {
-    grid-column: 2;
-  }
-
-  .reader-compare-columns-header {
-    display: none;
   }
 
   .reader-compare-selectors {

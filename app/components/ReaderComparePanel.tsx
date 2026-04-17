@@ -65,6 +65,7 @@ export function ReaderComparePanel({
     activeStudyVerseNumber,
     compareVersions,
     openStrongs,
+    setCompareVersions,
     setCompareVersionAtIndex
   } = useReaderWorkspace();
 
@@ -101,7 +102,7 @@ export function ReaderComparePanel({
   const compareSelectors = useMemo(() => {
     const selected = compareVersions
       .filter((candidate) => compareVersionOptions.includes(candidate))
-      .slice(0, Math.min(2, compareVersionOptions.length));
+      .slice(0, compareVersionOptions.length);
 
     if (selected.length > 0) {
       return selected;
@@ -109,6 +110,7 @@ export function ReaderComparePanel({
 
     return compareVersionOptions.slice(0, Math.min(2, compareVersionOptions.length));
   }, [compareVersionOptions, compareVersions]);
+  const canAddMoreComparisons = compareSelectors.length < compareVersionOptions.length;
 
   const compareSections = useMemo<CompareSection[]>(() => {
     if (availableVersions.length < 2) {
@@ -176,7 +178,7 @@ export function ReaderComparePanel({
   }
 
   const gridStyle: CSSProperties = {
-    gridTemplateColumns: `auto repeat(${availableVersions.length}, minmax(0, 1fr))`
+    gridTemplateColumns: `4.5rem repeat(${availableVersions.length}, minmax(22rem, max-content))`
   };
 
   return (
@@ -192,30 +194,66 @@ export function ReaderComparePanel({
         </div>
         <div className="reader-compare-selectors">
           {compareSelectors.map((selectedVersion, index) => {
+            const removeLabel = `Remove ${getBibleVersionLabel(selectedVersion)} from compare`;
+
             return (
-              <label
-                className="reader-settings-field reader-compare-select"
-                htmlFor={`compare-version-select-${index}`}
-                key={`compare-version-select-${index}`}
-              >
-                <span>{index === 0 ? "Compare with" : "Also compare"}</span>
-                <select
-                  aria-label={index === 0 ? "Compare with version" : "Also compare with version"}
-                  id={`compare-version-select-${index}`}
-                  onChange={(event) =>
-                    setCompareVersionAtIndex(index, event.target.value as BundledBibleVersion)
-                  }
-                  value={selectedVersion}
+              <div className="reader-compare-selector-row" key={`compare-version-select-${index}`}>
+                <label
+                  className="reader-settings-field reader-compare-select"
+                  htmlFor={`compare-version-select-${index}`}
                 >
-                  {compareVersionOptions.map((candidate) => (
-                    <option key={candidate} value={candidate}>
-                      {getBibleVersionLabel(candidate)}
-                    </option>
-                  ))}
-                </select>
-              </label>
+                  <span>{index === 0 ? "Compare with" : `Also compare ${index + 1}`}</span>
+                  <select
+                    aria-label={index === 0 ? "Compare with version" : `Also compare with version ${index + 1}`}
+                    id={`compare-version-select-${index}`}
+                    onChange={(event) =>
+                      setCompareVersionAtIndex(index, event.target.value as BundledBibleVersion)
+                    }
+                    value={selectedVersion}
+                  >
+                    {compareVersionOptions.map((candidate) => (
+                      <option key={candidate} value={candidate}>
+                        {getBibleVersionLabel(candidate)}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                {compareSelectors.length > 1 ? (
+                  <button
+                    aria-label={removeLabel}
+                    className="reader-inline-button reader-compare-remove"
+                    onClick={() =>
+                      setCompareVersions(
+                        compareSelectors.filter((_, compareIndex) => compareIndex !== index)
+                      )
+                    }
+                    type="button"
+                  >
+                    Remove
+                  </button>
+                ) : null}
+              </div>
             );
           })}
+          {canAddMoreComparisons ? (
+            <button
+              className="reader-inline-button reader-compare-add"
+              onClick={() => {
+                const nextCandidate = compareVersionOptions.find(
+                  (candidate) => !compareSelectors.includes(candidate)
+                );
+
+                if (!nextCandidate) {
+                  return;
+                }
+
+                setCompareVersions([...compareSelectors, nextCandidate]);
+              }}
+              type="button"
+            >
+              Add translation
+            </button>
+          ) : null}
         </div>
       </div>
 
@@ -230,49 +268,51 @@ export function ReaderComparePanel({
               <h4>Chapter {section.chapterNumber}</h4>
             </div>
           ) : null}
-          <div className="reader-compare-columns" aria-label="Parallel translation comparison">
-            <header className="reader-compare-columns-header" style={gridStyle}>
-              <span>Verse</span>
-              {availableVersions.map((candidate) => (
-                <span key={`compare-column-${section.chapterNumber}-${candidate}`}>
-                  {getBibleVersionLabel(candidate)}
-                </span>
-              ))}
-            </header>
-            <div className="reader-compare-rows">
-              {section.rows.map((row) => (
-                <article
-                  className={`reader-compare-row${
-                    activeStudyVerseNumber === row.number &&
-                    (view === "chapter" || section.chapterNumber === focusedChapterNumber)
-                      ? " is-active"
-                      : ""
-                  }`}
-                  key={`${section.chapterNumber}:${row.number}`}
-                  style={gridStyle}
-                >
-                  <span className="reader-compare-verse-number">{row.number}</span>
-                  {row.cells.map((cell) => {
-                    const showStrongs = cell.version === "kjv" && Boolean(cell.verse?.tokens?.length);
+          <div className="reader-compare-scroll" aria-label="Parallel translation comparison">
+            <div className="reader-compare-columns">
+              <header className="reader-compare-columns-header" style={gridStyle}>
+                <span>Verse</span>
+                {availableVersions.map((candidate) => (
+                  <span key={`compare-column-${section.chapterNumber}-${candidate}`}>
+                    {getBibleVersionLabel(candidate)}
+                  </span>
+                ))}
+              </header>
+              <div className="reader-compare-rows">
+                {section.rows.map((row) => (
+                  <article
+                    className={`reader-compare-row${
+                      activeStudyVerseNumber === row.number &&
+                      (view === "chapter" || section.chapterNumber === focusedChapterNumber)
+                        ? " is-active"
+                        : ""
+                    }`}
+                    key={`${section.chapterNumber}:${row.number}`}
+                    style={gridStyle}
+                  >
+                    <span className="reader-compare-verse-number">{row.number}</span>
+                    {row.cells.map((cell) => {
+                      const showStrongs = cell.version === "kjv" && Boolean(cell.verse?.tokens?.length);
 
-                    return (
-                      <div className="reader-compare-cell" key={`${section.chapterNumber}:${row.number}:${cell.version}`}>
-                        <span className="reader-compare-cell-version">
-                          {getBibleVersionLabel(cell.version)}
-                        </span>
-                        <VerseTextContent
-                          className={`verse-text${showStrongs ? " verse-text-rich" : ""} reader-compare-text`}
-                          onOpenStrongs={(strongsNumbers) =>
-                            openStrongs(strongsNumbers, strongsNumbers.join(" "))
-                          }
-                          showStrongs={showStrongs}
-                          verse={cell.verse}
-                        />
-                      </div>
-                    );
-                  })}
-                </article>
-              ))}
+                      return (
+                        <div className="reader-compare-cell" key={`${section.chapterNumber}:${row.number}:${cell.version}`}>
+                          <span className="reader-compare-cell-version">
+                            {getBibleVersionLabel(cell.version)}
+                          </span>
+                          <VerseTextContent
+                            className={`verse-text${showStrongs ? " verse-text-rich" : ""} reader-compare-text`}
+                            onOpenStrongs={(strongsNumbers) =>
+                              openStrongs(strongsNumbers, strongsNumbers.join(" "))
+                            }
+                            showStrongs={showStrongs}
+                            verse={cell.verse}
+                          />
+                        </div>
+                      );
+                    })}
+                  </article>
+                ))}
+              </div>
             </div>
           </div>
         </section>

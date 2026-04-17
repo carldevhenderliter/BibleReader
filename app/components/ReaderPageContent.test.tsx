@@ -78,6 +78,15 @@ const nltChapter: Chapter = {
   ]
 };
 
+const esvChapter: Chapter = {
+  bookSlug: "genesis",
+  chapterNumber: 1,
+  verses: [
+    { number: 1, text: "In the beginning, God created the heavens and the earth." },
+    { number: 2, text: "The earth was without form and void." }
+  ]
+};
+
 const greekOtChapter: Chapter = {
   bookSlug: "genesis",
   chapterNumber: 1,
@@ -599,7 +608,7 @@ describe("ReaderPageContent", () => {
       <ReaderPageContent
         book={books[0]}
         books={books}
-        chaptersByVersion={{ web: chapter, kjv: kjvChapter, nlt: nltChapter }}
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter, nlt: nltChapter, esv: esvChapter }}
       />
     );
 
@@ -609,11 +618,19 @@ describe("ReaderPageContent", () => {
     const firstSelector = screen.getByLabelText("Compare with version");
     expect(within(firstSelector).getByRole("option", { name: "KJV" })).toBeInTheDocument();
     expect(within(firstSelector).getByRole("option", { name: "NLT" })).toBeInTheDocument();
+    expect(within(firstSelector).getByRole("option", { name: "ESV" })).toBeInTheDocument();
 
     fireEvent.change(firstSelector, { target: { value: "nlt" } });
 
     expect(firstSelector).toHaveValue("nlt");
     expect(screen.getAllByText("NLT").length).toBeGreaterThan(0);
+
+    fireEvent.click(screen.getByRole("button", { name: "Add translation" }));
+
+    const thirdSelector = screen.getByLabelText("Also compare with version 3");
+    expect(thirdSelector).toHaveValue("esv");
+    expect(screen.getAllByText("ESV").length).toBeGreaterThan(0);
+    expect(screen.getByLabelText("Parallel translation comparison")).toBeInTheDocument();
   });
 
   it("hides read-aloud controls from the reader toolbar and settings menu", () => {

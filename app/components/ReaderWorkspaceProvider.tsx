@@ -207,7 +207,7 @@ function normalizeCompareVersions(
   }
 
   for (const candidate of getDefaultCompareVersions(primaryVersion, installedVersions)) {
-    if (uniqueSelections.length >= Math.max(0, installedVersions.length - 1) || uniqueSelections.length >= 2) {
+    if (uniqueSelections.length >= Math.max(0, installedVersions.length - 1)) {
       break;
     }
 
@@ -216,7 +216,7 @@ function normalizeCompareVersions(
     }
   }
 
-  return uniqueSelections.slice(0, Math.min(2, Math.max(0, installedVersions.length - 1)));
+  return uniqueSelections.slice(0, Math.max(0, installedVersions.length - 1));
 }
 
 function shouldPreserveReaderPane(activeReaderPane: ReaderPane) {
@@ -597,7 +597,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       },
       setCompareVersionAtIndex: (index, nextVersion) => {
         setCompareVersionOverrides((current) => {
-          const next = current.slice(0, 2);
+          const next = current.slice();
           next[index] = nextVersion;
           return next;
         });
