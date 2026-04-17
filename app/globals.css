@@ -3540,6 +3540,58 @@ select {
   font-size: 0.82rem;
 }
 
+.reader-ot-compare-split {
+  display: grid;
+  gap: 0.9rem;
+  width: max(100%, 54rem);
+  grid-template-columns: repeat(2, minmax(26rem, 1fr));
+}
+
+.reader-ot-compare-pane {
+  display: grid;
+  align-content: start;
+  gap: 0.7rem;
+  padding: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.05rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.reader-ot-compare-pane-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0 0.25rem;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.reader-ot-compare-pane-rows {
+  display: grid;
+  gap: 0.55rem;
+  min-height: 0;
+}
+
+.reader-ot-compare-pane-row {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  align-items: start;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.95rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.reader-ot-compare-pane-row.is-active {
+  border-color: rgba(var(--reader-accent-rgb), 0.28);
+  background: rgba(var(--reader-accent-rgb), 0.08);
+}
+
 .reader-ot-compare-cell {
   gap: 0.5rem;
 }
