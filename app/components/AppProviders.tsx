@@ -11,6 +11,9 @@ import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvide
 import { ReaderVersionProvider } from "@/app/components/ReaderVersionProvider";
 import { SearchCustomizationProvider } from "@/app/components/SearchCustomizationProvider";
 import { WritingAssistantProvider } from "@/app/components/WritingAssistantProvider";
+import { installBrowserCompatPolyfills } from "@/lib/browser-compat";
+
+installBrowserCompatPolyfills();
 
 export function AppProviders({ children }: PropsWithChildren) {
   return (
