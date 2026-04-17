@@ -3543,8 +3543,8 @@ select {
 .reader-ot-compare-split {
   display: grid;
   gap: 0.9rem;
-  width: max(100%, 54rem);
-  grid-template-columns: repeat(2, minmax(26rem, 1fr));
+  width: 100%;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .reader-ot-compare-pane {
@@ -3570,17 +3570,28 @@ select {
   text-transform: uppercase;
 }
 
+.reader-ot-compare-pane-body {
+  overflow: auto;
+  min-height: 0;
+  max-height: min(72vh, 34rem);
+  padding-bottom: 0.2rem;
+}
+
 .reader-ot-compare-pane-rows {
   display: grid;
   gap: 0.55rem;
   min-height: 0;
+  width: max-content;
+  min-width: 100%;
 }
 
 .reader-ot-compare-pane-row {
   display: grid;
-  grid-template-columns: 4.5rem minmax(0, 1fr);
+  grid-template-columns: 4.5rem max-content;
   align-items: start;
   gap: 0.75rem;
+  width: max-content;
+  min-width: 100%;
   padding: 0.75rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 0.95rem;
@@ -3590,6 +3601,20 @@ select {
 .reader-ot-compare-pane-row.is-active {
   border-color: rgba(var(--reader-accent-rgb), 0.28);
   background: rgba(var(--reader-accent-rgb), 0.08);
+}
+
+.reader-ot-compare-pane .reader-ot-compare-cell {
+  min-width: max-content;
+}
+
+.reader-ot-compare-pane .verse-compare-token-line {
+  flex-wrap: nowrap;
+  width: max-content;
+  min-width: 100%;
+}
+
+.reader-ot-compare-pane .verse-compare-token-wrap {
+  flex: 0 0 auto;
 }
 
 .reader-ot-compare-cell {

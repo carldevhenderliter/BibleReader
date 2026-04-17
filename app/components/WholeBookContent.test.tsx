@@ -436,6 +436,8 @@ describe("WholeBookContent", () => {
     expect(screen.getByText("OT Textual Compare")).toBeInTheDocument();
     expect(screen.getAllByLabelText("LXX Greek compare pane").length).toBeGreaterThan(0);
     expect(screen.getAllByLabelText("Masoretic Hebrew compare pane").length).toBeGreaterThan(0);
+    expect(screen.getAllByLabelText("LXX Greek compare scroller").length).toBeGreaterThan(0);
+    expect(screen.getAllByLabelText("Masoretic Hebrew compare scroller").length).toBeGreaterThan(0);
     expect(screen.getAllByRole("heading", { name: /Chapter /i }).length).toBeGreaterThan(1);
     expect(screen.getByText("archē")).toBeInTheDocument();
     expect(screen.getByText("ἀρχή")).toBeInTheDocument();

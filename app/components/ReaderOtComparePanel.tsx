@@ -61,6 +61,32 @@ function LazyOtCompareSection({
     useReaderWorkspace();
   const [shouldRenderSection, setShouldRenderSection] = useState(initialRender);
   const sectionRef = useRef<HTMLElement | null>(null);
+  const greekPaneBodyRef = useRef<HTMLDivElement | null>(null);
+  const hebrewPaneBodyRef = useRef<HTMLDivElement | null>(null);
+  const syncingPaneScrollRef = useRef(false);
+
+  const releasePaneScrollLock = () => {
+    if (typeof window !== "undefined" && typeof window.requestAnimationFrame === "function") {
+      window.requestAnimationFrame(() => {
+        syncingPaneScrollRef.current = false;
+      });
+      return;
+    }
+
+    setTimeout(() => {
+      syncingPaneScrollRef.current = false;
+    }, 0);
+  };
+
+  const syncPaneScroll = (source: HTMLDivElement, target: HTMLDivElement | null) => {
+    if (!target || syncingPaneScrollRef.current) {
+      return;
+    }
+
+    syncingPaneScrollRef.current = true;
+    target.scrollTop = source.scrollTop;
+    releasePaneScrollLock();
+  };
 
   useEffect(() => {
     if (initialRender) {
@@ -119,25 +145,34 @@ function LazyOtCompareSection({
               <header className="reader-ot-compare-pane-header">
                 <span>LXX Greek</span>
               </header>
-              <div className="reader-ot-compare-pane-rows">
-                {section.rows.map((row) => (
-                  <article
-                    className={`reader-ot-compare-pane-row${
-                      activeStudyVerseNumber === row.verseNumber && isFocused ? " is-active" : ""
-                    }`}
-                    key={`greek:${section.chapterNumber}:${row.verseNumber}`}
-                  >
-                    <span className="reader-compare-verse-number">{row.verseNumber}</span>
-                    <div className="reader-compare-cell reader-ot-compare-cell">
-                      <GreekVerseTextContent
-                        className="verse-text verse-text-greek reader-compare-text"
-                        displayMode="stacked"
-                        onOpenGreekDictionary={openGreekDictionaryInCurrentPane}
-                        verse={row.greekVerse}
-                      />
-                    </div>
-                  </article>
-                ))}
+              <div
+                aria-label="LXX Greek compare scroller"
+                className="reader-ot-compare-pane-body"
+                onScroll={(event) =>
+                  syncPaneScroll(event.currentTarget, hebrewPaneBodyRef.current)
+                }
+                ref={greekPaneBodyRef}
+              >
+                <div className="reader-ot-compare-pane-rows">
+                  {section.rows.map((row) => (
+                    <article
+                      className={`reader-ot-compare-pane-row${
+                        activeStudyVerseNumber === row.verseNumber && isFocused ? " is-active" : ""
+                      }`}
+                      key={`greek:${section.chapterNumber}:${row.verseNumber}`}
+                    >
+                      <span className="reader-compare-verse-number">{row.verseNumber}</span>
+                      <div className="reader-compare-cell reader-ot-compare-cell">
+                        <GreekVerseTextContent
+                          className="verse-text verse-text-greek reader-compare-text"
+                          displayMode="stacked"
+                          onOpenGreekDictionary={openGreekDictionaryInCurrentPane}
+                          verse={row.greekVerse}
+                        />
+                      </div>
+                    </article>
+                  ))}
+                </div>
               </div>
             </section>
             <section
@@ -147,26 +182,35 @@ function LazyOtCompareSection({
               <header className="reader-ot-compare-pane-header">
                 <span>Masoretic Hebrew</span>
               </header>
-              <div className="reader-ot-compare-pane-rows">
-                {section.rows.map((row) => (
-                  <article
-                    className={`reader-ot-compare-pane-row${
-                      activeStudyVerseNumber === row.verseNumber && isFocused ? " is-active" : ""
-                    }`}
-                    key={`hebrew:${section.chapterNumber}:${row.verseNumber}`}
-                  >
-                    <span className="reader-compare-verse-number">{row.verseNumber}</span>
-                    <div className="reader-compare-cell reader-ot-compare-cell">
-                      <HebrewVerseTextContent
-                        className="verse-text reader-compare-text"
-                        onOpenStrongs={(strongsNumbers, label) =>
-                          openStrongsInCurrentPane(strongsNumbers, label ?? strongsNumbers.join(" "))
-                        }
-                        verse={row.masoreticVerse}
-                      />
-                    </div>
-                  </article>
-                ))}
+              <div
+                aria-label="Masoretic Hebrew compare scroller"
+                className="reader-ot-compare-pane-body"
+                onScroll={(event) =>
+                  syncPaneScroll(event.currentTarget, greekPaneBodyRef.current)
+                }
+                ref={hebrewPaneBodyRef}
+              >
+                <div className="reader-ot-compare-pane-rows">
+                  {section.rows.map((row) => (
+                    <article
+                      className={`reader-ot-compare-pane-row${
+                        activeStudyVerseNumber === row.verseNumber && isFocused ? " is-active" : ""
+                      }`}
+                      key={`hebrew:${section.chapterNumber}:${row.verseNumber}`}
+                    >
+                      <span className="reader-compare-verse-number">{row.verseNumber}</span>
+                      <div className="reader-compare-cell reader-ot-compare-cell">
+                        <HebrewVerseTextContent
+                          className="verse-text reader-compare-text"
+                          onOpenStrongs={(strongsNumbers, label) =>
+                            openStrongsInCurrentPane(strongsNumbers, label ?? strongsNumbers.join(" "))
+                          }
+                          verse={row.masoreticVerse}
+                        />
+                      </div>
+                    </article>
+                  ))}
+                </div>
               </div>
             </section>
           </div>

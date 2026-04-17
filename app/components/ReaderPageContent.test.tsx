@@ -306,6 +306,8 @@ describe("ReaderPageContent", () => {
     expect(screen.getByLabelText("LXX and Masoretic compare")).toBeInTheDocument();
     expect(screen.getByLabelText("LXX Greek compare pane")).toBeInTheDocument();
     expect(screen.getByLabelText("Masoretic Hebrew compare pane")).toBeInTheDocument();
+    expect(screen.getByLabelText("LXX Greek compare scroller")).toBeInTheDocument();
+    expect(screen.getByLabelText("Masoretic Hebrew compare scroller")).toBeInTheDocument();
     expect(screen.getByText("LXX Greek")).toBeInTheDocument();
     expect(screen.getByText("Masoretic Hebrew")).toBeInTheDocument();
     expect(screen.getByText("ἀρχῇ")).toBeInTheDocument();
