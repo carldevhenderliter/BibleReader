@@ -39,9 +39,7 @@ function patchHistoryMethods() {
 }
 
 export function useLocationSearch() {
-  const [locationSearch, setLocationSearch] = useState(() =>
-    typeof window === "undefined" ? "" : window.location.search
-  );
+  const [locationSearch, setLocationSearch] = useState("");
 
   useEffect(() => {
     if (typeof window === "undefined") {

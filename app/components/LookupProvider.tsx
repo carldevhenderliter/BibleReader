@@ -185,13 +185,13 @@ export function LookupProvider({ children }: PropsWithChildren) {
   const [showStrongsInSearch, setShowStrongsInSearch] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
-  const [isSplitViewActive, setIsSplitViewActive] = useState(() => getSplitViewActive());
+  const [isSplitViewActive, setIsSplitViewActive] = useState(false);
   const [manualSearchPaneWidthRem, setManualSearchPaneWidthRem] = useState<number | null>(null);
   const [manualStudyPaneWidthRem, setManualStudyPaneWidthRem] = useState<number | null>(null);
   const [collapsedSplitPanes, setCollapsedSplitPanes] = useState<CollapsedSplitPanes>(
     DEFAULT_COLLAPSED_SPLIT_PANES
   );
-  const [viewportWidthRem, setViewportWidthRem] = useState(() => getViewportWidthRem());
+  const [viewportWidthRem, setViewportWidthRem] = useState(APP_LAYOUT_MAX_WIDTH_REM);
   const [expandedTopicsByQuery, setExpandedTopicsByQuery] = useState<Record<string, string>>({});
   const queryParts = useMemo(() => parseBibleSearchQueries(query), [query]);
   const queryCount = Math.max(queryParts.length, 1);

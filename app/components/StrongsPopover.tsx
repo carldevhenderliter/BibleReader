@@ -29,7 +29,7 @@ function getIsMobilePopover() {
 
 export function StrongsPopover({ activeToken, onClose }: StrongsPopoverProps) {
   const [entries, setEntries] = useState<StrongsEntry[]>([]);
-  const [isMobile, setIsMobile] = useState(() => getIsMobilePopover());
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     if (!activeToken) {
