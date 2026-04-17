@@ -657,21 +657,25 @@ function glossContainsMultipleMeanings(value?: string | null) {
 }
 
 function splitGlossDefinitionIntoCandidates(value: string) {
-  return value
-    .split(/\n+/)
-    .flatMap((line) => line.split(/[;,]/))
-    .flatMap((part) => {
+  return value.split(/\n+/).reduce<string[]>((candidates, line) => {
+    for (const part of line.split(/[;,]/)) {
       const trimmedPart = sanitizeGlossCandidate(part);
 
       if (!trimmedPart) {
-        return [];
+        continue;
       }
 
-      return trimmedPart
-        .split(/\s+or\s+/i)
-        .map((candidate) => sanitizeGlossCandidate(candidate))
-        .filter((candidate) => candidate && isReadableGlossCandidate(candidate));
-    });
+      for (const candidate of trimmedPart.split(/\s+or\s+/i)) {
+        const sanitizedCandidate = sanitizeGlossCandidate(candidate);
+
+        if (sanitizedCandidate && isReadableGlossCandidate(sanitizedCandidate)) {
+          candidates.push(sanitizedCandidate);
+        }
+      }
+    }
+
+    return candidates;
+  }, []);
 }
 
 function extractSingleWordGlossCandidate(value: string) {
@@ -803,9 +807,15 @@ const GREEK_MORPHOLOGY_TERM_MATCHERS: Array<{
 
 function getGreekMorphologyTermsFromDecodedMorphology(value?: string | null) {
   const normalizedValue = value?.toLowerCase() ?? "";
+  return GREEK_MORPHOLOGY_TERM_MATCHERS.reduce<GreekMorphologyTermDetails[]>(
+    (terms, { key, match }) => {
+      if (match.test(normalizedValue)) {
+        terms.push(GREEK_MORPHOLOGY_DETAILS[key]);
+      }
 
-  return GREEK_MORPHOLOGY_TERM_MATCHERS.flatMap(({ key, match }) =>
-    match.test(normalizedValue) ? [GREEK_MORPHOLOGY_DETAILS[key]] : []
+      return terms;
+    },
+    []
   );
 }
 

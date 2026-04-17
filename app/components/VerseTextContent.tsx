@@ -22,11 +22,19 @@ export function VerseTextContent({
 }: VerseTextContentProps) {
   const [tokenLemmas, setTokenLemmas] = useState<Record<string, string>>({});
   const strongsNumbers = useMemo(
-    () =>
-      verse?.tokens
-        ?.flatMap((token) => token.strongsNumbers ?? [])
-        .filter(Boolean)
-        .filter((value, index, allValues) => allValues.indexOf(value) === index) ?? [],
+    () => {
+      const numbers = (verse?.tokens ?? []).reduce<string[]>((items, token) => {
+        for (const strongsNumber of token.strongsNumbers ?? []) {
+          if (strongsNumber) {
+            items.push(strongsNumber);
+          }
+        }
+
+        return items;
+      }, []);
+
+      return numbers.filter((value, index, allValues) => allValues.indexOf(value) === index);
+    },
     [verse]
   );
 

@@ -42,7 +42,15 @@ type CompareSection = {
 
 function buildCompareRows(chapters: Array<Chapter | null>, displayVersions: BundledBibleVersion[]) {
   const verseNumbers = Array.from(
-    new Set(chapters.flatMap((chapter) => chapter?.verses.map((verse) => verse.number) ?? []))
+    new Set(
+      chapters.reduce<number[]>((numbers, chapter) => {
+        for (const verse of chapter?.verses ?? []) {
+          numbers.push(verse.number);
+        }
+
+        return numbers;
+      }, [])
+    )
   ).sort((left, right) => left - right);
 
   return verseNumbers.map((number) => ({
@@ -136,9 +144,13 @@ export function ReaderComparePanel({
     const bookMap = chaptersByVersion as BundledBookChapterMap;
     const chapterNumbers = Array.from(
       new Set(
-        availableVersions.flatMap(
-          (candidate) => bookMap[candidate]?.map((chapter) => chapter.chapterNumber) ?? []
-        )
+        availableVersions.reduce<number[]>((numbers, candidate) => {
+          for (const chapter of bookMap[candidate] ?? []) {
+            numbers.push(chapter.chapterNumber);
+          }
+
+          return numbers;
+        }, [])
       )
     ).sort((left, right) => left - right);
 

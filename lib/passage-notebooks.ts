@@ -160,12 +160,16 @@ function normalizeLegacyNotebook(id: string, value: LegacyPassageNotebook): Note
     chapterNumber: value.chapterNumber,
     sourceType: "manual"
   });
+  const allReferences = blocks.reduce<PassageReference[]>(
+    (items, block) => {
+      items.push(...block.references);
+      return items;
+    },
+    [fallbackReference]
+  );
   const references = Array.from(
     new Map(
-      [fallbackReference, ...blocks.flatMap((block) => block.references)].map((reference) => [
-        reference.id,
-        reference
-      ])
+      allReferences.map((reference) => [reference.id, reference])
     ).values()
   );
   const content = blocks.map((block) => block.text).filter(Boolean).join("\n\n");
