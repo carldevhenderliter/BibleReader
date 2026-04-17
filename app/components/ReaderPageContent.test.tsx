@@ -303,6 +303,7 @@ describe("ReaderPageContent", () => {
       "true"
     );
     expect(screen.getByText("OT Textual Compare")).toBeInTheDocument();
+    expect(screen.getByLabelText("LXX and Masoretic compare")).toBeInTheDocument();
     expect(screen.getByText("LXX Greek")).toBeInTheDocument();
     expect(screen.getByText("Masoretic Hebrew")).toBeInTheDocument();
     expect(screen.getByText("ἀρχῇ")).toBeInTheDocument();

@@ -62,7 +62,7 @@ function LazyOtCompareSection({
   const [shouldRenderSection, setShouldRenderSection] = useState(initialRender);
   const sectionRef = useRef<HTMLElement | null>(null);
   const gridStyle: CSSProperties = {
-    gridTemplateColumns: "auto minmax(0, 1fr) minmax(0, 1fr)"
+    gridTemplateColumns: "4.5rem minmax(22rem, max-content) minmax(22rem, max-content)"
   };
 
   useEffect(() => {
@@ -113,41 +113,43 @@ function LazyOtCompareSection({
         <h4>Chapter {section.chapterNumber}</h4>
       </div>
       {shouldRenderSection ? (
-        <div className="reader-compare-columns reader-ot-compare-columns" aria-label="LXX and Masoretic compare">
-          <header className="reader-compare-columns-header" style={gridStyle}>
-            <span>Verse</span>
-            <span>LXX Greek</span>
-            <span>Masoretic Hebrew</span>
-          </header>
-          <div className="reader-compare-rows">
-            {section.rows.map((row) => (
-              <article
-                className={`reader-compare-row reader-ot-compare-row${
-                  activeStudyVerseNumber === row.verseNumber && isFocused ? " is-active" : ""
-                }`}
-                key={`${section.chapterNumber}:${row.verseNumber}`}
-                style={gridStyle}
-              >
-                <span className="reader-compare-verse-number">{row.verseNumber}</span>
-                <div className="reader-compare-cell reader-ot-compare-cell">
-                  <GreekVerseTextContent
-                    className="verse-text verse-text-greek reader-compare-text"
-                    displayMode="stacked"
-                    onOpenGreekDictionary={openGreekDictionaryInCurrentPane}
-                    verse={row.greekVerse}
-                  />
-                </div>
-                <div className="reader-compare-cell reader-ot-compare-cell">
-                  <HebrewVerseTextContent
-                    className="verse-text reader-compare-text"
-                    onOpenStrongs={(strongsNumbers, label) =>
-                      openStrongsInCurrentPane(strongsNumbers, label ?? strongsNumbers.join(" "))
-                    }
-                    verse={row.masoreticVerse}
-                  />
-                </div>
-              </article>
-            ))}
+        <div className="reader-compare-scroll" aria-label="LXX and Masoretic compare">
+          <div className="reader-compare-columns reader-ot-compare-columns">
+            <header className="reader-compare-columns-header" style={gridStyle}>
+              <span>Verse</span>
+              <span>LXX Greek</span>
+              <span>Masoretic Hebrew</span>
+            </header>
+            <div className="reader-compare-rows">
+              {section.rows.map((row) => (
+                <article
+                  className={`reader-compare-row reader-ot-compare-row${
+                    activeStudyVerseNumber === row.verseNumber && isFocused ? " is-active" : ""
+                  }`}
+                  key={`${section.chapterNumber}:${row.verseNumber}`}
+                  style={gridStyle}
+                >
+                  <span className="reader-compare-verse-number">{row.verseNumber}</span>
+                  <div className="reader-compare-cell reader-ot-compare-cell">
+                    <GreekVerseTextContent
+                      className="verse-text verse-text-greek reader-compare-text"
+                      displayMode="stacked"
+                      onOpenGreekDictionary={openGreekDictionaryInCurrentPane}
+                      verse={row.greekVerse}
+                    />
+                  </div>
+                  <div className="reader-compare-cell reader-ot-compare-cell">
+                    <HebrewVerseTextContent
+                      className="verse-text reader-compare-text"
+                      onOpenStrongs={(strongsNumbers, label) =>
+                        openStrongsInCurrentPane(strongsNumbers, label ?? strongsNumbers.join(" "))
+                      }
+                      verse={row.masoreticVerse}
+                    />
+                  </div>
+                </article>
+              ))}
+            </div>
           </div>
         </div>
       ) : (
