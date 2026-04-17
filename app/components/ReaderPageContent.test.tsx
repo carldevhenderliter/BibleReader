@@ -9,21 +9,6 @@ import { PASSAGE_NOTEBOOK_STORAGE_KEY } from "@/lib/passage-notebooks";
 import { mockRouter, setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
 
-const mockKokoroGenerate = jest.fn();
-const mockLoadLocalKokoroTts = jest.fn();
-
-jest.mock("@/lib/kokoro-local", () => ({
-  getKokoroVoices: () => [
-    {
-      id: "af_heart",
-      name: "Heart",
-      language: "en-us",
-      gender: "Female"
-    }
-  ],
-  loadLocalKokoroTts: (...args: unknown[]) => mockLoadLocalKokoroTts(...args)
-}));
-
 const books: BookMeta[] = [
   {
     slug: "genesis",
@@ -221,133 +206,12 @@ function setSplitViewActive(isActive: boolean) {
   });
 }
 
-function installSpeechSynthesisMock() {
-  const voices = [
-    {
-      voiceURI: "test-voice",
-      name: "Test Voice",
-      lang: "en-US",
-      default: true
-    } as SpeechSynthesisVoice
-  ];
-  const utterances: SpeechSynthesisUtterance[] = [];
-  const speechSynthesis = {
-    getVoices: jest.fn(() => voices),
-    speak: jest.fn((utterance: SpeechSynthesisUtterance) => {
-      utterances.push(utterance);
-    }),
-    pause: jest.fn(),
-    resume: jest.fn(),
-    cancel: jest.fn(),
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn()
-  };
-
-  class MockSpeechSynthesisUtterance {
-    text: string;
-    rate = 1;
-    pitch = 1;
-    voice: SpeechSynthesisVoice | null = null;
-    onend: ((event: Event) => void) | null = null;
-    onerror: ((event: Event) => void) | null = null;
-
-    constructor(text: string) {
-      this.text = text;
-    }
-  }
-
-  Object.defineProperty(window, "speechSynthesis", {
-    configurable: true,
-    writable: true,
-    value: speechSynthesis
-  });
-  Object.defineProperty(window, "SpeechSynthesisUtterance", {
-    configurable: true,
-    writable: true,
-    value: MockSpeechSynthesisUtterance
-  });
-
-  return { speechSynthesis, utterances };
-}
-
-function installKokoroSupport(options?: { pendingLoad?: boolean }) {
-  const sourceNodes: Array<{
-    onended: ((event: Event) => void) | null;
-    buffer: AudioBuffer | null;
-    connect: jest.Mock;
-    disconnect: jest.Mock;
-    start: jest.Mock;
-    stop: jest.Mock;
-  }> = [];
-
-  class MockAudioContext {
-    currentTime = 0;
-    destination = {} as AudioDestinationNode;
-    state: AudioContextState = "running";
-    resume = jest.fn(async () => {});
-    decodeAudioData = jest.fn(async () => ({}) as AudioBuffer);
-    createBufferSource = jest.fn(() => {
-      const sourceNode = {
-        buffer: null,
-        onended: null,
-        connect: jest.fn(),
-        disconnect: jest.fn(),
-        start: jest.fn(),
-        stop: jest.fn()
-      };
-      sourceNodes.push(sourceNode);
-      return sourceNode as unknown as AudioBufferSourceNode;
-    });
-  }
-
-  Object.defineProperty(window, "AudioContext", {
-    configurable: true,
-    writable: true,
-    value: MockAudioContext
-  });
-  Object.defineProperty(window.navigator, "userAgent", {
-    configurable: true,
-    value: "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_0)"
-  });
-
-  mockKokoroGenerate.mockResolvedValue(new ArrayBuffer(8));
-  if (options?.pendingLoad) {
-    mockLoadLocalKokoroTts.mockReturnValue(new Promise(() => {}) as Promise<never>);
-  } else {
-    mockLoadLocalKokoroTts.mockResolvedValue({
-      voices: [
-        {
-          id: "af_heart",
-          name: "Heart",
-          language: "en-us",
-          gender: "Female"
-        }
-      ],
-      generate: mockKokoroGenerate
-    });
-  }
-
-  return { sourceNodes };
-}
-
 describe("ReaderPageContent", () => {
   beforeEach(() => {
-    jest.clearAllMocks();
     window.localStorage.clear();
     setMockPathname("/read/genesis/1");
     window.history.replaceState({}, "", "/read/genesis/1");
     setSplitViewActive(false);
-    installSpeechSynthesisMock();
-    Object.defineProperty(window, "AudioContext", {
-      configurable: true,
-      writable: true,
-      value: undefined
-    });
-    Object.defineProperty(window, "webkitAudioContext", {
-      configurable: true,
-      writable: true,
-      value: undefined
-    });
   });
 
   it("renders chapter content and navigation", () => {
@@ -634,8 +498,6 @@ describe("ReaderPageContent", () => {
   });
 
   it("hides read-aloud controls from the reader toolbar and settings menu", () => {
-    installKokoroSupport({ pendingLoad: true });
-
     renderWithReaderCustomization(
       <ReaderPageContent
         book={books[0]}

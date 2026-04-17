@@ -13,7 +13,6 @@ import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
 import { ReaderStrongsPanel } from "@/app/components/ReaderStrongsPanel";
 import { ReaderStudySetsPanel } from "@/app/components/ReaderStudySetsPanel";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
-import { useReaderTts } from "@/app/components/ReaderTtsProvider";
 import { useLocationSearch } from "@/app/components/useLocationSearch";
 import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { useLookup } from "@/app/components/LookupProvider";
@@ -28,7 +27,6 @@ import type {
   EsvInterlinearDisplayChapter,
   EsvInterlinearDisplayVerse
 } from "@/lib/bible/types";
-import { buildChapterSpeechText } from "@/lib/reader-tts";
 import { getBibleVersionBadge } from "@/lib/bible/version";
 
 function parsePositiveNumber(value: string | null) {
@@ -189,7 +187,6 @@ export function WholeBookContent({
   const locationSearch = useLocationSearch();
   const { version } = useReaderVersion();
   const { isPanelOpen, settings } = useReaderCustomization();
-  const { setReadingSource } = useReaderTts();
   const { canCollapseSplitPane, collapseSplitPane, isSplitViewActive } = useLookup();
   const {
     activeReaderPane,
@@ -277,35 +274,6 @@ export function WholeBookContent({
     const element = document.getElementById(`chapter-${book.slug}-${activeFocusedChapterNumber}`);
     element?.scrollIntoView?.({ block: "start" });
   }, [activeFocusedChapterNumber, book.chapterCount, book.slug]);
-
-  useEffect(() => {
-    setReadingSource({
-      bookSlug: book.slug,
-      bookName: book.name,
-      chapterCount: book.chapterCount,
-      currentChapterNumber: activeFocusedChapterNumber,
-      chapters: chapters.map((chapter) => ({
-        chapterNumber: chapter.chapterNumber,
-        text: buildChapterSpeechText(book.name, chapter.chapterNumber, chapter.verses)
-      })),
-      view: "book",
-      scrollToChapter: (chapterNumber) => {
-        const element = document.getElementById(`chapter-${book.slug}-${chapterNumber}`);
-        element?.scrollIntoView?.({ block: "start" });
-      }
-    });
-
-    return () => {
-      setReadingSource(null);
-    };
-  }, [
-    activeFocusedChapterNumber,
-    book.chapterCount,
-    book.name,
-    book.slug,
-    chapters,
-    setReadingSource
-  ]);
 
   useEffect(() => {
     if (!isOldTestament && activeReaderPane === "ot-compare") {

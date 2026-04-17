@@ -5,15 +5,11 @@ import type { PropsWithChildren } from "react";
 import { GreekGlossOverridesProvider } from "@/app/components/GreekGlossOverridesProvider";
 import { LookupProvider } from "@/app/components/LookupProvider";
 import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizationProvider";
-import { ReaderTtsProvider } from "@/app/components/ReaderTtsProvider";
 import { VerseTranslationOverridesProvider } from "@/app/components/VerseTranslationOverridesProvider";
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
 import { ReaderVersionProvider } from "@/app/components/ReaderVersionProvider";
 import { SearchCustomizationProvider } from "@/app/components/SearchCustomizationProvider";
 import { WritingAssistantProvider } from "@/app/components/WritingAssistantProvider";
-import { installBrowserCompatPolyfills } from "@/lib/browser-compat";
-
-installBrowserCompatPolyfills();
 
 export function AppProviders({ children }: PropsWithChildren) {
   return (
@@ -24,9 +20,7 @@ export function AppProviders({ children }: PropsWithChildren) {
             <VerseTranslationOverridesProvider>
               <GreekGlossOverridesProvider>
                 <ReaderCustomizationProvider>
-                  <ReaderTtsProvider>
-                    <SearchCustomizationProvider>{children}</SearchCustomizationProvider>
-                  </ReaderTtsProvider>
+                  <SearchCustomizationProvider>{children}</SearchCustomizationProvider>
                 </ReaderCustomizationProvider>
               </GreekGlossOverridesProvider>
             </VerseTranslationOverridesProvider>

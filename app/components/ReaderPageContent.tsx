@@ -13,7 +13,6 @@ import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
 import { ReaderStrongsPanel } from "@/app/components/ReaderStrongsPanel";
 import { ReaderStudySetsPanel } from "@/app/components/ReaderStudySetsPanel";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
-import { useReaderTts } from "@/app/components/ReaderTtsProvider";
 import { useLocationSearch } from "@/app/components/useLocationSearch";
 import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { useLookup } from "@/app/components/LookupProvider";
@@ -27,7 +26,6 @@ import type {
   Chapter,
   EsvInterlinearDisplayChapter
 } from "@/lib/bible/types";
-import { buildChapterSpeechText } from "@/lib/reader-tts";
 import { getBibleVersionBadge } from "@/lib/bible/version";
 
 function parsePositiveNumber(value: string | null) {
@@ -64,7 +62,6 @@ export function ReaderPageContent({
   const locationSearch = useLocationSearch();
   const { version } = useReaderVersion();
   const { isPanelOpen, settings } = useReaderCustomization();
-  const { setReadingSource } = useReaderTts();
   const { canCollapseSplitPane, collapseSplitPane, isSplitViewActive } = useLookup();
   const {
     activeReaderPane,
@@ -130,26 +127,6 @@ export function ReaderPageContent({
     setActiveStudyVerseNumber,
     syncCurrentChapterData
   ]);
-
-  useEffect(() => {
-    setReadingSource({
-      bookSlug: book.slug,
-      bookName: book.name,
-      chapterCount: book.chapterCount,
-      currentChapterNumber: chapter.chapterNumber,
-      chapters: [
-        {
-          chapterNumber: chapter.chapterNumber,
-          text: buildChapterSpeechText(book.name, chapter.chapterNumber, chapter.verses)
-        }
-      ],
-      view: "chapter"
-    });
-
-    return () => {
-      setReadingSource(null);
-    };
-  }, [book.chapterCount, book.name, book.slug, chapter.chapterNumber, chapter.verses, setReadingSource]);
 
   useEffect(() => {
     if (!isOldTestament && activeReaderPane === "ot-compare") {

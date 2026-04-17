@@ -99,18 +99,6 @@ export type SearchCustomizationSettings = {
   density: SearchDensityOption;
 };
 
-export type ReaderTtsStatus = "idle" | "loading" | "playing" | "paused" | "error";
-
-export type ReaderTtsEngine = "kokoro";
-
-export type ReaderTtsKokoroStatus = "unavailable" | "idle" | "loading" | "ready" | "error";
-
-export type ReaderTtsSettings = {
-  kokoroVoice: string | null;
-  rate: number;
-  pitch: number;
-};
-
 export type PassageReference = {
   id: string;
   version: BundledBibleVersion;
