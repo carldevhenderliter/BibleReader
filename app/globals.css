@@ -892,6 +892,43 @@ select {
   align-content: start;
 }
 
+.fathers-library-copy {
+  margin: 0 0 1rem;
+  max-width: 48rem;
+}
+
+.fathers-reading-surface {
+  display: grid;
+  gap: calc(var(--reader-paragraph-spacing) + 0.7rem);
+}
+
+.fathers-segment-card {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1rem 1rem 1.1rem;
+  border: 1px solid rgba(138, 162, 191, 0.16);
+  border-radius: 1.1rem;
+  background: rgba(8, 14, 24, 0.34);
+}
+
+.fathers-segment-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.fathers-segment-label,
+.fathers-segment-ref,
+.fathers-segment-greek,
+.fathers-segment-english {
+  margin: 0;
+}
+
+.fathers-segment-english {
+  color: rgba(224, 233, 244, 0.88);
+}
+
 .verse-stack,
 .chapter-stack {
   display: grid;

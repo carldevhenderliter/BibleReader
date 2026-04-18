@@ -375,6 +375,55 @@ let lemmaIndexPromise: Promise<Record<string, string[]>> | null = null;
 let formIndexPromise: Promise<Record<string, GreekFormIndexValue>> | null = null;
 let searchableGreekEntriesPromise: Promise<SearchableGreekEntry[]> | null = null;
 let greekVerseIndexPromise: Promise<BibleSearchVerseEntry[]> | null = null;
+let fathersGreekLexiconPromise: Promise<Record<string, GreekLemmaEntry>> | null = null;
+let fathersGreekLemmaIndexPromise: Promise<Record<string, string[]>> | null = null;
+let fathersGreekFormIndexPromise: Promise<Record<string, GreekFormIndexValue>> | null = null;
+
+function mergeGreekLemmaIndexes(
+  left: Record<string, string[]>,
+  right: Record<string, string[]>
+) {
+  const merged = { ...left };
+
+  for (const [key, values] of Object.entries(right)) {
+    merged[key] = Array.from(new Set([...(merged[key] ?? []), ...values]));
+  }
+
+  return merged;
+}
+
+function mergeGreekFormIndexes(
+  left: Record<string, GreekFormIndexValue>,
+  right: Record<string, GreekFormIndexValue>
+) {
+  const merged = { ...left };
+
+  for (const [key, values] of Object.entries(right)) {
+    const existingValues = merged[key] ?? [];
+    const seen = new Set(existingValues.map((item) => `${item.entryKey}:${item.form}`));
+    const nextValues = [...existingValues];
+
+    for (const value of values) {
+      const entryKey = value.entryKey ?? value.strongs ?? "";
+      const dedupeKey = `${entryKey}:${value.form}`;
+
+      if (seen.has(dedupeKey)) {
+        continue;
+      }
+
+      seen.add(dedupeKey);
+      nextValues.push({
+        entryKey,
+        strongs: value.strongs,
+        form: value.form
+      });
+    }
+
+    merged[key] = nextValues;
+  }
+
+  return merged;
+}
 
 const CRITICAL_MARKS_PATTERN = /[⸀-⸟]/gu;
 const ROUGH_BREATHING_MARK = "\u0314";
@@ -512,7 +561,34 @@ export function transliterateGreekSurface(value: string) {
 
 async function loadGreekLexicon() {
   if (!greekLexiconPromise) {
-    greekLexiconPromise = import("@/data/bible/greek/lexicon.json").then(
+    greekLexiconPromise = Promise.all([
+      import("@/data/bible/greek/lexicon.json").then(
+        (module) =>
+          Object.fromEntries(
+            Object.entries((module.default ?? {}) as Record<string, GreekLemmaEntry>).map(
+              ([entryKey, entry]) => [
+                entryKey,
+                {
+                  ...entry,
+                  entryKey: entry.entryKey ?? entryKey
+                }
+              ]
+            )
+          ) as Record<string, GreekLemmaEntry>
+      ),
+      loadFathersGreekLexicon()
+    ]).then(([baseLexicon, fathersLexicon]) => ({
+      ...baseLexicon,
+      ...fathersLexicon
+    }));
+  }
+
+  return greekLexiconPromise;
+}
+
+async function loadFathersGreekLexicon() {
+  if (!fathersGreekLexiconPromise) {
+    fathersGreekLexiconPromise = import("@/data/fathers/greek-lexicon.json").then(
       (module) =>
         Object.fromEntries(
           Object.entries((module.default ?? {}) as Record<string, GreekLemmaEntry>).map(
@@ -528,22 +604,60 @@ async function loadGreekLexicon() {
     );
   }
 
-  return greekLexiconPromise;
+  return fathersGreekLexiconPromise;
 }
 
 async function loadGreekLemmaIndex() {
   if (!lemmaIndexPromise) {
-    lemmaIndexPromise = import("@/data/bible/greek/lemma-index.json").then(
-      (module) => (module.default ?? {}) as Record<string, string[]>
-    );
+    lemmaIndexPromise = Promise.all([
+      import("@/data/bible/greek/lemma-index.json").then(
+        (module) => (module.default ?? {}) as Record<string, string[]>
+      ),
+      loadFathersGreekLemmaIndex()
+    ]).then(([baseIndex, fathersIndex]) => mergeGreekLemmaIndexes(baseIndex, fathersIndex));
   }
 
   return lemmaIndexPromise;
 }
 
+async function loadFathersGreekLemmaIndex() {
+  if (!fathersGreekLemmaIndexPromise) {
+    fathersGreekLemmaIndexPromise = import("@/data/fathers/greek-lemma-index.json").then(
+      (module) => (module.default ?? {}) as Record<string, string[]>
+    );
+  }
+
+  return fathersGreekLemmaIndexPromise;
+}
+
 async function loadGreekFormIndex() {
   if (!formIndexPromise) {
-    formIndexPromise = import("@/data/bible/greek/form-index.json").then(
+    formIndexPromise = Promise.all([
+      import("@/data/bible/greek/form-index.json").then(
+        (module) =>
+          Object.fromEntries(
+            Object.entries((module.default ?? {}) as Record<string, Array<{ entryKey?: string; strongs?: string; form: string }>>).map(
+              ([key, items]) => [
+                key,
+                items.map((item) => ({
+                  entryKey: item.entryKey ?? item.strongs ?? "",
+                  strongs: item.strongs,
+                  form: item.form
+                }))
+              ]
+            )
+          ) as Record<string, GreekFormIndexValue>
+      ),
+      loadFathersGreekFormIndex()
+    ]).then(([baseIndex, fathersIndex]) => mergeGreekFormIndexes(baseIndex, fathersIndex));
+  }
+
+  return formIndexPromise;
+}
+
+async function loadFathersGreekFormIndex() {
+  if (!fathersGreekFormIndexPromise) {
+    fathersGreekFormIndexPromise = import("@/data/fathers/greek-form-index.json").then(
       (module) =>
         Object.fromEntries(
           Object.entries((module.default ?? {}) as Record<string, Array<{ entryKey?: string; strongs?: string; form: string }>>).map(
@@ -560,7 +674,7 @@ async function loadGreekFormIndex() {
     );
   }
 
-  return formIndexPromise;
+  return fathersGreekFormIndexPromise;
 }
 
 async function loadSearchableGreekEntries() {

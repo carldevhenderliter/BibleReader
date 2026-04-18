@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 export function SiteHeader() {
   const pathname = usePathname();
 
-  if (pathname.includes("/read")) {
+  if (pathname.includes("/read") || /^\/fathers\/[^/]+/u.test(pathname)) {
     return null;
   }
 

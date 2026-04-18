@@ -2,13 +2,15 @@ import Link from "next/link";
 
 import { ContinueReading } from "@/app/components/ContinueReading";
 import type { BookMeta } from "@/lib/bible/types";
+import type { FathersWorkMeta } from "@/lib/fathers/types";
 import { getBookHref } from "@/lib/bible/utils";
 
 type HomePageContentProps = {
   books: BookMeta[];
+  fathersWorks?: FathersWorkMeta[];
 };
 
-export function HomePageContent({ books }: HomePageContentProps) {
+export function HomePageContent({ books, fathersWorks = [] }: HomePageContentProps) {
   const oldTestament = books.filter((book) => book.testament === "Old");
   const newTestament = books.filter((book) => book.testament === "New");
 
@@ -110,6 +112,34 @@ export function HomePageContent({ books }: HomePageContentProps) {
           ))}
         </div>
       </section>
+
+      {fathersWorks.length > 0 ? (
+        <section className="content-card testament-card">
+          <div className="section-header">
+            <div>
+              <p className="eyebrow">Greek Fathers</p>
+              <h2 className="section-title">Patristic Greek Study</h2>
+            </div>
+            <p className="muted-copy testament-meta">{fathersWorks.length} work</p>
+          </div>
+          <div className="book-grid">
+            {fathersWorks.map((work) => (
+              <Link
+                aria-label={`Open ${work.title}`}
+                className="book-link"
+                href={`/fathers/${work.slug}`}
+                key={work.slug}
+              >
+                <span className="book-chip">AF</span>
+                <strong>{work.title}</strong>
+                <span className="book-meta">{work.author}</span>
+                <span className="book-meta">{work.sectionCount} sections</span>
+                <span className="book-cta">Open Fathers reader</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      ) : null}
     </div>
   );
 }

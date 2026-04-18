@@ -562,7 +562,7 @@ export function ReaderStrongsPanel() {
         <section className="greek-dictionary-forms">
           <p className="strongs-entry-section-label">Inflected Forms</p>
           <div className="greek-dictionary-form-list">
-            {entry.forms.map((form) => {
+            {entry.forms.map((form, index) => {
               const isSelected =
                 normalizedSelectedForm !== null &&
                 normalizeGreekFormLookupValue(form.form) === normalizedSelectedForm;
@@ -570,7 +570,7 @@ export function ReaderStrongsPanel() {
               return (
                 <article
                   className={`greek-dictionary-form-row${isSelected ? " is-selected" : ""}`}
-                  key={`${entry.entryKey}:${form.form}:${form.morphology}`}
+                  key={`${entry.entryKey}:${form.form}:${form.morphology}:${index}`}
                 >
                   <p className="greek-dictionary-form-line">
                     <span className="greek-dictionary-form-text">{form.form}</span>

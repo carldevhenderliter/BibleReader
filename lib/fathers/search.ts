@@ -4,6 +4,7 @@ import type {
   FathersWorkMeta,
   FathersWorkPayload
 } from "@/lib/fathers/types";
+import { normalizeGreekLookupValue } from "@/lib/bible/greek";
 
 const fathersWorkLoaders: Record<string, () => Promise<FathersWorkPayload>> = {
   "1-clement": async () =>
@@ -131,7 +132,14 @@ export async function findFathersSegmentsByGreekLemma(lemma: string): Promise<Fa
     }
 
     for (const segment of payload.segments) {
-      if (!segment.greekTokens.includes(normalizedLemma)) {
+      const lexicalMatch = segment.greekLexicalTokens?.some((token) => {
+        const normalizedTokenLemma = normalizeGreekLookupValue(token.lemma);
+        const normalizedTokenSurface = normalizeGreekLookupValue(token.surface);
+
+        return normalizedTokenLemma === normalizedLemma || normalizedTokenSurface === normalizedLemma;
+      });
+
+      if (!segment.greekTokens.includes(normalizedLemma) && !lexicalMatch) {
         continue;
       }
 
@@ -143,6 +151,7 @@ export async function findFathersSegmentsByGreekLemma(lemma: string): Promise<Fa
         label: segment.label,
         greek: segment.greek,
         english: segment.english,
+        greekLexicalTokens: segment.greekLexicalTokens,
         ...getSentenceContext(segment.greek, segment.english, normalizedLemma)
       });
     }

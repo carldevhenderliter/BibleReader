@@ -7,6 +7,10 @@ type GreekVerseTextContentProps = {
   verse: Verse | null;
   className?: string;
   displayMode?: "inline" | "stacked";
+  showSurface?: boolean;
+  showTransliteration?: boolean;
+  showLemma?: boolean;
+  showGloss?: boolean;
   onOpenGreekDictionary?: NonNullable<{
     (
       selection: {
@@ -27,6 +31,10 @@ export function GreekVerseTextContent({
   verse,
   className,
   displayMode = "inline",
+  showSurface = true,
+  showTransliteration = true,
+  showLemma = true,
+  showGloss = true,
   onOpenGreekDictionary
 }: GreekVerseTextContentProps) {
   if (!verse) {
@@ -71,12 +79,20 @@ export function GreekVerseTextContent({
                   }}
                   type="button"
                 >
-                  <span className="verse-greek-surface verse-compare-token-surface">{token.surface}</span>
-                  <span className="verse-greek-transliteration verse-compare-token-transliteration">
-                    {token.transliteration ?? transliterateGreekSurface(token.surface)}
-                  </span>
-                  <span className="verse-greek-lemma verse-compare-token-lemma">{token.lemma}</span>
-                  {token.gloss ? (
+                  {showSurface ? (
+                    <span className="verse-greek-surface verse-compare-token-surface">
+                      {token.surface}
+                    </span>
+                  ) : null}
+                  {showTransliteration ? (
+                    <span className="verse-greek-transliteration verse-compare-token-transliteration">
+                      {token.transliteration ?? transliterateGreekSurface(token.surface)}
+                    </span>
+                  ) : null}
+                  {showLemma ? (
+                    <span className="verse-greek-lemma verse-compare-token-lemma">{token.lemma}</span>
+                  ) : null}
+                  {showGloss && token.gloss ? (
                     <span className="verse-greek-gloss verse-compare-token-gloss">{token.gloss}</span>
                   ) : null}
                 </button>

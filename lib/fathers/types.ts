@@ -1,4 +1,18 @@
+import type { GreekToken } from "@/lib/bible/types";
+
 export type FathersCorpus = "apostolic-fathers";
+
+export type FathersGreekToken = {
+  surface: string;
+  lemma: string;
+  entryKey: string;
+  strongs?: string;
+  transliteration: string;
+  morphology?: string;
+  decodedMorphology?: string;
+  gloss: string;
+  trailingPunctuation?: string;
+};
 
 export type FathersSegment = {
   id: string;
@@ -8,6 +22,7 @@ export type FathersSegment = {
   english: string;
   greekNormalized: string;
   greekTokens: string[];
+  greekLexicalTokens?: FathersGreekToken[];
 };
 
 export type FathersWorkMeta = {
@@ -37,4 +52,5 @@ export type FathersLemmaMatch = {
   english: string;
   greekContext: string;
   englishContext: string;
+  greekLexicalTokens?: GreekToken[];
 };

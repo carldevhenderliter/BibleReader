@@ -66,6 +66,23 @@ describe("Greek dictionary lookup", () => {
     expect(glossResults.some((result) => result.entry.strongs === "G746")).toBe(true);
   });
 
+  it("loads Fathers fallback entries through the merged Greek dictionary indexes", async () => {
+    const entry = await getGreekLemmaEntry("AF-1CLEM:παροικουσα");
+    const results = await lookupGreekDictionary("παροικοῦσα");
+
+    expect(entry).toMatchObject({
+      entryKey: "AF-1CLEM:παροικουσα",
+      lemma: "παροικοῦσα",
+      sources: expect.arrayContaining(["1 Clement"])
+    });
+    expect(results[0]).toMatchObject({
+      matchType: "lemma",
+      entry: expect.objectContaining({
+        entryKey: "AF-1CLEM:παροικουσα"
+      })
+    });
+  });
+
   it("builds stable occurrence keys for repeated Greek tokens", () => {
     expect(getGreekTokenOccurrenceKey("john", 1, 1, 3)).toBe("john:1:1:3");
   });

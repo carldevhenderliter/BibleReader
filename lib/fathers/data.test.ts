@@ -25,6 +25,15 @@ describe("fathers data", () => {
     expect(payload?.segments[0]?.english).toContain("The Church of God which sojourneth in Rome");
     expect(payload?.segments[0]?.greekNormalized).toContain("η εκκλησια του θεου");
     expect(payload?.segments[0]?.greekTokens).toContain("εκκλησια");
+    expect(payload?.segments[0]?.greekLexicalTokens?.[0]).toEqual(
+      expect.objectContaining({
+        surface: expect.any(String),
+        lemma: expect.any(String),
+        entryKey: expect.any(String),
+        transliteration: expect.any(String),
+        gloss: expect.any(String)
+      })
+    );
   });
 
   it("loads Hermas as aligned heading-level sections", async () => {

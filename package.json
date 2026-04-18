@@ -10,7 +10,8 @@
     "test:watch": "jest --config jest.config.js --watch",
     "import:bible": "node scripts/import-bible.mjs",
     "import:greek": "node scripts/import-greek.mjs",
-    "import:fathers": "node scripts/import-fathers.mjs"
+    "import:fathers": "node scripts/import-fathers.mjs",
+    "import:fathers:greek": "node scripts/enrich-fathers-greek.mjs"
   },
   "dependencies": {
     "@mlc-ai/web-llm": "^0.2.82",

@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 
 import { HomePageContent } from "@/app/components/HomePageContent";
 import type { BookMeta } from "@/lib/bible/types";
+import type { FathersWorkMeta } from "@/lib/fathers/types";
 
 const books: BookMeta[] = [
   {
@@ -30,9 +31,23 @@ const books: BookMeta[] = [
   }
 ];
 
+const fathersWorks: FathersWorkMeta[] = [
+  {
+    slug: "1-clement",
+    title: "1 Clement",
+    shortTitle: "1 Clem.",
+    author: "Clement of Rome",
+    order: 1,
+    corpus: "apostolic-fathers",
+    sectionCount: 66,
+    greekSource: "example-greek",
+    englishSource: "example-english"
+  }
+];
+
 describe("HomePageContent", () => {
   it("renders books in canonical order grouped by testament", () => {
-    render(<HomePageContent books={books} />);
+    render(<HomePageContent books={books} fathersWorks={fathersWorks} />);
 
     expect(screen.getByRole("link", { name: "Open Genesis" })).toHaveAttribute(
       "href",
@@ -45,6 +60,10 @@ describe("HomePageContent", () => {
     expect(screen.getByRole("link", { name: "Open Matthew" })).toHaveAttribute(
       "href",
       "/read/matthew"
+    );
+    expect(screen.getByRole("link", { name: "Open 1 Clement" })).toHaveAttribute(
+      "href",
+      "/fathers/1-clement"
     );
   });
 });

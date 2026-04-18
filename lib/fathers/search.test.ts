@@ -45,4 +45,17 @@ describe("fathers lemma search", () => {
   it("returns no matches for Greek lemmas that are absent from the Apostolic Fathers corpus", async () => {
     await expect(findFathersSegmentsByGreekLemma("ἄλφα")).resolves.toEqual([]);
   });
+
+  it("returns lexical token context when the Fathers payload has enriched Greek tokens", async () => {
+    const matches = await findFathersSegmentsByGreekLemma("ἐκκλησία");
+    const firstClementMatch = matches.find((match) => match.workSlug === "1-clement");
+
+    expect(firstClementMatch?.greekLexicalTokens?.[0]).toEqual(
+      expect.objectContaining({
+        surface: expect.any(String),
+        lemma: expect.any(String),
+        entryKey: expect.any(String)
+      })
+    );
+  });
 });
