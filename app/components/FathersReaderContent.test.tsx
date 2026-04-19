@@ -15,6 +15,7 @@ import type { FathersWorkPayload } from "@/lib/fathers/types";
 import { mockRouter, setMockPathname } from "@/test/mocks/next-navigation";
 
 const buildGreekUndertextSuggestionsMock = jest.fn();
+const searchGreekUndertextSuggestionsMock = jest.fn();
 const resolveCustomGreekUndertextMock = jest.fn();
 const saveFathersAnnotationFileMock = jest.fn();
 
@@ -25,6 +26,8 @@ jest.mock("@/lib/fathers/annotations", () => {
     ...actual,
     buildGreekUndertextSuggestions: (...args: unknown[]) =>
       buildGreekUndertextSuggestionsMock(...args),
+    searchGreekUndertextSuggestions: (...args: unknown[]) =>
+      searchGreekUndertextSuggestionsMock(...args),
     resolveCustomGreekUndertext: (...args: unknown[]) =>
       resolveCustomGreekUndertextMock(...args)
   };
@@ -231,9 +234,11 @@ function renderFathersReader(currentPayload: FathersWorkPayload = payload) {
 describe("FathersReaderContent", () => {
   beforeEach(() => {
     buildGreekUndertextSuggestionsMock.mockReset();
+    searchGreekUndertextSuggestionsMock.mockReset();
     resolveCustomGreekUndertextMock.mockReset();
     saveFathersAnnotationFileMock.mockReset();
     buildGreekUndertextSuggestionsMock.mockResolvedValue([]);
+    searchGreekUndertextSuggestionsMock.mockResolvedValue([]);
     resolveCustomGreekUndertextMock.mockResolvedValue(null);
     saveFathersAnnotationFileMock.mockResolvedValue("download");
   });
@@ -412,6 +417,12 @@ describe("FathersReaderContent", () => {
       ).toBeInTheDocument();
     });
 
+    const popupLayout = document.querySelector(".fathers-annotation-popup-layout");
+    expect(popupLayout?.querySelector(".fathers-annotation-suggestions")).not.toBeNull();
+    expect(popupLayout?.querySelector(".fathers-annotation-custom")).not.toBeNull();
+    expect(screen.getByRole("tab", { name: "Auto" })).toHaveAttribute("aria-selected", "true");
+    expect(screen.getByRole("tab", { name: "Search" })).toHaveAttribute("aria-selected", "false");
+
     const customGreekInput = screen.getByLabelText("Custom Greek") as HTMLInputElement;
     fireEvent.click(screen.getByRole("button", { name: "Insert α" }));
     fireEvent.click(screen.getByRole("button", { name: "Insert β" }));
@@ -426,6 +437,83 @@ describe("FathersReaderContent", () => {
     fireEvent.click(screen.getByRole("button", { name: "Delete Greek character" }));
 
     expect((screen.getByLabelText("Custom Greek") as HTMLInputElement).value).toBe("Κηφᾶ");
+  });
+
+  it("keeps the popup open until the Close button is clicked", async () => {
+    buildGreekUndertextSuggestionsMock.mockResolvedValue([
+      {
+        greekText: "Κηφᾶς",
+        entryKey: "G2786",
+        lemma: "Κηφᾶς",
+        strongs: "G2786",
+        transliteration: "Kēphas",
+        gloss: "Cephas"
+      }
+    ]);
+
+    renderFathersReader(englishOnlyPayload);
+
+    fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
+    fireEvent.click(screen.getByRole("button", { name: "Add Greek undertext for Kefa’s" }));
+
+    const dialog = await screen.findByRole("dialog", { name: "Greek undertext editor" });
+
+    const backdrop = document.querySelector(".fathers-annotation-popup-backdrop");
+    expect(backdrop).not.toBeNull();
+    fireEvent.click(backdrop as Element);
+    fireEvent.keyDown(window, { key: "Escape" });
+    fireEvent(window, new Event("resize"));
+    fireEvent.scroll(window);
+
+    expect(dialog).toBeInTheDocument();
+
+    fireEvent.click(await screen.findByRole("button", { name: /Κηφᾶς/i }));
+    expect(screen.getByRole("dialog", { name: "Greek undertext editor" })).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Close" }));
+
+    await waitFor(() => {
+      expect(
+        screen.queryByRole("dialog", { name: "Greek undertext editor" })
+      ).not.toBeInTheDocument();
+    });
+  });
+
+  it("searches the Greek dictionary from the popup as the user types in English", async () => {
+    searchGreekUndertextSuggestionsMock.mockResolvedValue([
+      {
+        greekText: "ἀρχή",
+        entryKey: "G746",
+        lemma: "ἀρχή",
+        strongs: "G746",
+        transliteration: "arche",
+        gloss: "beginning"
+      }
+    ]);
+
+    renderFathersReader(englishOnlyPayload);
+
+    fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
+    fireEvent.click(screen.getByRole("button", { name: "Add Greek undertext for Kefa’s" }));
+
+    await screen.findByRole("dialog", { name: "Greek undertext editor" });
+
+    fireEvent.click(screen.getByRole("tab", { name: "Search" }));
+
+    expect(screen.getByRole("tab", { name: "Search" })).toHaveAttribute("aria-selected", "true");
+
+    fireEvent.change(screen.getByLabelText("English search"), {
+      target: { value: "beginning" }
+    });
+
+    await waitFor(() => {
+      expect(searchGreekUndertextSuggestionsMock).toHaveBeenCalledWith("beginning");
+    });
+
+    fireEvent.click(await screen.findByRole("button", { name: /ἀρχή/i }));
+
+    expect(screen.getByRole("dialog", { name: "Greek undertext editor" })).toBeInTheDocument();
+    expect((screen.getByLabelText("Custom Greek") as HTMLInputElement).value).toBe("ἀρχή");
   });
 
   it("only unlocks immediately adjacent words after the first annotation", async () => {

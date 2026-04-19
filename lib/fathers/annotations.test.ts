@@ -5,6 +5,7 @@ import {
   getAddableFathersAnnotationWordIndexes,
   getFathersEnglishSpanText,
   normalizeSegmentAnnotations,
+  searchGreekUndertextSuggestions,
   tokenizeFathersEnglishText
 } from "@/lib/fathers/annotations";
 
@@ -144,6 +145,40 @@ describe("fathers annotations", () => {
       expect.objectContaining({
         greekText: "ἐπιστολή",
         entryKey: "G1992"
+      })
+    ]);
+  });
+
+  it("searches English glosses for popup dictionary suggestions", async () => {
+    lookupGreekDictionaryMock.mockResolvedValue([
+      {
+        entry: {
+          entryKey: "G746",
+          lemma: "ἀρχή",
+          strongs: "G746",
+          transliteration: "arche",
+          shortDefinition: "beginning",
+          forms: []
+        },
+        matchType: "gloss"
+      },
+      {
+        entry: {
+          entryKey: "G757",
+          lemma: "ἄρχω",
+          strongs: "G757",
+          transliteration: "archo",
+          shortDefinition: "rule",
+          forms: []
+        },
+        matchType: "transliteration"
+      }
+    ]);
+
+    await expect(searchGreekUndertextSuggestions("beginning")).resolves.toEqual([
+      expect.objectContaining({
+        greekText: "ἀρχή",
+        entryKey: "G746"
       })
     ]);
   });

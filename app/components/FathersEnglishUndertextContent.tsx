@@ -11,6 +11,7 @@ import {
   getFathersEnglishSpanText,
   removeSegmentAnnotation,
   replaceSegmentAnnotation,
+  searchGreekUndertextSuggestions,
   resolveCustomGreekUndertext
 } from "@/lib/fathers/annotations";
 import type {
@@ -39,6 +40,15 @@ type ActiveEditorState = {
   endToken: number;
   existingAnnotation: FathersGreekUndertextAnnotation | null;
   anchorRect: DOMRect;
+};
+
+type UndertextSuggestion = {
+  greekText: string;
+  entryKey: string;
+  lemma: string;
+  strongs?: string;
+  transliteration?: string;
+  gloss?: string;
 };
 
 const GREEK_KEYBOARD_ROWS = [
@@ -111,19 +121,15 @@ export function FathersEnglishUndertextContent({
 }: FathersEnglishUndertextContentProps) {
   const [activeEditor, setActiveEditor] = useState<ActiveEditorState | null>(null);
   const [customGreekText, setCustomGreekText] = useState("");
-  const [suggestions, setSuggestions] = useState<
-    Array<{
-      greekText: string;
-      entryKey: string;
-      lemma: string;
-      strongs?: string;
-      transliteration?: string;
-      gloss?: string;
-    }>
-  >([]);
+  const [activeSuggestionsTab, setActiveSuggestionsTab] = useState<"auto" | "search">("auto");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [suggestions, setSuggestions] = useState<UndertextSuggestion[]>([]);
+  const [searchResults, setSearchResults] = useState<UndertextSuggestion[]>([]);
   const [isLoadingSuggestions, setIsLoadingSuggestions] = useState(false);
+  const [isSearchLoading, setIsSearchLoading] = useState(false);
   const [isSavingCustom, setIsSavingCustom] = useState(false);
   const [editorError, setEditorError] = useState<string | null>(null);
+  const [searchError, setSearchError] = useState<string | null>(null);
   const customInputRef = useRef<HTMLInputElement | null>(null);
 
   const selectedSpanText = useMemo(() => {
@@ -146,6 +152,10 @@ export function FathersEnglishUndertextContent({
     if (!annotationMode) {
       setActiveEditor(null);
       setCustomGreekText("");
+      setActiveSuggestionsTab("auto");
+      setSearchQuery("");
+      setSearchResults([]);
+      setSearchError(null);
       setEditorError(null);
     }
   }, [annotationMode]);
@@ -201,7 +211,11 @@ export function FathersEnglishUndertextContent({
   const closeEditor = () => {
     setActiveEditor(null);
     setCustomGreekText("");
+    setActiveSuggestionsTab("auto");
+    setSearchQuery("");
+    setSearchResults([]);
     setEditorError(null);
+    setSearchError(null);
   };
 
   const openEditor = (
@@ -212,6 +226,10 @@ export function FathersEnglishUndertextContent({
     const existingAnnotation = findIntersectingAnnotation(annotations, startToken, endToken);
 
     setEditorError(null);
+    setSearchError(null);
+    setActiveSuggestionsTab("auto");
+    setSearchQuery("");
+    setSearchResults([]);
     setActiveEditor({
       startToken: existingAnnotation?.startToken ?? startToken,
       endToken: existingAnnotation?.endToken ?? endToken,
@@ -229,6 +247,10 @@ export function FathersEnglishUndertextContent({
 
     if (existingAnnotation) {
       setEditorError(null);
+      setSearchError(null);
+      setActiveSuggestionsTab("auto");
+      setSearchQuery("");
+      setSearchResults([]);
       setActiveEditor({
         startToken: existingAnnotation.startToken,
         endToken: existingAnnotation.endToken,
@@ -241,14 +263,7 @@ export function FathersEnglishUndertextContent({
     openEditor(wordIndex, wordIndex, anchorElement);
   };
 
-  const handleSuggestionSave = (suggestion: {
-    greekText: string;
-    entryKey: string;
-    lemma: string;
-    strongs?: string;
-    transliteration?: string;
-    gloss?: string;
-  }) => {
+  const handleSuggestionSave = (suggestion: UndertextSuggestion) => {
     const nextEditor = activeEditor;
 
     if (!nextEditor) {
@@ -402,7 +417,7 @@ export function FathersEnglishUndertextContent({
       return undefined;
     }
 
-    const maxWidth = Math.min(420, window.innerWidth - 24);
+    const maxWidth = Math.min(760, window.innerWidth - 24);
     const viewportPadding = 12;
     const left = Math.min(
       Math.max(viewportPadding, activeEditor.anchorRect.left),
@@ -428,19 +443,55 @@ export function FathersEnglishUndertextContent({
     window.requestAnimationFrame(() => {
       customInputRef.current?.focus();
     });
+  }, [activeEditor]);
 
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        closeEditor();
-      }
-    };
+  useEffect(() => {
+    if (!activeEditor || activeSuggestionsTab !== "search") {
+      setSearchResults([]);
+      setIsSearchLoading(false);
+      setSearchError(null);
+      return;
+    }
 
-    window.addEventListener("keydown", handleKeyDown);
+    const trimmedQuery = searchQuery.trim();
+
+    if (!trimmedQuery) {
+      setSearchResults([]);
+      setIsSearchLoading(false);
+      setSearchError(null);
+      return;
+    }
+
+    let isCancelled = false;
+    const timeoutId = window.setTimeout(() => {
+      setIsSearchLoading(true);
+      setSearchError(null);
+
+      void searchGreekUndertextSuggestions(trimmedQuery)
+        .then((nextResults) => {
+          if (isCancelled) {
+            return;
+          }
+
+          setSearchResults(nextResults);
+          setIsSearchLoading(false);
+        })
+        .catch(() => {
+          if (isCancelled) {
+            return;
+          }
+
+          setSearchResults([]);
+          setIsSearchLoading(false);
+          setSearchError("Unable to search the Greek dictionary right now.");
+        });
+    }, 180);
 
     return () => {
-      window.removeEventListener("keydown", handleKeyDown);
+      isCancelled = true;
+      window.clearTimeout(timeoutId);
     };
-  }, [activeEditor]);
+  }, [activeEditor, activeSuggestionsTab, searchQuery]);
 
   const renderedContent: ReactNode[] = [];
   let annotationIndex = 0;
@@ -595,11 +646,9 @@ export function FathersEnglishUndertextContent({
       {annotationMode && activeEditor && typeof document !== "undefined"
         ? createPortal(
             <>
-              <button
-                aria-label="Close Greek undertext editor"
+              <div
+                aria-hidden="true"
                 className="fathers-annotation-popup-backdrop"
-                onClick={closeEditor}
-                type="button"
               />
               <aside
                 aria-label="Greek undertext editor"
@@ -618,32 +667,112 @@ export function FathersEnglishUndertextContent({
                 </div>
                 <div className="fathers-annotation-popup-layout">
                   <section className="fathers-annotation-suggestions">
-                    <p className="fathers-annotation-editor-label">Suggestions</p>
-                    {isLoadingSuggestions ? (
-                      <p className="reader-toolbar-meta">Loading Greek suggestions…</p>
-                    ) : suggestions.length ? (
-                      <div className="fathers-annotation-suggestion-list">
-                        {suggestions.map((suggestion) => (
-                          <button
-                            className="fathers-annotation-suggestion"
-                            key={`${segmentId}:${suggestion.entryKey}:${suggestion.greekText}`}
-                            onClick={() => handleSuggestionSave(suggestion)}
-                            type="button"
-                          >
-                            <span className="fathers-annotation-suggestion-greek">
-                              {suggestion.greekText}
-                            </span>
-                            <span className="fathers-annotation-suggestion-meta">
-                              {suggestion.transliteration ?? suggestion.lemma}
-                              {suggestion.gloss ? ` · ${suggestion.gloss}` : ""}
-                            </span>
-                          </button>
-                        ))}
-                      </div>
+                    <div
+                      aria-label="Suggestion modes"
+                      className="fathers-annotation-tabbar"
+                      role="tablist"
+                    >
+                      <button
+                        aria-selected={activeSuggestionsTab === "auto"}
+                        className={`fathers-annotation-tab${
+                          activeSuggestionsTab === "auto" ? " is-active" : ""
+                        }`}
+                        onClick={() => setActiveSuggestionsTab("auto")}
+                        role="tab"
+                        type="button"
+                      >
+                        Auto
+                      </button>
+                      <button
+                        aria-selected={activeSuggestionsTab === "search"}
+                        className={`fathers-annotation-tab${
+                          activeSuggestionsTab === "search" ? " is-active" : ""
+                        }`}
+                        onClick={() => setActiveSuggestionsTab("search")}
+                        role="tab"
+                        type="button"
+                      >
+                        Search
+                      </button>
+                    </div>
+                    {activeSuggestionsTab === "auto" ? (
+                      <>
+                        <p className="fathers-annotation-editor-label">Suggestions</p>
+                        {isLoadingSuggestions ? (
+                          <p className="reader-toolbar-meta">Loading Greek suggestions…</p>
+                        ) : suggestions.length ? (
+                          <div className="fathers-annotation-suggestion-list">
+                            {suggestions.map((suggestion) => (
+                              <button
+                                className="fathers-annotation-suggestion"
+                                key={`${segmentId}:${suggestion.entryKey}:${suggestion.greekText}`}
+                                onClick={() => handleSuggestionSave(suggestion)}
+                                type="button"
+                              >
+                                <span className="fathers-annotation-suggestion-greek">
+                                  {suggestion.greekText}
+                                </span>
+                                <span className="fathers-annotation-suggestion-meta">
+                                  {suggestion.transliteration ?? suggestion.lemma}
+                                  {suggestion.gloss ? ` · ${suggestion.gloss}` : ""}
+                                </span>
+                              </button>
+                            ))}
+                          </div>
+                        ) : (
+                          <p className="reader-toolbar-meta">
+                            No lexicon suggestions matched this English span yet.
+                          </p>
+                        )}
+                      </>
                     ) : (
-                      <p className="reader-toolbar-meta">
-                        No lexicon suggestions matched this English span yet.
-                      </p>
+                      <div className="fathers-annotation-search-panel">
+                        <label
+                          className="reader-settings-field fathers-annotation-search-field"
+                          htmlFor={`${segmentId}:english-search`}
+                        >
+                          <span>English search</span>
+                          <input
+                            id={`${segmentId}:english-search`}
+                            onChange={(event) => setSearchQuery(event.currentTarget.value)}
+                            placeholder="Type English meaning"
+                            type="search"
+                            value={searchQuery}
+                          />
+                        </label>
+                        {isSearchLoading ? (
+                          <p className="reader-toolbar-meta">Searching Greek dictionary…</p>
+                        ) : searchError ? (
+                          <p className="fathers-annotation-error">{searchError}</p>
+                        ) : !searchQuery.trim() ? (
+                          <p className="reader-toolbar-meta">
+                            Type English to search the Greek dictionary as you type.
+                          </p>
+                        ) : searchResults.length ? (
+                          <div className="fathers-annotation-suggestion-list">
+                            {searchResults.map((suggestion) => (
+                              <button
+                                className="fathers-annotation-suggestion"
+                                key={`${segmentId}:search:${suggestion.entryKey}:${suggestion.greekText}`}
+                                onClick={() => handleSuggestionSave(suggestion)}
+                                type="button"
+                              >
+                                <span className="fathers-annotation-suggestion-greek">
+                                  {suggestion.greekText}
+                                </span>
+                                <span className="fathers-annotation-suggestion-meta">
+                                  {suggestion.transliteration ?? suggestion.lemma}
+                                  {suggestion.gloss ? ` · ${suggestion.gloss}` : ""}
+                                </span>
+                              </button>
+                            ))}
+                          </div>
+                        ) : (
+                          <p className="reader-toolbar-meta">
+                            No Greek dictionary entries matched that English search yet.
+                          </p>
+                        )}
+                      </div>
                     )}
                   </section>
                   <section className="fathers-annotation-custom">
@@ -689,14 +818,14 @@ export function FathersEnglishUndertextContent({
                       </div>
                     </div>
                     <div className="fathers-annotation-editor-actions">
-                    <button
-                      className="reader-inline-button"
-                      disabled={!customGreekText.trim() || isSavingCustom}
-                      onClick={() => void handleCustomSave()}
-                      type="button"
-                    >
-                      {isSavingCustom ? "Saving…" : "Save custom Greek"}
-                    </button>
+                      <button
+                        className="reader-inline-button"
+                        disabled={!customGreekText.trim() || isSavingCustom}
+                        onClick={() => void handleCustomSave()}
+                        type="button"
+                      >
+                        {isSavingCustom ? "Saving…" : "Save custom Greek"}
+                      </button>
                       {activeEditor.existingAnnotation ? (
                         <button
                           className="reader-inline-button reader-inline-button-subtle"

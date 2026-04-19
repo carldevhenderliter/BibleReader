@@ -352,6 +352,30 @@ async function lookupGreekSuggestionsFromQuery(query: string) {
   }));
 }
 
+export async function searchGreekUndertextSuggestions(query: string, limit = 8) {
+  const trimmedQuery = query.trim();
+
+  if (!trimmedQuery) {
+    return [];
+  }
+
+  const matches = await lookupGreekDictionary(trimmedQuery, limit * 2);
+
+  return dedupeGreekUndertextSuggestions(
+    matches
+      .filter((match) => match.matchType === "gloss")
+      .map((match) => ({
+        greekText: match.entry.lemma,
+        entryKey: match.entry.entryKey,
+        lemma: match.entry.lemma,
+        strongs: match.entry.strongs,
+        transliteration: match.entry.transliteration,
+        gloss: match.entry.shortDefinition
+      })),
+    limit
+  );
+}
+
 export async function buildGreekUndertextSuggestions(
   selectedText: string,
   selectedWords: string[],
