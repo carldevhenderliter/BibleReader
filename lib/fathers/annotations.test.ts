@@ -61,7 +61,7 @@ describe("fathers annotations", () => {
     expect(getAddableFathersAnnotationWordIndexes(tokens, [])).toEqual([0, 1, 2, 3]);
   });
 
-  it("only unlocks immediate edges around saved annotation spans", () => {
+  it("keeps every unannotated word addable after annotations exist", () => {
     const tokens = tokenizeFathersEnglishText("Kefa’s Letter to Ya’akov.");
 
     expect(
@@ -74,7 +74,7 @@ describe("fathers annotations", () => {
           source: "lexicon"
         }
       ])
-    ).toEqual([0, 2]);
+    ).toEqual([0, 2, 3]);
 
     expect(
       getAddableFathersAnnotationWordIndexes(tokens, [

@@ -642,7 +642,7 @@ describe("FathersReaderContent", () => {
     expect(screen.getByText("word, speech, account")).toBeInTheDocument();
   });
 
-  it("only unlocks immediately adjacent words after the first annotation", async () => {
+  it("keeps distant words addable after the first annotation", async () => {
     buildGreekUndertextSuggestionsMock.mockResolvedValue([
       {
         greekText: "Κηφᾶς",
@@ -676,11 +676,8 @@ describe("FathersReaderContent", () => {
     await waitFor(() => {
       expect(screen.getByRole("button", { name: "Add Greek undertext for Kefa’s" })).toBeInTheDocument();
       expect(screen.getByRole("button", { name: "Add Greek undertext for to" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "Add Greek undertext for Ya’akov" })).toBeInTheDocument();
     });
-
-    expect(
-      screen.queryByRole("button", { name: "Add Greek undertext for Ya’akov" })
-    ).not.toBeInTheDocument();
   });
 
   it("lazy loads distant Fathers sections before rendering their content", async () => {

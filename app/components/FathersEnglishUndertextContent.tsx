@@ -822,7 +822,7 @@ export function FathersEnglishUndertextContent({
             </p>
           ) : (
             <p className="reader-toolbar-meta">
-              Start on any word with `+`, then keep adding from the edges of what you have already annotated.
+              Use `+` on any unannotated word to add Greek undertext wherever you want.
             </p>
           )}
         </div>

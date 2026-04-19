@@ -113,21 +113,15 @@ export function getAddableFathersAnnotationWordIndexes(
     return wordIndexes;
   }
 
-  const addableWordIndexes = new Set<number>();
   const annotatedWordIndexes = new Set<number>();
 
   annotations.forEach((annotation) => {
     for (let wordIndex = annotation.startToken; wordIndex <= annotation.endToken; wordIndex += 1) {
       annotatedWordIndexes.add(wordIndex);
     }
-
-    addableWordIndexes.add(annotation.startToken - 1);
-    addableWordIndexes.add(annotation.endToken + 1);
   });
 
-  return wordIndexes.filter(
-    (wordIndex) => addableWordIndexes.has(wordIndex) && !annotatedWordIndexes.has(wordIndex)
-  );
+  return wordIndexes.filter((wordIndex) => !annotatedWordIndexes.has(wordIndex));
 }
 
 export function getFathersEnglishSpanText(
