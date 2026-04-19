@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
@@ -87,6 +87,7 @@ export function ReaderPageContent({
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
   const showStrongsInline = !isSplitViewActive && activeUtilityPane === "strongs";
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
+  const [annotationMode, setAnnotationMode] = useState(false);
   const searchParams = new URLSearchParams(locationSearch);
   const urlHighlightedVerseNumber = parsePositiveNumber(searchParams.get("highlight"));
   const urlHighlightedRangeStart = parsePositiveNumber(searchParams.get("highlightStart"));
@@ -104,6 +105,13 @@ export function ReaderPageContent({
   const activeHighlightedVerseNumber =
     activeHighlightedVerseRange !== null ? null : (highlightedVerseNumber ?? urlHighlightedVerseNumber);
   const isOldTestament = book.testament === "Old";
+  const hasBibleGreekAnnotationSurface =
+    (version === "greek" &&
+      chapter.verses.some(
+        (verse) => Boolean(verse.greekTokens?.length) && Boolean(verse.translationText?.trim())
+      )) ||
+    (showEsvInterlinear &&
+      chapter.verses.some((verse) => Boolean(interlinearVerseMap?.[verse.number]?.tokens?.length)));
 
   if (!chapter) {
     return null;
@@ -134,6 +142,12 @@ export function ReaderPageContent({
     }
   }, [activeReaderPane, isOldTestament, setActiveReaderPane]);
 
+  useEffect(() => {
+    if (!hasBibleGreekAnnotationSurface && annotationMode) {
+      setAnnotationMode(false);
+    }
+  }, [annotationMode, hasBibleGreekAnnotationSurface]);
+
   return (
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
       <ReadingSessionSync book={book.slug} chapter={chapter.chapterNumber} view="chapter" />
@@ -160,17 +174,28 @@ export function ReaderPageContent({
                 books={books}
                 currentChapter={chapter.chapterNumber}
                 trailingActions={
-                  isSplitViewActive ? (
-                    <button
-                      aria-label="Hide reader pane"
-                      className="split-pane-hide-button reader-pane-hide-button"
-                      disabled={!canCollapseSplitPane("reader")}
-                      onClick={() => collapseSplitPane("reader")}
-                      type="button"
-                    >
-                      Hide
-                    </button>
-                  ) : null
+                  <>
+                    {hasBibleGreekAnnotationSurface ? (
+                      <button
+                        className={`reader-inline-button${annotationMode ? " is-active" : ""}`}
+                        onClick={() => setAnnotationMode((current) => !current)}
+                        type="button"
+                      >
+                        {annotationMode ? "Done annotating" : "Annotate Greek"}
+                      </button>
+                    ) : null}
+                    {isSplitViewActive ? (
+                      <button
+                        aria-label="Hide reader pane"
+                        className="split-pane-hide-button reader-pane-hide-button"
+                        disabled={!canCollapseSplitPane("reader")}
+                        onClick={() => collapseSplitPane("reader")}
+                        type="button"
+                      >
+                        Hide
+                      </button>
+                    ) : null}
+                  </>
                 }
                 view="chapter"
               />
@@ -226,6 +251,7 @@ export function ReaderPageContent({
               highlightedVerseRange={activeHighlightedVerseRange}
               interlinearVerseMap={interlinearVerseMap}
               key={`${version}:${book.slug}:${chapter.chapterNumber}`}
+              annotationMode={annotationMode}
               showCompanionVerseTranslation={settings.showCompanionVerseTranslation}
               showCustomVerseTranslation={settings.showCustomVerseTranslation}
               showGreekGloss={settings.showGreekGloss}

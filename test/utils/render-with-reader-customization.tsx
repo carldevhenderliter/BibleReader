@@ -1,6 +1,7 @@
 import type { ReactElement, ReactNode } from "react";
 import { render } from "@testing-library/react";
 
+import { BibleGreekUndertextProvider } from "@/app/components/BibleGreekUndertextProvider";
 import { GreekGlossOverridesProvider } from "@/app/components/GreekGlossOverridesProvider";
 import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizationProvider";
 import { VerseTranslationOverridesProvider } from "@/app/components/VerseTranslationOverridesProvider";
@@ -21,11 +22,13 @@ function Wrapper({ children }: WrapperProps) {
         <WritingAssistantProvider>
           <LookupProvider>
             <VerseTranslationOverridesProvider>
-              <GreekGlossOverridesProvider>
-                <ReaderCustomizationProvider>
-                  <SearchCustomizationProvider>{children}</SearchCustomizationProvider>
-                </ReaderCustomizationProvider>
-              </GreekGlossOverridesProvider>
+              <BibleGreekUndertextProvider>
+                <GreekGlossOverridesProvider>
+                  <ReaderCustomizationProvider>
+                    <SearchCustomizationProvider>{children}</SearchCustomizationProvider>
+                  </ReaderCustomizationProvider>
+                </GreekGlossOverridesProvider>
+              </BibleGreekUndertextProvider>
             </VerseTranslationOverridesProvider>
           </LookupProvider>
         </WritingAssistantProvider>

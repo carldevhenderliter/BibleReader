@@ -2,12 +2,20 @@
 
 import { useEffect } from "react";
 
+import { useBibleGreekUndertext } from "@/app/components/BibleGreekUndertextProvider";
+import { FathersEnglishUndertextContent } from "@/app/components/FathersEnglishUndertextContent";
 import { GreekInterlinearLine } from "@/app/components/GreekInterlinearLine";
 import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { VerseTranslationEditor } from "@/app/components/VerseTranslationEditor";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { VerseTextContent } from "@/app/components/VerseTextContent";
+import {
+  buildBibleGreekUndertextSuggestions,
+  getBibleVerseAnnotationKey,
+  tokenizeBibleEnglishText
+} from "@/lib/bible/annotations";
+import type { EnglishUndertextAnnotation } from "@/lib/bible/types";
 import type { EsvInterlinearDisplayVerse, Verse } from "@/lib/bible/types";
 import { createPassageReference } from "@/lib/study-workspace";
 
@@ -23,6 +31,7 @@ type VerseListProps = {
   showGreekLemma?: boolean;
   showGreekTransliteration?: boolean;
   showGreekGloss?: boolean;
+  annotationMode?: boolean;
   highlightedVerseNumber?: number | null;
   highlightedVerseRange?: {
     start: number;
@@ -44,6 +53,7 @@ export function VerseList({
   showGreekLemma = true,
   showGreekTransliteration = true,
   showGreekGloss = true,
+  annotationMode = false,
   highlightedVerseNumber,
   highlightedVerseRange,
   showStrongs = false,
@@ -63,6 +73,7 @@ export function VerseList({
     updateBookmarkLabel,
     updateHighlightLabel
   } = useReaderWorkspace();
+  const { getVerseAnnotations, saveVerseAnnotations } = useBibleGreekUndertext();
   const activeHighlightedVerseNumber = highlightedVerseNumber ?? null;
   const activeHighlightedVerseRange = highlightedVerseRange ?? null;
   const shouldShowVerseText = showVerseText ?? !showInterlinearOnly;
@@ -109,6 +120,42 @@ export function VerseList({
               ? verse.number >= activeHighlightedVerseRange.start &&
                 verse.number <= activeHighlightedVerseRange.end
               : activeHighlightedVerseNumber === verse.number;
+          const verseKey = getBibleVerseAnnotationKey(bookSlug, chapterNumber, verse.number);
+          const verseAnnotations = getVerseAnnotations(verseKey);
+          const activeGreekTokens = activeGreekVerse?.tokens ?? verse.greekTokens ?? [];
+          const canAnnotateGreekVersionTranslation =
+            version === "greek" &&
+            Boolean(verse.greekTokens?.length) &&
+            Boolean(verse.translationText?.trim()) &&
+            showCompanionVerseTranslation;
+          const canAnnotateInterlinearVerse =
+            version !== "greek" &&
+            Boolean(activeGreekVerse?.tokens?.length) &&
+            shouldShowVerseText;
+          const bibleAnnotationText = canAnnotateGreekVersionTranslation
+            ? verse.translationText?.trim() ?? ""
+            : canAnnotateInterlinearVerse
+              ? verse.text
+              : "";
+          const bibleAnnotationTokens = bibleAnnotationText
+            ? tokenizeBibleEnglishText(bibleAnnotationText)
+            : [];
+          const undertextAnnotations: EnglishUndertextAnnotation[] = verseAnnotations.map(
+            (annotation) => ({
+              contentId: verseKey,
+              startToken: annotation.startToken,
+              endToken: annotation.endToken,
+              greekText: annotation.greekText,
+              entryKey: annotation.entryKey,
+              lemma: annotation.lemma,
+              strongs: annotation.strongs,
+              transliteration: annotation.transliteration,
+              gloss: annotation.gloss,
+              source: annotation.source
+            })
+          );
+          const showBibleAnnotationLine =
+            (annotationMode || undertextAnnotations.length > 0) && bibleAnnotationTokens.length > 0;
 
           return (
             <div
@@ -140,6 +187,40 @@ export function VerseList({
                             showStrongs
                             verse={verse}
                           />
+                        ) : canAnnotateInterlinearVerse && showBibleAnnotationLine ? (
+                          <FathersEnglishUndertextContent
+                            annotationMode={annotationMode}
+                            annotations={undertextAnnotations}
+                            autoSuggestionsBuilder={(selectedText, selectedWords) =>
+                              buildBibleGreekUndertextSuggestions(
+                                selectedText,
+                                selectedWords,
+                                activeGreekTokens
+                              )
+                            }
+                            contentId={verseKey}
+                            english={verse.text}
+                            englishTokens={bibleAnnotationTokens}
+                            lineClassName="verse-text verse-text-body"
+                            onChangeAnnotations={(contentId, nextAnnotations) =>
+                              saveVerseAnnotations(
+                                contentId,
+                                nextAnnotations.map((annotation) => ({
+                                  verseKey: contentId,
+                                  startToken: annotation.startToken,
+                                  endToken: annotation.endToken,
+                                  greekText: annotation.greekText,
+                                  entryKey: annotation.entryKey,
+                                  lemma: annotation.lemma,
+                                  strongs: annotation.strongs,
+                                  transliteration: annotation.transliteration,
+                                  gloss: annotation.gloss,
+                                  source: annotation.source
+                                }))
+                              )
+                            }
+                            onOpenGreekDictionary={openGreekDictionary}
+                          />
                         ) : (
                           <VerseTextContent className="verse-text verse-text-body" verse={verse} />
                         )
@@ -147,9 +228,45 @@ export function VerseList({
                     {version === "greek" &&
                     showCompanionVerseTranslation &&
                     verse.translationText?.trim() ? (
-                      <p className="verse-text verse-text-companion-translation">
-                        {verse.translationText}
-                      </p>
+                      canAnnotateGreekVersionTranslation && showBibleAnnotationLine ? (
+                        <FathersEnglishUndertextContent
+                          annotationMode={annotationMode}
+                          annotations={undertextAnnotations}
+                          autoSuggestionsBuilder={(selectedText, selectedWords) =>
+                            buildBibleGreekUndertextSuggestions(
+                              selectedText,
+                              selectedWords,
+                              activeGreekTokens
+                            )
+                          }
+                          contentId={verseKey}
+                          english={verse.translationText}
+                          englishTokens={bibleAnnotationTokens}
+                          lineClassName="verse-text verse-text-companion-translation"
+                          onChangeAnnotations={(contentId, nextAnnotations) =>
+                            saveVerseAnnotations(
+                              contentId,
+                              nextAnnotations.map((annotation) => ({
+                                verseKey: contentId,
+                                startToken: annotation.startToken,
+                                endToken: annotation.endToken,
+                                greekText: annotation.greekText,
+                                entryKey: annotation.entryKey,
+                                lemma: annotation.lemma,
+                                strongs: annotation.strongs,
+                                transliteration: annotation.transliteration,
+                                gloss: annotation.gloss,
+                                source: annotation.source
+                              }))
+                            )
+                          }
+                          onOpenGreekDictionary={openGreekDictionary}
+                        />
+                      ) : (
+                        <p className="verse-text verse-text-companion-translation">
+                          {verse.translationText}
+                        </p>
+                      )
                     ) : null}
                   </>
                 ) : null}

@@ -1,3 +1,4 @@
+import { BIBLE_GREEK_UNDERTEXT_STORAGE_KEY } from "@/app/components/BibleGreekUndertextProvider";
 import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 
 import { LookupPane } from "@/app/components/LookupPane";
@@ -284,6 +285,49 @@ describe("VerseList", () => {
     expect(
       await screen.findByRole("button", { name: "Choose English gloss for ἀρχῇ" })
     ).toBeInTheDocument();
+  });
+
+  it("adds Bible Greek undertext on the companion English line in the standalone Greek version", async () => {
+    window.localStorage.setItem(READER_VERSION_STORAGE_KEY, "greek");
+
+    renderWithReaderCustomization(
+      <VerseList
+        annotationMode
+        bookSlug="genesis"
+        chapterNumber={1}
+        verses={[
+          {
+            number: 1,
+            text: "ἐν ἀρχῇ",
+            translationText: "In the beginning",
+            greekTokens: [
+              {
+                surface: "ἀρχῇ",
+                lemma: "ἀρχή",
+                entryKey: "G746",
+                strongs: "G746",
+                gloss: "beginning",
+                transliteration: "archē"
+              }
+            ]
+          }
+        ]}
+      />
+    );
+
+    fireEvent.click(
+      await screen.findByRole("button", { name: "Add Greek undertext for beginning" })
+    );
+
+    const editor = await screen.findByRole("dialog", { name: "Greek undertext editor" });
+    fireEvent.click(within(editor).getByRole("button", { name: /ἀρχῇ/ }));
+
+    await waitFor(() => {
+      expect(screen.getAllByText("ἀρχῇ").length).toBeGreaterThan(1);
+    });
+    expect(window.localStorage.getItem(BIBLE_GREEK_UNDERTEXT_STORAGE_KEY)).toContain(
+      "\"source\":\"verse-token\""
+    );
   });
 
   it("can hide the standalone Greek English companion line independently", () => {

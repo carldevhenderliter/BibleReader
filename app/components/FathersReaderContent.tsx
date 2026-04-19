@@ -12,7 +12,7 @@ import { useReaderCustomization } from "@/app/components/ReaderCustomizationProv
 import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
-import type { GreekToken } from "@/lib/bible/types";
+import type { EnglishUndertextAnnotation, GreekToken } from "@/lib/bible/types";
 import { saveFathersAnnotationFile } from "@/lib/fathers/annotation-save";
 import { isNa1GreekAnnotationWork } from "@/lib/fathers/annotations";
 import type {
@@ -277,11 +277,23 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
 
   const handleAnnotationsChange = (
     segmentId: string,
-    nextAnnotations: FathersGreekUndertextAnnotation[]
+    nextAnnotations: EnglishUndertextAnnotation[]
   ) => {
     setSegmentAnnotations((current) => ({
       ...current,
-      [segmentId]: nextAnnotations
+      [segmentId]: nextAnnotations.map((annotation) => ({
+        segmentId,
+        startToken: annotation.startToken,
+        endToken: annotation.endToken,
+        greekText: annotation.greekText,
+        entryKey: annotation.entryKey,
+        lemma: annotation.lemma,
+        strongs: annotation.strongs,
+        transliteration: annotation.transliteration,
+        gloss: annotation.gloss,
+        source:
+          annotation.source === "verse-token" ? "lexicon" : annotation.source
+      }))
     }));
     setAnnotationSaveStatus("idle");
     setAnnotationSaveMessage(null);
@@ -414,13 +426,24 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
               {isNa1AnnotationWork ? (
                 <FathersEnglishUndertextContent
                   annotationMode={annotationMode}
-                  annotations={segmentAnnotations[segment.id] ?? []}
+                  annotations={(segmentAnnotations[segment.id] ?? []).map((annotation) => ({
+                    contentId: segment.id,
+                    startToken: annotation.startToken,
+                    endToken: annotation.endToken,
+                    greekText: annotation.greekText,
+                    entryKey: annotation.entryKey,
+                    lemma: annotation.lemma,
+                    strongs: annotation.strongs,
+                    transliteration: annotation.transliteration,
+                    gloss: annotation.gloss,
+                    source: annotation.source
+                  }))}
+                  contentId={segment.id}
                   english={segment.english}
                   englishTokens={segment.englishTokens}
                   onChangeAnnotations={handleAnnotationsChange}
                   onOpenGreekDictionary={openGreekDictionary}
                   separateSentencesByLine={settings.showFathersSentenceLines}
-                  segmentId={segment.id}
                 />
               ) : (
                 renderFathersEnglishBlock(segment.english, settings.showFathersSentenceLines)

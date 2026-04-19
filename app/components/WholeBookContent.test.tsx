@@ -550,6 +550,40 @@ describe("WholeBookContent", () => {
     expect(await screen.findByText("Agapētoi")).toBeInTheDocument();
   });
 
+  it("shows Bible Greek annotation controls in whole-book ESV interlinear mode", async () => {
+    window.localStorage.setItem(
+      "bible-reader:customization",
+      JSON.stringify({
+        showEsvInterlinear: true
+      })
+    );
+
+    renderWithReaderCustomization(
+      <>
+        <WholeBookContent
+          book={books[0]}
+          books={books}
+          chaptersByVersion={{ esv: chapters, web: chapters }}
+          esvInterlinearBook={ntInterlinearBookWithTokenGlosses}
+        />
+        <SearchPane />
+        <LookupPane />
+      </>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: {
+        value: "esv"
+      }
+    });
+
+    fireEvent.click(await screen.findByRole("button", { name: "Annotate Greek" }));
+
+    expect(screen.getByRole("button", { name: "Done annotating" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Add Greek undertext for Jude" })).toBeInTheDocument();
+  });
+
   it("renders custom verse translation editors in whole-book view", () => {
     renderWithReaderCustomization(
       <>

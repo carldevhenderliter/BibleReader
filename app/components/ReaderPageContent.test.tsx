@@ -433,6 +433,38 @@ describe("ReaderPageContent", () => {
     expect(await screen.findByText("geneseōs")).toBeInTheDocument();
   });
 
+  it("shows Bible Greek annotation controls in ESV interlinear chapter view", async () => {
+    window.localStorage.setItem(
+      "bible-reader:customization",
+      JSON.stringify({
+        showEsvInterlinear: true
+      })
+    );
+
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={ntBooks[0]}
+        books={ntBooks}
+        chaptersByVersion={{ esv: esvNtChapter, web: esvNtChapter }}
+        esvInterlinearChapter={esvNtInterlinearChapterWithTokenGlosses}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: {
+        value: "esv"
+      }
+    });
+
+    fireEvent.click(await screen.findByRole("button", { name: "Annotate Greek" }));
+
+    expect(screen.getByRole("button", { name: "Done annotating" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Add Greek undertext for genealogy" })
+    ).toBeInTheDocument();
+  });
+
   it("renders custom verse translation editors in chapter view", () => {
     renderWithReaderCustomization(
       <ReaderPageContent

@@ -53,6 +53,7 @@ export function tokenizeFathersEnglishText(text: string): FathersEnglishToken[] 
     return [];
   }
 
+  ENGLISH_WORD_PATTERN.lastIndex = 0;
   const tokens: FathersEnglishToken[] = [];
   let lastIndex = 0;
   let wordIndex = 0;
@@ -165,7 +166,7 @@ export function getFathersEnglishSpanText(
 }
 
 export function annotationContainsWord(
-  annotation: FathersGreekUndertextAnnotation,
+  annotation: Pick<FathersGreekUndertextAnnotation, "startToken" | "endToken">,
   wordIndex: number
 ) {
   return annotation.startToken <= wordIndex && annotation.endToken >= wordIndex;
@@ -178,8 +179,8 @@ export function annotationsIntersect(
   return left.startToken <= right.endToken && right.startToken <= left.endToken;
 }
 
-export function findIntersectingAnnotation(
-  annotations: FathersGreekUndertextAnnotation[],
+export function findIntersectingAnnotation<T extends Pick<FathersGreekUndertextAnnotation, "startToken" | "endToken">>(
+  annotations: T[],
   startToken: number,
   endToken: number
 ) {
@@ -189,29 +190,25 @@ export function findIntersectingAnnotation(
         startToken,
         endToken
       })
-    ) ?? null
+  ) ?? null
   );
 }
 
-export function replaceSegmentAnnotation(
-  annotations: FathersGreekUndertextAnnotation[],
-  nextAnnotation: FathersGreekUndertextAnnotation
+export function replaceSegmentAnnotation<T extends Pick<FathersGreekUndertextAnnotation, "startToken" | "endToken">>(
+  annotations: T[],
+  nextAnnotation: T
 ) {
   return [...annotations.filter((annotation) => !annotationsIntersect(annotation, nextAnnotation)), nextAnnotation]
     .sort((left, right) => left.startToken - right.startToken);
 }
 
-export function removeSegmentAnnotation(
-  annotations: FathersGreekUndertextAnnotation[],
-  target: Pick<FathersGreekUndertextAnnotation, "segmentId" | "startToken" | "endToken">
+export function removeSegmentAnnotation<T extends Pick<FathersGreekUndertextAnnotation, "startToken" | "endToken">>(
+  annotations: T[],
+  target: Pick<FathersGreekUndertextAnnotation, "startToken" | "endToken">
 ) {
   return annotations.filter(
     (annotation) =>
-      !(
-        annotation.segmentId === target.segmentId &&
-        annotation.startToken === target.startToken &&
-        annotation.endToken === target.endToken
-      )
+      !(annotation.startToken === target.startToken && annotation.endToken === target.endToken)
   );
 }
 

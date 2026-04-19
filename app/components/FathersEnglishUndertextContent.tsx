@@ -4,6 +4,13 @@ import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 
 import { getStrongsEntry, normalizeStrongsNumber } from "@/lib/bible/strongs";
+import type {
+  EnglishToken,
+  EnglishUndertextAnnotation,
+  SearchScope,
+  StrongsEntry,
+  VerseToken
+} from "@/lib/bible/types";
 import {
   annotationContainsWord,
   buildGreekUndertextSuggestions,
@@ -17,17 +24,20 @@ import {
   searchScriptureUndertextPassages,
   resolveCustomGreekUndertext
 } from "@/lib/fathers/annotations";
-import type { SearchScope, StrongsEntry, VerseToken } from "@/lib/bible/types";
-import type { FathersEnglishToken, FathersGreekUndertextAnnotation } from "@/lib/fathers/types";
 
 type FathersEnglishUndertextContentProps = {
-  segmentId: string;
+  contentId: string;
   english: string;
-  englishTokens?: FathersEnglishToken[];
-  annotations: FathersGreekUndertextAnnotation[];
+  englishTokens?: EnglishToken[];
+  annotations: EnglishUndertextAnnotation[];
   annotationMode: boolean;
   separateSentencesByLine?: boolean;
-  onChangeAnnotations: (segmentId: string, annotations: FathersGreekUndertextAnnotation[]) => void;
+  lineClassName?: string;
+  autoSuggestionsBuilder?: (
+    selectedText: string,
+    selectedWords: string[]
+  ) => Promise<UndertextSuggestion[]>;
+  onChangeAnnotations: (contentId: string, annotations: EnglishUndertextAnnotation[]) => void;
   onOpenGreekDictionary?: (selection: {
     entryKey: string;
     strongs?: string | null;
@@ -40,7 +50,7 @@ type FathersEnglishUndertextContentProps = {
 type ActiveEditorState = {
   startToken: number;
   endToken: number;
-  existingAnnotation: FathersGreekUndertextAnnotation | null;
+  existingAnnotation: EnglishUndertextAnnotation | null;
   anchorRect: DOMRect;
 };
 
@@ -51,6 +61,7 @@ type UndertextSuggestion = {
   strongs?: string;
   transliteration?: string;
   gloss?: string;
+  source?: "verse-token" | "lexicon";
 };
 
 type ScriptureDefinitionState = {
@@ -77,7 +88,7 @@ function isSentenceBreakSeparator(text: string) {
 }
 
 function getSelectedWords(
-  englishTokens: FathersEnglishToken[],
+  englishTokens: EnglishToken[],
   startToken: number,
   endToken: number
 ) {
@@ -93,7 +104,7 @@ function getSelectedWords(
 }
 
 function getAnnotationPhraseText(
-  englishTokens: FathersEnglishToken[],
+  englishTokens: EnglishToken[],
   startToken: number,
   endToken: number
 ) {
@@ -176,12 +187,14 @@ function renderScriptureSearchTokens({
 }
 
 export function FathersEnglishUndertextContent({
-  segmentId,
+  contentId,
   english,
   englishTokens,
   annotations,
   annotationMode,
   separateSentencesByLine = false,
+  lineClassName = "verse-text verse-text-body fathers-segment-english",
+  autoSuggestionsBuilder = buildGreekUndertextSuggestions,
   onChangeAnnotations,
   onOpenGreekDictionary
 }: FathersEnglishUndertextContentProps) {
@@ -255,7 +268,7 @@ export function FathersEnglishUndertextContent({
     setIsLoadingSuggestions(true);
     setEditorError(null);
 
-    void buildGreekUndertextSuggestions(selectedSpanText, selectedWords)
+    void autoSuggestionsBuilder(selectedSpanText, selectedWords)
       .then((nextSuggestions) => {
         if (isCancelled) {
           return;
@@ -277,7 +290,7 @@ export function FathersEnglishUndertextContent({
     return () => {
       isCancelled = true;
     };
-  }, [activeEditor, annotationMode, selectedSpanText, selectedWords]);
+  }, [activeEditor, annotationMode, autoSuggestionsBuilder, selectedSpanText, selectedWords]);
 
   useEffect(() => {
     if (!activeEditor?.existingAnnotation) {
@@ -289,7 +302,7 @@ export function FathersEnglishUndertextContent({
   }, [activeEditor]);
 
   if (!englishTokens?.length) {
-    return <p className="verse-text verse-text-body fathers-segment-english">{english}</p>;
+    return <p className={lineClassName}>{english}</p>;
   }
 
   const closeEditor = () => {
@@ -413,7 +426,7 @@ export function FathersEnglishUndertextContent({
     }
 
     const nextAnnotation = {
-      segmentId,
+      contentId,
       startToken: nextEditor.startToken,
       endToken: nextEditor.endToken,
       greekText: suggestion.greekText,
@@ -422,11 +435,11 @@ export function FathersEnglishUndertextContent({
       strongs: suggestion.strongs,
       transliteration: suggestion.transliteration,
       gloss: suggestion.gloss,
-      source: "lexicon" as const
+      source: suggestion.source ?? ("lexicon" as const)
     };
 
     onChangeAnnotations(
-      segmentId,
+      contentId,
       replaceSegmentAnnotation(annotations, nextAnnotation)
     );
     setActiveEditor({
@@ -448,7 +461,7 @@ export function FathersEnglishUndertextContent({
     try {
       const resolvedSuggestion = await resolveCustomGreekUndertext(customGreekText);
       const nextAnnotation = {
-        segmentId,
+        contentId,
         startToken: activeEditor.startToken,
         endToken: activeEditor.endToken,
         greekText: customGreekText.trim(),
@@ -461,7 +474,7 @@ export function FathersEnglishUndertextContent({
       };
 
       onChangeAnnotations(
-        segmentId,
+        contentId,
         replaceSegmentAnnotation(annotations, nextAnnotation)
       );
       setActiveEditor({
@@ -482,7 +495,7 @@ export function FathersEnglishUndertextContent({
     }
 
     onChangeAnnotations(
-      segmentId,
+      contentId,
       removeSegmentAnnotation(annotations, activeEditor.existingAnnotation)
     );
     setActiveEditor({
@@ -746,7 +759,7 @@ export function FathersEnglishUndertextContent({
       pushRenderedNode(
         <span
           className={`fathers-annotation-group${isActiveEditor ? " is-editing" : ""}`}
-          key={`${segmentId}:annotation:${nextAnnotation.startToken}:${nextAnnotation.endToken}`}
+          key={`${contentId}:annotation:${nextAnnotation.startToken}:${nextAnnotation.endToken}`}
         >
           {annotationMode ? (
             <button
@@ -796,7 +809,7 @@ export function FathersEnglishUndertextContent({
 
     if (token.type === "separator") {
       pushRenderedNode(
-        <span className="fathers-annotation-separator" key={`${segmentId}:separator:${tokenIndex}`}>
+        <span className="fathers-annotation-separator" key={`${contentId}:separator:${tokenIndex}`}>
           {token.text}
         </span>
       );
@@ -820,7 +833,7 @@ export function FathersEnglishUndertextContent({
       annotationMode ? (
         <span
           className={`fathers-annotation-word-wrap${isSelectedInEditor ? " is-selected" : ""}`}
-          key={`${segmentId}:word:${token.wordIndex}`}
+          key={`${contentId}:word:${token.wordIndex}`}
         >
           <span className="fathers-annotation-word-text">{token.text}</span>
           {canAddAnnotation ? (
@@ -837,7 +850,7 @@ export function FathersEnglishUndertextContent({
           ) : null}
         </span>
       ) : (
-        <span key={`${segmentId}:word:${token.wordIndex}`}>{token.text}</span>
+        <span key={`${contentId}:word:${token.wordIndex}`}>{token.text}</span>
       )
     );
   }
@@ -852,15 +865,15 @@ export function FathersEnglishUndertextContent({
         <div className="fathers-segment-english-sentences">
           {sentenceLines.map((line, index) => (
             <p
-              className="verse-text verse-text-body fathers-segment-english fathers-sentence-line"
-              key={`${segmentId}:sentence-line:${index}`}
+              className={`${lineClassName} fathers-sentence-line`}
+              key={`${contentId}:sentence-line:${index}`}
             >
               {line}
             </p>
           ))}
         </div>
       ) : (
-        <p className="verse-text verse-text-body fathers-segment-english fathers-annotation-line">
+        <p className={`${lineClassName} fathers-annotation-line`}>
           {renderedContent}
         </p>
       )}
@@ -963,7 +976,7 @@ export function FathersEnglishUndertextContent({
                             {suggestions.map((suggestion) => (
                               <button
                                 className="fathers-annotation-suggestion"
-                                key={`${segmentId}:${suggestion.entryKey}:${suggestion.greekText}`}
+                                key={`${contentId}:${suggestion.entryKey}:${suggestion.greekText}`}
                                 onClick={() => handleSuggestionSave(suggestion)}
                                 type="button"
                               >
@@ -987,11 +1000,11 @@ export function FathersEnglishUndertextContent({
                       <div className="fathers-annotation-search-panel">
                         <label
                           className="reader-settings-field fathers-annotation-search-field"
-                          htmlFor={`${segmentId}:english-search`}
+                          htmlFor={`${contentId}:english-search`}
                         >
                           <span>English search</span>
                           <input
-                            id={`${segmentId}:english-search`}
+                            id={`${contentId}:english-search`}
                             onChange={(event) => setSearchQuery(event.currentTarget.value)}
                             placeholder="Type English meaning"
                             type="search"
@@ -1011,7 +1024,7 @@ export function FathersEnglishUndertextContent({
                             {searchResults.map((suggestion) => (
                               <button
                                 className="fathers-annotation-suggestion"
-                                key={`${segmentId}:search:${suggestion.entryKey}:${suggestion.greekText}`}
+                                key={`${contentId}:search:${suggestion.entryKey}:${suggestion.greekText}`}
                                 onClick={() => handleSuggestionSave(suggestion)}
                                 type="button"
                               >
@@ -1036,11 +1049,11 @@ export function FathersEnglishUndertextContent({
                         <div className="fathers-scripture-search-controls">
                           <label
                             className="reader-settings-field fathers-annotation-search-field"
-                            htmlFor={`${segmentId}:scripture-search`}
+                            htmlFor={`${contentId}:scripture-search`}
                           >
                             <span>Scripture lookup</span>
                             <input
-                              id={`${segmentId}:scripture-search`}
+                              id={`${contentId}:scripture-search`}
                               onChange={(event) => setScriptureQuery(event.currentTarget.value)}
                               placeholder="Type a word or phrase"
                               type="search"
@@ -1049,11 +1062,11 @@ export function FathersEnglishUndertextContent({
                           </label>
                           <label
                             className="reader-settings-field fathers-scripture-search-scope"
-                            htmlFor={`${segmentId}:scripture-scope`}
+                            htmlFor={`${contentId}:scripture-scope`}
                           >
                             <span>Testament</span>
                             <select
-                              id={`${segmentId}:scripture-scope`}
+                              id={`${contentId}:scripture-scope`}
                               onChange={(event) =>
                                 setScriptureScope(event.currentTarget.value as SearchScope)
                               }
@@ -1166,11 +1179,11 @@ export function FathersEnglishUndertextContent({
                   <section className="fathers-annotation-custom">
                     <label
                       className="reader-settings-field fathers-annotation-custom-field"
-                      htmlFor={`${segmentId}:custom-greek`}
+                      htmlFor={`${contentId}:custom-greek`}
                     >
                       <span>Custom Greek</span>
                       <input
-                        id={`${segmentId}:custom-greek`}
+                        id={`${contentId}:custom-greek`}
                         onChange={(event) => setCustomGreekText(event.currentTarget.value)}
                         placeholder="Type Greek text"
                         ref={customInputRef}
@@ -1180,12 +1193,12 @@ export function FathersEnglishUndertextContent({
                     </label>
                     <div className="fathers-greek-keyboard" role="group" aria-label="Greek keyboard">
                       {GREEK_KEYBOARD_ROWS.map((row, rowIndex) => (
-                        <div className="fathers-greek-keyboard-row" key={`${segmentId}:row:${rowIndex}`}>
+                        <div className="fathers-greek-keyboard-row" key={`${contentId}:row:${rowIndex}`}>
                           {row.map((keyValue) => (
                             <button
                               aria-label={keyValue === " " ? "Insert space" : `Insert ${keyValue}`}
                               className={`fathers-greek-key${keyValue === " " ? " is-space-key" : ""}`}
-                              key={`${segmentId}:key:${rowIndex}:${keyValue}`}
+                              key={`${contentId}:key:${rowIndex}:${keyValue}`}
                               onClick={() => insertGreekText(keyValue)}
                               type="button"
                             >

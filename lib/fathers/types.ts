@@ -1,4 +1,4 @@
-import type { GreekToken } from "@/lib/bible/types";
+import type { EnglishToken, GreekToken } from "@/lib/bible/types";
 
 export type FathersCorpus = "apostolic-fathers";
 
@@ -14,13 +14,9 @@ export type FathersGreekToken = {
   trailingPunctuation?: string;
 };
 
-export type FathersEnglishToken = {
-  type: "word" | "separator";
-  text: string;
-  wordIndex?: number;
-};
+export type FathersEnglishToken = EnglishToken;
 
-export type FathersGreekUndertextAnnotationSource = "lexicon" | "custom";
+export type FathersGreekUndertextAnnotationSource = "verse-token" | "lexicon" | "custom";
 
 export type FathersGreekUndertextAnnotation = {
   segmentId: string;

@@ -71,6 +71,7 @@ type LazyBookChapterSectionProps = {
   showGreekTransliteration: boolean;
   showStrongs: boolean;
   showVerseText: boolean;
+  annotationMode: boolean;
   version: string;
 };
 
@@ -89,6 +90,7 @@ function LazyBookChapterSection({
   showGreekTransliteration,
   showStrongs,
   showVerseText,
+  annotationMode,
   version
 }: LazyBookChapterSectionProps) {
   const [shouldRenderChapter, setShouldRenderChapter] = useState(initialRender);
@@ -153,6 +155,7 @@ function LazyBookChapterSection({
           highlightedVerseRange={highlightedVerseRange}
           interlinearVerseMap={interlinearVerseMap}
           key={`${version}:${bookSlug}:${chapter.chapterNumber}`}
+          annotationMode={annotationMode}
           showCompanionVerseTranslation={showCompanionVerseTranslation}
           showCustomVerseTranslation={showCustomVerseTranslation}
           showGreekGloss={showGreekGloss}
@@ -215,6 +218,7 @@ export function WholeBookContent({
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
   const showStrongsInline = !isSplitViewActive && activeUtilityPane === "strongs";
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
+  const [annotationMode, setAnnotationMode] = useState(false);
   const searchParams = new URLSearchParams(locationSearch);
   const urlFocusedChapterNumber = parsePositiveNumber(searchParams.get("chapter"));
   const urlHighlightedChapterNumber = parsePositiveNumber(searchParams.get("highlightChapter"));
@@ -248,6 +252,19 @@ export function WholeBookContent({
     chapters[0] ??
     null;
   const isOldTestament = book.testament === "Old";
+  const hasBibleGreekAnnotationSurface =
+    (version === "greek" &&
+      chapters.some((chapter) =>
+        chapter.verses.some(
+          (verse) => Boolean(verse.greekTokens?.length) && Boolean(verse.translationText?.trim())
+        )
+      )) ||
+    (showEsvInterlinear &&
+      chapters.some((chapter) =>
+        chapter.verses.some((verse) =>
+          Boolean(interlinearByChapter?.get(chapter.chapterNumber)?.[verse.number]?.tokens?.length)
+        )
+      ));
 
   useEffect(() => {
     syncCurrentChapterData(book.slug, focusedChapter?.chapterNumber ?? 1, null);
@@ -281,6 +298,12 @@ export function WholeBookContent({
     }
   }, [activeReaderPane, isOldTestament, setActiveReaderPane]);
 
+  useEffect(() => {
+    if (!hasBibleGreekAnnotationSurface && annotationMode) {
+      setAnnotationMode(false);
+    }
+  }, [annotationMode, hasBibleGreekAnnotationSurface]);
+
   return (
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
       <ReadingSessionSync book={book.slug} chapter={1} view="book" />
@@ -305,17 +328,28 @@ export function WholeBookContent({
                 books={books}
                 currentChapter={1}
                 trailingActions={
-                  isSplitViewActive ? (
-                    <button
-                      aria-label="Hide reader pane"
-                      className="split-pane-hide-button reader-pane-hide-button"
-                      disabled={!canCollapseSplitPane("reader")}
-                      onClick={() => collapseSplitPane("reader")}
-                      type="button"
-                    >
-                      Hide
-                    </button>
-                  ) : null
+                  <>
+                    {hasBibleGreekAnnotationSurface ? (
+                      <button
+                        className={`reader-inline-button${annotationMode ? " is-active" : ""}`}
+                        onClick={() => setAnnotationMode((current) => !current)}
+                        type="button"
+                      >
+                        {annotationMode ? "Done annotating" : "Annotate Greek"}
+                      </button>
+                    ) : null}
+                    {isSplitViewActive ? (
+                      <button
+                        aria-label="Hide reader pane"
+                        className="split-pane-hide-button reader-pane-hide-button"
+                        disabled={!canCollapseSplitPane("reader")}
+                        onClick={() => collapseSplitPane("reader")}
+                        type="button"
+                      >
+                        Hide
+                      </button>
+                    ) : null}
+                  </>
                 }
                 view="book"
               />
@@ -393,6 +427,7 @@ export function WholeBookContent({
                 showGreekTransliteration={settings.showGreekTransliteration}
                 showStrongs={showStrongs}
                 showVerseText={settings.showVerseText}
+                annotationMode={annotationMode}
                 version={version}
               />
             ))}

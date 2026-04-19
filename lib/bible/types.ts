@@ -457,6 +457,12 @@ export type VerseToken = {
   strongsNumbers?: string[];
 };
 
+export type EnglishToken = {
+  type: "word" | "separator";
+  text: string;
+  wordIndex?: number;
+};
+
 export type GreekToken = {
   surface: string;
   lemma: string;
@@ -524,6 +530,39 @@ export type GreekLemmaGlossPreference = {
   optionId?: string;
   source: "lemma-option" | "custom";
 };
+
+export type GreekUndertextAnnotationSource = "verse-token" | "lexicon" | "custom";
+
+export type EnglishUndertextAnnotation = {
+  contentId: string;
+  startToken: number;
+  endToken: number;
+  greekText: string;
+  entryKey?: string;
+  lemma?: string;
+  strongs?: string;
+  transliteration?: string;
+  gloss?: string;
+  source: GreekUndertextAnnotationSource;
+};
+
+export type BibleGreekUndertextAnnotation = {
+  verseKey: string;
+  startToken: number;
+  endToken: number;
+  greekText: string;
+  entryKey?: string;
+  lemma?: string;
+  strongs?: string;
+  transliteration?: string;
+  gloss?: string;
+  source: GreekUndertextAnnotationSource;
+};
+
+export type BibleGreekUndertextAnnotationRecord = Record<
+  string,
+  BibleGreekUndertextAnnotation[]
+>;
 
 export type StrongsLanguage = "hebrew" | "greek";
 
