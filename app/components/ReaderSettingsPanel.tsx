@@ -41,8 +41,8 @@ type NumericFieldProps = {
   label: string;
   inputId: string;
   value: number;
-  min: number;
-  max: number;
+  min?: number;
+  max?: number;
   step: number;
   suffix: string;
   onChange: (value: number) => void;
@@ -930,8 +930,6 @@ export function ReaderSettingsPanel({
               <NumericField
                 inputId="reader-menu-line-height"
                 label="Line height"
-                max={3}
-                min={1.2}
                 onChange={(value) => updateNumericSetting("lineHeight", value)}
                 step={0.01}
                 suffix=""
@@ -940,8 +938,6 @@ export function ReaderSettingsPanel({
               <NumericField
                 inputId="reader-menu-first-line-indent"
                 label="First-line indent"
-                max={5}
-                min={0}
                 onChange={(value) => updateNumericSetting("firstLineIndent", value)}
                 step={0.05}
                 suffix="rem"
@@ -950,48 +946,31 @@ export function ReaderSettingsPanel({
             </div>
           </div>
           <div className="reader-settings-subsection">
-            <div className="settings-slider-group">
-              <label className="settings-slider">
-                <span>Content width</span>
-                <input
-                  aria-label="Content width"
-                  max="60"
-                  min="36"
-                  onChange={(event) => updateSettings({ contentWidth: Number(event.target.value) })}
-                  step="1"
-                  type="range"
-                  value={settings.contentWidth}
-                />
-                <strong>{settings.contentWidth}rem</strong>
-              </label>
-              <label className="settings-slider">
-                <span>Verse spacing</span>
-                <input
-                  aria-label="Verse spacing"
-                  max="1.8"
-                  min="0.6"
-                  onChange={(event) => updateSettings({ verseSpacing: Number(event.target.value) })}
-                  step="0.05"
-                  type="range"
-                  value={settings.verseSpacing}
-                />
-                <strong>{settings.verseSpacing.toFixed(2)}rem</strong>
-              </label>
-              <label className="settings-slider">
-                <span>Paragraph spacing</span>
-                <input
-                  aria-label="Paragraph spacing"
-                  max="0.8"
-                  min="0"
-                  onChange={(event) =>
-                    updateSettings({ paragraphSpacing: Number(event.target.value) })
-                  }
-                  step="0.05"
-                  type="range"
-                  value={settings.paragraphSpacing}
-                />
-                <strong>{settings.paragraphSpacing.toFixed(2)}rem</strong>
-              </label>
+            <div className="reader-settings-field-grid">
+              <NumericField
+                inputId="reader-menu-content-width"
+                label="Content width"
+                onChange={(value) => updateNumericSetting("contentWidth", value)}
+                step={1}
+                suffix="rem"
+                value={settings.contentWidth}
+              />
+              <NumericField
+                inputId="reader-menu-verse-spacing"
+                label="Verse spacing"
+                onChange={(value) => updateNumericSetting("verseSpacing", value)}
+                step={0.05}
+                suffix="rem"
+                value={settings.verseSpacing}
+              />
+              <NumericField
+                inputId="reader-menu-paragraph-spacing"
+                label="Paragraph spacing"
+                onChange={(value) => updateNumericSetting("paragraphSpacing", value)}
+                step={0.05}
+                suffix="rem"
+                value={settings.paragraphSpacing}
+              />
             </div>
           </div>
         </section>

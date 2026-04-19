@@ -92,7 +92,7 @@ describe("Reader customization", () => {
     expect(stored).not.toContain('"textSize"');
   });
 
-  it("opens advanced settings and updates power-user controls", () => {
+  it("opens advanced settings and persists unrestricted layout spacing values", () => {
     renderWithReaderCustomization(
       <ReaderPageContent
         book={books[0]}
@@ -118,9 +118,19 @@ describe("Reader customization", () => {
         value: "1.55"
       }
     });
+    fireEvent.change(screen.getByLabelText("Content width"), {
+      target: {
+        value: "128"
+      }
+    });
     fireEvent.change(screen.getByLabelText("Verse spacing"), {
       target: {
-        value: "1.35"
+        value: "4.75"
+      }
+    });
+    fireEvent.change(screen.getByLabelText("Paragraph spacing"), {
+      target: {
+        value: "-0.8"
       }
     });
 
@@ -129,7 +139,9 @@ describe("Reader customization", () => {
     expect(stored).toContain('"bodyFont":"mono"');
     expect(stored).toContain('"textAlign":"justify"');
     expect(stored).toContain('"glowIntensity":1.55');
-    expect(stored).toContain('"verseSpacing":1.35');
+    expect(stored).toContain('"contentWidth":128');
+    expect(stored).toContain('"verseSpacing":4.75');
+    expect(stored).toContain('"paragraphSpacing":-0.8');
   });
 
   it("persists exact per-layer typography inputs and font selections", () => {

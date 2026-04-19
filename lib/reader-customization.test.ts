@@ -10,7 +10,7 @@ describe("reader customization", () => {
     expect(normalizeReaderCustomization("bad")).toEqual(DEFAULT_READER_CUSTOMIZATION);
   });
 
-  it("normalizes partial and invalid values into the new per-layer model", () => {
+  it("keeps layout spacing values fully custom while normalizing bounded typography controls", () => {
     expect(
       normalizeReaderCustomization({
         themePreset: "ember",
@@ -72,11 +72,11 @@ describe("reader customization", () => {
       hebrewTextSize: 4,
       companionVerseTextSize: 3,
       customVerseTextSize: 3.25,
-      lineHeight: 1.2,
-      firstLineIndent: 0,
-      contentWidth: 60,
-      verseSpacing: 1.8,
-      paragraphSpacing: 0,
+      lineHeight: 0,
+      firstLineIndent: -2,
+      contentWidth: 200,
+      verseSpacing: 9,
+      paragraphSpacing: -1,
       textAlign: "justify",
       headerScale: 1.3,
       verseNumberScale: 0.75,

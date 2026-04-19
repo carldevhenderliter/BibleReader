@@ -172,11 +172,6 @@ const BODY_TEXT_SIZE_RANGE = { min: 0.8, max: 3.25 };
 const SCRIPT_TEXT_SIZE_RANGE = { min: 0.9, max: 4 };
 const COMPANION_TEXT_SIZE_RANGE = { min: 0.72, max: 3 };
 const CUSTOM_TEXT_SIZE_RANGE = { min: 0.72, max: 3.25 };
-const LINE_HEIGHT_RANGE = { min: 1.2, max: 3 };
-const FIRST_LINE_INDENT_RANGE = { min: 0, max: 5 };
-const CONTENT_WIDTH_RANGE = { min: 36, max: 60 };
-const VERSE_SPACING_RANGE = { min: 0.6, max: 1.8 };
-const PARAGRAPH_SPACING_RANGE = { min: 0, max: 0.8 };
 const HEADER_SCALE_RANGE = { min: 0.85, max: 1.3 };
 const VERSE_NUMBER_SCALE_RANGE = { min: 0.75, max: 1.6 };
 const LETTER_SPACING_RANGE = { min: -0.01, max: 0.04 };
@@ -191,6 +186,10 @@ function clamp(value: number, min: number, max: number) {
 
 function clampNumber(value: unknown, min: number, max: number, fallback: number) {
   return typeof value === "number" && Number.isFinite(value) ? clamp(value, min, max) : fallback;
+}
+
+function normalizeFiniteNumber(value: unknown, fallback: number) {
+  return typeof value === "number" && Number.isFinite(value) ? value : fallback;
 }
 
 function roundToHundredths(value: number) {
@@ -397,34 +396,24 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
           )
         : DEFAULT_READER_CUSTOMIZATION.customVerseTextSize
     ),
-    lineHeight: clampNumber(
+    lineHeight: normalizeFiniteNumber(
       candidate.lineHeight,
-      LINE_HEIGHT_RANGE.min,
-      LINE_HEIGHT_RANGE.max,
       DEFAULT_READER_CUSTOMIZATION.lineHeight
     ),
-    firstLineIndent: clampNumber(
+    firstLineIndent: normalizeFiniteNumber(
       candidate.firstLineIndent,
-      FIRST_LINE_INDENT_RANGE.min,
-      FIRST_LINE_INDENT_RANGE.max,
       DEFAULT_READER_CUSTOMIZATION.firstLineIndent
     ),
-    contentWidth: clampNumber(
+    contentWidth: normalizeFiniteNumber(
       candidate.contentWidth,
-      CONTENT_WIDTH_RANGE.min,
-      CONTENT_WIDTH_RANGE.max,
       DEFAULT_READER_CUSTOMIZATION.contentWidth
     ),
-    verseSpacing: clampNumber(
+    verseSpacing: normalizeFiniteNumber(
       candidate.verseSpacing,
-      VERSE_SPACING_RANGE.min,
-      VERSE_SPACING_RANGE.max,
       DEFAULT_READER_CUSTOMIZATION.verseSpacing
     ),
-    paragraphSpacing: clampNumber(
+    paragraphSpacing: normalizeFiniteNumber(
       candidate.paragraphSpacing,
-      PARAGRAPH_SPACING_RANGE.min,
-      PARAGRAPH_SPACING_RANGE.max,
       DEFAULT_READER_CUSTOMIZATION.paragraphSpacing
     ),
     textAlign: isTextAlignOption(candidate.textAlign)
