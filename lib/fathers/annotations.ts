@@ -96,7 +96,7 @@ export function getFathersEnglishWordCount(tokens: FathersEnglishToken[]) {
 
 export function getAddableFathersAnnotationWordIndexes(
   tokens: FathersEnglishToken[],
-  annotations: FathersGreekUndertextAnnotation[]
+  annotations: Array<Pick<FathersGreekUndertextAnnotation, "startToken" | "endToken">>
 ) {
   const wordIndexes = tokens.reduce<number[]>((result, token) => {
     if (token.type === "word" && token.wordIndex !== undefined) {
