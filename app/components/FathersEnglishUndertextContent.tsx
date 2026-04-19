@@ -6,6 +6,7 @@ import {
   annotationContainsWord,
   buildGreekUndertextSuggestions,
   findIntersectingAnnotation,
+  getAddableFathersAnnotationWordIndexes,
   getFathersEnglishSpanText,
   removeSegmentAnnotation,
   replaceSegmentAnnotation,
@@ -301,9 +302,9 @@ export function FathersEnglishUndertextContent({
     setEditorError(null);
   };
 
-  const nextSequentialTokenIndex =
-    annotations.reduce((highestIndex, annotation) => Math.max(highestIndex, annotation.endToken), -1) +
-    1;
+  const addableWordIndexes = new Set(
+    getAddableFathersAnnotationWordIndexes(englishTokens, annotations)
+  );
 
   const activeEditorRange =
     activeEditor !== null
@@ -411,7 +412,7 @@ export function FathersEnglishUndertextContent({
       token.wordIndex >= activeEditorRange.startToken &&
       token.wordIndex <= activeEditorRange.endToken;
     const canAddAnnotation =
-      annotationMode && token.wordIndex !== undefined && token.wordIndex === nextSequentialTokenIndex;
+      annotationMode && token.wordIndex !== undefined && addableWordIndexes.has(token.wordIndex);
 
     renderedContent.push(
       annotationMode ? (
@@ -450,7 +451,7 @@ export function FathersEnglishUndertextContent({
             </p>
           ) : (
             <p className="reader-toolbar-meta">
-              Use the `+` button beside the next word to add Greek undertext in order.
+              Start on any word with `+`, then keep adding from the edges of what you have already annotated.
             </p>
           )}
         </div>

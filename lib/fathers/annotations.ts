@@ -79,6 +79,43 @@ export function getFathersEnglishWordCount(tokens: FathersEnglishToken[]) {
   return tokens.reduce((count, token) => count + (token.type === "word" ? 1 : 0), 0);
 }
 
+export function getAddableFathersAnnotationWordIndexes(
+  tokens: FathersEnglishToken[],
+  annotations: FathersGreekUndertextAnnotation[]
+) {
+  const wordIndexes = tokens.reduce<number[]>((result, token) => {
+    if (token.type === "word" && token.wordIndex !== undefined) {
+      result.push(token.wordIndex);
+    }
+
+    return result;
+  }, []);
+
+  if (!wordIndexes.length) {
+    return [];
+  }
+
+  if (!annotations.length) {
+    return wordIndexes;
+  }
+
+  const addableWordIndexes = new Set<number>();
+  const annotatedWordIndexes = new Set<number>();
+
+  annotations.forEach((annotation) => {
+    for (let wordIndex = annotation.startToken; wordIndex <= annotation.endToken; wordIndex += 1) {
+      annotatedWordIndexes.add(wordIndex);
+    }
+
+    addableWordIndexes.add(annotation.startToken - 1);
+    addableWordIndexes.add(annotation.endToken + 1);
+  });
+
+  return wordIndexes.filter(
+    (wordIndex) => addableWordIndexes.has(wordIndex) && !annotatedWordIndexes.has(wordIndex)
+  );
+}
+
 export function getFathersEnglishSpanText(
   tokens: FathersEnglishToken[],
   startToken: number,

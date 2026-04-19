@@ -351,7 +351,7 @@ describe("FathersReaderContent", () => {
     expect(document.body.textContent).toContain("kēphas");
   });
 
-  it("only allows adding new undertext in reading order", async () => {
+  it("lets the first annotation start on any word in the segment", async () => {
     buildGreekUndertextSuggestionsMock.mockResolvedValue([
       {
         greekText: "Κηφᾶς",
@@ -375,11 +375,44 @@ describe("FathersReaderContent", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
     expect(screen.getByRole("button", { name: "Add Greek undertext for Kefa’s" })).toBeInTheDocument();
-    expect(
-      screen.queryByRole("button", { name: "Add Greek undertext for Letter" })
-    ).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Add Greek undertext for Letter" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Add Greek undertext for to" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Add Greek undertext for Ya’akov" })).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole("button", { name: "Add Greek undertext for Kefa’s" }));
+    fireEvent.click(screen.getByRole("button", { name: "Add Greek undertext for Letter" }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Greek undertext")).toBeInTheDocument();
+    });
+    expect(
+      screen.getByText("Letter", { selector: ".fathers-annotation-editor-meta" })
+    ).toBeInTheDocument();
+  });
+
+  it("only unlocks immediately adjacent words after the first annotation", async () => {
+    buildGreekUndertextSuggestionsMock.mockResolvedValue([
+      {
+        greekText: "Κηφᾶς",
+        entryKey: "G2786",
+        lemma: "Κηφᾶς",
+        strongs: "G2786",
+        transliteration: "Kēphas",
+        gloss: "Cephas"
+      },
+      {
+        greekText: "ἐπιστολή",
+        entryKey: "G1992",
+        lemma: "ἐπιστολή",
+        strongs: "G1992",
+        transliteration: "epistolē",
+        gloss: "letter"
+      }
+    ]);
+
+    renderFathersReader(englishOnlyPayload);
+
+    fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
+    fireEvent.click(screen.getByRole("button", { name: "Add Greek undertext for Letter" }));
 
     await waitFor(() => {
       expect(screen.getByText("Greek undertext")).toBeInTheDocument();
@@ -388,8 +421,13 @@ describe("FathersReaderContent", () => {
     fireEvent.click(screen.getByRole("button", { name: /Κηφᾶς/i }));
 
     await waitFor(() => {
-      expect(screen.getByRole("button", { name: "Add Greek undertext for Letter" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "Add Greek undertext for Kefa’s" })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: "Add Greek undertext for to" })).toBeInTheDocument();
     });
+
+    expect(
+      screen.queryByRole("button", { name: "Add Greek undertext for Ya’akov" })
+    ).not.toBeInTheDocument();
   });
 
   it("lazy loads distant Fathers sections before rendering their content", async () => {

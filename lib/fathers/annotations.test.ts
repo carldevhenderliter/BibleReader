@@ -2,6 +2,7 @@ import { jest } from "@jest/globals";
 
 import {
   buildGreekUndertextSuggestions,
+  getAddableFathersAnnotationWordIndexes,
   getFathersEnglishSpanText,
   normalizeSegmentAnnotations,
   tokenizeFathersEnglishText
@@ -45,6 +46,59 @@ describe("fathers annotations", () => {
         4
       )
     ).toThrow(/Overlapping undertext annotations/);
+  });
+
+  it("allows every word before the first undertext annotation", () => {
+    const tokens = tokenizeFathersEnglishText("Kefa’s Letter to Ya’akov.");
+
+    expect(getAddableFathersAnnotationWordIndexes(tokens, [])).toEqual([0, 1, 2, 3]);
+  });
+
+  it("only unlocks immediate edges around saved annotation spans", () => {
+    const tokens = tokenizeFathersEnglishText("Kefa’s Letter to Ya’akov.");
+
+    expect(
+      getAddableFathersAnnotationWordIndexes(tokens, [
+        {
+          segmentId: "preaching-of-peter:introduction",
+          startToken: 1,
+          endToken: 1,
+          greekText: "ἐπιστολή",
+          source: "lexicon"
+        }
+      ])
+    ).toEqual([0, 2]);
+
+    expect(
+      getAddableFathersAnnotationWordIndexes(tokens, [
+        {
+          segmentId: "preaching-of-peter:introduction",
+          startToken: 1,
+          endToken: 2,
+          greekText: "ἐπιστολὴ πρός",
+          source: "custom"
+        }
+      ])
+    ).toEqual([0, 3]);
+
+    expect(
+      getAddableFathersAnnotationWordIndexes(tokens, [
+        {
+          segmentId: "preaching-of-peter:introduction",
+          startToken: 0,
+          endToken: 0,
+          greekText: "Κηφᾶς",
+          source: "lexicon"
+        },
+        {
+          segmentId: "preaching-of-peter:introduction",
+          startToken: 2,
+          endToken: 2,
+          greekText: "πρός",
+          source: "lexicon"
+        }
+      ])
+    ).toEqual([1, 3]);
   });
 
   it("queries the Greek dictionary by span first and falls back to the individual words", async () => {
