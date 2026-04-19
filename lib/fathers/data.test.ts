@@ -59,5 +59,11 @@ describe("fathers data", () => {
     expect(payload?.segments[0]?.greek).toBe("");
     expect(payload?.segments[0]?.greekTokens).toEqual([]);
     expect(payload?.segments[0]?.greekLexicalTokens).toBeUndefined();
+    expect(payload?.segments[0]?.englishTokens?.[0]).toEqual({
+      type: "word",
+      text: "I",
+      wordIndex: 0
+    });
+    expect(payload?.segments[0]?.greekUndertextAnnotations).toEqual([]);
   });
 });

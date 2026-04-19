@@ -14,6 +14,27 @@ export type FathersGreekToken = {
   trailingPunctuation?: string;
 };
 
+export type FathersEnglishToken = {
+  type: "word" | "separator";
+  text: string;
+  wordIndex?: number;
+};
+
+export type FathersGreekUndertextAnnotationSource = "lexicon" | "custom";
+
+export type FathersGreekUndertextAnnotation = {
+  segmentId: string;
+  startToken: number;
+  endToken: number;
+  greekText: string;
+  entryKey?: string;
+  lemma?: string;
+  strongs?: string;
+  transliteration?: string;
+  gloss?: string;
+  source: FathersGreekUndertextAnnotationSource;
+};
+
 export type FathersSegment = {
   id: string;
   ref: string;
@@ -23,6 +44,8 @@ export type FathersSegment = {
   greekNormalized: string;
   greekTokens: string[];
   greekLexicalTokens?: FathersGreekToken[];
+  englishTokens?: FathersEnglishToken[];
+  greekUndertextAnnotations?: FathersGreekUndertextAnnotation[];
 };
 
 export type FathersWorkMeta = {
@@ -40,6 +63,16 @@ export type FathersWorkMeta = {
 export type FathersWorkPayload = {
   work: FathersWorkMeta;
   segments: FathersSegment[];
+};
+
+export type FathersGreekUndertextAnnotationRecord = Record<
+  string,
+  FathersGreekUndertextAnnotation[]
+>;
+
+export type FathersGreekUndertextAnnotationFile = {
+  workSlug: string;
+  annotations: FathersGreekUndertextAnnotationRecord;
 };
 
 export type FathersLemmaMatch = {

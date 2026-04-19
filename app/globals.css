@@ -865,6 +865,23 @@ select {
   cursor: pointer;
 }
 
+.reader-inline-button.is-active {
+  border-color: rgba(var(--reader-accent-rgb), 0.36);
+  background: rgba(var(--reader-accent-rgb), 0.12);
+  box-shadow: 0 0 0 1px rgba(var(--reader-accent-rgb), 0.08);
+}
+
+.reader-inline-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.56;
+  transform: none;
+}
+
+.reader-inline-button-subtle {
+  border-color: rgba(255, 132, 154, 0.22);
+  color: rgba(255, 214, 224, 0.94);
+}
+
 .reader-inline-action {
   display: inline-flex;
   align-items: center;
@@ -938,6 +955,220 @@ select {
 
 .fathers-segment-english {
   color: rgba(224, 233, 244, 0.88);
+}
+
+.fathers-segment-english-block {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.fathers-annotation-line {
+  white-space: normal;
+}
+
+.fathers-annotation-status {
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(138, 162, 191, 0.18);
+  border-radius: 1rem;
+  background: rgba(9, 16, 28, 0.46);
+  color: rgba(224, 233, 244, 0.88);
+  font-family: var(--reader-ui-font);
+  font-size: 0.86rem;
+}
+
+.fathers-annotation-status-saving,
+.fathers-annotation-status-saved {
+  border-color: rgba(var(--reader-accent-rgb), 0.28);
+}
+
+.fathers-annotation-status-error {
+  border-color: rgba(255, 132, 154, 0.34);
+  color: rgba(255, 208, 217, 0.94);
+}
+
+.fathers-annotation-group {
+  display: inline-grid;
+  margin-inline: 0.05rem;
+  vertical-align: baseline;
+}
+
+.fathers-annotation-group.is-editing {
+  filter: saturate(1.06);
+}
+
+.fathers-annotation-anchor {
+  display: inline-grid;
+  gap: 0.16rem;
+  padding: 0.16rem 0.24rem 0.22rem;
+  border: 1px solid rgba(138, 162, 191, 0.18);
+  border-radius: 0.7rem;
+  background: rgba(255, 255, 255, 0.025);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  vertical-align: baseline;
+}
+
+button.fathers-annotation-anchor {
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+button.fathers-annotation-anchor:hover,
+button.fathers-annotation-anchor:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(var(--reader-accent-rgb), 0.34);
+  background: rgba(var(--reader-accent-rgb), 0.1);
+  outline: none;
+}
+
+.fathers-annotation-anchor-static {
+  cursor: default;
+}
+
+.fathers-annotation-anchor-text {
+  display: inline;
+  color: rgba(232, 239, 248, 0.96);
+}
+
+.fathers-annotation-undertext {
+  color: rgba(198, 232, 255, 0.92);
+  font-family: var(--reader-greek-font);
+  font-size: calc(var(--reader-greek-text-size) * 0.56);
+  letter-spacing: 0.01em;
+  line-height: 1.25;
+}
+
+.fathers-annotation-word {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+  border-radius: 0.35rem;
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.fathers-annotation-word:hover,
+.fathers-annotation-word:focus-visible {
+  background: rgba(var(--reader-accent-rgb), 0.12);
+  color: rgba(244, 249, 255, 0.98);
+  outline: none;
+}
+
+.fathers-annotation-word.is-selected,
+.fathers-annotation-word.is-pending {
+  background: rgba(var(--reader-accent-rgb), 0.16);
+  box-shadow: 0 0 0 1px rgba(var(--reader-accent-rgb), 0.18);
+}
+
+.fathers-annotation-mode-copy {
+  margin-top: -0.15rem;
+}
+
+.fathers-annotation-mode-copy .reader-toolbar-meta {
+  margin: 0;
+}
+
+.fathers-annotation-editor {
+  display: grid;
+  gap: 0.9rem;
+  padding: 0.95rem 1rem 1rem;
+  border: 1px solid rgba(138, 162, 191, 0.18);
+  border-radius: 1rem;
+  background: rgba(6, 12, 22, 0.58);
+}
+
+.fathers-annotation-editor-header,
+.fathers-annotation-editor-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.fathers-annotation-editor-title,
+.fathers-annotation-editor-meta,
+.fathers-annotation-editor-label,
+.fathers-annotation-error {
+  margin: 0;
+}
+
+.fathers-annotation-editor-title {
+  color: rgba(240, 247, 255, 0.96);
+  font-family: var(--reader-ui-font);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.fathers-annotation-editor-meta,
+.fathers-annotation-editor-label,
+.fathers-annotation-suggestion-meta {
+  color: rgba(197, 212, 228, 0.82);
+  font-family: var(--reader-ui-font);
+  font-size: 0.82rem;
+}
+
+.fathers-annotation-suggestion-list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.fathers-annotation-suggestion {
+  display: grid;
+  gap: 0.18rem;
+  width: 100%;
+  padding: 0.72rem 0.82rem;
+  border: 1px solid rgba(138, 162, 191, 0.18);
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.035);
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.fathers-annotation-suggestion:hover,
+.fathers-annotation-suggestion:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(var(--reader-accent-rgb), 0.32);
+  background: rgba(var(--reader-accent-rgb), 0.08);
+  outline: none;
+}
+
+.fathers-annotation-suggestion-greek {
+  color: rgba(236, 244, 255, 0.98);
+  font-family: var(--reader-greek-font);
+  font-size: calc(var(--reader-greek-text-size) * 0.56);
+  line-height: 1.2;
+}
+
+.fathers-annotation-custom {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.fathers-annotation-custom-field {
+  align-items: stretch;
+}
+
+.fathers-annotation-error {
+  color: rgba(255, 188, 204, 0.95);
+  font-family: var(--reader-ui-font);
+  font-size: 0.82rem;
 }
 
 .verse-stack,

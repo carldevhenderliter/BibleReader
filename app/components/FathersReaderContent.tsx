@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 
+import { FathersEnglishUndertextContent } from "@/app/components/FathersEnglishUndertextContent";
 import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
@@ -12,7 +13,15 @@ import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVis
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import type { GreekToken } from "@/lib/bible/types";
-import type { FathersWorkMeta, FathersWorkPayload } from "@/lib/fathers/types";
+import { saveFathersAnnotationFile } from "@/lib/fathers/annotation-save";
+import { isNa1GreekAnnotationWork } from "@/lib/fathers/annotations";
+import type {
+  FathersGreekUndertextAnnotation,
+  FathersGreekUndertextAnnotationFile,
+  FathersGreekUndertextAnnotationRecord,
+  FathersWorkMeta,
+  FathersWorkPayload
+} from "@/lib/fathers/types";
 
 type FathersReaderContentProps = {
   payload: FathersWorkPayload;
@@ -24,7 +33,25 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
   const { isSplitViewActive } = useLookup();
   const { activeUtilityPane, openGreekDictionary } = useReaderWorkspace();
   const hasGreekReaderAid = payload.segments.some((segment) => segment.greek.trim().length > 0);
+  const isNa1AnnotationWork = isNa1GreekAnnotationWork(payload.work);
   const [activeSectionId, setActiveSectionId] = useState(payload.segments[0]?.id ?? "");
+  const [annotationMode, setAnnotationMode] = useState(false);
+  const [annotationSaveStatus, setAnnotationSaveStatus] = useState<
+    "idle" | "saving" | "saved" | "error"
+  >("idle");
+  const [annotationSaveMessage, setAnnotationSaveMessage] = useState<string | null>(null);
+  const [segmentAnnotations, setSegmentAnnotations] = useState<FathersGreekUndertextAnnotationRecord>(
+    () =>
+      Object.fromEntries(
+        payload.segments.map((segment) => [segment.id, segment.greekUndertextAnnotations ?? []])
+      )
+  );
+  const [persistedSegmentAnnotations, setPersistedSegmentAnnotations] =
+    useState<FathersGreekUndertextAnnotationRecord>(() =>
+      Object.fromEntries(
+        payload.segments.map((segment) => [segment.id, segment.greekUndertextAnnotations ?? []])
+      )
+    );
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
   const sectionOptions = useMemo(
     () =>
@@ -46,6 +73,17 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
   useEffect(() => {
     setActiveSectionId(payload.segments[0]?.id ?? "");
   }, [payload.segments]);
+
+  useEffect(() => {
+    setAnnotationMode(false);
+    setAnnotationSaveStatus("idle");
+    setAnnotationSaveMessage(null);
+    const nextAnnotations = Object.fromEntries(
+      payload.segments.map((segment) => [segment.id, segment.greekUndertextAnnotations ?? []])
+    );
+    setSegmentAnnotations(nextAnnotations);
+    setPersistedSegmentAnnotations(nextAnnotations);
+  }, [payload.segments, payload.work.slug]);
 
   useEffect(() => {
     const initialHash = window.location.hash.replace(/^#/, "");
@@ -130,6 +168,75 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
     window.history.replaceState({}, "", `#${sectionId}`);
   };
 
+  const hasAnnotationChanges = payload.segments.some((segment) => {
+    const initialAnnotations = JSON.stringify(persistedSegmentAnnotations[segment.id] ?? []);
+    const currentAnnotations = JSON.stringify(segmentAnnotations[segment.id] ?? []);
+
+    return initialAnnotations !== currentAnnotations;
+  });
+
+  const handleAnnotationsChange = (
+    segmentId: string,
+    nextAnnotations: FathersGreekUndertextAnnotation[]
+  ) => {
+    setSegmentAnnotations((current) => ({
+      ...current,
+      [segmentId]: nextAnnotations
+    }));
+    setAnnotationSaveStatus("idle");
+    setAnnotationSaveMessage(null);
+  };
+
+  const handleAnnotationSave = async () => {
+    if (!isNa1AnnotationWork || !hasAnnotationChanges) {
+      return;
+    }
+
+    setAnnotationSaveStatus("saving");
+    setAnnotationSaveMessage(null);
+
+    try {
+      const annotationFile: FathersGreekUndertextAnnotationFile = {
+        workSlug: payload.work.slug,
+        annotations: segmentAnnotations
+      };
+      const saveMode = await saveFathersAnnotationFile(annotationFile);
+
+      setAnnotationSaveStatus("saved");
+      setAnnotationSaveMessage(
+        saveMode === "filesystem"
+          ? `Greek undertext annotations saved to ${payload.work.slug}.json.`
+          : "Downloaded annotation JSON. Move it into data/fathers/annotations/ to keep it repo-tracked."
+      );
+      setPersistedSegmentAnnotations(segmentAnnotations);
+    } catch (error) {
+      setAnnotationSaveStatus("error");
+      setAnnotationSaveMessage(
+        error instanceof Error ? error.message : "Unable to save Greek undertext annotations."
+      );
+    }
+  };
+
+  const annotationActions = isNa1AnnotationWork ? (
+    <>
+      <button
+        className={`reader-inline-button${annotationMode ? " is-active" : ""}`}
+        onClick={() => setAnnotationMode((current) => !current)}
+        type="button"
+      >
+        {annotationMode ? "Done annotating" : "Annotate Greek"}
+      </button>
+      <button
+        className="reader-inline-button"
+        disabled={!hasAnnotationChanges || annotationSaveStatus === "saving"}
+        onClick={() => void handleAnnotationSave()}
+        type="button"
+      >
+        {annotationSaveStatus === "saving" ? "Saving…" : "Save Greek"}
+      </button>
+    </>
+  ) : null;
+
   return (
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
       <ReaderSettingsPanel hasGreekReaderAid={hasGreekReaderAid} mode="fathers" />
@@ -156,6 +263,7 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
                 mode="fathers"
                 onSectionChange={handleSectionChange}
                 sections={sectionOptions}
+                trailingActions={annotationActions}
                 works={workOptions}
                 libraryHref="/fathers"
               />
@@ -163,6 +271,14 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
           </div>
         </div>
         <div className="reading-surface fathers-reading-surface">
+          {isNa1AnnotationWork && annotationSaveMessage ? (
+            <div
+              className={`fathers-annotation-status fathers-annotation-status-${annotationSaveStatus}`}
+              role="status"
+            >
+              {annotationSaveMessage}
+            </div>
+          ) : null}
           {payload.segments.map((segment, index) => (
             <article className="fathers-segment-card" id={segment.id} key={segment.id}>
               <div className="fathers-segment-header">
@@ -187,7 +303,19 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
                   }}
                 />
               ) : null}
-              <p className="verse-text verse-text-body fathers-segment-english">{segment.english}</p>
+              {isNa1AnnotationWork ? (
+                <FathersEnglishUndertextContent
+                  annotationMode={annotationMode}
+                  annotations={segmentAnnotations[segment.id] ?? []}
+                  english={segment.english}
+                  englishTokens={segment.englishTokens}
+                  onChangeAnnotations={handleAnnotationsChange}
+                  onOpenGreekDictionary={openGreekDictionary}
+                  segmentId={segment.id}
+                />
+              ) : (
+                <p className="verse-text verse-text-body fathers-segment-english">{segment.english}</p>
+              )}
             </article>
           ))}
         </div>

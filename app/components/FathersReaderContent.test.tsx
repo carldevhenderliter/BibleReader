@@ -1,3 +1,4 @@
+import { jest } from "@jest/globals";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
 import { FathersReaderContent } from "@/app/components/FathersReaderContent";
@@ -9,8 +10,29 @@ import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvide
 import { SearchCustomizationProvider } from "@/app/components/SearchCustomizationProvider";
 import { VerseTranslationOverridesProvider } from "@/app/components/VerseTranslationOverridesProvider";
 import { WritingAssistantProvider } from "@/app/components/WritingAssistantProvider";
+import { tokenizeFathersEnglishText } from "@/lib/fathers/annotations";
 import type { FathersWorkPayload } from "@/lib/fathers/types";
 import { mockRouter, setMockPathname } from "@/test/mocks/next-navigation";
+
+const buildGreekUndertextSuggestionsMock = jest.fn();
+const resolveCustomGreekUndertextMock = jest.fn();
+const saveFathersAnnotationFileMock = jest.fn();
+
+jest.mock("@/lib/fathers/annotations", () => {
+  const actual = jest.requireActual("@/lib/fathers/annotations");
+
+  return {
+    ...actual,
+    buildGreekUndertextSuggestions: (...args: unknown[]) =>
+      buildGreekUndertextSuggestionsMock(...args),
+    resolveCustomGreekUndertext: (...args: unknown[]) =>
+      resolveCustomGreekUndertextMock(...args)
+  };
+});
+
+jest.mock("@/lib/fathers/annotation-save", () => ({
+  saveFathersAnnotationFile: (...args: unknown[]) => saveFathersAnnotationFileMock(...args)
+}));
 
 const payload: FathersWorkPayload = {
   work: {
@@ -76,7 +98,9 @@ const englishOnlyPayload: FathersWorkPayload = {
       greek: "",
       english: "Kefa’s Letter to Ya’akov",
       greekNormalized: "",
-      greekTokens: []
+      greekTokens: [],
+      englishTokens: tokenizeFathersEnglishText("Kefa’s Letter to Ya’akov"),
+      greekUndertextAnnotations: []
     },
     {
       id: "preaching-of-peter:section-1",
@@ -86,7 +110,11 @@ const englishOnlyPayload: FathersWorkPayload = {
       english:
         "Knowing, my brother, your eager desire after that which is for the advantage of us all.",
       greekNormalized: "",
-      greekTokens: []
+      greekTokens: [],
+      englishTokens: tokenizeFathersEnglishText(
+        "Knowing, my brother, your eager desire after that which is for the advantage of us all."
+      ),
+      greekUndertextAnnotations: []
     }
   ]
 };
@@ -143,6 +171,15 @@ function renderFathersReader(currentPayload: FathersWorkPayload = payload) {
 }
 
 describe("FathersReaderContent", () => {
+  beforeEach(() => {
+    buildGreekUndertextSuggestionsMock.mockReset();
+    resolveCustomGreekUndertextMock.mockReset();
+    saveFathersAnnotationFileMock.mockReset();
+    buildGreekUndertextSuggestionsMock.mockResolvedValue([]);
+    resolveCustomGreekUndertextMock.mockResolvedValue(null);
+    saveFathersAnnotationFileMock.mockResolvedValue("download");
+  });
+
   it("renders Greek study tokens with transliteration and gloss lines", () => {
     renderFathersReader();
 
@@ -169,14 +206,93 @@ describe("FathersReaderContent", () => {
 
     expect(screen.getByText("Fathers Reader")).toBeInTheDocument();
     expect(screen.queryByText("Apostolic Fathers")).not.toBeInTheDocument();
-    expect(screen.getByText("Kefa’s Letter to Ya’akov")).toBeInTheDocument();
+    expect(screen.getByText("Kefa’s")).toBeInTheDocument();
+    expect(screen.getByText("Ya’akov")).toBeInTheDocument();
     expect(screen.getAllByText("Chapter I: Doctrine of Reserve").length).toBeGreaterThan(0);
-    expect(
-      screen.getByText(
-        "Knowing, my brother, your eager desire after that which is for the advantage of us all."
-      )
-    ).toBeInTheDocument();
+    expect(document.body.textContent).toContain(
+      "Knowing, my brother, your eager desire after that which is for the advantage of us all."
+    );
     expect(screen.queryByRole("button", { name: /G1577/i })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Annotate Greek" })).toBeInTheDocument();
+  });
+
+  it("adds NA1 Greek undertext annotations and saves them through the local save flow", async () => {
+    buildGreekUndertextSuggestionsMock.mockResolvedValue([
+      {
+        greekText: "Κηφᾶς",
+        entryKey: "G2786",
+        lemma: "Κηφᾶς",
+        strongs: "G2786",
+        transliteration: "Kēphas",
+        gloss: "Cephas"
+      }
+    ]);
+
+    renderFathersReader(englishOnlyPayload);
+
+    fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
+    fireEvent.click(screen.getByRole("button", { name: "Kefa’s" }));
+    fireEvent.click(screen.getByRole("button", { name: "Kefa’s" }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Greek undertext")).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: /Κηφᾶς/i }));
+
+    expect(screen.getByText("Κηφᾶς")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Save Greek" }));
+
+    await waitFor(() => {
+      expect(saveFathersAnnotationFileMock).toHaveBeenCalledWith(
+        expect.objectContaining({
+          workSlug: "preaching-of-peter",
+          annotations: expect.objectContaining({
+            "preaching-of-peter:introduction": [
+              expect.objectContaining({
+                greekText: "Κηφᾶς",
+                startToken: 0,
+                endToken: 0
+              })
+            ]
+          })
+        })
+      );
+    });
+  });
+
+  it("opens the Greek dictionary from a saved NA1 undertext line", async () => {
+    buildGreekUndertextSuggestionsMock.mockResolvedValue([
+      {
+        greekText: "Κηφᾶς",
+        entryKey: "G2786",
+        lemma: "Κηφᾶς",
+        strongs: "G2786",
+        transliteration: "Kēphas",
+        gloss: "Cephas"
+      }
+    ]);
+
+    renderFathersReader(englishOnlyPayload);
+
+    fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
+    fireEvent.click(screen.getByRole("button", { name: "Kefa’s" }));
+    fireEvent.click(screen.getByRole("button", { name: "Kefa’s" }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Greek undertext")).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: /Κηφᾶς/i }));
+    fireEvent.click(screen.getByRole("button", { name: "Done annotating" }));
+    fireEvent.click(screen.getByRole("button", { name: /Kefa’s Κηφᾶς/i }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Greek dictionary")).toBeInTheDocument();
+    });
+
+    expect(document.body.textContent).toContain("kēphas");
   });
 
   it("uses shared reader controls for work navigation and section selection", () => {
