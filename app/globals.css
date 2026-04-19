@@ -939,6 +939,14 @@ select {
   background: rgba(8, 14, 24, 0.34);
 }
 
+.fathers-segment-placeholder {
+  min-height: 8rem;
+  border-radius: 0.9rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012)),
+    rgba(4, 9, 17, 0.46);
+}
+
 .fathers-segment-header {
   display: flex;
   align-items: baseline;

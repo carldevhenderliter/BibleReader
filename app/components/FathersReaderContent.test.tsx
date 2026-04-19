@@ -1,5 +1,5 @@
 import { jest } from "@jest/globals";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 
 import { FathersReaderContent } from "@/app/components/FathersReaderContent";
 import { GreekGlossOverridesProvider } from "@/app/components/GreekGlossOverridesProvider";
@@ -144,6 +144,64 @@ const works = [
   }
 ];
 
+function installIntersectionObserverMock() {
+  const callbacksByElement = new Map<Element, IntersectionObserverCallback[]>();
+
+  class MockIntersectionObserver {
+    constructor(private readonly callback: IntersectionObserverCallback) {}
+
+    observe = (element: Element) => {
+      callbacksByElement.set(element, [
+        ...(callbacksByElement.get(element) ?? []),
+        this.callback
+      ]);
+    };
+
+    unobserve = (element: Element) => {
+      callbacksByElement.delete(element);
+    };
+
+    disconnect = () => {
+      callbacksByElement.clear();
+    };
+
+    takeRecords = () => [];
+  }
+
+  Object.defineProperty(window, "IntersectionObserver", {
+    configurable: true,
+    writable: true,
+    value: MockIntersectionObserver
+  });
+
+  return {
+    trigger(element: Element) {
+      const callbacks = callbacksByElement.get(element);
+
+      if (!callbacks?.length) {
+        return;
+      }
+
+      act(() => {
+        callbacks.forEach((callback) => {
+          callback(
+            [
+              {
+                isIntersecting: true,
+                target: element,
+                boundingClientRect: {
+                  top: 0
+                }
+              } as IntersectionObserverEntry
+            ],
+            {} as IntersectionObserver
+          );
+        });
+      });
+    }
+  };
+}
+
 function renderFathersReader(currentPayload: FathersWorkPayload = payload) {
   setMockPathname(`/fathers/${currentPayload.work.slug}`);
   window.history.replaceState({}, "", `/fathers/${currentPayload.work.slug}`);
@@ -232,7 +290,6 @@ describe("FathersReaderContent", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
     fireEvent.click(screen.getByRole("button", { name: "Kefa’s" }));
-    fireEvent.click(screen.getByRole("button", { name: "Kefa’s" }));
 
     await waitFor(() => {
       expect(screen.getByText("Greek undertext")).toBeInTheDocument();
@@ -278,7 +335,6 @@ describe("FathersReaderContent", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
     fireEvent.click(screen.getByRole("button", { name: "Kefa’s" }));
-    fireEvent.click(screen.getByRole("button", { name: "Kefa’s" }));
 
     await waitFor(() => {
       expect(screen.getByText("Greek undertext")).toBeInTheDocument();
@@ -293,6 +349,67 @@ describe("FathersReaderContent", () => {
     });
 
     expect(document.body.textContent).toContain("kēphas");
+  });
+
+  it("supports phrase selection mode for grouped undertext annotation", async () => {
+    buildGreekUndertextSuggestionsMock.mockResolvedValue([
+      {
+        greekText: "ἐπιστολή",
+        entryKey: "G1992",
+        lemma: "ἐπιστολή",
+        strongs: "G1992",
+        transliteration: "epistolē",
+        gloss: "letter"
+      }
+    ]);
+
+    renderFathersReader(englishOnlyPayload);
+
+    fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
+    fireEvent.click(screen.getByRole("button", { name: "Single word" }));
+    fireEvent.click(screen.getByRole("button", { name: "Kefa’s" }));
+    fireEvent.click(screen.getByRole("button", { name: "Letter" }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Greek undertext")).toBeInTheDocument();
+      expect(document.body.textContent).toContain("Kefa’s Letter");
+    });
+  });
+
+  it("lazy loads distant Fathers sections before rendering their content", async () => {
+    const intersectionObserver = installIntersectionObserverMock();
+    const largePayload: FathersWorkPayload = {
+      ...englishOnlyPayload,
+      work: {
+        ...englishOnlyPayload.work,
+        sectionCount: 10
+      },
+      segments: Array.from({ length: 10 }, (_, index) => ({
+        id: `preaching-of-peter:section-${index + 1}`,
+        ref: `section-${index + 1}`,
+        label: `Section ${index + 1}`,
+        greek: "",
+        english: `Large work section ${index + 1}.`,
+        greekNormalized: "",
+        greekTokens: [],
+        englishTokens: tokenizeFathersEnglishText(`Large work section ${index + 1}.`),
+        greekUndertextAnnotations: []
+      }))
+    };
+
+    renderFathersReader(largePayload);
+
+    expect(document.body.textContent).toContain("Large work section 1.");
+    expect(screen.queryByText("Large work section 10.")).not.toBeInTheDocument();
+
+    const distantSection = document.getElementById("preaching-of-peter:section-10");
+    expect(distantSection).not.toBeNull();
+
+    intersectionObserver.trigger(distantSection as Element);
+
+    await waitFor(() => {
+      expect(document.body.textContent).toContain("Large work section 10.");
+    });
   });
 
   it("uses shared reader controls for work navigation and section selection", () => {

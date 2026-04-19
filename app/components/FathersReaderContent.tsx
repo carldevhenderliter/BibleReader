@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { FathersEnglishUndertextContent } from "@/app/components/FathersEnglishUndertextContent";
 import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
@@ -28,6 +28,67 @@ type FathersReaderContentProps = {
   works: FathersWorkMeta[];
 };
 
+type LazyFathersSegmentSectionProps = {
+  segmentId: string;
+  initialRender: boolean;
+  children: React.ReactNode;
+};
+
+function LazyFathersSegmentSection({
+  segmentId,
+  initialRender,
+  children
+}: LazyFathersSegmentSectionProps) {
+  const [shouldRenderSection, setShouldRenderSection] = useState(initialRender);
+  const sectionRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (initialRender) {
+      setShouldRenderSection(true);
+    }
+  }, [initialRender]);
+
+  useEffect(() => {
+    if (shouldRenderSection) {
+      return;
+    }
+
+    const sectionElement = sectionRef.current;
+
+    if (!sectionElement) {
+      return;
+    }
+
+    if (typeof IntersectionObserver === "undefined") {
+      setShouldRenderSection(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setShouldRenderSection(true);
+        }
+      },
+      {
+        rootMargin: "1400px 0px"
+      }
+    );
+
+    observer.observe(sectionElement);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [shouldRenderSection]);
+
+  return (
+    <article className="fathers-segment-card" id={segmentId} ref={sectionRef}>
+      {shouldRenderSection ? children : <div className="fathers-segment-placeholder" />}
+    </article>
+  );
+}
+
 export function FathersReaderContent({ payload, works }: FathersReaderContentProps) {
   const { isPanelOpen, settings } = useReaderCustomization();
   const { isSplitViewActive } = useLookup();
@@ -36,10 +97,16 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
   const isNa1AnnotationWork = isNa1GreekAnnotationWork(payload.work);
   const [activeSectionId, setActiveSectionId] = useState(payload.segments[0]?.id ?? "");
   const [annotationMode, setAnnotationMode] = useState(false);
+  const [annotationSelectionMode, setAnnotationSelectionMode] = useState<"word" | "phrase">(
+    "word"
+  );
   const [annotationSaveStatus, setAnnotationSaveStatus] = useState<
     "idle" | "saving" | "saved" | "error"
   >("idle");
   const [annotationSaveMessage, setAnnotationSaveMessage] = useState<string | null>(null);
+  const [prioritizedSectionIds, setPrioritizedSectionIds] = useState<string[]>(() =>
+    payload.segments.slice(0, 8).map((segment) => segment.id)
+  );
   const [segmentAnnotations, setSegmentAnnotations] = useState<FathersGreekUndertextAnnotationRecord>(
     () =>
       Object.fromEntries(
@@ -76,11 +143,13 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
 
   useEffect(() => {
     setAnnotationMode(false);
+    setAnnotationSelectionMode("word");
     setAnnotationSaveStatus("idle");
     setAnnotationSaveMessage(null);
     const nextAnnotations = Object.fromEntries(
       payload.segments.map((segment) => [segment.id, segment.greekUndertextAnnotations ?? []])
     );
+    setPrioritizedSectionIds(payload.segments.slice(0, 8).map((segment) => segment.id));
     setSegmentAnnotations(nextAnnotations);
     setPersistedSegmentAnnotations(nextAnnotations);
   }, [payload.segments, payload.work.slug]);
@@ -99,6 +168,9 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
     }
 
     setActiveSectionId(target.id);
+    setPrioritizedSectionIds((current) =>
+      current.includes(target.id) ? current : [...current, target.id]
+    );
 
     window.requestAnimationFrame(() => {
       document.getElementById(target.id)?.scrollIntoView?.({ block: "start" });
@@ -164,6 +236,9 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
 
   const handleSectionChange = (sectionId: string) => {
     setActiveSectionId(sectionId);
+    setPrioritizedSectionIds((current) =>
+      current.includes(sectionId) ? current : [...current, sectionId]
+    );
     document.getElementById(sectionId)?.scrollIntoView?.({ block: "start" });
     window.history.replaceState({}, "", `#${sectionId}`);
   };
@@ -221,11 +296,34 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
     <>
       <button
         className={`reader-inline-button${annotationMode ? " is-active" : ""}`}
-        onClick={() => setAnnotationMode((current) => !current)}
+        onClick={() => {
+          setAnnotationMode((current) => {
+            const nextValue = !current;
+
+            if (!nextValue) {
+              setAnnotationSelectionMode("word");
+            }
+
+            return nextValue;
+          });
+        }}
         type="button"
       >
         {annotationMode ? "Done annotating" : "Annotate Greek"}
       </button>
+      {annotationMode ? (
+        <button
+          className={`reader-inline-button${
+            annotationSelectionMode === "phrase" ? " is-active" : ""
+          }`}
+          onClick={() =>
+            setAnnotationSelectionMode((current) => (current === "word" ? "phrase" : "word"))
+          }
+          type="button"
+        >
+          {annotationSelectionMode === "word" ? "Single word" : "Phrase mode"}
+        </button>
+      ) : null}
       <button
         className="reader-inline-button"
         disabled={!hasAnnotationChanges || annotationSaveStatus === "saving"}
@@ -280,7 +378,11 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
             </div>
           ) : null}
           {payload.segments.map((segment, index) => (
-            <article className="fathers-segment-card" id={segment.id} key={segment.id}>
+            <LazyFathersSegmentSection
+              initialRender={prioritizedSectionIds.includes(segment.id) || index < 8}
+              key={segment.id}
+              segmentId={segment.id}
+            >
               <div className="fathers-segment-header">
                 <p className="reader-toolbar-summary fathers-segment-label">{segment.label}</p>
                 {segment.ref !== segment.label ? (
@@ -311,12 +413,13 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
                   englishTokens={segment.englishTokens}
                   onChangeAnnotations={handleAnnotationsChange}
                   onOpenGreekDictionary={openGreekDictionary}
+                  selectionMode={annotationSelectionMode}
                   segmentId={segment.id}
                 />
               ) : (
                 <p className="verse-text verse-text-body fathers-segment-english">{segment.english}</p>
               )}
-            </article>
+            </LazyFathersSegmentSection>
           ))}
         </div>
         {!isSplitViewActive && activeUtilityPane === "strongs" ? (

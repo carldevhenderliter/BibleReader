@@ -22,6 +22,7 @@ type FathersEnglishUndertextContentProps = {
   englishTokens?: FathersEnglishToken[];
   annotations: FathersGreekUndertextAnnotation[];
   annotationMode: boolean;
+  selectionMode: "word" | "phrase";
   onChangeAnnotations: (segmentId: string, annotations: FathersGreekUndertextAnnotation[]) => void;
   onOpenGreekDictionary?: (selection: {
     entryKey: string;
@@ -96,6 +97,7 @@ export function FathersEnglishUndertextContent({
   englishTokens,
   annotations,
   annotationMode,
+  selectionMode,
   onChangeAnnotations,
   onOpenGreekDictionary
 }: FathersEnglishUndertextContentProps) {
@@ -140,6 +142,10 @@ export function FathersEnglishUndertextContent({
       setEditorError(null);
     }
   }, [annotationMode]);
+
+  useEffect(() => {
+    setPendingStartToken(null);
+  }, [selectionMode]);
 
   useEffect(() => {
     if (!annotationMode || !activeEditor || !selectedSpanText) {
@@ -216,6 +222,11 @@ export function FathersEnglishUndertextContent({
         endToken: existingAnnotation.endToken,
         existingAnnotation
       });
+      return;
+    }
+
+    if (selectionMode === "word") {
+      openEditor(wordIndex, wordIndex);
       return;
     }
 
@@ -455,11 +466,15 @@ export function FathersEnglishUndertextContent({
             <p className="reader-toolbar-meta">
               Greek undertext for: <strong>{selectedSpanText}</strong>
             </p>
-          ) : pendingStartToken !== null ? (
+          ) : selectionMode === "phrase" && pendingStartToken !== null ? (
             <p className="reader-toolbar-meta">Select another word to finish the phrase span.</p>
+          ) : selectionMode === "phrase" ? (
+            <p className="reader-toolbar-meta">
+              Phrase mode: click the first word, then the last word in the phrase.
+            </p>
           ) : (
             <p className="reader-toolbar-meta">
-              Click one English word, or click a start word and an end word for a phrase.
+              Single-word mode: click any English word to annotate it immediately.
             </p>
           )}
         </div>
