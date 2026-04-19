@@ -3,15 +3,18 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 
+import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
 import {
   annotationContainsWord,
   buildGreekUndertextSuggestions,
+  type FathersScriptureLookupResult,
   findIntersectingAnnotation,
   getAddableFathersAnnotationWordIndexes,
   getFathersEnglishSpanText,
   removeSegmentAnnotation,
   replaceSegmentAnnotation,
   searchGreekUndertextSuggestions,
+  searchScriptureUndertextPassages,
   resolveCustomGreekUndertext
 } from "@/lib/fathers/annotations";
 import type {
@@ -121,15 +124,19 @@ export function FathersEnglishUndertextContent({
 }: FathersEnglishUndertextContentProps) {
   const [activeEditor, setActiveEditor] = useState<ActiveEditorState | null>(null);
   const [customGreekText, setCustomGreekText] = useState("");
-  const [activeSuggestionsTab, setActiveSuggestionsTab] = useState<"auto" | "search">("auto");
+  const [activeSuggestionsTab, setActiveSuggestionsTab] = useState<"auto" | "search" | "scripture">("auto");
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState<UndertextSuggestion[]>([]);
   const [searchResults, setSearchResults] = useState<UndertextSuggestion[]>([]);
+  const [scriptureQuery, setScriptureQuery] = useState("");
+  const [scriptureResults, setScriptureResults] = useState<FathersScriptureLookupResult[]>([]);
   const [isLoadingSuggestions, setIsLoadingSuggestions] = useState(false);
   const [isSearchLoading, setIsSearchLoading] = useState(false);
+  const [isScriptureLoading, setIsScriptureLoading] = useState(false);
   const [isSavingCustom, setIsSavingCustom] = useState(false);
   const [editorError, setEditorError] = useState<string | null>(null);
   const [searchError, setSearchError] = useState<string | null>(null);
+  const [scriptureError, setScriptureError] = useState<string | null>(null);
   const customInputRef = useRef<HTMLInputElement | null>(null);
 
   const selectedSpanText = useMemo(() => {
@@ -155,7 +162,10 @@ export function FathersEnglishUndertextContent({
       setActiveSuggestionsTab("auto");
       setSearchQuery("");
       setSearchResults([]);
+      setScriptureQuery("");
+      setScriptureResults([]);
       setSearchError(null);
+      setScriptureError(null);
       setEditorError(null);
     }
   }, [annotationMode]);
@@ -214,8 +224,11 @@ export function FathersEnglishUndertextContent({
     setActiveSuggestionsTab("auto");
     setSearchQuery("");
     setSearchResults([]);
+    setScriptureQuery("");
+    setScriptureResults([]);
     setEditorError(null);
     setSearchError(null);
+    setScriptureError(null);
   };
 
   const openEditor = (
@@ -227,9 +240,12 @@ export function FathersEnglishUndertextContent({
 
     setEditorError(null);
     setSearchError(null);
+    setScriptureError(null);
     setActiveSuggestionsTab("auto");
     setSearchQuery("");
     setSearchResults([]);
+    setScriptureQuery("");
+    setScriptureResults([]);
     setActiveEditor({
       startToken: existingAnnotation?.startToken ?? startToken,
       endToken: existingAnnotation?.endToken ?? endToken,
@@ -248,9 +264,12 @@ export function FathersEnglishUndertextContent({
     if (existingAnnotation) {
       setEditorError(null);
       setSearchError(null);
+      setScriptureError(null);
       setActiveSuggestionsTab("auto");
       setSearchQuery("");
       setSearchResults([]);
+      setScriptureQuery("");
+      setScriptureResults([]);
       setActiveEditor({
         startToken: existingAnnotation.startToken,
         endToken: existingAnnotation.endToken,
@@ -493,6 +512,54 @@ export function FathersEnglishUndertextContent({
     };
   }, [activeEditor, activeSuggestionsTab, searchQuery]);
 
+  useEffect(() => {
+    if (!activeEditor || activeSuggestionsTab !== "scripture") {
+      setScriptureResults([]);
+      setIsScriptureLoading(false);
+      setScriptureError(null);
+      return;
+    }
+
+    const trimmedQuery = scriptureQuery.trim();
+
+    if (!trimmedQuery) {
+      setScriptureResults([]);
+      setIsScriptureLoading(false);
+      setScriptureError(null);
+      return;
+    }
+
+    let isCancelled = false;
+    const timeoutId = window.setTimeout(() => {
+      setIsScriptureLoading(true);
+      setScriptureError(null);
+
+      void searchScriptureUndertextPassages(trimmedQuery)
+        .then((nextResults) => {
+          if (isCancelled) {
+            return;
+          }
+
+          setScriptureResults(nextResults);
+          setIsScriptureLoading(false);
+        })
+        .catch(() => {
+          if (isCancelled) {
+            return;
+          }
+
+          setScriptureResults([]);
+          setIsScriptureLoading(false);
+          setScriptureError("Unable to search scripture right now.");
+        });
+    }, 180);
+
+    return () => {
+      isCancelled = true;
+      window.clearTimeout(timeoutId);
+    };
+  }, [activeEditor, activeSuggestionsTab, scriptureQuery]);
+
   const renderedContent: ReactNode[] = [];
   let annotationIndex = 0;
 
@@ -694,6 +761,17 @@ export function FathersEnglishUndertextContent({
                       >
                         Search
                       </button>
+                      <button
+                        aria-selected={activeSuggestionsTab === "scripture"}
+                        className={`fathers-annotation-tab${
+                          activeSuggestionsTab === "scripture" ? " is-active" : ""
+                        }`}
+                        onClick={() => setActiveSuggestionsTab("scripture")}
+                        role="tab"
+                        type="button"
+                      >
+                        Scripture
+                      </button>
                     </div>
                     {activeSuggestionsTab === "auto" ? (
                       <>
@@ -725,7 +803,7 @@ export function FathersEnglishUndertextContent({
                           </p>
                         )}
                       </>
-                    ) : (
+                    ) : activeSuggestionsTab === "search" ? (
                       <div className="fathers-annotation-search-panel">
                         <label
                           className="reader-settings-field fathers-annotation-search-field"
@@ -770,6 +848,69 @@ export function FathersEnglishUndertextContent({
                         ) : (
                           <p className="reader-toolbar-meta">
                             No Greek dictionary entries matched that English search yet.
+                          </p>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="fathers-annotation-search-panel">
+                        <label
+                          className="reader-settings-field fathers-annotation-search-field"
+                          htmlFor={`${segmentId}:scripture-search`}
+                        >
+                          <span>Scripture lookup</span>
+                          <input
+                            id={`${segmentId}:scripture-search`}
+                            onChange={(event) => setScriptureQuery(event.currentTarget.value)}
+                            placeholder="Type a word or phrase"
+                            type="search"
+                            value={scriptureQuery}
+                          />
+                        </label>
+                        {isScriptureLoading ? (
+                          <p className="reader-toolbar-meta">Searching scripture…</p>
+                        ) : scriptureError ? (
+                          <p className="fathers-annotation-error">{scriptureError}</p>
+                        ) : !scriptureQuery.trim() ? (
+                          <p className="reader-toolbar-meta">
+                            Type a word or phrase to find matching verses with Greek tokens underneath.
+                          </p>
+                        ) : scriptureResults.length ? (
+                          <div className="fathers-scripture-search-results">
+                            {scriptureResults.map((result) => (
+                              <article className="fathers-scripture-search-result" key={result.id}>
+                                <div className="fathers-scripture-search-header">
+                                  <p className="fathers-scripture-search-reference">{result.label}</p>
+                                  <p className="fathers-scripture-search-description">
+                                    {result.description}
+                                  </p>
+                                </div>
+                                <p className="fathers-scripture-search-preview">{result.preview}</p>
+                                {result.greekTokens?.length ? (
+                                  <GreekVerseTextContent
+                                    className="verse-text verse-text-greek fathers-scripture-search-greek"
+                                    displayMode="stacked"
+                                    onOpenGreekDictionary={onOpenGreekDictionary}
+                                    showGloss={false}
+                                    showLemma={false}
+                                    showTransliteration={false}
+                                    verse={{
+                                      number: result.verseNumber,
+                                      text: result.greekTokens
+                                        .map(
+                                          (token) =>
+                                            `${token.surface}${token.trailingPunctuation ?? ""}`
+                                        )
+                                        .join(" "),
+                                      greekTokens: result.greekTokens
+                                    }}
+                                  />
+                                ) : null}
+                              </article>
+                            ))}
+                          </div>
+                        ) : (
+                          <p className="reader-toolbar-meta">
+                            No scripture verses matched that lookup yet.
                           </p>
                         )}
                       </div>

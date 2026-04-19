@@ -1225,6 +1225,54 @@ button.fathers-annotation-anchor:focus-visible {
   align-content: start;
 }
 
+.fathers-scripture-search-results {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.fathers-scripture-search-result {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.78rem 0.82rem;
+  border: 1px solid rgba(138, 162, 191, 0.18);
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.fathers-scripture-search-header {
+  display: grid;
+  gap: 0.12rem;
+}
+
+.fathers-scripture-search-reference,
+.fathers-scripture-search-description,
+.fathers-scripture-search-preview {
+  margin: 0;
+}
+
+.fathers-scripture-search-reference {
+  color: rgba(242, 247, 255, 0.98);
+  font-family: var(--reader-ui-font);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.fathers-scripture-search-description {
+  color: rgba(197, 212, 228, 0.72);
+  font-family: var(--reader-ui-font);
+  font-size: 0.76rem;
+}
+
+.fathers-scripture-search-preview {
+  color: rgba(232, 239, 248, 0.92);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.fathers-scripture-search-greek {
+  margin-top: 0.1rem;
+}
+
 .fathers-annotation-suggestion {
   display: grid;
   gap: 0.18rem;

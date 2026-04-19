@@ -16,6 +16,7 @@ import { mockRouter, setMockPathname } from "@/test/mocks/next-navigation";
 
 const buildGreekUndertextSuggestionsMock = jest.fn();
 const searchGreekUndertextSuggestionsMock = jest.fn();
+const searchScriptureUndertextPassagesMock = jest.fn();
 const resolveCustomGreekUndertextMock = jest.fn();
 const saveFathersAnnotationFileMock = jest.fn();
 
@@ -28,6 +29,8 @@ jest.mock("@/lib/fathers/annotations", () => {
       buildGreekUndertextSuggestionsMock(...args),
     searchGreekUndertextSuggestions: (...args: unknown[]) =>
       searchGreekUndertextSuggestionsMock(...args),
+    searchScriptureUndertextPassages: (...args: unknown[]) =>
+      searchScriptureUndertextPassagesMock(...args),
     resolveCustomGreekUndertext: (...args: unknown[]) =>
       resolveCustomGreekUndertextMock(...args)
   };
@@ -235,10 +238,12 @@ describe("FathersReaderContent", () => {
   beforeEach(() => {
     buildGreekUndertextSuggestionsMock.mockReset();
     searchGreekUndertextSuggestionsMock.mockReset();
+    searchScriptureUndertextPassagesMock.mockReset();
     resolveCustomGreekUndertextMock.mockReset();
     saveFathersAnnotationFileMock.mockReset();
     buildGreekUndertextSuggestionsMock.mockResolvedValue([]);
     searchGreekUndertextSuggestionsMock.mockResolvedValue([]);
+    searchScriptureUndertextPassagesMock.mockResolvedValue([]);
     resolveCustomGreekUndertextMock.mockResolvedValue(null);
     saveFathersAnnotationFileMock.mockResolvedValue("download");
   });
@@ -514,6 +519,59 @@ describe("FathersReaderContent", () => {
 
     expect(screen.getByRole("dialog", { name: "Greek undertext editor" })).toBeInTheDocument();
     expect((screen.getByLabelText("Custom Greek") as HTMLInputElement).value).toBe("ἀρχή");
+  });
+
+  it("shows scripture lookup results with Greek words under each verse", async () => {
+    searchScriptureUndertextPassagesMock.mockResolvedValue([
+      {
+        id: "verse:john:1:1:esv",
+        bookSlug: "john",
+        chapterNumber: 1,
+        verseNumber: 1,
+        label: "John 1:1",
+        description: "ESV scripture lookup",
+        preview: "In the beginning was the Word.",
+        greekTokens: [
+          {
+            surface: "Ἐν",
+            lemma: "ἐν",
+            entryKey: "G1722",
+            strongs: "G1722",
+            transliteration: "En",
+            gloss: "in"
+          },
+          {
+            surface: "ἀρχῇ",
+            lemma: "ἀρχή",
+            entryKey: "G746",
+            strongs: "G746",
+            transliteration: "archē",
+            gloss: "beginning"
+          }
+        ]
+      }
+    ]);
+
+    renderFathersReader(englishOnlyPayload);
+
+    fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
+    fireEvent.click(screen.getByRole("button", { name: "Add Greek undertext for Kefa’s" }));
+
+    await screen.findByRole("dialog", { name: "Greek undertext editor" });
+
+    fireEvent.click(screen.getByRole("tab", { name: "Scripture" }));
+    fireEvent.change(screen.getByLabelText("Scripture lookup"), {
+      target: { value: "beginning" }
+    });
+
+    await waitFor(() => {
+      expect(searchScriptureUndertextPassagesMock).toHaveBeenCalledWith("beginning");
+    });
+
+    expect(screen.getByText("John 1:1")).toBeInTheDocument();
+    expect(screen.getByText("In the beginning was the Word.")).toBeInTheDocument();
+    expect(screen.getByText("Ἐν")).toBeInTheDocument();
+    expect(screen.getByText("ἀρχῇ")).toBeInTheDocument();
   });
 
   it("only unlocks immediately adjacent words after the first annotation", async () => {

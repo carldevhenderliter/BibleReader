@@ -1,4 +1,6 @@
 import { lookupGreekDictionary } from "@/lib/bible/greek";
+import { searchBible } from "@/lib/bible/search";
+import type { BibleSearchVerseEntry, GreekToken } from "@/lib/bible/types";
 import { NA1_FATHERS_WORK_SLUGS } from "@/lib/fathers/constants";
 import type {
   FathersEnglishToken,
@@ -21,8 +23,20 @@ export type FathersGreekUndertextSuggestion = {
   gloss?: string;
 };
 
+export type FathersScriptureLookupResult = {
+  id: string;
+  bookSlug: string;
+  chapterNumber: number;
+  verseNumber: number;
+  label: string;
+  description: string;
+  preview: string;
+  greekTokens?: GreekToken[];
+};
+
 const NA1_GREEK_ANNOTATION_WORK_SLUG_SET = new Set<string>(NA1_GREEK_ANNOTATION_WORK_SLUGS);
 const ENGLISH_WORD_PATTERN = /[\p{L}\p{N}]+(?:['’\-][\p{L}\p{N}]+)*/gu;
+let esvVerseIndexPromise: Promise<BibleSearchVerseEntry[]> | null = null;
 
 function isFiniteInteger(value: unknown): value is number {
   return typeof value === "number" && Number.isInteger(value) && Number.isFinite(value);
@@ -352,6 +366,16 @@ async function lookupGreekSuggestionsFromQuery(query: string) {
   }));
 }
 
+async function getEsvVerseIndex() {
+  if (!esvVerseIndexPromise) {
+    esvVerseIndexPromise = import("@/data/bible/search/esv.json").then(
+      (module) => ((module as { default: BibleSearchVerseEntry[] }).default ?? [])
+    );
+  }
+
+  return esvVerseIndexPromise;
+}
+
 export async function searchGreekUndertextSuggestions(query: string, limit = 8) {
   const trimmedQuery = query.trim();
 
@@ -374,6 +398,47 @@ export async function searchGreekUndertextSuggestions(query: string, limit = 8) 
       })),
     limit
   );
+}
+
+export async function searchScriptureUndertextPassages(query: string, limit = 8) {
+  const trimmedQuery = query.trim();
+
+  if (!trimmedQuery) {
+    return [];
+  }
+
+  const [results, esvVerseIndex] = await Promise.all([
+    searchBible(trimmedQuery, "esv"),
+    getEsvVerseIndex()
+  ]);
+  const verseEntriesByKey = new Map(
+    esvVerseIndex.map((entry) => [
+      `${entry.bookSlug}:${entry.chapterNumber}:${entry.verseNumber}`,
+      entry
+    ])
+  );
+
+  return results
+    .filter(
+      (result): result is Extract<(typeof results)[number], { type: "verse" }> => result.type === "verse"
+    )
+    .slice(0, limit)
+    .map((result) => {
+      const verseEntry = verseEntriesByKey.get(
+        `${result.bookSlug}:${result.chapterNumber}:${result.verseNumber}`
+      );
+
+      return {
+        id: result.id,
+        bookSlug: result.bookSlug,
+        chapterNumber: result.chapterNumber,
+        verseNumber: result.verseNumber,
+        label: result.label,
+        description: result.description,
+        preview: result.preview,
+        greekTokens: verseEntry?.greekTokens
+      } satisfies FathersScriptureLookupResult;
+    });
 }
 
 export async function buildGreekUndertextSuggestions(

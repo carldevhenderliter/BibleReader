@@ -10,14 +10,20 @@ import {
 } from "@/lib/fathers/annotations";
 
 const lookupGreekDictionaryMock = jest.fn();
+const searchBibleMock = jest.fn();
 
 jest.mock("@/lib/bible/greek", () => ({
   lookupGreekDictionary: (...args: unknown[]) => lookupGreekDictionaryMock(...args)
 }));
 
+jest.mock("@/lib/bible/search", () => ({
+  searchBible: (...args: unknown[]) => searchBibleMock(...args)
+}));
+
 describe("fathers annotations", () => {
   beforeEach(() => {
     lookupGreekDictionaryMock.mockReset();
+    searchBibleMock.mockReset();
   });
 
   it("tokenizes English text deterministically and preserves separators", () => {
@@ -179,6 +185,40 @@ describe("fathers annotations", () => {
       expect.objectContaining({
         greekText: "ἀρχή",
         entryKey: "G746"
+      })
+    ]);
+  });
+
+  it("returns scripture lookup passages with attached Greek tokens", async () => {
+    searchBibleMock.mockResolvedValue([
+      {
+        type: "verse",
+        id: "verse:john:1:1:esv",
+        bookSlug: "john",
+        chapterNumber: 1,
+        verseNumber: 1,
+        label: "John 1:1",
+        description: "Verse match",
+        href: "/read/john/1#v1",
+        preview: "In the beginning was the Word."
+      }
+    ]);
+
+    const importSearchIndex = await import("@/data/bible/search/esv.json");
+    const [entry] = (importSearchIndex.default ?? []).filter(
+      (candidate) =>
+        candidate.bookSlug === "john" &&
+        candidate.chapterNumber === 1 &&
+        candidate.verseNumber === 1
+    );
+
+    const { searchScriptureUndertextPassages } = await import("@/lib/fathers/annotations");
+
+    await expect(searchScriptureUndertextPassages("beginning", 1)).resolves.toEqual([
+      expect.objectContaining({
+        label: "John 1:1",
+        preview: "In the beginning was the Word.",
+        greekTokens: entry?.greekTokens
       })
     ]);
   });
