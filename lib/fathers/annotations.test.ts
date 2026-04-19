@@ -193,18 +193,22 @@ describe("fathers annotations", () => {
     searchBibleMock.mockResolvedValue([
       {
         type: "verse",
-        id: "verse:john:1:1:esv",
+        id: "verse:john:1:1:kjv",
         bookSlug: "john",
         chapterNumber: 1,
         verseNumber: 1,
         label: "John 1:1",
         description: "Verse match",
         href: "/read/john/1#v1",
-        preview: "In the beginning was the Word."
+        preview: "In the beginning was the Word.",
+        tokens: [
+          { text: "In", strongsNumbers: ["G1722"] },
+          { text: " the beginning", strongsNumbers: ["G746"] }
+        ]
       }
     ]);
 
-    const importSearchIndex = await import("@/data/bible/search/esv.json");
+    const importSearchIndex = await import("@/data/bible/search/kjv.json");
     const [entry] = (importSearchIndex.default ?? []).filter(
       (candidate) =>
         candidate.bookSlug === "john" &&
@@ -214,12 +218,15 @@ describe("fathers annotations", () => {
 
     const { searchScriptureUndertextPassages } = await import("@/lib/fathers/annotations");
 
-    await expect(searchScriptureUndertextPassages("beginning", 1)).resolves.toEqual([
+    await expect(searchScriptureUndertextPassages("beginning", "new-testament", 1)).resolves.toEqual([
       expect.objectContaining({
         label: "John 1:1",
         preview: "In the beginning was the Word.",
-        greekTokens: entry?.greekTokens
+        description: "KJV New Testament lookup",
+        tokens: entry?.tokens
       })
     ]);
+
+    expect(searchBibleMock).toHaveBeenCalledWith("beginning", "kjv", "partial", undefined, "new-testament");
   });
 });

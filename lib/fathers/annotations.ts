@@ -1,6 +1,6 @@
 import { lookupGreekDictionary } from "@/lib/bible/greek";
 import { searchBible } from "@/lib/bible/search";
-import type { BibleSearchVerseEntry, GreekToken } from "@/lib/bible/types";
+import type { BibleSearchVerseEntry, SearchScope, VerseToken } from "@/lib/bible/types";
 import { NA1_FATHERS_WORK_SLUGS } from "@/lib/fathers/constants";
 import type {
   FathersEnglishToken,
@@ -31,12 +31,12 @@ export type FathersScriptureLookupResult = {
   label: string;
   description: string;
   preview: string;
-  greekTokens?: GreekToken[];
+  tokens?: VerseToken[];
 };
 
 const NA1_GREEK_ANNOTATION_WORK_SLUG_SET = new Set<string>(NA1_GREEK_ANNOTATION_WORK_SLUGS);
 const ENGLISH_WORD_PATTERN = /[\p{L}\p{N}]+(?:['’\-][\p{L}\p{N}]+)*/gu;
-let esvVerseIndexPromise: Promise<BibleSearchVerseEntry[]> | null = null;
+let kjvVerseIndexPromise: Promise<BibleSearchVerseEntry[]> | null = null;
 
 function isFiniteInteger(value: unknown): value is number {
   return typeof value === "number" && Number.isInteger(value) && Number.isFinite(value);
@@ -366,14 +366,14 @@ async function lookupGreekSuggestionsFromQuery(query: string) {
   }));
 }
 
-async function getEsvVerseIndex() {
-  if (!esvVerseIndexPromise) {
-    esvVerseIndexPromise = import("@/data/bible/search/esv.json").then(
+async function getKjvVerseIndex() {
+  if (!kjvVerseIndexPromise) {
+    kjvVerseIndexPromise = import("@/data/bible/search/kjv.json").then(
       (module) => ((module as { default: BibleSearchVerseEntry[] }).default ?? [])
     );
   }
 
-  return esvVerseIndexPromise;
+  return kjvVerseIndexPromise;
 }
 
 export async function searchGreekUndertextSuggestions(query: string, limit = 8) {
@@ -400,19 +400,23 @@ export async function searchGreekUndertextSuggestions(query: string, limit = 8) 
   );
 }
 
-export async function searchScriptureUndertextPassages(query: string, limit = 8) {
+export async function searchScriptureUndertextPassages(
+  query: string,
+  scope: SearchScope = "all",
+  limit = 8
+) {
   const trimmedQuery = query.trim();
 
   if (!trimmedQuery) {
     return [];
   }
 
-  const [results, esvVerseIndex] = await Promise.all([
-    searchBible(trimmedQuery, "esv"),
-    getEsvVerseIndex()
+  const [results, kjvVerseIndex] = await Promise.all([
+    searchBible(trimmedQuery, "kjv", "partial", undefined, scope),
+    getKjvVerseIndex()
   ]);
   const verseEntriesByKey = new Map(
-    esvVerseIndex.map((entry) => [
+    kjvVerseIndex.map((entry) => [
       `${entry.bookSlug}:${entry.chapterNumber}:${entry.verseNumber}`,
       entry
     ])
@@ -434,9 +438,14 @@ export async function searchScriptureUndertextPassages(query: string, limit = 8)
         chapterNumber: result.chapterNumber,
         verseNumber: result.verseNumber,
         label: result.label,
-        description: result.description,
+        description:
+          scope === "old-testament"
+            ? "KJV Old Testament lookup"
+            : scope === "new-testament"
+              ? "KJV New Testament lookup"
+              : "KJV scripture lookup",
         preview: result.preview,
-        greekTokens: verseEntry?.greekTokens
+        tokens: verseEntry?.tokens ?? result.tokens
       } satisfies FathersScriptureLookupResult;
     });
 }

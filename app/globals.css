@@ -1230,6 +1230,13 @@ button.fathers-annotation-anchor:focus-visible {
   gap: 0.7rem;
 }
 
+.fathers-scripture-search-controls {
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: minmax(0, 1.8fr) minmax(11rem, 1fr);
+  align-items: end;
+}
+
 .fathers-scripture-search-result {
   display: grid;
   gap: 0.5rem;
@@ -1271,6 +1278,45 @@ button.fathers-annotation-anchor:focus-visible {
 
 .fathers-scripture-search-greek {
   margin-top: 0.1rem;
+}
+
+.fathers-scripture-search-token-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.42rem;
+}
+
+.fathers-scripture-search-token {
+  display: inline-grid;
+  gap: 0.18rem;
+  align-content: start;
+  min-width: 0;
+  padding: 0.42rem 0.5rem;
+  border-radius: 0.72rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.fathers-scripture-search-token-text {
+  color: rgba(240, 246, 255, 0.95);
+  font-size: 0.84rem;
+  line-height: 1.25;
+  white-space: pre-wrap;
+}
+
+.fathers-scripture-search-token-strongs {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: fit-content;
+  min-height: 1.1rem;
+  padding: 0.08rem 0.42rem;
+  border-radius: 999px;
+  background: rgba(170, 203, 255, 0.14);
+  color: rgba(214, 230, 255, 0.98);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1;
 }
 
 .fathers-annotation-suggestion {
@@ -1369,6 +1415,10 @@ button.fathers-annotation-anchor:focus-visible {
 
 @media (max-width: 52rem) {
   .fathers-annotation-popup-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .fathers-scripture-search-controls {
     grid-template-columns: 1fr;
   }
 }

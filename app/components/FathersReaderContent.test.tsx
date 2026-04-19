@@ -524,29 +524,21 @@ describe("FathersReaderContent", () => {
   it("shows scripture lookup results with Greek words under each verse", async () => {
     searchScriptureUndertextPassagesMock.mockResolvedValue([
       {
-        id: "verse:john:1:1:esv",
+        id: "verse:john:1:1:kjv",
         bookSlug: "john",
         chapterNumber: 1,
         verseNumber: 1,
         label: "John 1:1",
-        description: "ESV scripture lookup",
+        description: "KJV New Testament lookup",
         preview: "In the beginning was the Word.",
-        greekTokens: [
+        tokens: [
           {
-            surface: "Ἐν",
-            lemma: "ἐν",
-            entryKey: "G1722",
-            strongs: "G1722",
-            transliteration: "En",
-            gloss: "in"
+            text: "In",
+            strongsNumbers: ["G1722"]
           },
           {
-            surface: "ἀρχῇ",
-            lemma: "ἀρχή",
-            entryKey: "G746",
-            strongs: "G746",
-            transliteration: "archē",
-            gloss: "beginning"
+            text: " the beginning",
+            strongsNumbers: ["G746"]
           }
         ]
       }
@@ -560,18 +552,23 @@ describe("FathersReaderContent", () => {
     await screen.findByRole("dialog", { name: "Greek undertext editor" });
 
     fireEvent.click(screen.getByRole("tab", { name: "Scripture" }));
+    fireEvent.change(screen.getByLabelText("Testament"), {
+      target: { value: "new-testament" }
+    });
     fireEvent.change(screen.getByLabelText("Scripture lookup"), {
       target: { value: "beginning" }
     });
 
     await waitFor(() => {
-      expect(searchScriptureUndertextPassagesMock).toHaveBeenCalledWith("beginning");
+      expect(searchScriptureUndertextPassagesMock).toHaveBeenCalledWith("beginning", "new-testament");
     });
 
     expect(screen.getByText("John 1:1")).toBeInTheDocument();
     expect(screen.getByText("In the beginning was the Word.")).toBeInTheDocument();
-    expect(screen.getByText("Ἐν")).toBeInTheDocument();
-    expect(screen.getByText("ἀρχῇ")).toBeInTheDocument();
+    expect(screen.getByText("In")).toBeInTheDocument();
+    expect(screen.getByText("the beginning")).toBeInTheDocument();
+    expect(screen.getByText("G1722")).toBeInTheDocument();
+    expect(screen.getByText("G746")).toBeInTheDocument();
   });
 
   it("only unlocks immediately adjacent words after the first annotation", async () => {
