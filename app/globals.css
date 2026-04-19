@@ -1105,6 +1105,28 @@ button.fathers-annotation-anchor:focus-visible {
   margin: 0;
 }
 
+.fathers-annotation-popup-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 54;
+  border: 0;
+  background: transparent;
+}
+
+.fathers-annotation-popup {
+  position: fixed;
+  z-index: 58;
+  display: grid;
+  gap: 0.9rem;
+  max-height: min(70vh, 34rem);
+  padding: 0.95rem 1rem 1rem;
+  border: 1px solid rgba(138, 162, 191, 0.18);
+  border-radius: 1rem;
+  background: linear-gradient(180deg, rgba(16, 20, 26, 0.98), rgba(9, 11, 16, 0.99));
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
+  overflow-y: auto;
+}
+
 .fathers-annotation-editor {
   display: grid;
   gap: 0.9rem;
@@ -1190,6 +1212,54 @@ button.fathers-annotation-anchor:focus-visible {
 
 .fathers-annotation-custom-field {
   align-items: stretch;
+}
+
+.fathers-greek-keyboard {
+  display: grid;
+  gap: 0.42rem;
+  margin-top: 0.75rem;
+}
+
+.fathers-greek-keyboard-row {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.fathers-greek-key {
+  min-width: 2rem;
+  min-height: 2rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid rgba(138, 162, 191, 0.18);
+  border-radius: 0.7rem;
+  background: rgba(255, 255, 255, 0.045);
+  color: rgba(236, 244, 255, 0.98);
+  font-family: var(--reader-greek-font);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.fathers-greek-key:hover,
+.fathers-greek-key:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(var(--reader-accent-rgb), 0.32);
+  background: rgba(var(--reader-accent-rgb), 0.08);
+  outline: none;
+}
+
+.fathers-greek-key.is-space-key,
+.fathers-greek-key-action {
+  font-family: var(--reader-ui-font);
+  font-size: 0.82rem;
+}
+
+.fathers-greek-key.is-space-key {
+  min-width: 4.5rem;
 }
 
 .fathers-annotation-error {

@@ -389,6 +389,29 @@ describe("FathersReaderContent", () => {
     ).toBeInTheDocument();
   });
 
+  it("opens the annotation popup under the clicked word and supports Greek keyboard entry", async () => {
+    renderFathersReader(englishOnlyPayload);
+
+    fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
+    fireEvent.click(screen.getByRole("button", { name: "Add Greek undertext for Kefa’s" }));
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole("dialog", { name: "Greek undertext editor" })
+      ).toBeInTheDocument();
+    });
+
+    const customGreekInput = screen.getByLabelText("Custom Greek") as HTMLInputElement;
+    fireEvent.click(screen.getByRole("button", { name: "Insert α" }));
+    fireEvent.click(screen.getByRole("button", { name: "Insert β" }));
+
+    expect(customGreekInput.value).toBe("αβ");
+
+    fireEvent.click(screen.getByRole("button", { name: "Delete Greek character" }));
+
+    expect(customGreekInput.value).toBe("α");
+  });
+
   it("only unlocks immediately adjacent words after the first annotation", async () => {
     buildGreekUndertextSuggestionsMock.mockResolvedValue([
       {

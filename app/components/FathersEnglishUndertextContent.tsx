@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 
 import {
   annotationContainsWord,
@@ -37,7 +38,15 @@ type ActiveEditorState = {
   startToken: number;
   endToken: number;
   existingAnnotation: FathersGreekUndertextAnnotation | null;
+  anchorRect: DOMRect;
 };
+
+const GREEK_KEYBOARD_ROWS = [
+  ["α", "β", "γ", "δ", "ε", "ζ", "η", "θ", "ι", "κ", "λ", "μ"],
+  ["ν", "ξ", "ο", "π", "ρ", "σ", "ς", "τ", "υ", "φ", "χ", "ψ", "ω"],
+  ["ά", "έ", "ή", "ί", "ό", "ύ", "ώ", "ἀ", "ἁ", "ἐ", "ἑ", "ἰ", "ἱ"],
+  ["ὀ", "ὁ", "ὐ", "ὑ", "ὠ", "ὡ", "ᾶ", "ῖ", "ῦ", "ῶ", "·", " "]
+] as const;
 
 function getSelectedWords(
   englishTokens: FathersEnglishToken[],
@@ -115,6 +124,7 @@ export function FathersEnglishUndertextContent({
   const [isLoadingSuggestions, setIsLoadingSuggestions] = useState(false);
   const [isSavingCustom, setIsSavingCustom] = useState(false);
   const [editorError, setEditorError] = useState<string | null>(null);
+  const customInputRef = useRef<HTMLInputElement | null>(null);
 
   const selectedSpanText = useMemo(() => {
     if (!englishTokens || !activeEditor) {
@@ -188,18 +198,29 @@ export function FathersEnglishUndertextContent({
     return <p className="verse-text verse-text-body fathers-segment-english">{english}</p>;
   }
 
-  const openEditor = (startToken: number, endToken: number) => {
+  const closeEditor = () => {
+    setActiveEditor(null);
+    setCustomGreekText("");
+    setEditorError(null);
+  };
+
+  const openEditor = (
+    startToken: number,
+    endToken: number,
+    anchorElement: HTMLElement
+  ) => {
     const existingAnnotation = findIntersectingAnnotation(annotations, startToken, endToken);
 
     setEditorError(null);
     setActiveEditor({
       startToken: existingAnnotation?.startToken ?? startToken,
       endToken: existingAnnotation?.endToken ?? endToken,
-      existingAnnotation
+      existingAnnotation,
+      anchorRect: anchorElement.getBoundingClientRect()
     });
   };
 
-  const handleWordSelection = (wordIndex: number) => {
+  const handleWordSelection = (wordIndex: number, anchorElement: HTMLElement) => {
     if (!annotationMode) {
       return;
     }
@@ -211,12 +232,13 @@ export function FathersEnglishUndertextContent({
       setActiveEditor({
         startToken: existingAnnotation.startToken,
         endToken: existingAnnotation.endToken,
-        existingAnnotation
+        existingAnnotation,
+        anchorRect: anchorElement.getBoundingClientRect()
       });
       return;
     }
 
-    openEditor(wordIndex, wordIndex);
+    openEditor(wordIndex, wordIndex, anchorElement);
   };
 
   const handleSuggestionSave = (suggestion: {
@@ -248,9 +270,7 @@ export function FathersEnglishUndertextContent({
         source: "lexicon"
       })
     );
-    setActiveEditor(null);
-    setCustomGreekText("");
-    setEditorError(null);
+    closeEditor();
   };
 
   const handleCustomSave = async () => {
@@ -279,8 +299,7 @@ export function FathersEnglishUndertextContent({
           source: "custom"
         })
       );
-      setActiveEditor(null);
-      setCustomGreekText("");
+      closeEditor();
     } catch {
       setEditorError("Unable to save this Greek undertext right now.");
     } finally {
@@ -297,9 +316,56 @@ export function FathersEnglishUndertextContent({
       segmentId,
       removeSegmentAnnotation(annotations, activeEditor.existingAnnotation)
     );
-    setActiveEditor(null);
-    setCustomGreekText("");
-    setEditorError(null);
+    closeEditor();
+  };
+
+  const insertGreekText = (text: string) => {
+    const input = customInputRef.current;
+    const selectionStart = input?.selectionStart ?? customGreekText.length;
+    const selectionEnd = input?.selectionEnd ?? customGreekText.length;
+
+    setCustomGreekText((current) => {
+      const nextValue = current.slice(0, selectionStart) + text + current.slice(selectionEnd);
+
+      window.requestAnimationFrame(() => {
+        const nextCursorPosition = selectionStart + text.length;
+
+        customInputRef.current?.focus();
+        customInputRef.current?.setSelectionRange(nextCursorPosition, nextCursorPosition);
+      });
+
+      return nextValue;
+    });
+  };
+
+  const deleteGreekTextBackward = () => {
+    const input = customInputRef.current;
+    const selectionStart = input?.selectionStart ?? customGreekText.length;
+    const selectionEnd = input?.selectionEnd ?? customGreekText.length;
+
+    if (selectionStart === 0 && selectionEnd === 0) {
+      return;
+    }
+
+    setCustomGreekText((current) => {
+      let nextValue = current;
+      let nextCursorPosition = selectionStart;
+
+      if (selectionStart !== selectionEnd) {
+        nextValue = current.slice(0, selectionStart) + current.slice(selectionEnd);
+      } else {
+        nextValue =
+          current.slice(0, Math.max(0, selectionStart - 1)) + current.slice(selectionEnd);
+        nextCursorPosition = Math.max(0, selectionStart - 1);
+      }
+
+      window.requestAnimationFrame(() => {
+        customInputRef.current?.focus();
+        customInputRef.current?.setSelectionRange(nextCursorPosition, nextCursorPosition);
+      });
+
+      return nextValue;
+    });
   };
 
   const addableWordIndexes = new Set(
@@ -313,6 +379,58 @@ export function FathersEnglishUndertextContent({
           endToken: activeEditor.endToken
         }
       : null;
+
+  const popupStyle = useMemo(() => {
+    if (!activeEditor || typeof window === "undefined") {
+      return undefined;
+    }
+
+    const maxWidth = Math.min(420, window.innerWidth - 24);
+    const viewportPadding = 12;
+    const left = Math.min(
+      Math.max(viewportPadding, activeEditor.anchorRect.left),
+      window.innerWidth - maxWidth - viewportPadding
+    );
+    const top = Math.min(
+      Math.max(viewportPadding, activeEditor.anchorRect.bottom + 10),
+      window.innerHeight - 220
+    );
+
+    return {
+      left: `${left}px`,
+      top: `${top}px`,
+      width: `${maxWidth}px`
+    };
+  }, [activeEditor]);
+
+  useEffect(() => {
+    if (!activeEditor) {
+      return;
+    }
+
+    window.requestAnimationFrame(() => {
+      customInputRef.current?.focus();
+    });
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeEditor();
+      }
+    };
+    const handleViewportChange = () => {
+      closeEditor();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("resize", handleViewportChange);
+    window.addEventListener("scroll", handleViewportChange, true);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("resize", handleViewportChange);
+      window.removeEventListener("scroll", handleViewportChange, true);
+    };
+  }, [activeEditor]);
 
   const renderedContent: ReactNode[] = [];
   let annotationIndex = 0;
@@ -359,7 +477,13 @@ export function FathersEnglishUndertextContent({
           {annotationMode ? (
             <button
               className="fathers-annotation-anchor"
-              onClick={() => openEditor(nextAnnotation.startToken, nextAnnotation.endToken)}
+              onClick={(event) =>
+                openEditor(
+                  nextAnnotation.startToken,
+                  nextAnnotation.endToken,
+                  event.currentTarget
+                )
+              }
               type="button"
             >
               <span className="fathers-annotation-anchor-text">{phraseText}</span>
@@ -425,7 +549,9 @@ export function FathersEnglishUndertextContent({
             <button
               aria-label={`Add Greek undertext for ${token.text}`}
               className="fathers-annotation-add-button"
-              onClick={() => handleWordSelection(token.wordIndex as number)}
+              onClick={(event) =>
+                handleWordSelection(token.wordIndex as number, event.currentTarget)
+              }
               type="button"
             >
               +
@@ -456,84 +582,127 @@ export function FathersEnglishUndertextContent({
           )}
         </div>
       ) : null}
-      {annotationMode && activeEditor ? (
-        <div className="fathers-annotation-editor" role="group" aria-label="Greek undertext editor">
-          <div className="fathers-annotation-editor-header">
-            <div>
-              <p className="fathers-annotation-editor-title">Greek undertext</p>
-              <p className="fathers-annotation-editor-meta">{selectedSpanText}</p>
-            </div>
-            <button
-              className="reader-inline-button"
-              onClick={() => {
-                setActiveEditor(null);
-                setCustomGreekText("");
-                setEditorError(null);
-              }}
-              type="button"
-            >
-              Cancel
-            </button>
-          </div>
-          <div className="fathers-annotation-suggestions">
-            <p className="fathers-annotation-editor-label">Suggestions</p>
-            {isLoadingSuggestions ? (
-              <p className="reader-toolbar-meta">Loading Greek suggestions…</p>
-            ) : suggestions.length ? (
-              <div className="fathers-annotation-suggestion-list">
-                {suggestions.map((suggestion) => (
-                  <button
-                    className="fathers-annotation-suggestion"
-                    key={`${segmentId}:${suggestion.entryKey}:${suggestion.greekText}`}
-                    onClick={() => handleSuggestionSave(suggestion)}
-                    type="button"
-                  >
-                    <span className="fathers-annotation-suggestion-greek">{suggestion.greekText}</span>
-                    <span className="fathers-annotation-suggestion-meta">
-                      {suggestion.transliteration ?? suggestion.lemma}
-                      {suggestion.gloss ? ` · ${suggestion.gloss}` : ""}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            ) : (
-              <p className="reader-toolbar-meta">No lexicon suggestions matched this English span yet.</p>
-            )}
-          </div>
-          <div className="fathers-annotation-custom">
-            <label className="reader-settings-field fathers-annotation-custom-field" htmlFor={`${segmentId}:custom-greek`}>
-              <span>Custom Greek</span>
-              <input
-                id={`${segmentId}:custom-greek`}
-                onChange={(event) => setCustomGreekText(event.currentTarget.value)}
-                placeholder="Type Greek text"
-                type="text"
-                value={customGreekText}
-              />
-            </label>
-            <div className="fathers-annotation-editor-actions">
+      {annotationMode && activeEditor && typeof document !== "undefined"
+        ? createPortal(
+            <>
               <button
-                className="reader-inline-button"
-                disabled={!customGreekText.trim() || isSavingCustom}
-                onClick={() => void handleCustomSave()}
+                aria-label="Close Greek undertext editor"
+                className="fathers-annotation-popup-backdrop"
+                onClick={closeEditor}
                 type="button"
+              />
+              <aside
+                aria-label="Greek undertext editor"
+                className="fathers-annotation-popup"
+                role="dialog"
+                style={popupStyle}
               >
-                {isSavingCustom ? "Saving…" : "Save Greek"}
-              </button>
-              {activeEditor.existingAnnotation ? (
-                <button
-                  className="reader-inline-button reader-inline-button-subtle"
-                  onClick={handleRemoveAnnotation}
-                  type="button"
-                >
-                  Remove
-                </button>
-              ) : null}
-            </div>
-          </div>
-          {editorError ? <p className="fathers-annotation-error">{editorError}</p> : null}
-        </div>
-      ) : null}
+                <div className="fathers-annotation-editor-header">
+                  <div>
+                    <p className="fathers-annotation-editor-title">Greek undertext</p>
+                    <p className="fathers-annotation-editor-meta">{selectedSpanText}</p>
+                  </div>
+                  <button className="reader-inline-button" onClick={closeEditor} type="button">
+                    Close
+                  </button>
+                </div>
+                <div className="fathers-annotation-suggestions">
+                  <p className="fathers-annotation-editor-label">Suggestions</p>
+                  {isLoadingSuggestions ? (
+                    <p className="reader-toolbar-meta">Loading Greek suggestions…</p>
+                  ) : suggestions.length ? (
+                    <div className="fathers-annotation-suggestion-list">
+                      {suggestions.map((suggestion) => (
+                        <button
+                          className="fathers-annotation-suggestion"
+                          key={`${segmentId}:${suggestion.entryKey}:${suggestion.greekText}`}
+                          onClick={() => handleSuggestionSave(suggestion)}
+                          type="button"
+                        >
+                          <span className="fathers-annotation-suggestion-greek">
+                            {suggestion.greekText}
+                          </span>
+                          <span className="fathers-annotation-suggestion-meta">
+                            {suggestion.transliteration ?? suggestion.lemma}
+                            {suggestion.gloss ? ` · ${suggestion.gloss}` : ""}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="reader-toolbar-meta">
+                      No lexicon suggestions matched this English span yet.
+                    </p>
+                  )}
+                </div>
+                <div className="fathers-annotation-custom">
+                  <label
+                    className="reader-settings-field fathers-annotation-custom-field"
+                    htmlFor={`${segmentId}:custom-greek`}
+                  >
+                    <span>Custom Greek</span>
+                    <input
+                      id={`${segmentId}:custom-greek`}
+                      onChange={(event) => setCustomGreekText(event.currentTarget.value)}
+                      placeholder="Type Greek text"
+                      ref={customInputRef}
+                      type="text"
+                      value={customGreekText}
+                    />
+                  </label>
+                  <div className="fathers-greek-keyboard" role="group" aria-label="Greek keyboard">
+                    {GREEK_KEYBOARD_ROWS.map((row, rowIndex) => (
+                      <div className="fathers-greek-keyboard-row" key={`${segmentId}:row:${rowIndex}`}>
+                        {row.map((keyValue) => (
+                          <button
+                            aria-label={keyValue === " " ? "Insert space" : `Insert ${keyValue}`}
+                            className={`fathers-greek-key${keyValue === " " ? " is-space-key" : ""}`}
+                            key={`${segmentId}:key:${rowIndex}:${keyValue}`}
+                            onClick={() => insertGreekText(keyValue)}
+                            type="button"
+                          >
+                            {keyValue === " " ? "Space" : keyValue}
+                          </button>
+                        ))}
+                      </div>
+                    ))}
+                    <div className="fathers-greek-keyboard-row">
+                      <button
+                        aria-label="Delete Greek character"
+                        className="fathers-greek-key fathers-greek-key-action"
+                        onClick={deleteGreekTextBackward}
+                        type="button"
+                      >
+                        ⌫
+                      </button>
+                    </div>
+                  </div>
+                  <div className="fathers-annotation-editor-actions">
+                    <button
+                      className="reader-inline-button"
+                      disabled={!customGreekText.trim() || isSavingCustom}
+                      onClick={() => void handleCustomSave()}
+                      type="button"
+                    >
+                      {isSavingCustom ? "Saving…" : "Save Greek"}
+                    </button>
+                    {activeEditor.existingAnnotation ? (
+                      <button
+                        className="reader-inline-button reader-inline-button-subtle"
+                        onClick={handleRemoveAnnotation}
+                        type="button"
+                      >
+                        Remove
+                      </button>
+                    ) : null}
+                  </div>
+                </div>
+                {editorError ? <p className="fathers-annotation-error">{editorError}</p> : null}
+              </aside>
+            </>,
+            document.body
+          )
+        : null}
     </div>
   );
 }
