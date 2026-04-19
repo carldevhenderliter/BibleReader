@@ -19,6 +19,7 @@ export function FathersReaderContent({ payload }: FathersReaderContentProps) {
   const { settings } = useReaderCustomization();
   const { isSplitViewActive } = useLookup();
   const { activeUtilityPane, openGreekDictionary } = useReaderWorkspace();
+  const hasGreekReaderAid = payload.segments.some((segment) => segment.greek.trim().length > 0);
 
   return (
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
@@ -26,7 +27,9 @@ export function FathersReaderContent({ payload }: FathersReaderContentProps) {
         <div className="reader-topline">
           <div className="reader-toolbar">
             <div className="reader-toolbar-copy">
-              <p className="reader-toolbar-summary">Apostolic Fathers</p>
+              <p className="reader-toolbar-summary">
+                {hasGreekReaderAid ? "Apostolic Fathers" : "Fathers Reader"}
+              </p>
               <p className="reader-toolbar-title">{payload.work.title}</p>
               <p className="reader-toolbar-meta">
                 {payload.work.author}
@@ -52,20 +55,22 @@ export function FathersReaderContent({ payload }: FathersReaderContentProps) {
                   <p className="reader-toolbar-meta fathers-segment-ref">{segment.ref}</p>
                 ) : null}
               </div>
-              <GreekVerseTextContent
-                className="verse-text verse-text-greek fathers-segment-greek"
-                displayMode="stacked"
-                onOpenGreekDictionary={openGreekDictionary}
-                showGloss={settings.showGreekGloss}
-                showLemma={settings.showGreekLemma}
-                showSurface={settings.showGreekSurface}
-                showTransliteration={settings.showGreekTransliteration}
-                verse={{
-                  number: index + 1,
-                  text: segment.greek,
-                  greekTokens: (segment.greekLexicalTokens as GreekToken[] | undefined) ?? undefined
-                }}
-              />
+              {segment.greek.trim() ? (
+                <GreekVerseTextContent
+                  className="verse-text verse-text-greek fathers-segment-greek"
+                  displayMode="stacked"
+                  onOpenGreekDictionary={openGreekDictionary}
+                  showGloss={settings.showGreekGloss}
+                  showLemma={settings.showGreekLemma}
+                  showSurface={settings.showGreekSurface}
+                  showTransliteration={settings.showGreekTransliteration}
+                  verse={{
+                    number: index + 1,
+                    text: segment.greek,
+                    greekTokens: (segment.greekLexicalTokens as GreekToken[] | undefined) ?? undefined
+                  }}
+                />
+              ) : null}
               <p className="verse-text fathers-segment-english">{segment.english}</p>
             </article>
           ))}

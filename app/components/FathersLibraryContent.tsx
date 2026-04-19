@@ -12,14 +12,17 @@ export function FathersLibraryContent({ works }: FathersLibraryContentProps) {
       <section className="content-card testament-card">
         <div className="section-header">
           <div>
-            <p className="eyebrow">Greek Fathers</p>
-            <h1 className="section-title">Study early Christian Greek texts</h1>
+            <p className="eyebrow">Fathers Reader</p>
+            <h1 className="section-title">Study early Christian texts</h1>
           </div>
-          <p className="muted-copy testament-meta">{works.length} work available</p>
+          <p className="muted-copy testament-meta">
+            {works.length} {works.length === 1 ? "work" : "works"} available
+          </p>
         </div>
         <p className="muted-copy fathers-library-copy">
-          Open a Fathers work in a dedicated reader with Greek word stacks, transliteration,
-          one-word glosses, and click-through dictionary lookup.
+          Open a Fathers work in a dedicated reader. Greek-backed works include study tokens,
+          transliteration, glosses, and dictionary lookup; English-source works stay clean and
+          readable until Greek text is added later.
         </p>
         <div className="book-grid">
           {works.map((work) => (

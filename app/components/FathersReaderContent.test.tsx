@@ -56,9 +56,44 @@ const payload: FathersWorkPayload = {
   ]
 };
 
-function renderFathersReader() {
-  setMockPathname("/fathers/1-clement");
-  window.history.replaceState({}, "", "/fathers/1-clement");
+const englishOnlyPayload: FathersWorkPayload = {
+  work: {
+    slug: "preaching-of-peter",
+    title: "The Preaching of Peter",
+    shortTitle: "Preaching",
+    author: "T. Flavius Clemens / Jackson H. Snyder",
+    order: 15,
+    corpus: "apostolic-fathers",
+    sectionCount: 2,
+    greekSource: "",
+    englishSource: "PDF/NA1.pdf (Appendix A)"
+  },
+  segments: [
+    {
+      id: "preaching-of-peter:introduction",
+      ref: "introduction",
+      label: "Introduction",
+      greek: "",
+      english: "Kefa’s Letter to Ya’akov",
+      greekNormalized: "",
+      greekTokens: []
+    },
+    {
+      id: "preaching-of-peter:section-1",
+      ref: "chapter-i",
+      label: "Chapter I: Doctrine of Reserve",
+      greek: "",
+      english:
+        "Knowing, my brother, your eager desire after that which is for the advantage of us all.",
+      greekNormalized: "",
+      greekTokens: []
+    }
+  ]
+};
+
+function renderFathersReader(currentPayload: FathersWorkPayload = payload) {
+  setMockPathname(`/fathers/${currentPayload.work.slug}`);
+  window.history.replaceState({}, "", `/fathers/${currentPayload.work.slug}`);
 
   return render(
     <ReaderVersionProvider>
@@ -69,7 +104,7 @@ function renderFathersReader() {
               <GreekGlossOverridesProvider>
                 <ReaderCustomizationProvider>
                   <SearchCustomizationProvider>
-                    <FathersReaderContent payload={payload} />
+                    <FathersReaderContent payload={currentPayload} />
                   </SearchCustomizationProvider>
                 </ReaderCustomizationProvider>
               </GreekGlossOverridesProvider>
@@ -101,5 +136,20 @@ describe("FathersReaderContent", () => {
     });
 
     expect(screen.getByText("Transliteration: ekklēsia")).toBeInTheDocument();
+  });
+
+  it("renders English-only Fathers works without Greek token stacks", () => {
+    renderFathersReader(englishOnlyPayload);
+
+    expect(screen.getByText("Fathers Reader")).toBeInTheDocument();
+    expect(screen.queryByText("Apostolic Fathers")).not.toBeInTheDocument();
+    expect(screen.getByText("Kefa’s Letter to Ya’akov")).toBeInTheDocument();
+    expect(screen.getByText("Chapter I: Doctrine of Reserve")).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "Knowing, my brother, your eager desire after that which is for the advantage of us all."
+      )
+    ).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /G1577/i })).not.toBeInTheDocument();
   });
 });

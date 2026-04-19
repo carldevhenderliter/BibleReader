@@ -117,10 +117,12 @@ export function HomePageContent({ books, fathersWorks = [] }: HomePageContentPro
         <section className="content-card testament-card">
           <div className="section-header">
             <div>
-              <p className="eyebrow">Greek Fathers</p>
-              <h2 className="section-title">Patristic Greek Study</h2>
+              <p className="eyebrow">Fathers Reader</p>
+              <h2 className="section-title">Early Christian Study Texts</h2>
             </div>
-            <p className="muted-copy testament-meta">{fathersWorks.length} work</p>
+            <p className="muted-copy testament-meta">
+              {fathersWorks.length} {fathersWorks.length === 1 ? "work" : "works"}
+            </p>
           </div>
           <div className="book-grid">
             {fathersWorks.map((work) => (

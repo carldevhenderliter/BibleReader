@@ -42,6 +42,17 @@ const fathersWorks: FathersWorkMeta[] = [
     sectionCount: 66,
     greekSource: "example-greek",
     englishSource: "example-english"
+  },
+  {
+    slug: "recognitions-of-clement",
+    title: "The Recognitions of Clement",
+    shortTitle: "Recognitions",
+    author: "T. Flavius Clemens",
+    order: 14,
+    corpus: "apostolic-fathers",
+    sectionCount: 508,
+    greekSource: "",
+    englishSource: "PDF/NA1.pdf (main text)"
   }
 ];
 
@@ -64,6 +75,10 @@ describe("HomePageContent", () => {
     expect(screen.getByRole("link", { name: "Open 1 Clement" })).toHaveAttribute(
       "href",
       "/fathers/1-clement"
+    );
+    expect(screen.getByRole("link", { name: "Open The Recognitions of Clement" })).toHaveAttribute(
+      "href",
+      "/fathers/recognitions-of-clement"
     );
   });
 });

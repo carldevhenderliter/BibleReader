@@ -141,5 +141,60 @@
     "sectionCount": 27,
     "greekSource": "jtauber/apostolic-fathers:texts/013-shepherd.txt",
     "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.xiv.html"
+  },
+  {
+    "slug": "recognitions-of-clement",
+    "title": "The Recognitions of Clement",
+    "shortTitle": "Recognitions",
+    "author": "T. Flavius Clemens",
+    "order": 14,
+    "corpus": "apostolic-fathers",
+    "sectionCount": 508,
+    "greekSource": "",
+    "englishSource": "PDF/NA1.pdf (main text)"
+  },
+  {
+    "slug": "preaching-of-peter",
+    "title": "The Preaching of Peter",
+    "shortTitle": "Preaching",
+    "author": "T. Flavius Clemens / Jackson H. Snyder",
+    "order": 15,
+    "corpus": "apostolic-fathers",
+    "sectionCount": 6,
+    "greekSource": "",
+    "englishSource": "PDF/NA1.pdf (Appendix A)"
+  },
+  {
+    "slug": "ascents-of-james",
+    "title": "The Ascents of James",
+    "shortTitle": "Ascents",
+    "author": "T. Flavius Clemens / Jackson H. Snyder",
+    "order": 16,
+    "corpus": "apostolic-fathers",
+    "sectionCount": 21,
+    "greekSource": "",
+    "englishSource": "PDF/NA1.pdf (Appendix B)"
+  },
+  {
+    "slug": "excerpts-from-clements-homilies",
+    "title": "Excerpts from Clement’s Homilies",
+    "shortTitle": "Homilies Excerpts",
+    "author": "T. Flavius Clemens / Jackson H. Snyder",
+    "order": 17,
+    "corpus": "apostolic-fathers",
+    "sectionCount": 91,
+    "greekSource": "",
+    "englishSource": "PDF/NA1.pdf (Appendix C)"
+  },
+  {
+    "slug": "sinai-arabic-summary",
+    "title": "The Sinai (Arabic) Summary",
+    "shortTitle": "Sinai Summary",
+    "author": "Margaret Dunlop Gibson / T. Flavius Clemens",
+    "order": 18,
+    "corpus": "apostolic-fathers",
+    "sectionCount": 3,
+    "greekSource": "",
+    "englishSource": "PDF/NA1.pdf (Appendix D)"
   }
 ]

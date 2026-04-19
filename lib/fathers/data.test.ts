@@ -8,9 +8,9 @@ describe("fathers data", () => {
   it("loads the Apostolic Fathers manifest", async () => {
     const works = await getFathersWorks();
 
-    expect(works).toHaveLength(13);
+    expect(works).toHaveLength(18);
     expect(works[0]?.slug).toBe("1-clement");
-    expect(works.at(-1)?.slug).toBe("shepherd-of-hermas");
+    expect(works.at(-1)?.slug).toBe("sinai-arabic-summary");
   });
 
   it("loads 1 Clement with linked Greek and English segments", async () => {
@@ -43,5 +43,21 @@ describe("fathers data", () => {
     expect(payload?.segments[0]?.label).toBe("Vision 1");
     expect(payload?.segments[0]?.greek).toContain("Ὁ θρέψας με");
     expect(payload?.segments[0]?.english).toContain("The master, who reared me");
+  });
+
+  it("loads NA1 Clementine works as English-only Fathers payloads", async () => {
+    const [work, payload] = await Promise.all([
+      getFathersWorkBySlug("recognitions-of-clement"),
+      getFathersWorkPayload("recognitions-of-clement")
+    ]);
+
+    expect(work?.title).toBe("The Recognitions of Clement");
+    expect(work?.englishSource).toBe("PDF/NA1.pdf (main text)");
+    expect(work?.greekSource).toBe("");
+    expect(payload?.segments[0]?.label).toBe("Book I · Chapter I: Clement’s Early History; Doubts");
+    expect(payload?.segments[0]?.english).toContain("I Clement, who was born in the city of Rome");
+    expect(payload?.segments[0]?.greek).toBe("");
+    expect(payload?.segments[0]?.greekTokens).toEqual([]);
+    expect(payload?.segments[0]?.greekLexicalTokens).toBeUndefined();
   });
 });

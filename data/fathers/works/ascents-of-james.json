@@ -1,0 +1,204 @@
+{
+  "work": {
+    "slug": "ascents-of-james",
+    "title": "The Ascents of James",
+    "shortTitle": "Ascents",
+    "author": "T. Flavius Clemens / Jackson H. Snyder",
+    "order": 16,
+    "corpus": "apostolic-fathers",
+    "sectionCount": 21,
+    "greekSource": "",
+    "englishSource": "PDF/NA1.pdf (Appendix B)"
+  },
+  "segments": [
+    {
+      "id": "ascents-of-james:introduction",
+      "ref": "introduction",
+      "label": "Introduction",
+      "greek": "",
+      "english": "Clement’s Letter to Ya’akov Greeting",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "ascents-of-james:section-1",
+      "ref": "chapter-i",
+      "label": "Chapter I: Kefa's Martyrdom",
+      "greek": "",
+      "english": "Be it known to you, my master, that Simeon, who, for the sake of the true faith, and the most sure foundation of his doctrine, was set apart to be the foundation of the qahal, and for this end was by Y’shua Himself, with His truthful mouth, named Kefa, the first-fruits of our Master, the first of the shlichim; to whom first the Father revealed the Son; whom the Moshiach, with good reason, blessed; the called, and elect, and associate at table and in the journeyings of Moshiach; the excellent and approved talmid, who, as being fittest of all, was commanded to enlighten the darker part of the world, namely the West, and was enabled to accomplish it,--and to what extent do I lengthen my discourse, not wishing to indicate what is sad, which yet of necessity, though reluctantly, I must tell you—he himself, by reason of his immense love towards men, having come as far as Rome, clearly and publicly testifying, in opposition to the immoral one who withstood him, that there is to be a good King over all the world, while saving men by his Elohim-inspired doctrine, himself, by violence, exchanged this present existence for life.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "ascents-of-james:section-2",
+      "ref": "chapter-ii",
+      "label": "Chapter II: The Anointing Of Clement",
+      "greek": "",
+      "english": "But about that time, when he was about to die, the brothers being assembled together, he suddenly seized my hand, and rose up, and said in presence of the qahal: \"Hear me, brothers and fellow-servants. Since, as I have been taught by the Master and Teacher Y’shua Moshiach, whose apostle I am, the day of my death is approaching, I lay hands upon this Clement as your Mevaqqre; and to him I entrust my chair of discourse, even to him who has journeyed with me from the beginning to the end, and thus has heard all my discourses—who, in a word, having had a share in all my trials, has been found steadfast in the faith; whom I have found, above all others, obedient, philanthropic, pure, learned, chaste, good, upright, largehearted, and striving generously to bear the ingratitude of some of the talmidim. For this reason I communicate to him the power of binding and loosing, so that with respect to everything that he will decree in the earth, it will be decreed in the skies. For he will bind what ought to be bound, and loose what ought to be loosed, as knowing the role of the qahal. Therefore hear him, as knowing that he who grieves the Mevaqqre of the truth sins against Moshiach and offends YHWH the Father of all. For this reason he will not live; and therefore it becomes him who presides to hold the place of a physician, and not to cherish the rage of an irrational beast.\"",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "ascents-of-james:section-3",
+      "ref": "chapter-iii",
+      "label": "Chapter III: “I Am Not Fit To Be Mevaqqre”",
+      "greek": "",
+      "english": "While he thus spoke, I knelt to him, and entreated him, declining the honor and the authority of the chair. But he answered: \"Concerning this matter do not ask me; for it has seemed to me to be good that thus it be, and all the more if you decline it. For this chair has not need of a presumptuous man, ambitious of occupying it, but of one obedient in conduct and deeply skilled in the word of Elohim. But show me a better than yourself, who has traveled more with me, and has heard more of my discourses, and has learned better the regulations of the qahal, and I will not force you to do well against your will. But it will not be in your power to show me your superior; for you are the choice first-fruits of the multitudes saved through me. However, consider this further, that if you do not undertake the administration of the qahal, through fear of the danger of sin, you may be sure that you sin more, when you have it in your power to help the righteous, who are, as it were, at sea and in danger, and will not do so, providing only for your own interest, and not for the common advantage of all. But that it behooves you altogether to undertake the danger, while I do not cease to ask it of you for the help of all, you well understand. The sooner, therefore, you consent, so much the sooner will you relieve me from anxiety.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "ascents-of-james:section-4",
+      "ref": "chapter-iv",
+      "label": "Chapter IV: The Recompense of the Reward",
+      "greek": "",
+      "english": "\"But I myself also, O Clement, know the grieves and anxieties, and dangers and reproaches, that are appointed you from the uninstructed multitudes; and these you will be able to bear nobly, looking to the great reward of patience bestowed on you by Elohim. But also consider this fairly with me: When has Moshiach need of your aid? Now, when the immoral one has sworn war against His bride; or in the time to come, when He will reign victorious, having no need of further help? Is it not evident to anyone who has even the least understanding that it is now? Therefore with all goodwill hasten in the time of the present necessity to do battle on the side of this good King, whose character it is to give great rewards after victory. Therefore take the oversight gladly; and all the more in good time, because you have learned from me the administration of the qahal, for the safety of the brothers who have taken refuge with us.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "ascents-of-james:section-5",
+      "ref": "chapter-v",
+      "label": "Chapter V:A Charge",
+      "greek": "",
+      "english": "\"However, I wish, in the presence of all, to remind you, for the sake of all, of the things belonging to the administration. It becomes you, living without reproach, with the greatest earnestness to shake off all the cares of life, being neither a surety nor an advocate nor involved in any other worldly business. For Moshiach does not wish to appoint you either a judge or an arbitrator in business or negotiator of the worldly affairs of the present life, lest, being confined to the present cares of men, you should not have opportunity by the word of truth to separate the good among men from the bad. But let the talmidim perform these offices to one another, and not withdraw you from the discourses that are able to save. For as it is immoral for you to undertake worldly cares and to omit the doing of what you have been commanded to do, so it is sin for every talmid if they do not stand by one another even in worldly necessities. And if all do not understand to take order that you be without care in respect of the things in which you ought to be, let them learn it from the attendants; that you may have the care of the qahal always, in order both to your administering it well, and to your holding forth the words of truth.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "ascents-of-james:section-6",
+      "ref": "chapter-vi",
+      "label": "Chapter VI: The Duty of a Mevaqqre",
+      "greek": "",
+      "english": "\"Now, if you were occupied with worldly cares, you should deceive both yourself and your hearers. For not being able, on account of occupation, to point out the things that are advantageous, both you should be punished, as not having taught what was profitable, and they, not having learned, should perish by reason of ignorance. Why do you then preside over them without anxiety, so as to send forth seasonably the words that are able to save them; and so let them listen to you, knowing that whatever the ambassador of the truth will bind upon earth is bound also in heaven, and what he will loose is loosed. But you will bind what should be bound, and loose what should be loosed? And these, and such like, are the things that relate to you as Mevaqqre.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "ascents-of-james:section-7",
+      "ref": "chapter-vii",
+      "label": "Chapter VII: Duties of Zaqenim",
+      "greek": "",
+      "english": "\"And with respect to the zaqenim, take these instructions. Above all things, let them join the young at the proper time in marriage, anticipating the entanglements of youthful lusts. But neither let them neglect the marriage of those who are already old; for lust is vigorous even in some old men. Lest, therefore, fornication find a place among you, and bring upon you a grave pestilence, take precaution, and search, lest at any time the fire of adultery be secretly kindled among you. For adultery is a very terrible thing, even such that it holds the second place in respect of punishment, the first being assigned to those who are in error, even although they be chaste. Why then do you, as zaqenim of the qahal, exercise the spouse of Moshiach to chastity (by the spouse I mean the body of the qahal); for if she is understood to be chaste by her royal Bridegroom, she will obtain the greatest honor; and you, as wedding guests, will receive great commendation? But if she be caught having sinned, she herself indeed will be cast out; and you will suffer punishment, if at any time her sin has been through your negligence.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "ascents-of-james:section-8",
+      "ref": "chapter-viii",
+      "label": "Chapter VIII: \"Do Good Unto All\"",
+      "greek": "",
+      "english": "\"Above all things then be careful about chastity; for fornication has been marked out as a bitter thing in the estimation of YHWH. But there are many forms of fornication, as also Clement himself will explain to you. The first is adultery, that a man should not enjoy his own wife alone, or that a woman should not enjoy her own husband alone. If anyone is chaste, he is able also to love fellow humans, on account of which he will obtain ageless mercy. For as adultery is a great evil, so showing love to other people is the greatest good. So love all your brothers with sober and compassionate eyes, performing to orphans the part of parents, to widows that of husbands, affording them sustenance with all kindliness, arranging marriages for those who are in their prime, and for those who are without a profession, the means of necessary support through employment; giving work to the capable, and alms to the incapable.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "ascents-of-james:section-9",
+      "ref": "chapter-ix",
+      "label": "Chapter IX: \"Let Brotherly Love Continue\"",
+      "greek": "",
+      "english": "\"But I know that you will do these things if you fix love into your minds; and for its entrance there is one only fit means, namely, the common partaking of food. See to it then that you are frequently one another's guests as you are able, and that you may continue in it. For it is the cause of welldoing, and well-doing of salvation. Therefore all of you present your provisions in common to all your brothers in Elohim, knowing that, giving temporal things, you will receive ageless things. Much more feed the hungry, and give drink to the thirsty, and clothing to the naked; visit the sick; showing yourselves to those who are in prison, help them as you are able, and receive strangers into your houses with all cheerfulness. However, not to speak in detail, love of fellow humans will teach you to do everything that is good, as animosity to people suggests ill-doing to those who will not be saved.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "ascents-of-james:section-10",
+      "ref": "chapter-x",
+      "label": "Chapter X: “Whatsoever Things are Honest”",
+      "greek": "",
+      "english": "\"Let the brothers who have causes to be settled not be judged by the worldly authorities; but let them by all means be reconciled by the zaqenim of the qahal, yielding ready obedience to them. Moreover, also, flee avarice, inasmuch as it is able, under pretext of temporal gain, to deprive you of ageless blessings. Carefully keep your balances, your measures, your weights, and the things belonging to your business, just. Be faithful with respect to your trusts. Moreover, you will persevere in doing these things, and things similar to these, until the end, if you have in your hearts an ineradicable remembrance of the judgment that is from Elohim. For who would sin, being persuaded that at the end of life there is a judgment appointed by the righteous Elohim, who only now is long-suffering and good, that the good may in future enjoy forever unspeakable blessings; but the sinners being found as evil, will obtain an eternity of unspeakable punishment. And, indeed, it would be reasonable to doubt that these things are so, were it not that the Navi of the truth has said and sworn that it will be.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "ascents-of-james:section-11",
+      "ref": "chapter-xi",
+      "label": "Chapter XI: Doubts to be Satisfied",
+      "greek": "",
+      "english": "\"So then, being talmidim of the Navi ̒Emet, laying aside doublemindedness, from which comes ill-doing, eagerly undertake well-doing. But if any of you doubt concerning the things that I have said are to be, let him confess it without shame, if he cares for his own inner being, and he will be satisfied by the Mevaqqre. But if he has believed rightly, let his conduct be with confidence, as fleeing from the great fire of condemnation, and entering into the ageless good malkuth of Elohim.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "ascents-of-james:section-12",
+      "ref": "chapter-xii",
+      "label": "Chapter XII: Duties of Azariïm",
+      "greek": "",
+      "english": "\"Moreover let the attendants of the qahal, going about with intelligence, be as eyes to the Mevaqqre, carefully inquiring into the doings of each member of the qahal, ascertaining who is about to sin, in order that, being arrested with admonition by the Mevaqqre, he may, to his benefit, not accomplish the sin. Let them check the disorderly, that they may not desist from assembling to hear the discourses, so that they may be able to counteract by the word of truth those anxieties that fall upon the heart from every side by means of worldly casualties and evil communications; for if they long remain without instruction, they become fuel for the fire. And let them learn who are suffering under bodily disease, and let them bring them to the notice of the multitude who do not know of them, that they may visit them, and supply their wants according to the judgment of the Mevaqqre. Yea, though they do this without his knowledge, they do nothing amiss. These things, then, and things like to these, let the attendants attend to.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "ascents-of-james:section-13",
+      "ref": "chapter-xiii",
+      "label": "Chapter XIII: Duties of Morim",
+      "greek": "",
+      "english": "\"Let the morim instruct, being first instructed; for it is a work relating to the spirits of men. For the teacher of the word must understand the various judgments of the learners. The morim must therefore be learned, and irreproachable, of much experience, and approved, as you will know that Clement is, who is to be your instructor after me. For it were too much for me now to go into details. However, if you be of one mind, you will be able to reach the haven of rest, where is the peaceful city of the great King.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "ascents-of-james:section-14",
+      "ref": "chapter-xiv",
+      "label": "Chapter XIV: The Vessel of the Congregation",
+      "greek": "",
+      "english": "\"For the whole business of the qahal is like unto a great ship, bearing through a violent storm - men who are of many places, and who desire to inhabit the city of the good malkuth. Let, therefore, Elohim be your shipmaster; and let the pilot be likened to Moshiach, the mate to the Mevaqqre, and the sailors to the attendants, the midshipmen to the morim, the multitude of the brothers to the passengers, the world to the sea; the foul winds to temptations, persecutions, and dangers; and all manner of afflictions to the waves; the land winds and their squalls to the discourses of deceivers and false naviïm; the promontories and rugged rocks to the judges in high places threatening terrible things; the meetings of two seas, and the wild places, to unreasonable men and those who doubt of the promises of truth. Let hypocrites be regarded as like to pirates. Moreover, account the strong whirlpool, and the Tartarean Charybdis, and murderous wrecks, and deadly founderings, to be nothing but sins. In order, therefore, that, sailing with a fair wind, you may safely reach the haven of the hopedfor city, pray so as to be heard. But prayers become audible by good deeds.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "ascents-of-james:section-15",
+      "ref": "chapter-xv",
+      "label": "Chapter XV: Incidents of the Voyage",
+      "greek": "",
+      "english": "\"Let therefore the passengers remain quiet, sitting in their own places, lest by disorder they occasion rolling or careening. Let the midshipmen give heed to the fare. Let the attendants neglect nothing with which they are entrusted; let the zaqenim, like sailors, studiously arrange what is needful for each one. Let the Mevaqqre, as the mate, wakefully ponder the words of the pilot alone. Let Moshiach, even Y’shua, be loved as the pilot, and alone believed in the matters of which He speaks; and let all pray to Elohim for a prosperous voyage. Let those sailing expect every tribulation, as traveling over a great and troubled sea, the world: sometimes, indeed, disheartened, persecuted, dispersed, hungry, thirsty, naked, hemmed in; and, again, sometimes united, congregated, at rest; but also sea-sick, giddy, vomiting, that is, confessing sins, like disease-producing bile—I mean the sins proceeding from bitterness, and the evils accumulated from disorderly lusts, by the confession of which, as by vomiting, you are relieved of your disease, attaining healthful safety by means of carefulness.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "ascents-of-james:section-16",
+      "ref": "chapter-xvi",
+      "label": "Chapter XVI: The Mevaqqre's Labors and Reward",
+      "greek": "",
+      "english": "\"But know all of you that the Mevaqqre labors more than you all; because each of you suffers his own affliction, but he his own and that of every one. So, O Clement, preside as a helper to everyone according to your ability, being careful of the cares of all. Whence I know that in your undertaking the administration, I do not confer but receive a favor. But take courage and bear it generously, as knowing that YHWH will recompense you when you enter the haven of rest, the greatest of blessings, a reward that cannot be taken from you, in proportion as you have undertaken more labor for the safety of all. So that, if many of the brothers should hate you on account of your lofty righteousness, their hatred will not at all hurt you, but the love of the righteous Elohim will greatly benefit you. Therefore endeavor to shake off the praise that arises from injustice and to attain the profitable praise that is from Moshiach on account of righteous administration.\"",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "ascents-of-james:section-17",
+      "ref": "chapter-xvii",
+      "label": "Chapter XVII: The People's Duties",
+      "greek": "",
+      "english": "Having said this and more than this, he looked again upon the multitude, and said: \"And you also, my beloved brothers and fellow-servants, be subject to the Mevaqqre of the truth in all things, knowing this, that he who grieves him has not received Moshiach, with whose chair he has been entrusted; and he who has not received Moshiach will be regarded as having despised the Father; so he will be cast out of the good malkuth. On this account, endeavor to come to all the assemblies, lest as deserters you incur the charge of sin through the disheartening of your captain. So all of you think before all else of the things that relate to him, knowing this, that the immoral one, being the more hostile on account of every one of you, wars against him alone. Do you therefore strive to live in affection towards him, and in kindliness towards one another, and to obey him, in order that both he may be comforted and you may be saved.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "ascents-of-james:section-18",
+      "ref": "chapter-xviii",
+      "label": "Chapter XVIII: “As a Heathen Man and a Publican”",
+      "greek": "",
+      "english": "\"But some things also you ought of yourselves to consider, on account of his not being able to speak openly by reason of the plots. Such as: if he be hostile to any one, do not wait for his speaking; and do not take part with that man, but prudently follow the Mevaqqre’s will, being enemies to those to whom he is an enemy, and not conversing with those with whom he does not converse, in order that every one, desiring to have you all as his haverim, may be reconciled to him and be saved, listening to his discourse. But if any one remains a friend of those to whom he is an enemy, and speaks to those with whom he does not converse, he also himself is one of those who would waste the qahal. For, being with you in body, but not with you in judgment, he is against you; and is much worse than the open enemies from without, since with seeming friendship he disperses those who are within.\"",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "ascents-of-james:section-19",
+      "ref": "chapter-xix",
+      "label": "Chapter XIX: Installation of Clement",
+      "greek": "",
+      "english": "Having thus spoken, he laid his hands upon me in the presence of all, and compelled me to sit in his own chair. And when I was seated, he immediately said to me: \"I entreat you, in the presence of all the brothers here, that whenever I depart from this life, as depart I must, you send to Ya’akov the brother of the Master a brief account of your reasonings from your boyhood, and how from the beginning until now you have journeyed with me, hearing the discourses preached by me in every city, and seeing my deeds. And then at the end you will not fail to inform him of the manner of my death, as I said before. For that event will not grieve him very much, when he knows that I obediently went through what it behooved me to suffer. And he will get the greatest comfort when he learns that not an unlearned man or one ignorant of life-giving words or not knowing the rule of the qahal, will be entrusted with the chair of the teacher after me. For the discourse of a deceiver destroys the spirits of the multitudes who hear.\"",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "ascents-of-james:section-20",
+      "ref": "chapter-xx",
+      "label": "Chapter XX: Clement's Obedience",
+      "greek": "",
+      "english": "Therefore I, my master Ya’akov, having promised as I was ordered, have not failed to write in scrolls by chapters the greater part of his discourses in every city, which have been already written to you and sent by himself as for a token; and thus I dispatched them to you, inscribing them \"Clement’s Epitome of the Popular Preaching of (Simeon) Kefa.\"",
+      "greekNormalized": "",
+      "greekTokens": []
+    }
+  ]
+}

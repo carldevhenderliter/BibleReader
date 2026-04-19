@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 
 import { FathersReaderContent } from "@/app/components/FathersReaderContent";
-import { getFathersWorkPayload } from "@/lib/fathers/data";
+import { getFathersWorkPayload, getFathersWorks } from "@/lib/fathers/data";
 
 type FathersReaderPageProps = {
   params: Promise<{
@@ -10,15 +10,15 @@ type FathersReaderPageProps = {
 };
 
 export async function generateStaticParams() {
-  return [{ work: "1-clement" }];
+  const works = await getFathersWorks();
+
+  return works.map((work) => ({
+    work: work.slug
+  }));
 }
 
 export default async function FathersReaderPage({ params }: FathersReaderPageProps) {
   const { work } = await params;
-
-  if (work !== "1-clement") {
-    notFound();
-  }
 
   const payload = await getFathersWorkPayload(work);
 

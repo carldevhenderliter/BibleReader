@@ -71,6 +71,60 @@ describe("FathersReaderPage", () => {
     expect(screen.getByText("The church")).toBeInTheDocument();
   });
 
+  it("renders English-only Fathers works without Greek placeholders", async () => {
+    mockedGetFathersWorkPayload.mockResolvedValue({
+      work: {
+        slug: "preaching-of-peter",
+        title: "The Preaching of Peter",
+        shortTitle: "Preaching",
+        author: "T. Flavius Clemens / Jackson H. Snyder",
+        order: 15,
+        corpus: "apostolic-fathers",
+        sectionCount: 2,
+        greekSource: "",
+        englishSource: "PDF/NA1.pdf (Appendix A)"
+      },
+      segments: [
+        {
+          id: "preaching-of-peter:introduction",
+          ref: "introduction",
+          label: "Introduction",
+          greek: "",
+          english: "Kefa’s Letter to Ya’akov",
+          greekNormalized: "",
+          greekTokens: []
+        },
+        {
+          id: "preaching-of-peter:section-1",
+          ref: "chapter-i",
+          label: "Chapter I: Doctrine of Reserve",
+          greek: "",
+          english: "Knowing, my brother, your eager desire after that which is for the advantage of us all.",
+          greekNormalized: "",
+          greekTokens: []
+        }
+      ]
+    });
+
+    const element = await FathersReaderPage({
+      params: Promise.resolve({
+        work: "preaching-of-peter"
+      })
+    });
+
+    renderWithReaderCustomization(element);
+
+    expect(screen.getByText("The Preaching of Peter")).toBeInTheDocument();
+    expect(screen.getByText("Chapter I: Doctrine of Reserve")).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "Knowing, my brother, your eager desire after that which is for the advantage of us all."
+      )
+    ).toBeInTheDocument();
+    expect(screen.queryByText("Apostolic Fathers")).not.toBeInTheDocument();
+    expect(screen.getByText("Fathers Reader")).toBeInTheDocument();
+  });
+
   it("calls notFound for unsupported Fathers routes", async () => {
     mockedGetFathersWorkPayload.mockResolvedValue(null);
 

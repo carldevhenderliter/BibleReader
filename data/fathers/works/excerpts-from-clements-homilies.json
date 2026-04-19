@@ -1,0 +1,834 @@
+{
+  "work": {
+    "slug": "excerpts-from-clements-homilies",
+    "title": "Excerpts from Clement’s Homilies",
+    "shortTitle": "Homilies Excerpts",
+    "author": "T. Flavius Clemens / Jackson H. Snyder",
+    "order": 17,
+    "corpus": "apostolic-fathers",
+    "sectionCount": 91,
+    "greekSource": "",
+    "englishSource": "PDF/NA1.pdf (Appendix C)"
+  },
+  "segments": [
+    {
+      "id": "excerpts-from-clements-homilies:introduction",
+      "ref": "introduction",
+      "label": "Introduction",
+      "greek": "",
+      "english": "The Lost Chapters Recovered from the Clementine Homilies, Which We Situate After Book III, Chapter I, Restored in This Appendix so as to Keep the Various Editions Page-consistent; This Section of the Homilies Corresponds to the Lost Section of the Recognitions.10 There is some overlap on both ends for context. Note that these chapters do not appear in the Recognitions, but their content may well be that which once filled the lacunae.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-1",
+      "ref": "homilies-ii-chapter-xxxvii",
+      "label": "Homilies II, Chapter XXXVII: Spies in the Enemy’s Camp",
+      "greek": "",
+      "english": "“Some11 of our people attend feignedly upon Simon as companions, as if they were persuaded by his most atheistic error, in order that they may learn his purpose and disclose it to us, so that we may be able to confront this terrible man on favorable terms. And now I have learned from them what arguments he is going to employ in the discussion. “And knowing this, I give thanks to Elohim on the one hand and I congratulate you on the other, on the postponement of the discussion; for, since I instructed you before the discussion, you know the arguments that he will use and can listen without danger of falling.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-2",
+      "ref": "homilies-ii-chapter-xxxviii",
+      "label": "Homilies II, Chapter XXXVIII: Corruption of the Torah",
+      "greek": "",
+      "english": "“For the Scriptures have had joined to them many falsehoods against Elohim on this account. The prophet Moses, by the order of Elohim, delivered the Torah with the explanations to seventy chosen men, in order that they also might instruct such of the people as they chose. After some time, the written Torah had added to it certain falsehoods contrary to the Torah of Elohim,12 who made the heaven and the earth, and all things in them; the evil one having dared to work this for his evil purpose. “This took place in reason and judgment, that those might be convicted who should dare to listen to the things written against Elohim, and those who, through love towards Him, should not only disbelieve the things spoken against Him, but should not even endure to hear them at all, even if they should happen to be true, judging it much safer to incur danger with respect to religious faith, than to live with an evil conscience on account of blasphemous words.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-3",
+      "ref": "homilies-ii-chapter-xxxix",
+      "label": "Homilies II, Chapter XXXIX: Tactics",
+      "greek": "",
+      "english": "“Simon, therefore, as I learn, intends to come into public, and to speak of those chapters against Elohim that are added to the Scriptures, for the sake of temptation, that he may seduce as many wretched ones as he can from the love of Elohim. “For we do not wish to say in public that these chapters are added to the Scripture, since we should thereby perplex the unlearned multitudes, and so accomplish the purpose of this evil Simon. For they do not yet have the power to discern and would flee from us as if we were evil, or, as if not only the blasphemous chapters were false, they would even withdraw from the word. “Wherefore we are under a necessity of assenting to the false chapters, and putting questions in return to him concerning them, to draw him into a 11[From chap. 27 to 3:28 the matter is peculiar to theHomilies. The views stated are obviously colored by the Gnostic Ebionism of the Author.-R.] 12The Vatican ms. reads; “against the only God.” strait, and to give in private an explanation of the chapters that are spoken against Elohim to the well-disposed after a trial of their faith; and of this there is but one way, and that a brief one. It is this:”13",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-4",
+      "ref": "homilies-ii-chapter-xl",
+      "label": "Homilies II, Chapter XL: Preliminary Instruction",
+      "greek": "",
+      "english": "“Everything that is spoken or written against Elohim is false. But that we say this truly, not only for the sake of reputation, but for the sake of truth, I will convince you when my discourse has proceeded a little further. You, my most beloved Clement, ought not to be sorry at Simon’s having interposed a day between this and the discussion at hand. (Simon Magus postponed the debate for an extra day.) “For today, before the discussion, you will be instructed concerning the chapters added to the Scriptures; and then in the discussion concerning the only one and good Elohim, the Maker also of the world, you ought not to be distracted. But in the discussion you will even wonder how unrighteous men, overlooking the multitudes of things that are spoken in the Scriptures for Elohim, and looking at those that are spoken against Him, gladly bring these forward; and thus the hearers, by reason of ignorance, believing the things against Elohim, become outcasts from His kingdom. “Wherefore you, by advantage of the postponement, learning the mystery of the Scriptures, and gaining the means of not sinning against Elohim, will incomparably rejoice.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-5",
+      "ref": "homilies-ii-chapter-xli",
+      "label": "Homilies II, Chapter XLI: Asking for Information, Not Contradiction",
+      "greek": "",
+      "english": "Then I Clement, hearing this, said: “Truly I rejoice, and I give thanks to Elohim, who in all things does well. However, he knows that I will be able to think nothing other than that all things are for Elohim. Do not suppose that I ask questions, as doubting the words concerning Elohim, or those that are to be spoken, but rather that I may learn, and so be able myself to instruct another who is unaccustomed to learning. So tell me the falsehoods added to the Scriptures and how it is that they are really false.” Then Kefa answered: “Even although you had not asked me, I would have gone on in order, and afforded you the exposition of these matters, as I promised. Learn, then, how the Scriptures misrepresent Him in many respects, so that you may know when you happen upon them.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-6",
+      "ref": "homilies-ii-chapter-xlii",
+      "label": "Homilies II, Chapter XLII: Right Notions of Elohim Essential to Holiness",
+      "greek": "",
+      "english": "“What I am going to tell you will be sufficient by way of example. But I do not think, my dear Clement, that anyone who possesses ever so little love to Elohim and unaccustomed to learning, will be able to take in, or even to hear, the things that are spoken against Him. 13[This view of the Scriptures, as held by Kefa, is one of the marked characteristics of the Homilies.-R.] “For how is it that He can have an overarching soul and yet be set-apart, supposing that there are many elohim and not one only? But even if there be but one who will cherish zeal to be set-apart, one finds in Him many defects, since he will hope that the beginning of all things, by reason of the defects of his own nature, will not visit the crimes of others?”14",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-7",
+      "ref": "homilies-ii-chapter-xliii",
+      "label": "Homilies II, Chapter XLIII: A Priori Argument on the Divine Attributes",
+      "greek": "",
+      "english": "“Wherefore, far be it from us to believe that the Master of all, who made the heaven and the earth, and all things that are in them, shares His government with others, or that He lies. “For if He lies, then who speaks truth? Or if He makes experiments as in ignorance; then who foreknows? If He deliberates and changes His purpose, who then is perfect in understanding and permanent in design? “If He envies, who is above rivalry? If He hardens hearts, who makes wise? If He makes blind and deaf, who has given sight and hearing? If He commits pilfering, who administers justice? “If He mocks, who is sincere? If He is weak, who is omnipotent? If He is unjust, who is just? If He makes evil things, who will make good things? If He does evil, who will do good?”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-8",
+      "ref": "homilies-ii-chapter-xliv",
+      "label": "Homilies II, Chapter XLIV: The Same Continued",
+      "greek": "",
+      "english": "“But if He desires the fruitful hill, 15 whose then are all things? If He is false, who then is true? If He lives in a tent, who is without bounds? “If He is fond of fat, sacrifices, offerings, and drink-offerings, who then is without need, and who is holy, and pure, and perfect? If He is pleased with lamps and wicks, who then placed the luminaries in the sky? If He dwells in shadow, and darkness, and storm, and smoke, who is the light that lightens the universe? “If He comes with trumpets, shoutings, darts, and arrows, who is the sought-after tranquility of all? If He loves war, who then wishes peace? If He makes evil things, who makes good things? “If He is without affection, who is a lover of men? If He is not faithful to His promises, who will be trusted? If He loves the evil, adulterers, and murderers, who will be a just judge? If He changes His mind, who is steadfast? If He chooses evil men, who then takes the part of the good?” - a soul ruling over His body. If the Mighty One has a soul ruling over a body, and must keep the body in check by means of zeal unto holiness, will not he also be inclined to fall into Torahless behaviors, just as human beings? Chapter 43 tries to explain this further. [jhs] 15Wieseler considers this corrupt, and amends: “if He desires more.” I agree with Wieseler. [jhs] 14Overarching = “monarchic”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-9",
+      "ref": "homilies-ii-chapter-xlv",
+      "label": "Homilies II, Chapter XLV: How Elohim Is to Be Thought of",
+      "greek": "",
+      "english": "“Wherefore, Clement, my son, beware of thinking otherwise of Elohim than that He is the only Elohim, Master, and Father, good and righteous, the Creator, long-suffering, merciful, the sustainer, the benefactor, ordaining love of men, counseling purity, immortal and making immortal, incomparable, dwelling in the souls of the good, who cannot be contained and yet is contained within the heart, who has fixed the great world as a center in space, who has spread out the skies and solidified the land, who has stored up the water, who has disposed the stars in the sky, who has made the fountains flow in the earth, has produced faults, has raised up mountains, has set bounds to the sea, has ordered winds and blasts, who by the spirit of counsel has kept safely the body comprehended in a boundless sea?”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-10",
+      "ref": "homilies-ii-chapter-xlvi",
+      "label": "Homilies II, Chapter XLVI: Judgment to Come",
+      "greek": "",
+      "english": "“This is our Judge, to whom it behooves us to look and to regulate our own souls, thinking all things in His favor, speaking well of Him, persuaded that by His long-suffering He brings to light the obstinacy of all, and is alone good. And He, at the end of all, will sit as a just judge upon every one of those who have attempted what they ought not.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-11",
+      "ref": "homilies-ii-chapter-xlvii",
+      "label": "Homilies II, Chapter XLVII: A Pertinent Question",
+      "greek": "",
+      "english": "When I Clement heard this, I said, “Truly, this is Shabbat-guarding piety.” And again I said: “I would like to learn why the Scripture has any writings of this sort? For I remember that you said that it was for the conviction of those who should dare to believe anything that was spoken against Elohim. But since you permit us, we venture to ask, at your command: If anyone, most beloved Kefa, should choose to say to us, ‘The Scriptures are true, though to you the things spoken against Elohim seem to be false,’ how should we answer him?”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-12",
+      "ref": "homilies-ii-chapter-xlviii",
+      "label": "Homilies II, Chapter XLVIII: A Particular Case",
+      "greek": "",
+      "english": "Then Kefa answered: “You speak well in your inquiry; for it will be for your safety. So listen: Since there are many things that are spoken in the Scriptures against Elohim, as time presses on account of the evening, ask with respect to any matter that you please, and I will explain it, showing that it is false, not only because it is spoken against Elohim, but because it is really false.” Then I answered: “I wish to learn how, when the Scriptures say that Elohim is ignorant, you can show that He knows?”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-13",
+      "ref": "homilies-ii-chapter-xlix",
+      "label": "Homilies II, Chapter XLIX: Reductio ad Absurdum",
+      "greek": "",
+      "english": "Then Kefa answered: “You have presented us with a matter that can easily be answered. Listen: Elohim is ignorant of nothing; he even foreknows. But first answer me what I ask of you. He who wrote the Scripture told how the world was made yet said Elohim does not foreknow, was he a man or not?”Then I said: “He was a man.” Then Kefa answered: “How, then, was it possible for Him, being a man, to know with certainty how the world was made, and that Elohim does not foreknow?”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-14",
+      "ref": "homilies-ii-chapter-l",
+      "label": "Homilies II, Chapter L: A Satisfactory Answer",
+      "greek": "",
+      "english": "Then I, already perceiving the explanation, smiled, and said that he was a prophet. And Kefa said: “If, then, he was a prophet, being a man, he was ignorant of nothing, by reason of his having received foreknowledge from Elohim; how then, should He, who gave to man the gift of foreknowledge, being Elohim, Himself be ignorant?”And I said: “You have spoken rightly.” Then Kefa said: “Come with me one step further. We acknowledge that Elohim foreknows all things, so we know that the Scriptures that say He is ignorant are false, and those that say He knows are true.” Then said I: “It has to be true.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-15",
+      "ref": "homilies-ii-chapter-li",
+      "label": "Homilies II, Chapter LI: Weigh in the Balance",
+      "greek": "",
+      "english": "Then Kefa said: “If some of the Scriptures are true and some false, our Master had good reason to say, ‘Be good money-changers,’16 inasmuch as in the Scriptures there are some true sayings and some spurious. For those who err by reason of the false Scriptures He fitly showed the cause of their error, saying, ‘You do so err, not knowing the true things of the Scriptures.17For this reason, you are also ignorant of the power of Elohim.’” Then said I: “You have spoken very excellently.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-16",
+      "ref": "homilies-ii-chapter-lii",
+      "label": "Homilies II, Chapter LII: Sins of the Kiddoshim Denied",
+      "greek": "",
+      "english": "Then Kefa answered: With good reason, I neither believe anything against Elohim, nor against the just men recorded in the Torah, taking for granted that such are impious imaginations. For I am persuaded that Adam was neither a transgressor (he who was fashioned by the hands of Elohim), nor was Noah drunken, who was found righteous above all the world;18 nor did Avraham live with three wives at once, who, on account of his sobriety, was thought worthy of numerous posterity; nor did Yaakov associate with four, of whom two were sisters, who was the father of the twelve tribes, and who was suggestive of our Master’s presence; nor was Moses a murderer, nor did he learn to judge from an idolatrous priest: he who set forth the 16This is quoted three times in theHomiliesas a saying of our Master Y’shua, viz., here and in Homily III. Chap. 50 and Homily XVIII.Chap. 20. It is probably taken from one of the apocryphal Gospels. In Homily XVIII. Chap. 20 the meaning is shown to be, that as it is the part of a moneychanger to distinguish spurious coins from genuine, so it is part of Yisraelite kiddushim/saints to distinguish false statements from true. 17A corruption of the texts, Matt. 22:29, Mark 12:24. [Note by bzbm: What corruption? Maybe it’s paraphrasing, but not corruption, for does it not carry the same idea?] 18Gen. 7:11. Torah of Elohim to all the world, and for his right judgment has been accounted a faithful steward.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-17",
+      "ref": "homilies-ii-chapter-liii",
+      "label": "Homilies II, Chapter LIII: Close of the Conference",
+      "greek": "",
+      "english": "“Of these and like things I will afford you an explanation in due time. But for the rest, since, as you see, the evening has come upon us, let what has been said be enough for today. But whenever you wish, and about whatever you wish, ask boldly of us, and we will gladly explain it at once.” Having spoken, Kefa rose up. Then, having partaken of food, we turned to sleep, for the night had come upon us.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-18",
+      "ref": "homilies-iii-chapter-i",
+      "label": "Homilies III, Chapter I: The Morning of the Discussion",
+      "greek": "",
+      "english": "Two days having elapsed, and while the third was dawning, I Clement, and the rest of our companions woke up about the second cock-crowing, wanted to talk with Simon, and found his lamp still burning and Kefa kneeling in prayer. So, having finished his supplication, and turning round, and seeing us ready to hear, he said:19",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-19",
+      "ref": "homilies-iii-chapter-ii",
+      "label": "Homilies III, Chapter II: Simon’s Design",
+      "greek": "",
+      "english": "“I wish you to know that the men who, according to our arrangement, associate with Simon that they may learn his intentions and submit them to us so that we may be able to cope with his variety of impiety, have sent to me and informed me that Simon today is, as he arranged, prepared to come before all and show from the Scriptures that He who made heaven and the earth and all things in them is not the Supreme Elohim. He claims that there is another, unknown and supreme, as being in an unspeakable manner Elohim of elohim, who sent two elohim, one of whom made the world, and the other who gave the Torah. He contrives these things in order to destroy the right faith of those who would worship the one and only Elohim who made heaven and earth.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-20",
+      "ref": "homilies-iii-chapter-iii",
+      "label": "Homilies III, Chapter III: His Object",
+      "greek": "",
+      "english": "“When I heard this, how could it not have disheartened me? So I wanted you also, my brothers who associate with me, to know that I am beyond measure grieved in my soul, because the evil one is awake for the temptation of men, but men are wholly indifferent about their own salvation. “For to those from among the Gentiles who were learning that the earthly images are no-elohim, he has contrived to bring in opinions of many other elohim, in order that those who would leave polytheistic madness may be turned back around to speak even worse than they now do against 19[The first twenty-eight chapters of this homily have no exact much of the matter is peculiar to this work.-R.] parallel in theRecognitions; the sole government of Elohim, so that they may not value the truths connected with His rulership and may never be able to obtain mercy. “And for the sake of this attempt Simon comes to do battle with us, armed with the false chapters of the Scriptures. And what is more dreadful, he is not afraid to dogmatize thus against the true Elohim from the prophets whom he does not in fact believe.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-21",
+      "ref": "homilies-iii-chapter-iv",
+      "label": "Homilies III, Chapter IV: Snares Laid for the Gentiles",
+      "greek": "",
+      "english": "“And with us, indeed, who have had handed down from our forefathers the worship of the Elohim who made all things, and also the mystery of the books which are able to deceive, he will not prevail; but with those from among the Gentiles who have the polytheistic fancy bred in them and who know not the falsehoods of the Scriptures, he will have the upper hand. “And not only he; but if any other will recount to those from among the Gentiles any vain, dreamlike, richly set-out story against Elohim, he will be believed, because from their childhood their minds are accustomed to take in things spoken against Elohim.20 “And there will be only a few out of many of them who through naïveté will not be willing so much as to hear an evil word against the Elohim who made all things. And these alone from among the Gentiles will be truly saved. So let not anyone of you complain about Simon, or of anyone else; for nothing occurs unjustly, since even the falsehoods of Scripture are with good reason presented for a test.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-22",
+      "ref": "homilies-iii-chapter-v",
+      "label": "Homilies III, Chapter V: Use of Errors",
+      "greek": "",
+      "english": "Then I Clement, hearing this, said: “How say you, master, that even the falsehoods of the Scriptures are set forth with good reason for the proof of men?”And he answered: “The falsehoods of the Scriptures have been permitted to be written for a certain righteous reason at the demand of evil. And when I say as a blessing, I mean this: In the account of Elohim, the evil one, not loving Elohim less than the good one, is exceeded by the good in this one thing only, that he, not pardoning those who are evil on account of ignorance, through love towards that which is profound, desires the destruction of the evil; but the good one desires to present them with a remedy. “For the good one desires all to be healed by repentance, but saves those only who know Elohim. But He does not heal those who don’t know Elohim, because it is not Torah to give the good things that belong to the children of the Kingdom to those who, because they lack judgment, are like irrational animals.” 20 [Note by bzbm: All their lives they’ve heard of the evil done by their false elohim.]",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-23",
+      "ref": "homilies-iii-chapter-vi",
+      "label": "Homilies III, Chapter VI: Purgatory and Hell",
+      "greek": "",
+      "english": "“Such is the nature of the one and only Elohim, who made the world, and who created us, and who has given us all things, that as long as anyone is within the limit of piety, and does not blaspheme His Qadosh Ruach, through His love towards him He brings the soul to Himself by reason of His love towards it. And although it is sinful, it is His nature to save it, after it has been suitably punished for the deeds it hath done. “But if anyone will deny Him, or in any other way be guilty of impiety against Him, and then will repent, he will be punished indeed for the sins he has committed against Him, but he will be saved, because he turned and lived. And perhaps excessive piety and supplication will even be delivered from punishment, ignorance being admitted as a reason for the pardon of sin after repentance.21 “But those who do not repent will be destroyed by the punishment of fire, even though in all other things they are most qadosh. But, as I said, at an appointed time a fifth22 part, being punished with eternal fire, will be consumed. For they cannot endure forever who have been impious against the one Elohim.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-24",
+      "ref": "homilies-iii-chapter-vii",
+      "label": "Homilies III, Chapter VII: What is Impiety?",
+      "greek": "",
+      "english": "“But impiety against Him is, in the matter of religion, to die saying there is another Elohim, whether superior or inferior, or in any way saying that there is one besides Him who really is. For He who truly exists is He who formed the body of man like His own; for whose sake the heaven and all the stars, though in their essence superior, submit to serve him who is in essence inferior, on account of the form of the Ruler. “So much has Elohim blessed man above all, in order that, loving the Benefactor in proportion to the multitude of His benefits, by means of this love he may be saved for the world to come.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-25",
+      "ref": "homilies-iii-chapter-viii",
+      "label": "Homilies III, Chapter VIII: Wiles of the Devil",
+      "greek": "",
+      "english": "“So the love of men towards Elohim is sufficient for salvation. And this the evil one knows; and while we are hastening to sow the love towards Him which makes immortal in the souls of those who from among the Gentiles are ready to believe in the one and only Elohim, this evil one, having sufficient armor against the ignorant for their destruction, hastens to sow the supposition of many elohim, or at least of one greater, in order that men, conceiving and being persuaded of what is not wisdom, may die, as in the crime of adultery, and be cast out from His kingdom.” 21The text manifestly corrupt. 22Perhaps, rather, “the greatest part.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-26",
+      "ref": "homilies-iii-chapter-ix",
+      "label": "Homilies III, Chapter IX: Uncertainty of the Scriptures",
+      "greek": "",
+      "english": "“Worthy therefore of rejection is everyone who is willing so much as to hear anything against the monarchy of Elohim; but if anyone dares to hear anything against Elohim, as trusting in the Scriptures, let him first of all consider with me that if anyone, as he pleases, form a dogma agreeable to himself, and then carefully search the Scriptures, he will be able to produce many testimonies from them in favor of the dogma that he has formed. “How, then, can confidence be placed in them against Elohim, when what every man wishes is found in them?”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-27",
+      "ref": "homilies-iii-chapter-x",
+      "label": "Homilies III, Chapter X: Simon’s Intention",
+      "greek": "",
+      "english": "“So Simon, who is going to discuss in public with us tomorrow, is bold against the monarchy of Elohim, wishing to produce many statements from these Scriptures, to the effect that there are many elohim, and a certain one who is not He who made this world, but who is superior to Him; and, at the same time, he is going to offer many scriptural proofs. “But we also can easily show many passages from them that He who made the world alone is Elohim, and that there is no other besides Him. But if anyone will wish to speak otherwise, he also will be able to produce proofs from them at his pleasure. For the Scriptures say all manner of things, so that no one of those who inquire ungratefully may find the truth, but simply what he wishes to find, the truth being reserved for the grateful. Now gratitude is to preserve our love to Him who is the cause of our being.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-28",
+      "ref": "homilies-iii-chapter-xi",
+      "label": "Homilies III, Chapter XI: Distinction between Prediction and Prophecy",
+      "greek": "",
+      "english": "“Before we can know all truth, we have to recognize that nowhere can truth be found unless from a prophet of truth. But He is a true Prophet who always knows all things and even the thoughts of all men, who is without sin, as being convinced respecting the judgment of Elohim. “For that reason we ought not simply to consider respecting His foreknowledge, but whether His foreknowledge can stand apart from other cause. For physicians predict certain things, having the pulse of the patient as matter submitted to them; and some predict by means of having fowls, some by having sacrifices, and others by having many various matters submitted to them; yet these are not prophets.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-29",
+      "ref": "homilies-iii-chapter-xii",
+      "label": "Homilies III, Chapter XII: The Same",
+      "greek": "",
+      "english": "“But if anyone says that the foreknowledge shown by these predictions is like the foreknowledge which is really implanted, he is quite deceived, for he only declares such things as being present, and only if he speaks truth. However, even these things help me, for they establish that there is such a thing as foreknowledge. “But the foreknowledge of the one true Prophet does not only know things present, but stretches out prophecy without limit as far as the world to come, and needs nothing for its interpretation, not prophesying darkly and ambiguously, so that the things spoken would need another prophet to interpret them. Through the inborn and ever-flowing Ruach, our Master and Prophet explains them clearly and simply, because He has always known.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-30",
+      "ref": "homilies-iii-chapter-xiii",
+      "label": "Homilies III, Chapter XIII: Prophetic Knowledge Constant",
+      "greek": "",
+      "english": "“So He confidently made statements respecting things that are to be—I mean sufferings, places, and limits: for He is a faultless Prophet. He looks upon all things with the unlimited eye of His being, and so He knows hidden things. “But if we should hold, as many do, that even the true Prophet, sometimes, when He has the Ruach, has foreknowledge, but when He does not have it he is just ignorant; if we should suppose this, we should deceive ourselves and mislead others. For such a thing belongs to those who are madly inspired by the spirit of disorder prophesying to those who are drunken beside the altars and gorged with fat.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-31",
+      "ref": "homilies-iii-chapter-xiv",
+      "label": "Homilies III, Chapter XIV: Prophetic Ruach Constant",
+      "greek": "",
+      "english": "“For if it were permitted to anyone who will profess prophecy supposedly to prove the cases in which they allege that he was found false and not speaking by the Qadosh Ruach of foreknowledge, it will be difficult to convict him of being a false prophet. Let’s say that among the many things that he speaks, a few come to pass, and then he is believed to have the Ruach, although he speaks the first things last, and the last first; speaks of past events as future, and future as already past; and also without sequence; or things borrowed from others and altered, and some that are lessened, unformed, foolish, ambiguous, unseemly, obscure, and proclaiming total lack of discipline.”23",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-32",
+      "ref": "homilies-iii-chapter-xv",
+      "label": "Homilies III, Chapter XV: Moshiach’s Prophecies",
+      "greek": "",
+      "english": "“Our Master did not prophesy this way; but, as I have already said, being a prophet by an inborn and ever-flowing Ruach, and knowing all things at all times, He confidently set forth, plainly as I said before, sufferings, places, appointed times, manners, and limits. “Accordingly, when he was prophesying concerning the temple, He said: ‘See these buildings? Amein I say to you that there will not be one stone left here upon another that will not be taken away; and this generation will not pass until the destruction begin. For they will come and sit here, and will besiege it and slay your children here.’24 23 [Note by bzbm: It seems to me that Kefa is saying that it’s difficult to convict one of being a false prophet if you believe that sometimes he has the Ruach and sometimes not. The True Prophet is ALWAYS in the Ruach.]Amein. [jhs] 24Matt. 24:2, 34; Luke 19:43, 44. “And in like manner He spoke in plain words the things that were quickly to happen, which we can now see with our eyes, in order that their fulfillment might be known among those who heard Him. For the Prophet of truth gives the word of proof to build up the faith of His hearers.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-33",
+      "ref": "homilies-iii-chapter-xvi",
+      "label": "Homilies III, Chapter XVI: Doctrine of Coincidence",
+      "greek": "",
+      "english": "“However, there are many proclaimers of error, all under one chief, who is the chief of evilness, just as the Prophet of truth, being one, and being also the chief of piety, will in His own times have as His prophets all who are found pure. “But the chief cause of men being deceived is that they do not understand beforehand the Doctrine of Coincidence, which I will in detail expound to you in private every day; it is too broad a topic to give the details all at once. So you must be truth-loving judges for me of those things spoken while someone prophesies.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-34",
+      "ref": "homilies-iii-chapter-xvii",
+      "label": "Homilies III, Chapter XVII: Whether Adam Had the Ruach",
+      "greek": "",
+      "english": "“I will begin by saying that Elohim made all things. If anyone will not admit that a man fashioned by His hands could have possessed His great and Qadosh Ruach of foreknowledge, how great is his mistake when he says one has it who has been born of spurious stock! “I do not think that he will obtain pardon, though he is misled by spurious Scripture to think dreadful things against the Father of all. For he who insults the image and the things belonging to the eternal King has the sin reckoned as committed against Him in whose likeness the image was made. “But then, says he, the Ruach of Elohim left him when he sinned. In that case the Ruach sinned along with him;25 and how can he escape peril who says this? But perhaps he received the Ruach after he sinned. Then it is given to the unrighteous; and where is justice? But it was afforded to the just and the unjust. This was most unrighteous of all. Thus every falsehood, though it is aided by ten thousand excuses, must be refuted, even though it takes time.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-35",
+      "ref": "homilies-iii-chapter-xviii",
+      "label": "Homilies III, Chapter XVIII: Adam Not Ignorant",
+      "greek": "",
+      "english": "“Be not deceived! Our father was ignorant of nothing. (This being expressed even in the Torah that is currently in the public). Though Torah charges him with the crime of ignorance for the sake of the unworthy, it 25 [Note by bzbm: But he, that is, Ahdahm, could have left the Ruach/Spirit, which is probably not the case; he sinned, but the Word does not say whether he lost his opportunity for everlasting life, but it would not seem so. Isn’t that why the Master Y’shua came to die & rise up again? also sends to him those desirous of knowledge, saying, ‘Ask your father and he will tell you. Ask your zaqenim and they will answer you.’26 “This father and these zaqenim should be asked. But you have not inquired whose is the kingdom and whose is the seat of prophecy, though He Himself points to Himself by saying, ‘The scribes and the Pharisees sit in Moshe’s seat; listen to whatever they say to you.’ “Hear them, He said, as entrusted with knowledge, the key of the kingdom, which alone can open the gate of life, through which alone is the entrance to timeless life. But truly, He says, they possess the key, but they do not permit those who want to enter.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-36",
+      "ref": "homilies-iii-chapter-xix",
+      "label": "Homilies III, Chapter XIX: Reign of Moshiach",
+      "greek": "",
+      "english": "“On this account, I say, He rises in person from His seat as father of his children, proclaiming the things that from the beginning were delivered in secret to the worthy, extending mercy even to Gentiles, and feeling compassion for all souls, neglected His own kindred. For He who is worthy to be King of the world to come fights against27 him who, by predestination, has usurped the kingdom that now is. “What grieved Him exceedingly is that by those very persons for whom, as for sons, he fought, He was assailed on account of their ignorance. Yet He loved even those who hated Him, wept over the unbelieving, blessed those who slandered Him, and prayed for those who were at enmity against Him.28 “Not only did He do this as a father, but also taught His talmidim to do the like, conducting themselves as to brothers.29 That’s what our Father and our Prophet both did. This is reasonable, that He should be King over His children; that by the affection of a father towards his children, and the engrafted respect of children towards their father, longstanding peace might be produced. For when a good man reigns, there is true joy among those who are ruled over, on account of him who rules.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-37",
+      "ref": "homilies-iii-chapter-xx",
+      "label": "Homilies III, Chapter XX: The True Prophet Has Appeared in Different Ages",
+      "greek": "",
+      "english": "“But give heed to my first discourse of the truth. If anyone does not allow the man fashioned by the hands of Elohim to have had the Qadosh Ruach of Moshiach, how is he not guilty of the greatest malice in allowing another born of an impure stock to have it?30 26Deut. 32:7. 27From a conjectural reading by Neander. 28Matt. 23:37; Luke 13:34; Luke 23:34. [Note by bzbm: He is our example, per Kefa alef/1Peter 2:21, who also told us to do the same, per Matt. 5:44; Luke 6:28.] 29Matt. 5:44. 30 [Note by bzbm: The Master Y’shua, the second Adam of this age, was of the purest stock, for His body was prepared in the heavens, which was implanted in Miryam’s womb in order to enter this age.] “But he believes righteously if he denies that another could have it, but should say that he alone has it who has changed his forms and his names from the beginning of the world, and so reappeared again and again in the world, until coming upon his own times, and being anointed with mercy for the works of Elohim, he will enjoy Sabbath from this day forward. His esteem it is to bear rule and authority over all things, in air, earth, and waters. But in addition to these, himself having made man, he had breath, the indescribable garment of the soul, that he might be able to be undying.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-38",
+      "ref": "homilies-iii-chapter-xxi",
+      "label": "Homilies III, Chapter XXI: The Eating of the Forbidden Fruit Denied",
+      "greek": "",
+      "english": "“He, since He was the only true prophet, fittingly gave names to each animal, according to the merits of its nature, since He made it. Whatever name He gave to any of them, it was a fitting name from its maker Himself. How, then, had he still need to partake of a tree, that he might know what is good and what is evil, if he was commanded not to eat of it? But senseless men believe this; those who think that a reasonless beast was more powerful than the Elohim who made these things.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-39",
+      "ref": "homilies-iii-chapter-xxii",
+      "label": "Homilies III, Chapter XXII: Male and Female",
+      "greek": "",
+      "english": "“But a companion was created along with him, a female nature, much differing from him, as quality from substance, as the moon from the sun, as fire from light. She, as a female ruling the present world as her like was entrusted to be the first prophetess, announcing prophecy with all among those born of woman.31 But the other, as the son of man, being a male, prophesies better things to the world to come as a male.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-40",
+      "ref": "homilies-iii-chapter-xxiii",
+      "label": "Homilies III, Chapter XXIII: Two Kinds of Prophecy, Male and Female",
+      "greek": "",
+      "english": "“Let us then understand that there are two kinds of prophecy:32 the one male; and let it be defined that the first, being the male, has been ranked after the other in the order of advent; but the second, being female, has been appointed to come first in the advent of the pairs. This second, being among those born of woman, as the female superintendent of this present world wants to be thought of as masculine. So, stealing the seeds of the male and sowing them with her own seeds of the flesh, she brings forth the fruits—that is, words—as wholly her own. And she promises that she will give the present earthly riches as a dowry, and would change the slow for the swift, the small for the greater.” 31The allusion is to the fact that John Baptist is called the greatest of those born of woman, while Messiah is called the Son of Man. 32Literally, “Let there be to us two genuine prophecies.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-41",
+      "ref": "homilies-iii-chapter-xxiv",
+      "label": "Homilies III, Chapter XXIV: The Prophetess a Misleader",
+      "greek": "",
+      "english": "“She, not only presuming to say and to hear that there are many elohim, but also believing herself to be one, and in hope of being that which she had not a nature to be, and throwing away what she had, and as a female being in her courses at the offering of sacrifices, is stained with blood; and then she pollutes those who touch her. But when she conceives and brings forth temporary kings, she stirs up wars, shedding much blood; and those who desire to learn truth from her by telling them all things contrary and presenting many and various services, she keeps them always seeking and finding nothing, even until death. For from the beginning a cause of death lies upon blind men; for she, prophesying deceit, ambiguities, and obliquities, deceives those who believe her.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-42",
+      "ref": "homilies-iii-chapter-xxv",
+      "label": "Homilies III, Chapter XXV: Cain’s Name and Nature",
+      "greek": "",
+      "english": "“Hence the ambiguous name which she gave to her first-born son, calling him Cayin, which has a capability of interpretation in two ways; for it is interpreted both Possession and Envy, as signifying that in the future he was to envy either a woman, or possessions, or the love of the parents towards her.33If it be none of these, then it will befall him to be called the Possession; for she possessed him first, which also was advantageous to him. He was a murderer and a liar, and with his sins was not willing to be at peace with respect to supervision. Moreover, those who came forth by succession from him were the first adulterers, makers of small and large harps, and forgers of instruments of war. Additionally, the prophecy of his descendants was full of adulterers and harpers who, by means of secrecy and pleasure, excited others to wars.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-43",
+      "ref": "homilies-iii-chapter-xxvi",
+      "label": "Homilies III, Chapter XXVI: Abel’s Name and Nature",
+      "greek": "",
+      "english": "“But he who among the sons of men had prophecy innate to his soul as belonging to it, expressly, as being a male, indicating the hopes of the world to come, called his own son Abel, which without any ambiguity is translated Grief. He assigns to his sons to grieve over their deceived brothers. He does not deceive them when he promises them comfort in the world to come. When he says that we must pray to one and only Elohim, he neither himself speaks of gods, nor does he believe anyone else who speaks of them. “He keeps the good which he has, and increases more and more. He hates sacrifices, bloodshed, and libations; he loves the chaste, the pure, the qadosh. He quenches the fire of altars, represses wars, teaches pious preachers wisdom, purges sins, sanctions marriage, approves temperance, leads all to chastity, makes men liberal, prescribes justice, seals those of them who are perfect, publishes the word of peace, warns of the eternal fire of punishment, constantly announces the kingdom of Elohim, indicates 33Qu. “towards Abel”? heavenly riches, promises unfading glory, and shows the remission of sins by works.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-44",
+      "ref": "homilies-iii-chapter-xxvii",
+      "label": "Homilies III, Chapter XXVII: The Prophet and the Prophetess",
+      "greek": "",
+      "english": "“And what need is there to say more? The male is wholly truth, the female wholly falsehood. Whoever is born of the male and the female, in some things speaks truth, in some falsehood. For the female, surrounding the white seed of the male with her own blood, as with red fire, sustains her own weakness with the extraneous supports of bones, and, pleased with the temporary flower of flesh, and spoiling the strength of the judgment by short pleasures, leads the greater part into fornication, and thus deprives them of the coming excellent Bridegroom. For every person is a bride, whenever he is enlightened in his understanding by the true Prophet sowing in him the whole word of truth.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-45",
+      "ref": "homilies-iii-chapter-xxviii",
+      "label": "Homilies III, Chapter XXVIII: Spiritual Adultery",
+      "greek": "",
+      "english": "“So, it is fitting to hear the one and only Prophet of the truth, knowing that the word that is sown by another bearing the charge of fornication, is, as it were, cast out by the Bridegroom from His kingdom. But to those who know the mystery, death is also produced by spiritual adultery. For whenever the soul is sown by others, then it is forsaken by the Ruach, as guilty of fornication or adultery; and so the living body, the life-giving Ruach being withdrawn, is dissolved into dust, and the rightful punishment of sin is suffered at the time of the judgment by the soul, after the dissolution of the body; even as, among men, she who is caught in adultery is first cast out from the house, and then afterwards is condemned to punishment.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-46",
+      "ref": "homilies-iii-chapter-xxix",
+      "label": "Homilies III, Chapter XXIX: The Signal Given",
+      "greek": "",
+      "english": "While Kefa was about to explain fully to us this mysterious word, Zacchai came, saying: “Now indeed, O Kefa, is the time for you to go out and engage in the discussion; for a great crowd awaits you, packed together in the court; and in the midst of them stands Simon, like a war-chieftain attended by his spearmen.” Kefa, hearing this, ordered me to withdraw for prayer, as not yet having received baptism for salvation, and then said to those who were already perfected: “Let us rise and pray that Elohim, by His unfailing mercies, may help me striving for the salvation of the men whom He has made.” Having said this, and having prayed, he went out into the uncovered portion of the court – a great space; there were many who had come together to see him. Because he was a celebrity they were all the more anxious to hear him.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-47",
+      "ref": "homilies-iii-chapter-xxx",
+      "label": "Homilies III, Chapter XXX: Apostolic Salutation",
+      "greek": "",
+      "english": "So, standing and seeing all the people gazing upon him in profound silence, and Simon the magician standing in the midst, Kefa began to speak thus: “Peace to all you who are in readiness to give your right hands to the truth of Elohim, which, being His great and incomparable gift in the present world, He who sent us, since He is an infallible Prophet of that which is most profitable, put us in charge, by way of salutation before our words of instruction, to announce to you, so that if there is a son of peace among you, peace may take hold of him through our teaching. But if any of you will not receive our word (that we have borne through our toils and brought to you that you may be saved), then we for a testimony shake off the dust from the road that is on our feet and will go to other houses and cities.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-48",
+      "ref": "homilies-iii-chapter-xxxi",
+      "label": "Homilies III, Chapter XXXI: Faith in Elohim",
+      "greek": "",
+      "english": "“I tell you the truth: It will be more tolerable in the Day of Judgment to live in the land of Sodom and Gomorrah, than in the place of unbelief. In the first place, because you have not preserved reason in yourselves, and in the second place, because, hearing things about us, you have not come to us, and in the third place, because you have disbelieved us when we have come to you. We are concerned for you and pray of our own accord that our peace may come upon you. “If you will have it, you must readily promise not to do injustice, and generously to bear wrong, which is contrary to human nature, unless one first received the knowledge of that which is supremely profitable, namely, to know the righteous nature of Him who is over all, for He defends and avenges those who are wronged and does good forever to the devout.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-49",
+      "ref": "homilies-iii-chapter-xxxii",
+      "label": "Homilies III, Chapter XXXII: Invitation",
+      "greek": "",
+      "english": "“Do you, therefore, as thankful servants of Elohim and reasonable persons, take upon you the manner of life that pleases Him, that so, by loving Him and by Him loving you, you may enjoy the age of reward. For He alone is able to give you this, who gave life to things that did not exist, who created the skies, settled the earth, set bounds to the sea, stored up the things that are in Sheol, and filled all places with air.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-50",
+      "ref": "homilies-iii-chapter-xxxiii",
+      "label": "Homilies III, Chapter XXXIII: Works of Creation",
+      "greek": "",
+      "english": "“He alone turned the four contrary elements into the one, first, simple substance. Thus combining them, He made of them myriads of compounds, so that, being turned into opposite natures and mingled, they might affect the pleasure of life from the combination of contrary things. “In like manner, He alone created races of angels and spirits by the decree of His will to inhabit the heavens. He likewise decked the visible firmament with stars, to which also He assigned their paths and arranged their orbits, and compacted the earth for the production of fruits. He set bounds to the sea, marking out a dwelling-place on the dry land. He stores up the things in Sheol, designating it as the place of beings; and He filled all places with air, that all living creatures might be able to breathe safely in order that they might live.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-51",
+      "ref": "homilies-iii-chapter-xxxiv",
+      "label": "Homilies III, Chapter XXXIV: Extent of Creation",
+      "greek": "",
+      "english": "“O the great hand of the wise Elohim that does all in all! For a countless multitude of birds have been made by Him, and those various, differing in all respects from one another; I mean in respect of their colors, beaks, talons, looks, senses, voices, and all else. “And how many different species of plants, distinguished by boundless variety of colors, qualities, and scents! And how many animals on the land and in the water, of which it were impossible to tell the figures, forms, habitats, color, food, senses, natures, and multitude! Then also the multitude and height of mountains, the varieties of stones, awful caverns, fountains, rivers, marshes, seas, harbors, islands, forests, and all the inhabited world, and uninhabited places!”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-52",
+      "ref": "homilies-iii-chapter-xxxv",
+      "label": "Homilies III, Chapter XXXV: “These are a Part of His Ways”",
+      "greek": "",
+      "english": "“Yet how many things besides are unknown because men cannot know them! Of those that are within our comprehension, who knows the limit? I mean, how the sky rolls, how the stars are borne in their courses, and what forms they have, what composition, and where they travel in the ether. From where do the blasts of winds come up with their different levels of energy? From where do the fountains ceaselessly spring? The ever-flowing rivers run down into the sea. Their source is not emptied, and neither do they fill where they empty into! “How far reaches the unfathomable depth of the boundless Tartarus!34 Upon what is the sky that surrounds us carried? How the clouds spring from air, and are absorbed into air! What is the nature of thunder and lightning, snow, hail, mist, ice, storms, showers, and hanging clouds? How does He make plants and animals? All these things are certainly and continually perfected in their countless varieties!”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-53",
+      "ref": "homilies-iii-chapter-xxxvi",
+      "label": "Homilies III, Chapter XXXVI: Dominion over the Creatures",
+      "greek": "",
+      "english": "“So, if anyone will accurately scan the whole with reason, he will find that Elohim has made them for the sake of people. For showers fall for the sake of fruits, that man may partake of them, and that animals may be fed, that they may be useful to men. And the sun shines, that he may turn the air 34Tartarus – note: 2 Peter 2:4 (NJB) When angels sinned, Elohim did not spare them: he sent them down into the underworld (G. tartaroō) and consigned them to the dark abyss to be held there until the Judgment. into four seasons, and that each time may afford its peculiar service to man. And the fountains spring up, so people may drink of them. “And, moreover, who is master over the creatures, so far as is possible? Is it not man, who has received wisdom to till the earth, to sail the sea: to make fishes, birds, and beasts his prey; to investigate the course of the stars, to mine the earth, to sail the sea; to build cities, to define kingdoms, to ordain laws, to execute justice, to know the invisible Elohim, to know the names of angels, to drive away demons, to endeavor to cure diseases by medicines, to find charms against poison-darting serpents, and to understand aversions?”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-54",
+      "ref": "homilies-iii-chapter-xxxvii",
+      "label": "Homilies III, Chapter XXXVII: “Whom to Know Is Life Eternal”",
+      "greek": "",
+      "english": "“But if you are thankful, O man, if you understand that Elohim is your benefactor in all things, and that you may even be made immortal, the things that are made for you continue to be given through your gratitude to Elohim. And now you are able to become incorruptible, if you acknowledge Him whom you did not know, if you love Him whom you used to forsake, and if you pray to Him alone who is able to punish or to save both your body and your being. “So, consider primarily that no one shares His rule and no one has a name in common with Him—that is, no man is called Elohim. For He alone is both called and is Elohim, “the Mighty One.” Nor is it Torah to think that there is any other, or to call any other by that name. And if anyone should dare do so, eternal castigation of his very being is his.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-55",
+      "ref": "homilies-iii-chapter-xxxviii",
+      "label": "Homilies III, Chapter XXXVIII: Simon’s Challenge – Many Gods",
+      "greek": "",
+      "english": "When Kefa had thus spoken, Simon, at the outside of the crowd, cried aloud: “Why would you lie, and deceive the unlearned multitude standing around you, persuading them that it is unlawful to think that there are elohim, and to call them so, when the books that are current among the Jews say that there are many elohim35? “And now I wish, in the presence of all, to discuss with you from these books on the necessity of thinking that there are elohim; first showing respecting him whom you call Elohim, that he is not the supreme and omnipotent Being, inasmuch as he is without foreknowledge, imperfect, needy, not good, and underlying many and innumerable grievous passions. So, when this has been shown from the Scriptures, as I say, it follows that there is another, not written of, foreknowing, perfect, without want, good, far removed from all grievous passions. But He whom you call the Creator is subject to the opposite evils.” 35Elohim, i.e. “gods.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-56",
+      "ref": "homilies-iii-chapter-xxxix",
+      "label": "Homilies III, Chapter XXXIX: Defects Ascribed to Elohim",
+      "greek": "",
+      "english": "“So also Adam, being made at first after his likeness, is created blind, and is said not to have knowledge of good or evil, and is found a transgressor, and is driven out of paradise, and is punished with death. In like manner also, He who made him, because He sees not in all places, says with reference to the overthrow of Sodom, ‘Come, and let us go down, and see whether they do according to their cry which comes to me; or if not, that I may know.’ Thus he shows himself ignorant. “And in his saying respecting Adam, ‘Let us drive him out, lest he put forth his hand and touch the tree of life, and eat, and live forever;’ in saying LEST he is ignorant; and in driving him out lest he should eat and live forever, he is also envious. “And whereas it is written that ‘Elohim changed His mind that he had made man,’ this implies both repentance and ignorance. For this reflection is a view by which one, through ignorance, wishes to inquire into the result of the things that he wills, or it is the act of one repenting on account of the event not being according to his expectation. “And whereas it is written, ‘And the Master smelled a scent of sweetness,’ it is the part of one in need; and his being pleased with the fat of flesh is the part of one who is not good. But his trial, as it is written, ‘And Elohim tried Avraham, is the part of one who is evil, and who is ignorant of the issue of the experiment.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-57",
+      "ref": "homilies-iii-chapter-xl",
+      "label": "Homilies III, Chapter XL: Kefa’s Answer",
+      "greek": "",
+      "english": "In like manner Simon, by taking many passages from the Scriptures, seemed to show that Elohim is subject to every infirmity. And to this Kefa said: “Does he who is evil, and wholly evil, love to accuse himself in the things in which he sins? Answer me this.” Then said Simon: “He does not.” Then said Kefa: “How, then, can Elohim be evil and immoral, seeing that those evil things which have been commonly written regarding Him, have been added by His own will!” Then said Simon: “It may be that the charge against Him is written by another power, and not according to His choice.” Then said Kefa: “Let us then, in the first place, inquire into this. If, indeed, He has of His own will accused Himself, as you formerly acknowledged, then He is not evil; but if it is done by another power, it must be inquired and investigated with all energy who has subjected to all evils Him who alone is good.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-58",
+      "ref": "homilies-iii-chapter-xli",
+      "label": "Homilies III, Chapter XLI: “Status Quaestionis.”36",
+      "greek": "",
+      "english": "Then said Simon: “You are obviously avoiding dealing with the charges that the Scriptures make against your Elohim.” Then Kefa: “You yourself appear to me to be doing this; for he who avoids the order of inquiry does not wish a true investigation to be made. Hence I, who proceed in an orderly manner, and want the writer first to be considered, am obviously desirous to walk in a straight path.” Then Simon: “First confess that if the things written against the Creator are true, He is not above all, since, according to the Scriptures, He is subject to all evil; then afterwards we will inquire as to the writer.” Then said Kefa: “That I may not seem to speak against your want of order through unwillingness to enter upon the investigation,37 I answer you. I say that if the things written against Elohim are true, they do not show that Elohim is evil.” Then said Simon: “How can you maintain that?”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-59",
+      "ref": "homilies-iii-chapter-xlii",
+      "label": "Homilies III, Chapter XLII: Was Adam Blind?",
+      "greek": "",
+      "english": "Then said Kefa: “Because things are written opposite to those sayings that speak evil of him; so neither the one nor the other can be confirmed.” Then Simon: “How, then, is the truth to be ascertained, of those Scriptures that say He is evil, or of those that say He is good?” Then Kefa: “Whatever sayings of the Scriptures are in harmony with the creation that was made by Him are true, but whatever are contrary to it are false.”38 Then Simon said: “How can you show that the Scriptures contradict themselves?” And Kefa said: “You say that Adam was created blind, which was not so; for He would not have pointed out the tree of the knowledge of good and evil to a blind man, and commanded him not to taste of it.” Then said Simon: “He meant that his mind was blind.” Then Kefa: “How could he be blind in respect of his mind, who, before tasting of the tree was in harmony with Him who made him, giving appropriate names to all the animals?” Then Simon: “If Adam had foreknowledge, how did he not foreknow that the serpent would deceive his wife?” Then Kefa: “If Adam had not foreknowledge, how did he give names to the sons of men as they were born with reference to their future doings, calling the first Cain (which is interpreted ‘envy’), who through envy killed 36Or “stage at which the question is presented.” 37The text of this passage in all the editions is meaningless, gaining clarity only by a change of punctuation. 38Comp. 2:38 and many other passages for this view of the errors of Scripture. The test of truth as here stated is noteworthy. It suggests some modern analytical affinities. his brother Abel (which is interpreted ‘grief’); for his parents grieved over him, the first slain?”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-60",
+      "ref": "homilies-iii-chapter-xliii",
+      "label": "Homilies III, Chapter XLIII: Elohim’s Foreknowledge",
+      "greek": "",
+      "english": "“But if Adam, being the work of Elohim, had foreknowledge, much more Elohim who created him had it. And that is false which is written that Elohim reflected, as if using reasoning on account of ignorance; and that YHWH tested Avraham, that He might know if he would endure it; and that which is written, ‘Let us go down, and see if they are doing according to the cry of them that come to me; and if not, that I may know.’ “Yet not to extend my discourse too far, whatever sayings ascribe ignorance to Him, or anything else that is evil, being upset by other sayings that affirm the contrary, are proven to be false. But because He does indeed foreknow, He says to Avraham, ‘You will surely know that your seed will be exiles in a land that is not their own; and they will enslave them and treat them badly, and they will humble them four hundred years. But I will judge the nation to which they will be in bondage, and after that they will come out to this place with much property. But you will go to your fathers in peace, after living to a ripe old age; and in the fourth generation they will return here, for the sins of the Amorites are not yet filled up.’”39",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-61",
+      "ref": "homilies-iii-chapter-xliv",
+      "label": "Homilies III, Chapter XLIV: Elohim’s Decrees",
+      "greek": "",
+      "english": "“But what? Does not Moses foretell the sins of the people and predict their dispersion among the nations? But if He gave foreknowledge to Moses, how can it be that He had it not Himself? But He has it. And if He has it, as we have also shown, it is an extravagant saying that He reflected, and that He changed His mind, and that He went down to see, and whatever else of this sort. What things He knew about before they came to pass came about without variance.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-62",
+      "ref": "homilies-iii-chapter-xlv",
+      "label": "Homilies III, Chapter XLV: Sacrifices",
+      "greek": "",
+      "english": "“But that He is not pleased with sacrifices, is shown by this: those who lusted after flesh were slain as soon as they tasted it, and were buried, so that it was called the grave of lusts.40 He then who at the first was displeased with the slaughtering of animals, not wishing them to be slain, did not ordain sacrifices as desiring them; nor from the beginning did He require them. For neither are sacrifices accomplished without the slaughter of animals, nor can the first-fruits be presented. But how is it possible for Him to abide in darkness, and smoke, and storm (for this also is written), who created a pure sky, and created the sun to give light to all, and assigned the invariable order of their revolutions to innumerable stars? Thus, O 39Gen. 15:13-16. 40That is, Kibroth-Hattaavah; Num. 11:32. Simon, the handwriting of Elohim—I mean the skies—shows the counsels of Him who made it to be pure and stable.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-63",
+      "ref": "homilies-iii-chapter-xlvi",
+      "label": "Homilies III, Chapter XLVI: Contempt Against of Elohim",
+      "greek": "",
+      "english": "“Thus the sayings accusatory of the Elohim who made the sky are both rendered void by the opposite sayings which are alongside of them, and are refuted by the creation. It was not a prophetic hand that wrote them. So also they appear opposite to the hand of Elohim, who made all things.” Then said Simon: “How can you show this? “",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-64",
+      "ref": "homilies-iii-chapter-xlvii",
+      "label": "Homilies III, Chapter XLVII: Foreknowledge of Moses",
+      "greek": "",
+      "english": "Then said Kefa: “The Torah of Elohim was given by Moses, without writing, to seventy wise men, to be handed down, so that the government might be carried on by succession. But after that Moses was taken up; it was written by someone, but not by Moses.41 “For in the Torah itself it is written, ‘And Moses died; and they buried him near the house of Phogor,42 and to this day no one knows where he is buried.’ But how could Moses write that Moses died? “And whereas in the time after Moses, about 500 years or thereabouts, it is found lying in the temple which was built, and after about 500 years more it is carried away, and being burnt in the time of Nebuchadnezzar it is destroyed; and thus being written after Moses, and often lost, even this shows the foreknowledge of Moses, because he, foreseeing its disappearance, did not write it; but those who wrote it, being convicted of ignorance through their not foreseeing its disappearance, were not prophets.”43",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-65",
+      "ref": "homilies-iii-chapter-xlviii",
+      "label": "Homilies III, Chapter XLVIII: Test of Truth",
+      "greek": "",
+      "english": "Then said Simon: “Since, as you say, we must understand the things concerning Elohim by comparing them with the creation, how is it possible to recognize the other things in the Torah which are from the tradition of Moses, and are true, and are mixed up with these falsehoods?” Then Kefa said: “A certain verse has been recorded without controversy in the written Torah, according to the providence of Elohim, so as to show clearly which of the things written are true and which are false.” Then said Simon: “Which is that? Show it us.” 41 This discussion finds its antithesis in the writings of bible scholars of the 16th -18th centuries, who brought in the term ‘higher criticism.’ Indeed, Kefa was quite far ahead of his time. 42Deut. 34:6, LXX 43It is curious to find the post-exilian theory of the Pentateuch in this place, put in the mouth of the Apostle Kefa.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-66",
+      "ref": "homilies-iii-chapter-xlix",
+      "label": "Homilies III, Chapter XLIX: The True Prophet",
+      "greek": "",
+      "english": "Then Kefa said: “I will tell you right away. It is written in the first book of the Torah, towards the end: ‘A ruler will not fail from Yahudah, nor a leader from his thighs, until He come whose it is; and He is the expectation of the nations.’44 “If, therefore, anyone can apprehend Him who came after the failure of ruler and leader from Yahudah, and who was to be expected by the nations, he will be able by this verse to recognize Him as truly having come;45 and believing His teaching, he will know what of the Scriptures are true and what are false.” Then said Simon: “I understand that you speak of your Y’shua as He of whom the prophecy of the Scripture spoke. So let it be granted that it is so. Tell us, then, how he taught you to discriminate the Scriptures.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-67",
+      "ref": "homilies-iii-chapter-l",
+      "label": "Homilies III, Chapter L: His Teaching Concerning the Scriptures",
+      "greek": "",
+      "english": "Then Kefa: “He taught that it is the mixture of truth with falsehood,46 I remember that on one occasion He, finding fault with the Sadducees, said, ‘So you are in error, not knowing the true things of the Scriptures; and on this account you are ignorant of the power of Elohim.’47 But if He laid it on them that they knew not the true things of the Scriptures, it is obvious that there are false things in them. And also, inasmuch as He said, ‘Be prudent money-changers,’48 it is because there are genuine and spurious words. And so He said, ‘How do you not perceive that which is reasonable in the Scriptures?’ He makes the understanding of him stronger who voluntarily judges soundly.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-68",
+      "ref": "homilies-iii-chapter-li",
+      "label": "Homilies III, Chapter LI: His Teaching Concerning Torah",
+      "greek": "",
+      "english": "“His word to the scribes and morim of the existing Scriptures, as to those who knew the true things of the Torah that then was, is well known. And also that He said, ‘I am not come to destroy the Torah,’49 and yet that He appeared to be destroying it, is the part of one intimating that the things that He destroyed did not belong to the Torah. 44Gen. 49:10. 45From the amended reading of Davis. 46Comp. Homily II. 40. The attitude of Kefa, as here represented, disparaging the Old Testament, appearing to exalt the author of Messiah’s teachings, and yet ignoring the claims of His Person and Work, seeks its justification in rationalistic interpretation. The attitude is not an uncommon one at present.-R. 47Matt. 22. 29. He was there when the Master said it, and so my opinion is that he uses it properly and did not misconstrue it at all. 48This is frequently quoted as a saying of Moshiach. It is probably from one of the apocryphal Gospels. [Comp. Homily II. 51.-R.] 49 Matt. 5:17. “And His saying, ‘The heaven and the earth will pass away, but not one least letter or punctuation will pass from the Torah,’50 intimated that the things which pass away before the heaven and the earth do so, do not belong to the Torah in the first place.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-69",
+      "ref": "homilies-iii-chapter-lii",
+      "label": "Homilies III, Chapter LII: Other Sayings of Moshiach",
+      "greek": "",
+      "english": "“Since, then, while the heaven and the earth still stand, sacrifices have passed away, and kingdoms, and prophecies among those who are born of woman, and such like, as not being ordinances of Elohim; hence therefore He says, ‘Every plant which the heavenly Father has not planted will be rooted up.’51So He, being the true Prophet, said, ‘I am the gate of life;52 he who enters by Me enters into life,’ there being no other teaching able to save.“Furthermore also He cried, and said, ‘Come unto me, all who labor,’53 that is, who are seeking the truth, and not finding it; and again, ‘My sheep hear my voice;’54 and elsewhere, ‘Seek and find,’55 since the truth does not lie on the surface.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-70",
+      "ref": "homilies-iii-chapter-liii",
+      "label": "Homilies III, Chapter LIII: Yet Other Sayings of Moshiach",
+      "greek": "",
+      "english": "“But also a witnessing voice was heard from heaven, saying, ‘This is my beloved Son, in whom I am well pleased; hear Him.’56 And in addition to this, willing to convict more fully of error the prophets from whom they asserted that they had learned, He proclaimed that they died desiring the truth, but not having learned it, saying, ‘Many prophets and kings desired to see what ye see, and to hear what you hear; and verily I say to you, they neither saw nor heard.’57 Still further He said, ‘I am he concerning whom Moses prophesied, saying, A Prophet will YHWH our Elohim raise unto you of your brothers, like unto me: Hear Him in all things. Whoever will not hear that Prophet will die.’”58",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-71",
+      "ref": "homilies-iii-chapter-liv",
+      "label": "Homilies III, Chapter LIV: Other Sayings",
+      "greek": "",
+      "english": "“From that we know that it is impossible without His teaching to attain to saving truth, though one seek it forever where the thing that is sought is not. But it was, and is, in the word of our Y’shua. 50 Matt. 5:18. 51 Matt. 15:13. 52 John 10:9. 53 Matt. 11:28. 54 John 10:3. 55 Matt. 7:7. 56 Matt. 17:5. 57Matt. 13:17; Luke 10:24. 58Deut. 18:15-19; Acts 3:22, 7:37. “Accordingly, He, knowing the true things of the Torah, said to the Sadducees, asking on what account Moses permitted to marry seven,59 ‘Moses gave you commandments according to your hard-heartedness; for from the beginning it was not so: for He who created man at first, made him male and female.’60",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-72",
+      "ref": "homilies-iii-chapter-lv",
+      "label": "Homilies III, Chapter LV: Teaching of Moshiach",
+      "greek": "",
+      "english": "“But to those who think, as the Scriptures teach, that Elohim swears, He said, ‘Let your yes be yes, and no, no; for what is more than these is of the evil one.’61And to those who say that Avraham and Yitzchak and Yaakov are dead, He said, ‘Elohim is not of the dead, but of the living.’62 And to those who suppose that Elohim tempts, as the Scriptures say, He said, ‘The tempter is the evil one,’63 who also tempted himself.64 To those who suppose that Elohim does not foreknow, He said, ‘For your heavenly Father knows that you need all these things before you ask Him.’65 And to those who believe, as the Scriptures say, that He does not see all things, He said, ‘Pray in secret, and your Father who sees secret things will reward you.’”66",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-73",
+      "ref": "homilies-iii-chapter-lvi",
+      "label": "Homilies III, Chapter LVI: More Teaching of Moshiach",
+      "greek": "",
+      "english": "“And to those who think that He is not good, as the Scriptures say, He said, ‘From which of you will his son ask bread, and he will give him a stone; or will ask a fish, and he will give him a serpent? If ye then, being evil, know to give good gifts to your children, how much more will your heavenly Father give good things to those who ask Him, and to those who do His will!’67 But to those who affirmed that He was in the temple, He said, ‘Swear not by heaven, for it is Elohim’s throne; nor by the earth, for it is the footstool of His feet.’68 And to those who supposed that Elohim is pleased with sacrifices, He said, ‘Elohim wishes mercy, and not sacrifices’69—the knowledge of Himself, and not holocausts.” 59Kefa was not confused. Whatever questions the religious authorities asked, they asked out of the hardness of their hearts. 60Matt. 19:8; Mark 10:5, 6. 61Matt. 5:37. 62Matt. 22:32; Mark 12:27; Luke 20:38. 63Perhaps Matt. 13:39. 64 This word should not be capitalized, because “himself’ reflects back on the tempter, not on YWHW, who is not tempted in any case, per Yaakov/James 1:13. 65Matt. 6:8, 32. 66Mt. 6:6. 67Matt. 7:9-11. 68Matt. 5:34, 35. 69Matt. 9:13, 12:7. [Comp. Hos. 6:6.-R.]",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-74",
+      "ref": "homilies-iii-chapter-lvii",
+      "label": "Homilies III, Chapter LVII: Even More Teaching of Moshiach",
+      "greek": "",
+      "english": "“But to those who are persuaded that He is evil, as the Scriptures say, He said, ‘Do not call Me good, for One only is good.’70 And again, ‘Be good and merciful, as your Father in the heavens is, who makes the sun rise on good and evil men, and brings rain upon just and unjust.’71 But to those who were misled to imagine many elohim, as the Scriptures say, He said, ‘Hear, O Israel; YWHW your Elohim is echad/unity YWHW.’”72",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-75",
+      "ref": "homilies-iii-chapter-lxviii",
+      "label": "Homilies III, Chapter LXVIII: Flight of Simon",
+      "greek": "",
+      "english": "So Simon, perceiving that Kefa was driving him to use the Scriptures as Y’shua taught, was unwilling that the discussion should go into the doctrine concerning Elohim, even although Kefa had changed the discussion into question and answer, as Simon himself asked. However, the discussion occupied three days.73 And while the fourth was dawning, he set off sneaking, as it were, as far as Tyre of Phoenicia.74 And not many days after, some of the precursors came and said to Kefa: “Simon is doing great miracles in Tyre, and disturbing many of the people there; and by many slanders he has made you to be hated.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-76",
+      "ref": "homilies-iii-chapter-lix",
+      "label": "Homilies III, Chapter LIX: Kefa’s Resolution to Follow",
+      "greek": "",
+      "english": "Kefa, hearing this, on the following night assembled the multitude of hearers; and as soon as they were come together, he said: “While I am going forth to the nations which say that there are many Elohim (gods), to teach and to preach that Elohim is one, who made heaven and earth, and all things that are in them, in order that they may love Him and be saved, evil has anticipated me, and by the very law of conjunction has sent Simon before me, in order that these men, if they will cease to say that there are many elohim, disowning those upon earth that are called elohim, may think that there are many elohim in the sky; so that, not feeling the excellency of the monarchy75, they may perish with eternal punishment. “And what is most dreadful, since true doctrine has incomparable power, he forestalls me with slanders, and persuades them to this, not even at first to receive me; lest he who is the slanderer be convicted of being himself in reality a devil, and the true doctrine be received and believed. So I must quickly catch up with him, unless their false accusation, through the gaining of time, completely grip all the men.” 70Matt. 19:17; Mark 10:18; Luke 18:19. 71Matt. 5:44, 45. 72Mark 12:29. [Comp. Deut. 6:4.-R.] 73[The three days’ discussion is detailed inRecognitions, 2:20-3:48; the account here is confined to the first day.-R.] 74[Comp.Recognitions, 3:73. The historical incidents of the two narratives vary greatly from this point onward.-R.] 75 Monarcy – one divine monarch / king = one divine kingdom.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-77",
+      "ref": "homilies-iii-chapter-lx",
+      "label": "Homilies III, Chapter LX: Successor to Be Appointed",
+      "greek": "",
+      "english": "“Since it is necessary to set apart someone instead of me to fill my place, let us all with one consent pray to Elohim, that He would reveal who among us is the best to have sitting in the chair of Moshiach, so that he may piously rule His Yisraelite Yahad. Who, then, will be set apart? For by the counsel of Elohim that man is set forth as blessed, ‘whom his Master will appoint over the ministry of his fellow-servants, to give them their meat in their season, not thinking and saying in his heart, My Master delays His coming, and who will not begin to beat his fellow-servants, eating and drinking with harlots and drunkards. And the Master of that servant will come in an hour when he doth not look for Him, and in a day when he is not aware, and will cut him in pieces and sentence him with the rest of the hypocrites.’”76",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-78",
+      "ref": "homilies-iii-chapter-lxi",
+      "label": "Homilies III, Chapter LXI: Monarchy",
+      "greek": "",
+      "english": "“But if anyone of those present who is able to instruct ignorant men and yet shrink from it, thinking only of his own ease, let him expect to hear this sentence: ‘O bad and lazy servant, you should have put my money in the bank, so that when I came I could at least have my money back. Cast out the unprofitable servant into the outer darkness.’77 And with good reason; ‘for,’ says He, ‘it is for you, O man, to prove my words, as silver and money are proven by the moneychangers.’ So the community of the faithful ought to obey someone, in order to live in harmony. For that which tends to the government of one person, in the form of monarchy78, enables the subjects to enjoy peace by means of good order. But if any do not want a single ruler by reason of wanting the rule himself, they must altogether fall by reason of division.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-79",
+      "ref": "homilies-iii-chapter-lxii",
+      "label": "Homilies III, Chapter LXII: Obedience Leads to Shalom",
+      "greek": "",
+      "english": "“So then let the things that are going on before your eyes persuade you; how wars are constantly arising through there being now many kings all over the earth. For each one holds the government of another as a pretext for war. But if one were ruler over all, he would have no reason to make war and would have perpetual peace. In short, to those who are thought worthy of eternal life, Elohim appoints one universal King in the world that will then be, that by means of monarchy there may be unfailing peace. It is imperative for all then to follow someone as a leader, honoring him as the 76Matt. 24:45-50. 77Matt. 25:27-30. 78 Monarchy; that is, An autocracy governed by a monarch who usually inherits the authority. It is recorded in Gospel of Thomas 12 that Y’shuah himself authorized James / Ya’aqov the Just as his successor, and this succession is affirmed in Acts 15. Of course, the Just’s monarchy is affirmed throughout the Nazarene Acts. image of Elohim; and for the leader to be acquainted with the road that enters into the qadosh city.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-80",
+      "ref": "homilies-iii-chapter-lxiii",
+      "label": "Homilies III, Chapter LXIII: Zacchai Appointed",
+      "greek": "",
+      "english": "“But of those who are present, whom will I choose but Zacchai, to whom also the Master went in79 and rested, judging him worthy to be saved?” And having said this, he laid his hand upon Zacchai, who stood by, and forced him to sit down in his own chair. But Zacchai, falling at his feet, begged that he would permit him to decline the rulership; promising, at the same time, and saying, “Whatever the ruler has to do, I will do, only grant me not to have this title. I am afraid of having the name of the rulership, for it is full of bitter envy and danger.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-81",
+      "ref": "homilies-iii-chapter-lxiv",
+      "label": "Homilies III, Chapter LXIV: The Oversight of the Yahad",
+      "greek": "",
+      "english": "Then Kefa said: “If you are afraid of this, do not be called Mevaqqre, but The Appointed One, the Master having permitted you to be so called, when He said, ‘Blessed is that man whom his Master will Appoint to the ministry of his fellow-servants.’80 But if you wish it to be altogether unknown that you have authority of administration, you seem to me not to realize that the acknowledged authority of the Mevaqqre has great influence as regards the respect of the Yahad. For everyone obeys him who has received authority, for conscience constrains them. And are you not well aware that you are not to rule as the rulers of the nations, but as a servant taking care of them—as a father to the oppressed, visiting them as a physician, guarding them as a shepherd—in short, taking all care for their salvation? “And do you think that I am not aware what labors I compel you to undertake, desiring you to be judged by people whom it is impossible for anyone to please? But it is most possible for him who does well to please Elohim. So I plead with you to take the office heartily, by Elohim, by Moshiach, for the salvation of the brothers, both so they will be in order and for your own profit.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-82",
+      "ref": "homilies-iii-chapter-lxv",
+      "label": "Homilies III, Chapter LXV: Nolo Episcopari (I Do Not Want to be a Bishop)",
+      "greek": "",
+      "english": "“Consider this other thing, that in proportion as there is labor and danger in ruling the Yahad of Moshiach, so much greater is the reward. And yet again the punishment is greater to him who has the ability and refuses to do it. I would therefore, knowing that you are the best instructed of my attendants, to consider the noble powers of discernment that the Master has given you, in order that you may be saluted with the ‘Well Done, Good And Faithful Servant,’ and not be found at fault and declared liable to punishment, like the man who hid the one talent. 79Luke 19:5, etc. 80Luke 12:42. “But if you will not be appointed a good guardian of the Yahad, point out another in your stead, more learned and more faithful than yourself. But you cannot do this; for you associated with the Master, and witnessed His marvelous doings, and learned the administration of the Yahad.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-83",
+      "ref": "homilies-iii-chapter-lxvi",
+      "label": "Homilies III, Chapter LXVI: Danger of Disobedience",
+      "greek": "",
+      "english": "“Your work is to order what things are proper; and that of the brothers is to submit, and not to disobey. So submitting they will be saved, but disobeying they will be punished by the Master, because the mevaqqre is entrusted with the place of Moshiach. “So, indeed, honor or contempt shown to the mevaqqre is handed on to Moshiach, and from Moshiach to Elohim. And this I have said, that these brothers may not be ignorant of the danger they incur by disobedience to you, because whosoever disobeys your orders, disobeys Moshiach; and he who disobeys Moshiach offends Elohim.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-84",
+      "ref": "homilies-iii-chapter-lxvii",
+      "label": "Homilies III, Chapter LXVII: Duties of Yahad Office-Bearers",
+      "greek": "",
+      "english": "“It is necessary that the Yahad, as a city built upon a hill, have an order approved of Elohim, and good government. In particular, let the mevaqqre, as chief, be heard in the things he speaks; and let the zaqenim give heed that the things ordered be done. Let the shoterim, going about, look after the bodies and the souls of the brothers, and report to the mevaqqre. Let all the rest of the brothers bear wrong patiently; but if they wish judgment to be given concerning wrongs done to them, let them be reconciled in presence of the zaqenim; and let the zaqenim report the reconciliation to the mevaqqre.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-85",
+      "ref": "homilies-iii-chapter-lxviii",
+      "label": "Homilies III, Chapter LXVIII: “Marriage Always Honorable”",
+      "greek": "",
+      "english": "“And let them impress marriage not only upon the young, but also upon those advanced in years, lest burning lust bring a plague upon the Yahad by reason of whoredom or adultery. For, above every other sin, the immorality of adultery is hated by Elohim, because it not only destroys the person himself who sins, but those also who eat and associate with him. “For it is like the madness of a dog, because it has the nature of communicating its own madness. For the sake of chastity, let not only the zaqenim, but even all, hasten to accomplish marriage. For the sin of him who commits adultery necessarily comes upon all. Therefore, to urge the brothers to be chaste is the first requirement of love, for it heals the soul. The nourishment of the body is rest.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-86",
+      "ref": "homilies-iii-chapter-lxix",
+      "label": "Homilies III, Chapter LXIX: “Not Forsaking the Assembling”",
+      "greek": "",
+      "english": "“But if you love your brothers, take nothing from them, but share with them such things as you have. Feed the hungry; give drink to the thirsty; clothe the naked; visit the sick; so far as you can, help those in prison; receive strangers gladly into your own abodes; and hate no one. “And how you must be pious, your own mind will teach you to judging rightly. But before all else, if indeed I need to tell you, come together frequently, even if it were every hour, especially on the appointed days of meeting. For if you do this, you are within a wall of safety. For disorderliness is the beginning of perdition. “Let no one therefore forsake the assembly on the ground of envy towards a brother. For if anyone of you forsake the assembly, he will be regarded as of those who scatter the Yahad of Moshiach, and will be cast out with adulterers. For as an adulterer, under the influence of the spirit that is in him, he separates himself on some pretext, and gives place to the evil one against himself—a sheep for the stealing, as one found outside the fold.”81",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-87",
+      "ref": "homilies-iii-chapter-lxx",
+      "label": "Homilies III, Chapter LXX: “Hear the Mevaqqre”",
+      "greek": "",
+      "english": "“However, hear your mevaqqre, and do not be tired of giving him esteem. Know that, by showing it to him, you show it to Moshiach and to Elohim. To him who offers it, it is returned many times over.82 Honor, then, the throne of Moshiach. For you are commanded even to honor the chair of Moses, although those who occupy it are accounted sinners.83 And now I have said enough to you. It would be superfluous to tell him to live blamelessly, since he is an approved talmid of Him who taught me also.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-88",
+      "ref": "homilies-iii-chapter-lxxi",
+      "label": "Homilies III, Chapter LXXI: Various Duties of Israelite Kiddushim/Saints",
+      "greek": "",
+      "english": "“But, brothers, there are some things that you must not wait to hear, but must yourselves be reasonable. Zacchai alone having given himself up wholly to labor for you, and needing sustenance, and not being able to attend to his own affairs, how can he procure necessary support? Is it not reasonable that you are to take forethought for his living? Do not wait for him to ask you, for you make him feel like a beggar. But he will rather die of hunger than submit to do this. “And will you not incur punishment, not considering that the workman is worthy of his hire? And let no one say, “Is the word sold then, which was freely given?” Far be that from the truth. For if anyone already has the means to support himself and takes anything, he is selling the word. On the other hand, if he who has not takes support in order to live—as the Master also took at supper and among His friends, having nothing, though He alone is the owner of all things—he sins not. “So suitably honor zaqenim, morim, useful attendants, widows who have lived well, orphans as children of the Yahad. But wherever there is need of 81There seems to be a corruption of the text here, but the general meaning is evident enough. 82There are several conjectural readings of this sentence. We have not exactly followed anyone of them, but have ventured on a conjecture of our own. 83Matt. 23:2, 3. any provision for an emergency, contribute all together. Be kind one to another, not shrinking from the endurance of anything whatever for your own salvation.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-89",
+      "ref": "homilies-iii-chapter-lxxii",
+      "label": "Homilies III, Chapter LXXII: Ordination",
+      "greek": "",
+      "english": "And having thus spoken, he placed his hand upon Zacchai, saying, “O You Ruler and Master of all, Father and Elohim, guard the shepherd with the flock. You are the cause and You the power. We are those who need to be helped. You the helper, the Physician, the Savior, the wall, the life, the hope, the refuge, the joy, the expectation, and the rest. In a word, You are all things to us. “In order to bring us to the eternal attainment of salvation, may You cooperate, preserve, and protect us. You can do all things. For You are the Ruler of rulers, the Master of masters, the Governor of kings. Give power to the mevaqqre to lose what ought to be loosed, and to bind what ought to be bound. Make him wise. In Y’shua’s Name, protect the Israelite Yahad of Your Moshiach, as a fair bride. For all everlasting esteem is Yours. Praise belongs to You, our Father, and to Your Son, through the Ruach HaKodesh, to all ages. Amein.”",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "excerpts-from-clements-homilies:section-90",
+      "ref": "homilies-iii-chapter-lxxiii",
+      "label": "Homilies III, Chapter LXXIII: Baptisms",
+      "greek": "",
+      "english": "And having thus spoken, he afterwards said: “Whoever of you would be baptized, begin from tomorrow to fast, and have hands laid upon you day by day, and ask whatever questions that you have. I intend to stay with you ten days.” And after three days, having begun to baptize, he called me, and Aquila, and Nicetas, and said to us: “As I am going to set out for Tyre after seven days, I wish you to go away this very day, and to lodge secretly with Bernice the Canaanite, the daughter of Yusta, and to learn from her, and write accurately to me what Simon is about. For this is of great consequence to me, that I may prepare myself accordingly. So depart straightway in peace.” And leaving him baptizing, as he commanded, we preceded him to Tyre of Phoenicia. ___ * *___ * This finishes our exposé of a small part of the Clementine Homilies – the only passages from the Homilies not found in the Recognitions, and we feel that in Kefa’s treatise on the false books, the Homilies sufficiently fill in that gaps in book three left to us by the timid translators of yore of these important passages not included in the recognitions. May YHWH Have Mercy Upon Us.",
+      "greekNormalized": "",
+      "greekTokens": []
+    }
+  ]
+}
