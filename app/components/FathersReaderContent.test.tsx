@@ -295,7 +295,7 @@ describe("FathersReaderContent", () => {
       expect(screen.getByText("Greek undertext")).toBeInTheDocument();
     });
 
-    fireEvent.click(screen.getByRole("button", { name: /Κηφᾶς/i }));
+    fireEvent.click(await screen.findByRole("button", { name: /Κηφᾶς/i }));
 
     expect(screen.getByText("Κηφᾶς")).toBeInTheDocument();
 
@@ -340,7 +340,7 @@ describe("FathersReaderContent", () => {
       expect(screen.getByText("Greek undertext")).toBeInTheDocument();
     });
 
-    fireEvent.click(screen.getByRole("button", { name: /Κηφᾶς/i }));
+    fireEvent.click(await screen.findByRole("button", { name: /Κηφᾶς/i }));
     fireEvent.click(screen.getByRole("button", { name: "Done annotating" }));
     fireEvent.click(screen.getByRole("button", { name: /Kefa’s Κηφᾶς/i }));
 
@@ -390,6 +390,17 @@ describe("FathersReaderContent", () => {
   });
 
   it("opens the annotation popup under the clicked word and supports Greek keyboard entry", async () => {
+    buildGreekUndertextSuggestionsMock.mockResolvedValue([
+      {
+        greekText: "Κηφᾶς",
+        entryKey: "G2786",
+        lemma: "Κηφᾶς",
+        strongs: "G2786",
+        transliteration: "Kēphas",
+        gloss: "Cephas"
+      }
+    ]);
+
     renderFathersReader(englishOnlyPayload);
 
     fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
@@ -407,9 +418,14 @@ describe("FathersReaderContent", () => {
 
     expect(customGreekInput.value).toBe("αβ");
 
+    fireEvent.click(await screen.findByRole("button", { name: /Κηφᾶς/i }));
+
+    expect(screen.getByRole("dialog", { name: "Greek undertext editor" })).toBeInTheDocument();
+    expect((screen.getByLabelText("Custom Greek") as HTMLInputElement).value).toBe("Κηφᾶς");
+
     fireEvent.click(screen.getByRole("button", { name: "Delete Greek character" }));
 
-    expect(customGreekInput.value).toBe("α");
+    expect((screen.getByLabelText("Custom Greek") as HTMLInputElement).value).toBe("Κηφᾶ");
   });
 
   it("only unlocks immediately adjacent words after the first annotation", async () => {
@@ -441,7 +457,7 @@ describe("FathersReaderContent", () => {
       expect(screen.getByText("Greek undertext")).toBeInTheDocument();
     });
 
-    fireEvent.click(screen.getByRole("button", { name: /Κηφᾶς/i }));
+    fireEvent.click(await screen.findByRole("button", { name: /Κηφᾶς/i }));
 
     await waitFor(() => {
       expect(screen.getByRole("button", { name: "Add Greek undertext for Kefa’s" })).toBeInTheDocument();
