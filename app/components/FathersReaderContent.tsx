@@ -97,9 +97,6 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
   const isNa1AnnotationWork = isNa1GreekAnnotationWork(payload.work);
   const [activeSectionId, setActiveSectionId] = useState(payload.segments[0]?.id ?? "");
   const [annotationMode, setAnnotationMode] = useState(false);
-  const [annotationSelectionMode, setAnnotationSelectionMode] = useState<"word" | "phrase">(
-    "word"
-  );
   const [annotationSaveStatus, setAnnotationSaveStatus] = useState<
     "idle" | "saving" | "saved" | "error"
   >("idle");
@@ -143,7 +140,6 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
 
   useEffect(() => {
     setAnnotationMode(false);
-    setAnnotationSelectionMode("word");
     setAnnotationSaveStatus("idle");
     setAnnotationSaveMessage(null);
     const nextAnnotations = Object.fromEntries(
@@ -298,32 +294,13 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
         className={`reader-inline-button${annotationMode ? " is-active" : ""}`}
         onClick={() => {
           setAnnotationMode((current) => {
-            const nextValue = !current;
-
-            if (!nextValue) {
-              setAnnotationSelectionMode("word");
-            }
-
-            return nextValue;
+            return !current;
           });
         }}
         type="button"
       >
         {annotationMode ? "Done annotating" : "Annotate Greek"}
       </button>
-      {annotationMode ? (
-        <button
-          className={`reader-inline-button${
-            annotationSelectionMode === "phrase" ? " is-active" : ""
-          }`}
-          onClick={() =>
-            setAnnotationSelectionMode((current) => (current === "word" ? "phrase" : "word"))
-          }
-          type="button"
-        >
-          {annotationSelectionMode === "word" ? "Single word" : "Phrase mode"}
-        </button>
-      ) : null}
       <button
         className="reader-inline-button"
         disabled={!hasAnnotationChanges || annotationSaveStatus === "saving"}
@@ -413,7 +390,6 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
                   englishTokens={segment.englishTokens}
                   onChangeAnnotations={handleAnnotationsChange}
                   onOpenGreekDictionary={openGreekDictionary}
-                  selectionMode={annotationSelectionMode}
                   segmentId={segment.id}
                 />
               ) : (

@@ -22,7 +22,6 @@ type FathersEnglishUndertextContentProps = {
   englishTokens?: FathersEnglishToken[];
   annotations: FathersGreekUndertextAnnotation[];
   annotationMode: boolean;
-  selectionMode: "word" | "phrase";
   onChangeAnnotations: (segmentId: string, annotations: FathersGreekUndertextAnnotation[]) => void;
   onOpenGreekDictionary?: (selection: {
     entryKey: string;
@@ -97,11 +96,9 @@ export function FathersEnglishUndertextContent({
   englishTokens,
   annotations,
   annotationMode,
-  selectionMode,
   onChangeAnnotations,
   onOpenGreekDictionary
 }: FathersEnglishUndertextContentProps) {
-  const [pendingStartToken, setPendingStartToken] = useState<number | null>(null);
   const [activeEditor, setActiveEditor] = useState<ActiveEditorState | null>(null);
   const [customGreekText, setCustomGreekText] = useState("");
   const [suggestions, setSuggestions] = useState<
@@ -136,16 +133,11 @@ export function FathersEnglishUndertextContent({
 
   useEffect(() => {
     if (!annotationMode) {
-      setPendingStartToken(null);
       setActiveEditor(null);
       setCustomGreekText("");
       setEditorError(null);
     }
   }, [annotationMode]);
-
-  useEffect(() => {
-    setPendingStartToken(null);
-  }, [selectionMode]);
 
   useEffect(() => {
     if (!annotationMode || !activeEditor || !selectedSpanText) {
@@ -198,7 +190,6 @@ export function FathersEnglishUndertextContent({
   const openEditor = (startToken: number, endToken: number) => {
     const existingAnnotation = findIntersectingAnnotation(annotations, startToken, endToken);
 
-    setPendingStartToken(null);
     setEditorError(null);
     setActiveEditor({
       startToken: existingAnnotation?.startToken ?? startToken,
@@ -215,7 +206,6 @@ export function FathersEnglishUndertextContent({
     const existingAnnotation = annotations.find((annotation) => annotationContainsWord(annotation, wordIndex));
 
     if (existingAnnotation) {
-      setPendingStartToken(null);
       setEditorError(null);
       setActiveEditor({
         startToken: existingAnnotation.startToken,
@@ -225,22 +215,7 @@ export function FathersEnglishUndertextContent({
       return;
     }
 
-    if (selectionMode === "word") {
-      openEditor(wordIndex, wordIndex);
-      return;
-    }
-
-    if (pendingStartToken === null) {
-      setPendingStartToken(wordIndex);
-      setActiveEditor(null);
-      setEditorError(null);
-      return;
-    }
-
-    const startToken = Math.min(pendingStartToken, wordIndex);
-    const endToken = Math.max(pendingStartToken, wordIndex);
-
-    openEditor(startToken, endToken);
+    openEditor(wordIndex, wordIndex);
   };
 
   const handleSuggestionSave = (suggestion: {
@@ -273,7 +248,6 @@ export function FathersEnglishUndertextContent({
       })
     );
     setActiveEditor(null);
-    setPendingStartToken(null);
     setCustomGreekText("");
     setEditorError(null);
   };
@@ -305,7 +279,6 @@ export function FathersEnglishUndertextContent({
         })
       );
       setActiveEditor(null);
-      setPendingStartToken(null);
       setCustomGreekText("");
     } catch {
       setEditorError("Unable to save this Greek undertext right now.");
@@ -324,10 +297,13 @@ export function FathersEnglishUndertextContent({
       removeSegmentAnnotation(annotations, activeEditor.existingAnnotation)
     );
     setActiveEditor(null);
-    setPendingStartToken(null);
     setCustomGreekText("");
     setEditorError(null);
   };
+
+  const nextSequentialTokenIndex =
+    annotations.reduce((highestIndex, annotation) => Math.max(highestIndex, annotation.endToken), -1) +
+    1;
 
   const activeEditorRange =
     activeEditor !== null
@@ -434,21 +410,27 @@ export function FathersEnglishUndertextContent({
       token.wordIndex !== undefined &&
       token.wordIndex >= activeEditorRange.startToken &&
       token.wordIndex <= activeEditorRange.endToken;
-    const isPendingStart =
-      annotationMode && pendingStartToken !== null && token.wordIndex === pendingStartToken;
+    const canAddAnnotation =
+      annotationMode && token.wordIndex !== undefined && token.wordIndex === nextSequentialTokenIndex;
 
     renderedContent.push(
       annotationMode ? (
-        <button
-          className={`fathers-annotation-word${isSelectedInEditor ? " is-selected" : ""}${
-            isPendingStart ? " is-pending" : ""
-          }`}
+        <span
+          className={`fathers-annotation-word-wrap${isSelectedInEditor ? " is-selected" : ""}`}
           key={`${segmentId}:word:${token.wordIndex}`}
-          onClick={() => handleWordSelection(token.wordIndex as number)}
-          type="button"
         >
-          {token.text}
-        </button>
+          <span className="fathers-annotation-word-text">{token.text}</span>
+          {canAddAnnotation ? (
+            <button
+              aria-label={`Add Greek undertext for ${token.text}`}
+              className="fathers-annotation-add-button"
+              onClick={() => handleWordSelection(token.wordIndex as number)}
+              type="button"
+            >
+              +
+            </button>
+          ) : null}
+        </span>
       ) : (
         <span key={`${segmentId}:word:${token.wordIndex}`}>{token.text}</span>
       )
@@ -466,15 +448,9 @@ export function FathersEnglishUndertextContent({
             <p className="reader-toolbar-meta">
               Greek undertext for: <strong>{selectedSpanText}</strong>
             </p>
-          ) : selectionMode === "phrase" && pendingStartToken !== null ? (
-            <p className="reader-toolbar-meta">Select another word to finish the phrase span.</p>
-          ) : selectionMode === "phrase" ? (
-            <p className="reader-toolbar-meta">
-              Phrase mode: click the first word, then the last word in the phrase.
-            </p>
           ) : (
             <p className="reader-toolbar-meta">
-              Single-word mode: click any English word to annotate it immediately.
+              Use the `+` button beside the next word to add Greek undertext in order.
             </p>
           )}
         </div>
@@ -490,7 +466,6 @@ export function FathersEnglishUndertextContent({
               className="reader-inline-button"
               onClick={() => {
                 setActiveEditor(null);
-                setPendingStartToken(null);
                 setCustomGreekText("");
                 setEditorError(null);
               }}

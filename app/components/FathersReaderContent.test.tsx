@@ -289,7 +289,7 @@ describe("FathersReaderContent", () => {
     renderFathersReader(englishOnlyPayload);
 
     fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
-    fireEvent.click(screen.getByRole("button", { name: "Kefa’s" }));
+    fireEvent.click(screen.getByRole("button", { name: "Add Greek undertext for Kefa’s" }));
 
     await waitFor(() => {
       expect(screen.getByText("Greek undertext")).toBeInTheDocument();
@@ -334,7 +334,7 @@ describe("FathersReaderContent", () => {
     renderFathersReader(englishOnlyPayload);
 
     fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
-    fireEvent.click(screen.getByRole("button", { name: "Kefa’s" }));
+    fireEvent.click(screen.getByRole("button", { name: "Add Greek undertext for Kefa’s" }));
 
     await waitFor(() => {
       expect(screen.getByText("Greek undertext")).toBeInTheDocument();
@@ -351,8 +351,16 @@ describe("FathersReaderContent", () => {
     expect(document.body.textContent).toContain("kēphas");
   });
 
-  it("supports phrase selection mode for grouped undertext annotation", async () => {
+  it("only allows adding new undertext in reading order", async () => {
     buildGreekUndertextSuggestionsMock.mockResolvedValue([
+      {
+        greekText: "Κηφᾶς",
+        entryKey: "G2786",
+        lemma: "Κηφᾶς",
+        strongs: "G2786",
+        transliteration: "Kēphas",
+        gloss: "Cephas"
+      },
       {
         greekText: "ἐπιστολή",
         entryKey: "G1992",
@@ -366,13 +374,21 @@ describe("FathersReaderContent", () => {
     renderFathersReader(englishOnlyPayload);
 
     fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
-    fireEvent.click(screen.getByRole("button", { name: "Single word" }));
-    fireEvent.click(screen.getByRole("button", { name: "Kefa’s" }));
-    fireEvent.click(screen.getByRole("button", { name: "Letter" }));
+    expect(screen.getByRole("button", { name: "Add Greek undertext for Kefa’s" })).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Add Greek undertext for Letter" })
+    ).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Add Greek undertext for Kefa’s" }));
 
     await waitFor(() => {
       expect(screen.getByText("Greek undertext")).toBeInTheDocument();
-      expect(document.body.textContent).toContain("Kefa’s Letter");
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: /Κηφᾶς/i }));
+
+    await waitFor(() => {
+      expect(screen.getByRole("button", { name: "Add Greek undertext for Letter" })).toBeInTheDocument();
     });
   });
 
