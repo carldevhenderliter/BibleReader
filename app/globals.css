@@ -1303,6 +1303,12 @@ button.fathers-annotation-anchor:focus-visible {
   white-space: pre-wrap;
 }
 
+.fathers-scripture-search-token-strongs-list {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+}
+
 .fathers-scripture-search-token-strongs {
   display: inline-flex;
   align-items: center;
@@ -1317,6 +1323,20 @@ button.fathers-annotation-anchor:focus-visible {
   font-weight: 700;
   letter-spacing: 0.02em;
   line-height: 1;
+  border: 0;
+  cursor: pointer;
+}
+
+.fathers-scripture-search-token-strongs:hover,
+.fathers-scripture-search-token-strongs:focus-visible,
+.fathers-scripture-search-token-strongs.is-active {
+  background: rgba(var(--reader-accent-rgb), 0.2);
+  color: rgba(248, 252, 255, 0.98);
+  outline: none;
+}
+
+.fathers-annotation-strongs-card {
+  gap: 0.5rem;
 }
 
 .fathers-annotation-suggestion {

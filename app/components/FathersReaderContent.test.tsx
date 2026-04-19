@@ -19,6 +19,7 @@ const searchGreekUndertextSuggestionsMock = jest.fn();
 const searchScriptureUndertextPassagesMock = jest.fn();
 const resolveCustomGreekUndertextMock = jest.fn();
 const saveFathersAnnotationFileMock = jest.fn();
+const getStrongsEntryMock = jest.fn();
 
 jest.mock("@/lib/fathers/annotations", () => {
   const actual = jest.requireActual("@/lib/fathers/annotations");
@@ -39,6 +40,15 @@ jest.mock("@/lib/fathers/annotations", () => {
 jest.mock("@/lib/fathers/annotation-save", () => ({
   saveFathersAnnotationFile: (...args: unknown[]) => saveFathersAnnotationFileMock(...args)
 }));
+
+jest.mock("@/lib/bible/strongs", () => {
+  const actual = jest.requireActual("@/lib/bible/strongs");
+
+  return {
+    ...actual,
+    getStrongsEntry: (...args: unknown[]) => getStrongsEntryMock(...args)
+  };
+});
 
 const payload: FathersWorkPayload = {
   work: {
@@ -241,11 +251,13 @@ describe("FathersReaderContent", () => {
     searchScriptureUndertextPassagesMock.mockReset();
     resolveCustomGreekUndertextMock.mockReset();
     saveFathersAnnotationFileMock.mockReset();
+    getStrongsEntryMock.mockReset();
     buildGreekUndertextSuggestionsMock.mockResolvedValue([]);
     searchGreekUndertextSuggestionsMock.mockResolvedValue([]);
     searchScriptureUndertextPassagesMock.mockResolvedValue([]);
     resolveCustomGreekUndertextMock.mockResolvedValue(null);
     saveFathersAnnotationFileMock.mockResolvedValue("download");
+    getStrongsEntryMock.mockResolvedValue(null);
   });
 
   it("renders Greek study tokens with transliteration and gloss lines", () => {
@@ -569,6 +581,65 @@ describe("FathersReaderContent", () => {
     expect(screen.getByText("the beginning")).toBeInTheDocument();
     expect(screen.getByText("G1722")).toBeInTheDocument();
     expect(screen.getByText("G746")).toBeInTheDocument();
+  });
+
+  it("opens a Strong’s definition tab from scripture lookup chips", async () => {
+    searchScriptureUndertextPassagesMock.mockResolvedValue([
+      {
+        id: "verse:john:1:1:kjv",
+        bookSlug: "john",
+        chapterNumber: 1,
+        verseNumber: 1,
+        label: "John 1:1",
+        description: "KJV New Testament lookup",
+        preview: "In the beginning was the Word.",
+        tokens: [
+          {
+            text: " the Word",
+            strongsNumbers: ["G3056"]
+          }
+        ]
+      }
+    ]);
+    getStrongsEntryMock.mockResolvedValue({
+      id: "G3056",
+      language: "greek",
+      lemma: "λόγος",
+      transliteration: "logos",
+      definition: "word, speech, account",
+      partOfSpeech: "noun",
+      rootWord: "G3004",
+      outlineUsage: "word"
+    });
+
+    renderFathersReader(englishOnlyPayload);
+
+    fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
+    fireEvent.click(screen.getByRole("button", { name: "Add Greek undertext for Kefa’s" }));
+
+    await screen.findByRole("dialog", { name: "Greek undertext editor" });
+
+    fireEvent.click(screen.getByRole("tab", { name: "Scripture" }));
+    fireEvent.change(screen.getByLabelText("Testament"), {
+      target: { value: "new-testament" }
+    });
+    fireEvent.change(screen.getByLabelText("Scripture lookup"), {
+      target: { value: "word" }
+    });
+
+    await screen.findByRole("button", { name: "Show G3056 definition for the Word" });
+
+    fireEvent.click(screen.getByRole("button", { name: "Show G3056 definition for the Word" }));
+
+    await waitFor(() => {
+      expect(getStrongsEntryMock).toHaveBeenCalledWith("G3056");
+    });
+
+    expect(screen.getByRole("tab", { name: "Definition" })).toHaveAttribute("aria-selected", "true");
+    expect(screen.getByText("λόγος")).toBeInTheDocument();
+    expect(screen.getByText("Word clicked: the Word")).toBeInTheDocument();
+    expect(screen.getByText("Transliteration: logos")).toBeInTheDocument();
+    expect(screen.getByText("word, speech, account")).toBeInTheDocument();
   });
 
   it("only unlocks immediately adjacent words after the first annotation", async () => {

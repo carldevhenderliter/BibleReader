@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 
-import { normalizeStrongsNumber } from "@/lib/bible/strongs";
+import { getStrongsEntry, normalizeStrongsNumber } from "@/lib/bible/strongs";
 import {
   annotationContainsWord,
   buildGreekUndertextSuggestions,
@@ -17,7 +17,7 @@ import {
   searchScriptureUndertextPassages,
   resolveCustomGreekUndertext
 } from "@/lib/fathers/annotations";
-import type { SearchScope, VerseToken } from "@/lib/bible/types";
+import type { SearchScope, StrongsEntry, VerseToken } from "@/lib/bible/types";
 import type { FathersEnglishToken, FathersGreekUndertextAnnotation } from "@/lib/fathers/types";
 
 type FathersEnglishUndertextContentProps = {
@@ -50,6 +50,12 @@ type UndertextSuggestion = {
   strongs?: string;
   transliteration?: string;
   gloss?: string;
+};
+
+type ScriptureDefinitionState = {
+  strongsNumber: string;
+  tokenText: string;
+  entry: StrongsEntry | null;
 };
 
 const GREEK_KEYBOARD_ROWS = [
@@ -117,7 +123,15 @@ function getAnnotationPhraseText(
   return text;
 }
 
-function renderScriptureSearchTokens(tokens?: VerseToken[]) {
+function renderScriptureSearchTokens({
+  tokens,
+  activeStrongsNumber,
+  onOpenDefinition
+}: {
+  tokens?: VerseToken[];
+  activeStrongsNumber?: string | null;
+  onOpenDefinition: (strongsNumber: string, tokenText: string) => void;
+}) {
   if (!tokens?.length) {
     return null;
   }
@@ -133,8 +147,20 @@ function renderScriptureSearchTokens(tokens?: VerseToken[]) {
           <span className="fathers-scripture-search-token" key={`${index}:${token.text}`}>
             <span className="fathers-scripture-search-token-text">{token.text.trimStart()}</span>
             {strongsNumbers.length ? (
-              <span className="fathers-scripture-search-token-strongs">
-                {strongsNumbers.join(" ")}
+              <span className="fathers-scripture-search-token-strongs-list">
+                {strongsNumbers.map((strongsNumber) => (
+                  <button
+                    aria-label={`Show ${strongsNumber} definition for ${token.text.trim()}`}
+                    className={`fathers-scripture-search-token-strongs${
+                      activeStrongsNumber === strongsNumber ? " is-active" : ""
+                    }`}
+                    key={`${index}:${strongsNumber}`}
+                    onClick={() => onOpenDefinition(strongsNumber, token.text.trim())}
+                    type="button"
+                  >
+                    {strongsNumber}
+                  </button>
+                ))}
               </span>
             ) : null}
           </span>
@@ -155,21 +181,28 @@ export function FathersEnglishUndertextContent({
 }: FathersEnglishUndertextContentProps) {
   const [activeEditor, setActiveEditor] = useState<ActiveEditorState | null>(null);
   const [customGreekText, setCustomGreekText] = useState("");
-  const [activeSuggestionsTab, setActiveSuggestionsTab] = useState<"auto" | "search" | "scripture">("auto");
+  const [activeSuggestionsTab, setActiveSuggestionsTab] = useState<
+    "auto" | "search" | "scripture" | "definition"
+  >("auto");
   const [searchQuery, setSearchQuery] = useState("");
   const [suggestions, setSuggestions] = useState<UndertextSuggestion[]>([]);
   const [searchResults, setSearchResults] = useState<UndertextSuggestion[]>([]);
   const [scriptureQuery, setScriptureQuery] = useState("");
   const [scriptureScope, setScriptureScope] = useState<SearchScope>("all");
   const [scriptureResults, setScriptureResults] = useState<FathersScriptureLookupResult[]>([]);
+  const [activeScriptureDefinition, setActiveScriptureDefinition] =
+    useState<ScriptureDefinitionState | null>(null);
   const [isLoadingSuggestions, setIsLoadingSuggestions] = useState(false);
   const [isSearchLoading, setIsSearchLoading] = useState(false);
   const [isScriptureLoading, setIsScriptureLoading] = useState(false);
+  const [isDefinitionLoading, setIsDefinitionLoading] = useState(false);
   const [isSavingCustom, setIsSavingCustom] = useState(false);
   const [editorError, setEditorError] = useState<string | null>(null);
   const [searchError, setSearchError] = useState<string | null>(null);
   const [scriptureError, setScriptureError] = useState<string | null>(null);
+  const [definitionError, setDefinitionError] = useState<string | null>(null);
   const customInputRef = useRef<HTMLInputElement | null>(null);
+  const definitionRequestIdRef = useRef(0);
 
   const selectedSpanText = useMemo(() => {
     if (!englishTokens || !activeEditor) {
@@ -197,8 +230,10 @@ export function FathersEnglishUndertextContent({
       setScriptureQuery("");
       setScriptureScope("all");
       setScriptureResults([]);
+      setActiveScriptureDefinition(null);
       setSearchError(null);
       setScriptureError(null);
+      setDefinitionError(null);
       setEditorError(null);
     }
   }, [annotationMode]);
@@ -260,9 +295,11 @@ export function FathersEnglishUndertextContent({
     setScriptureQuery("");
     setScriptureScope("all");
     setScriptureResults([]);
+    setActiveScriptureDefinition(null);
     setEditorError(null);
     setSearchError(null);
     setScriptureError(null);
+    setDefinitionError(null);
   };
 
   const openEditor = (
@@ -280,6 +317,8 @@ export function FathersEnglishUndertextContent({
     setSearchResults([]);
     setScriptureQuery("");
     setScriptureResults([]);
+    setActiveScriptureDefinition(null);
+    setDefinitionError(null);
     setActiveEditor({
       startToken: existingAnnotation?.startToken ?? startToken,
       endToken: existingAnnotation?.endToken ?? endToken,
@@ -305,6 +344,7 @@ export function FathersEnglishUndertextContent({
       setScriptureQuery("");
       setScriptureScope("all");
       setScriptureResults([]);
+      setActiveScriptureDefinition(null);
       setActiveEditor({
         startToken: existingAnnotation.startToken,
         endToken: existingAnnotation.endToken,
@@ -315,6 +355,48 @@ export function FathersEnglishUndertextContent({
     }
 
     openEditor(wordIndex, wordIndex, anchorElement);
+  };
+
+  const handleOpenScriptureDefinition = (strongsNumber: string, tokenText: string) => {
+    const normalizedStrongsNumber = normalizeStrongsNumber(strongsNumber);
+    const requestId = definitionRequestIdRef.current + 1;
+    definitionRequestIdRef.current = requestId;
+
+    setActiveSuggestionsTab("definition");
+    setDefinitionError(null);
+    setIsDefinitionLoading(true);
+    setActiveScriptureDefinition({
+      strongsNumber: normalizedStrongsNumber,
+      tokenText,
+      entry: null
+    });
+
+    void getStrongsEntry(normalizedStrongsNumber)
+      .then((entry) => {
+        if (definitionRequestIdRef.current !== requestId) {
+          return;
+        }
+
+        setActiveScriptureDefinition({
+          strongsNumber: normalizedStrongsNumber,
+          tokenText,
+          entry
+        });
+        setIsDefinitionLoading(false);
+      })
+      .catch(() => {
+        if (definitionRequestIdRef.current !== requestId) {
+          return;
+        }
+
+        setActiveScriptureDefinition({
+          strongsNumber: normalizedStrongsNumber,
+          tokenText,
+          entry: null
+        });
+        setIsDefinitionLoading(false);
+        setDefinitionError("Unable to load the Strong’s definition right now.");
+      });
   };
 
   const handleSuggestionSave = (suggestion: UndertextSuggestion) => {
@@ -807,6 +889,19 @@ export function FathersEnglishUndertextContent({
                       >
                         Scripture
                       </button>
+                      {activeScriptureDefinition ? (
+                        <button
+                          aria-selected={activeSuggestionsTab === "definition"}
+                          className={`fathers-annotation-tab${
+                            activeSuggestionsTab === "definition" ? " is-active" : ""
+                          }`}
+                          onClick={() => setActiveSuggestionsTab("definition")}
+                          role="tab"
+                          type="button"
+                        >
+                          Definition
+                        </button>
+                      ) : null}
                     </div>
                     {activeSuggestionsTab === "auto" ? (
                       <>
@@ -886,7 +981,7 @@ export function FathersEnglishUndertextContent({
                           </p>
                         )}
                       </div>
-                    ) : (
+                    ) : activeSuggestionsTab === "scripture" ? (
                       <div className="fathers-annotation-search-panel">
                         <div className="fathers-scripture-search-controls">
                           <label
@@ -941,13 +1036,78 @@ export function FathersEnglishUndertextContent({
                                   </p>
                                 </div>
                                 <p className="fathers-scripture-search-preview">{result.preview}</p>
-                                {renderScriptureSearchTokens(result.tokens)}
+                                {renderScriptureSearchTokens({
+                                  tokens: result.tokens,
+                                  activeStrongsNumber: activeScriptureDefinition?.strongsNumber ?? null,
+                                  onOpenDefinition: handleOpenScriptureDefinition
+                                })}
                               </article>
                             ))}
                           </div>
                         ) : (
                           <p className="reader-toolbar-meta">
                             No scripture verses matched that lookup yet.
+                          </p>
+                        )}
+                      </div>
+                    ) : (
+                      <div className="fathers-annotation-search-panel">
+                        <p className="fathers-annotation-editor-label">Strong’s Definition</p>
+                        {isDefinitionLoading ? (
+                          <p className="reader-toolbar-meta">Loading Strong’s definition…</p>
+                        ) : definitionError ? (
+                          <p className="fathers-annotation-error">{definitionError}</p>
+                        ) : activeScriptureDefinition?.entry ? (
+                          <article className="strongs-entry-card fathers-annotation-strongs-card">
+                            <div className="strongs-entry-header">
+                              <span className="strongs-entry-number">
+                                {activeScriptureDefinition.entry.id}
+                              </span>
+                              <span className="strongs-entry-language">
+                                {activeScriptureDefinition.entry.language === "hebrew"
+                                  ? "Hebrew Strong’s"
+                                  : "Greek Strong’s"}
+                              </span>
+                            </div>
+                            <p className="strongs-entry-lemma">
+                              {activeScriptureDefinition.entry.lemma}
+                            </p>
+                            <p className="strongs-entry-meta">
+                              Word clicked: {activeScriptureDefinition.tokenText}
+                            </p>
+                            {activeScriptureDefinition.entry.transliteration ? (
+                              <p className="strongs-entry-meta">
+                                Transliteration: {activeScriptureDefinition.entry.transliteration}
+                              </p>
+                            ) : null}
+                            {activeScriptureDefinition.entry.partOfSpeech ? (
+                              <p className="strongs-entry-meta">
+                                Part of speech: {activeScriptureDefinition.entry.partOfSpeech}
+                              </p>
+                            ) : null}
+                            {activeScriptureDefinition.entry.definition ? (
+                              <p className="strongs-entry-copy">
+                                {activeScriptureDefinition.entry.definition}
+                              </p>
+                            ) : null}
+                            {activeScriptureDefinition.entry.outlineUsage ? (
+                              <p className="strongs-entry-copy">
+                                {activeScriptureDefinition.entry.outlineUsage}
+                              </p>
+                            ) : null}
+                            {activeScriptureDefinition.entry.rootWord ? (
+                              <p className="strongs-entry-meta">
+                                Root word: {activeScriptureDefinition.entry.rootWord}
+                              </p>
+                            ) : null}
+                          </article>
+                        ) : activeScriptureDefinition ? (
+                          <p className="reader-toolbar-meta">
+                            No Strong’s definition is available for {activeScriptureDefinition.strongsNumber}.
+                          </p>
+                        ) : (
+                          <p className="reader-toolbar-meta">
+                            Click a Strong’s number in the Scripture tab to open its definition here.
                           </p>
                         )}
                       </div>
