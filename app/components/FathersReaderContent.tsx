@@ -34,6 +34,35 @@ type LazyFathersSegmentSectionProps = {
   children: React.ReactNode;
 };
 
+function splitFathersEnglishSentences(text: string) {
+  const matches =
+    text.match(/[^.!?]+(?:[.!?]+["'”’)\]]*)?(?:\s+|$)/gu)?.map((sentence) => sentence.trim()) ?? [];
+
+  return matches.filter(Boolean);
+}
+
+function renderFathersEnglishBlock(text: string, separateSentencesByLine: boolean) {
+  if (!separateSentencesByLine) {
+    return <p className="verse-text verse-text-body fathers-segment-english">{text}</p>;
+  }
+
+  const sentences = splitFathersEnglishSentences(text);
+
+  if (!sentences.length) {
+    return <p className="verse-text verse-text-body fathers-segment-english">{text}</p>;
+  }
+
+  return (
+    <div className="fathers-segment-english-sentences">
+      {sentences.map((sentence, index) => (
+        <p className="verse-text verse-text-body fathers-segment-english fathers-sentence-line" key={`${index}:${sentence}`}>
+          {sentence}
+        </p>
+      ))}
+    </div>
+  );
+}
+
 function LazyFathersSegmentSection({
   segmentId,
   initialRender,
@@ -390,10 +419,11 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
                   englishTokens={segment.englishTokens}
                   onChangeAnnotations={handleAnnotationsChange}
                   onOpenGreekDictionary={openGreekDictionary}
+                  separateSentencesByLine={settings.showFathersSentenceLines}
                   segmentId={segment.id}
                 />
               ) : (
-                <p className="verse-text verse-text-body fathers-segment-english">{segment.english}</p>
+                renderFathersEnglishBlock(segment.english, settings.showFathersSentenceLines)
               )}
             </LazyFathersSegmentSection>
           ))}

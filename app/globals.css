@@ -970,6 +970,16 @@ select {
   gap: 0.75rem;
 }
 
+.fathers-segment-english-sentences {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.fathers-sentence-line {
+  margin: 0;
+  text-indent: 0;
+}
+
 .fathers-annotation-line {
   white-space: normal;
 }

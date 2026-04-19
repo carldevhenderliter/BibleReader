@@ -147,6 +147,7 @@ export const DEFAULT_READER_CUSTOMIZATION: ReaderCustomizationSettings = {
   showGreekMorphology: true,
   showGreekGloss: true,
   showCustomVerseTranslation: true,
+  showFathersSentenceLines: false,
   bodyTextSize: 1.08,
   greekTextSize: 1.55,
   hebrewTextSize: 1.55,
@@ -365,6 +366,10 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
             !hasGranularCustomVerseTranslation
           ? false
           : DEFAULT_READER_CUSTOMIZATION.showCustomVerseTranslation,
+    showFathersSentenceLines:
+      typeof candidate.showFathersSentenceLines === "boolean"
+        ? candidate.showFathersSentenceLines
+        : DEFAULT_READER_CUSTOMIZATION.showFathersSentenceLines,
     bodyTextSize: normalizedBodyTextSize,
     greekTextSize: normalizedGreekTextSize,
     hebrewTextSize: normalizedHebrewTextSize,

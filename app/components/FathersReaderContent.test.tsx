@@ -12,6 +12,10 @@ import { VerseTranslationOverridesProvider } from "@/app/components/VerseTransla
 import { WritingAssistantProvider } from "@/app/components/WritingAssistantProvider";
 import { tokenizeFathersEnglishText } from "@/lib/fathers/annotations";
 import type { FathersWorkPayload } from "@/lib/fathers/types";
+import {
+  DEFAULT_READER_CUSTOMIZATION,
+  READER_CUSTOMIZATION_STORAGE_KEY
+} from "@/lib/reader-customization";
 import { mockRouter, setMockPathname } from "@/test/mocks/next-navigation";
 
 const buildGreekUndertextSuggestionsMock = jest.fn();
@@ -246,6 +250,7 @@ function renderFathersReader(currentPayload: FathersWorkPayload = payload) {
 
 describe("FathersReaderContent", () => {
   beforeEach(() => {
+    window.localStorage.removeItem(READER_CUSTOMIZATION_STORAGE_KEY);
     buildGreekUndertextSuggestionsMock.mockReset();
     searchGreekUndertextSuggestionsMock.mockReset();
     searchScriptureUndertextPassagesMock.mockReset();
@@ -294,6 +299,43 @@ describe("FathersReaderContent", () => {
     );
     expect(screen.queryByRole("button", { name: /G1577/i })).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Annotate Greek" })).toBeInTheDocument();
+  });
+
+  it("can place each Fathers sentence on its own line", async () => {
+    const sentencePayload: FathersWorkPayload = {
+      ...englishOnlyPayload,
+      segments: [
+        {
+          id: "preaching-of-peter:sentences",
+          ref: "sentences",
+          label: "Sentences",
+          greek: "",
+          english: "First sentence. Second sentence? Third sentence!",
+          greekNormalized: "",
+          greekTokens: [],
+          englishTokens: tokenizeFathersEnglishText("First sentence. Second sentence? Third sentence!"),
+          greekUndertextAnnotations: []
+        }
+      ]
+    };
+
+    window.localStorage.setItem(
+      READER_CUSTOMIZATION_STORAGE_KEY,
+      JSON.stringify({
+        ...DEFAULT_READER_CUSTOMIZATION,
+        showFathersSentenceLines: true
+      })
+    );
+
+    renderFathersReader(sentencePayload);
+
+    await waitFor(() => {
+      expect(document.querySelectorAll(".fathers-sentence-line")).toHaveLength(3);
+    });
+
+    expect(document.body.textContent).toContain("First sentence.");
+    expect(document.body.textContent).toContain("Second sentence?");
+    expect(document.body.textContent).toContain("Third sentence!");
   });
 
   it("adds NA1 Greek undertext annotations and saves them through the local save flow", async () => {

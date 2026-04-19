@@ -178,6 +178,7 @@ export function ReaderSettingsPanel({
       | "showGreekLemma"
       | "showGreekTransliteration"
       | "showGreekGloss"
+      | "showFathersSentenceLines"
   ) => {
     updateSettings({
       [key]: !settings[key],
@@ -548,6 +549,19 @@ export function ReaderSettingsPanel({
                   <strong>English gloss</strong>
                   <span>Show the editable one-word gloss line.</span>
                 </button>
+                {isFathersMode ? (
+                  <button
+                    className={`settings-option-card${
+                      settings.showFathersSentenceLines ? " is-active" : ""
+                    }`}
+                    key="showFathersSentenceLines"
+                    onClick={() => toggleLayer("showFathersSentenceLines")}
+                    type="button"
+                  >
+                    <strong>Sentence lines</strong>
+                    <span>Put each English sentence on its own line in Fathers reading.</span>
+                  </button>
+                ) : null}
               </div>
             </div>
           ) : null}

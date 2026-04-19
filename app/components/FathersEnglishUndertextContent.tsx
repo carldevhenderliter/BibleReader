@@ -26,6 +26,7 @@ type FathersEnglishUndertextContentProps = {
   englishTokens?: FathersEnglishToken[];
   annotations: FathersGreekUndertextAnnotation[];
   annotationMode: boolean;
+  separateSentencesByLine?: boolean;
   onChangeAnnotations: (segmentId: string, annotations: FathersGreekUndertextAnnotation[]) => void;
   onOpenGreekDictionary?: (selection: {
     entryKey: string;
@@ -70,6 +71,10 @@ const SCRIPTURE_SCOPE_OPTIONS: ReadonlyArray<{ value: SearchScope; label: string
   { value: "old-testament", label: "Old Testament" },
   { value: "new-testament", label: "New Testament" }
 ];
+
+function isSentenceBreakSeparator(text: string) {
+  return /[.!?](?:["'”’)\]]*)\s*$/u.test(text.trim());
+}
 
 function getSelectedWords(
   englishTokens: FathersEnglishToken[],
@@ -176,6 +181,7 @@ export function FathersEnglishUndertextContent({
   englishTokens,
   annotations,
   annotationMode,
+  separateSentencesByLine = false,
   onChangeAnnotations,
   onOpenGreekDictionary
 }: FathersEnglishUndertextContentProps) {
@@ -678,7 +684,30 @@ export function FathersEnglishUndertextContent({
   }, [activeEditor, activeSuggestionsTab, scriptureQuery, scriptureScope]);
 
   const renderedContent: ReactNode[] = [];
+  const renderedLines: ReactNode[][] = [[]];
+  const splitSentences = !annotationMode && separateSentencesByLine;
   let annotationIndex = 0;
+
+  const pushRenderedNode = (node: ReactNode) => {
+    if (splitSentences) {
+      renderedLines[renderedLines.length - 1]?.push(node);
+      return;
+    }
+
+    renderedContent.push(node);
+  };
+
+  const pushSentenceBreak = () => {
+    if (!splitSentences) {
+      return;
+    }
+
+    const currentLine = renderedLines[renderedLines.length - 1];
+
+    if (currentLine && currentLine.length > 0) {
+      renderedLines.push([]);
+    }
+  };
 
   for (let tokenIndex = 0; tokenIndex < englishTokens.length; tokenIndex += 1) {
     const token = englishTokens[tokenIndex];
@@ -714,7 +743,7 @@ export function FathersEnglishUndertextContent({
         nextTokenIndex += 1;
       }
 
-      renderedContent.push(
+      pushRenderedNode(
         <span
           className={`fathers-annotation-group${isActiveEditor ? " is-editing" : ""}`}
           key={`${segmentId}:annotation:${nextAnnotation.startToken}:${nextAnnotation.endToken}`}
@@ -766,11 +795,15 @@ export function FathersEnglishUndertextContent({
     }
 
     if (token.type === "separator") {
-      renderedContent.push(
+      pushRenderedNode(
         <span className="fathers-annotation-separator" key={`${segmentId}:separator:${tokenIndex}`}>
           {token.text}
         </span>
       );
+
+      if (splitSentences && isSentenceBreakSeparator(token.text)) {
+        pushSentenceBreak();
+      }
       continue;
     }
 
@@ -783,7 +816,7 @@ export function FathersEnglishUndertextContent({
     const canAddAnnotation =
       annotationMode && token.wordIndex !== undefined && addableWordIndexes.has(token.wordIndex);
 
-    renderedContent.push(
+    pushRenderedNode(
       annotationMode ? (
         <span
           className={`fathers-annotation-word-wrap${isSelectedInEditor ? " is-selected" : ""}`}
@@ -809,11 +842,28 @@ export function FathersEnglishUndertextContent({
     );
   }
 
+  const sentenceLines = splitSentences
+    ? renderedLines.filter((line) => line.length > 0)
+    : [];
+
   return (
     <div className="fathers-segment-english-block">
-      <p className="verse-text verse-text-body fathers-segment-english fathers-annotation-line">
-        {renderedContent}
-      </p>
+      {splitSentences ? (
+        <div className="fathers-segment-english-sentences">
+          {sentenceLines.map((line, index) => (
+            <p
+              className="verse-text verse-text-body fathers-segment-english fathers-sentence-line"
+              key={`${segmentId}:sentence-line:${index}`}
+            >
+              {line}
+            </p>
+          ))}
+        </div>
+      ) : (
+        <p className="verse-text verse-text-body fathers-segment-english fathers-annotation-line">
+          {renderedContent}
+        </p>
+      )}
       {annotationMode ? (
         <div className="fathers-annotation-mode-copy">
           {activeEditor ? (
