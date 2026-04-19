@@ -8,10 +8,35 @@ import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-c
 jest.mock("@/lib/fathers/data");
 
 const mockedGetFathersWorkPayload = jest.mocked(fathersData.getFathersWorkPayload);
+const mockedGetFathersWorks = jest.mocked(fathersData.getFathersWorks);
 
 describe("FathersReaderPage", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mockedGetFathersWorks.mockResolvedValue([
+      {
+        slug: "1-clement",
+        title: "1 Clement",
+        shortTitle: "1 Clem.",
+        author: "Clement of Rome",
+        order: 1,
+        corpus: "apostolic-fathers",
+        sectionCount: 1,
+        greekSource: "example-greek",
+        englishSource: "example-english"
+      },
+      {
+        slug: "preaching-of-peter",
+        title: "The Preaching of Peter",
+        shortTitle: "Preaching",
+        author: "T. Flavius Clemens / Jackson H. Snyder",
+        order: 15,
+        corpus: "apostolic-fathers",
+        sectionCount: 2,
+        greekSource: "",
+        englishSource: "PDF/NA1.pdf (Appendix A)"
+      }
+    ]);
   });
 
   it("renders 1 Clement in the dedicated Fathers reader", async () => {
@@ -67,7 +92,7 @@ describe("FathersReaderPage", () => {
     renderWithReaderCustomization(element);
 
     expect(screen.getAllByText("1 Clement").length).toBeGreaterThan(0);
-    expect(screen.getByText("Prologue")).toBeInTheDocument();
+    expect(screen.getByLabelText("Section")).toHaveValue("1-clement:prologue");
     expect(screen.getByText("The church")).toBeInTheDocument();
   });
 
@@ -114,8 +139,9 @@ describe("FathersReaderPage", () => {
 
     renderWithReaderCustomization(element);
 
-    expect(screen.getByText("The Preaching of Peter")).toBeInTheDocument();
-    expect(screen.getByText("Chapter I: Doctrine of Reserve")).toBeInTheDocument();
+    expect(screen.getAllByText("The Preaching of Peter").length).toBeGreaterThan(0);
+    expect(screen.getByLabelText("Section")).toHaveValue("preaching-of-peter:introduction");
+    expect(screen.getAllByText("Chapter I: Doctrine of Reserve").length).toBeGreaterThan(0);
     expect(
       screen.getByText(
         "Knowing, my brother, your eager desire after that which is for the advantage of us all."

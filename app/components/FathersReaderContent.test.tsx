@@ -10,7 +10,7 @@ import { SearchCustomizationProvider } from "@/app/components/SearchCustomizatio
 import { VerseTranslationOverridesProvider } from "@/app/components/VerseTranslationOverridesProvider";
 import { WritingAssistantProvider } from "@/app/components/WritingAssistantProvider";
 import type { FathersWorkPayload } from "@/lib/fathers/types";
-import { setMockPathname } from "@/test/mocks/next-navigation";
+import { mockRouter, setMockPathname } from "@/test/mocks/next-navigation";
 
 const payload: FathersWorkPayload = {
   work: {
@@ -91,9 +91,35 @@ const englishOnlyPayload: FathersWorkPayload = {
   ]
 };
 
+const works = [
+  {
+    slug: payload.work.slug,
+    title: payload.work.title,
+    shortTitle: payload.work.shortTitle,
+    author: payload.work.author,
+    order: payload.work.order,
+    corpus: payload.work.corpus,
+    sectionCount: payload.work.sectionCount,
+    greekSource: payload.work.greekSource,
+    englishSource: payload.work.englishSource
+  },
+  {
+    slug: englishOnlyPayload.work.slug,
+    title: englishOnlyPayload.work.title,
+    shortTitle: englishOnlyPayload.work.shortTitle,
+    author: englishOnlyPayload.work.author,
+    order: englishOnlyPayload.work.order,
+    corpus: englishOnlyPayload.work.corpus,
+    sectionCount: englishOnlyPayload.work.sectionCount,
+    greekSource: englishOnlyPayload.work.greekSource,
+    englishSource: englishOnlyPayload.work.englishSource
+  }
+];
+
 function renderFathersReader(currentPayload: FathersWorkPayload = payload) {
   setMockPathname(`/fathers/${currentPayload.work.slug}`);
   window.history.replaceState({}, "", `/fathers/${currentPayload.work.slug}`);
+  mockRouter.push.mockClear();
 
   return render(
     <ReaderVersionProvider>
@@ -104,7 +130,7 @@ function renderFathersReader(currentPayload: FathersWorkPayload = payload) {
               <GreekGlossOverridesProvider>
                 <ReaderCustomizationProvider>
                   <SearchCustomizationProvider>
-                    <FathersReaderContent payload={currentPayload} />
+                    <FathersReaderContent payload={currentPayload} works={works} />
                   </SearchCustomizationProvider>
                 </ReaderCustomizationProvider>
               </GreekGlossOverridesProvider>
@@ -144,12 +170,52 @@ describe("FathersReaderContent", () => {
     expect(screen.getByText("Fathers Reader")).toBeInTheDocument();
     expect(screen.queryByText("Apostolic Fathers")).not.toBeInTheDocument();
     expect(screen.getByText("Kefa’s Letter to Ya’akov")).toBeInTheDocument();
-    expect(screen.getByText("Chapter I: Doctrine of Reserve")).toBeInTheDocument();
+    expect(screen.getAllByText("Chapter I: Doctrine of Reserve").length).toBeGreaterThan(0);
     expect(
       screen.getByText(
         "Knowing, my brother, your eager desire after that which is for the advantage of us all."
       )
     ).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /G1577/i })).not.toBeInTheDocument();
+  });
+
+  it("uses shared reader controls for work navigation and section selection", () => {
+    const scrollIntoView = jest.fn();
+    const originalScrollIntoView = Element.prototype.scrollIntoView;
+    Element.prototype.scrollIntoView = scrollIntoView;
+
+    renderFathersReader();
+
+    fireEvent.change(screen.getByLabelText("Work"), {
+      target: {
+        value: "preaching-of-peter"
+      }
+    });
+
+    expect(mockRouter.push).toHaveBeenCalledWith("/fathers/preaching-of-peter");
+
+    fireEvent.change(screen.getByLabelText("Section"), {
+      target: {
+        value: "1-clement:prologue"
+      }
+    });
+
+    expect(scrollIntoView).toHaveBeenCalled();
+    expect(screen.getByRole("button", { name: "Menu" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Library" })).toHaveAttribute("href", "/fathers");
+
+    Element.prototype.scrollIntoView = originalScrollIntoView;
+  });
+
+  it("opens a Fathers-compatible settings panel without Bible-only controls", () => {
+    renderFathersReader();
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+
+    expect(screen.getByRole("dialog", { name: "Reader controls and settings" })).toBeVisible();
+    expect(screen.queryByLabelText("Version")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Show Strongs/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Show Greek interlinear/i })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Greek lemma/i })).toBeInTheDocument();
   });
 });

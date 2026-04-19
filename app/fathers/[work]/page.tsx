@@ -20,11 +20,11 @@ export async function generateStaticParams() {
 export default async function FathersReaderPage({ params }: FathersReaderPageProps) {
   const { work } = await params;
 
-  const payload = await getFathersWorkPayload(work);
+  const [works, payload] = await Promise.all([getFathersWorks(), getFathersWorkPayload(work)]);
 
   if (!payload) {
     notFound();
   }
 
-  return <FathersReaderContent payload={payload} />;
+  return <FathersReaderContent payload={payload} works={works} />;
 }
