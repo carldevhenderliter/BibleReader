@@ -67,7 +67,7 @@ describe("Reader customization", () => {
     expect(screen.getByRole("button", { name: "Menu" })).toBeInTheDocument();
   });
 
-  it("updates menu theme and text size controls and persists them", () => {
+  it("updates menu theme and main text size controls and persists them", () => {
     renderWithReaderCustomization(
       <ReaderPageContent
         book={books[0]}
@@ -87,8 +87,9 @@ describe("Reader customization", () => {
     const stored = window.localStorage.getItem(READER_CUSTOMIZATION_STORAGE_KEY) ?? "";
 
     expect(stored).toContain('"themePreset":"midnight"');
-    expect(stored).toContain('"textSize":1.12');
+    expect(stored).toContain('"bodyTextSize":1.12');
     expect(stored).toContain('"showStrongs":false');
+    expect(stored).not.toContain('"textSize"');
   });
 
   it("opens advanced settings and updates power-user controls", () => {
@@ -110,7 +111,7 @@ describe("Reader customization", () => {
     expect(screen.getByRole("dialog", { name: "Reader controls and settings" })).toBeVisible();
     expect(trigger).toHaveAttribute("aria-expanded", "true");
 
-    fireEvent.click(screen.getByRole("button", { name: /Mono/i }));
+    fireEvent.click(screen.getAllByRole("button", { name: /Mono/i })[0]);
     fireEvent.click(screen.getByRole("button", { name: /Justified/i }));
     fireEvent.change(screen.getByLabelText("Glow intensity"), {
       target: {
@@ -131,16 +132,65 @@ describe("Reader customization", () => {
     expect(stored).toContain('"verseSpacing":1.35');
   });
 
+  it("persists exact per-layer typography inputs and font selections", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ greek: chapter, web: chapter }}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: {
+        value: "greek"
+      }
+    });
+    fireEvent.change(screen.getByLabelText("Main text size"), {
+      target: {
+        value: "1.34"
+      }
+    });
+    fireEvent.change(screen.getByLabelText("Hebrew text size"), {
+      target: {
+        value: "1.92"
+      }
+    });
+    fireEvent.change(screen.getByLabelText("First-line indent"), {
+      target: {
+        value: "1.15"
+      }
+    });
+    fireEvent.click(screen.getAllByRole("button", { name: /Literary Serif/i })[1]);
+
+    const stored = window.localStorage.getItem(READER_CUSTOMIZATION_STORAGE_KEY) ?? "";
+
+    expect(stored).toContain('"bodyTextSize":1.34');
+    expect(stored).toContain('"hebrewTextSize":1.92');
+    expect(stored).toContain('"firstLineIndent":1.15');
+    expect(stored).toContain('"companionVerseFont":"literary"');
+  });
+
   it("restores persisted advanced settings from localStorage", () => {
     window.localStorage.setItem(
       READER_CUSTOMIZATION_STORAGE_KEY,
       JSON.stringify({
         themePreset: "ember",
         bodyFont: "mono",
+        greekFont: "modern",
+        hebrewFont: "sans",
+        companionVerseFont: "humanist",
+        customVerseFont: "humanist",
         uiFont: "technical",
         showStrongs: false,
-        textSize: 1.18,
+        bodyTextSize: 1.18,
+        greekTextSize: 1.94,
+        hebrewTextSize: 1.72,
+        companionVerseTextSize: 1.02,
+        customVerseTextSize: 1.16,
         lineHeight: 2.1,
+        firstLineIndent: 0.85,
         contentWidth: 52,
         verseSpacing: 1.3,
         paragraphSpacing: 0.45,
@@ -167,7 +217,8 @@ describe("Reader customization", () => {
 
     expect(screen.getByLabelText("Theme")).toHaveValue("ember");
 
-    expect(screen.getByRole("button", { name: /Mono/i })).toHaveClass("is-active");
+    expect(screen.getAllByRole("button", { name: /Mono/i })[0]).toHaveClass("is-active");
+    expect(screen.getAllByRole("button", { name: /Modern Sans/i })[0]).toHaveClass("is-active");
     expect(screen.getByRole("button", { name: /Justified/i })).toHaveClass("is-active");
   });
 
@@ -209,7 +260,7 @@ describe("Reader customization", () => {
       }
     });
     fireEvent.click(screen.getByRole("button", { name: "Show Greek interlinear" }));
-    fireEvent.change(screen.getByLabelText("Greek size"), {
+    fireEvent.change(screen.getByLabelText("Greek text size"), {
       target: {
         value: "2.1"
       }
@@ -221,7 +272,8 @@ describe("Reader customization", () => {
     expect(stored).toContain('"showEsvInterlinear":true');
     expect(stored).toContain('"showEsvGreekOnly":true');
     expect(stored).toContain('"showVerseText":false');
-    expect(stored).toContain('"greekFontScale":2.1');
+    expect(stored).toContain('"greekTextSize":2.1');
+    expect(stored).not.toContain('"greekFontScale"');
   });
 
   it("persists individual verse display toggles from the reader menu", () => {
@@ -281,10 +333,10 @@ describe("Reader customization", () => {
     );
 
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
-    fireEvent.click(screen.getByRole("button", { name: /Mono/i }));
+    fireEvent.click(screen.getAllByRole("button", { name: /Mono/i })[0]);
     fireEvent.click(screen.getByRole("button", { name: "Reset to defaults" }));
 
-    expect(screen.getByRole("button", { name: /Serif/i })).toHaveClass("is-active");
+    expect(screen.getAllByRole("button", { name: /Serif/i })[0]).toHaveClass("is-active");
   });
 
   it("closes the panel from the close button and escape key", () => {

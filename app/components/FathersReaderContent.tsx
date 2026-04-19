@@ -71,7 +71,7 @@ export function FathersReaderContent({ payload }: FathersReaderContentProps) {
                   }}
                 />
               ) : null}
-              <p className="verse-text fathers-segment-english">{segment.english}</p>
+              <p className="verse-text verse-text-body fathers-segment-english">{segment.english}</p>
             </article>
           ))}
         </div>

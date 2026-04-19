@@ -10,11 +10,15 @@ describe("reader customization", () => {
     expect(normalizeReaderCustomization("bad")).toEqual(DEFAULT_READER_CUSTOMIZATION);
   });
 
-  it("normalizes partial and invalid values", () => {
+  it("normalizes partial and invalid values into the new per-layer model", () => {
     expect(
       normalizeReaderCustomization({
         themePreset: "ember",
         bodyFont: "mono",
+        greekFont: "modern",
+        hebrewFont: "sans",
+        companionVerseFont: "humanist",
+        customVerseFont: "transitional",
         uiFont: "technical",
         showStrongs: true,
         showEsvGreekOnly: true,
@@ -24,9 +28,13 @@ describe("reader customization", () => {
         showGreekMorphology: false,
         showGreekGloss: false,
         showCustomVerseTranslation: false,
-        greekFontScale: 4,
-        textSize: 9,
+        bodyTextSize: 9,
+        greekTextSize: 8,
+        hebrewTextSize: 7,
+        companionVerseTextSize: 5,
+        customVerseTextSize: 6,
         lineHeight: 0,
+        firstLineIndent: -2,
         contentWidth: 200,
         verseSpacing: 9,
         paragraphSpacing: -1,
@@ -42,6 +50,10 @@ describe("reader customization", () => {
     ).toEqual({
       themePreset: "ember",
       bodyFont: "mono",
+      greekFont: "modern",
+      hebrewFont: "sans",
+      companionVerseFont: "humanist",
+      customVerseFont: "transitional",
       uiFont: "technical",
       showStrongs: true,
       showEsvInterlinear: false,
@@ -54,9 +66,13 @@ describe("reader customization", () => {
       showGreekMorphology: false,
       showGreekGloss: false,
       showCustomVerseTranslation: false,
-      greekFontScale: 2.4,
-      textSize: 1.8,
-      lineHeight: 1.6,
+      bodyTextSize: 3.25,
+      greekTextSize: 4,
+      hebrewTextSize: 4,
+      companionVerseTextSize: 3,
+      customVerseTextSize: 3.25,
+      lineHeight: 1.2,
+      firstLineIndent: 0,
       contentWidth: 60,
       verseSpacing: 1.8,
       paragraphSpacing: 0,
@@ -71,10 +87,14 @@ describe("reader customization", () => {
     });
   });
 
-  it("maps settings to css custom properties", () => {
+  it("maps settings to per-layer css custom properties", () => {
     const variables = getReaderCustomizationVariables({
       themePreset: "aurora",
       bodyFont: "humanist",
+      greekFont: "scholarly",
+      hebrewFont: "serif",
+      companionVerseFont: "literary",
+      customVerseFont: "mono",
       uiFont: "technical",
       showStrongs: true,
       showEsvInterlinear: false,
@@ -87,9 +107,13 @@ describe("reader customization", () => {
       showGreekMorphology: true,
       showGreekGloss: true,
       showCustomVerseTranslation: true,
-      greekFontScale: 1.8,
-      textSize: 1.2,
+      bodyTextSize: 1.2,
+      greekTextSize: 1.8,
+      hebrewTextSize: 1.7,
+      companionVerseTextSize: 1.05,
+      customVerseTextSize: 1.12,
       lineHeight: 2,
+      firstLineIndent: 1.2,
       contentWidth: 50,
       verseSpacing: 1.4,
       paragraphSpacing: 0.35,
@@ -103,17 +127,23 @@ describe("reader customization", () => {
       surfaceDepth: 1.1
     });
 
-    expect(variables["--reader-text-size"]).toBe("1.2rem");
-    expect(variables["--reader-greek-font-scale"]).toBe("1.8");
+    expect(variables["--reader-body-text-size"]).toBe("1.2rem");
+    expect(variables["--reader-greek-text-size"]).toBe("1.8rem");
+    expect(variables["--reader-hebrew-text-size"]).toBe("1.7rem");
+    expect(variables["--reader-companion-text-size"]).toBe("1.05rem");
+    expect(variables["--reader-custom-text-size"]).toBe("1.12rem");
     expect(variables["--reader-line-height"]).toBe("2");
+    expect(variables["--reader-first-line-indent"]).toBe("1.2rem");
     expect(variables["--reader-content-width"]).toBe("50rem");
     expect(variables["--reader-verse-spacing"]).toBe("1.4rem");
     expect(variables["--reader-text-align"]).toBe("justify");
     expect(variables["--reader-accent"]).toBe("#74ffd6");
-    expect(variables["--reader-body-font"]).toContain("Inter");
+    expect(variables["--reader-body-font"]).toContain("Avenir Next");
+    expect(variables["--reader-greek-font"]).toContain("Times New Roman");
+    expect(variables["--reader-hebrew-font"]).toContain("Noto Serif Hebrew");
   });
 
-  it("fills new fields when restoring older saved settings", () => {
+  it("migrates legacy textSize and greekFontScale into the new fields", () => {
     expect(
       normalizeReaderCustomization({
         themePreset: "midnight",
@@ -121,6 +151,7 @@ describe("reader customization", () => {
         uiFont: "sans",
         showStrongs: true,
         textSize: 1.1,
+        greekFontScale: 2.05,
         lineHeight: 2,
         contentWidth: 48
       })
@@ -128,18 +159,23 @@ describe("reader customization", () => {
       ...DEFAULT_READER_CUSTOMIZATION,
       themePreset: "midnight",
       bodyFont: "serif",
+      companionVerseFont: "serif",
+      customVerseFont: "serif",
       uiFont: "sans",
       showStrongs: true,
       showVerseText: true,
       showEsvGreekOnly: false,
-      greekFontScale: DEFAULT_READER_CUSTOMIZATION.greekFontScale,
-      textSize: 1.1,
+      bodyTextSize: 1.1,
+      greekTextSize: 2.05,
+      hebrewTextSize: 2.05,
+      companionVerseTextSize: 1.06,
+      customVerseTextSize: 1.1,
       lineHeight: 2,
       contentWidth: 48
     });
   });
 
-  it("maps legacy Greek-only settings onto the new granular fields", () => {
+  it("maps legacy Greek-only settings onto the granular visibility fields", () => {
     expect(
       normalizeReaderCustomization({
         showEsvInterlinear: true,

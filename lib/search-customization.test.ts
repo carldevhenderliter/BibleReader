@@ -50,7 +50,7 @@ describe("search customization", () => {
 
     expect(variables["--search-text-size"]).toBe("2.08rem");
     expect(variables["--search-line-height"]).toBe("1.9");
-    expect(variables["--search-body-font"]).toContain("Inter");
+    expect(variables["--search-body-font"]).toContain("Avenir Next");
     expect(variables["--search-ui-font"]).toContain("Eurostile");
     expect(variables["--search-density"]).toBe("compact");
     expect(variables["--search-density-card-padding"]).toBe("0.78rem");

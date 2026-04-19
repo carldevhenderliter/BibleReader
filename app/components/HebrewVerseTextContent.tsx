@@ -13,20 +13,26 @@ export function HebrewVerseTextContent({
   className,
   onOpenStrongs
 }: HebrewVerseTextContentProps) {
+  const resolvedClassName = className
+    ? className.includes("verse-text-hebrew")
+      ? className
+      : `${className} verse-text-hebrew`
+    : "verse-text verse-text-hebrew";
+
   if (!verse) {
-    return <div className={className ?? "verse-text verse-text-hebrew"} dir="rtl" lang="he" />;
+    return <div className={resolvedClassName} dir="rtl" lang="he" />;
   }
 
   if (!verse.hebrewTokens?.length || !onOpenStrongs) {
     return (
-      <div className={className ?? "verse-text verse-text-hebrew"} dir="rtl" lang="he">
+      <div className={resolvedClassName} dir="rtl" lang="he">
         {verse.text}
       </div>
     );
   }
 
   return (
-    <div className={className ?? "verse-text verse-text-hebrew"} dir="rtl" lang="he">
+    <div className={resolvedClassName} dir="rtl" lang="he">
       <div className="verse-interlinear verse-compare-token-line verse-compare-token-line-hebrew">
         {verse.hebrewTokens.map((token, index) => (
           <span className="verse-greek-token-wrap verse-compare-token-wrap" key={`${verse.number}:${index}:${token.surface}`}>

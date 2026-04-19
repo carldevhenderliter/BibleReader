@@ -1,5 +1,7 @@
 import type {
   BodyFontOption,
+  GreekFontOption,
+  HebrewFontOption,
   ReaderCustomizationSettings,
   TextAlignOption,
   ThemePreset,
@@ -56,6 +58,16 @@ export const BODY_FONT_OPTIONS = [
     description: "Classic long-form scripture reading."
   },
   {
+    id: "literary",
+    name: "Literary Serif",
+    description: "Warmer book-page rhythm with softer strokes."
+  },
+  {
+    id: "transitional",
+    name: "Transitional Serif",
+    description: "Sharper contrast for a more formal printed feel."
+  },
+  {
     id: "humanist",
     name: "Humanist Sans",
     description: "Cleaner and more contemporary body text."
@@ -66,6 +78,42 @@ export const BODY_FONT_OPTIONS = [
     description: "A technical codex feel with tighter character rhythm."
   }
 ] satisfies Array<{ id: BodyFontOption; name: string; description: string }>;
+
+export const GREEK_FONT_OPTIONS = [
+  {
+    id: "classic",
+    name: "Classical Serif",
+    description: "A traditional Greek reading face with a familiar liturgical feel."
+  },
+  {
+    id: "scholarly",
+    name: "Scholarly Serif",
+    description: "A denser academic stack for extended lexical work."
+  },
+  {
+    id: "modern",
+    name: "Modern Sans",
+    description: "Cleaner Greek forms for tighter token-based study layouts."
+  }
+] satisfies Array<{ id: GreekFontOption; name: string; description: string }>;
+
+export const HEBREW_FONT_OPTIONS = [
+  {
+    id: "square",
+    name: "Square Hebrew",
+    description: "A traditional square-script reading stack for Hebrew text."
+  },
+  {
+    id: "serif",
+    name: "Hebrew Serif",
+    description: "A softer serif stack for sustained Hebrew reading."
+  },
+  {
+    id: "sans",
+    name: "Hebrew Sans",
+    description: "A clearer modern sans stack for dense compare panes."
+  }
+] satisfies Array<{ id: HebrewFontOption; name: string; description: string }>;
 
 export const UI_FONT_OPTIONS = [
   {
@@ -83,6 +131,10 @@ export const UI_FONT_OPTIONS = [
 export const DEFAULT_READER_CUSTOMIZATION: ReaderCustomizationSettings = {
   themePreset: "neon",
   bodyFont: "serif",
+  greekFont: "classic",
+  hebrewFont: "square",
+  companionVerseFont: "serif",
+  customVerseFont: "serif",
   uiFont: "sans",
   showStrongs: false,
   showEsvInterlinear: false,
@@ -95,9 +147,13 @@ export const DEFAULT_READER_CUSTOMIZATION: ReaderCustomizationSettings = {
   showGreekMorphology: true,
   showGreekGloss: true,
   showCustomVerseTranslation: true,
-  greekFontScale: 1.55,
-  textSize: 1.08,
+  bodyTextSize: 1.08,
+  greekTextSize: 1.55,
+  hebrewTextSize: 1.55,
+  companionVerseTextSize: 1.04,
+  customVerseTextSize: 1.08,
   lineHeight: 1.95,
+  firstLineIndent: 0,
   contentWidth: 46,
   verseSpacing: 1,
   paragraphSpacing: 0.2,
@@ -111,8 +167,12 @@ export const DEFAULT_READER_CUSTOMIZATION: ReaderCustomizationSettings = {
   surfaceDepth: 1
 };
 
-const TEXT_SIZE_RANGE = { min: 0.92, max: 1.8 };
-const LINE_HEIGHT_RANGE = { min: 1.6, max: 2.3 };
+const BODY_TEXT_SIZE_RANGE = { min: 0.8, max: 3.25 };
+const SCRIPT_TEXT_SIZE_RANGE = { min: 0.9, max: 4 };
+const COMPANION_TEXT_SIZE_RANGE = { min: 0.72, max: 3 };
+const CUSTOM_TEXT_SIZE_RANGE = { min: 0.72, max: 3.25 };
+const LINE_HEIGHT_RANGE = { min: 1.2, max: 3 };
+const FIRST_LINE_INDENT_RANGE = { min: 0, max: 5 };
 const CONTENT_WIDTH_RANGE = { min: 36, max: 60 };
 const VERSE_SPACING_RANGE = { min: 0.6, max: 1.8 };
 const PARAGRAPH_SPACING_RANGE = { min: 0, max: 0.8 };
@@ -123,10 +183,17 @@ const CONTRAST_RANGE = { min: 0.9, max: 1.25 };
 const GLOW_RANGE = { min: 0, max: 1.8 };
 const BACKGROUND_INTENSITY_RANGE = { min: 0.03, max: 0.3 };
 const SURFACE_DEPTH_RANGE = { min: 0.8, max: 1.3 };
-const GREEK_FONT_SCALE_RANGE = { min: 1, max: 2.4 };
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));
+}
+
+function clampNumber(value: unknown, min: number, max: number, fallback: number) {
+  return typeof value === "number" && Number.isFinite(value) ? clamp(value, min, max) : fallback;
+}
+
+function roundToHundredths(value: number) {
+  return Number(value.toFixed(2));
 }
 
 function isThemePreset(value: unknown): value is ThemePreset {
@@ -140,7 +207,21 @@ function isThemePreset(value: unknown): value is ThemePreset {
 }
 
 function isBodyFontOption(value: unknown): value is BodyFontOption {
-  return value === "serif" || value === "humanist" || value === "mono";
+  return (
+    value === "serif" ||
+    value === "literary" ||
+    value === "transitional" ||
+    value === "humanist" ||
+    value === "mono"
+  );
+}
+
+function isGreekFontOption(value: unknown): value is GreekFontOption {
+  return value === "classic" || value === "scholarly" || value === "modern";
+}
+
+function isHebrewFontOption(value: unknown): value is HebrewFontOption {
+  return value === "square" || value === "serif" || value === "sans";
 }
 
 function isUiFontOption(value: unknown): value is UiFontOption {
@@ -156,7 +237,10 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
     return DEFAULT_READER_CUSTOMIZATION;
   }
 
-  const candidate = value as Partial<ReaderCustomizationSettings>;
+  const candidate = value as Partial<ReaderCustomizationSettings> & {
+    greekFontScale?: number;
+    textSize?: number;
+  };
   const hasGranularVerseText = typeof candidate.showVerseText === "boolean";
   const hasGranularCompanionVerseTranslation =
     typeof candidate.showCompanionVerseTranslation === "boolean";
@@ -168,14 +252,51 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
   const hasGranularGreekGloss = typeof candidate.showGreekGloss === "boolean";
   const hasGranularCustomVerseTranslation =
     typeof candidate.showCustomVerseTranslation === "boolean";
+  const normalizedBodyFont = isBodyFontOption(candidate.bodyFont)
+    ? candidate.bodyFont
+    : DEFAULT_READER_CUSTOMIZATION.bodyFont;
+  const normalizedBodyTextSize = clampNumber(
+    candidate.bodyTextSize ?? candidate.textSize,
+    BODY_TEXT_SIZE_RANGE.min,
+    BODY_TEXT_SIZE_RANGE.max,
+    DEFAULT_READER_CUSTOMIZATION.bodyTextSize
+  );
+  const normalizedGreekTextSize = clampNumber(
+    candidate.greekTextSize ?? candidate.greekFontScale,
+    SCRIPT_TEXT_SIZE_RANGE.min,
+    SCRIPT_TEXT_SIZE_RANGE.max,
+    DEFAULT_READER_CUSTOMIZATION.greekTextSize
+  );
+  const normalizedHebrewTextSize = clampNumber(
+    candidate.hebrewTextSize ?? candidate.greekFontScale,
+    SCRIPT_TEXT_SIZE_RANGE.min,
+    SCRIPT_TEXT_SIZE_RANGE.max,
+    DEFAULT_READER_CUSTOMIZATION.hebrewTextSize
+  );
+  const shouldDeriveCompanionSizeFromLegacyBody =
+    typeof candidate.companionVerseTextSize !== "number" &&
+    (typeof candidate.bodyTextSize === "number" || typeof candidate.textSize === "number");
+  const shouldDeriveCustomSizeFromLegacyBody =
+    typeof candidate.customVerseTextSize !== "number" &&
+    (typeof candidate.bodyTextSize === "number" || typeof candidate.textSize === "number");
 
   return {
     themePreset: isThemePreset(candidate.themePreset)
       ? candidate.themePreset
       : DEFAULT_READER_CUSTOMIZATION.themePreset,
-    bodyFont: isBodyFontOption(candidate.bodyFont)
-      ? candidate.bodyFont
-      : DEFAULT_READER_CUSTOMIZATION.bodyFont,
+    bodyFont: normalizedBodyFont,
+    greekFont: isGreekFontOption(candidate.greekFont)
+      ? candidate.greekFont
+      : DEFAULT_READER_CUSTOMIZATION.greekFont,
+    hebrewFont: isHebrewFontOption(candidate.hebrewFont)
+      ? candidate.hebrewFont
+      : DEFAULT_READER_CUSTOMIZATION.hebrewFont,
+    companionVerseFont: isBodyFontOption(candidate.companionVerseFont)
+      ? candidate.companionVerseFont
+      : normalizedBodyFont,
+    customVerseFont: isBodyFontOption(candidate.customVerseFont)
+      ? candidate.customVerseFont
+      : normalizedBodyFont,
     uiFont: isUiFontOption(candidate.uiFont)
       ? candidate.uiFont
       : DEFAULT_READER_CUSTOMIZATION.uiFont,
@@ -244,73 +365,108 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
             !hasGranularCustomVerseTranslation
           ? false
           : DEFAULT_READER_CUSTOMIZATION.showCustomVerseTranslation,
-    greekFontScale:
-      typeof candidate.greekFontScale === "number"
-        ? clamp(candidate.greekFontScale, GREEK_FONT_SCALE_RANGE.min, GREEK_FONT_SCALE_RANGE.max)
-        : DEFAULT_READER_CUSTOMIZATION.greekFontScale,
-    textSize:
-      typeof candidate.textSize === "number"
-        ? clamp(candidate.textSize, TEXT_SIZE_RANGE.min, TEXT_SIZE_RANGE.max)
-        : DEFAULT_READER_CUSTOMIZATION.textSize,
-    lineHeight:
-      typeof candidate.lineHeight === "number"
-        ? clamp(candidate.lineHeight, LINE_HEIGHT_RANGE.min, LINE_HEIGHT_RANGE.max)
-        : DEFAULT_READER_CUSTOMIZATION.lineHeight,
-    contentWidth:
-      typeof candidate.contentWidth === "number"
-        ? clamp(candidate.contentWidth, CONTENT_WIDTH_RANGE.min, CONTENT_WIDTH_RANGE.max)
-        : DEFAULT_READER_CUSTOMIZATION.contentWidth,
-    verseSpacing:
-      typeof candidate.verseSpacing === "number"
-        ? clamp(candidate.verseSpacing, VERSE_SPACING_RANGE.min, VERSE_SPACING_RANGE.max)
-        : DEFAULT_READER_CUSTOMIZATION.verseSpacing,
-    paragraphSpacing:
-      typeof candidate.paragraphSpacing === "number"
+    bodyTextSize: normalizedBodyTextSize,
+    greekTextSize: normalizedGreekTextSize,
+    hebrewTextSize: normalizedHebrewTextSize,
+    companionVerseTextSize: clampNumber(
+      candidate.companionVerseTextSize,
+      COMPANION_TEXT_SIZE_RANGE.min,
+      COMPANION_TEXT_SIZE_RANGE.max,
+      shouldDeriveCompanionSizeFromLegacyBody
         ? clamp(
-            candidate.paragraphSpacing,
-            PARAGRAPH_SPACING_RANGE.min,
-            PARAGRAPH_SPACING_RANGE.max
+            roundToHundredths(normalizedBodyTextSize * 0.96),
+            COMPANION_TEXT_SIZE_RANGE.min,
+            COMPANION_TEXT_SIZE_RANGE.max
           )
-        : DEFAULT_READER_CUSTOMIZATION.paragraphSpacing,
+        : DEFAULT_READER_CUSTOMIZATION.companionVerseTextSize
+    ),
+    customVerseTextSize: clampNumber(
+      candidate.customVerseTextSize,
+      CUSTOM_TEXT_SIZE_RANGE.min,
+      CUSTOM_TEXT_SIZE_RANGE.max,
+      shouldDeriveCustomSizeFromLegacyBody
+        ? clamp(
+            roundToHundredths(normalizedBodyTextSize),
+            CUSTOM_TEXT_SIZE_RANGE.min,
+            CUSTOM_TEXT_SIZE_RANGE.max
+          )
+        : DEFAULT_READER_CUSTOMIZATION.customVerseTextSize
+    ),
+    lineHeight: clampNumber(
+      candidate.lineHeight,
+      LINE_HEIGHT_RANGE.min,
+      LINE_HEIGHT_RANGE.max,
+      DEFAULT_READER_CUSTOMIZATION.lineHeight
+    ),
+    firstLineIndent: clampNumber(
+      candidate.firstLineIndent,
+      FIRST_LINE_INDENT_RANGE.min,
+      FIRST_LINE_INDENT_RANGE.max,
+      DEFAULT_READER_CUSTOMIZATION.firstLineIndent
+    ),
+    contentWidth: clampNumber(
+      candidate.contentWidth,
+      CONTENT_WIDTH_RANGE.min,
+      CONTENT_WIDTH_RANGE.max,
+      DEFAULT_READER_CUSTOMIZATION.contentWidth
+    ),
+    verseSpacing: clampNumber(
+      candidate.verseSpacing,
+      VERSE_SPACING_RANGE.min,
+      VERSE_SPACING_RANGE.max,
+      DEFAULT_READER_CUSTOMIZATION.verseSpacing
+    ),
+    paragraphSpacing: clampNumber(
+      candidate.paragraphSpacing,
+      PARAGRAPH_SPACING_RANGE.min,
+      PARAGRAPH_SPACING_RANGE.max,
+      DEFAULT_READER_CUSTOMIZATION.paragraphSpacing
+    ),
     textAlign: isTextAlignOption(candidate.textAlign)
       ? candidate.textAlign
       : DEFAULT_READER_CUSTOMIZATION.textAlign,
-    headerScale:
-      typeof candidate.headerScale === "number"
-        ? clamp(candidate.headerScale, HEADER_SCALE_RANGE.min, HEADER_SCALE_RANGE.max)
-        : DEFAULT_READER_CUSTOMIZATION.headerScale,
-    verseNumberScale:
-      typeof candidate.verseNumberScale === "number"
-        ? clamp(
-            candidate.verseNumberScale,
-            VERSE_NUMBER_SCALE_RANGE.min,
-            VERSE_NUMBER_SCALE_RANGE.max
-          )
-        : DEFAULT_READER_CUSTOMIZATION.verseNumberScale,
-    letterSpacing:
-      typeof candidate.letterSpacing === "number"
-        ? clamp(candidate.letterSpacing, LETTER_SPACING_RANGE.min, LETTER_SPACING_RANGE.max)
-        : DEFAULT_READER_CUSTOMIZATION.letterSpacing,
-    readingModeContrast:
-      typeof candidate.readingModeContrast === "number"
-        ? clamp(candidate.readingModeContrast, CONTRAST_RANGE.min, CONTRAST_RANGE.max)
-        : DEFAULT_READER_CUSTOMIZATION.readingModeContrast,
-    glowIntensity:
-      typeof candidate.glowIntensity === "number"
-        ? clamp(candidate.glowIntensity, GLOW_RANGE.min, GLOW_RANGE.max)
-        : DEFAULT_READER_CUSTOMIZATION.glowIntensity,
-    backgroundIntensity:
-      typeof candidate.backgroundIntensity === "number"
-        ? clamp(
-            candidate.backgroundIntensity,
-            BACKGROUND_INTENSITY_RANGE.min,
-            BACKGROUND_INTENSITY_RANGE.max
-          )
-        : DEFAULT_READER_CUSTOMIZATION.backgroundIntensity,
-    surfaceDepth:
-      typeof candidate.surfaceDepth === "number"
-        ? clamp(candidate.surfaceDepth, SURFACE_DEPTH_RANGE.min, SURFACE_DEPTH_RANGE.max)
-        : DEFAULT_READER_CUSTOMIZATION.surfaceDepth
+    headerScale: clampNumber(
+      candidate.headerScale,
+      HEADER_SCALE_RANGE.min,
+      HEADER_SCALE_RANGE.max,
+      DEFAULT_READER_CUSTOMIZATION.headerScale
+    ),
+    verseNumberScale: clampNumber(
+      candidate.verseNumberScale,
+      VERSE_NUMBER_SCALE_RANGE.min,
+      VERSE_NUMBER_SCALE_RANGE.max,
+      DEFAULT_READER_CUSTOMIZATION.verseNumberScale
+    ),
+    letterSpacing: clampNumber(
+      candidate.letterSpacing,
+      LETTER_SPACING_RANGE.min,
+      LETTER_SPACING_RANGE.max,
+      DEFAULT_READER_CUSTOMIZATION.letterSpacing
+    ),
+    readingModeContrast: clampNumber(
+      candidate.readingModeContrast,
+      CONTRAST_RANGE.min,
+      CONTRAST_RANGE.max,
+      DEFAULT_READER_CUSTOMIZATION.readingModeContrast
+    ),
+    glowIntensity: clampNumber(
+      candidate.glowIntensity,
+      GLOW_RANGE.min,
+      GLOW_RANGE.max,
+      DEFAULT_READER_CUSTOMIZATION.glowIntensity
+    ),
+    backgroundIntensity: clampNumber(
+      candidate.backgroundIntensity,
+      BACKGROUND_INTENSITY_RANGE.min,
+      BACKGROUND_INTENSITY_RANGE.max,
+      DEFAULT_READER_CUSTOMIZATION.backgroundIntensity
+    ),
+    surfaceDepth: clampNumber(
+      candidate.surfaceDepth,
+      SURFACE_DEPTH_RANGE.min,
+      SURFACE_DEPTH_RANGE.max,
+      DEFAULT_READER_CUSTOMIZATION.surfaceDepth
+    )
   };
 }
 
@@ -351,9 +507,19 @@ export function getReaderCustomizationVariables(
     "--reader-meta-text": toRgb(presetVariables.metaTextRgb, metaTextAlpha),
     "--reader-ui-font": getUiFontValue(settings.uiFont),
     "--reader-body-font": getBodyFontValue(settings.bodyFont),
-    "--reader-text-size": `${settings.textSize}rem`,
-    "--reader-greek-font-scale": String(settings.greekFontScale),
+    "--reader-greek-font": getGreekFontValue(settings.greekFont),
+    "--reader-hebrew-font": getHebrewFontValue(settings.hebrewFont),
+    "--reader-companion-font": getBodyFontValue(settings.companionVerseFont),
+    "--reader-custom-font": getBodyFontValue(settings.customVerseFont),
+    "--reader-body-text-size": `${settings.bodyTextSize}rem`,
+    "--reader-greek-text-size": `${settings.greekTextSize}rem`,
+    "--reader-hebrew-text-size": `${settings.hebrewTextSize}rem`,
+    "--reader-companion-text-size": `${settings.companionVerseTextSize}rem`,
+    "--reader-custom-text-size": `${settings.customVerseTextSize}rem`,
+    "--reader-text-size": `${settings.bodyTextSize}rem`,
+    "--reader-greek-font-scale": String(settings.greekTextSize),
     "--reader-line-height": String(settings.lineHeight),
+    "--reader-first-line-indent": `${settings.firstLineIndent}rem`,
     "--reader-content-width": `${settings.contentWidth}rem`,
     "--reader-verse-spacing": `${settings.verseSpacing}rem`,
     "--reader-paragraph-spacing": `${settings.paragraphSpacing}rem`,
@@ -430,13 +596,41 @@ function getThemePresetVariables(themePreset: ThemePreset): ThemePresetVariables
 
 export function getBodyFontValue(bodyFont: BodyFontOption) {
   switch (bodyFont) {
+    case "literary":
+      return '"Baskerville", "Garamond", "Times New Roman", serif';
+    case "transitional":
+      return '"Charter", "Cambria", "Times New Roman", serif';
     case "humanist":
-      return '"Inter", "Segoe UI", "Helvetica Neue", sans-serif';
+      return '"Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif';
     case "mono":
       return '"SFMono-Regular", "JetBrains Mono", "Menlo", monospace';
     case "serif":
     default:
       return '"Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif';
+  }
+}
+
+export function getGreekFontValue(greekFont: GreekFontOption) {
+  switch (greekFont) {
+    case "scholarly":
+      return '"Times New Roman", "Palatino Linotype", "Georgia", serif';
+    case "modern":
+      return '"Segoe UI", "Helvetica Neue", Arial, sans-serif';
+    case "classic":
+    default:
+      return '"Palatino Linotype", "Times New Roman", "Georgia", serif';
+  }
+}
+
+export function getHebrewFontValue(hebrewFont: HebrewFontOption) {
+  switch (hebrewFont) {
+    case "serif":
+      return '"Times New Roman", "Noto Serif Hebrew", serif';
+    case "sans":
+      return '"Arial Hebrew", Arial, "Noto Sans Hebrew", sans-serif';
+    case "square":
+    default:
+      return '"SBL Hebrew", "Times New Roman", serif';
   }
 }
 

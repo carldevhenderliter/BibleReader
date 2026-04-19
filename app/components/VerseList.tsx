@@ -133,7 +133,7 @@ export function VerseList({
                           />
                         ) : showStrongs && verse.tokens?.length ? (
                           <VerseTextContent
-                            className="verse-text verse-text-rich"
+                            className="verse-text verse-text-body verse-text-rich"
                             onOpenStrongs={(strongsNumbers) =>
                               openStrongs(strongsNumbers, strongsNumbers.join(" "))
                             }
@@ -141,7 +141,7 @@ export function VerseList({
                             verse={verse}
                           />
                         ) : (
-                          <VerseTextContent className="verse-text" verse={verse} />
+                          <VerseTextContent className="verse-text verse-text-body" verse={verse} />
                         )
                       : null}
                     {version === "greek" &&

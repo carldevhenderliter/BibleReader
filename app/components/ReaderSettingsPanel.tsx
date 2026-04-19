@@ -14,8 +14,13 @@ import type {
   ReadingView,
   ThemePreset
 } from "@/lib/bible/types";
-import { BODY_FONT_OPTIONS, UI_FONT_OPTIONS } from "@/lib/reader-customization";
-import { THEME_PRESETS } from "@/lib/reader-customization";
+import {
+  BODY_FONT_OPTIONS,
+  GREEK_FONT_OPTIONS,
+  HEBREW_FONT_OPTIONS,
+  THEME_PRESETS,
+  UI_FONT_OPTIONS
+} from "@/lib/reader-customization";
 import { getViewToggleHref } from "@/lib/bible/utils";
 import { getBibleVersionOptions, isInstalledBundledBibleVersion } from "@/lib/bible/version";
 
@@ -32,6 +37,59 @@ const TEXT_ALIGNMENT_OPTIONS = [
   }
 ] as const;
 
+type NumericFieldProps = {
+  label: string;
+  inputId: string;
+  value: number;
+  min: number;
+  max: number;
+  step: number;
+  suffix: string;
+  onChange: (value: number) => void;
+  disabled?: boolean;
+};
+
+function NumericField({
+  label,
+  inputId,
+  value,
+  min,
+  max,
+  step,
+  suffix,
+  onChange,
+  disabled = false
+}: NumericFieldProps) {
+  return (
+    <label className="reader-settings-field" htmlFor={inputId}>
+      <span>{label}</span>
+      <input
+        aria-label={label}
+        disabled={disabled}
+        id={inputId}
+        max={max}
+        min={min}
+        onChange={(event) => {
+          const nextValue = event.currentTarget.valueAsNumber;
+
+          if (!Number.isFinite(nextValue)) {
+            return;
+          }
+
+          onChange(nextValue);
+        }}
+        step={step}
+        type="number"
+        value={value}
+      />
+      <strong className="reader-settings-field-value">
+        {value.toFixed(step >= 1 ? 0 : 2)}
+        {suffix}
+      </strong>
+    </label>
+  );
+}
+
 type ReaderSettingsPanelProps = {
   book: BookMeta;
   currentChapter: number;
@@ -45,8 +103,14 @@ export function ReaderSettingsPanel({
 }: ReaderSettingsPanelProps) {
   const { isPanelOpen, resetSettings, setIsPanelOpen, settings, updateSettings } =
     useReaderCustomization();
-  const { openCompare, openCrossReferences, openNotebook, openOtCompare, openSermons, setActiveReaderPane } =
-    useReaderWorkspace();
+  const {
+    openCompare,
+    openCrossReferences,
+    openNotebook,
+    openOtCompare,
+    openSermons,
+    setActiveReaderPane
+  } = useReaderWorkspace();
   const { version, setVersion } = useReaderVersion();
   const pathname = usePathname();
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -68,8 +132,17 @@ export function ReaderSettingsPanel({
 
   const handleTextSizeShift = (delta: number) => {
     updateSettings({
-      textSize: Number((settings.textSize + delta).toFixed(2))
+      bodyTextSize: Number((settings.bodyTextSize + delta).toFixed(2))
     });
+  };
+
+  const updateNumericSetting = <K extends keyof ReaderCustomizationSettings>(
+    key: K,
+    nextValue: ReaderCustomizationSettings[K]
+  ) => {
+    updateSettings({
+      [key]: nextValue
+    } as Partial<ReaderCustomizationSettings>);
   };
 
   const toggleLayer = (
@@ -288,23 +361,6 @@ export function ReaderSettingsPanel({
           </div>
           <div className="reader-settings-subsection">
             <div className="reader-settings-field-grid">
-              <label className="reader-settings-field" htmlFor="reader-menu-greek-size">
-                <span>Greek size</span>
-                <input
-                  aria-label="Greek size"
-                  disabled={!supportsGreekReading}
-                  id="reader-menu-greek-size"
-                  max="2.4"
-                  min="1"
-                  onChange={(event) =>
-                    updateSettings({ greekFontScale: Number(event.target.value) })
-                  }
-                  step="0.05"
-                  type="range"
-                  value={settings.greekFontScale}
-                />
-                <strong>{settings.greekFontScale.toFixed(2)}x</strong>
-              </label>
               <div className="reader-settings-field">
                 <span>Display presets</span>
                 <div className="reader-settings-shortcuts">
@@ -432,7 +488,7 @@ export function ReaderSettingsPanel({
                 >
                   A-
                 </button>
-                <span className="reader-controls-status">{settings.textSize.toFixed(2)}rem</span>
+                <span className="reader-controls-status">{settings.bodyTextSize.toFixed(2)}rem</span>
                 <button
                   aria-label="Increase text size"
                   className="reader-inline-button"
@@ -538,10 +594,66 @@ export function ReaderSettingsPanel({
         <section className="reader-settings-section">
           <div className="reader-settings-section-header">
             <h3>Typography</h3>
-            <p>Adjust the character of the scripture text and the supporting interface.</p>
+            <p>Set exact sizes and curated font stacks for each reading layer.</p>
           </div>
           <div className="reader-settings-subsection">
-            <p className="reader-settings-subsection-label">Body font</p>
+            <p className="reader-settings-subsection-label">Exact sizes</p>
+            <div className="reader-settings-field-grid">
+              <NumericField
+                inputId="reader-menu-body-text-size"
+                label="Main text size"
+                max={3.25}
+                min={0.8}
+                onChange={(value) => updateNumericSetting("bodyTextSize", value)}
+                step={0.01}
+                suffix="rem"
+                value={settings.bodyTextSize}
+              />
+              <NumericField
+                disabled={!supportsGreekReading}
+                inputId="reader-menu-greek-text-size"
+                label="Greek text size"
+                max={4}
+                min={0.9}
+                onChange={(value) => updateNumericSetting("greekTextSize", value)}
+                step={0.01}
+                suffix="rem"
+                value={settings.greekTextSize}
+              />
+              <NumericField
+                inputId="reader-menu-hebrew-text-size"
+                label="Hebrew text size"
+                max={4}
+                min={0.9}
+                onChange={(value) => updateNumericSetting("hebrewTextSize", value)}
+                step={0.01}
+                suffix="rem"
+                value={settings.hebrewTextSize}
+              />
+              <NumericField
+                inputId="reader-menu-companion-text-size"
+                label="Companion verse size"
+                max={3}
+                min={0.72}
+                onChange={(value) => updateNumericSetting("companionVerseTextSize", value)}
+                step={0.01}
+                suffix="rem"
+                value={settings.companionVerseTextSize}
+              />
+              <NumericField
+                inputId="reader-menu-custom-text-size"
+                label="Custom translation size"
+                max={3.25}
+                min={0.72}
+                onChange={(value) => updateNumericSetting("customVerseTextSize", value)}
+                step={0.01}
+                suffix="rem"
+                value={settings.customVerseTextSize}
+              />
+            </div>
+          </div>
+          <div className="reader-settings-subsection">
+            <p className="reader-settings-subsection-label">Main and English fonts</p>
             <div className="settings-option-grid settings-option-grid-compact">
               {BODY_FONT_OPTIONS.map((option) => (
                 <button
@@ -550,6 +662,78 @@ export function ReaderSettingsPanel({
                   }`}
                   key={option.id}
                   onClick={() => updateSettings({ bodyFont: option.id })}
+                  type="button"
+                >
+                  <strong>{option.name}</strong>
+                  <span>{option.description}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="reader-settings-subsection">
+            <p className="reader-settings-subsection-label">Greek font</p>
+            <div className="settings-option-grid settings-option-grid-compact">
+              {GREEK_FONT_OPTIONS.map((option) => (
+                <button
+                  className={`settings-option-card${
+                    settings.greekFont === option.id ? " is-active" : ""
+                  }`}
+                  key={option.id}
+                  onClick={() => updateSettings({ greekFont: option.id })}
+                  type="button"
+                >
+                  <strong>{option.name}</strong>
+                  <span>{option.description}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="reader-settings-subsection">
+            <p className="reader-settings-subsection-label">Hebrew font</p>
+            <div className="settings-option-grid settings-option-grid-compact">
+              {HEBREW_FONT_OPTIONS.map((option) => (
+                <button
+                  className={`settings-option-card${
+                    settings.hebrewFont === option.id ? " is-active" : ""
+                  }`}
+                  key={option.id}
+                  onClick={() => updateSettings({ hebrewFont: option.id })}
+                  type="button"
+                >
+                  <strong>{option.name}</strong>
+                  <span>{option.description}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="reader-settings-subsection">
+            <p className="reader-settings-subsection-label">Companion verse font</p>
+            <div className="settings-option-grid settings-option-grid-compact">
+              {BODY_FONT_OPTIONS.map((option) => (
+                <button
+                  className={`settings-option-card${
+                    settings.companionVerseFont === option.id ? " is-active" : ""
+                  }`}
+                  key={`companion:${option.id}`}
+                  onClick={() => updateSettings({ companionVerseFont: option.id })}
+                  type="button"
+                >
+                  <strong>{option.name}</strong>
+                  <span>{option.description}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="reader-settings-subsection">
+            <p className="reader-settings-subsection-label">Custom translation font</p>
+            <div className="settings-option-grid settings-option-grid-compact">
+              {BODY_FONT_OPTIONS.map((option) => (
+                <button
+                  className={`settings-option-card${
+                    settings.customVerseFont === option.id ? " is-active" : ""
+                  }`}
+                  key={`custom:${option.id}`}
+                  onClick={() => updateSettings({ customVerseFont: option.id })}
                   type="button"
                 >
                   <strong>{option.name}</strong>
@@ -595,7 +779,7 @@ export function ReaderSettingsPanel({
             </div>
           </div>
           <div className="reader-settings-subsection">
-            <p className="reader-settings-subsection-label">Type scale</p>
+            <p className="reader-settings-subsection-label">Supporting scale</p>
             <div className="settings-slider-group">
               <label className="settings-slider">
                 <span>Header scale</span>
@@ -648,20 +832,32 @@ export function ReaderSettingsPanel({
             <p>Refine reading density, measure, and verse rhythm beyond the toolbar controls.</p>
           </div>
           <div className="reader-settings-subsection">
+            <p className="reader-settings-subsection-label">Paragraph rhythm</p>
+            <div className="reader-settings-field-grid">
+              <NumericField
+                inputId="reader-menu-line-height"
+                label="Line height"
+                max={3}
+                min={1.2}
+                onChange={(value) => updateNumericSetting("lineHeight", value)}
+                step={0.01}
+                suffix=""
+                value={settings.lineHeight}
+              />
+              <NumericField
+                inputId="reader-menu-first-line-indent"
+                label="First-line indent"
+                max={5}
+                min={0}
+                onChange={(value) => updateNumericSetting("firstLineIndent", value)}
+                step={0.05}
+                suffix="rem"
+                value={settings.firstLineIndent}
+              />
+            </div>
+          </div>
+          <div className="reader-settings-subsection">
             <div className="settings-slider-group">
-              <label className="settings-slider">
-                <span>Line height</span>
-                <input
-                  aria-label="Line height"
-                  max="2.3"
-                  min="1.6"
-                  onChange={(event) => updateSettings({ lineHeight: Number(event.target.value) })}
-                  step="0.05"
-                  type="range"
-                  value={settings.lineHeight}
-                />
-                <strong>{settings.lineHeight.toFixed(2)}</strong>
-              </label>
               <label className="settings-slider">
                 <span>Content width</span>
                 <input

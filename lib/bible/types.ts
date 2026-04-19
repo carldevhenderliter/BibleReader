@@ -52,7 +52,11 @@ export type ChapterLink = {
 
 export type ThemePreset = "neon" | "midnight" | "ember" | "obsidian" | "aurora";
 
-export type BodyFontOption = "serif" | "humanist" | "mono";
+export type BodyFontOption = "serif" | "literary" | "transitional" | "humanist" | "mono";
+
+export type GreekFontOption = "classic" | "scholarly" | "modern";
+
+export type HebrewFontOption = "square" | "serif" | "sans";
 
 export type UiFontOption = "sans" | "technical";
 
@@ -61,6 +65,10 @@ export type TextAlignOption = "left" | "justify";
 export type ReaderCustomizationSettings = {
   themePreset: ThemePreset;
   bodyFont: BodyFontOption;
+  greekFont: GreekFontOption;
+  hebrewFont: HebrewFontOption;
+  companionVerseFont: BodyFontOption;
+  customVerseFont: BodyFontOption;
   uiFont: UiFontOption;
   showStrongs: boolean;
   showEsvInterlinear: boolean;
@@ -73,9 +81,13 @@ export type ReaderCustomizationSettings = {
   showGreekMorphology: boolean;
   showGreekGloss: boolean;
   showCustomVerseTranslation: boolean;
-  greekFontScale: number;
-  textSize: number;
+  bodyTextSize: number;
+  greekTextSize: number;
+  hebrewTextSize: number;
+  companionVerseTextSize: number;
+  customVerseTextSize: number;
   lineHeight: number;
+  firstLineIndent: number;
   contentWidth: number;
   verseSpacing: number;
   paragraphSpacing: number;
