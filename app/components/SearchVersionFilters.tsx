@@ -12,10 +12,10 @@ import {
 function getNextSelectedVersions(
   selectedVersions: readonly BundledBibleVersion[],
   toggledVersion: BundledBibleVersion
-) {
+): BundledBibleVersion[] {
   if (selectedVersions.includes(toggledVersion)) {
     if (selectedVersions.length === 1) {
-      return selectedVersions;
+      return [...selectedVersions];
     }
 
     return selectedVersions.filter((version) => version !== toggledVersion);
