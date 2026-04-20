@@ -344,6 +344,7 @@ export function SearchResultGroups({
                                 handleCompareResult({
                                   type: "verse",
                                   id: verse.id,
+                                  version: verse.version,
                                   bookSlug: result.bookSlug,
                                   chapterNumber: result.chapterNumber,
                                   verseNumber: verse.verseNumber,
