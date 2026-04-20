@@ -1,5 +1,6 @@
 import {
   getStrongsEntries,
+  getStrongsParallelVerseRows,
   getStrongsVerseOccurrences,
   normalizeGreekWordLookupValue,
   normalizeStrongsNumber,
@@ -64,6 +65,30 @@ describe("strongs lexicon", () => {
         chapterNumber: expect.any(Number),
         verseNumber: expect.any(Number),
         href: expect.stringContaining("/read/")
+      })
+    );
+  });
+
+  it("loads cross-version verse rows for a Strong's number", async () => {
+    const rows = await getStrongsParallelVerseRows("H7225", ["web", "kjv"]);
+
+    expect(rows.length).toBeGreaterThan(0);
+    expect(rows[0]).toEqual(
+      expect.objectContaining({
+        strongsNumber: "H7225",
+        bookSlug: expect.any(String),
+        chapterNumber: expect.any(Number),
+        verseNumber: expect.any(Number),
+        versions: expect.arrayContaining([
+          expect.objectContaining({
+            version: "web",
+            href: expect.stringContaining("/read/")
+          }),
+          expect.objectContaining({
+            version: "kjv",
+            href: expect.stringContaining("version=kjv")
+          })
+        ])
       })
     );
   });

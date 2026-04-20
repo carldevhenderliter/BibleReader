@@ -3471,6 +3471,25 @@ button.fathers-annotation-anchor:focus-visible {
   gap: var(--search-density-tight-gap, 0.72rem);
 }
 
+.search-result-groups-shell {
+  display: grid;
+  gap: 0.85rem;
+  min-height: 0;
+}
+
+.search-result-tabs {
+  width: fit-content;
+  max-width: 100%;
+}
+
+.search-result-tab-empty {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-family: var(--search-body-font, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif);
+  font-size: max(0.92rem, calc(var(--search-text-size, 1.04rem) * 0.88));
+  line-height: calc(var(--search-line-height, 1.72) * 0.9);
+}
+
 .search-result-groups {
   display: grid;
   gap: var(--search-density-gap, 1rem);
@@ -3590,6 +3609,72 @@ button.fathers-annotation-anchor:focus-visible {
 
 .search-result-range {
   cursor: default;
+}
+
+.search-result-strongs {
+  gap: 0.72rem;
+}
+
+.search-strongs-expansion {
+  display: grid;
+  gap: 0.8rem;
+  padding-top: 0.2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.search-strongs-expansion-header {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.search-strongs-parallel-rows {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.search-strongs-parallel-row {
+  display: grid;
+  gap: 0.6rem;
+  padding: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.search-strongs-parallel-row-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+}
+
+.search-strongs-parallel-cells {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.search-strongs-parallel-cell {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.72rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.82rem;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.search-strongs-parallel-cell-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.55rem;
+}
+
+.search-strongs-parallel-version {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .reader-notebook {

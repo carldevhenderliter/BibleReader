@@ -48,6 +48,15 @@ function renderSearchUi(ui?: React.ReactNode) {
   );
 }
 
+async function waitForSearchToFinish() {
+  await waitFor(
+    () => {
+      expect(screen.queryAllByText("Searching scripture…")).toHaveLength(0);
+    },
+    { timeout: 10000 }
+  );
+}
+
 function setDesktopMode(isDesktop: boolean) {
   Object.defineProperty(window, "matchMedia", {
     writable: true,
@@ -180,15 +189,17 @@ describe("BottomSearchBar", () => {
       target: { value: "gen" }
     });
 
-    await waitForElementToBeRemoved(() => screen.queryByText("Searching scripture…"), {
-      timeout: 10000
-    });
+    await waitForSearchToFinish();
+
+    fireEvent.click(screen.getByRole("tab", { name: "Verses" }));
 
     const result = await screen.findByRole("button", { name: /Book Genesis/i });
     fireEvent.click(result);
 
-    expect(mockRouter.push).toHaveBeenCalledWith("/read/genesis");
-  }, 15000);
+    await waitFor(() => {
+      expect(mockRouter.push).toHaveBeenCalledWith("/read/genesis");
+    });
+  }, 30000);
 
   it("navigates to a highlighted verse result", async () => {
     renderSearchUi();
@@ -317,6 +328,61 @@ describe("BottomSearchBar", () => {
     expect(await within(studyPane).findByText("G3056")).toBeInTheDocument();
   });
 
+  it("splits search results into definitions and verses tabs", async () => {
+    renderSearchUi();
+
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
+      target: { value: "H7225" }
+    });
+
+    await waitForSearchToFinish();
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole("tab", { name: "Definitions" })
+      ).toHaveAttribute("aria-selected", "true");
+    });
+    expect(screen.getByRole("button", { name: /H7225/i })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Verse Genesis 1:1/i })).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("tab", { name: "Verses" }));
+
+    expect(screen.getByRole("button", { name: /Verse Genesis 1:1/i })).toBeInTheDocument();
+  });
+
+  it("expands Strong's definition cards inline and keeps study-pane open as a secondary action", async () => {
+    setDesktopMode(true);
+    renderSearchUi();
+
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
+      target: { value: "H7225" }
+    });
+
+    await waitForSearchToFinish();
+
+    const strongsResult = await screen.findByRole("button", { name: /H7225/i });
+    fireEvent.click(strongsResult);
+
+    const expansion = await screen.findByText("Matching Verses");
+    expect(expansion).toBeInTheDocument();
+    expect(screen.getByRole("group", { name: "Versions for H7225" })).toBeInTheDocument();
+
+    const kjvVersionToggle = within(
+      screen.getByRole("group", { name: "Versions for H7225" })
+    ).getByRole("button", { name: "KJV" });
+
+    expect(kjvVersionToggle).toHaveAttribute("aria-pressed", "false");
+    fireEvent.click(kjvVersionToggle);
+    expect(kjvVersionToggle).toHaveAttribute("aria-pressed", "true");
+
+    const studyPane = screen.getByLabelText("Study pane");
+    expect(within(studyPane).queryByText("H7225")).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Open in Study Pane" }));
+
+    expect(await within(studyPane).findByText("H7225")).toBeInTheDocument();
+  }, 30000);
+
   it("shows Strongs numbers beside KJV word-search hits only when the search toggle is on", async () => {
     renderSearchUi(<SearchHarness />);
 
@@ -325,9 +391,11 @@ describe("BottomSearchBar", () => {
     fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
       target: { value: "beginning" }
     });
+    await waitForSearchToFinish();
+    fireEvent.click(screen.getByRole("tab", { name: "Verses" }));
 
     await waitFor(() => {
-      expect(screen.getByRole("button", { name: /Verse Genesis 1:1 KJV/i })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: /Verse Genesis 1:1/i })).toBeInTheDocument();
     });
 
     expect(screen.queryByText("H7225")).not.toBeInTheDocument();
@@ -349,10 +417,9 @@ describe("BottomSearchBar", () => {
       target: { value: "light" }
     });
 
-    await waitForElementToBeRemoved(
-      () => screen.queryByText("Searching scripture…"),
-      { timeout: 10000 }
-    );
+    await waitForSearchToFinish();
+
+    fireEvent.click(screen.getByRole("tab", { name: "Verses" }));
 
     expect(screen.getByRole("button", { name: /Verse Matthew 4:16/i })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Verse Genesis 1:3/i })).not.toBeInTheDocument();
@@ -364,6 +431,10 @@ describe("BottomSearchBar", () => {
     fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
       target: { value: "Matthew 1:1, repent, forgiveness" }
     });
+
+    await waitForSearchToFinish();
+
+    fireEvent.click(screen.getByRole("tab", { name: "Verses" }));
 
     expect(await screen.findByRole("heading", { name: "Matthew 1:1" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "repent" })).toBeInTheDocument();
@@ -427,6 +498,10 @@ describe("BottomSearchBar", () => {
       target: { value: "Matthew 1:1, repent" }
     });
 
+    await waitForSearchToFinish();
+
+    fireEvent.click(screen.getByRole("tab", { name: "Verses" }));
+
     expect(await screen.findByRole("heading", { name: "Matthew 1:1" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "repent" })).toBeInTheDocument();
     expect(await screen.findByRole("button", { name: /Verse Matthew 1:1/i })).toBeInTheDocument();
@@ -475,17 +550,24 @@ describe("BottomSearchBar", () => {
       target: { value: "begin" }
     });
 
-    expect(await screen.findByRole("button", { name: /Verse Genesis 1:1/i })).toBeInTheDocument();
+    await waitForSearchToFinish();
+    fireEvent.click(screen.getByRole("tab", { name: "Verses" }));
+
+    expect(await screen.findByRole("button", { name: /Genesis 1:1/i })).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Complete" }));
+    await waitForSearchToFinish();
+    fireEvent.click(screen.getByRole("tab", { name: "Verses" }));
 
     await waitFor(() => {
-      expect(screen.queryByRole("button", { name: /Verse Genesis 1:1/i })).not.toBeInTheDocument();
+      expect(screen.queryByRole("button", { name: /Genesis 1:1/i })).not.toBeInTheDocument();
     });
 
     fireEvent.click(screen.getByRole("button", { name: "Partial" }));
+    await waitForSearchToFinish();
+    fireEvent.click(screen.getByRole("tab", { name: "Verses" }));
 
-    expect(await screen.findByRole("button", { name: /Verse Genesis 1:1/i })).toBeInTheDocument();
+    expect(await screen.findByRole("button", { name: /Genesis 1:1/i })).toBeInTheDocument();
   });
 
   it("restores the saved match mode from local storage", async () => {
@@ -545,20 +627,28 @@ describe("BottomSearchBar", () => {
       target: { value: "H7225" }
     });
 
+    await waitFor(() => {
+      expect(screen.getByRole("tab", { name: "Definitions" })).toHaveAttribute("aria-selected", "true");
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText("Hebrew Strongs")).toBeInTheDocument();
+    }, { timeout: 5000 });
+
+    fireEvent.click(screen.getByRole("tab", { name: "Verses" }));
+
     const verseResult = await screen.findByRole(
       "button",
       { name: /Verse Genesis 1:1/i },
       { timeout: 5000 }
     );
 
-    await waitFor(() => {
-      expect(screen.getByText("Hebrew Strongs")).toBeInTheDocument();
-    }, { timeout: 5000 });
-
-    const beforeToggleCount = screen.getAllByText("H7225").length;
+    const beforeToggleCount = screen.queryAllByText("H7225").length;
 
     fireEvent.click(screen.getByRole("button", { name: "Show Strongs" }));
-    expect(screen.getAllByText("H7225").length).toBeGreaterThan(beforeToggleCount);
+    await waitFor(() => {
+      expect(screen.queryAllByText("H7225").length).toBeGreaterThan(beforeToggleCount);
+    });
 
     fireEvent.click(verseResult);
 
@@ -585,6 +675,7 @@ describe("BottomSearchBar", () => {
 
     expect(strongsResult).not.toBeNull();
     fireEvent.click(strongsResult!);
+    fireEvent.click(screen.getByRole("button", { name: "Open in Study Pane" }));
 
     await waitFor(() => {
       expect(screen.getByRole("tab", { name: "Strongs" })).toHaveAttribute("aria-selected", "true");

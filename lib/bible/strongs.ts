@@ -1,5 +1,6 @@
 import { getBookHighlightedVerseHref } from "@/lib/bible/utils";
 import type {
+  BundledBibleVersion,
   BibleSearchStrongsVerseEntry,
   BibleSearchVerseEntry,
   StrongsEntry
@@ -12,8 +13,31 @@ type SearchableGreekStrongsEntry = StrongsEntry & {
 
 let strongsLexiconPromise: Promise<Record<string, StrongsEntry>> | null = null;
 let strongsVerseIndexPromise: Promise<BibleSearchStrongsVerseEntry[]> | null = null;
-let kjvVerseSearchPromise: Promise<BibleSearchVerseEntry[]> | null = null;
 let searchableGreekEntriesPromise: Promise<SearchableGreekStrongsEntry[]> | null = null;
+const verseSearchPromises = new Map<BundledBibleVersion, Promise<BibleSearchVerseEntry[]>>();
+
+const verseSearchLoaders: Record<BundledBibleVersion, () => Promise<unknown>> = {
+  web: () => import("@/data/bible/search/web.json"),
+  kjv: () => import("@/data/bible/search/kjv.json"),
+  nlt: () => import("@/data/bible/search/nlt.json"),
+  esv: () => import("@/data/bible/search/esv.json"),
+  greek: () => import("@/data/bible/search/greek.json")
+};
+
+export type StrongsParallelVerseVersion = {
+  version: BundledBibleVersion;
+  entry: BibleSearchVerseEntry | null;
+  href: string;
+};
+
+export type StrongsParallelVerseRow = {
+  strongsNumber: string;
+  bookSlug: string;
+  bookName: string;
+  chapterNumber: number;
+  verseNumber: number;
+  versions: StrongsParallelVerseVersion[];
+};
 
 export function normalizeStrongsNumber(value: string) {
   const match = value.trim().toUpperCase().match(/^([HG])\s*0*(\d+)$/);
@@ -77,14 +101,19 @@ async function loadStrongsVerseIndex() {
   return strongsVerseIndexPromise;
 }
 
-async function loadKjvVerseSearchIndex() {
-  if (!kjvVerseSearchPromise) {
-    kjvVerseSearchPromise = import("@/data/bible/search/kjv.json").then(
-      (module) => ((module.default ?? []) as BibleSearchVerseEntry[])
-    );
+async function loadVerseSearchIndex(version: BundledBibleVersion) {
+  const existing = verseSearchPromises.get(version);
+
+  if (existing) {
+    return existing;
   }
 
-  return kjvVerseSearchPromise;
+  const promise = verseSearchLoaders[version]().then(
+    (module) => ((module as { default?: BibleSearchVerseEntry[] }).default ?? [])
+  );
+
+  verseSearchPromises.set(version, promise);
+  return promise;
 }
 
 function getGreekSearchScore(
@@ -162,7 +191,7 @@ export async function getStrongsVerseOccurrences(strongsNumber: string) {
 
 export async function getStrongsVerseOccurrencesWithTokens(strongsNumber: string) {
   const normalized = normalizeStrongsNumber(strongsNumber);
-  const verseIndex = await loadKjvVerseSearchIndex();
+  const verseIndex = await loadVerseSearchIndex("kjv");
 
   return verseIndex
     .filter((entry) =>
@@ -176,4 +205,49 @@ export async function getStrongsVerseOccurrencesWithTokens(strongsNumber: string
       ...entry,
       href: getBookHighlightedVerseHref(entry.bookSlug, entry.chapterNumber, entry.verseNumber, "kjv")
     }));
+}
+
+export async function getStrongsParallelVerseRows(
+  strongsNumber: string,
+  versions: readonly BundledBibleVersion[]
+) {
+  const normalized = normalizeStrongsNumber(strongsNumber);
+  const uniqueVersions = Array.from(new Set(versions));
+
+  if (uniqueVersions.length === 0) {
+    return [];
+  }
+
+  const [baseMatches, ...verseIndexes] = await Promise.all([
+    getStrongsVerseOccurrences(normalized),
+    ...uniqueVersions.map((version) => loadVerseSearchIndex(version))
+  ]);
+
+  return baseMatches.map<StrongsParallelVerseRow>((match) => ({
+    strongsNumber: normalized,
+    bookSlug: match.bookSlug,
+    bookName: match.bookName,
+    chapterNumber: match.chapterNumber,
+    verseNumber: match.verseNumber,
+    versions: uniqueVersions.map((version, index) => {
+      const entry =
+        verseIndexes[index]?.find(
+          (candidate) =>
+            candidate.bookSlug === match.bookSlug &&
+            candidate.chapterNumber === match.chapterNumber &&
+            candidate.verseNumber === match.verseNumber
+        ) ?? null;
+
+      return {
+        version,
+        entry,
+        href: getBookHighlightedVerseHref(
+          match.bookSlug,
+          match.chapterNumber,
+          match.verseNumber,
+          version
+        )
+      };
+    })
+  }));
 }
