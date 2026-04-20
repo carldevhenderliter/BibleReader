@@ -95,6 +95,27 @@ describe("Bible search", () => {
     expect(kjvResults.some((result) => result.type === "verse")).toBe(true);
   });
 
+  it("merges verse search results across multiple selected versions", async () => {
+    const results = await searchBible("John 1:1", ["web", "kjv"]);
+    const verseResults = results.filter(
+      (result): result is Extract<(typeof results)[number], { type: "verse" }> =>
+        result.type === "verse"
+    );
+
+    expect(verseResults).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          version: "web",
+          href: "/read/john?highlightChapter=1&highlight=1"
+        }),
+        expect.objectContaining({
+          version: "kjv",
+          href: "/read/john?version=kjv&highlightChapter=1&highlight=1"
+        })
+      ])
+    );
+  });
+
   it("loads ESV verse search results from bundled indexes", async () => {
     const results = await searchBible("only Son", "esv");
 
@@ -344,6 +365,21 @@ describe("Bible search", () => {
       chapterNumber: 1,
       verseNumber: 1
     });
+  });
+
+  it("keeps version metadata when grouped search spans multiple selected versions", async () => {
+    const groups = await searchBibleGroups("John 1:1", ["web", "kjv"]);
+    const verseResults = groups[0]?.results.filter(
+      (result): result is Extract<(typeof groups)[number]["results"][number], { type: "verse" }> =>
+        result.type === "verse"
+    );
+
+    expect(verseResults).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ version: "web" }),
+        expect.objectContaining({ version: "kjv" })
+      ])
+    );
   });
 
   it("keeps verse-by-verse range results inside grouped searches", async () => {

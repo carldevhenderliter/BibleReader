@@ -297,6 +297,7 @@ export type BibleTopicSearchEntry = {
 export type BibleSearchBookResult = {
   type: "book";
   id: string;
+  version: BundledBibleVersion;
   bookSlug: string;
   label: string;
   description: string;
@@ -306,6 +307,7 @@ export type BibleSearchBookResult = {
 export type BibleSearchChapterResult = {
   type: "chapter";
   id: string;
+  version: BundledBibleVersion;
   bookSlug: string;
   chapterNumber: number;
   label: string;
@@ -316,6 +318,7 @@ export type BibleSearchChapterResult = {
 export type BibleSearchVerseResult = {
   type: "verse";
   id: string;
+  version: BundledBibleVersion;
   bookSlug: string;
   chapterNumber: number;
   verseNumber: number;
@@ -388,6 +391,7 @@ export type BibleSearchResult =
   | {
       type: "range";
       id: string;
+      version: BundledBibleVersion;
       bookSlug: string;
       chapterNumber: number;
       startVerseNumber: number;
@@ -396,6 +400,7 @@ export type BibleSearchResult =
       description: string;
       verses: Array<{
         id: string;
+        version: BundledBibleVersion;
         verseNumber: number;
         label: string;
         href: string;

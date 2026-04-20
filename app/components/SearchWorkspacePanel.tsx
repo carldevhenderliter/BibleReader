@@ -4,11 +4,11 @@ import type { ReactNode } from "react";
 
 import { SearchCustomizationMenu } from "@/app/components/SearchCustomizationMenu";
 import { useLookup } from "@/app/components/LookupProvider";
-import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { SearchMatchModeToggle } from "@/app/components/SearchMatchModeToggle";
 import { SearchResultGroups } from "@/app/components/SearchResultGroups";
 import { SearchStrongsToggle } from "@/app/components/SearchStrongsToggle";
-import { getBibleVersionLabel } from "@/lib/bible/version";
+import { SearchVersionFilters } from "@/app/components/SearchVersionFilters";
+import { getBibleVersionSelectionLabel } from "@/lib/bible/version";
 
 type SearchWorkspacePanelProps = {
   title?: string;
@@ -23,7 +23,6 @@ export function SearchWorkspacePanel({
   className = "",
   extraActions = null
 }: SearchWorkspacePanelProps) {
-  const { version } = useReaderVersion();
   const {
     clearSearch,
     isSearching,
@@ -31,6 +30,7 @@ export function SearchWorkspacePanel({
     query,
     queryParts,
     resultGroups,
+    searchVersions,
     selectResult,
     setMatchMode,
     setShowStrongsInSearch,
@@ -42,10 +42,13 @@ export function SearchWorkspacePanel({
       <div className="lookup-pane-header search-workspace-header">
         <div className="lookup-pane-header-main">
           <p className="search-tray-kicker">Bible Search</p>
-          <h2 className="search-tray-title">{title ?? `${getBibleVersionLabel(version)} results`}</h2>
+          <h2 className="search-tray-title">
+            {title ?? `${getBibleVersionSelectionLabel(searchVersions)} results`}
+          </h2>
         </div>
         <div className="lookup-pane-header-actions">
           <div className="search-workspace-primary-actions">
+            <SearchVersionFilters />
             <SearchMatchModeToggle matchMode={matchMode} onChange={setMatchMode} />
             <SearchStrongsToggle
               isEnabled={showStrongsInSearch}
@@ -66,8 +69,9 @@ export function SearchWorkspacePanel({
       {!query.trim() ? (
         <p className="search-empty-copy">
           Search for a book, reference, Strong’s number, Greek lemma or inflected form,
-          transliteration, gloss, word, phrase, or comma-separated list. Use `Topic:` for study
-          topics and `Greek:` to force a Greek lookup.
+          transliteration, gloss, word, phrase, or comma-separated list. Choose which Bible
+          versions to search, then use `Topic:` for study topics and `Greek:` to force a Greek
+          lookup.
         </p>
       ) : (
         <SearchResultGroups

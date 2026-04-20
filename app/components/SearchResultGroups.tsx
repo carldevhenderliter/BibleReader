@@ -1,6 +1,5 @@
 "use client";
 
-import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { normalizeStrongsNumber } from "@/lib/bible/strongs";
 import type { BibleSearchResult, BibleSearchResultGroup, VerseToken } from "@/lib/bible/types";
@@ -178,7 +177,6 @@ export function SearchResultGroups({
   isSearching = false,
   showStrongsInSearch = false
 }: SearchResultGroupsProps) {
-  const { version } = useReaderVersion();
   const { openCompare, saveReferenceToStudySet } = useReaderWorkspace();
 
   const handleCompareResult = (result: Extract<BibleSearchResult, { type: "verse" | "chapter" }>) => {
@@ -199,7 +197,7 @@ export function SearchResultGroups({
   const handleSaveVerseResult = (result: Extract<BibleSearchResult, { type: "verse" }>) => {
     handleSaveReference(
       createPassageReference({
-        version,
+        version: result.version,
         bookSlug: result.bookSlug,
         chapterNumber: result.chapterNumber,
         verseNumber: result.verseNumber,
@@ -310,13 +308,14 @@ export function SearchResultGroups({
                           <button
                             aria-label={verse.label}
                             className="search-range-line-main"
-                            onClick={() =>
-                              onSelectResult({
-                                type: "verse",
-                                id: verse.id,
-                                bookSlug: result.bookSlug,
-                                chapterNumber: result.chapterNumber,
-                                verseNumber: verse.verseNumber,
+                              onClick={() =>
+                                onSelectResult({
+                                  type: "verse",
+                                  id: verse.id,
+                                  version: verse.version,
+                                  bookSlug: result.bookSlug,
+                                  chapterNumber: result.chapterNumber,
+                                  verseNumber: verse.verseNumber,
                                 label: verse.label,
                                 description: result.description,
                                 href: verse.href,
@@ -364,7 +363,7 @@ export function SearchResultGroups({
                               onClick={() =>
                                 handleSaveReference(
                                   createPassageReference({
-                                    version,
+                                    version: verse.version,
                                     bookSlug: result.bookSlug,
                                     chapterNumber: result.chapterNumber,
                                     verseNumber: verse.verseNumber,
@@ -441,7 +440,7 @@ export function SearchResultGroups({
                           onClick={() =>
                             handleSaveReference(
                               createPassageReference({
-                                version,
+                                version: result.version,
                                 bookSlug: result.bookSlug,
                                 chapterNumber: result.chapterNumber,
                                 verseNumber: result.type === "verse" ? result.verseNumber : undefined,

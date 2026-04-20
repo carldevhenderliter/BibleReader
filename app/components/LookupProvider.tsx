@@ -17,14 +17,20 @@ import { parseBibleSearchQueries, searchBibleGroups } from "@/lib/bible/search";
 import type {
   BibleSearchResult,
   BibleSearchResultGroup,
+  BundledBibleVersion,
   SearchMatchMode,
   SearchScope
 } from "@/lib/bible/types";
+import {
+  getInstalledBundledBibleVersions,
+  isInstalledBundledBibleVersion
+} from "@/lib/bible/version";
 
 const SPLIT_VIEW_MEDIA_QUERY = "(min-width: 64rem)";
 const SEARCH_MATCH_MODE_STORAGE_KEY = "bible-reader.search-match-mode";
 const SEARCH_SHOW_STRONGS_STORAGE_KEY = "bible-reader.search-show-strongs";
 const SEARCH_SCOPE_STORAGE_KEY = "bible-reader.search-scope";
+const SEARCH_VERSIONS_STORAGE_KEY = "bible-reader.search-versions";
 const SPLIT_SEARCH_WIDTH_STORAGE_KEY = "bible-reader.split-search-width-rem";
 const SPLIT_STUDY_WIDTH_STORAGE_KEY = "bible-reader.split-study-width-rem";
 const SPLIT_COLLAPSED_PANES_STORAGE_KEY = "bible-reader.split-collapsed-panes";
@@ -59,6 +65,8 @@ type LookupContextValue = {
   setMatchMode: (value: SearchMatchMode) => void;
   searchScope: SearchScope;
   setSearchScope: (value: SearchScope) => void;
+  searchVersions: BundledBibleVersion[];
+  setSearchVersions: (value: BundledBibleVersion[]) => void;
   showStrongsInSearch: boolean;
   setShowStrongsInSearch: (value: boolean) => void;
   isSplitViewActive: boolean;
@@ -147,6 +155,41 @@ function normalizeSearchScope(value: string | null): SearchScope {
   return "all";
 }
 
+function normalizeSearchVersions(value: string | null, fallbackVersion: BundledBibleVersion) {
+  const installedVersions = getInstalledBundledBibleVersions();
+
+  if (!value) {
+    return {
+      hasSavedSelection: false,
+      versions: [fallbackVersion]
+    };
+  }
+
+  try {
+    const parsedValue = JSON.parse(value);
+    const versions = Array.from(
+      new Set(
+        Array.isArray(parsedValue)
+          ? parsedValue.filter(isInstalledBundledBibleVersion)
+          : []
+      )
+    );
+
+    return {
+      hasSavedSelection: versions.length > 0,
+      versions:
+        versions.length > 0
+          ? versions
+          : [installedVersions.includes(fallbackVersion) ? fallbackVersion : installedVersions[0] ?? fallbackVersion]
+    };
+  } catch {
+    return {
+      hasSavedSelection: false,
+      versions: [fallbackVersion]
+    };
+  }
+}
+
 function normalizeCollapsedSplitPanes(value: string | null): CollapsedSplitPanes {
   if (!value) {
     return DEFAULT_COLLAPSED_SPLIT_PANES;
@@ -182,6 +225,9 @@ export function LookupProvider({ children }: PropsWithChildren) {
   const [resultGroups, setResultGroups] = useState<BibleSearchResultGroup[]>([]);
   const [matchMode, setMatchMode] = useState<SearchMatchMode>("partial");
   const [searchScope, setSearchScope] = useState<SearchScope>("all");
+  const [searchVersions, setSearchVersionsState] = useState<BundledBibleVersion[]>([version]);
+  const [hasSavedSearchVersions, setHasSavedSearchVersions] = useState(false);
+  const [hasHydratedSearchVersions, setHasHydratedSearchVersions] = useState(false);
   const [showStrongsInSearch, setShowStrongsInSearch] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
@@ -194,6 +240,10 @@ export function LookupProvider({ children }: PropsWithChildren) {
   const [viewportWidthRem, setViewportWidthRem] = useState(APP_LAYOUT_MAX_WIDTH_REM);
   const [expandedTopicsByQuery, setExpandedTopicsByQuery] = useState<Record<string, string>>({});
   const queryParts = useMemo(() => parseBibleSearchQueries(query), [query]);
+  const effectiveSearchVersions = useMemo(
+    () => (hasSavedSearchVersions ? searchVersions : [version]),
+    [hasSavedSearchVersions, searchVersions, version]
+  );
   const queryCount = Math.max(queryParts.length, 1);
   const hasCollapsedPaneDock = collapsedSplitPanes.reader || collapsedSplitPanes.search || collapsedSplitPanes.study;
   const dockWidthRem = hasCollapsedPaneDock ? SPLIT_PANE_RAIL_WIDTH_REM : 0;
@@ -380,6 +430,13 @@ export function LookupProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     setMatchMode(normalizeSearchMatchMode(window.localStorage.getItem(SEARCH_MATCH_MODE_STORAGE_KEY)));
     setSearchScope(normalizeSearchScope(window.localStorage.getItem(SEARCH_SCOPE_STORAGE_KEY)));
+    const normalizedSearchVersions = normalizeSearchVersions(
+      window.localStorage.getItem(SEARCH_VERSIONS_STORAGE_KEY),
+      version
+    );
+    setSearchVersionsState(normalizedSearchVersions.versions);
+    setHasSavedSearchVersions(normalizedSearchVersions.hasSavedSelection);
+    setHasHydratedSearchVersions(true);
     setShowStrongsInSearch(
       normalizeShowStrongsInSearch(window.localStorage.getItem(SEARCH_SHOW_STRONGS_STORAGE_KEY))
     );
@@ -407,6 +464,19 @@ export function LookupProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     window.localStorage.setItem(SEARCH_SCOPE_STORAGE_KEY, searchScope);
   }, [searchScope]);
+
+  useEffect(() => {
+    if (!hasHydratedSearchVersions) {
+      return;
+    }
+
+    if (!hasSavedSearchVersions) {
+      window.localStorage.removeItem(SEARCH_VERSIONS_STORAGE_KEY);
+      return;
+    }
+
+    window.localStorage.setItem(SEARCH_VERSIONS_STORAGE_KEY, JSON.stringify(searchVersions));
+  }, [hasHydratedSearchVersions, hasSavedSearchVersions, searchVersions]);
 
   useEffect(() => {
     window.localStorage.setItem(SEARCH_SHOW_STRONGS_STORAGE_KEY, String(showStrongsInSearch));
@@ -506,21 +576,33 @@ export function LookupProvider({ children }: PropsWithChildren) {
     setIsSearching(true);
     setResultGroups([]);
 
-    void searchBibleGroups(trimmedQuery, version, matchMode, expandedTopicsByQuery, searchScope).then(
-      (nextResults) => {
-        if (isCancelled) {
-          return;
-        }
-
-        setResultGroups(nextResults);
-        setIsSearching(false);
+    void searchBibleGroups(
+      trimmedQuery,
+      effectiveSearchVersions,
+      matchMode,
+      expandedTopicsByQuery,
+      searchScope
+    ).then((nextResults) => {
+      if (isCancelled) {
+        return;
       }
-    );
+
+      setResultGroups(nextResults);
+      setIsSearching(false);
+    });
 
     return () => {
       isCancelled = true;
     };
-  }, [expandedTopicsByQuery, isOpen, isSplitViewActive, matchMode, query, searchScope, version]);
+  }, [
+    expandedTopicsByQuery,
+    isOpen,
+    isSplitViewActive,
+    matchMode,
+    query,
+    searchScope,
+    effectiveSearchVersions
+  ]);
 
   const value = useMemo<LookupContextValue>(
     () => ({
@@ -543,6 +625,20 @@ export function LookupProvider({ children }: PropsWithChildren) {
       setMatchMode,
       searchScope,
       setSearchScope,
+      searchVersions: effectiveSearchVersions,
+      setSearchVersions: (nextVersions) => {
+        const normalizedVersions = Array.from(
+          new Set(nextVersions.filter(isInstalledBundledBibleVersion))
+        );
+
+        if (normalizedVersions.length === 0) {
+          return;
+        }
+
+        setSearchVersionsState(normalizedVersions);
+        setHasSavedSearchVersions(true);
+        setHasHydratedSearchVersions(true);
+      },
       showStrongsInSearch,
       setShowStrongsInSearch,
       isSplitViewActive,

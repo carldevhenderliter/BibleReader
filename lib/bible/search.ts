@@ -511,6 +511,7 @@ function getVerseResult(
   return {
     type: "verse",
     id: getVerseResultId(entry.bookSlug, entry.chapterNumber, entry.verseNumber, version),
+    version,
     bookSlug: entry.bookSlug,
     chapterNumber: entry.chapterNumber,
     verseNumber: entry.verseNumber,
@@ -598,6 +599,7 @@ function getStrongsVerseResults(
   return verseEntries.slice(0, MAX_VERSE_RESULTS).map<BibleSearchResult>((verseEntry) => ({
     type: "verse",
     id: `strongs-verse:${verseEntry.strongsNumber}:${verseEntry.bookSlug}:${verseEntry.chapterNumber}:${verseEntry.verseNumber}`,
+    version: "kjv",
     bookSlug: verseEntry.bookSlug,
     chapterNumber: verseEntry.chapterNumber,
     verseNumber: verseEntry.verseNumber,
@@ -755,10 +757,11 @@ async function searchSingleBibleQuery(
         {
           type: "chapter",
           id: `chapter:${parsedReference.book.slug}:${parsedReference.chapterNumber}:${version}`,
+          version,
           bookSlug: parsedReference.book.slug,
           chapterNumber: parsedReference.chapterNumber,
           label: `${parsedReference.book.name} ${parsedReference.chapterNumber}`,
-          description: "Chapter reference",
+          description: `${version.toUpperCase()} chapter reference`,
           href: getBookChapterHref(parsedReference.book.slug, parsedReference.chapterNumber, version)
         }
       ];
@@ -786,6 +789,7 @@ async function searchSingleBibleQuery(
             {
               type: "range",
               id: `range:${parsedReference.book.slug}:${parsedReference.chapterNumber}:${startVerseNumber}-${endVerseNumber}:${version}`,
+              version,
               bookSlug: parsedReference.book.slug,
               chapterNumber: parsedReference.chapterNumber,
               startVerseNumber,
@@ -794,6 +798,7 @@ async function searchSingleBibleQuery(
               description: `${version.toUpperCase()} reference range`,
               verses: rangeEntries.map((entry) => ({
                 id: `range-verse:${entry.bookSlug}:${entry.chapterNumber}:${entry.verseNumber}:${version}`,
+                version,
                 verseNumber: entry.verseNumber,
                 label: `${entry.bookName} ${entry.chapterNumber}:${entry.verseNumber}`,
                 href: getBookHighlightedVerseHref(
@@ -840,9 +845,10 @@ async function searchSingleBibleQuery(
     .map<BibleSearchResult>((entry) => ({
       type: "book",
       id: `book:${entry.book.slug}`,
+      version,
       bookSlug: entry.book.slug,
       label: entry.book.name,
-      description: `${entry.book.chapterCount} chapters`,
+      description: `${version.toUpperCase()} • ${entry.book.chapterCount} chapters`,
       href: getBookHref(entry.book.slug, version)
     }));
 
@@ -905,24 +911,41 @@ async function searchSingleBibleQuery(
 
 export async function searchBible(
   rawQuery: string,
-  version: BundledBibleVersion = DEFAULT_BIBLE_VERSION,
+  versionInput: BundledBibleVersion | readonly BundledBibleVersion[] = DEFAULT_BIBLE_VERSION,
   matchMode: SearchMatchMode = "partial",
   expandedTopicId?: string | null,
   scope: SearchScope = "all"
 ): Promise<BibleSearchResult[]> {
-  return searchSingleBibleQuery(rawQuery, version, matchMode, expandedTopicId, scope);
+  const versions = Array.from(
+    new Set((Array.isArray(versionInput) ? versionInput : [versionInput]).filter(Boolean))
+  );
+
+  if (versions.length === 0) {
+    return [];
+  }
+
+  const results = await Promise.all(
+    versions.map((version) =>
+      searchSingleBibleQuery(rawQuery, version, matchMode, expandedTopicId, scope)
+    )
+  );
+
+  return dedupeSearchResults(results.flat());
 }
 
 export async function searchBibleGroups(
   rawQuery: string,
-  version: BundledBibleVersion = DEFAULT_BIBLE_VERSION,
+  versionInput: BundledBibleVersion | readonly BundledBibleVersion[] = DEFAULT_BIBLE_VERSION,
   matchMode: SearchMatchMode = "partial",
   expandedTopicsByQuery: Record<string, string> = {},
   scope: SearchScope = "all"
 ): Promise<BibleSearchResultGroup[]> {
   const queries = parseBibleSearchQueries(rawQuery);
+  const versions = Array.from(
+    new Set((Array.isArray(versionInput) ? versionInput : [versionInput]).filter(Boolean))
+  );
 
-  if (queries.length === 0) {
+  if (queries.length === 0 || versions.length === 0) {
     return [];
   }
 
@@ -930,14 +953,17 @@ export async function searchBibleGroups(
     queries.map(async (query, index) => ({
       id: `group:${index}:${normalizeValue(query)}`,
       query,
-      results: await searchSingleBibleQuery(
+      results: await searchBible(
         query,
-        version,
+        versions,
         matchMode,
         expandedTopicsByQuery[query] ?? null,
         scope
       ),
-      emptyMessage: "No matches found in the active translation."
+      emptyMessage:
+        versions.length === 1
+          ? "No matches found in the selected version."
+          : "No matches found in the selected versions."
     }))
   );
 

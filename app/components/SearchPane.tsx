@@ -2,18 +2,17 @@
 
 import { SearchWorkspacePanel } from "@/app/components/SearchWorkspacePanel";
 import { useLookup } from "@/app/components/LookupProvider";
-import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { useSearchCustomization } from "@/app/components/SearchCustomizationProvider";
-import { getBibleVersionLabel } from "@/lib/bible/version";
+import { getBibleVersionSelectionLabel } from "@/lib/bible/version";
 
 export function SearchPane() {
   const {
     canCollapseSplitPane,
     collapseSplitPane,
     collapsedSplitPanes,
-    isSplitViewActive
+    isSplitViewActive,
+    searchVersions
   } = useLookup();
-  const { version } = useReaderVersion();
   const { style } = useSearchCustomization();
 
   if (!isSplitViewActive) {
@@ -28,7 +27,7 @@ export function SearchPane() {
     <aside aria-label="Search pane" className="app-side-pane search-pane" style={style}>
       <SearchWorkspacePanel
         className="search-pane-workspace"
-        title={`${getBibleVersionLabel(version)} search`}
+        title={`${getBibleVersionSelectionLabel(searchVersions)} search`}
         variant="panes"
         extraActions={
           <button

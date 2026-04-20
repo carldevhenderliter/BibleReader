@@ -4,12 +4,16 @@ import { useEffect, useId, useRef } from "react";
 
 import { useLookup } from "@/app/components/LookupProvider";
 import { SearchCustomizationMenu } from "@/app/components/SearchCustomizationMenu";
+import { SearchVersionFilters } from "@/app/components/SearchVersionFilters";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { useSearchCustomization } from "@/app/components/SearchCustomizationProvider";
 import { SearchMatchModeToggle } from "@/app/components/SearchMatchModeToggle";
 import { SearchResultGroups } from "@/app/components/SearchResultGroups";
 import { SearchStrongsToggle } from "@/app/components/SearchStrongsToggle";
-import { getBibleVersionLabel } from "@/lib/bible/version";
+import {
+  getBibleVersionLabel,
+  getBibleVersionSelectionLabel
+} from "@/lib/bible/version";
 
 export function BottomSearchBar() {
   const { version } = useReaderVersion();
@@ -25,6 +29,7 @@ export function BottomSearchBar() {
     query,
     queryParts,
     resultGroups,
+    searchVersions,
     selectResult,
     setMatchMode,
     setQuery,
@@ -86,10 +91,13 @@ export function BottomSearchBar() {
             <div className="search-tray-header">
               <div className="search-tray-header-main">
                 <p className="search-tray-kicker">Bible Search</p>
-                <h2 className="search-tray-title">{getBibleVersionLabel(version)} results</h2>
+                <h2 className="search-tray-title">
+                  {getBibleVersionSelectionLabel(searchVersions)} results
+                </h2>
               </div>
               <div className="search-tray-header-actions">
                 <div className="search-workspace-primary-actions">
+                  <SearchVersionFilters />
                   <SearchMatchModeToggle matchMode={matchMode} onChange={setMatchMode} />
                   <SearchStrongsToggle
                     isEnabled={showStrongsInSearch}
@@ -107,8 +115,9 @@ export function BottomSearchBar() {
             {!query.trim() ? (
               <p className="search-empty-copy">
                 Search for a book, reference, Strong’s number, Greek lemma or inflected form,
-                transliteration, gloss, word, phrase, or comma-separated list. Use `Topic:` for
-                study topics and `Greek:` to force a Greek lookup.
+                transliteration, gloss, word, phrase, or comma-separated list. Choose which Bible
+                versions to search, then use `Topic:` for study topics and `Greek:` to force a
+                Greek lookup.
               </p>
             ) : (
               <SearchResultGroups
@@ -161,7 +170,11 @@ export function BottomSearchBar() {
               Clear
             </button>
           ) : (
-            <span className="search-version-pill">{version.toUpperCase()}</span>
+            <span className="search-version-pill">
+              {searchVersions.length === 1
+                ? getBibleVersionLabel(searchVersions[0] ?? version).toUpperCase()
+                : getBibleVersionSelectionLabel(searchVersions)}
+            </span>
           )}
         </div>
       </div>

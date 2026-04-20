@@ -92,6 +92,28 @@ export function getBibleVersionLabel(version: BibleVersion): string {
   return BIBLE_VERSION_METADATA[version].label;
 }
 
+export function getBibleVersionSelectionLabel(
+  versions: readonly BundledBibleVersion[]
+): string {
+  const normalizedVersions = versions.filter(isInstalledBundledBibleVersion);
+
+  if (normalizedVersions.length === 0) {
+    return getBibleVersionLabel(DEFAULT_BIBLE_VERSION);
+  }
+
+  if (normalizedVersions.length === INSTALLED_BUNDLED_BIBLE_VERSIONS.length) {
+    return "All Versions";
+  }
+
+  const labels = normalizedVersions.map((version) => getBibleVersionLabel(version));
+
+  if (labels.length <= 3) {
+    return labels.join(" + ");
+  }
+
+  return `${labels.slice(0, 2).join(" + ")} + ${labels.length - 2} more`;
+}
+
 export function getBibleVersionBadge(version: BibleVersion): string {
   return BIBLE_VERSION_METADATA[version].badge;
 }

@@ -245,10 +245,6 @@ describe("BottomSearchBar", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Use KJV" }));
 
-    await waitFor(() => {
-      expect(screen.getByText(/^KJV$/)).toBeInTheDocument();
-    });
-
     fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
       target: { value: "without form and void" }
     });
@@ -262,6 +258,43 @@ describe("BottomSearchBar", () => {
 
     expect(resultButton).toHaveTextContent(/without form/i);
     expect(resultButton).toHaveTextContent(/Spirit/i);
+  });
+
+  it("lets search include multiple selected Bible versions", async () => {
+    renderSearchUi();
+
+    fireEvent.focus(screen.getByLabelText(SEARCH_INPUT_LABEL));
+    fireEvent.click(
+      within(screen.getByRole("group", { name: "Search versions" })).getByRole("button", {
+        name: "KJV"
+      })
+    );
+
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
+      target: { value: "without form and void" }
+    });
+
+    await waitForElementToBeRemoved(
+      () => screen.queryByText("Searching scripture…"),
+      { timeout: 10000 }
+    );
+
+    expect(screen.getByRole("button", { name: /Verse Genesis 1:2 KJV/i })).toBeInTheDocument();
+  });
+
+  it("does not allow deselecting the last active search version", async () => {
+    renderSearchUi();
+
+    fireEvent.focus(screen.getByLabelText(SEARCH_INPUT_LABEL));
+
+    const webButton = within(
+      screen.getByRole("group", { name: "Search versions" })
+    ).getByRole("button", { name: "WEB" });
+
+    expect(webButton).toHaveAttribute("aria-pressed", "true");
+    fireEvent.click(webButton);
+
+    expect(webButton).toHaveAttribute("aria-pressed", "true");
   });
 
   it("opens a Greek word lookup from search results", async () => {
@@ -288,10 +321,6 @@ describe("BottomSearchBar", () => {
     renderSearchUi(<SearchHarness />);
 
     fireEvent.click(screen.getByRole("button", { name: "Use KJV" }));
-
-    await waitFor(() => {
-      expect(screen.getByText(/^KJV$/)).toBeInTheDocument();
-    });
 
     fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
       target: { value: "beginning" }
