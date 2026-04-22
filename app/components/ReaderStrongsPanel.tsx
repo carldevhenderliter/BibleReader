@@ -767,6 +767,15 @@ export function ReaderStrongsPanel() {
             </div>
           ) : null}
         </section>
+        <section className="greek-learning-quiz-definition">
+          <p className="strongs-entry-section-label">Lemma Definition</p>
+          <p className="strongs-entry-copy">{quiz.entry.shortDefinition}</p>
+          {quiz.entry.longDefinition ? (
+            <p className="strongs-entry-copy greek-dictionary-long-definition">
+              {quiz.entry.longDefinition}
+            </p>
+          ) : null}
+        </section>
         <div className="greek-learning-quiz-actions">
           <button
             className="reader-inline-button"
