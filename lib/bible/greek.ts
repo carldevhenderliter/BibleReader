@@ -1222,14 +1222,18 @@ export async function buildGreekLearningQuiz(
   const selectedFormValue = selection.selectedForm ?? null;
   const selectedForm = selectedFormValue ? findSelectedForm(entry, selectedFormValue) : null;
   const correctAnswer =
+    getGreekLearningGlossCandidate(entry) ??
+    getPreferredSingleWordGlossCandidate(selectedForm?.definition, {
+      preferSingleMeaning: true
+    }) ??
     resolveGreekTokenGloss(
       {
-        gloss: selection.gloss ?? selectedForm?.definition ?? undefined
+        gloss: selectedForm?.definition ?? selection.gloss ?? undefined
       },
       entry,
       null,
       null
-    ).trim() || getGreekLearningGlossCandidate(entry);
+    ).trim();
 
   if (!correctAnswer) {
     return null;

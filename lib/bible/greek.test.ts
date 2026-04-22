@@ -221,7 +221,7 @@ describe("Greek dictionary lookup", () => {
     expect(transliterateGreekSurface("Ἀγαπητοί")).toBe("Agapētoi");
   });
 
-  it("builds a Greek learning quiz with four options and a token-gloss correct answer", async () => {
+  it("builds a Greek learning quiz with four options using the lemma definition as the correct answer", async () => {
     const quiz = await buildGreekLearningQuiz({
       entryKey: "G746",
       strongs: "G746",
@@ -230,7 +230,7 @@ describe("Greek dictionary lookup", () => {
       selectedFormMorphology: "N-GSF",
       selectedFormDecodedMorphology: "noun genitive singular feminine",
       transliteration: "archēs",
-      gloss: "of the beginning"
+      gloss: "origin"
     });
 
     expect(quiz).toMatchObject({
