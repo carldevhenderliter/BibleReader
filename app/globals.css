@@ -3034,6 +3034,56 @@ button.fathers-annotation-anchor:focus-visible {
   padding: var(--search-density-input-padding-y, 0.82rem)
     var(--search-density-input-padding-x, 0.9rem);
   border-radius: 1.35rem;
+  transition:
+    width 160ms ease,
+    padding 160ms ease,
+    gap 160ms ease,
+    border-radius 160ms ease;
+}
+
+.search-bar.search-bar-collapsed {
+  width: auto;
+  min-width: auto;
+  gap: 0;
+  padding: 0.48rem;
+  border-radius: 999px;
+}
+
+.search-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.7rem;
+  height: 2.7rem;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease,
+    color 140ms ease,
+    transform 140ms ease;
+}
+
+.search-icon-button:hover,
+.search-icon-button:focus-visible {
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 1);
+  outline: none;
+}
+
+.search-icon {
+  display: block;
+}
+
+.search-bar.search-bar-collapsed .search-input,
+.search-bar.search-bar-collapsed .search-action-button,
+.search-bar.search-bar-collapsed .search-version-pill {
+  display: none;
 }
 
 .search-input {
@@ -4923,6 +4973,10 @@ button.fathers-annotation-anchor:focus-visible {
 
 .search-shell.search-shell-split .search-bar {
   width: 100%;
+}
+
+.search-shell.search-shell-split .search-bar.search-bar-collapsed {
+  width: auto;
 }
 
 @media (min-width: 64rem) {

@@ -108,11 +108,23 @@ describe("BottomSearchBar", () => {
   it("opens and closes the mobile search tray", () => {
     renderSearchUi();
 
-    fireEvent.focus(screen.getByLabelText(SEARCH_INPUT_LABEL));
+    fireEvent.click(screen.getByRole("button", { name: "Open search" }));
     expect(screen.getByLabelText("Bible search results")).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Close" }));
     expect(screen.queryByLabelText("Bible search results")).not.toBeInTheDocument();
+  });
+
+  it("starts collapsed to a search icon and expands when clicked", () => {
+    renderSearchUi();
+
+    expect(screen.getByRole("button", { name: "Open search" })).toBeInTheDocument();
+    expect(document.querySelector(".search-bar")).toHaveClass("search-bar-collapsed");
+
+    fireEvent.click(screen.getByRole("button", { name: "Open search" }));
+
+    expect(document.querySelector(".search-bar")).not.toHaveClass("search-bar-collapsed");
+    expect(screen.getByLabelText("Bible search results")).toBeInTheDocument();
   });
 
   it("renders a match-mode toggle in the mobile search tray", () => {

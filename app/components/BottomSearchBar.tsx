@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useRef } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import { useLookup } from "@/app/components/LookupProvider";
 import { SearchCustomizationMenu } from "@/app/components/SearchCustomizationMenu";
@@ -41,6 +41,21 @@ export function BottomSearchBar() {
   const inputId = useId();
   const trayId = useId();
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const [isBarExpanded, setIsBarExpanded] = useState(false);
+  const shouldCollapseBar = !isBarExpanded && !isOpen && !query.trim();
+
+  const expandBar = () => {
+    setIsBarExpanded(true);
+    openSearch();
+  };
+
+  const handleCloseSearch = () => {
+    closeSearch();
+
+    if (!query.trim()) {
+      setIsBarExpanded(false);
+    }
+  };
 
   useEffect(() => {
     if (!isOpen || isSplitViewActive) {
@@ -60,13 +75,23 @@ export function BottomSearchBar() {
     };
   }, [closeSearch, isOpen, isSplitViewActive]);
 
+  useEffect(() => {
+    if (!isBarExpanded) {
+      return;
+    }
+
+    window.requestAnimationFrame(() => {
+      inputRef.current?.focus();
+    });
+  }, [isBarExpanded]);
+
   return (
     <>
       {isOpen && !isSplitViewActive ? (
         <button
           aria-label="Close search"
           className="search-backdrop"
-          onClick={closeSearch}
+          onClick={handleCloseSearch}
           type="button"
         />
       ) : null}
@@ -106,7 +131,7 @@ export function BottomSearchBar() {
                 </div>
                 <div className="search-workspace-secondary-actions">
                   <SearchCustomizationMenu />
-                  <button className="search-close-button" onClick={closeSearch} type="button">
+                  <button className="search-close-button" onClick={handleCloseSearch} type="button">
                     Close
                   </button>
                 </div>
@@ -137,11 +162,32 @@ export function BottomSearchBar() {
           )}
           </section>
         ) : null}
-        <div className="search-bar" role="search">
+        <div
+          className={`search-bar${shouldCollapseBar ? " search-bar-collapsed" : ""}`}
+          role="search"
+        >
           <label className="sr-only" htmlFor={inputId}>
             Search books, references, Strong’s numbers, Greek lemmas, inflected forms, glosses,
             phrases, or use Topic: or Greek:
           </label>
+          <button
+            aria-label={shouldCollapseBar ? "Open search" : "Search"}
+            className="search-icon-button"
+            onClick={expandBar}
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              className="search-icon"
+              fill="none"
+              height="18"
+              viewBox="0 0 18 18"
+              width="18"
+            >
+              <circle cx="8" cy="8" r="4.75" stroke="currentColor" strokeWidth="1.5" />
+              <path d="m11.5 11.5 3.75 3.75" stroke="currentColor" strokeLinecap="round" strokeWidth="1.5" />
+            </svg>
+          </button>
           <input
             aria-controls={trayId}
             aria-expanded={isSplitViewActive ? true : isOpen}
@@ -151,7 +197,10 @@ export function BottomSearchBar() {
             onChange={(event) => {
               setQuery(event.target.value);
             }}
-            onFocus={openSearch}
+            onFocus={() => {
+              setIsBarExpanded(true);
+              openSearch();
+            }}
             placeholder="Search references, Strong’s, Greek lemmas/forms, glosses, or Topic:/Greek:"
             ref={inputRef}
             type="search"
