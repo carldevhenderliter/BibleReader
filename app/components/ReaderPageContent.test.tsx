@@ -231,6 +231,7 @@ describe("ReaderPageContent", () => {
     expect(screen.queryByRole("heading", { name: "Genesis 1" })).not.toBeInTheDocument();
     expect(screen.getByText("In the beginning, God created the heavens and the earth.")).toBeInTheDocument();
     expect(screen.getAllByText("World English").length).toBeGreaterThan(0);
+    expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute("href", "/");
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     expect(screen.getByRole("link", { name: /Whole book view/i })).toHaveAttribute(
       "href",

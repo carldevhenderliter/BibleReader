@@ -781,6 +781,7 @@ describe("FathersReaderContent", () => {
 
     expect(scrollIntoView).toHaveBeenCalled();
     expect(screen.getByRole("button", { name: "Menu" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute("href", "/");
     expect(screen.getByRole("link", { name: "Library" })).toHaveAttribute("href", "/fathers");
 
     Element.prototype.scrollIntoView = originalScrollIntoView;

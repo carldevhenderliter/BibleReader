@@ -189,6 +189,9 @@ export function ReaderControls({
         </div>
         <div className="reader-controls-actions">
           {leadingActions}
+          <Link className="reader-inline-action reader-settings-link" href="/">
+            Home
+          </Link>
           <button
             aria-controls="reader-settings-panel"
             aria-expanded={isPanelOpen}
