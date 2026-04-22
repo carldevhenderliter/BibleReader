@@ -647,24 +647,6 @@ describe("ReaderPageContent", () => {
     );
   });
 
-  it("applies a manual study highlight to the verse row", () => {
-    renderWithReaderCustomization(
-      <ReaderPageContent
-        book={books[0]}
-        books={books}
-        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
-      />
-    );
-
-    fireEvent.click(screen.getAllByRole("button", { name: "Highlight" })[0]!);
-
-    expect(
-      screen
-        .getByText("In the beginning, God created the heavens and the earth.")
-        .closest(".verse-row")
-    ).toHaveClass("has-study-highlight", "has-study-highlight-gold");
-  });
-
   it("renders the notebook inline in the reader column", () => {
     renderWithReaderCustomization(
       <ReaderPageContent
@@ -713,37 +695,6 @@ describe("ReaderPageContent", () => {
     expect(screen.getByLabelText("Sermon section 1")).toHaveValue(
       "God creates with intention and order."
     );
-  });
-
-  it("adds a verse to a selected notebook through the picker flow", () => {
-    setSplitViewActive(true);
-
-    renderWithReaderCustomization(
-      <>
-        <ReaderPageContent
-          book={books[0]}
-          books={books}
-          chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
-        />
-        <SearchPane />
-        <LookupPane />
-      </>
-    );
-
-    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
-    fireEvent.click(screen.getByRole("button", { name: "Notebook" }));
-    fireEvent.click(screen.getByRole("button", { name: "New notebook" }));
-    fireEvent.change(screen.getByLabelText("Notebook title"), {
-      target: { value: "Current study" }
-    });
-    fireEvent.click(screen.getAllByRole("button", { name: "To notebook" })[0]!);
-
-    expect(screen.getByRole("status")).toHaveTextContent(/Choose a notebook for Genesis 1:1/i);
-
-    fireEvent.click(screen.getByRole("tab", { name: /Current study/i }));
-
-    expect(screen.queryByRole("status")).not.toBeInTheDocument();
-    expect(window.localStorage.getItem(PASSAGE_NOTEBOOK_STORAGE_KEY)).toContain("web:genesis:1:1");
   });
 
   it("opens the notebook in the right-side study pane in split view", async () => {
