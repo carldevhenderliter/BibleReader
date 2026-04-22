@@ -22,6 +22,8 @@ type GreekVerseTextContentProps = {
         selectedFormMorphology?: string | null;
         selectedFormDecodedMorphology?: string | null;
         matchedQuery?: string | null;
+        transliteration?: string | null;
+        gloss?: string | null;
       }
     ): void;
   }>;
@@ -74,7 +76,10 @@ export function GreekVerseTextContent({
                       selectedForm: token.surface,
                       selectedFormMorphology: token.morphology ?? null,
                       selectedFormDecodedMorphology: token.decodedMorphology ?? null,
-                      matchedQuery: token.surface
+                      matchedQuery: token.surface,
+                      transliteration:
+                        token.transliteration ?? transliterateGreekSurface(token.surface),
+                      gloss: token.gloss ?? null
                     });
                   }}
                   type="button"
@@ -123,7 +128,10 @@ export function GreekVerseTextContent({
                     selectedForm: token.surface,
                     selectedFormMorphology: token.morphology ?? null,
                     selectedFormDecodedMorphology: token.decodedMorphology ?? null,
-                    matchedQuery: token.surface
+                    matchedQuery: token.surface,
+                    transliteration:
+                      token.transliteration ?? transliterateGreekSurface(token.surface),
+                    gloss: token.gloss ?? null
                   })
                 }
                 type="button"

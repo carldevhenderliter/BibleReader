@@ -6,6 +6,7 @@ import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
 import { VerseTextContent } from "@/app/components/VerseTextContent";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import {
+  buildGreekLearningQuiz,
   getGreekLemmaEntry,
   getGreekMorphologyDetails,
   getGreekVerseOccurrences,
@@ -18,6 +19,7 @@ import {
 } from "@/lib/bible/strongs";
 import type {
   BibleSearchVerseEntry,
+  GreekLearningQuiz,
   GreekInflectedForm,
   GreekLemmaEntry,
   StrongsEntry
@@ -141,6 +143,7 @@ function renderBdagArticles(entry: StrongsEntry) {
 
 export function ReaderStrongsPanel() {
   const {
+    activeGreekLearningQuizSelection,
     activeGreekSelection,
     activeStrongsLabel,
     activeStrongsNumbers,
@@ -150,51 +153,58 @@ export function ReaderStrongsPanel() {
   const [entries, setEntries] = useState<StrongsEntry[]>([]);
   const [greekEntry, setGreekEntry] = useState<GreekLemmaEntry | null>(null);
   const [greekStrongsEntry, setGreekStrongsEntry] = useState<StrongsEntry | null>(null);
+  const [greekLearningQuiz, setGreekLearningQuiz] = useState<GreekLearningQuiz | null>(null);
+  const [greekLearningQuizStatus, setGreekLearningQuizStatus] = useState<"idle" | "loading" | "loaded">("idle");
+  const [greekLearningAttempt, setGreekLearningAttempt] = useState(0);
+  const [selectedQuizOptionId, setSelectedQuizOptionId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [activeTabs, setActiveTabs] = useState<Record<string, StrongsTab>>({});
   const [bibleOccurrences, setBibleOccurrences] = useState<Record<string, BibleOccurrencesState>>({});
   const [outsideScripture, setOutsideScripture] = useState<
     Record<string, OutsideScriptureLookupState>
   >({});
+  const isGreekLearningQuizMode = activeGreekLearningQuizSelection !== null;
   const isGreekDictionaryMode = activeGreekSelection !== null;
-  const activeGreekEntryKey = activeGreekSelection?.entryKey ?? activeGreekSelection?.strongs ?? null;
+  const activeGreekModeSelection = activeGreekSelection ?? activeGreekLearningQuizSelection;
+  const activeGreekEntryKey =
+    activeGreekModeSelection?.entryKey ?? activeGreekModeSelection?.strongs ?? null;
   const activePanelTitle =
-    activeGreekSelection?.lemma ??
+    activeGreekModeSelection?.lemma ??
     activeStrongsLabel?.trim() ??
     activeStrongsNumbers[0] ??
     "Strongs details";
   const selectedGreekForm = useMemo(() => {
-    if (!greekEntry || !activeGreekSelection?.selectedForm) {
+    if (!greekEntry || !activeGreekModeSelection?.selectedForm) {
       return null;
     }
 
-    const normalizedSelectedForm = normalizeGreekFormLookupValue(activeGreekSelection.selectedForm);
+    const normalizedSelectedForm = normalizeGreekFormLookupValue(activeGreekModeSelection.selectedForm);
 
     return (
       greekEntry.forms.find(
         (form) => normalizeGreekFormLookupValue(form.form) === normalizedSelectedForm
       ) ?? null
     );
-  }, [activeGreekSelection?.selectedForm, greekEntry]);
+  }, [activeGreekModeSelection?.selectedForm, greekEntry]);
   const selectedGreekFormDetails: GreekInflectedForm | null = useMemo(() => {
     if (selectedGreekForm) {
       return selectedGreekForm;
     }
 
-    if (!activeGreekSelection?.selectedForm) {
+    if (!activeGreekModeSelection?.selectedForm) {
       return null;
     }
 
     return {
-      form: activeGreekSelection.selectedForm,
-      morphology: activeGreekSelection.selectedFormMorphology ?? "",
-      decodedMorphology: activeGreekSelection.selectedFormDecodedMorphology ?? undefined,
+      form: activeGreekModeSelection.selectedForm,
+      morphology: activeGreekModeSelection.selectedFormMorphology ?? "",
+      decodedMorphology: activeGreekModeSelection.selectedFormDecodedMorphology ?? undefined,
       definition: undefined
     };
   }, [
-    activeGreekSelection?.selectedFormDecodedMorphology,
-    activeGreekSelection?.selectedForm,
-    activeGreekSelection?.selectedFormMorphology,
+    activeGreekModeSelection?.selectedFormDecodedMorphology,
+    activeGreekModeSelection?.selectedForm,
+    activeGreekModeSelection?.selectedFormMorphology,
     selectedGreekForm
   ]);
   const selectedGreekMorphologyDetails = useMemo(() => {
@@ -209,7 +219,7 @@ export function ReaderStrongsPanel() {
   }, [selectedGreekFormDetails?.decodedMorphology, selectedGreekFormDetails?.morphology]);
 
   useEffect(() => {
-    if (!isGreekDictionaryMode) {
+    if (!isGreekDictionaryMode && !isGreekLearningQuizMode) {
       setGreekEntry(null);
       setGreekStrongsEntry(null);
       return;
@@ -231,7 +241,9 @@ export function ReaderStrongsPanel() {
 
     void Promise.all([
       getGreekLemmaEntry(activeGreekEntryKey),
-      activeGreekSelection?.strongs ? getStrongsEntry(activeGreekSelection.strongs) : Promise.resolve(null)
+      activeGreekModeSelection?.strongs
+        ? getStrongsEntry(activeGreekModeSelection.strongs)
+        : Promise.resolve(null)
     ]).then(([nextGreekEntry, nextGreekStrongsEntry]) => {
         if (isCancelled) {
           return;
@@ -251,7 +263,43 @@ export function ReaderStrongsPanel() {
     return () => {
       isCancelled = true;
     };
-  }, [activeGreekEntryKey, activeGreekSelection?.strongs, isGreekDictionaryMode]);
+  }, [
+    activeGreekEntryKey,
+    activeGreekModeSelection?.strongs,
+    isGreekDictionaryMode,
+    isGreekLearningQuizMode
+  ]);
+
+  useEffect(() => {
+    setGreekLearningAttempt(0);
+    setSelectedQuizOptionId(null);
+  }, [activeGreekLearningQuizSelection?.entryKey, activeGreekLearningQuizSelection?.selectedForm]);
+
+  useEffect(() => {
+    if (!isGreekLearningQuizMode || !activeGreekLearningQuizSelection) {
+      setGreekLearningQuiz(null);
+      setGreekLearningQuizStatus("idle");
+      return;
+    }
+
+    let isCancelled = false;
+    setGreekLearningQuizStatus("loading");
+
+    void buildGreekLearningQuiz(activeGreekLearningQuizSelection, greekLearningAttempt).then(
+      (quiz) => {
+        if (isCancelled) {
+          return;
+        }
+
+        setGreekLearningQuiz(quiz);
+        setGreekLearningQuizStatus("loaded");
+      }
+    );
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [activeGreekLearningQuizSelection, greekLearningAttempt, isGreekLearningQuizMode]);
 
   useEffect(() => {
     if (isGreekDictionaryMode) {
@@ -490,7 +538,7 @@ export function ReaderStrongsPanel() {
   function renderGreekDictionaryCard(entry: GreekLemmaEntry) {
     const strongsKey = entry.entryKey;
     const activeTab = activeTabs[strongsKey] ?? "bible";
-    const selectedFormValue = activeGreekSelection?.selectedForm ?? null;
+    const selectedFormValue = activeGreekModeSelection?.selectedForm ?? null;
     const normalizedSelectedForm = selectedFormValue
       ? normalizeGreekFormLookupValue(selectedFormValue)
       : null;
@@ -640,6 +688,116 @@ export function ReaderStrongsPanel() {
     );
   }
 
+  function renderGreekLearningQuizCard(quiz: GreekLearningQuiz) {
+    const selectedOption = selectedQuizOptionId
+      ? quiz.options.find((option) => option.id === selectedQuizOptionId) ?? null
+      : null;
+    const hasAnswered = selectedOption !== null;
+    const answeredCorrectly = selectedOption?.isCorrect === true;
+
+    return (
+      <article className="strongs-entry-card greek-learning-quiz-card" key={quiz.entry.entryKey}>
+        <div className="strongs-entry-header">
+          <span className="strongs-entry-number">{quiz.entry.strongs ?? quiz.entry.entryKey}</span>
+          <span className="strongs-entry-language">Greek learning</span>
+        </div>
+        <p className="strongs-entry-lemma greek-dictionary-lemma">{quiz.entry.lemma}</p>
+        <div className="greek-dictionary-meta-list">
+          <p className="strongs-entry-meta">
+            Form: {quiz.selectedFormValue ?? quiz.entry.lemma}
+          </p>
+          <p className="strongs-entry-meta">
+            Transliteration: {quiz.selectedTransliteration || quiz.entry.transliteration}
+          </p>
+          {selectedGreekFormDetails?.morphology ? (
+            <p className="strongs-entry-meta">
+              Morphology:{" "}
+              {selectedGreekFormDetails.decodedMorphology
+                ? `${selectedGreekFormDetails.decodedMorphology} (${selectedGreekFormDetails.morphology})`
+                : selectedGreekFormDetails.morphology}
+            </p>
+          ) : null}
+        </div>
+        <section className="greek-learning-quiz-body">
+          <p className="strongs-entry-section-label">Greek Quiz</p>
+          <p className="strongs-entry-copy greek-learning-quiz-prompt">{quiz.prompt}</p>
+          <div className="greek-learning-quiz-options">
+            {quiz.options.map((option) => {
+              const isSelected = selectedQuizOptionId === option.id;
+              const showCorrectState = hasAnswered && option.isCorrect;
+              const showWrongState = hasAnswered && isSelected && !option.isCorrect;
+
+              return (
+                <button
+                  className={`greek-learning-quiz-option${
+                    isSelected ? " is-selected" : ""
+                  }${showCorrectState ? " is-correct" : ""}${
+                    showWrongState ? " is-wrong" : ""
+                  }`}
+                  disabled={hasAnswered}
+                  key={option.id}
+                  onClick={() => setSelectedQuizOptionId(option.id)}
+                  type="button"
+                >
+                  <span>{option.label}</span>
+                  {showCorrectState ? (
+                    <span className="greek-learning-quiz-option-status">Correct</span>
+                  ) : null}
+                  {showWrongState ? (
+                    <span className="greek-learning-quiz-option-status">Not this one</span>
+                  ) : null}
+                </button>
+              );
+            })}
+          </div>
+          {hasAnswered ? (
+            <div
+              className={`greek-learning-quiz-feedback${
+                answeredCorrectly ? " is-correct" : " is-wrong"
+              }`}
+            >
+              <p className="strongs-entry-section-label">
+                {answeredCorrectly ? "Correct" : "Correct Answer"}
+              </p>
+              <p className="strongs-entry-copy">
+                {answeredCorrectly
+                  ? `${quiz.selectedFormValue ?? quiz.entry.lemma} means ${quiz.correctAnswer}.`
+                  : `${quiz.selectedFormValue ?? quiz.entry.lemma} means ${quiz.correctAnswer}, not ${selectedOption?.label}.`}
+              </p>
+            </div>
+          ) : null}
+        </section>
+        <div className="greek-learning-quiz-actions">
+          <button
+            className="reader-inline-button"
+            onClick={() =>
+              activeGreekLearningQuizSelection
+                ? openGreekDictionary({
+                    ...activeGreekLearningQuizSelection,
+                    transliteration: activeGreekLearningQuizSelection.transliteration ?? null,
+                    gloss: activeGreekLearningQuizSelection.gloss ?? null
+                  })
+                : null
+            }
+            type="button"
+          >
+            Open Dictionary
+          </button>
+          <button
+            className="reader-inline-button"
+            onClick={() => {
+              setGreekLearningAttempt((current) => current + 1);
+              setSelectedQuizOptionId(null);
+            }}
+            type="button"
+          >
+            Try Again
+          </button>
+        </div>
+      </article>
+    );
+  }
+
   function renderStrongsEntryCard(entry: StrongsEntry) {
     const activeTab = activeTabs[entry.id] ?? "bible";
 
@@ -704,21 +862,41 @@ export function ReaderStrongsPanel() {
       <div className="reader-notebook-header">
         <div>
           <p className="reader-notebook-kicker">
-            {isGreekDictionaryMode ? "Greek Dictionary" : "Strongs Study"}
+            {isGreekLearningQuizMode
+              ? "Greek Learning"
+              : isGreekDictionaryMode
+                ? "Greek Dictionary"
+                : "Strongs Study"}
           </p>
           <h3 className="reader-notebook-title">{activePanelTitle}</h3>
         </div>
       </div>
 
-      {activeStrongsNumbers.length === 0 && !activeGreekSelection ? (
+      {activeStrongsNumbers.length === 0 &&
+      !activeGreekSelection &&
+      !activeGreekLearningQuizSelection ? (
         <p className="reader-notebook-empty">
           Search for a Strong’s number, Greek lemma, inflected form, transliteration, or gloss,
           or open a tagged word to study it here.
         </p>
       ) : isLoading ? (
         <p className="reader-notebook-empty">
-          {isGreekDictionaryMode ? "Loading Greek dictionary…" : "Loading Strongs details…"}
+          {isGreekLearningQuizMode
+            ? "Loading Greek quiz…"
+            : isGreekDictionaryMode
+              ? "Loading Greek dictionary…"
+              : "Loading Strongs details…"}
         </p>
+      ) : isGreekLearningQuizMode ? (
+        greekLearningQuizStatus === "loading" ? (
+          <p className="reader-notebook-empty">Loading Greek quiz…</p>
+        ) : greekLearningQuiz ? (
+          <div className="reader-strongs-list">{renderGreekLearningQuizCard(greekLearningQuiz)}</div>
+        ) : (
+          <p className="reader-notebook-empty">
+            No Greek learning quiz is available for this selection.
+          </p>
+        )
       ) : isGreekDictionaryMode ? (
         greekEntry ? (
           <div className="reader-strongs-list">{renderGreekDictionaryCard(greekEntry)}</div>

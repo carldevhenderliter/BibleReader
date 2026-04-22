@@ -466,6 +466,37 @@ describe("ReaderPageContent", () => {
     ).toBeInTheDocument();
   });
 
+  it("opens a Greek learning quiz from chapter view when Learn Greek is enabled", async () => {
+    window.localStorage.setItem(
+      "bible-reader:customization",
+      JSON.stringify({
+        showEsvInterlinear: true
+      })
+    );
+
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={ntBooks[0]}
+        books={ntBooks}
+        chaptersByVersion={{ esv: esvNtChapter, web: esvNtChapter }}
+        esvInterlinearChapter={esvNtInterlinearChapterWithTokenGlosses}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: {
+        value: "esv"
+      }
+    });
+
+    fireEvent.click(await screen.findByRole("button", { name: "Learn Greek" }));
+    fireEvent.click(screen.getByRole("button", { name: /Βίβλος βίβλος G976/i }));
+
+    expect(await screen.findByText("Greek Learning")).toBeInTheDocument();
+    expect(await screen.findByText("Which meaning matches this word?")).toBeInTheDocument();
+  });
+
   it("renders custom verse translation editors in chapter view", () => {
     renderWithReaderCustomization(
       <ReaderPageContent

@@ -16,7 +16,7 @@ import {
   tokenizeBibleEnglishText
 } from "@/lib/bible/annotations";
 import type { EnglishUndertextAnnotation } from "@/lib/bible/types";
-import type { EsvInterlinearDisplayVerse, Verse } from "@/lib/bible/types";
+import type { EsvInterlinearDisplayVerse, GreekToken, Verse } from "@/lib/bible/types";
 
 type VerseListProps = {
   bookSlug: string;
@@ -60,6 +60,8 @@ export function VerseList({
 }: VerseListProps) {
   const { version } = useReaderVersion();
   const {
+    isGreekLearningMode,
+    openGreekLearningQuiz,
     openGreekDictionary,
     openStrongs,
   } = useReaderWorkspace();
@@ -72,6 +74,39 @@ export function VerseList({
     showGreekLemma ||
     showGreekTransliteration ||
     showGreekGloss;
+
+  function handleGreekTokenSelection(token: GreekToken) {
+    const entryKey = token.entryKey ?? token.strongs ?? token.lemma;
+
+    if (isGreekLearningMode) {
+      openGreekLearningQuiz({
+        entryKey,
+        strongs: token.strongs ?? null,
+        lemma: token.lemma,
+        label: token.lemma,
+        selectedForm: token.surface,
+        selectedFormMorphology: token.morphology ?? null,
+        selectedFormDecodedMorphology: token.decodedMorphology ?? null,
+        matchedQuery: token.surface,
+        transliteration: token.transliteration ?? null,
+        gloss: token.gloss ?? null
+      });
+      return;
+    }
+
+    openGreekDictionary({
+      entryKey,
+      strongs: token.strongs ?? null,
+      lemma: token.lemma,
+      label: token.lemma,
+      selectedForm: token.surface,
+      selectedFormMorphology: token.morphology ?? null,
+      selectedFormDecodedMorphology: token.decodedMorphology ?? null,
+      matchedQuery: token.surface,
+      transliteration: token.transliteration ?? null,
+      gloss: token.gloss ?? null
+    });
+  }
 
   useEffect(() => {
     const scrollTargetVerseNumber =
@@ -157,11 +192,22 @@ export function VerseList({
               <div className="verse-content">
                 {shouldShowVerseText || (version === "greek" && showCompanionVerseTranslation) ? (
                   <>
-                    {shouldShowVerseText
-                      ? version === "greek" && verse.greekTokens?.length ? (
+                        {shouldShowVerseText
+                          ? version === "greek" && verse.greekTokens?.length ? (
                           <GreekVerseTextContent
                             className="verse-text verse-text-greek"
-                            onOpenGreekDictionary={openGreekDictionary}
+                            onOpenGreekDictionary={(selection) => {
+                              if (isGreekLearningMode) {
+                                openGreekLearningQuiz({
+                                  ...selection,
+                                  transliteration: selection.transliteration ?? null,
+                                  gloss: selection.gloss ?? null
+                                });
+                                return;
+                              }
+
+                              openGreekDictionary(selection);
+                            }}
                             verse={verse}
                           />
                         ) : showStrongs && verse.tokens?.length ? (
@@ -260,18 +306,7 @@ export function VerseList({
                   <GreekInterlinearLine
                     bookSlug={bookSlug}
                     chapterNumber={chapterNumber}
-                    onOpenGreekDictionary={(token) =>
-                      openGreekDictionary({
-                        entryKey: token.entryKey ?? token.strongs ?? token.lemma,
-                        strongs: token.strongs ?? null,
-                        lemma: token.lemma,
-                        label: token.lemma,
-                        selectedForm: token.surface,
-                        selectedFormMorphology: token.morphology ?? null,
-                        selectedFormDecodedMorphology: token.decodedMorphology ?? null,
-                        matchedQuery: token.surface
-                      })
-                    }
+                    onOpenGreekDictionary={handleGreekTokenSelection}
                     showGloss={showGreekGloss}
                     showLemma={showGreekLemma}
                     showSurface={showGreekSurface}

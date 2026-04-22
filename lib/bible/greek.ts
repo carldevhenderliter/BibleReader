@@ -1,5 +1,7 @@
 import type {
   BibleSearchVerseEntry,
+  GreekLearningQuiz,
+  GreekLearningQuizSelection,
   GreekGlossOption,
   GreekInflectedForm,
   GreekLemmaGlossPreference,
@@ -1013,7 +1015,7 @@ function pickGreekMorphologySummaryTerms(terms: GreekMorphologyTermDetails[]) {
       terms.find((term) => term.group === "tense"),
       terms.find((term) => term.group === "voice"),
       terms.find((term) => term.group === "mood")
-    ].filter((term): term is GreekMorphologyTermDetails => term !== undefined);
+    ].filter((term): term is GreekMorphologyTermDetails => term != null);
   }
 
   return [
@@ -1021,7 +1023,7 @@ function pickGreekMorphologySummaryTerms(terms: GreekMorphologyTermDetails[]) {
     terms.find((term) => term.group === "case"),
     terms.find((term) => term.group === "number"),
     terms.find((term) => term.group === "gender")
-  ].filter((term): term is GreekMorphologyTermDetails => term !== undefined);
+  ].filter((term): term is GreekMorphologyTermDetails => term != null);
 }
 
 export function getGreekTokenOccurrenceKey(
@@ -1165,6 +1167,167 @@ export function resolveGreekTokenGloss(
     firstOption?.label ??
     ""
   );
+}
+
+function getBroadGreekPartOfSpeech(
+  token: Pick<GreekToken, "decodedMorphology" | "morphology">
+) {
+  const details = getGreekMorphologyDetails(token);
+
+  return details?.terms.find((term) => term.group === "part-of-speech")?.key ?? null;
+}
+
+function getGreekLearningGlossCandidate(entry: GreekLemmaEntry) {
+  return (
+    getPreferredSingleWordGlossCandidate(entry.shortDefinition, {
+      preferSingleMeaning: true
+    }) ??
+    getGreekGlossOptions(entry, null)[0]?.label ??
+    null
+  );
+}
+
+function isNearDuplicateGloss(left: string, right: string) {
+  const normalizedLeft = normalizeGlossValue(left);
+  const normalizedRight = normalizeGlossValue(right);
+
+  return (
+    normalizedLeft === normalizedRight ||
+    normalizedLeft.startsWith(normalizedRight) ||
+    normalizedRight.startsWith(normalizedLeft)
+  );
+}
+
+function sortGreekLearningEntries(left: GreekLemmaEntry, right: GreekLemmaEntry) {
+  if (left.strongs && right.strongs) {
+    return (
+      Number.parseInt(left.strongs.slice(1), 10) -
+      Number.parseInt(right.strongs.slice(1), 10)
+    );
+  }
+
+  return left.entryKey.localeCompare(right.entryKey);
+}
+
+export async function buildGreekLearningQuiz(
+  selection: GreekLearningQuizSelection,
+  attempt = 0
+): Promise<GreekLearningQuiz | null> {
+  const entry = await getGreekLemmaEntry(selection.entryKey);
+
+  if (!entry) {
+    return null;
+  }
+
+  const selectedFormValue = selection.selectedForm ?? null;
+  const selectedForm = selectedFormValue ? findSelectedForm(entry, selectedFormValue) : null;
+  const correctAnswer =
+    resolveGreekTokenGloss(
+      {
+        gloss: selection.gloss ?? selectedForm?.definition ?? undefined
+      },
+      entry,
+      null,
+      null
+    ).trim() || getGreekLearningGlossCandidate(entry);
+
+  if (!correctAnswer) {
+    return null;
+  }
+
+  const partOfSpeech =
+    getBroadGreekPartOfSpeech({
+      morphology: selection.selectedFormMorphology ?? selectedForm?.morphology,
+      decodedMorphology:
+        selection.selectedFormDecodedMorphology ?? selectedForm?.decodedMorphology
+    }) ??
+    (entry.forms[0]
+      ? getBroadGreekPartOfSpeech({
+          morphology: entry.forms[0].morphology,
+          decodedMorphology: entry.forms[0].decodedMorphology
+        })
+      : null);
+
+  const searchableEntries = await loadSearchableGreekEntries();
+  const candidateEntries = searchableEntries
+    .filter((candidate) => candidate.entryKey !== entry.entryKey)
+    .sort(sortGreekLearningEntries);
+
+  const samePartOfSpeechCandidates = candidateEntries.filter((candidate) => {
+    if (!partOfSpeech) {
+      return false;
+    }
+
+    return (
+      (candidate.forms[0]
+        ? getBroadGreekPartOfSpeech({
+            morphology: candidate.forms[0].morphology,
+            decodedMorphology: candidate.forms[0].decodedMorphology
+          })
+        : null) === partOfSpeech
+    );
+  });
+
+  const seen = new Set<string>([normalizeGlossValue(correctAnswer)]);
+  const distractors: string[] = [];
+  const addDistractorsFromPool = (pool: GreekLemmaEntry[]) => {
+    for (const candidate of pool) {
+      const distractor = getGreekLearningGlossCandidate(candidate);
+
+      if (!distractor || isNearDuplicateGloss(distractor, correctAnswer)) {
+        continue;
+      }
+
+      const normalizedDistractor = normalizeGlossValue(distractor);
+
+      if (!normalizedDistractor || seen.has(normalizedDistractor)) {
+        continue;
+      }
+
+      seen.add(normalizedDistractor);
+      distractors.push(distractor);
+
+      if (distractors.length === 3) {
+        break;
+      }
+    }
+  };
+
+  addDistractorsFromPool(samePartOfSpeechCandidates);
+
+  if (distractors.length < 3) {
+    addDistractorsFromPool(candidateEntries);
+  }
+
+  if (distractors.length < 3) {
+    return null;
+  }
+
+  const correctIndex = ((attempt % 4) + 4) % 4;
+  const options = distractors.slice(0, 3).map((label, index) => ({
+    id: `distractor:${index}:${normalizeGlossValue(label)}`,
+    label,
+    isCorrect: false
+  }));
+
+  options.splice(correctIndex, 0, {
+    id: `correct:${normalizeGlossValue(correctAnswer)}`,
+    label: correctAnswer,
+    isCorrect: true
+  });
+
+  return {
+    entry,
+    selectedForm,
+    selectedFormValue,
+    selectedTransliteration:
+      selection.transliteration?.trim() ||
+      (selectedFormValue ? transliterateGreekSurface(selectedFormValue) : "") ||
+      entry.transliteration,
+    prompt: "Which meaning matches this word?",
+    correctAnswer,
+    options
+  };
 }
 
 export async function getGreekLemmaEntry(strongsNumber: string) {

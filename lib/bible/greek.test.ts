@@ -1,4 +1,5 @@
 import {
+  buildGreekLearningQuiz,
   getGreekGlossOptions,
   getGreekLemmaEntry,
   getGreekMorphologyDetails,
@@ -218,5 +219,46 @@ describe("Greek dictionary lookup", () => {
     expect(transliterateGreekSurface("ἐγένετο")).toBe("egeneto");
     expect(transliterateGreekSurface("Ἰούδας")).toBe("Ioudas");
     expect(transliterateGreekSurface("Ἀγαπητοί")).toBe("Agapētoi");
+  });
+
+  it("builds a Greek learning quiz with four options and a token-gloss correct answer", async () => {
+    const quiz = await buildGreekLearningQuiz({
+      entryKey: "G746",
+      strongs: "G746",
+      lemma: "ἀρχή",
+      selectedForm: "ἀρχῆς",
+      selectedFormMorphology: "N-GSF",
+      selectedFormDecodedMorphology: "noun genitive singular feminine",
+      transliteration: "archēs",
+      gloss: "of the beginning"
+    });
+
+    expect(quiz).toMatchObject({
+      entry: expect.objectContaining({
+        lemma: "ἀρχή",
+        strongs: "G746"
+      }),
+      selectedFormValue: "ἀρχῆς",
+      selectedTransliteration: "archēs",
+      prompt: "Which meaning matches this word?",
+      correctAnswer: "beginning"
+    });
+    expect(quiz?.options).toHaveLength(4);
+    expect(quiz?.options.filter((option) => option.isCorrect)).toHaveLength(1);
+    expect(quiz?.options.map((option) => option.label)).toContain("beginning");
+  });
+
+  it("falls back to lemma glosses when a quiz selection has no token gloss", async () => {
+    const quiz = await buildGreekLearningQuiz({
+      entryKey: "G746",
+      strongs: "G746",
+      lemma: "ἀρχή",
+      selectedForm: "ἀρχῇ",
+      selectedFormMorphology: "N-DSF",
+      selectedFormDecodedMorphology: "noun dative singular feminine"
+    });
+
+    expect(quiz?.correctAnswer).toBe("beginning");
+    expect(new Set(quiz?.options.map((option) => option.label)).size).toBe(4);
   });
 });

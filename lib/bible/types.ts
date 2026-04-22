@@ -360,6 +360,37 @@ export type GreekDictionarySelection = {
   selectedFormMorphology?: string | null;
   selectedFormDecodedMorphology?: string | null;
   matchedQuery?: string | null;
+  transliteration?: string | null;
+  gloss?: string | null;
+};
+
+export type GreekLearningQuizSelection = {
+  entryKey: string;
+  strongs?: string | null;
+  lemma: string;
+  label?: string | null;
+  selectedForm?: string | null;
+  selectedFormMorphology?: string | null;
+  selectedFormDecodedMorphology?: string | null;
+  matchedQuery?: string | null;
+  transliteration?: string | null;
+  gloss?: string | null;
+};
+
+export type GreekLearningQuizOption = {
+  id: string;
+  label: string;
+  isCorrect: boolean;
+};
+
+export type GreekLearningQuiz = {
+  entry: GreekLemmaEntry;
+  selectedForm?: GreekInflectedForm | null;
+  selectedFormValue?: string | null;
+  selectedTransliteration: string;
+  prompt: string;
+  correctAnswer: string;
+  options: GreekLearningQuizOption[];
 };
 
 export type BibleSearchGreekLemmaResult = {

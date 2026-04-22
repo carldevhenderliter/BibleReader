@@ -121,8 +121,17 @@ function LazyFathersSegmentSection({
 export function FathersReaderContent({ payload, works }: FathersReaderContentProps) {
   const { isPanelOpen, settings } = useReaderCustomization();
   const { isSplitViewActive } = useLookup();
-  const { activeUtilityPane, openGreekDictionary } = useReaderWorkspace();
+  const {
+    activeUtilityPane,
+    isGreekLearningMode,
+    openGreekDictionary,
+    openGreekLearningQuiz,
+    setIsGreekLearningMode
+  } = useReaderWorkspace();
   const hasGreekReaderAid = payload.segments.some((segment) => segment.greek.trim().length > 0);
+  const hasGreekLearningSurface = payload.segments.some((segment) =>
+    Boolean(segment.greekLexicalTokens?.length)
+  );
   const isNa1AnnotationWork = isNa1GreekAnnotationWork(payload.work);
   const [activeSectionId, setActiveSectionId] = useState(payload.segments[0]?.id ?? "");
   const [annotationMode, setAnnotationMode] = useState(false);
@@ -353,6 +362,21 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
     </>
   ) : null;
 
+  const trailingActions = (
+    <>
+      {hasGreekLearningSurface ? (
+        <button
+          className={`reader-inline-button${isGreekLearningMode ? " is-active" : ""}`}
+          onClick={() => setIsGreekLearningMode(!isGreekLearningMode)}
+          type="button"
+        >
+          {isGreekLearningMode ? "Stop Learning" : "Learn Greek"}
+        </button>
+      ) : null}
+      {annotationActions}
+    </>
+  );
+
   return (
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
       <ReaderSettingsPanel hasGreekReaderAid={hasGreekReaderAid} mode="fathers" />
@@ -379,7 +403,7 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
                 mode="fathers"
                 onSectionChange={handleSectionChange}
                 sections={sectionOptions}
-                trailingActions={annotationActions}
+                trailingActions={trailingActions}
                 works={workOptions}
                 libraryHref="/fathers"
               />
@@ -411,7 +435,18 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
                 <GreekVerseTextContent
                   className="verse-text verse-text-greek fathers-segment-greek"
                   displayMode="stacked"
-                  onOpenGreekDictionary={openGreekDictionary}
+                  onOpenGreekDictionary={(selection) => {
+                    if (isGreekLearningMode) {
+                      openGreekLearningQuiz({
+                        ...selection,
+                        transliteration: selection.transliteration ?? null,
+                        gloss: selection.gloss ?? null
+                      });
+                      return;
+                    }
+
+                    openGreekDictionary(selection);
+                  }}
                   showGloss={settings.showGreekGloss}
                   showLemma={settings.showGreekLemma}
                   showSurface={settings.showGreekSurface}

@@ -194,7 +194,9 @@ export function WholeBookContent({
   const {
     activeReaderPane,
     activeUtilityPane,
+    isGreekLearningMode,
     setActiveReaderPane,
+    setIsGreekLearningMode,
     setActiveStudyVerseNumber,
     syncCurrentChapterData
   } = useReaderWorkspace();
@@ -252,6 +254,17 @@ export function WholeBookContent({
     chapters[0] ??
     null;
   const isOldTestament = book.testament === "Old";
+  const hasGreekLearningSurface =
+    (version === "greek" &&
+      chapters.some((chapter) =>
+        chapter.verses.some((verse) => Boolean(verse.greekTokens?.length))
+      )) ||
+    (showEsvInterlinear &&
+      chapters.some((chapter) =>
+        chapter.verses.some((verse) =>
+          Boolean(interlinearByChapter?.get(chapter.chapterNumber)?.[verse.number]?.tokens?.length)
+        )
+      ));
   const hasBibleGreekAnnotationSurface =
     (version === "greek" &&
       chapters.some((chapter) =>
@@ -336,6 +349,15 @@ export function WholeBookContent({
                         type="button"
                       >
                         {annotationMode ? "Done annotating" : "Annotate Greek"}
+                      </button>
+                    ) : null}
+                    {hasGreekLearningSurface ? (
+                      <button
+                        className={`reader-inline-button${isGreekLearningMode ? " is-active" : ""}`}
+                        onClick={() => setIsGreekLearningMode(!isGreekLearningMode)}
+                        type="button"
+                      >
+                        {isGreekLearningMode ? "Stop Learning" : "Learn Greek"}
                       </button>
                     ) : null}
                     {isSplitViewActive ? (

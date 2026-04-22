@@ -584,6 +584,41 @@ describe("WholeBookContent", () => {
     expect(screen.getByRole("button", { name: "Add Greek undertext for Jude" })).toBeInTheDocument();
   });
 
+  it("opens a Greek learning quiz from whole-book view when Learn Greek is enabled", async () => {
+    window.localStorage.setItem(
+      "bible-reader:customization",
+      JSON.stringify({
+        showEsvInterlinear: true
+      })
+    );
+
+    renderWithReaderCustomization(
+      <>
+        <WholeBookContent
+          book={books[0]}
+          books={books}
+          chaptersByVersion={{ esv: chapters, web: chapters }}
+          esvInterlinearBook={ntInterlinearBookWithTokenGlosses}
+        />
+        <SearchPane />
+        <LookupPane />
+      </>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: {
+        value: "esv"
+      }
+    });
+
+    fireEvent.click(await screen.findByRole("button", { name: "Learn Greek" }));
+    fireEvent.click(screen.getByRole("button", { name: /Ἰούδας Ἰούδας G2455/i }));
+
+    expect(await screen.findByText("Greek Learning")).toBeInTheDocument();
+    expect(await screen.findByText("Which meaning matches this word?")).toBeInTheDocument();
+  });
+
   it("renders custom verse translation editors in whole-book view", () => {
     renderWithReaderCustomization(
       <>

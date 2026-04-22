@@ -272,6 +272,7 @@ describe("FathersReaderContent", () => {
     expect(screen.getByText("Ē")).toBeInTheDocument();
     expect(screen.getByText("assembly")).toBeInTheDocument();
     expect(screen.getByText("The church.")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Learn Greek" })).toBeInTheDocument();
   });
 
   it("opens the Greek dictionary when a Fathers token is clicked", async () => {
@@ -284,6 +285,16 @@ describe("FathersReaderContent", () => {
     });
 
     expect(screen.getByText("Transliteration: ekklēsia")).toBeInTheDocument();
+  });
+
+  it("opens a Greek learning quiz when Learn Greek is enabled for Fathers text", async () => {
+    renderFathersReader();
+
+    fireEvent.click(screen.getByRole("button", { name: "Learn Greek" }));
+    fireEvent.click(screen.getByRole("button", { name: /ἐκκλησία ἐκκλησία G1577/i }));
+
+    expect(await screen.findByText("Greek Learning")).toBeInTheDocument();
+    expect(await screen.findByText("Which meaning matches this word?")).toBeInTheDocument();
   });
 
   it("renders English-only Fathers works without Greek token stacks", () => {
@@ -299,6 +310,7 @@ describe("FathersReaderContent", () => {
     );
     expect(screen.queryByRole("button", { name: /G1577/i })).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Annotate Greek" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Learn Greek" })).not.toBeInTheDocument();
   });
 
   it("can place each Fathers sentence on its own line", async () => {
