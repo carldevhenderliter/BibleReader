@@ -1177,6 +1177,68 @@ function getBroadGreekPartOfSpeech(
   return details?.terms.find((term) => term.group === "part-of-speech")?.key ?? null;
 }
 
+const GREEK_QUIZ_TYPED_STOP_WORDS = new Set([
+  "a",
+  "an",
+  "and",
+  "as",
+  "by",
+  "for",
+  "in",
+  "of",
+  "or",
+  "the",
+  "that",
+  "thing",
+  "to",
+  "with"
+]);
+
+export function normalizeGreekQuizAnswer(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/[’']/g, "")
+    .replace(/[^a-z0-9\s]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+export function getAcceptedGreekQuizAnswers(correctAnswer: string) {
+  const answers = new Set<string>();
+  const normalizedFullAnswer = normalizeGreekQuizAnswer(correctAnswer);
+
+  if (normalizedFullAnswer) {
+    answers.add(normalizedFullAnswer);
+  }
+
+  for (const part of correctAnswer.split(/[;,]|\s+or\s+/i)) {
+    const normalizedPart = normalizeGreekQuizAnswer(part);
+
+    if (normalizedPart) {
+      answers.add(normalizedPart);
+    }
+
+    const words = normalizedPart
+      .split(" ")
+      .filter((word) => word.length > 2 && !GREEK_QUIZ_TYPED_STOP_WORDS.has(word));
+
+    for (const word of words) {
+      answers.add(word);
+    }
+  }
+
+  return answers;
+}
+
+export function isTypedGreekQuizAnswerCorrect(answer: string, correctAnswer: string) {
+  const normalizedAnswer = normalizeGreekQuizAnswer(answer);
+
+  return (
+    normalizedAnswer.length > 0 &&
+    getAcceptedGreekQuizAnswers(correctAnswer).has(normalizedAnswer)
+  );
+}
+
 function isReadableGreekLearningDefinition(value: string) {
   const normalized = normalizeGlossValue(value);
 

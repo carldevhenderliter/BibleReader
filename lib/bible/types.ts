@@ -356,6 +356,7 @@ export type GreekDictionarySelection = {
   strongs?: string | null;
   lemma: string;
   label?: string | null;
+  occurrenceKey?: string | null;
   selectedForm?: string | null;
   selectedFormMorphology?: string | null;
   selectedFormDecodedMorphology?: string | null;
@@ -369,6 +370,7 @@ export type GreekLearningQuizSelection = {
   strongs?: string | null;
   lemma: string;
   label?: string | null;
+  occurrenceKey?: string | null;
   selectedForm?: string | null;
   selectedFormMorphology?: string | null;
   selectedFormDecodedMorphology?: string | null;

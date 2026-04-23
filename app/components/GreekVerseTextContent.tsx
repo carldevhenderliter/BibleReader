@@ -1,5 +1,7 @@
 "use client";
 
+import { GreekInlineQuizAnswer } from "@/app/components/GreekInlineQuizAnswer";
+import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { transliterateGreekSurface } from "@/lib/bible/greek";
 import type { Verse } from "@/lib/bible/types";
 
@@ -18,6 +20,7 @@ type GreekVerseTextContentProps = {
         strongs?: string | null;
         lemma: string;
         label?: string | null;
+        occurrenceKey?: string | null;
         selectedForm?: string | null;
         selectedFormMorphology?: string | null;
         selectedFormDecodedMorphology?: string | null;
@@ -39,6 +42,8 @@ export function GreekVerseTextContent({
   showGloss = true,
   onOpenGreekDictionary
 }: GreekVerseTextContentProps) {
+  const { activeGreekLearningQuizSelection, isGreekLearningMode } = useReaderWorkspace();
+
   if (!verse) {
     return <p className={className ?? "verse-text verse-text-greek"} lang="el" />;
   }
@@ -57,6 +62,7 @@ export function GreekVerseTextContent({
         <div className="verse-interlinear verse-compare-token-line">
           {verse.greekTokens.map((token, index) => {
             const entryKey = token.entryKey ?? token.strongs ?? null;
+            const occurrenceKey = token.occurrenceKey ?? `greek:${verse.number}:${index}`;
 
             return (
               <span className="verse-greek-token-wrap verse-compare-token-wrap" key={`${verse.number}:${index}:${token.surface}`}>
@@ -73,6 +79,7 @@ export function GreekVerseTextContent({
                       strongs: token.strongs ?? null,
                       lemma: token.lemma,
                       label: token.lemma,
+                      occurrenceKey,
                       selectedForm: token.surface,
                       selectedFormMorphology: token.morphology ?? null,
                       selectedFormDecodedMorphology: token.decodedMorphology ?? null,
@@ -101,6 +108,10 @@ export function GreekVerseTextContent({
                     <span className="verse-greek-gloss verse-compare-token-gloss">{token.gloss}</span>
                   ) : null}
                 </button>
+                {isGreekLearningMode &&
+                activeGreekLearningQuizSelection?.occurrenceKey === occurrenceKey ? (
+                  <GreekInlineQuizAnswer selection={activeGreekLearningQuizSelection} />
+                ) : null}
               </span>
             );
           })}
@@ -110,9 +121,10 @@ export function GreekVerseTextContent({
   }
 
   return (
-    <p className={className ?? "verse-text verse-text-greek"} lang="el">
+    <div className={className ?? "verse-text verse-text-greek"} lang="el">
       {verse.greekTokens.map((token, index) => {
         const entryKey = token.entryKey ?? token.strongs ?? null;
+        const occurrenceKey = token.occurrenceKey ?? `greek:${verse.number}:${index}`;
 
         return (
           <span className="verse-greek-inline-wrap" key={`${verse.number}:${index}:${token.surface}`}>
@@ -125,6 +137,7 @@ export function GreekVerseTextContent({
                     strongs: token.strongs ?? null,
                     lemma: token.lemma,
                     label: token.lemma,
+                    occurrenceKey,
                     selectedForm: token.surface,
                     selectedFormMorphology: token.morphology ?? null,
                     selectedFormDecodedMorphology: token.decodedMorphology ?? null,
@@ -146,9 +159,13 @@ export function GreekVerseTextContent({
                 {token.trailingPunctuation}
               </span>
             ) : null}
+            {isGreekLearningMode &&
+            activeGreekLearningQuizSelection?.occurrenceKey === occurrenceKey ? (
+              <GreekInlineQuizAnswer selection={activeGreekLearningQuizSelection} />
+            ) : null}
           </span>
         );
       })}
-    </p>
+    </div>
   );
 }

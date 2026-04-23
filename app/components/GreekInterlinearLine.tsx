@@ -2,7 +2,9 @@
 
 import { useEffect, useMemo, useState } from "react";
 
+import { GreekInlineQuizAnswer } from "@/app/components/GreekInlineQuizAnswer";
 import { useGreekGlossOverrides } from "@/app/components/GreekGlossOverridesProvider";
+import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import {
   getGreekGlossOptions,
   getGreekLemmaEntry,
@@ -38,6 +40,7 @@ export function GreekInterlinearLine({
   showTransliteration = true,
   showGloss = true
 }: GreekInterlinearLineProps) {
+  const { activeGreekLearningQuizSelection, isGreekLearningMode } = useReaderWorkspace();
   const {
     clearLemmaDefault,
     clearOverride,
@@ -266,7 +269,7 @@ export function GreekInterlinearLine({
               <button
                 aria-label={`${token.surface} ${token.lemma} ${token.strongs ?? ""}`.trim()}
                 className="verse-greek-token"
-                onClick={() => onOpenGreekDictionary(token)}
+                onClick={() => onOpenGreekDictionary({ ...token, occurrenceKey })}
                 type="button"
               >
                 {showSurface ? (
@@ -446,6 +449,10 @@ export function GreekInterlinearLine({
                     </div>
                   ) : null}
                 </>
+              ) : null}
+              {isGreekLearningMode &&
+              activeGreekLearningQuizSelection?.occurrenceKey === occurrenceKey ? (
+                <GreekInlineQuizAnswer selection={activeGreekLearningQuizSelection} />
               ) : null}
             </span>
             {token.trailingPunctuation ? (

@@ -493,8 +493,17 @@ describe("ReaderPageContent", () => {
     fireEvent.click(await screen.findByRole("button", { name: "Learn Greek" }));
     fireEvent.click(screen.getByRole("button", { name: /Βίβλος βίβλος G976/i }));
 
-    expect(await screen.findByText("Greek Learning")).toBeInTheDocument();
-    expect(await screen.findByText("Which meaning matches this word?")).toBeInTheDocument();
+    const inlineAnswer = await screen.findByLabelText("Type meaning");
+
+    expect(inlineAnswer).toBeInTheDocument();
+    fireEvent.change(inlineAnswer, {
+      target: {
+        value: "book"
+      }
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Check" }));
+
+    expect(await screen.findByText("Correct")).toBeInTheDocument();
   });
 
   it("renders custom verse translation editors in chapter view", () => {

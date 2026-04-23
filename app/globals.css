@@ -2601,6 +2601,111 @@ button.fathers-annotation-anchor:focus-visible {
   background: rgba(224, 107, 107, 0.12);
 }
 
+.greek-inline-quiz,
+.greek-inline-quiz-status {
+  display: grid;
+  gap: 0.35rem;
+  width: min(18rem, 82vw);
+  margin-top: 0.42rem;
+  padding: 0.58rem;
+  border: 1px solid rgba(var(--reader-accent-rgb), 0.2);
+  border-radius: 0.85rem;
+  background: rgba(5, 10, 20, 0.88);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.26);
+  color: rgba(255, 255, 255, 0.9);
+  font-family: var(--reader-ui-font);
+  font-size: 0.78rem;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.greek-inline-quiz-status {
+  margin-bottom: 0;
+}
+
+.greek-inline-quiz-label {
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.greek-inline-quiz-row {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.greek-inline-quiz-input {
+  min-width: 0;
+  flex: 1 1 auto;
+  padding: 0.48rem 0.55rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.62rem;
+  background: rgba(255, 255, 255, 0.055);
+  color: rgba(255, 255, 255, 0.94);
+  outline: none;
+}
+
+.greek-inline-quiz-input:focus-visible {
+  border-color: rgba(var(--reader-accent-rgb), 0.36);
+  box-shadow: 0 0 0 3px rgba(var(--reader-accent-rgb), 0.1);
+}
+
+.greek-inline-quiz-button {
+  min-height: 2rem;
+  padding: 0.42rem 0.58rem;
+  border: 1px solid rgba(var(--reader-accent-rgb), 0.24);
+  border-radius: 0.62rem;
+  background: rgba(var(--reader-accent-rgb), 0.1);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.greek-inline-quiz-button:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.greek-inline-quiz-feedback {
+  display: grid;
+  gap: 0.18rem;
+  padding-top: 0.18rem;
+}
+
+.greek-inline-quiz-feedback p,
+.greek-inline-quiz-feedback span,
+.greek-inline-quiz-feedback small {
+  margin: 0;
+}
+
+.greek-inline-quiz-feedback p {
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.greek-inline-quiz-feedback span {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.greek-inline-quiz-feedback small {
+  max-height: 5.5rem;
+  overflow: auto;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.greek-inline-quiz.is-correct {
+  border-color: rgba(73, 194, 124, 0.42);
+}
+
+.greek-inline-quiz.is-wrong {
+  border-color: rgba(224, 107, 107, 0.42);
+}
+
 @media (max-width: 48rem) {
   .verse-interlinear {
     gap: 0.72rem 0.42rem;
