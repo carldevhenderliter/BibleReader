@@ -7,6 +7,7 @@ export type BookMeta = {
   testament: Testament;
   chapterCount: number;
   order: number;
+  compositionDate?: string;
 };
 
 export type Verse = {

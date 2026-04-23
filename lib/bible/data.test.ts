@@ -12,6 +12,9 @@ describe("bible data", () => {
     expect(kjvBooks).toHaveLength(66);
     expect(esvBooks).toHaveLength(66);
     expect(webBooks[0]?.slug).toBe("genesis");
+    expect(webBooks[0]?.compositionDate).toBeUndefined();
+    expect(webBooks.find((book) => book.slug === "matthew")?.compositionDate).toBe("c. 70–90 AD");
+    expect(kjvBooks.find((book) => book.slug === "revelation")?.compositionDate).toBe("c. 95–96 AD");
     expect(kjvBooks.at(-1)?.slug).toBe("revelation");
     expect(esvBooks[0]?.slug).toBe("genesis");
   });

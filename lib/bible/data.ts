@@ -19,11 +19,53 @@ type SourceBook = BookMeta & {
 const versionsDir = path.join(process.cwd(), "data", "bible", "versions");
 const sourceBooksPath = path.join(process.cwd(), "data", "source", "books.json");
 
+const NEW_TESTAMENT_COMPOSITION_DATES: Record<string, string> = {
+  matthew: "c. 70–90 AD",
+  mark: "c. 65–70 AD",
+  luke: "c. 70–90 AD",
+  john: "c. 90–100 AD",
+  acts: "c. 70–90 AD",
+  romans: "c. 57 AD",
+  "1-corinthians": "c. 53–55 AD",
+  "2-corinthians": "c. 55–56 AD",
+  galatians: "c. 48–55 AD",
+  ephesians: "c. 60–62 AD",
+  philippians: "c. 60–62 AD",
+  colossians: "c. 60–62 AD",
+  "1-thessalonians": "c. 50–51 AD",
+  "2-thessalonians": "c. 50–52 AD",
+  "1-timothy": "c. 62–100 AD",
+  "2-timothy": "c. 64–100 AD",
+  titus: "c. 63–100 AD",
+  philemon: "c. 60–62 AD",
+  hebrews: "c. 60–90 AD",
+  james: "c. 45–62 AD",
+  "1-peter": "c. 60–65 AD",
+  "2-peter": "c. 65–100 AD",
+  "1-john": "c. 90–100 AD",
+  "2-john": "c. 90–100 AD",
+  "3-john": "c. 90–100 AD",
+  jude: "c. 65–90 AD",
+  revelation: "c. 95–96 AD"
+};
+
+function addBookCompositionDates<T extends BookMeta>(books: T[]): T[] {
+  return books.map((book) => {
+    if (book.testament !== "New") {
+      return book;
+    }
+
+    const compositionDate = NEW_TESTAMENT_COMPOSITION_DATES[book.slug];
+
+    return compositionDate ? { ...book, compositionDate } : book;
+  });
+}
+
 const readSourceBooks = cache(async (): Promise<BookMeta[]> => {
   const file = await readFile(sourceBooksPath, "utf8");
   const books = JSON.parse(file) as SourceBook[];
 
-  return books
+  return addBookCompositionDates(books)
     .map(({ sourceKey: _sourceKey, ...book }) => book)
     .sort((left, right) => left.order - right.order);
 });
@@ -61,7 +103,7 @@ export async function getBooks(version: BibleVersion = DEFAULT_BIBLE_VERSION): P
   if (isBundledBibleVersion(version)) {
     const books = await readBundledBooksFile(version);
 
-    return [...books].sort((left, right) => left.order - right.order);
+    return addBookCompositionDates(books).sort((left, right) => left.order - right.order);
   }
 
   return readSourceBooks();

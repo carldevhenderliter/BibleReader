@@ -27,7 +27,8 @@ const books: BookMeta[] = [
     abbreviation: "Matt",
     testament: "New",
     chapterCount: 28,
-    order: 40
+    order: 40,
+    compositionDate: "c. 70–90 AD"
   }
 ];
 
@@ -72,6 +73,7 @@ describe("HomePageContent", () => {
       "href",
       "/read/matthew"
     );
+    expect(screen.getByText("c. 70–90 AD")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Open 1 Clement" })).toHaveAttribute(
       "href",
       "/fathers/1-clement"
