@@ -9,10 +9,16 @@ import {
 import type { GreekLearningQuiz, GreekLearningQuizSelection } from "@/lib/bible/types";
 
 type GreekInlineQuizAnswerProps = {
+  nextSelection?: GreekLearningQuizSelection | null;
+  onAdvance?: (selection: GreekLearningQuizSelection) => void;
   selection: GreekLearningQuizSelection;
 };
 
-export function GreekInlineQuizAnswer({ selection }: GreekInlineQuizAnswerProps) {
+export function GreekInlineQuizAnswer({
+  nextSelection = null,
+  onAdvance,
+  selection
+}: GreekInlineQuizAnswerProps) {
   const [quiz, setQuiz] = useState<GreekLearningQuiz | null>(null);
   const [status, setStatus] = useState<"loading" | "loaded">("loading");
   const [answer, setAnswer] = useState("");
@@ -39,6 +45,26 @@ export function GreekInlineQuizAnswer({ selection }: GreekInlineQuizAnswerProps)
     };
   }, [selection]);
 
+  const isAnswered = submittedAnswer !== null;
+  const isCorrect =
+    quiz !== null &&
+    submittedAnswer !== null &&
+    isTypedGreekQuizAnswerCorrect(submittedAnswer, quiz.correctAnswer);
+
+  useEffect(() => {
+    if (!isCorrect || !nextSelection || !onAdvance) {
+      return;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      onAdvance(nextSelection);
+    }, 450);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+    };
+  }, [isCorrect, nextSelection, onAdvance]);
+
   if (status === "loading") {
     return <p className="greek-inline-quiz-status">Loading quiz…</p>;
   }
@@ -46,11 +72,6 @@ export function GreekInlineQuizAnswer({ selection }: GreekInlineQuizAnswerProps)
   if (!quiz) {
     return <p className="greek-inline-quiz-status">No quiz available.</p>;
   }
-
-  const isAnswered = submittedAnswer !== null;
-  const isCorrect =
-    submittedAnswer !== null &&
-    isTypedGreekQuizAnswerCorrect(submittedAnswer, quiz.correctAnswer);
 
   return (
     <form
@@ -65,7 +86,10 @@ export function GreekInlineQuizAnswer({ selection }: GreekInlineQuizAnswerProps)
         setSubmittedAnswer(answer.trim());
       }}
     >
-      <label className="greek-inline-quiz-label" htmlFor={`greek-inline-quiz:${selection.occurrenceKey ?? selection.entryKey}`}>
+      <label
+        className="greek-inline-quiz-label"
+        htmlFor={`greek-inline-quiz:${selection.occurrenceKey ?? selection.entryKey}`}
+      >
         Type meaning
       </label>
       <div className="greek-inline-quiz-row">
@@ -90,6 +114,7 @@ export function GreekInlineQuizAnswer({ selection }: GreekInlineQuizAnswerProps)
         <div className="greek-inline-quiz-feedback">
           <p>{isCorrect ? "Correct" : "Correct answer"}</p>
           <span>{quiz.correctAnswer}</span>
+          {isCorrect && !nextSelection ? <small>Finished</small> : null}
           {!isCorrect && quiz.entry.longDefinition ? (
             <small>{quiz.entry.longDefinition}</small>
           ) : null}

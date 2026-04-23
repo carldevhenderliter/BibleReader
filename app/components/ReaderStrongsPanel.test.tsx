@@ -6,7 +6,7 @@ import { setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
 
 function StrongsHarness() {
-  const { openGreekDictionary, openGreekLearningQuiz, openStrongs } = useReaderWorkspace();
+  const { openGreekDictionary, openStrongs } = useReaderWorkspace();
 
   return (
     <>
@@ -33,24 +33,6 @@ function StrongsHarness() {
         type="button"
       >
         Open Greek Dictionary
-      </button>
-      <button
-        onClick={() =>
-          openGreekLearningQuiz({
-            entryKey: "G746",
-            strongs: "G746",
-            lemma: "ἀρχή",
-            label: "ἀρχή",
-            selectedForm: "ἀρχῆς",
-            selectedFormMorphology: "N-GSF",
-            selectedFormDecodedMorphology: "noun genitive singular feminine",
-            transliteration: "archēs",
-            gloss: "of the beginning"
-          })
-        }
-        type="button"
-      >
-        Open Greek Quiz
       </button>
       <LookupPane />
     </>
@@ -160,53 +142,10 @@ describe("ReaderStrongsPanel", () => {
     expect(selectedFormRow?.closest(".greek-dictionary-form-row")).toHaveClass("is-selected");
   });
 
-  it("renders a Greek learning quiz in the study pane and shows correction feedback", async () => {
+  it("does not render Greek learning inside the study pane", () => {
     renderWithReaderCustomization(<StrongsHarness />);
 
-    fireEvent.click(screen.getByRole("button", { name: "Open Greek Quiz" }));
-
-    const studyPane = screen.getByLabelText("Study pane");
-
-    expect(await within(studyPane).findByText("Greek Learning")).toBeInTheDocument();
-    expect(await within(studyPane).findByText("Which meaning matches this word?")).toBeInTheDocument();
-    expect(within(studyPane).queryByText("Lemma Definition")).not.toBeInTheDocument();
-
-    const options = await within(studyPane).findAllByRole("button");
-    const quizOptions = options.filter((button) =>
-      button.className.includes("greek-learning-quiz-option")
-    );
-
-    expect(quizOptions).toHaveLength(4);
-
-    const wrongOption =
-      quizOptions.find((button) => !button.textContent?.includes("beginning")) ?? null;
-
-    expect(wrongOption).not.toBeNull();
-
-    fireEvent.click(wrongOption!);
-
-    expect(await within(studyPane).findByText("Correct Answer")).toBeInTheDocument();
-    expect(within(studyPane).getByText(/means beginning/i)).toBeInTheDocument();
-    expect(within(studyPane).getByText("Lemma Definition")).toBeInTheDocument();
-
-    fireEvent.click(within(studyPane).getByRole("button", { name: "Try Again" }));
-
-    expect(await within(studyPane).findByText("Which meaning matches this word?")).toBeInTheDocument();
-    expect(within(studyPane).queryByText("Correct Answer")).not.toBeInTheDocument();
-
-    fireEvent.click(within(studyPane).getByRole("button", { name: "Type answer" }));
-    fireEvent.change(within(studyPane).getByLabelText("Type the meaning"), {
-      target: {
-        value: "beginning"
-      }
-    });
-    fireEvent.click(within(studyPane).getByRole("button", { name: "Check" }));
-
-    expect(await within(studyPane).findByText("Correct")).toBeInTheDocument();
-
-    fireEvent.click(await within(studyPane).findByRole("button", { name: "Open Dictionary" }));
-
-    expect(await within(studyPane).findByText("Greek Dictionary")).toBeInTheDocument();
-    expect(await within(studyPane).findByText("Selected Form")).toBeInTheDocument();
+    expect(screen.queryByText("Greek Learning")).not.toBeInTheDocument();
+    expect(screen.queryByText("Which meaning matches this word?")).not.toBeInTheDocument();
   });
 });

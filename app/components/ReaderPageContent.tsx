@@ -64,7 +64,6 @@ export function ReaderPageContent({
   const { isPanelOpen, settings } = useReaderCustomization();
   const { canCollapseSplitPane, collapseSplitPane, isSplitViewActive } = useLookup();
   const {
-    activeGreekLearningQuizSelection,
     activeReaderPane,
     activeUtilityPane,
     isGreekLearningMode,
@@ -88,8 +87,7 @@ export function ReaderPageContent({
   const versionBadge = getBibleVersionBadge(version);
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
-  const showStrongsInline =
-    !isSplitViewActive && activeUtilityPane === "strongs" && !activeGreekLearningQuizSelection;
+  const showStrongsInline = !isSplitViewActive && activeUtilityPane === "strongs";
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
   const [annotationMode, setAnnotationMode] = useState(false);
   const searchParams = new URLSearchParams(locationSearch);

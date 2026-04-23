@@ -6,6 +6,7 @@ import { GreekInlineQuizAnswer } from "@/app/components/GreekInlineQuizAnswer";
 import { useGreekGlossOverrides } from "@/app/components/GreekGlossOverridesProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import {
+  createGreekLearningQuizSelection,
   getGreekGlossOptions,
   getGreekLemmaEntry,
   getGreekTokenOccurrenceKey,
@@ -16,6 +17,7 @@ import type {
   EsvInterlinearDisplayVerse,
   GreekGlossOption,
   GreekLemmaEntry,
+  GreekLearningQuizSelection,
   GreekToken
 } from "@/lib/bible/types";
 
@@ -24,6 +26,8 @@ type GreekInterlinearLineProps = {
   chapterNumber: number;
   verse: EsvInterlinearDisplayVerse;
   onOpenGreekDictionary: (token: GreekToken) => void;
+  nextLearningSelections?: Record<string, GreekLearningQuizSelection | null>;
+  onAdvanceGreekLearningQuiz?: (selection: GreekLearningQuizSelection) => void;
   showSurface?: boolean;
   showLemma?: boolean;
   showTransliteration?: boolean;
@@ -34,7 +38,9 @@ export function GreekInterlinearLine({
   bookSlug,
   chapterNumber,
   verse,
+  nextLearningSelections = {},
   onOpenGreekDictionary,
+  onAdvanceGreekLearningQuiz,
   showSurface = true,
   showLemma = true,
   showTransliteration = true,
@@ -60,6 +66,10 @@ export function GreekInterlinearLine({
         const occurrenceKey =
           token.occurrenceKey ??
           getGreekTokenOccurrenceKey(bookSlug, chapterNumber, verse.number, tokenIndex);
+        const tokenWithOccurrenceKey = {
+          ...token,
+          occurrenceKey
+        };
         const tokenEntryKey = token.entryKey ?? token.strongs ?? null;
         const entry = tokenEntryKey ? entriesByKey[tokenEntryKey] ?? null : null;
         const override = getOverride(occurrenceKey);
@@ -75,8 +85,10 @@ export function GreekInterlinearLine({
 
         return {
           token,
+          tokenWithOccurrenceKey,
           tokenIndex,
           occurrenceKey,
+          learningSelection: createGreekLearningQuizSelection(tokenWithOccurrenceKey, occurrenceKey),
           entry,
           override,
           lemmaDefault,
@@ -251,8 +263,10 @@ export function GreekInterlinearLine({
       {tokenEntries.map(
         ({
           token,
+          tokenWithOccurrenceKey,
           tokenIndex,
           occurrenceKey,
+          learningSelection,
           entry,
           override,
           lemmaDefault,
@@ -269,7 +283,7 @@ export function GreekInterlinearLine({
               <button
                 aria-label={`${token.surface} ${token.lemma} ${token.strongs ?? ""}`.trim()}
                 className="verse-greek-token"
-                onClick={() => onOpenGreekDictionary({ ...token, occurrenceKey })}
+                onClick={() => onOpenGreekDictionary(tokenWithOccurrenceKey)}
                 type="button"
               >
                 {showSurface ? (
@@ -452,7 +466,11 @@ export function GreekInterlinearLine({
               ) : null}
               {isGreekLearningMode &&
               activeGreekLearningQuizSelection?.occurrenceKey === occurrenceKey ? (
-                <GreekInlineQuizAnswer selection={activeGreekLearningQuizSelection} />
+                <GreekInlineQuizAnswer
+                  nextSelection={nextLearningSelections[occurrenceKey] ?? null}
+                  onAdvance={onAdvanceGreekLearningQuiz}
+                  selection={activeGreekLearningQuizSelection ?? learningSelection}
+                />
               ) : null}
             </span>
             {token.trailingPunctuation ? (

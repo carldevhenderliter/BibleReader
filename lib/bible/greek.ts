@@ -1035,6 +1035,27 @@ export function getGreekTokenOccurrenceKey(
   return `${bookSlug}:${chapterNumber}:${verseNumber}:${tokenIndex}`;
 }
 
+export function createGreekLearningQuizSelection(
+  token: GreekToken,
+  occurrenceKey: string | null = token.occurrenceKey ?? null
+): GreekLearningQuizSelection {
+  const entryKey = token.entryKey ?? token.strongs ?? token.lemma;
+
+  return {
+    entryKey,
+    strongs: token.strongs ?? null,
+    lemma: token.lemma,
+    label: token.lemma,
+    occurrenceKey,
+    selectedForm: token.surface,
+    selectedFormMorphology: token.morphology ?? null,
+    selectedFormDecodedMorphology: token.decodedMorphology ?? null,
+    matchedQuery: token.surface,
+    transliteration: token.transliteration ?? transliterateGreekSurface(token.surface),
+    gloss: token.gloss ?? null
+  };
+}
+
 export function getGreekGlossOptions(
   entry: GreekLemmaEntry,
   tokenGloss?: string | null

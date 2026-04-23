@@ -12,6 +12,7 @@ import { useReaderCustomization } from "@/app/components/ReaderCustomizationProv
 import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
+import { createGreekLearningQuizSelection } from "@/lib/bible/greek";
 import type { EnglishUndertextAnnotation, GreekToken } from "@/lib/bible/types";
 import { saveFathersAnnotationFile } from "@/lib/fathers/annotation-save";
 import { isNa1GreekAnnotationWork } from "@/lib/fathers/annotations";
@@ -170,6 +171,37 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
         title: work.title
       })),
     [works]
+  );
+  const greekLearningSelections = useMemo(
+    () =>
+      payload.segments.flatMap(
+        (segment) =>
+          segment.greekLexicalTokens?.map((token, tokenIndex) => {
+            const greekToken = token as GreekToken;
+            const occurrenceKey = greekToken.occurrenceKey ?? `${segment.id}:${tokenIndex}`;
+
+            return createGreekLearningQuizSelection(
+              {
+                ...greekToken,
+                occurrenceKey
+              },
+              occurrenceKey
+            );
+          }) ?? []
+      ),
+    [payload.segments]
+  );
+  const nextGreekLearningSelections = useMemo(
+    () =>
+      Object.fromEntries(
+        greekLearningSelections
+          .filter((selection) => selection.occurrenceKey)
+          .map((selection, index) => [
+            selection.occurrenceKey!,
+            greekLearningSelections[index + 1] ?? null
+          ])
+      ),
+    [greekLearningSelections]
   );
 
   useEffect(() => {
@@ -454,13 +486,14 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
                 <GreekVerseTextContent
                   className="verse-text verse-text-greek fathers-segment-greek"
                   displayMode="stacked"
+                  getOccurrenceKey={(token, tokenIndex) =>
+                    token.occurrenceKey ?? `${segment.id}:${tokenIndex}`
+                  }
+                  nextLearningSelections={nextGreekLearningSelections}
+                  onAdvanceGreekLearningQuiz={openGreekLearningQuiz}
                   onOpenGreekDictionary={(selection) => {
                     if (isGreekLearningMode) {
-                      openGreekLearningQuiz({
-                        ...selection,
-                        transliteration: selection.transliteration ?? null,
-                        gloss: selection.gloss ?? null
-                      });
+                      openGreekLearningQuiz(selection);
                       return;
                     }
 

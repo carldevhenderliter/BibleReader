@@ -293,8 +293,9 @@ describe("FathersReaderContent", () => {
     fireEvent.click(screen.getByRole("button", { name: "Learn Greek" }));
     fireEvent.click(screen.getByRole("button", { name: /ἐκκλησία ἐκκλησία G1577/i }));
 
-    expect(await screen.findByText("Greek Learning")).toBeInTheDocument();
-    expect(await screen.findByText("Which meaning matches this word?")).toBeInTheDocument();
+    expect(await screen.findByLabelText("Type meaning")).toBeInTheDocument();
+    expect(screen.queryByText("Greek Learning")).not.toBeInTheDocument();
+    expect(screen.queryByText("Which meaning matches this word?")).not.toBeInTheDocument();
   });
 
   it("renders English-only Fathers works without Greek token stacks", () => {

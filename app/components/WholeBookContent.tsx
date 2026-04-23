@@ -20,12 +20,17 @@ import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { VerseList } from "@/app/components/VerseList";
+import {
+  createGreekLearningQuizSelection,
+  getGreekTokenOccurrenceKey
+} from "@/lib/bible/greek";
 import type {
   BookMeta,
   BundledBookChapterMap,
   Chapter,
   EsvInterlinearDisplayChapter,
-  EsvInterlinearDisplayVerse
+  EsvInterlinearDisplayVerse,
+  GreekLearningQuizSelection
 } from "@/lib/bible/types";
 import { getBibleVersionBadge } from "@/lib/bible/version";
 
@@ -71,6 +76,7 @@ type LazyBookChapterSectionProps = {
   showGreekTransliteration: boolean;
   showStrongs: boolean;
   showVerseText: boolean;
+  learningNextSelections: Record<string, GreekLearningQuizSelection | null>;
   annotationMode: boolean;
   version: string;
 };
@@ -90,6 +96,7 @@ function LazyBookChapterSection({
   showGreekTransliteration,
   showStrongs,
   showVerseText,
+  learningNextSelections,
   annotationMode,
   version
 }: LazyBookChapterSectionProps) {
@@ -154,6 +161,7 @@ function LazyBookChapterSection({
           highlightedVerseNumber={highlightedVerseNumber}
           highlightedVerseRange={highlightedVerseRange}
           interlinearVerseMap={interlinearVerseMap}
+          learningNextSelections={learningNextSelections}
           key={`${version}:${bookSlug}:${chapter.chapterNumber}`}
           annotationMode={annotationMode}
           showCompanionVerseTranslation={showCompanionVerseTranslation}
@@ -192,7 +200,6 @@ export function WholeBookContent({
   const { isPanelOpen, settings } = useReaderCustomization();
   const { canCollapseSplitPane, collapseSplitPane, isSplitViewActive } = useLookup();
   const {
-    activeGreekLearningQuizSelection,
     activeReaderPane,
     activeUtilityPane,
     isGreekLearningMode,
@@ -219,8 +226,7 @@ export function WholeBookContent({
   const versionBadge = getBibleVersionBadge(version);
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
-  const showStrongsInline =
-    !isSplitViewActive && activeUtilityPane === "strongs" && !activeGreekLearningQuizSelection;
+  const showStrongsInline = !isSplitViewActive && activeUtilityPane === "strongs";
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
   const [annotationMode, setAnnotationMode] = useState(false);
   const searchParams = new URLSearchParams(locationSearch);
@@ -280,6 +286,47 @@ export function WholeBookContent({
           Boolean(interlinearByChapter?.get(chapter.chapterNumber)?.[verse.number]?.tokens?.length)
         )
       ));
+  const greekLearningSelections = chapters.flatMap((chapter) =>
+    chapter.verses.flatMap((verse) => {
+      const greekVersionInterlinearVerse =
+        version === "greek" && verse.greekTokens?.length
+          ? {
+              number: verse.number,
+              baseGreek: verse.text,
+              greek: verse.text,
+              tokens: verse.greekTokens
+            }
+          : null;
+      const activeGreekVerse =
+        greekVersionInterlinearVerse ??
+        interlinearByChapter?.get(chapter.chapterNumber)?.[verse.number] ??
+        null;
+
+      return (
+        activeGreekVerse?.tokens?.map((token, tokenIndex) => {
+          const occurrenceKey =
+            token.occurrenceKey ??
+            getGreekTokenOccurrenceKey(book.slug, chapter.chapterNumber, verse.number, tokenIndex);
+
+          return createGreekLearningQuizSelection(
+            {
+              ...token,
+              occurrenceKey
+            },
+            occurrenceKey
+          );
+        }) ?? []
+      );
+    })
+  );
+  const nextGreekLearningSelections = Object.fromEntries(
+    greekLearningSelections
+      .filter((selection) => selection.occurrenceKey)
+      .map((selection, index) => [
+        selection.occurrenceKey!,
+        greekLearningSelections[index + 1] ?? null
+      ])
+  );
 
   useEffect(() => {
     syncCurrentChapterData(book.slug, focusedChapter?.chapterNumber ?? 1, null);
@@ -451,6 +498,7 @@ export function WholeBookContent({
                 showGreekTransliteration={settings.showGreekTransliteration}
                 showStrongs={showStrongs}
                 showVerseText={settings.showVerseText}
+                learningNextSelections={nextGreekLearningSelections}
                 annotationMode={annotationMode}
                 version={version}
               />

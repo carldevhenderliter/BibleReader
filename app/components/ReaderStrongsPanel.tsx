@@ -6,11 +6,9 @@ import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
 import { VerseTextContent } from "@/app/components/VerseTextContent";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import {
-  buildGreekLearningQuiz,
   getGreekLemmaEntry,
   getGreekMorphologyDetails,
   getGreekVerseOccurrences,
-  isTypedGreekQuizAnswerCorrect,
   normalizeGreekFormLookupValue
 } from "@/lib/bible/greek";
 import {
@@ -20,7 +18,6 @@ import {
 } from "@/lib/bible/strongs";
 import type {
   BibleSearchVerseEntry,
-  GreekLearningQuiz,
   GreekInflectedForm,
   GreekLemmaEntry,
   StrongsEntry
@@ -40,7 +37,6 @@ type BibleOccurrencesState = {
 };
 
 type StrongsTab = "bible" | "bdag" | "outside-bible";
-type GreekLearningAnswerMode = "multiple-choice" | "typed";
 
 function getAvailableTabs(entry: StrongsEntry): StrongsTab[] {
   const tabs: StrongsTab[] = ["bible"];
@@ -145,7 +141,6 @@ function renderBdagArticles(entry: StrongsEntry) {
 
 export function ReaderStrongsPanel() {
   const {
-    activeGreekLearningQuizSelection,
     activeGreekSelection,
     activeStrongsLabel,
     activeStrongsNumbers,
@@ -155,23 +150,14 @@ export function ReaderStrongsPanel() {
   const [entries, setEntries] = useState<StrongsEntry[]>([]);
   const [greekEntry, setGreekEntry] = useState<GreekLemmaEntry | null>(null);
   const [greekStrongsEntry, setGreekStrongsEntry] = useState<StrongsEntry | null>(null);
-  const [greekLearningQuiz, setGreekLearningQuiz] = useState<GreekLearningQuiz | null>(null);
-  const [greekLearningQuizStatus, setGreekLearningQuizStatus] = useState<"idle" | "loading" | "loaded">("idle");
-  const [greekLearningAttempt, setGreekLearningAttempt] = useState(0);
-  const [greekLearningAnswerMode, setGreekLearningAnswerMode] =
-    useState<GreekLearningAnswerMode>("multiple-choice");
-  const [selectedQuizOptionId, setSelectedQuizOptionId] = useState<string | null>(null);
-  const [typedQuizAnswer, setTypedQuizAnswer] = useState("");
-  const [submittedTypedQuizAnswer, setSubmittedTypedQuizAnswer] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [activeTabs, setActiveTabs] = useState<Record<string, StrongsTab>>({});
   const [bibleOccurrences, setBibleOccurrences] = useState<Record<string, BibleOccurrencesState>>({});
   const [outsideScripture, setOutsideScripture] = useState<
     Record<string, OutsideScriptureLookupState>
   >({});
-  const isGreekLearningQuizMode = activeGreekLearningQuizSelection !== null;
   const isGreekDictionaryMode = activeGreekSelection !== null;
-  const activeGreekModeSelection = activeGreekSelection ?? activeGreekLearningQuizSelection;
+  const activeGreekModeSelection = activeGreekSelection;
   const activeGreekEntryKey =
     activeGreekModeSelection?.entryKey ?? activeGreekModeSelection?.strongs ?? null;
   const activePanelTitle =
@@ -225,7 +211,7 @@ export function ReaderStrongsPanel() {
   }, [selectedGreekFormDetails?.decodedMorphology, selectedGreekFormDetails?.morphology]);
 
   useEffect(() => {
-    if (!isGreekDictionaryMode && !isGreekLearningQuizMode) {
+    if (!isGreekDictionaryMode) {
       setGreekEntry(null);
       setGreekStrongsEntry(null);
       return;
@@ -272,42 +258,8 @@ export function ReaderStrongsPanel() {
   }, [
     activeGreekEntryKey,
     activeGreekModeSelection?.strongs,
-    isGreekDictionaryMode,
-    isGreekLearningQuizMode
+    isGreekDictionaryMode
   ]);
-
-  useEffect(() => {
-    setGreekLearningAttempt(0);
-    setSelectedQuizOptionId(null);
-    setTypedQuizAnswer("");
-    setSubmittedTypedQuizAnswer(null);
-  }, [activeGreekLearningQuizSelection?.entryKey, activeGreekLearningQuizSelection?.selectedForm]);
-
-  useEffect(() => {
-    if (!isGreekLearningQuizMode || !activeGreekLearningQuizSelection) {
-      setGreekLearningQuiz(null);
-      setGreekLearningQuizStatus("idle");
-      return;
-    }
-
-    let isCancelled = false;
-    setGreekLearningQuizStatus("loading");
-
-    void buildGreekLearningQuiz(activeGreekLearningQuizSelection, greekLearningAttempt).then(
-      (quiz) => {
-        if (isCancelled) {
-          return;
-        }
-
-        setGreekLearningQuiz(quiz);
-        setGreekLearningQuizStatus("loaded");
-      }
-    );
-
-    return () => {
-      isCancelled = true;
-    };
-  }, [activeGreekLearningQuizSelection, greekLearningAttempt, isGreekLearningQuizMode]);
 
   useEffect(() => {
     if (isGreekDictionaryMode) {
@@ -457,6 +409,7 @@ export function ReaderStrongsPanel() {
             {mode === "greek" ? (
               <GreekVerseTextContent
                 className="strongs-entry-copy strongs-entry-bible-verse-text verse-text-greek"
+                enableGreekLearning={false}
                 onOpenGreekDictionary={openGreekDictionary}
                 verse={{
                   number: match.verseNumber,
@@ -696,208 +649,6 @@ export function ReaderStrongsPanel() {
     );
   }
 
-  function renderGreekLearningQuizCard(quiz: GreekLearningQuiz) {
-    const selectedOption = selectedQuizOptionId
-      ? quiz.options.find((option) => option.id === selectedQuizOptionId) ?? null
-      : null;
-    const hasTypedAnswer = submittedTypedQuizAnswer !== null;
-    const typedAnswerCorrect =
-      submittedTypedQuizAnswer !== null &&
-      isTypedGreekQuizAnswerCorrect(submittedTypedQuizAnswer, quiz.correctAnswer);
-    const hasAnswered =
-      greekLearningAnswerMode === "typed" ? hasTypedAnswer : selectedOption !== null;
-    const answeredCorrectly =
-      greekLearningAnswerMode === "typed" ? typedAnswerCorrect : selectedOption?.isCorrect === true;
-    const submittedAnswerLabel =
-      greekLearningAnswerMode === "typed" ? submittedTypedQuizAnswer : selectedOption?.label;
-
-    return (
-      <article className="strongs-entry-card greek-learning-quiz-card" key={quiz.entry.entryKey}>
-        <div className="strongs-entry-header">
-          <span className="strongs-entry-number">{quiz.entry.strongs ?? quiz.entry.entryKey}</span>
-          <span className="strongs-entry-language">Greek learning</span>
-        </div>
-        <p className="strongs-entry-lemma greek-dictionary-lemma">{quiz.entry.lemma}</p>
-        <div className="greek-dictionary-meta-list">
-          <p className="strongs-entry-meta">
-            Form: {quiz.selectedFormValue ?? quiz.entry.lemma}
-          </p>
-          <p className="strongs-entry-meta">
-            Transliteration: {quiz.selectedTransliteration || quiz.entry.transliteration}
-          </p>
-          {selectedGreekFormDetails?.morphology ? (
-            <p className="strongs-entry-meta">
-              Morphology:{" "}
-              {selectedGreekFormDetails.decodedMorphology
-                ? `${selectedGreekFormDetails.decodedMorphology} (${selectedGreekFormDetails.morphology})`
-                : selectedGreekFormDetails.morphology}
-            </p>
-          ) : null}
-        </div>
-        <section className="greek-learning-quiz-body">
-          <p className="strongs-entry-section-label">Greek Quiz</p>
-          <p className="strongs-entry-copy greek-learning-quiz-prompt">{quiz.prompt}</p>
-          <div
-            className="greek-learning-quiz-mode-switch"
-            role="group"
-            aria-label="Greek quiz answer mode"
-          >
-            <button
-              className={`reader-inline-button${
-                greekLearningAnswerMode === "multiple-choice" ? " is-active" : ""
-              }`}
-              onClick={() => {
-                setGreekLearningAnswerMode("multiple-choice");
-                setTypedQuizAnswer("");
-                setSubmittedTypedQuizAnswer(null);
-              }}
-              type="button"
-            >
-              Multiple choice
-            </button>
-            <button
-              className={`reader-inline-button${
-                greekLearningAnswerMode === "typed" ? " is-active" : ""
-              }`}
-              onClick={() => {
-                setGreekLearningAnswerMode("typed");
-                setSelectedQuizOptionId(null);
-              }}
-              type="button"
-            >
-              Type answer
-            </button>
-          </div>
-          {greekLearningAnswerMode === "multiple-choice" ? (
-            <div className="greek-learning-quiz-options">
-              {quiz.options.map((option) => {
-                const isSelected = selectedQuizOptionId === option.id;
-                const showCorrectState = hasAnswered && option.isCorrect;
-                const showWrongState = hasAnswered && isSelected && !option.isCorrect;
-
-                return (
-                  <button
-                    className={`greek-learning-quiz-option${
-                      isSelected ? " is-selected" : ""
-                    }${showCorrectState ? " is-correct" : ""}${
-                      showWrongState ? " is-wrong" : ""
-                    }`}
-                    disabled={hasAnswered}
-                    key={option.id}
-                    onClick={() => setSelectedQuizOptionId(option.id)}
-                    type="button"
-                  >
-                    <span>{option.label}</span>
-                    {showCorrectState ? (
-                      <span className="greek-learning-quiz-option-status">Correct</span>
-                    ) : null}
-                    {showWrongState ? (
-                      <span className="greek-learning-quiz-option-status">Not this one</span>
-                    ) : null}
-                  </button>
-                );
-              })}
-            </div>
-          ) : (
-            <form
-              className="greek-learning-quiz-typed-form"
-              onSubmit={(event) => {
-                event.preventDefault();
-
-                if (!typedQuizAnswer.trim()) {
-                  return;
-                }
-
-                setSubmittedTypedQuizAnswer(typedQuizAnswer.trim());
-              }}
-            >
-              <label
-                className="greek-learning-quiz-typed-label"
-                htmlFor="greek-learning-typed-answer"
-              >
-                Type the meaning
-              </label>
-              <div className="greek-learning-quiz-typed-row">
-                <input
-                  className="greek-learning-quiz-typed-input"
-                  disabled={hasTypedAnswer}
-                  id="greek-learning-typed-answer"
-                  onChange={(event) => setTypedQuizAnswer(event.currentTarget.value)}
-                  placeholder="Example: beginning"
-                  type="text"
-                  value={typedQuizAnswer}
-                />
-                <button
-                  className="reader-inline-button"
-                  disabled={!typedQuizAnswer.trim() || hasTypedAnswer}
-                  type="submit"
-                >
-                  Check
-                </button>
-              </div>
-              <p className="strongs-entry-meta">
-                You can type the full definition or a key word from it.
-              </p>
-            </form>
-          )}
-          {hasAnswered ? (
-            <div
-              className={`greek-learning-quiz-feedback${
-                answeredCorrectly ? " is-correct" : " is-wrong"
-              }`}
-            >
-              <p className="strongs-entry-section-label">
-                {answeredCorrectly ? "Correct" : "Correct Answer"}
-              </p>
-              <p className="strongs-entry-copy">
-                {answeredCorrectly
-                  ? `${quiz.selectedFormValue ?? quiz.entry.lemma} means ${quiz.correctAnswer}.`
-                  : `${quiz.selectedFormValue ?? quiz.entry.lemma} means ${quiz.correctAnswer}, not ${submittedAnswerLabel}.`}
-              </p>
-              {!answeredCorrectly && quiz.entry.longDefinition ? (
-                <div className="greek-learning-quiz-definition">
-                  <p className="strongs-entry-section-label">Lemma Definition</p>
-                  <p className="strongs-entry-copy greek-dictionary-long-definition">
-                    {quiz.entry.longDefinition}
-                  </p>
-                </div>
-              ) : null}
-            </div>
-          ) : null}
-        </section>
-        <div className="greek-learning-quiz-actions">
-          <button
-            className="reader-inline-button"
-            onClick={() =>
-              activeGreekLearningQuizSelection
-                ? openGreekDictionary({
-                    ...activeGreekLearningQuizSelection,
-                    transliteration: activeGreekLearningQuizSelection.transliteration ?? null,
-                    gloss: activeGreekLearningQuizSelection.gloss ?? null
-                  })
-                : null
-            }
-            type="button"
-          >
-            Open Dictionary
-          </button>
-          <button
-            className="reader-inline-button"
-            onClick={() => {
-              setGreekLearningAttempt((current) => current + 1);
-              setSelectedQuizOptionId(null);
-              setTypedQuizAnswer("");
-              setSubmittedTypedQuizAnswer(null);
-            }}
-            type="button"
-          >
-            Try Again
-          </button>
-        </div>
-      </article>
-    );
-  }
-
   function renderStrongsEntryCard(entry: StrongsEntry) {
     const activeTab = activeTabs[entry.id] ?? "bible";
 
@@ -962,41 +713,21 @@ export function ReaderStrongsPanel() {
       <div className="reader-notebook-header">
         <div>
           <p className="reader-notebook-kicker">
-            {isGreekLearningQuizMode
-              ? "Greek Learning"
-              : isGreekDictionaryMode
-                ? "Greek Dictionary"
-                : "Strongs Study"}
+            {isGreekDictionaryMode ? "Greek Dictionary" : "Strongs Study"}
           </p>
           <h3 className="reader-notebook-title">{activePanelTitle}</h3>
         </div>
       </div>
 
-      {activeStrongsNumbers.length === 0 &&
-      !activeGreekSelection &&
-      !activeGreekLearningQuizSelection ? (
+      {activeStrongsNumbers.length === 0 && !activeGreekSelection ? (
         <p className="reader-notebook-empty">
           Search for a Strong’s number, Greek lemma, inflected form, transliteration, or gloss,
           or open a tagged word to study it here.
         </p>
       ) : isLoading ? (
         <p className="reader-notebook-empty">
-          {isGreekLearningQuizMode
-            ? "Loading Greek quiz…"
-            : isGreekDictionaryMode
-              ? "Loading Greek dictionary…"
-              : "Loading Strongs details…"}
+          {isGreekDictionaryMode ? "Loading Greek dictionary…" : "Loading Strongs details…"}
         </p>
-      ) : isGreekLearningQuizMode ? (
-        greekLearningQuizStatus === "loading" ? (
-          <p className="reader-notebook-empty">Loading Greek quiz…</p>
-        ) : greekLearningQuiz ? (
-          <div className="reader-strongs-list">{renderGreekLearningQuizCard(greekLearningQuiz)}</div>
-        ) : (
-          <p className="reader-notebook-empty">
-            No Greek learning quiz is available for this selection.
-          </p>
-        )
       ) : isGreekDictionaryMode ? (
         greekEntry ? (
           <div className="reader-strongs-list">{renderGreekDictionaryCard(greekEntry)}</div>

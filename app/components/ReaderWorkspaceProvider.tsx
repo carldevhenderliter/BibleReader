@@ -356,16 +356,6 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   );
 
   const openGreekLearningQuiz = useCallback((selection: GreekLearningQuizSelection) => {
-    const normalizedLabel = selection.label?.trim() || selection.lemma;
-
-    setActiveReaderPane("reading");
-    setLeftReaderMode("scripture");
-    setActiveUtilityPaneState("strongs");
-    setUtilityPaneRequestKey((current) => current + 1);
-    setLastReaderUtilityPane("strongs");
-    setActiveStrongsNumbers(selection.strongs ? [selection.strongs] : []);
-    setActiveStrongsLabel(normalizedLabel || null);
-    setActiveGreekSelection(null);
     setActiveGreekLearningQuizSelection(selection);
   }, []);
 
@@ -551,6 +541,12 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   }, [hasLoadedState, studySets]);
 
   useEffect(() => {
+    if (!isGreekLearningMode) {
+      setActiveGreekLearningQuizSelection(null);
+    }
+  }, [isGreekLearningMode]);
+
+  useEffect(() => {
     if (!isReaderRoute) {
       setActiveReaderPane("reading");
       setLeftReaderMode("scripture");
@@ -563,6 +559,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       setActiveStrongsNumbers([]);
       setActiveStrongsLabel(null);
       setActiveGreekSelection(null);
+      setActiveGreekLearningQuizSelection(null);
       setActiveSermonId(null);
     }
   }, [isReaderRoute, pathname]);

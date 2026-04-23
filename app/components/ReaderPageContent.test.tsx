@@ -503,7 +503,14 @@ describe("ReaderPageContent", () => {
     });
     fireEvent.click(screen.getByRole("button", { name: "Check" }));
 
-    expect(await screen.findByText("Correct")).toBeInTheDocument();
+    await waitFor(() => {
+      const nextTokenWrap = screen
+        .getByRole("button", { name: /γενέσεως γένεσις G1078/i })
+        .closest(".verse-greek-token-wrap");
+
+      expect(nextTokenWrap?.querySelector(".greek-inline-quiz-input")).toBeInTheDocument();
+    });
+    expect(screen.queryByText("Greek Learning")).not.toBeInTheDocument();
   });
 
   it("renders custom verse translation editors in chapter view", () => {
