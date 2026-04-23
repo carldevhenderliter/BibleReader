@@ -603,6 +603,24 @@ select {
   font-size: 1.08rem;
 }
 
+.book-title-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: baseline;
+}
+
+.book-date-chip {
+  width: fit-content;
+  padding: 0.18rem 0.48rem;
+  border: 1px solid rgba(var(--reader-accent-rgb, 85 214 255) / 0.28);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
 .book-link:hover {
   border-color: rgba(85, 214, 255, 0.42);
   background: rgba(10, 20, 36, 0.84);

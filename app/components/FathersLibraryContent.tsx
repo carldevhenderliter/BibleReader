@@ -33,11 +33,13 @@ export function FathersLibraryContent({ works }: FathersLibraryContentProps) {
               key={work.slug}
             >
               <span className="book-chip">AF</span>
-              <strong>{work.title}</strong>
+              <span className="book-title-line">
+                <strong>{work.title}</strong>
+                {work.compositionDate ? (
+                  <span className="book-date-chip">{work.compositionDate}</span>
+                ) : null}
+              </span>
               <span className="book-meta">{work.author}</span>
-              {work.compositionDate ? (
-                <span className="book-meta">{work.compositionDate}</span>
-              ) : null}
               <span className="book-meta">{work.sectionCount} sections</span>
               {work.fullTextSource ? (
                 <span className="book-meta">Source: {work.fullTextSource}</span>

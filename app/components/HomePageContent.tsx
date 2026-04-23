@@ -133,7 +133,12 @@ export function HomePageContent({ books, fathersWorks = [] }: HomePageContentPro
                 key={work.slug}
               >
                 <span className="book-chip">AF</span>
-                <strong>{work.title}</strong>
+                <span className="book-title-line">
+                  <strong>{work.title}</strong>
+                  {work.compositionDate ? (
+                    <span className="book-date-chip">{work.compositionDate}</span>
+                  ) : null}
+                </span>
                 <span className="book-meta">{work.author}</span>
                 <span className="book-meta">{work.sectionCount} sections</span>
                 <span className="book-cta">Open Fathers reader</span>
