@@ -615,8 +615,17 @@ describe("WholeBookContent", () => {
     fireEvent.click(await screen.findByRole("button", { name: "Learn Greek" }));
     fireEvent.click(screen.getByRole("button", { name: /Ἰούδας Ἰούδας G2455/i }));
 
-    expect(await screen.findByText("Greek Learning")).toBeInTheDocument();
-    expect(await screen.findByText("Which meaning matches this word?")).toBeInTheDocument();
+    const inlineAnswer = await screen.findByLabelText("Type meaning");
+
+    expect(inlineAnswer).toBeInTheDocument();
+    fireEvent.change(inlineAnswer, {
+      target: {
+        value: "Judas"
+      }
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Check" }));
+
+    expect(await screen.findByText("Correct")).toBeInTheDocument();
   });
 
   it("renders custom verse translation editors in whole-book view", () => {
