@@ -1177,14 +1177,34 @@ function getBroadGreekPartOfSpeech(
   return details?.terms.find((term) => term.group === "part-of-speech")?.key ?? null;
 }
 
-function getGreekLearningGlossCandidate(entry: GreekLemmaEntry) {
+function isReadableGreekLearningDefinition(value: string) {
+  const normalized = normalizeGlossValue(value);
+
   return (
-    getPreferredSingleWordGlossCandidate(entry.shortDefinition, {
-      preferSingleMeaning: true
-    }) ??
-    getGreekGlossOptions(entry, null)[0]?.label ??
-    null
+    normalized.length >= 3 &&
+    value.length <= 160 &&
+    !/\d/.test(value) &&
+    !/null/i.test(value) &&
+    !/^[a-z]?\s*gos/i.test(normalized) &&
+    !isPlaceholderGlossText(value)
   );
+}
+
+function getGreekLearningDefinitionCandidate(entry: GreekLemmaEntry) {
+  const shortDefinition = sanitizeGlossCandidate(entry.shortDefinition);
+
+  if (shortDefinition && isReadableGreekLearningDefinition(shortDefinition)) {
+    return shortDefinition;
+  }
+
+  const longDefinitionCandidates = entry.longDefinition
+    ? entry.longDefinition
+        .split(/\n+/)
+        .map((line) => sanitizeGlossCandidate(line))
+        .filter((line) => line && isReadableGreekLearningDefinition(line))
+    : [];
+
+  return longDefinitionCandidates[0] ?? getGreekGlossOptions(entry, null)[0]?.label ?? null;
 }
 
 function isNearDuplicateGloss(left: string, right: string) {
@@ -1222,18 +1242,8 @@ export async function buildGreekLearningQuiz(
   const selectedFormValue = selection.selectedForm ?? null;
   const selectedForm = selectedFormValue ? findSelectedForm(entry, selectedFormValue) : null;
   const correctAnswer =
-    getGreekLearningGlossCandidate(entry) ??
-    getPreferredSingleWordGlossCandidate(selectedForm?.definition, {
-      preferSingleMeaning: true
-    }) ??
-    resolveGreekTokenGloss(
-      {
-        gloss: selectedForm?.definition ?? selection.gloss ?? undefined
-      },
-      entry,
-      null,
-      null
-    ).trim();
+    getGreekLearningDefinitionCandidate(entry) ??
+    sanitizeGlossCandidate(selectedForm?.definition ?? selection.gloss ?? "");
 
   if (!correctAnswer) {
     return null;
@@ -1276,7 +1286,7 @@ export async function buildGreekLearningQuiz(
   const distractors: string[] = [];
   const addDistractorsFromPool = (pool: GreekLemmaEntry[]) => {
     for (const candidate of pool) {
-      const distractor = getGreekLearningGlossCandidate(candidate);
+      const distractor = getGreekLearningDefinitionCandidate(candidate);
 
       if (!distractor || isNearDuplicateGloss(distractor, correctAnswer)) {
         continue;

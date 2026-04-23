@@ -221,7 +221,7 @@ describe("Greek dictionary lookup", () => {
     expect(transliterateGreekSurface("Ἀγαπητοί")).toBe("Agapētoi");
   });
 
-  it("builds a Greek learning quiz with four options using the lemma definition as the correct answer", async () => {
+  it("builds a Greek learning quiz with four options using the full lemma definition as the correct answer", async () => {
     const quiz = await buildGreekLearningQuiz({
       entryKey: "G746",
       strongs: "G746",
@@ -241,14 +241,16 @@ describe("Greek dictionary lookup", () => {
       selectedFormValue: "ἀρχῆς",
       selectedTransliteration: "archēs",
       prompt: "Which meaning matches this word?",
-      correctAnswer: "beginning"
+      correctAnswer: "beginning, origin, or the person or thing that commences"
     });
     expect(quiz?.options).toHaveLength(4);
     expect(quiz?.options.filter((option) => option.isCorrect)).toHaveLength(1);
-    expect(quiz?.options.map((option) => option.label)).toContain("beginning");
+    expect(quiz?.options.map((option) => option.label)).toContain(
+      "beginning, origin, or the person or thing that commences"
+    );
   });
 
-  it("falls back to lemma glosses when a quiz selection has no token gloss", async () => {
+  it("falls back to lemma definitions when a quiz selection has no token gloss", async () => {
     const quiz = await buildGreekLearningQuiz({
       entryKey: "G746",
       strongs: "G746",
@@ -258,7 +260,7 @@ describe("Greek dictionary lookup", () => {
       selectedFormDecodedMorphology: "noun dative singular feminine"
     });
 
-    expect(quiz?.correctAnswer).toBe("beginning");
+    expect(quiz?.correctAnswer).toBe("beginning, origin, or the person or thing that commences");
     expect(new Set(quiz?.options.map((option) => option.label)).size).toBe(4);
   });
 });
