@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 import { useBibleGreekUndertext } from "@/app/components/BibleGreekUndertextProvider";
 import { FathersEnglishUndertextContent } from "@/app/components/FathersEnglishUndertextContent";
@@ -16,7 +16,7 @@ import {
   tokenizeBibleEnglishText
 } from "@/lib/bible/annotations";
 import {
-  createGreekLearningQuizSelection,
+  createGreekLearningQuizSelections,
   getGreekTokenOccurrenceKey
 } from "@/lib/bible/greek";
 import type {
@@ -45,7 +45,8 @@ type VerseListProps = {
     start: number;
     end: number;
   } | null;
-  learningNextSelections?: Record<string, GreekLearningQuizSelection | null>;
+  greekLearningQueue?: GreekLearningQuizSelection[];
+  greekLearningScopeKey?: string;
   showStrongs?: boolean;
   verses: Verse[];
 };
@@ -65,72 +66,69 @@ export function VerseList({
   annotationMode = false,
   highlightedVerseNumber,
   highlightedVerseRange,
-  learningNextSelections = {},
+  greekLearningQueue,
+  greekLearningScopeKey,
   showStrongs = false,
   verses
 }: VerseListProps) {
   const { version } = useReaderVersion();
   const {
     isGreekLearningMode,
-    openGreekLearningQuiz,
     openGreekDictionary,
     openStrongs,
+    startGreekLearningSession
   } = useReaderWorkspace();
   const { getVerseAnnotations, saveVerseAnnotations } = useBibleGreekUndertext();
   const activeHighlightedVerseNumber = highlightedVerseNumber ?? null;
   const activeHighlightedVerseRange = highlightedVerseRange ?? null;
   const shouldShowVerseText = showVerseText ?? !showInterlinearOnly;
   const shouldShowGreekTokens =
-    showGreekSurface ||
-    showGreekLemma ||
-    showGreekTransliteration ||
-    showGreekGloss;
-  const greekLearningSelections = verses.flatMap((verse) => {
-    const greekVersionInterlinearVerse =
-      version === "greek" && verse.greekTokens?.length
-        ? {
-            number: verse.number,
-            baseGreek: verse.text,
-            greek: verse.text,
-            tokens: verse.greekTokens
-          }
-        : null;
-    const activeGreekVerse =
-      greekVersionInterlinearVerse ?? interlinearVerseMap?.[verse.number] ?? null;
+    showGreekSurface || showGreekLemma || showGreekTransliteration || showGreekGloss;
+  const localGreekLearningQueue = useMemo(
+    () =>
+      verses.flatMap((verse) => {
+        const greekVersionInterlinearVerse =
+          version === "greek" && verse.greekTokens?.length
+            ? {
+                number: verse.number,
+                baseGreek: verse.text,
+                greek: verse.text,
+                tokens: verse.greekTokens
+              }
+            : null;
+        const activeGreekVerse =
+          greekVersionInterlinearVerse ?? interlinearVerseMap?.[verse.number] ?? null;
 
-    return (
-      activeGreekVerse?.tokens?.map((token, tokenIndex) => {
-        const occurrenceKey =
-          token.occurrenceKey ??
-          getGreekTokenOccurrenceKey(bookSlug, chapterNumber, verse.number, tokenIndex);
-
-        return createGreekLearningQuizSelection(
-          {
-            ...token,
-            occurrenceKey
-          },
-          occurrenceKey
+        return createGreekLearningQuizSelections(
+          activeGreekVerse?.tokens,
+          (token, tokenIndex) =>
+            token.occurrenceKey ??
+            getGreekTokenOccurrenceKey(bookSlug, chapterNumber, verse.number, tokenIndex)
         );
-      }) ?? []
+      }),
+    [bookSlug, chapterNumber, interlinearVerseMap, verses, version]
+  );
+  const effectiveGreekLearningQueue = greekLearningQueue ?? localGreekLearningQueue;
+  const effectiveGreekLearningScopeKey =
+    greekLearningScopeKey ?? `chapter:${version}:${bookSlug}:${chapterNumber}`;
+
+  function startLearningFromOccurrence(occurrenceKey: string | null) {
+    if (effectiveGreekLearningQueue.length === 0) {
+      return;
+    }
+
+    startGreekLearningSession(
+      effectiveGreekLearningQueue,
+      occurrenceKey,
+      effectiveGreekLearningScopeKey
     );
-  });
-  const nextGreekLearningSelections = {
-    ...Object.fromEntries(
-      greekLearningSelections
-        .filter((selection) => selection.occurrenceKey)
-        .map((selection, index) => [
-          selection.occurrenceKey!,
-          greekLearningSelections[index + 1] ?? null
-        ])
-    ),
-    ...learningNextSelections
-  };
+  }
 
   function handleGreekTokenSelection(token: GreekToken) {
     const entryKey = token.entryKey ?? token.strongs ?? token.lemma;
 
     if (isGreekLearningMode) {
-      openGreekLearningQuiz(createGreekLearningQuizSelection(token, token.occurrenceKey ?? null));
+      startLearningFromOccurrence(token.occurrenceKey ?? null);
       return;
     }
 
@@ -165,217 +163,211 @@ export function VerseList({
   }, [activeHighlightedVerseNumber, activeHighlightedVerseRange, bookSlug, chapterNumber]);
 
   return (
-    <>
-      <div className="verse-stack">
-        {verses.map((verse) => {
-          const greekVersionInterlinearVerse =
-            version === "greek" && verse.greekTokens?.length
-              ? {
-                  number: verse.number,
-                  baseGreek: verse.text,
-                  greek: verse.text,
-                  tokens: verse.greekTokens
-                }
-              : null;
-          const activeGreekVerse =
-            greekVersionInterlinearVerse ?? interlinearVerseMap?.[verse.number] ?? null;
-          const isHighlighted =
-            activeHighlightedVerseRange !== null
-              ? verse.number >= activeHighlightedVerseRange.start &&
-                verse.number <= activeHighlightedVerseRange.end
-              : activeHighlightedVerseNumber === verse.number;
-          const verseKey = getBibleVerseAnnotationKey(bookSlug, chapterNumber, verse.number);
-          const verseAnnotations = getVerseAnnotations(verseKey);
-          const activeGreekTokens = activeGreekVerse?.tokens ?? verse.greekTokens ?? [];
-          const canAnnotateGreekVersionTranslation =
-            version === "greek" &&
-            Boolean(verse.greekTokens?.length) &&
-            Boolean(verse.translationText?.trim()) &&
-            showCompanionVerseTranslation;
-          const canAnnotateInterlinearVerse =
-            version !== "greek" &&
-            Boolean(activeGreekVerse?.tokens?.length) &&
-            shouldShowVerseText;
-          const bibleAnnotationText = canAnnotateGreekVersionTranslation
-            ? verse.translationText?.trim() ?? ""
-            : canAnnotateInterlinearVerse
-              ? verse.text
-              : "";
-          const bibleAnnotationTokens = bibleAnnotationText
-            ? tokenizeBibleEnglishText(bibleAnnotationText)
-            : [];
-          const undertextAnnotations: EnglishUndertextAnnotation[] = verseAnnotations.map(
-            (annotation) => ({
-              contentId: verseKey,
-              startToken: annotation.startToken,
-              endToken: annotation.endToken,
-              greekText: annotation.greekText,
-              entryKey: annotation.entryKey,
-              lemma: annotation.lemma,
-              strongs: annotation.strongs,
-              transliteration: annotation.transliteration,
-              gloss: annotation.gloss,
-              source: annotation.source
-            })
-          );
-          const showBibleAnnotationLine =
-            (annotationMode || undertextAnnotations.length > 0) && bibleAnnotationTokens.length > 0;
+    <div className="verse-stack">
+      {verses.map((verse) => {
+        const greekVersionInterlinearVerse =
+          version === "greek" && verse.greekTokens?.length
+            ? {
+                number: verse.number,
+                baseGreek: verse.text,
+                greek: verse.text,
+                tokens: verse.greekTokens
+              }
+            : null;
+        const activeGreekVerse =
+          greekVersionInterlinearVerse ?? interlinearVerseMap?.[verse.number] ?? null;
+        const isHighlighted =
+          activeHighlightedVerseRange !== null
+            ? verse.number >= activeHighlightedVerseRange.start &&
+              verse.number <= activeHighlightedVerseRange.end
+            : activeHighlightedVerseNumber === verse.number;
+        const verseKey = getBibleVerseAnnotationKey(bookSlug, chapterNumber, verse.number);
+        const verseAnnotations = getVerseAnnotations(verseKey);
+        const activeGreekTokens = activeGreekVerse?.tokens ?? verse.greekTokens ?? [];
+        const canAnnotateGreekVersionTranslation =
+          version === "greek" &&
+          Boolean(verse.greekTokens?.length) &&
+          Boolean(verse.translationText?.trim()) &&
+          showCompanionVerseTranslation;
+        const canAnnotateInterlinearVerse =
+          version !== "greek" &&
+          Boolean(activeGreekVerse?.tokens?.length) &&
+          shouldShowVerseText;
+        const bibleAnnotationText = canAnnotateGreekVersionTranslation
+          ? verse.translationText?.trim() ?? ""
+          : canAnnotateInterlinearVerse
+            ? verse.text
+            : "";
+        const bibleAnnotationTokens = bibleAnnotationText
+          ? tokenizeBibleEnglishText(bibleAnnotationText)
+          : [];
+        const undertextAnnotations: EnglishUndertextAnnotation[] = verseAnnotations.map(
+          (annotation) => ({
+            contentId: verseKey,
+            startToken: annotation.startToken,
+            endToken: annotation.endToken,
+            greekText: annotation.greekText,
+            entryKey: annotation.entryKey,
+            lemma: annotation.lemma,
+            strongs: annotation.strongs,
+            transliteration: annotation.transliteration,
+            gloss: annotation.gloss,
+            source: annotation.source
+          })
+        );
+        const showBibleAnnotationLine =
+          (annotationMode || undertextAnnotations.length > 0) && bibleAnnotationTokens.length > 0;
 
-          return (
-            <div
-              className={`verse-row${isHighlighted ? " is-highlighted" : ""}`}
-              id={`verse-${bookSlug}-${chapterNumber}-${verse.number}`}
-              key={verse.number}
-            >
-              <span className="verse-number" aria-hidden="true">
-                {verse.number}
-              </span>
-              <div className="verse-content">
-                {shouldShowVerseText || (version === "greek" && showCompanionVerseTranslation) ? (
-                  <>
-                    {shouldShowVerseText ? (
-                      version === "greek" && verse.greekTokens?.length ? (
-                        <GreekVerseTextContent
-                          className="verse-text verse-text-greek"
-                          getOccurrenceKey={(token, tokenIndex) =>
-                            token.occurrenceKey ??
-                            getGreekTokenOccurrenceKey(
-                              bookSlug,
-                              chapterNumber,
-                              verse.number,
-                              tokenIndex
-                            )
+        return (
+          <div
+            className={`verse-row${isHighlighted ? " is-highlighted" : ""}`}
+            id={`verse-${bookSlug}-${chapterNumber}-${verse.number}`}
+            key={verse.number}
+          >
+            <span className="verse-number" aria-hidden="true">
+              {verse.number}
+            </span>
+            <div className="verse-content">
+              {shouldShowVerseText || (version === "greek" && showCompanionVerseTranslation) ? (
+                <>
+                  {shouldShowVerseText ? (
+                    version === "greek" && verse.greekTokens?.length ? (
+                      <GreekVerseTextContent
+                        className="verse-text verse-text-greek"
+                        getOccurrenceKey={(token, tokenIndex) =>
+                          token.occurrenceKey ??
+                          getGreekTokenOccurrenceKey(
+                            bookSlug,
+                            chapterNumber,
+                            verse.number,
+                            tokenIndex
+                          )
+                        }
+                        onOpenGreekDictionary={(selection) => {
+                          if (isGreekLearningMode) {
+                            startLearningFromOccurrence(selection.occurrenceKey ?? null);
+                            return;
                           }
-                          nextLearningSelections={nextGreekLearningSelections}
-                          onAdvanceGreekLearningQuiz={openGreekLearningQuiz}
-                          onOpenGreekDictionary={(selection) => {
-                            if (isGreekLearningMode) {
-                              openGreekLearningQuiz(selection);
-                              return;
-                            }
 
-                            openGreekDictionary(selection);
-                          }}
-                          verse={verse}
-                        />
-                      ) : showStrongs && verse.tokens?.length ? (
-                        <VerseTextContent
-                          className="verse-text verse-text-body verse-text-rich"
-                          onOpenStrongs={(strongsNumbers) =>
-                            openStrongs(strongsNumbers, strongsNumbers.join(" "))
-                          }
-                          showStrongs
-                          verse={verse}
-                        />
-                      ) : canAnnotateInterlinearVerse && showBibleAnnotationLine ? (
-                        <FathersEnglishUndertextContent
-                          annotationMode={annotationMode}
-                          annotations={undertextAnnotations}
-                          autoSuggestionsBuilder={(selectedText, selectedWords) =>
-                            buildBibleGreekUndertextSuggestions(
-                              selectedText,
-                              selectedWords,
-                              activeGreekTokens
-                            )
-                          }
-                          contentId={verseKey}
-                          english={verse.text}
-                          englishTokens={bibleAnnotationTokens}
-                          lineClassName="verse-text verse-text-body"
-                          onChangeAnnotations={(contentId, nextAnnotations) =>
-                            saveVerseAnnotations(
-                              contentId,
-                              nextAnnotations.map((annotation) => ({
-                                verseKey: contentId,
-                                startToken: annotation.startToken,
-                                endToken: annotation.endToken,
-                                greekText: annotation.greekText,
-                                entryKey: annotation.entryKey,
-                                lemma: annotation.lemma,
-                                strongs: annotation.strongs,
-                                transliteration: annotation.transliteration,
-                                gloss: annotation.gloss,
-                                source: annotation.source
-                              }))
-                            )
-                          }
-                          onOpenGreekDictionary={openGreekDictionary}
-                        />
-                      ) : (
-                        <VerseTextContent className="verse-text verse-text-body" verse={verse} />
-                      )
-                    ) : null}
-                    {version === "greek" &&
-                    showCompanionVerseTranslation &&
-                    verse.translationText?.trim() ? (
-                      canAnnotateGreekVersionTranslation && showBibleAnnotationLine ? (
-                        <FathersEnglishUndertextContent
-                          annotationMode={annotationMode}
-                          annotations={undertextAnnotations}
-                          autoSuggestionsBuilder={(selectedText, selectedWords) =>
-                            buildBibleGreekUndertextSuggestions(
-                              selectedText,
-                              selectedWords,
-                              activeGreekTokens
-                            )
-                          }
-                          contentId={verseKey}
-                          english={verse.translationText}
-                          englishTokens={bibleAnnotationTokens}
-                          lineClassName="verse-text verse-text-companion-translation"
-                          onChangeAnnotations={(contentId, nextAnnotations) =>
-                            saveVerseAnnotations(
-                              contentId,
-                              nextAnnotations.map((annotation) => ({
-                                verseKey: contentId,
-                                startToken: annotation.startToken,
-                                endToken: annotation.endToken,
-                                greekText: annotation.greekText,
-                                entryKey: annotation.entryKey,
-                                lemma: annotation.lemma,
-                                strongs: annotation.strongs,
-                                transliteration: annotation.transliteration,
-                                gloss: annotation.gloss,
-                                source: annotation.source
-                              }))
-                            )
-                          }
-                          onOpenGreekDictionary={openGreekDictionary}
-                        />
-                      ) : (
-                        <p className="verse-text verse-text-companion-translation">
-                          {verse.translationText}
-                        </p>
-                      )
-                    ) : null}
-                  </>
-                ) : null}
-                {activeGreekVerse && shouldShowGreekTokens ? (
-                  <GreekInterlinearLine
-                    bookSlug={bookSlug}
-                    chapterNumber={chapterNumber}
-                    nextLearningSelections={nextGreekLearningSelections}
-                    onAdvanceGreekLearningQuiz={openGreekLearningQuiz}
-                    onOpenGreekDictionary={handleGreekTokenSelection}
-                    showGloss={showGreekGloss}
-                    showLemma={showGreekLemma}
-                    showSurface={showGreekSurface}
-                    showTransliteration={showGreekTransliteration}
-                    verse={activeGreekVerse}
-                  />
-                ) : null}
-                {showCustomVerseTranslation ? (
-                  <VerseTranslationEditor
-                    bookSlug={bookSlug}
-                    chapterNumber={chapterNumber}
-                    verseNumber={verse.number}
-                  />
-                ) : null}
-              </div>
+                          openGreekDictionary(selection);
+                        }}
+                        verse={verse}
+                      />
+                    ) : showStrongs && verse.tokens?.length ? (
+                      <VerseTextContent
+                        className="verse-text verse-text-body verse-text-rich"
+                        onOpenStrongs={(strongsNumbers) =>
+                          openStrongs(strongsNumbers, strongsNumbers.join(" "))
+                        }
+                        showStrongs
+                        verse={verse}
+                      />
+                    ) : canAnnotateInterlinearVerse && showBibleAnnotationLine ? (
+                      <FathersEnglishUndertextContent
+                        annotationMode={annotationMode}
+                        annotations={undertextAnnotations}
+                        autoSuggestionsBuilder={(selectedText, selectedWords) =>
+                          buildBibleGreekUndertextSuggestions(
+                            selectedText,
+                            selectedWords,
+                            activeGreekTokens
+                          )
+                        }
+                        contentId={verseKey}
+                        english={verse.text}
+                        englishTokens={bibleAnnotationTokens}
+                        lineClassName="verse-text verse-text-body"
+                        onChangeAnnotations={(contentId, nextAnnotations) =>
+                          saveVerseAnnotations(
+                            contentId,
+                            nextAnnotations.map((annotation) => ({
+                              verseKey: contentId,
+                              startToken: annotation.startToken,
+                              endToken: annotation.endToken,
+                              greekText: annotation.greekText,
+                              entryKey: annotation.entryKey,
+                              lemma: annotation.lemma,
+                              strongs: annotation.strongs,
+                              transliteration: annotation.transliteration,
+                              gloss: annotation.gloss,
+                              source: annotation.source
+                            }))
+                          )
+                        }
+                        onOpenGreekDictionary={openGreekDictionary}
+                      />
+                    ) : (
+                      <VerseTextContent className="verse-text verse-text-body" verse={verse} />
+                    )
+                  ) : null}
+                  {version === "greek" &&
+                  showCompanionVerseTranslation &&
+                  verse.translationText?.trim() ? (
+                    canAnnotateGreekVersionTranslation && showBibleAnnotationLine ? (
+                      <FathersEnglishUndertextContent
+                        annotationMode={annotationMode}
+                        annotations={undertextAnnotations}
+                        autoSuggestionsBuilder={(selectedText, selectedWords) =>
+                          buildBibleGreekUndertextSuggestions(
+                            selectedText,
+                            selectedWords,
+                            activeGreekTokens
+                          )
+                        }
+                        contentId={verseKey}
+                        english={verse.translationText}
+                        englishTokens={bibleAnnotationTokens}
+                        lineClassName="verse-text verse-text-companion-translation"
+                        onChangeAnnotations={(contentId, nextAnnotations) =>
+                          saveVerseAnnotations(
+                            contentId,
+                            nextAnnotations.map((annotation) => ({
+                              verseKey: contentId,
+                              startToken: annotation.startToken,
+                              endToken: annotation.endToken,
+                              greekText: annotation.greekText,
+                              entryKey: annotation.entryKey,
+                              lemma: annotation.lemma,
+                              strongs: annotation.strongs,
+                              transliteration: annotation.transliteration,
+                              gloss: annotation.gloss,
+                              source: annotation.source
+                            }))
+                          )
+                        }
+                        onOpenGreekDictionary={openGreekDictionary}
+                      />
+                    ) : (
+                      <p className="verse-text verse-text-companion-translation">
+                        {verse.translationText}
+                      </p>
+                    )
+                  ) : null}
+                </>
+              ) : null}
+              {activeGreekVerse && shouldShowGreekTokens ? (
+                <GreekInterlinearLine
+                  bookSlug={bookSlug}
+                  chapterNumber={chapterNumber}
+                  onOpenGreekDictionary={handleGreekTokenSelection}
+                  showGloss={showGreekGloss}
+                  showLemma={showGreekLemma}
+                  showSurface={showGreekSurface}
+                  showTransliteration={showGreekTransliteration}
+                  verse={activeGreekVerse}
+                />
+              ) : null}
+              {showCustomVerseTranslation ? (
+                <VerseTranslationEditor
+                  bookSlug={bookSlug}
+                  chapterNumber={chapterNumber}
+                  verseNumber={verse.number}
+                />
+              ) : null}
             </div>
-          );
-        })}
-      </div>
-    </>
+          </div>
+        );
+      })}
+    </div>
   );
 }

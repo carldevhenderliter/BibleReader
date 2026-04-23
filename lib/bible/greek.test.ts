@@ -4,6 +4,7 @@ import {
   getGreekLemmaEntry,
   getGreekMorphologyDetails,
   getGreekTokenOccurrenceKey,
+  isTypedGreekQuizAnswerCorrect,
   lookupGreekDictionary,
   normalizeGreekFormLookupValue,
   normalizeGreekLookupValue,
@@ -262,5 +263,16 @@ describe("Greek dictionary lookup", () => {
 
     expect(quiz?.correctAnswer).toBe("beginning, origin, or the person or thing that commences");
     expect(new Set(quiz?.options.map((option) => option.label)).size).toBe(4);
+  });
+
+  it("accepts token glosses as valid typed quiz answers even when the lemma definition is longer", () => {
+    expect(
+      isTypedGreekQuizAnswerCorrect(
+        "genealogy",
+        "genealogy",
+        "source, origin, or a book of one's lineage",
+        "source, origin, or a book of one's lineage"
+      )
+    ).toBe(true);
   });
 });

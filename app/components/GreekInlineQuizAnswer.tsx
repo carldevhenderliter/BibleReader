@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
+import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import {
   buildGreekLearningQuiz,
   isTypedGreekQuizAnswerCorrect
@@ -9,27 +10,25 @@ import {
 import type { GreekLearningQuiz, GreekLearningQuizSelection } from "@/lib/bible/types";
 
 type GreekInlineQuizAnswerProps = {
-  nextSelection?: GreekLearningQuizSelection | null;
-  onAdvance?: (selection: GreekLearningQuizSelection) => void;
   selection: GreekLearningQuizSelection;
 };
 
-export function GreekInlineQuizAnswer({
-  nextSelection = null,
-  onAdvance,
-  selection
-}: GreekInlineQuizAnswerProps) {
+export function GreekInlineQuizAnswer({ selection }: GreekInlineQuizAnswerProps) {
+  const { activeGreekLearningSession, advanceGreekLearningSession } = useReaderWorkspace();
   const [quiz, setQuiz] = useState<GreekLearningQuiz | null>(null);
-  const [status, setStatus] = useState<"loading" | "loaded">("loading");
+  const [status, setStatus] = useState<"loading" | "idle" | "correct" | "wrong">("loading");
   const [answer, setAnswer] = useState("");
-  const [submittedAnswer, setSubmittedAnswer] = useState<string | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const hasNextSelection =
+    activeGreekLearningSession !== null &&
+    activeGreekLearningSession.currentIndex < activeGreekLearningSession.queue.length - 1;
 
   useEffect(() => {
     let isCancelled = false;
+
     setStatus("loading");
     setQuiz(null);
     setAnswer("");
-    setSubmittedAnswer(null);
 
     void buildGreekLearningQuiz(selection).then((nextQuiz) => {
       if (isCancelled) {
@@ -37,7 +36,7 @@ export function GreekInlineQuizAnswer({
       }
 
       setQuiz(nextQuiz);
-      setStatus("loaded");
+      setStatus("idle");
     });
 
     return () => {
@@ -45,25 +44,28 @@ export function GreekInlineQuizAnswer({
     };
   }, [selection]);
 
-  const isAnswered = submittedAnswer !== null;
-  const isCorrect =
-    quiz !== null &&
-    submittedAnswer !== null &&
-    isTypedGreekQuizAnswerCorrect(submittedAnswer, quiz.correctAnswer);
+  useEffect(() => {
+    if (status !== "idle") {
+      return;
+    }
+
+    inputRef.current?.focus();
+    inputRef.current?.select();
+  }, [selection, status]);
 
   useEffect(() => {
-    if (!isCorrect || !nextSelection || !onAdvance) {
+    if (status !== "correct" || !hasNextSelection) {
       return;
     }
 
     const timeoutId = window.setTimeout(() => {
-      onAdvance(nextSelection);
+      advanceGreekLearningSession();
     }, 450);
 
     return () => {
       window.clearTimeout(timeoutId);
     };
-  }, [isCorrect, nextSelection, onAdvance]);
+  }, [advanceGreekLearningSession, hasNextSelection, status]);
 
   if (status === "loading") {
     return <p className="greek-inline-quiz-status">Loading quiz…</p>;
@@ -75,15 +77,28 @@ export function GreekInlineQuizAnswer({
 
   return (
     <form
-      className={`greek-inline-quiz${isAnswered ? (isCorrect ? " is-correct" : " is-wrong") : ""}`}
+      className={`greek-inline-quiz${
+        status === "correct" ? " is-correct" : status === "wrong" ? " is-wrong" : ""
+      }`}
       onSubmit={(event) => {
         event.preventDefault();
 
-        if (!answer.trim()) {
+        const trimmedAnswer = answer.trim();
+
+        if (!trimmedAnswer) {
           return;
         }
 
-        setSubmittedAnswer(answer.trim());
+        setStatus(
+          isTypedGreekQuizAnswerCorrect(
+            trimmedAnswer,
+            selection.gloss,
+            quiz.entry.shortDefinition,
+            quiz.correctAnswer
+          )
+            ? "correct"
+            : "wrong"
+        );
       }}
     >
       <label
@@ -94,8 +109,9 @@ export function GreekInlineQuizAnswer({
       </label>
       <div className="greek-inline-quiz-row">
         <input
+          ref={inputRef}
           className="greek-inline-quiz-input"
-          disabled={isAnswered}
+          disabled={status !== "idle"}
           id={`greek-inline-quiz:${selection.occurrenceKey ?? selection.entryKey}`}
           onChange={(event) => setAnswer(event.currentTarget.value)}
           placeholder="beginning"
@@ -104,20 +120,34 @@ export function GreekInlineQuizAnswer({
         />
         <button
           className="greek-inline-quiz-button"
-          disabled={!answer.trim() || isAnswered}
+          disabled={!answer.trim() || status !== "idle"}
           type="submit"
         >
           Check
         </button>
       </div>
-      {isAnswered ? (
+      {status === "correct" ? (
         <div className="greek-inline-quiz-feedback">
-          <p>{isCorrect ? "Correct" : "Correct answer"}</p>
+          <p>Correct</p>
+          {!hasNextSelection ? <small>Finished</small> : null}
+        </div>
+      ) : null}
+      {status === "wrong" ? (
+        <div className="greek-inline-quiz-feedback">
+          <p>Correct answer</p>
           <span>{quiz.correctAnswer}</span>
-          {isCorrect && !nextSelection ? <small>Finished</small> : null}
-          {!isCorrect && quiz.entry.longDefinition ? (
-            <small>{quiz.entry.longDefinition}</small>
-          ) : null}
+          {quiz.entry.longDefinition ? <small>{quiz.entry.longDefinition}</small> : null}
+          {hasNextSelection ? (
+            <button
+              className="greek-inline-quiz-button"
+              onClick={() => advanceGreekLearningSession()}
+              type="button"
+            >
+              Continue
+            </button>
+          ) : (
+            <small>Finished</small>
+          )}
         </div>
       ) : null}
     </form>

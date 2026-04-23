@@ -18,6 +18,7 @@ import type {
   BundledBibleVersion,
   Chapter,
   GreekDictionarySelection,
+  GreekLearningSession,
   GreekLearningQuizSelection,
   Highlight,
   NotebookDocument,
@@ -83,7 +84,13 @@ type ReaderWorkspaceContextValue = {
   openStrongsInCurrentPane: (strongsNumber: string | string[], label?: string | null) => void;
   openGreekDictionary: (selection: GreekDictionarySelection) => void;
   openGreekDictionaryInCurrentPane: (selection: GreekDictionarySelection) => void;
-  openGreekLearningQuiz: (selection: GreekLearningQuizSelection) => void;
+  activeGreekLearningSession: GreekLearningSession | null;
+  startGreekLearningSession: (
+    queue: GreekLearningQuizSelection[],
+    startOccurrenceKey: string | null,
+    scopeKey: string
+  ) => void;
+  advanceGreekLearningSession: () => void;
   clearGreekLearningQuiz: () => void;
   openNotebook: (reference?: PassageReference | null) => void;
   closeNotebookWorkspace: () => void;
@@ -252,8 +259,8 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   const [activeGreekSelection, setActiveGreekSelection] = useState<GreekDictionarySelection | null>(
     null
   );
-  const [activeGreekLearningQuizSelection, setActiveGreekLearningQuizSelection] =
-    useState<GreekLearningQuizSelection | null>(null);
+  const [activeGreekLearningSession, setActiveGreekLearningSession] =
+    useState<GreekLearningSession | null>(null);
   const [isGreekLearningMode, setIsGreekLearningMode] = useState(false);
   const [activeSermonId, setActiveSermonId] = useState<string | null>(null);
   const [compareVersionOverrides, setCompareVersionOverrides] = useState<BundledBibleVersion[]>([]);
@@ -265,6 +272,8 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
     () => normalizeCompareVersions(version, installedBundledVersions, compareVersionOverrides),
     [compareVersionOverrides, installedBundledVersions, version]
   );
+  const activeGreekLearningQuizSelection =
+    activeGreekLearningSession?.queue[activeGreekLearningSession.currentIndex] ?? null;
 
   const setActiveUtilityPane = useCallback((pane: UtilityPane) => {
     setActiveUtilityPaneState(pane);
@@ -298,7 +307,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
     setActiveStrongsNumbers(nextNumbers);
     setActiveStrongsLabel(label);
     setActiveGreekSelection(null);
-    setActiveGreekLearningQuizSelection(null);
+    setActiveGreekLearningSession(null);
   }, []);
 
   const openStrongsInCurrentPane = useCallback(
@@ -316,7 +325,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       setActiveStrongsNumbers(nextNumbers);
       setActiveStrongsLabel(label);
       setActiveGreekSelection(null);
-      setActiveGreekLearningQuizSelection(null);
+      setActiveGreekLearningSession(null);
     },
     [activeReaderPane]
   );
@@ -332,7 +341,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
     setActiveStrongsNumbers(selection.strongs ? [selection.strongs] : []);
     setActiveStrongsLabel(normalizedLabel || null);
     setActiveGreekSelection(selection);
-    setActiveGreekLearningQuizSelection(null);
+    setActiveGreekLearningSession(null);
   }, []);
 
   const openGreekDictionaryInCurrentPane = useCallback(
@@ -350,17 +359,66 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       setActiveStrongsNumbers(selection.strongs ? [selection.strongs] : []);
       setActiveStrongsLabel(normalizedLabel || null);
       setActiveGreekSelection(selection);
-      setActiveGreekLearningQuizSelection(null);
+      setActiveGreekLearningSession(null);
     },
     [activeReaderPane]
   );
 
-  const openGreekLearningQuiz = useCallback((selection: GreekLearningQuizSelection) => {
-    setActiveGreekLearningQuizSelection(selection);
+  const startGreekLearningSession = useCallback(
+    (
+      queue: GreekLearningQuizSelection[],
+      startOccurrenceKey: string | null,
+      scopeKey: string
+    ) => {
+      if (queue.length === 0) {
+        setActiveGreekLearningSession(null);
+        return;
+      }
+
+      const startIndex = startOccurrenceKey
+        ? queue.findIndex((selection) => selection.occurrenceKey === startOccurrenceKey)
+        : -1;
+      const resolvedIndex = startIndex >= 0 ? startIndex : 0;
+      const activeSelection = queue[resolvedIndex] ?? null;
+
+      if (!activeSelection) {
+        setActiveGreekLearningSession(null);
+        return;
+      }
+
+      setActiveGreekLearningSession({
+        queue,
+        currentIndex: resolvedIndex,
+        currentOccurrenceKey: activeSelection.occurrenceKey ?? null,
+        scopeKey
+      });
+    },
+    []
+  );
+
+  const advanceGreekLearningSession = useCallback(() => {
+    setActiveGreekLearningSession((current) => {
+      if (!current) {
+        return current;
+      }
+
+      const nextIndex = current.currentIndex + 1;
+      const nextSelection = current.queue[nextIndex] ?? null;
+
+      if (!nextSelection) {
+        return current;
+      }
+
+      return {
+        ...current,
+        currentIndex: nextIndex,
+        currentOccurrenceKey: nextSelection.occurrenceKey ?? null
+      };
+    });
   }, []);
 
   const clearGreekLearningQuiz = useCallback(() => {
-    setActiveGreekLearningQuizSelection(null);
+    setActiveGreekLearningSession(null);
   }, []);
 
   const openSermons = useCallback(() => {
@@ -542,7 +600,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     if (!isGreekLearningMode) {
-      setActiveGreekLearningQuizSelection(null);
+      setActiveGreekLearningSession(null);
     }
   }, [isGreekLearningMode]);
 
@@ -559,7 +617,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       setActiveStrongsNumbers([]);
       setActiveStrongsLabel(null);
       setActiveGreekSelection(null);
-      setActiveGreekLearningQuizSelection(null);
+      setActiveGreekLearningSession(null);
       setActiveSermonId(null);
     }
   }, [isReaderRoute, pathname]);
@@ -587,7 +645,8 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       openStrongsInCurrentPane,
       openGreekDictionary,
       openGreekDictionaryInCurrentPane,
-      openGreekLearningQuiz,
+      startGreekLearningSession,
+      advanceGreekLearningSession,
       clearGreekLearningQuiz,
       openNotebook,
       closeNotebookWorkspace,
@@ -704,6 +763,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       activeStrongsLabel,
       activeGreekSelection,
       activeGreekLearningQuizSelection,
+      activeGreekLearningSession,
       isGreekLearningMode,
       setIsGreekLearningMode,
       getHighlight: (bookSlug, chapterNumber, verseNumber) =>
@@ -1142,7 +1202,8 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       openStrongsInCurrentPane,
       openGreekDictionary,
       openGreekDictionaryInCurrentPane,
-      openGreekLearningQuiz,
+      startGreekLearningSession,
+      advanceGreekLearningSession,
       clearGreekLearningQuiz,
       openNotebook,
       openSermons,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { FathersEnglishUndertextContent } from "@/app/components/FathersEnglishUndertextContent";
 import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
@@ -12,7 +12,7 @@ import { useReaderCustomization } from "@/app/components/ReaderCustomizationProv
 import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
-import { createGreekLearningQuizSelection } from "@/lib/bible/greek";
+import { createGreekLearningQuizSelections } from "@/lib/bible/greek";
 import type { EnglishUndertextAnnotation, GreekToken } from "@/lib/bible/types";
 import { saveFathersAnnotationFile } from "@/lib/fathers/annotation-save";
 import { isNa1GreekAnnotationWork } from "@/lib/fathers/annotations";
@@ -32,6 +32,7 @@ type FathersReaderContentProps = {
 type LazyFathersSegmentSectionProps = {
   segmentId: string;
   initialRender: boolean;
+  onRenderSection: (segmentId: string) => void;
   children: React.ReactNode;
 };
 
@@ -67,6 +68,7 @@ function renderFathersEnglishBlock(text: string, separateSentencesByLine: boolea
 function LazyFathersSegmentSection({
   segmentId,
   initialRender,
+  onRenderSection,
   children
 }: LazyFathersSegmentSectionProps) {
   const [shouldRenderSection, setShouldRenderSection] = useState(initialRender);
@@ -77,6 +79,14 @@ function LazyFathersSegmentSection({
       setShouldRenderSection(true);
     }
   }, [initialRender]);
+
+  useEffect(() => {
+    if (!shouldRenderSection) {
+      return;
+    }
+
+    onRenderSection(segmentId);
+  }, [onRenderSection, segmentId, shouldRenderSection]);
 
   useEffect(() => {
     if (shouldRenderSection) {
@@ -124,9 +134,10 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
   const { isSplitViewActive } = useLookup();
   const {
     activeUtilityPane,
+    clearGreekLearningQuiz,
     isGreekLearningMode,
     openGreekDictionary,
-    openGreekLearningQuiz,
+    startGreekLearningSession,
     setIsGreekLearningMode
   } = useReaderWorkspace();
   const hasGreekReaderAid = payload.segments.some((segment) => segment.greek.trim().length > 0);
@@ -141,6 +152,9 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
   >("idle");
   const [annotationSaveMessage, setAnnotationSaveMessage] = useState<string | null>(null);
   const [prioritizedSectionIds, setPrioritizedSectionIds] = useState<string[]>(() =>
+    payload.segments.slice(0, 8).map((segment) => segment.id)
+  );
+  const [renderedSectionIds, setRenderedSectionIds] = useState<string[]>(() =>
     payload.segments.slice(0, 8).map((segment) => segment.id)
   );
   const [segmentAnnotations, setSegmentAnnotations] = useState<FathersGreekUndertextAnnotationRecord>(
@@ -172,37 +186,19 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
       })),
     [works]
   );
-  const greekLearningSelections = useMemo(
+  const greekLearningQueue = useMemo(
     () =>
-      payload.segments.flatMap(
-        (segment) =>
-          segment.greekLexicalTokens?.map((token, tokenIndex) => {
-            const greekToken = token as GreekToken;
-            const occurrenceKey = greekToken.occurrenceKey ?? `${segment.id}:${tokenIndex}`;
-
-            return createGreekLearningQuizSelection(
-              {
-                ...greekToken,
-                occurrenceKey
-              },
-              occurrenceKey
-            );
-          }) ?? []
-      ),
-    [payload.segments]
+      payload.segments
+        .filter((segment) => renderedSectionIds.includes(segment.id))
+        .flatMap((segment) =>
+          createGreekLearningQuizSelections(
+            (segment.greekLexicalTokens as GreekToken[] | undefined) ?? undefined,
+            (token, tokenIndex) => token.occurrenceKey ?? `${segment.id}:${tokenIndex}`
+          )
+        ),
+    [payload.segments, renderedSectionIds]
   );
-  const nextGreekLearningSelections = useMemo(
-    () =>
-      Object.fromEntries(
-        greekLearningSelections
-          .filter((selection) => selection.occurrenceKey)
-          .map((selection, index) => [
-            selection.occurrenceKey!,
-            greekLearningSelections[index + 1] ?? null
-          ])
-      ),
-    [greekLearningSelections]
-  );
+  const greekLearningScopeKey = `fathers:${payload.work.slug}:${renderedSectionIds.join(",")}`;
 
   useEffect(() => {
     setActiveSectionId(payload.segments[0]?.id ?? "");
@@ -216,9 +212,20 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
       payload.segments.map((segment) => [segment.id, segment.greekUndertextAnnotations ?? []])
     );
     setPrioritizedSectionIds(payload.segments.slice(0, 8).map((segment) => segment.id));
+    setRenderedSectionIds(payload.segments.slice(0, 8).map((segment) => segment.id));
     setSegmentAnnotations(nextAnnotations);
     setPersistedSegmentAnnotations(nextAnnotations);
   }, [payload.segments, payload.work.slug]);
+
+  useEffect(() => {
+    clearGreekLearningQuiz();
+  }, [clearGreekLearningQuiz, greekLearningScopeKey]);
+
+  const handleRenderSection = useCallback((segmentId: string) => {
+    setRenderedSectionIds((current) =>
+      current.includes(segmentId) ? current : [...current, segmentId]
+    );
+  }, []);
 
   useEffect(() => {
     const initialHash = window.location.hash.replace(/^#/, "");
@@ -474,6 +481,7 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
             <LazyFathersSegmentSection
               initialRender={prioritizedSectionIds.includes(segment.id) || index < 8}
               key={segment.id}
+              onRenderSection={handleRenderSection}
               segmentId={segment.id}
             >
               <div className="fathers-segment-header">
@@ -489,11 +497,13 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
                   getOccurrenceKey={(token, tokenIndex) =>
                     token.occurrenceKey ?? `${segment.id}:${tokenIndex}`
                   }
-                  nextLearningSelections={nextGreekLearningSelections}
-                  onAdvanceGreekLearningQuiz={openGreekLearningQuiz}
                   onOpenGreekDictionary={(selection) => {
                     if (isGreekLearningMode) {
-                      openGreekLearningQuiz(selection);
+                      startGreekLearningSession(
+                        greekLearningQueue,
+                        selection.occurrenceKey ?? null,
+                        greekLearningScopeKey
+                      );
                       return;
                     }
 

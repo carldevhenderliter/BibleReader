@@ -632,6 +632,15 @@ describe("WholeBookContent", () => {
 
       expect(nextTokenWrap?.querySelector(".greek-inline-quiz-input")).toBeInTheDocument();
     });
+
+    fireEvent.change(await screen.findByLabelText("Type meaning"), {
+      target: {
+        value: "beloved"
+      }
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Check" }));
+
+    expect(await screen.findByText("Finished")).toBeInTheDocument();
     expect(screen.queryByText("Greek Learning")).not.toBeInTheDocument();
   });
 

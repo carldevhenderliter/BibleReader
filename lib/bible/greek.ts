@@ -1056,6 +1056,22 @@ export function createGreekLearningQuizSelection(
   };
 }
 
+export function createGreekLearningQuizSelections(
+  tokens: GreekToken[] | null | undefined,
+  getOccurrenceKey?: (token: GreekToken, index: number) => string | null
+) {
+  return (
+    tokens?.map((token, index) => {
+      const occurrenceKey = getOccurrenceKey?.(token, index) ?? token.occurrenceKey ?? null;
+
+      return createGreekLearningQuizSelection(
+        occurrenceKey ? { ...token, occurrenceKey } : token,
+        occurrenceKey
+      );
+    }) ?? []
+  );
+}
+
 export function getGreekGlossOptions(
   entry: GreekLemmaEntry,
   tokenGloss?: string | null
@@ -1251,13 +1267,23 @@ export function getAcceptedGreekQuizAnswers(correctAnswer: string) {
   return answers;
 }
 
-export function isTypedGreekQuizAnswerCorrect(answer: string, correctAnswer: string) {
+export function isTypedGreekQuizAnswerCorrect(
+  answer: string,
+  ...acceptedValues: Array<string | null | undefined>
+) {
   const normalizedAnswer = normalizeGreekQuizAnswer(answer);
 
-  return (
-    normalizedAnswer.length > 0 &&
-    getAcceptedGreekQuizAnswers(correctAnswer).has(normalizedAnswer)
-  );
+  if (!normalizedAnswer.length) {
+    return false;
+  }
+
+  return acceptedValues.some((value) => {
+    if (!value?.trim()) {
+      return false;
+    }
+
+    return getAcceptedGreekQuizAnswers(value).has(normalizedAnswer);
+  });
 }
 
 function isReadableGreekLearningDefinition(value: string) {

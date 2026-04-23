@@ -168,8 +168,8 @@ const esvNtInterlinearChapterWithTokenGlosses: EsvInterlinearDisplayChapter = {
   verses: [
     {
       number: 1,
-      baseGreek: "Βίβλος γενέσεως",
-      greek: "Βίβλος γενέσεως",
+      baseGreek: "Βίβλος γενέσεως Ἰησοῦ χριστοῦ",
+      greek: "Βίβλος γενέσεως Ἰησοῦ χριστοῦ",
       tokens: [
         {
           surface: "Βίβλος",
@@ -184,6 +184,20 @@ const esvNtInterlinearChapterWithTokenGlosses: EsvInterlinearDisplayChapter = {
           strongs: "G1078",
           occurrenceKey: "matthew:1:1:1",
           gloss: "genealogy"
+        },
+        {
+          surface: "Ἰησοῦ",
+          lemma: "Ἰησοῦς",
+          strongs: "G2424",
+          occurrenceKey: "matthew:1:1:2",
+          gloss: "Jesus"
+        },
+        {
+          surface: "χριστοῦ",
+          lemma: "Χριστός",
+          strongs: "G5547",
+          occurrenceKey: "matthew:1:1:3",
+          gloss: "Christ"
         }
       ]
     }
@@ -466,7 +480,7 @@ describe("ReaderPageContent", () => {
     ).toBeInTheDocument();
   });
 
-  it("opens a Greek learning quiz from chapter view when Learn Greek is enabled", async () => {
+  it("advances through consecutive Greek words in chapter view when Learn Greek is enabled", async () => {
     window.localStorage.setItem(
       "bible-reader:customization",
       JSON.stringify({
@@ -493,15 +507,88 @@ describe("ReaderPageContent", () => {
     fireEvent.click(await screen.findByRole("button", { name: "Learn Greek" }));
     fireEvent.click(screen.getByRole("button", { name: /Βίβλος βίβλος G976/i }));
 
-    const inlineAnswer = await screen.findByLabelText("Type meaning");
+    const answerCurrentQuiz = async (value: string) => {
+      const inlineAnswer = await screen.findByLabelText("Type meaning");
+      fireEvent.change(inlineAnswer, {
+        target: {
+          value
+        }
+      });
+      fireEvent.click(screen.getByRole("button", { name: "Check" }));
+    };
 
-    expect(inlineAnswer).toBeInTheDocument();
-    fireEvent.change(inlineAnswer, {
+    await answerCurrentQuiz("book");
+    await waitFor(() => {
+      const nextTokenWrap = screen
+        .getByRole("button", { name: /γενέσεως γένεσις G1078/i })
+        .closest(".verse-greek-token-wrap");
+
+      expect(nextTokenWrap?.querySelector(".greek-inline-quiz-input")).toBeInTheDocument();
+    });
+
+    await answerCurrentQuiz("genealogy");
+    await waitFor(() => {
+      const nextTokenWrap = screen
+        .getByRole("button", { name: /Ἰησοῦ Ἰησοῦς G2424/i })
+        .closest(".verse-greek-token-wrap");
+
+      expect(nextTokenWrap?.querySelector(".greek-inline-quiz-input")).toBeInTheDocument();
+    });
+
+    await answerCurrentQuiz("Jesus");
+    await waitFor(() => {
+      const nextTokenWrap = screen
+        .getByRole("button", { name: /χριστοῦ Χριστός G5547/i })
+        .closest(".verse-greek-token-wrap");
+
+      expect(nextTokenWrap?.querySelector(".greek-inline-quiz-input")).toBeInTheDocument();
+    });
+
+    await answerCurrentQuiz("Christ");
+
+    expect(await screen.findByText("Finished")).toBeInTheDocument();
+    expect(screen.queryByText("Greek Learning")).not.toBeInTheDocument();
+  });
+
+  it("shows correction and waits for Continue after a wrong Greek learning answer", async () => {
+    window.localStorage.setItem(
+      "bible-reader:customization",
+      JSON.stringify({
+        showEsvInterlinear: true
+      })
+    );
+
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={ntBooks[0]}
+        books={ntBooks}
+        chaptersByVersion={{ esv: esvNtChapter, web: esvNtChapter }}
+        esvInterlinearChapter={esvNtInterlinearChapterWithTokenGlosses}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
       target: {
-        value: "book"
+        value: "esv"
+      }
+    });
+
+    fireEvent.click(await screen.findByRole("button", { name: "Learn Greek" }));
+    fireEvent.click(screen.getByRole("button", { name: /Βίβλος βίβλος G976/i }));
+
+    fireEvent.change(await screen.findByLabelText("Type meaning"), {
+      target: {
+        value: "wrong"
       }
     });
     fireEvent.click(screen.getByRole("button", { name: "Check" }));
+
+    expect(await screen.findByText("Correct answer")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Continue" })).toBeInTheDocument();
+    expect(screen.getByText(/papyrus plant/i)).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Continue" }));
 
     await waitFor(() => {
       const nextTokenWrap = screen
@@ -510,7 +597,6 @@ describe("ReaderPageContent", () => {
 
       expect(nextTokenWrap?.querySelector(".greek-inline-quiz-input")).toBeInTheDocument();
     });
-    expect(screen.queryByText("Greek Learning")).not.toBeInTheDocument();
   });
 
   it("renders custom verse translation editors in chapter view", () => {

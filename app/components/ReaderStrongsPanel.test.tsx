@@ -22,6 +22,7 @@ function StrongsHarness() {
       <button
         onClick={() =>
           openGreekDictionary({
+            entryKey: "G746",
             strongs: "G746",
             lemma: "ἀρχή",
             label: "ἀρχή",

@@ -380,6 +380,13 @@ export type GreekLearningQuizSelection = {
   gloss?: string | null;
 };
 
+export type GreekLearningSession = {
+  queue: GreekLearningQuizSelection[];
+  currentIndex: number;
+  currentOccurrenceKey?: string | null;
+  scopeKey: string;
+};
+
 export type GreekLearningQuizOption = {
   id: string;
   label: string;

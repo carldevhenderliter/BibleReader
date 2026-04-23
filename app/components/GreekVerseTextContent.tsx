@@ -2,8 +2,8 @@
 
 import { GreekInlineQuizAnswer } from "@/app/components/GreekInlineQuizAnswer";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
-import { createGreekLearningQuizSelection, transliterateGreekSurface } from "@/lib/bible/greek";
-import type { GreekLearningQuizSelection, GreekToken, Verse } from "@/lib/bible/types";
+import { transliterateGreekSurface } from "@/lib/bible/greek";
+import type { GreekToken, Verse } from "@/lib/bible/types";
 
 type GreekVerseTextContentProps = {
   verse: Verse | null;
@@ -15,8 +15,6 @@ type GreekVerseTextContentProps = {
   showGloss?: boolean;
   enableGreekLearning?: boolean;
   getOccurrenceKey?: (token: GreekToken, index: number) => string;
-  nextLearningSelections?: Record<string, GreekLearningQuizSelection | null>;
-  onAdvanceGreekLearningQuiz?: (selection: GreekLearningQuizSelection) => void;
   onOpenGreekDictionary?: NonNullable<{
     (
       selection: {
@@ -46,8 +44,6 @@ export function GreekVerseTextContent({
   showGloss = true,
   enableGreekLearning = true,
   getOccurrenceKey,
-  nextLearningSelections = {},
-  onAdvanceGreekLearningQuiz,
   onOpenGreekDictionary
 }: GreekVerseTextContentProps) {
   const { activeGreekLearningQuizSelection, isGreekLearningMode } = useReaderWorkspace();
@@ -74,14 +70,6 @@ export function GreekVerseTextContent({
               getOccurrenceKey?.(token, index) ??
               token.occurrenceKey ??
               `greek:${verse.number}:${index}`;
-            const tokenWithOccurrenceKey = {
-              ...token,
-              occurrenceKey
-            };
-            const learningSelection = createGreekLearningQuizSelection(
-              tokenWithOccurrenceKey,
-              occurrenceKey
-            );
 
             return (
               <span
@@ -133,11 +121,7 @@ export function GreekVerseTextContent({
                 {enableGreekLearning &&
                 isGreekLearningMode &&
                 activeGreekLearningQuizSelection?.occurrenceKey === occurrenceKey ? (
-                  <GreekInlineQuizAnswer
-                    nextSelection={nextLearningSelections[occurrenceKey] ?? null}
-                    onAdvance={onAdvanceGreekLearningQuiz}
-                    selection={activeGreekLearningQuizSelection ?? learningSelection}
-                  />
+                  <GreekInlineQuizAnswer selection={activeGreekLearningQuizSelection} />
                 ) : null}
               </span>
             );
@@ -155,14 +139,6 @@ export function GreekVerseTextContent({
           getOccurrenceKey?.(token, index) ??
           token.occurrenceKey ??
           `greek:${verse.number}:${index}`;
-        const tokenWithOccurrenceKey = {
-          ...token,
-          occurrenceKey
-        };
-        const learningSelection = createGreekLearningQuizSelection(
-          tokenWithOccurrenceKey,
-          occurrenceKey
-        );
 
         return (
           <span className="verse-greek-inline-wrap" key={`${verse.number}:${index}:${token.surface}`}>
@@ -200,11 +176,7 @@ export function GreekVerseTextContent({
             {enableGreekLearning &&
             isGreekLearningMode &&
             activeGreekLearningQuizSelection?.occurrenceKey === occurrenceKey ? (
-              <GreekInlineQuizAnswer
-                nextSelection={nextLearningSelections[occurrenceKey] ?? null}
-                onAdvance={onAdvanceGreekLearningQuiz}
-                selection={activeGreekLearningQuizSelection ?? learningSelection}
-              />
+              <GreekInlineQuizAnswer selection={activeGreekLearningQuizSelection} />
             ) : null}
           </span>
         );

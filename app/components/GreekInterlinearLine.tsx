@@ -6,7 +6,6 @@ import { GreekInlineQuizAnswer } from "@/app/components/GreekInlineQuizAnswer";
 import { useGreekGlossOverrides } from "@/app/components/GreekGlossOverridesProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import {
-  createGreekLearningQuizSelection,
   getGreekGlossOptions,
   getGreekLemmaEntry,
   getGreekTokenOccurrenceKey,
@@ -17,7 +16,6 @@ import type {
   EsvInterlinearDisplayVerse,
   GreekGlossOption,
   GreekLemmaEntry,
-  GreekLearningQuizSelection,
   GreekToken
 } from "@/lib/bible/types";
 
@@ -26,8 +24,6 @@ type GreekInterlinearLineProps = {
   chapterNumber: number;
   verse: EsvInterlinearDisplayVerse;
   onOpenGreekDictionary: (token: GreekToken) => void;
-  nextLearningSelections?: Record<string, GreekLearningQuizSelection | null>;
-  onAdvanceGreekLearningQuiz?: (selection: GreekLearningQuizSelection) => void;
   showSurface?: boolean;
   showLemma?: boolean;
   showTransliteration?: boolean;
@@ -38,9 +34,7 @@ export function GreekInterlinearLine({
   bookSlug,
   chapterNumber,
   verse,
-  nextLearningSelections = {},
   onOpenGreekDictionary,
-  onAdvanceGreekLearningQuiz,
   showSurface = true,
   showLemma = true,
   showTransliteration = true,
@@ -88,7 +82,6 @@ export function GreekInterlinearLine({
           tokenWithOccurrenceKey,
           tokenIndex,
           occurrenceKey,
-          learningSelection: createGreekLearningQuizSelection(tokenWithOccurrenceKey, occurrenceKey),
           entry,
           override,
           lemmaDefault,
@@ -266,7 +259,6 @@ export function GreekInterlinearLine({
           tokenWithOccurrenceKey,
           tokenIndex,
           occurrenceKey,
-          learningSelection,
           entry,
           override,
           lemmaDefault,
@@ -466,11 +458,7 @@ export function GreekInterlinearLine({
               ) : null}
               {isGreekLearningMode &&
               activeGreekLearningQuizSelection?.occurrenceKey === occurrenceKey ? (
-                <GreekInlineQuizAnswer
-                  nextSelection={nextLearningSelections[occurrenceKey] ?? null}
-                  onAdvance={onAdvanceGreekLearningQuiz}
-                  selection={activeGreekLearningQuizSelection ?? learningSelection}
-                />
+                <GreekInlineQuizAnswer selection={activeGreekLearningQuizSelection} />
               ) : null}
             </span>
             {token.trailingPunctuation ? (
