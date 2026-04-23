@@ -169,7 +169,7 @@ describe("ReaderStrongsPanel", () => {
 
     expect(await within(studyPane).findByText("Greek Learning")).toBeInTheDocument();
     expect(await within(studyPane).findByText("Which meaning matches this word?")).toBeInTheDocument();
-    expect(within(studyPane).getByText("Lemma Definition")).toBeInTheDocument();
+    expect(within(studyPane).queryByText("Lemma Definition")).not.toBeInTheDocument();
 
     const options = await within(studyPane).findAllByRole("button");
     const quizOptions = options.filter((button) =>
@@ -187,6 +187,7 @@ describe("ReaderStrongsPanel", () => {
 
     expect(await within(studyPane).findByText("Correct Answer")).toBeInTheDocument();
     expect(within(studyPane).getByText(/means beginning/i)).toBeInTheDocument();
+    expect(within(studyPane).getByText("Lemma Definition")).toBeInTheDocument();
 
     fireEvent.click(within(studyPane).getByRole("button", { name: "Try Again" }));
 

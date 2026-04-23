@@ -764,16 +764,15 @@ export function ReaderStrongsPanel() {
                   ? `${quiz.selectedFormValue ?? quiz.entry.lemma} means ${quiz.correctAnswer}.`
                   : `${quiz.selectedFormValue ?? quiz.entry.lemma} means ${quiz.correctAnswer}, not ${selectedOption?.label}.`}
               </p>
+              {!answeredCorrectly && quiz.entry.longDefinition ? (
+                <div className="greek-learning-quiz-definition">
+                  <p className="strongs-entry-section-label">Lemma Definition</p>
+                  <p className="strongs-entry-copy greek-dictionary-long-definition">
+                    {quiz.entry.longDefinition}
+                  </p>
+                </div>
+              ) : null}
             </div>
-          ) : null}
-        </section>
-        <section className="greek-learning-quiz-definition">
-          <p className="strongs-entry-section-label">Lemma Definition</p>
-          <p className="strongs-entry-copy">{quiz.entry.shortDefinition}</p>
-          {quiz.entry.longDefinition ? (
-            <p className="strongs-entry-copy greek-dictionary-long-definition">
-              {quiz.entry.longDefinition}
-            </p>
           ) : null}
         </section>
         <div className="greek-learning-quiz-actions">
