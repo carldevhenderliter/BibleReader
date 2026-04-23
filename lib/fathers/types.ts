@@ -2,6 +2,8 @@ import type { EnglishToken, GreekToken } from "@/lib/bible/types";
 
 export type FathersCorpus = "apostolic-fathers";
 
+export type FathersAuthenticityStatus = "accepted" | "fragmentary" | "excluded";
+
 export type FathersGreekToken = {
   surface: string;
   lemma: string;
@@ -54,6 +56,11 @@ export type FathersWorkMeta = {
   sectionCount: number;
   greekSource: string;
   englishSource: string;
+  compositionDate?: string;
+  fullTextUrl?: string;
+  fullTextSource?: string;
+  authenticityStatus?: FathersAuthenticityStatus;
+  authenticityNote?: string;
 };
 
 export type FathersWorkPayload = {

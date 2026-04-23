@@ -1,0 +1,110 @@
+{
+  "work": {
+    "slug": "papias-fragments",
+    "title": "Fragments of Papias",
+    "shortTitle": "Papias Frg.",
+    "author": "Papias of Hierapolis",
+    "order": 11,
+    "corpus": "apostolic-fathers",
+    "sectionCount": 10,
+    "greekSource": "",
+    "englishSource": "https://www.newadvent.org/fathers/0125.htm",
+    "compositionDate": "c. 110–130 AD",
+    "fullTextUrl": "https://www.newadvent.org/fathers/0125.htm",
+    "fullTextSource": "New Advent, Roberts-Donaldson",
+    "authenticityStatus": "fragmentary",
+    "authenticityNote": "Included as a fragment collection of Papias's Expositions of the Oracles of the Lord."
+  },
+  "segments": [
+    {
+      "id": "papias-fragments:fragment-1",
+      "ref": "fragment-1",
+      "label": "Fragment I",
+      "greek": "",
+      "english": "From the exposition of the oracles of the Lord. The writings of Papias in common circulation are five in number, and these are called an Exposition of the Oracles of the Lord. Irenaeus makes mention of these as the only works written by him, saying that testimony is borne to these things in writing by Papias, an ancient man, a hearer of John, and a friend of Polycarp, in the fourth of his books; for five books were composed by him. Moreover, Papias himself, in the introduction to his books, makes it manifest that he was not himself a hearer and eye-witness of the holy apostles; but he tells us that he received the truths of religion from those who were acquainted with them. He says that he would not be unwilling to put down, along with his interpretations, whatsoever instructions he received with care at any time from the elders, and stored up with care in his memory, assuring the reader of their truth. He did not, like the multitude, take pleasure in those who spoke much, but in those who taught the truth; nor in those who related strange commandments, but in those who rehearsed the commandments given by the Lord to faith, and proceeding from truth itself. If any one who had attended on the elders came, he asked minutely after their sayings: what Andrew or Peter said, or what was said by Philip, Thomas, James, John, Matthew, or any other of the Lord's disciples, and what Aristion and the presbyter John, disciples of the Lord, say. For he imagined that what was to be got from books was not so profitable to him as what came from the living and abiding voice.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "papias-fragments:fragment-2",
+      "ref": "fragment-2",
+      "label": "Fragment II",
+      "greek": "",
+      "english": "The early Christians called those who practised a godly guilelessness children, as is stated by Papias in the first book of the Lord's Expositions and by Clement of Alexandria in his Paedagogue.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "papias-fragments:fragment-3",
+      "ref": "fragment-3",
+      "label": "Fragment III",
+      "greek": "",
+      "english": "Judas walked about in this world a sad example of impiety; for his body having swollen to such an extent that he could not pass where a chariot could pass easily, he was crushed by the chariot, so that his bowels gushed out.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "papias-fragments:fragment-4",
+      "ref": "fragment-4",
+      "label": "Fragment IV",
+      "greek": "",
+      "english": "As the elders who saw John the disciple of the Lord remembered that they had heard from him how the Lord taught in regard to those times, they said that days would come in which vines would grow, each having ten thousand branches, and each branch ten thousand twigs, and each true twig ten thousand shoots, and every shoot ten thousand clusters, and every cluster ten thousand grapes, and every grape when pressed would give twenty-five metretes of wine. When any one of the saints should lay hold of a cluster, another would cry out, I am a better cluster; take me; bless the Lord through me. In like manner, a grain of wheat would produce ten thousand ears, every ear ten thousand grains, and every grain ten pounds of clear, pure, fine flour; apples, seeds, and grass would produce in similar proportions; and all animals, feeding only on the productions of the earth, would become peaceable and harmonious, and be in perfect subjection to man. Papias adds that these things are credible to believers, and connects them with the times mentioned by Isaiah.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "papias-fragments:fragment-5",
+      "ref": "fragment-5",
+      "label": "Fragment V",
+      "greek": "",
+      "english": "As the presbyters say, those who are deemed worthy of an abode in heaven shall go there; others shall enjoy the delights of Paradise; and others shall possess the splendour of the city. Everywhere the Saviour will be seen according as they shall be worthy who see Him. There is this distinction between the habitation of those who produce a hundred-fold, sixty-fold, and thirty-fold: the first will be taken up into the heavens, the second will dwell in Paradise, and the last will inhabit the city. On this account the Lord said, In my Father's house are many mansions. The presbyters, the disciples of the apostles, say that this is the gradation and arrangement of those who are saved, and that they advance through steps of this nature; moreover, they ascend through the Spirit to the Son, and through the Son to the Father.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "papias-fragments:fragment-6",
+      "ref": "fragment-6",
+      "label": "Fragment VI",
+      "greek": "",
+      "english": "Papias affirms that he received the sayings of the apostles from those who accompanied them, and he asserts that he heard in person Aristion and the presbyter John. He mentions them frequently by name and in his writings gives their traditions. He relates that a dead man was raised to life in his day, and mentions another miracle concerning Justus, surnamed Barsabas, who swallowed a deadly poison and received no harm by the grace of the Lord. Papias also set down other things from unwritten tradition, including some strange parables and instructions of the Saviour, some other things of a more fabulous nature, and a millennium after the resurrection when the personal reign of Christ would be established on this earth. He gives a tradition regarding Mark who wrote the Gospel: the presbyter said that Mark, having become the interpreter of Peter, wrote down accurately whatsoever he remembered, though not in exact order, for he neither heard the Lord nor accompanied Him, but afterwards accompanied Peter, who accommodated his instructions to the necessities of his hearers. Mark made no mistake in writing some things as he remembered them, taking special care not to omit anything he had heard and not to put anything fictitious into the statements. With regard to Matthew, Papias states that Matthew put together the oracles in the Hebrew language, and each one interpreted them as best he could. The same person uses proofs from the First Epistle of John and from the Epistle of Peter, and gives another story of a woman accused of many sins before the Lord, found in the Gospel according to the Hebrews.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "papias-fragments:fragment-7",
+      "ref": "fragment-7",
+      "label": "Fragment VII",
+      "greek": "",
+      "english": "Papias speaks thus, word for word: To some of them He gave dominion over the arrangement of the world, and He commissioned them to exercise their dominion well. Immediately after this he says that their arrangement came to nothing.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "papias-fragments:fragment-8",
+      "ref": "fragment-8",
+      "label": "Fragment VIII",
+      "greek": "",
+      "english": "With regard to the inspiration of the book of Revelation, Papias is named among older witnesses, together with Irenaeus, Methodius, and Hippolytus, as one who bore satisfactory testimony to it.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "papias-fragments:fragment-9",
+      "ref": "fragment-9",
+      "label": "Fragment IX",
+      "greek": "",
+      "english": "Taking occasion from Papias of Hierapolis, the illustrious disciple of the apostle who leaned on the bosom of Christ, and from Clement, Pantaenus, and the wise Ammonius, the ancient and first expositors agreed with each other and understood the work of the six days as referring to Christ and the whole Church.",
+      "greekNormalized": "",
+      "greekTokens": []
+    },
+    {
+      "id": "papias-fragments:fragment-10",
+      "ref": "fragment-10",
+      "label": "Fragment X",
+      "greek": "",
+      "english": "Mary the mother of the Lord; Mary the wife of Cleophas or Alphaeus, mother of James the bishop and apostle, Simon, Thaddaeus, and Joseph; Mary Salome, wife of Zebedee and mother of John the evangelist and James; and Mary Magdalene are the four Marys found in the Gospel. James, Judas, and Joseph were sons of an aunt of the Lord. James and John were sons of another aunt of the Lord. Mary, mother of James the Less and Joseph, wife of Alphaeus, was the sister of Mary the mother of the Lord, whom John names of Cleophas, either from her father, from the family of the clan, or for some other reason. Mary Salome is called Salome either from her husband or her village. Some affirm that she is the same as Mary of Cleophas because she had two husbands.",
+      "greekNormalized": "",
+      "greekTokens": []
+    }
+  ]
+}

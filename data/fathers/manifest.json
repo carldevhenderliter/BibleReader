@@ -8,7 +8,11 @@
     "corpus": "apostolic-fathers",
     "sectionCount": 66,
     "greekSource": "jtauber/apostolic-fathers:texts/001-i_clement.txt",
-    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.i.html"
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.i.html",
+    "compositionDate": "c. 96 AD",
+    "fullTextUrl": "https://www.ccel.org/ccel/lightfoot/fathers.ii.i.html",
+    "fullTextSource": "CCEL Lightfoot",
+    "authenticityStatus": "accepted"
   },
   {
     "slug": "2-clement",
@@ -19,7 +23,12 @@
     "corpus": "apostolic-fathers",
     "sectionCount": 20,
     "greekSource": "jtauber/apostolic-fathers:texts/002-ii_clement.txt",
-    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.ii.html"
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.ii.html",
+    "compositionDate": "c. 130–160 AD",
+    "fullTextUrl": "https://www.ccel.org/ccel/lightfoot/fathers.ii.ii.html",
+    "fullTextSource": "CCEL Lightfoot",
+    "authenticityStatus": "excluded",
+    "authenticityNote": "Excluded from the authentic corpus because it is an anonymous ancient homily, not a work by Clement of Rome."
   },
   {
     "slug": "ignatius-ephesians",
@@ -30,7 +39,12 @@
     "corpus": "apostolic-fathers",
     "sectionCount": 22,
     "greekSource": "jtauber/apostolic-fathers:texts/003-ignatius-ephesians.txt",
-    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.iii.html"
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.iii.html",
+    "compositionDate": "c. 107–110 AD",
+    "fullTextUrl": "https://www.ccel.org/ccel/lightfoot/fathers.ii.iii.html",
+    "fullTextSource": "CCEL Lightfoot",
+    "authenticityStatus": "accepted",
+    "authenticityNote": "Included as one of the seven commonly accepted middle-recension Ignatian letters."
   },
   {
     "slug": "ignatius-magnesians",
@@ -41,7 +55,12 @@
     "corpus": "apostolic-fathers",
     "sectionCount": 16,
     "greekSource": "jtauber/apostolic-fathers:texts/004-ignatius-magnesians.txt",
-    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.iv.html"
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.iv.html",
+    "compositionDate": "c. 107–110 AD",
+    "fullTextUrl": "https://www.ccel.org/ccel/lightfoot/fathers.ii.iv.html",
+    "fullTextSource": "CCEL Lightfoot",
+    "authenticityStatus": "accepted",
+    "authenticityNote": "Included as one of the seven commonly accepted middle-recension Ignatian letters."
   },
   {
     "slug": "ignatius-trallians",
@@ -52,7 +71,12 @@
     "corpus": "apostolic-fathers",
     "sectionCount": 14,
     "greekSource": "jtauber/apostolic-fathers:texts/005-ignatius-trallians.txt",
-    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.v.html"
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.v.html",
+    "compositionDate": "c. 107–110 AD",
+    "fullTextUrl": "https://www.ccel.org/ccel/lightfoot/fathers.ii.v.html",
+    "fullTextSource": "CCEL Lightfoot",
+    "authenticityStatus": "accepted",
+    "authenticityNote": "Included as one of the seven commonly accepted middle-recension Ignatian letters."
   },
   {
     "slug": "ignatius-romans",
@@ -63,7 +87,12 @@
     "corpus": "apostolic-fathers",
     "sectionCount": 11,
     "greekSource": "jtauber/apostolic-fathers:texts/006-ignatius-romans.txt",
-    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.vi.html"
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.vi.html",
+    "compositionDate": "c. 107–110 AD",
+    "fullTextUrl": "https://www.ccel.org/ccel/lightfoot/fathers.ii.vi.html",
+    "fullTextSource": "CCEL Lightfoot",
+    "authenticityStatus": "accepted",
+    "authenticityNote": "Included as one of the seven commonly accepted middle-recension Ignatian letters."
   },
   {
     "slug": "ignatius-philadelphians",
@@ -74,7 +103,12 @@
     "corpus": "apostolic-fathers",
     "sectionCount": 12,
     "greekSource": "jtauber/apostolic-fathers:texts/007-ignatius-philadelphians.txt",
-    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.vii.html"
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.vii.html",
+    "compositionDate": "c. 107–110 AD",
+    "fullTextUrl": "https://www.ccel.org/ccel/lightfoot/fathers.ii.vii.html",
+    "fullTextSource": "CCEL Lightfoot",
+    "authenticityStatus": "accepted",
+    "authenticityNote": "Included as one of the seven commonly accepted middle-recension Ignatian letters."
   },
   {
     "slug": "ignatius-smyrnaeans",
@@ -85,7 +119,12 @@
     "corpus": "apostolic-fathers",
     "sectionCount": 14,
     "greekSource": "jtauber/apostolic-fathers:texts/008-ignatius-smyrnaeans.txt",
-    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.viii.html"
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.viii.html",
+    "compositionDate": "c. 107–110 AD",
+    "fullTextUrl": "https://www.ccel.org/ccel/lightfoot/fathers.ii.viii.html",
+    "fullTextSource": "CCEL Lightfoot",
+    "authenticityStatus": "accepted",
+    "authenticityNote": "Included as one of the seven commonly accepted middle-recension Ignatian letters."
   },
   {
     "slug": "ignatius-polycarp",
@@ -96,7 +135,12 @@
     "corpus": "apostolic-fathers",
     "sectionCount": 9,
     "greekSource": "jtauber/apostolic-fathers:texts/009-ignatius-polycarp.txt",
-    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.ix.html"
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.ix.html",
+    "compositionDate": "c. 107–110 AD",
+    "fullTextUrl": "https://www.ccel.org/ccel/lightfoot/fathers.ii.ix.html",
+    "fullTextSource": "CCEL Lightfoot",
+    "authenticityStatus": "accepted",
+    "authenticityNote": "Included as one of the seven commonly accepted middle-recension Ignatian letters."
   },
   {
     "slug": "polycarp-to-philippians",
@@ -107,94 +151,145 @@
     "corpus": "apostolic-fathers",
     "sectionCount": 15,
     "greekSource": "jtauber/apostolic-fathers:texts/010-polycarp-philippians.txt",
-    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.x.html"
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.x.html",
+    "compositionDate": "c. 110–140 AD",
+    "fullTextUrl": "https://www.ccel.org/ccel/lightfoot/fathers.ii.x.html",
+    "fullTextSource": "CCEL Lightfoot",
+    "authenticityStatus": "accepted",
+    "authenticityNote": "Generally accepted as Polycarp's letter, with some scholarly discussion about transmission and individual sections."
+  },
+  {
+    "slug": "papias-fragments",
+    "title": "Fragments of Papias",
+    "shortTitle": "Papias Frg.",
+    "author": "Papias of Hierapolis",
+    "order": 11,
+    "corpus": "apostolic-fathers",
+    "sectionCount": 10,
+    "greekSource": "",
+    "englishSource": "https://www.newadvent.org/fathers/0125.htm",
+    "compositionDate": "c. 110–130 AD",
+    "fullTextUrl": "https://www.newadvent.org/fathers/0125.htm",
+    "fullTextSource": "New Advent, Roberts-Donaldson",
+    "authenticityStatus": "fragmentary",
+    "authenticityNote": "Included as a fragment collection of Papias's Expositions of the Oracles of the Lord."
   },
   {
     "slug": "didache",
     "title": "Didache",
     "shortTitle": "Did.",
     "author": "Anonymous",
-    "order": 11,
+    "order": 12,
     "corpus": "apostolic-fathers",
     "sectionCount": 16,
     "greekSource": "jtauber/apostolic-fathers:texts/011-didache.txt",
-    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.xii.html"
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.xii.html",
+    "compositionDate": "c. 70–120 AD",
+    "fullTextUrl": "https://www.ccel.org/ccel/lightfoot/fathers.ii.xii.html",
+    "fullTextSource": "CCEL Lightfoot",
+    "authenticityStatus": "excluded",
+    "authenticityNote": "Excluded from the authentic corpus because it is anonymous."
   },
   {
     "slug": "barnabas",
     "title": "Barnabas",
     "shortTitle": "Barn.",
     "author": "Pseudo-Barnabas",
-    "order": 12,
+    "order": 13,
     "corpus": "apostolic-fathers",
     "sectionCount": 21,
     "greekSource": "jtauber/apostolic-fathers:texts/012-barnabas.txt",
-    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.xiii.html"
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.xiii.html",
+    "compositionDate": "c. 70–135 AD",
+    "fullTextUrl": "https://www.ccel.org/ccel/lightfoot/fathers.ii.xiii.html",
+    "fullTextSource": "CCEL Lightfoot",
+    "authenticityStatus": "excluded",
+    "authenticityNote": "Excluded from the authentic corpus because it is pseudonymous and not by Barnabas."
   },
   {
     "slug": "shepherd-of-hermas",
     "title": "Shepherd of Hermas",
     "shortTitle": "Herm.",
     "author": "Hermas",
-    "order": 13,
+    "order": 14,
     "corpus": "apostolic-fathers",
     "sectionCount": 27,
     "greekSource": "jtauber/apostolic-fathers:texts/013-shepherd.txt",
-    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.xiv.html"
+    "englishSource": "https://www.ccel.org/ccel/lightfoot/fathers.ii.xiv.html",
+    "compositionDate": "c. 100–160 AD",
+    "fullTextUrl": "https://www.ccel.org/ccel/lightfoot/fathers.ii.xiv.html",
+    "fullTextSource": "CCEL Lightfoot",
+    "authenticityStatus": "excluded",
+    "authenticityNote": "Excluded from this strict named-Father corpus because the work is traditionally attributed but not treated here as an authentic writing of a known Church Father."
   },
   {
     "slug": "recognitions-of-clement",
     "title": "The Recognitions of Clement",
     "shortTitle": "Recognitions",
     "author": "T. Flavius Clemens",
-    "order": 14,
+    "order": 15,
     "corpus": "apostolic-fathers",
     "sectionCount": 508,
     "greekSource": "",
-    "englishSource": "PDF/NA1.pdf (main text)"
+    "englishSource": "PDF/NA1.pdf (main text)",
+    "fullTextSource": "Local PDF/NA1.pdf",
+    "authenticityStatus": "excluded",
+    "authenticityNote": "Excluded from the authentic corpus as a late Pseudo-Clementine work."
   },
   {
     "slug": "preaching-of-peter",
     "title": "The Preaching of Peter",
     "shortTitle": "Preaching",
     "author": "T. Flavius Clemens / Jackson H. Snyder",
-    "order": 15,
+    "order": 16,
     "corpus": "apostolic-fathers",
     "sectionCount": 6,
     "greekSource": "",
-    "englishSource": "PDF/NA1.pdf (Appendix A)"
+    "englishSource": "PDF/NA1.pdf (Appendix A)",
+    "fullTextSource": "Local PDF/NA1.pdf",
+    "authenticityStatus": "excluded",
+    "authenticityNote": "Excluded from the authentic corpus as a Pseudo-Clementine or related non-authentic work."
   },
   {
     "slug": "ascents-of-james",
     "title": "The Ascents of James",
     "shortTitle": "Ascents",
     "author": "T. Flavius Clemens / Jackson H. Snyder",
-    "order": 16,
+    "order": 17,
     "corpus": "apostolic-fathers",
     "sectionCount": 21,
     "greekSource": "",
-    "englishSource": "PDF/NA1.pdf (Appendix B)"
+    "englishSource": "PDF/NA1.pdf (Appendix B)",
+    "fullTextSource": "Local PDF/NA1.pdf",
+    "authenticityStatus": "excluded",
+    "authenticityNote": "Excluded from the authentic corpus as a Pseudo-Clementine or related non-authentic work."
   },
   {
     "slug": "excerpts-from-clements-homilies",
     "title": "Excerpts from Clement’s Homilies",
     "shortTitle": "Homilies Excerpts",
     "author": "T. Flavius Clemens / Jackson H. Snyder",
-    "order": 17,
+    "order": 18,
     "corpus": "apostolic-fathers",
     "sectionCount": 91,
     "greekSource": "",
-    "englishSource": "PDF/NA1.pdf (Appendix C)"
+    "englishSource": "PDF/NA1.pdf (Appendix C)",
+    "fullTextSource": "Local PDF/NA1.pdf",
+    "authenticityStatus": "excluded",
+    "authenticityNote": "Excluded from the authentic corpus as a Pseudo-Clementine work."
   },
   {
     "slug": "sinai-arabic-summary",
     "title": "The Sinai (Arabic) Summary",
     "shortTitle": "Sinai Summary",
     "author": "Margaret Dunlop Gibson / T. Flavius Clemens",
-    "order": 18,
+    "order": 19,
     "corpus": "apostolic-fathers",
     "sectionCount": 3,
     "greekSource": "",
-    "englishSource": "PDF/NA1.pdf (Appendix D)"
+    "englishSource": "PDF/NA1.pdf (Appendix D)",
+    "fullTextSource": "Local PDF/NA1.pdf",
+    "authenticityStatus": "excluded",
+    "authenticityNote": "Excluded from the authentic corpus as a later summary, not an authentic Apostolic Father writing."
   }
 ]

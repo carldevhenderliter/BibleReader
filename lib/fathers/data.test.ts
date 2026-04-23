@@ -1,4 +1,5 @@
 import {
+  getAuthenticFathersWorks,
   getFathersWorkBySlug,
   getFathersWorkPayload,
   getFathersWorks
@@ -8,9 +9,28 @@ describe("fathers data", () => {
   it("loads the Apostolic Fathers manifest", async () => {
     const works = await getFathersWorks();
 
-    expect(works).toHaveLength(18);
+    expect(works).toHaveLength(19);
     expect(works[0]?.slug).toBe("1-clement");
     expect(works.at(-1)?.slug).toBe("sinai-arabic-summary");
+  });
+
+  it("filters the authentic Apostolic Fathers corpus", async () => {
+    const works = await getAuthenticFathersWorks();
+
+    expect(works.map((work) => work.slug)).toEqual([
+      "1-clement",
+      "ignatius-ephesians",
+      "ignatius-magnesians",
+      "ignatius-trallians",
+      "ignatius-romans",
+      "ignatius-philadelphians",
+      "ignatius-smyrnaeans",
+      "ignatius-polycarp",
+      "polycarp-to-philippians",
+      "papias-fragments"
+    ]);
+    expect(works.find((work) => work.slug === "2-clement")).toBeUndefined();
+    expect(works.find((work) => work.slug === "didache")).toBeUndefined();
   });
 
   it("loads 1 Clement with linked Greek and English segments", async () => {
@@ -65,5 +85,20 @@ describe("fathers data", () => {
       wordIndex: 0
     });
     expect(payload?.segments[0]?.greekUndertextAnnotations).toEqual([]);
+  });
+
+  it("loads Papias as an English-only fragment collection", async () => {
+    const [work, payload] = await Promise.all([
+      getFathersWorkBySlug("papias-fragments"),
+      getFathersWorkPayload("papias-fragments")
+    ]);
+
+    expect(work?.authenticityStatus).toBe("fragmentary");
+    expect(work?.fullTextUrl).toBe("https://www.newadvent.org/fathers/0125.htm");
+    expect(payload?.segments).toHaveLength(10);
+    expect(payload?.segments[0]?.label).toBe("Fragment I");
+    expect(payload?.segments[0]?.english).toContain("Exposition of the Oracles of the Lord");
+    expect(payload?.segments[0]?.greek).toBe("");
+    expect(payload?.segments[0]?.greekTokens).toEqual([]);
   });
 });

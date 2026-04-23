@@ -55,6 +55,14 @@ export async function getFathersWorks(): Promise<FathersWorkMeta[]> {
   return readManifest();
 }
 
+export async function getAuthenticFathersWorks(): Promise<FathersWorkMeta[]> {
+  const works = await getFathersWorks();
+
+  return works.filter((work) =>
+    work.authenticityStatus === "accepted" || work.authenticityStatus === "fragmentary"
+  );
+}
+
 export async function getFathersWorkBySlug(workSlug: string): Promise<FathersWorkMeta | null> {
   const works = await getFathersWorks();
 
@@ -62,18 +70,31 @@ export async function getFathersWorkBySlug(workSlug: string): Promise<FathersWor
 }
 
 export async function getFathersWorkPayload(workSlug: string): Promise<FathersWorkPayload | null> {
-  const payload = await readWorkFile(workSlug);
+  const [payload, manifestWork] = await Promise.all([
+    readWorkFile(workSlug),
+    getFathersWorkBySlug(workSlug)
+  ]);
 
   if (!payload) {
     return null;
   }
 
+  const payloadWithManifestMeta = manifestWork
+    ? {
+        ...payload,
+        work: {
+          ...payload.work,
+          ...manifestWork
+        }
+      }
+    : payload;
+
   if (!isNa1GreekAnnotationWork(workSlug)) {
-    return payload;
+    return payloadWithManifestMeta;
   }
 
   const annotationFile = await readAnnotationFile(workSlug);
-  const segmentsWithEnglishTokens = payload.segments.map((segment) => ({
+  const segmentsWithEnglishTokens = payloadWithManifestMeta.segments.map((segment) => ({
     ...segment,
     englishTokens: tokenizeFathersEnglishText(segment.english)
   }));
@@ -83,7 +104,7 @@ export async function getFathersWorkPayload(workSlug: string): Promise<FathersWo
   );
 
   return {
-    ...payload,
+    ...payloadWithManifestMeta,
     segments: segmentsWithEnglishTokens.map((segment) => ({
       ...segment,
       greekUndertextAnnotations: annotationsBySegment[segment.id] ?? []

@@ -390,6 +390,14 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
               <p className="reader-toolbar-title">{payload.work.title}</p>
               <p className="reader-toolbar-meta">
                 {payload.work.author}
+                {payload.work.compositionDate ? (
+                  <>
+                    <span className="reader-meta-separator" aria-hidden="true">
+                      ·
+                    </span>
+                    {payload.work.compositionDate}
+                  </>
+                ) : null}
                 <span className="reader-meta-separator" aria-hidden="true">
                   ·
                 </span>
@@ -411,6 +419,17 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
           </div>
         </div>
         <div className="reading-surface fathers-reading-surface">
+          {payload.work.fullTextUrl ? (
+            <p className="muted-copy fathers-source-link">
+              Full text source:{" "}
+              <a href={payload.work.fullTextUrl} rel="noreferrer" target="_blank">
+                {payload.work.fullTextSource ?? payload.work.fullTextUrl}
+              </a>
+              {payload.work.authenticityNote ? ` · ${payload.work.authenticityNote}` : ""}
+            </p>
+          ) : payload.work.authenticityNote ? (
+            <p className="muted-copy fathers-source-link">{payload.work.authenticityNote}</p>
+          ) : null}
           {isNa1AnnotationWork && annotationSaveMessage ? (
             <div
               className={`fathers-annotation-status fathers-annotation-status-${annotationSaveStatus}`}

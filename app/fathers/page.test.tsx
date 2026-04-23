@@ -6,15 +6,15 @@ import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-c
 
 jest.mock("@/lib/fathers/data");
 
-const mockedGetFathersWorks = jest.mocked(fathersData.getFathersWorks);
+const mockedGetAuthenticFathersWorks = jest.mocked(fathersData.getAuthenticFathersWorks);
 
 describe("FathersPage", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("renders the Fathers library with Greek and English-only Clementine works", async () => {
-    mockedGetFathersWorks.mockResolvedValue([
+  it("renders the authentic Apostolic Fathers library", async () => {
+    mockedGetAuthenticFathersWorks.mockResolvedValue([
       {
         slug: "1-clement",
         title: "1 Clement",
@@ -24,18 +24,26 @@ describe("FathersPage", () => {
         corpus: "apostolic-fathers",
         sectionCount: 66,
         greekSource: "example-greek",
-        englishSource: "example-english"
+        englishSource: "example-english",
+        compositionDate: "c. 96 AD",
+        fullTextUrl: "https://www.ccel.org/ccel/lightfoot/fathers.ii.i.html",
+        fullTextSource: "CCEL Lightfoot",
+        authenticityStatus: "accepted"
       },
       {
-        slug: "recognitions-of-clement",
-        title: "The Recognitions of Clement",
-        shortTitle: "Recognitions",
-        author: "T. Flavius Clemens",
-        order: 14,
+        slug: "papias-fragments",
+        title: "Fragments of Papias",
+        shortTitle: "Papias Frg.",
+        author: "Papias of Hierapolis",
+        order: 11,
         corpus: "apostolic-fathers",
-        sectionCount: 508,
+        sectionCount: 10,
         greekSource: "",
-        englishSource: "PDF/NA1.pdf (main text)"
+        englishSource: "https://www.newadvent.org/fathers/0125.htm",
+        compositionDate: "c. 110–130 AD",
+        fullTextUrl: "https://www.newadvent.org/fathers/0125.htm",
+        fullTextSource: "New Advent, Roberts-Donaldson",
+        authenticityStatus: "fragmentary"
       }
     ]);
 
@@ -47,10 +55,10 @@ describe("FathersPage", () => {
       "href",
       "/fathers/1-clement"
     );
-    expect(screen.getByRole("link", { name: "Open The Recognitions of Clement" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Open Fragments of Papias" })).toHaveAttribute(
       "href",
-      "/fathers/recognitions-of-clement"
+      "/fathers/papias-fragments"
     );
-    expect(screen.getByText("Study early Christian texts")).toBeInTheDocument();
+    expect(screen.getByText("Authentic Apostolic Fathers")).toBeInTheDocument();
   });
 });
