@@ -194,6 +194,16 @@ describe("ReaderStrongsPanel", () => {
     expect(await within(studyPane).findByText("Which meaning matches this word?")).toBeInTheDocument();
     expect(within(studyPane).queryByText("Correct Answer")).not.toBeInTheDocument();
 
+    fireEvent.click(within(studyPane).getByRole("button", { name: "Type answer" }));
+    fireEvent.change(within(studyPane).getByLabelText("Type the meaning"), {
+      target: {
+        value: "beginning"
+      }
+    });
+    fireEvent.click(within(studyPane).getByRole("button", { name: "Check" }));
+
+    expect(await within(studyPane).findByText("Correct")).toBeInTheDocument();
+
     fireEvent.click(await within(studyPane).findByRole("button", { name: "Open Dictionary" }));
 
     expect(await within(studyPane).findByText("Greek Dictionary")).toBeInTheDocument();

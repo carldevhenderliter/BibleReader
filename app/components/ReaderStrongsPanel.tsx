@@ -39,6 +39,69 @@ type BibleOccurrencesState = {
 };
 
 type StrongsTab = "bible" | "bdag" | "outside-bible";
+type GreekLearningAnswerMode = "multiple-choice" | "typed";
+
+const GREEK_QUIZ_TYPED_STOP_WORDS = new Set([
+  "a",
+  "an",
+  "and",
+  "as",
+  "by",
+  "for",
+  "in",
+  "of",
+  "or",
+  "the",
+  "that",
+  "thing",
+  "to",
+  "with"
+]);
+
+function normalizeGreekQuizAnswer(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/[’']/g, "")
+    .replace(/[^a-z0-9\s]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function getAcceptedGreekQuizAnswers(correctAnswer: string) {
+  const answers = new Set<string>();
+  const normalizedFullAnswer = normalizeGreekQuizAnswer(correctAnswer);
+
+  if (normalizedFullAnswer) {
+    answers.add(normalizedFullAnswer);
+  }
+
+  for (const part of correctAnswer.split(/[;,]|\s+or\s+/i)) {
+    const normalizedPart = normalizeGreekQuizAnswer(part);
+
+    if (normalizedPart) {
+      answers.add(normalizedPart);
+    }
+
+    const words = normalizedPart
+      .split(" ")
+      .filter((word) => word.length > 2 && !GREEK_QUIZ_TYPED_STOP_WORDS.has(word));
+
+    for (const word of words) {
+      answers.add(word);
+    }
+  }
+
+  return answers;
+}
+
+function isTypedGreekQuizAnswerCorrect(answer: string, correctAnswer: string) {
+  const normalizedAnswer = normalizeGreekQuizAnswer(answer);
+
+  return (
+    normalizedAnswer.length > 0 &&
+    getAcceptedGreekQuizAnswers(correctAnswer).has(normalizedAnswer)
+  );
+}
 
 function getAvailableTabs(entry: StrongsEntry): StrongsTab[] {
   const tabs: StrongsTab[] = ["bible"];
@@ -156,7 +219,11 @@ export function ReaderStrongsPanel() {
   const [greekLearningQuiz, setGreekLearningQuiz] = useState<GreekLearningQuiz | null>(null);
   const [greekLearningQuizStatus, setGreekLearningQuizStatus] = useState<"idle" | "loading" | "loaded">("idle");
   const [greekLearningAttempt, setGreekLearningAttempt] = useState(0);
+  const [greekLearningAnswerMode, setGreekLearningAnswerMode] =
+    useState<GreekLearningAnswerMode>("multiple-choice");
   const [selectedQuizOptionId, setSelectedQuizOptionId] = useState<string | null>(null);
+  const [typedQuizAnswer, setTypedQuizAnswer] = useState("");
+  const [submittedTypedQuizAnswer, setSubmittedTypedQuizAnswer] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [activeTabs, setActiveTabs] = useState<Record<string, StrongsTab>>({});
   const [bibleOccurrences, setBibleOccurrences] = useState<Record<string, BibleOccurrencesState>>({});
@@ -273,6 +340,8 @@ export function ReaderStrongsPanel() {
   useEffect(() => {
     setGreekLearningAttempt(0);
     setSelectedQuizOptionId(null);
+    setTypedQuizAnswer("");
+    setSubmittedTypedQuizAnswer(null);
   }, [activeGreekLearningQuizSelection?.entryKey, activeGreekLearningQuizSelection?.selectedForm]);
 
   useEffect(() => {
@@ -692,8 +761,16 @@ export function ReaderStrongsPanel() {
     const selectedOption = selectedQuizOptionId
       ? quiz.options.find((option) => option.id === selectedQuizOptionId) ?? null
       : null;
-    const hasAnswered = selectedOption !== null;
-    const answeredCorrectly = selectedOption?.isCorrect === true;
+    const hasTypedAnswer = submittedTypedQuizAnswer !== null;
+    const typedAnswerCorrect =
+      submittedTypedQuizAnswer !== null &&
+      isTypedGreekQuizAnswerCorrect(submittedTypedQuizAnswer, quiz.correctAnswer);
+    const hasAnswered =
+      greekLearningAnswerMode === "typed" ? hasTypedAnswer : selectedOption !== null;
+    const answeredCorrectly =
+      greekLearningAnswerMode === "typed" ? typedAnswerCorrect : selectedOption?.isCorrect === true;
+    const submittedAnswerLabel =
+      greekLearningAnswerMode === "typed" ? submittedTypedQuizAnswer : selectedOption?.label;
 
     return (
       <article className="strongs-entry-card greek-learning-quiz-card" key={quiz.entry.entryKey}>
@@ -721,35 +798,109 @@ export function ReaderStrongsPanel() {
         <section className="greek-learning-quiz-body">
           <p className="strongs-entry-section-label">Greek Quiz</p>
           <p className="strongs-entry-copy greek-learning-quiz-prompt">{quiz.prompt}</p>
-          <div className="greek-learning-quiz-options">
-            {quiz.options.map((option) => {
-              const isSelected = selectedQuizOptionId === option.id;
-              const showCorrectState = hasAnswered && option.isCorrect;
-              const showWrongState = hasAnswered && isSelected && !option.isCorrect;
-
-              return (
-                <button
-                  className={`greek-learning-quiz-option${
-                    isSelected ? " is-selected" : ""
-                  }${showCorrectState ? " is-correct" : ""}${
-                    showWrongState ? " is-wrong" : ""
-                  }`}
-                  disabled={hasAnswered}
-                  key={option.id}
-                  onClick={() => setSelectedQuizOptionId(option.id)}
-                  type="button"
-                >
-                  <span>{option.label}</span>
-                  {showCorrectState ? (
-                    <span className="greek-learning-quiz-option-status">Correct</span>
-                  ) : null}
-                  {showWrongState ? (
-                    <span className="greek-learning-quiz-option-status">Not this one</span>
-                  ) : null}
-                </button>
-              );
-            })}
+          <div
+            className="greek-learning-quiz-mode-switch"
+            role="group"
+            aria-label="Greek quiz answer mode"
+          >
+            <button
+              className={`reader-inline-button${
+                greekLearningAnswerMode === "multiple-choice" ? " is-active" : ""
+              }`}
+              onClick={() => {
+                setGreekLearningAnswerMode("multiple-choice");
+                setTypedQuizAnswer("");
+                setSubmittedTypedQuizAnswer(null);
+              }}
+              type="button"
+            >
+              Multiple choice
+            </button>
+            <button
+              className={`reader-inline-button${
+                greekLearningAnswerMode === "typed" ? " is-active" : ""
+              }`}
+              onClick={() => {
+                setGreekLearningAnswerMode("typed");
+                setSelectedQuizOptionId(null);
+              }}
+              type="button"
+            >
+              Type answer
+            </button>
           </div>
+          {greekLearningAnswerMode === "multiple-choice" ? (
+            <div className="greek-learning-quiz-options">
+              {quiz.options.map((option) => {
+                const isSelected = selectedQuizOptionId === option.id;
+                const showCorrectState = hasAnswered && option.isCorrect;
+                const showWrongState = hasAnswered && isSelected && !option.isCorrect;
+
+                return (
+                  <button
+                    className={`greek-learning-quiz-option${
+                      isSelected ? " is-selected" : ""
+                    }${showCorrectState ? " is-correct" : ""}${
+                      showWrongState ? " is-wrong" : ""
+                    }`}
+                    disabled={hasAnswered}
+                    key={option.id}
+                    onClick={() => setSelectedQuizOptionId(option.id)}
+                    type="button"
+                  >
+                    <span>{option.label}</span>
+                    {showCorrectState ? (
+                      <span className="greek-learning-quiz-option-status">Correct</span>
+                    ) : null}
+                    {showWrongState ? (
+                      <span className="greek-learning-quiz-option-status">Not this one</span>
+                    ) : null}
+                  </button>
+                );
+              })}
+            </div>
+          ) : (
+            <form
+              className="greek-learning-quiz-typed-form"
+              onSubmit={(event) => {
+                event.preventDefault();
+
+                if (!typedQuizAnswer.trim()) {
+                  return;
+                }
+
+                setSubmittedTypedQuizAnswer(typedQuizAnswer.trim());
+              }}
+            >
+              <label
+                className="greek-learning-quiz-typed-label"
+                htmlFor="greek-learning-typed-answer"
+              >
+                Type the meaning
+              </label>
+              <div className="greek-learning-quiz-typed-row">
+                <input
+                  className="greek-learning-quiz-typed-input"
+                  disabled={hasTypedAnswer}
+                  id="greek-learning-typed-answer"
+                  onChange={(event) => setTypedQuizAnswer(event.currentTarget.value)}
+                  placeholder="Example: beginning"
+                  type="text"
+                  value={typedQuizAnswer}
+                />
+                <button
+                  className="reader-inline-button"
+                  disabled={!typedQuizAnswer.trim() || hasTypedAnswer}
+                  type="submit"
+                >
+                  Check
+                </button>
+              </div>
+              <p className="strongs-entry-meta">
+                You can type the full definition or a key word from it.
+              </p>
+            </form>
+          )}
           {hasAnswered ? (
             <div
               className={`greek-learning-quiz-feedback${
@@ -762,7 +913,7 @@ export function ReaderStrongsPanel() {
               <p className="strongs-entry-copy">
                 {answeredCorrectly
                   ? `${quiz.selectedFormValue ?? quiz.entry.lemma} means ${quiz.correctAnswer}.`
-                  : `${quiz.selectedFormValue ?? quiz.entry.lemma} means ${quiz.correctAnswer}, not ${selectedOption?.label}.`}
+                  : `${quiz.selectedFormValue ?? quiz.entry.lemma} means ${quiz.correctAnswer}, not ${submittedAnswerLabel}.`}
               </p>
               {!answeredCorrectly && quiz.entry.longDefinition ? (
                 <div className="greek-learning-quiz-definition">
@@ -796,6 +947,8 @@ export function ReaderStrongsPanel() {
             onClick={() => {
               setGreekLearningAttempt((current) => current + 1);
               setSelectedQuizOptionId(null);
+              setTypedQuizAnswer("");
+              setSubmittedTypedQuizAnswer(null);
             }}
             type="button"
           >

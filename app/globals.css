@@ -2485,6 +2485,45 @@ button.fathers-annotation-anchor:focus-visible {
   font-size: 0.98rem;
 }
 
+.greek-learning-quiz-mode-switch,
+.greek-learning-quiz-typed-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.greek-learning-quiz-typed-form {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.greek-learning-quiz-typed-label {
+  color: rgba(255, 255, 255, 0.72);
+  font-family: var(--reader-ui-font);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.greek-learning-quiz-typed-input {
+  flex: 1 1 13rem;
+  min-height: 2.45rem;
+  min-width: 0;
+  padding: 0.62rem 0.78rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.86rem;
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.94);
+  outline: none;
+}
+
+.greek-learning-quiz-typed-input:focus-visible {
+  border-color: rgba(var(--reader-accent-rgb), 0.34);
+  box-shadow: 0 0 0 3px rgba(var(--reader-accent-rgb), 0.09);
+}
+
 .greek-learning-quiz-options {
   display: grid;
   gap: 0.55rem;
