@@ -142,37 +142,39 @@ export function GreekVerseTextContent({
 
         return (
           <span className="verse-greek-inline-wrap" key={`${verse.number}:${index}:${token.surface}`}>
-            {entryKey ? (
-              <button
-                className="verse-greek-inline-token"
-                onClick={() =>
-                  onOpenGreekDictionary({
-                    entryKey,
-                    strongs: token.strongs ?? null,
-                    lemma: token.lemma,
-                    label: token.lemma,
-                    occurrenceKey,
-                    selectedForm: token.surface,
-                    selectedFormMorphology: token.morphology ?? null,
-                    selectedFormDecodedMorphology: token.decodedMorphology ?? null,
-                    matchedQuery: token.surface,
-                    transliteration:
-                      token.transliteration ?? transliterateGreekSurface(token.surface),
-                    gloss: token.gloss ?? null
-                  })
-                }
-                type="button"
-              >
-                {token.surface}
-              </button>
-            ) : (
-              <span className="verse-greek-inline-token-text">{token.surface}</span>
-            )}
-            {token.trailingPunctuation ? (
-              <span aria-hidden="true" className="verse-greek-inline-punctuation">
-                {token.trailingPunctuation}
-              </span>
-            ) : null}
+            <span className="verse-greek-inline-head">
+              {entryKey ? (
+                <button
+                  className="verse-greek-inline-token"
+                  onClick={() =>
+                    onOpenGreekDictionary({
+                      entryKey,
+                      strongs: token.strongs ?? null,
+                      lemma: token.lemma,
+                      label: token.lemma,
+                      occurrenceKey,
+                      selectedForm: token.surface,
+                      selectedFormMorphology: token.morphology ?? null,
+                      selectedFormDecodedMorphology: token.decodedMorphology ?? null,
+                      matchedQuery: token.surface,
+                      transliteration:
+                        token.transliteration ?? transliterateGreekSurface(token.surface),
+                      gloss: token.gloss ?? null
+                    })
+                  }
+                  type="button"
+                >
+                  {token.surface}
+                </button>
+              ) : (
+                <span className="verse-greek-inline-token-text">{token.surface}</span>
+              )}
+              {token.trailingPunctuation ? (
+                <span aria-hidden="true" className="verse-greek-inline-punctuation">
+                  {token.trailingPunctuation}
+                </span>
+              ) : null}
+            </span>
             {enableGreekLearning &&
             isGreekLearningMode &&
             activeGreekLearningQuizSelection?.occurrenceKey === occurrenceKey ? (

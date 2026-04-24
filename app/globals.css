@@ -1572,11 +1572,19 @@ button.fathers-annotation-anchor:focus-visible {
 }
 
 .verse-greek-inline-wrap {
-  display: inline;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  vertical-align: top;
+  margin-inline-end: 0.28em;
+  max-width: 100%;
 }
 
-.verse-greek-inline-wrap + .verse-greek-inline-wrap::before {
-  content: " ";
+.verse-greek-inline-head {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.03em;
+  max-width: 100%;
 }
 
 .verse-greek-inline-token,
@@ -2623,7 +2631,7 @@ button.fathers-annotation-anchor:focus-visible {
 .greek-inline-quiz-status {
   display: grid;
   gap: 0.35rem;
-  width: min(18rem, 82vw);
+  width: min(18rem, calc(100vw - 3rem));
   margin-top: 0.42rem;
   padding: 0.58rem;
   border: 1px solid rgba(var(--reader-accent-rgb), 0.2);
@@ -2635,6 +2643,7 @@ button.fathers-annotation-anchor:focus-visible {
   font-size: 0.78rem;
   line-height: 1.35;
   text-align: left;
+  justify-items: stretch;
 }
 
 .greek-inline-quiz-status {
