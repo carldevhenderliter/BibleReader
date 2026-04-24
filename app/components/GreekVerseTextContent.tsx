@@ -1,8 +1,13 @@
 "use client";
 
-import { GreekInlineQuizAnswer } from "@/app/components/GreekInlineQuizAnswer";
+import { useMemo } from "react";
+
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
-import { transliterateGreekSurface } from "@/lib/bible/greek";
+import { useGreekSentenceQuiz } from "@/app/components/useGreekSentenceQuiz";
+import {
+  createGreekLearningQuizSelections,
+  transliterateGreekSurface
+} from "@/lib/bible/greek";
 import type { GreekToken, Verse } from "@/lib/bible/types";
 
 type GreekVerseTextContentProps = {
@@ -15,6 +20,7 @@ type GreekVerseTextContentProps = {
   showGloss?: boolean;
   enableGreekLearning?: boolean;
   getOccurrenceKey?: (token: GreekToken, index: number) => string;
+  greekLearningScopeKey?: string;
   onOpenGreekDictionary?: NonNullable<{
     (
       selection: {
@@ -44,9 +50,35 @@ export function GreekVerseTextContent({
   showGloss = true,
   enableGreekLearning = true,
   getOccurrenceKey,
+  greekLearningScopeKey,
   onOpenGreekDictionary
 }: GreekVerseTextContentProps) {
-  const { activeGreekLearningQuizSelection, isGreekLearningMode } = useReaderWorkspace();
+  const { isGreekLearningMode } = useReaderWorkspace();
+  const greekLearningSelections = useMemo(
+    () =>
+      createGreekLearningQuizSelections(
+        verse?.greekTokens,
+        (token, index) =>
+          getOccurrenceKey?.(token, index) ??
+          token.occurrenceKey ??
+          `greek:${verse?.number ?? 0}:${index}`
+      ),
+    [getOccurrenceKey, verse?.greekTokens, verse?.number]
+  );
+  const activeGreekLearningScopeKey =
+    greekLearningScopeKey ?? `greek-verse:${verse?.number ?? 0}`;
+  const {
+    answers,
+    checkSentence,
+    focusOccurrenceKey,
+    hasUncheckedAnswers,
+    isActive: isSentenceQuizActive,
+    isLoading: isSentenceQuizLoading,
+    resetSentence,
+    results,
+    setAnswer,
+    wrongCount
+  } = useGreekSentenceQuiz(greekLearningSelections, activeGreekLearningScopeKey);
 
   if (!verse) {
     return <p className={className ?? "verse-text verse-text-greek"} lang="el" />;
@@ -120,13 +152,72 @@ export function GreekVerseTextContent({
                 </button>
                 {enableGreekLearning &&
                 isGreekLearningMode &&
-                activeGreekLearningQuizSelection?.occurrenceKey === occurrenceKey ? (
-                  <GreekInlineQuizAnswer selection={activeGreekLearningQuizSelection} />
+                isSentenceQuizActive ? (
+                  <div
+                    className={`greek-sentence-quiz-field${
+                      results?.[occurrenceKey]?.isCorrect === true
+                        ? " is-correct"
+                        : results?.[occurrenceKey]?.isCorrect === false
+                          ? " is-wrong"
+                          : ""
+                    }`}
+                  >
+                    <label
+                      className="sr-only"
+                      htmlFor={`greek-sentence-quiz:${occurrenceKey}`}
+                    >
+                      Type meaning for {token.surface}
+                    </label>
+                    <input
+                      autoFocus={focusOccurrenceKey === occurrenceKey}
+                      className="greek-sentence-quiz-input"
+                      disabled={isSentenceQuizLoading}
+                      id={`greek-sentence-quiz:${occurrenceKey}`}
+                      onChange={(event) => {
+                        if (results) {
+                          resetSentence();
+                        }
+
+                        setAnswer(occurrenceKey, event.currentTarget.value);
+                      }}
+                      placeholder="Type meaning"
+                      type="text"
+                      value={answers[occurrenceKey] ?? ""}
+                    />
+                    {results?.[occurrenceKey]?.isCorrect === false ? (
+                      <small className="greek-sentence-quiz-correction">
+                        Wrong: {results[occurrenceKey]?.correctAnswer}
+                      </small>
+                    ) : null}
+                  </div>
                 ) : null}
               </span>
             );
           })}
         </div>
+        {enableGreekLearning && isGreekLearningMode && isSentenceQuizActive ? (
+          <div className="greek-sentence-quiz-actions">
+            <button
+              className="greek-inline-quiz-button"
+              disabled={isSentenceQuizLoading || hasUncheckedAnswers}
+              onClick={checkSentence}
+              type="button"
+            >
+              Check sentence
+            </button>
+            {results ? (
+              <p
+                className={`greek-sentence-quiz-summary${
+                  wrongCount === 0 ? " is-correct" : " is-wrong"
+                }`}
+              >
+                {wrongCount === 0
+                  ? "Sentence complete"
+                  : `${wrongCount} word${wrongCount === 1 ? "" : "s"} wrong`}
+              </p>
+            ) : null}
+          </div>
+        ) : null}
       </div>
     );
   }
@@ -177,12 +268,68 @@ export function GreekVerseTextContent({
             </span>
             {enableGreekLearning &&
             isGreekLearningMode &&
-            activeGreekLearningQuizSelection?.occurrenceKey === occurrenceKey ? (
-              <GreekInlineQuizAnswer selection={activeGreekLearningQuizSelection} />
+            isSentenceQuizActive ? (
+              <div
+                className={`greek-sentence-quiz-field${
+                  results?.[occurrenceKey]?.isCorrect === true
+                    ? " is-correct"
+                    : results?.[occurrenceKey]?.isCorrect === false
+                      ? " is-wrong"
+                      : ""
+                }`}
+              >
+                <label className="sr-only" htmlFor={`greek-sentence-quiz:${occurrenceKey}`}>
+                  Type meaning for {token.surface}
+                </label>
+                <input
+                  autoFocus={focusOccurrenceKey === occurrenceKey}
+                  className="greek-sentence-quiz-input"
+                  disabled={isSentenceQuizLoading}
+                  id={`greek-sentence-quiz:${occurrenceKey}`}
+                  onChange={(event) => {
+                    if (results) {
+                      resetSentence();
+                    }
+
+                    setAnswer(occurrenceKey, event.currentTarget.value);
+                  }}
+                  placeholder="Type meaning"
+                  type="text"
+                  value={answers[occurrenceKey] ?? ""}
+                />
+                {results?.[occurrenceKey]?.isCorrect === false ? (
+                  <small className="greek-sentence-quiz-correction">
+                    Wrong: {results[occurrenceKey]?.correctAnswer}
+                  </small>
+                ) : null}
+              </div>
             ) : null}
           </span>
         );
       })}
+      {enableGreekLearning && isGreekLearningMode && isSentenceQuizActive ? (
+        <div className="greek-sentence-quiz-actions">
+          <button
+            className="greek-inline-quiz-button"
+            disabled={isSentenceQuizLoading || hasUncheckedAnswers}
+            onClick={checkSentence}
+            type="button"
+          >
+            Check sentence
+          </button>
+          {results ? (
+            <p
+              className={`greek-sentence-quiz-summary${
+                wrongCount === 0 ? " is-correct" : " is-wrong"
+              }`}
+            >
+              {wrongCount === 0
+                ? "Sentence complete"
+                : `${wrongCount} word${wrongCount === 1 ? "" : "s"} wrong`}
+            </p>
+          ) : null}
+        </div>
+      ) : null}
     </div>
   );
 }

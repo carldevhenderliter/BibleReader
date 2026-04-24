@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 
 import { useBibleGreekUndertext } from "@/app/components/BibleGreekUndertextProvider";
 import { FathersEnglishUndertextContent } from "@/app/components/FathersEnglishUndertextContent";
@@ -16,13 +16,11 @@ import {
   tokenizeBibleEnglishText
 } from "@/lib/bible/annotations";
 import {
-  createGreekLearningQuizSelections,
   getGreekTokenOccurrenceKey
 } from "@/lib/bible/greek";
 import type {
   EnglishUndertextAnnotation,
   EsvInterlinearDisplayVerse,
-  GreekLearningQuizSelection,
   GreekToken,
   Verse
 } from "@/lib/bible/types";
@@ -45,8 +43,6 @@ type VerseListProps = {
     start: number;
     end: number;
   } | null;
-  greekLearningQueue?: GreekLearningQuizSelection[];
-  greekLearningScopeKey?: string;
   showStrongs?: boolean;
   verses: Verse[];
 };
@@ -66,8 +62,6 @@ export function VerseList({
   annotationMode = false,
   highlightedVerseNumber,
   highlightedVerseRange,
-  greekLearningQueue,
-  greekLearningScopeKey,
   showStrongs = false,
   verses
 }: VerseListProps) {
@@ -84,68 +78,6 @@ export function VerseList({
   const shouldShowVerseText = showVerseText ?? !showInterlinearOnly;
   const shouldShowGreekTokens =
     showGreekSurface || showGreekLemma || showGreekTransliteration || showGreekGloss;
-  const localGreekLearningQueue = useMemo(
-    () =>
-      verses.flatMap((verse) => {
-        const greekVersionInterlinearVerse =
-          version === "greek" && verse.greekTokens?.length
-            ? {
-                number: verse.number,
-                baseGreek: verse.text,
-                greek: verse.text,
-                tokens: verse.greekTokens
-              }
-            : null;
-        const activeGreekVerse =
-          greekVersionInterlinearVerse ?? interlinearVerseMap?.[verse.number] ?? null;
-
-        return createGreekLearningQuizSelections(
-          activeGreekVerse?.tokens,
-          (token, tokenIndex) =>
-            token.occurrenceKey ??
-            getGreekTokenOccurrenceKey(bookSlug, chapterNumber, verse.number, tokenIndex)
-        );
-      }),
-    [bookSlug, chapterNumber, interlinearVerseMap, verses, version]
-  );
-  const effectiveGreekLearningQueue = greekLearningQueue ?? localGreekLearningQueue;
-  const effectiveGreekLearningScopeKey =
-    greekLearningScopeKey ?? `chapter:${version}:${bookSlug}:${chapterNumber}`;
-
-  function startLearningFromOccurrence(occurrenceKey: string | null) {
-    if (effectiveGreekLearningQueue.length === 0) {
-      return;
-    }
-
-    startGreekLearningSession(
-      effectiveGreekLearningQueue,
-      occurrenceKey,
-      effectiveGreekLearningScopeKey
-    );
-  }
-
-  function handleGreekTokenSelection(token: GreekToken) {
-    const entryKey = token.entryKey ?? token.strongs ?? token.lemma;
-
-    if (isGreekLearningMode) {
-      startLearningFromOccurrence(token.occurrenceKey ?? null);
-      return;
-    }
-
-    openGreekDictionary({
-      entryKey,
-      strongs: token.strongs ?? null,
-      lemma: token.lemma,
-      label: token.lemma,
-      occurrenceKey: token.occurrenceKey ?? null,
-      selectedForm: token.surface,
-      selectedFormMorphology: token.morphology ?? null,
-      selectedFormDecodedMorphology: token.decodedMorphology ?? null,
-      matchedQuery: token.surface,
-      transliteration: token.transliteration ?? null,
-      gloss: token.gloss ?? null
-    });
-  }
 
   useEffect(() => {
     const scrollTargetVerseNumber =
@@ -217,6 +149,57 @@ export function VerseList({
         );
         const showBibleAnnotationLine =
           (annotationMode || undertextAnnotations.length > 0) && bibleAnnotationTokens.length > 0;
+        const greekLearningScopeKey = `verse:${version}:${bookSlug}:${chapterNumber}:${verse.number}`;
+        const startLearningSession = (occurrenceKey: string | null) => {
+          const activeGreekLearningQueue =
+            activeGreekVerse?.tokens?.map((token, tokenIndex) => ({
+              entryKey: token.entryKey ?? token.strongs ?? token.lemma,
+              strongs: token.strongs ?? null,
+              lemma: token.lemma,
+              label: token.lemma,
+              occurrenceKey:
+                token.occurrenceKey ??
+                getGreekTokenOccurrenceKey(bookSlug, chapterNumber, verse.number, tokenIndex),
+              selectedForm: token.surface,
+              selectedFormMorphology: token.morphology ?? null,
+              selectedFormDecodedMorphology: token.decodedMorphology ?? null,
+              matchedQuery: token.surface,
+              transliteration: token.transliteration ?? null,
+              gloss: token.gloss ?? null
+            })) ?? [];
+
+          if (activeGreekLearningQueue.length === 0) {
+            return;
+          }
+
+          startGreekLearningSession(
+            activeGreekLearningQueue,
+            occurrenceKey,
+            greekLearningScopeKey
+          );
+        };
+        const handleGreekTokenSelection = (token: GreekToken) => {
+          const entryKey = token.entryKey ?? token.strongs ?? token.lemma;
+
+          if (isGreekLearningMode) {
+            startLearningSession(token.occurrenceKey ?? null);
+            return;
+          }
+
+          openGreekDictionary({
+            entryKey,
+            strongs: token.strongs ?? null,
+            lemma: token.lemma,
+            label: token.lemma,
+            occurrenceKey: token.occurrenceKey ?? null,
+            selectedForm: token.surface,
+            selectedFormMorphology: token.morphology ?? null,
+            selectedFormDecodedMorphology: token.decodedMorphology ?? null,
+            matchedQuery: token.surface,
+            transliteration: token.transliteration ?? null,
+            gloss: token.gloss ?? null
+          });
+        };
 
         return (
           <div
@@ -234,6 +217,7 @@ export function VerseList({
                     version === "greek" && verse.greekTokens?.length ? (
                       <GreekVerseTextContent
                         className="verse-text verse-text-greek"
+                        greekLearningScopeKey={greekLearningScopeKey}
                         getOccurrenceKey={(token, tokenIndex) =>
                           token.occurrenceKey ??
                           getGreekTokenOccurrenceKey(
@@ -245,7 +229,7 @@ export function VerseList({
                         }
                         onOpenGreekDictionary={(selection) => {
                           if (isGreekLearningMode) {
-                            startLearningFromOccurrence(selection.occurrenceKey ?? null);
+                            startLearningSession(selection.occurrenceKey ?? null);
                             return;
                           }
 
@@ -349,6 +333,7 @@ export function VerseList({
                 <GreekInterlinearLine
                   bookSlug={bookSlug}
                   chapterNumber={chapterNumber}
+                  greekLearningScopeKey={greekLearningScopeKey}
                   onOpenGreekDictionary={handleGreekTokenSelection}
                   showGloss={showGreekGloss}
                   showLemma={showGreekLemma}

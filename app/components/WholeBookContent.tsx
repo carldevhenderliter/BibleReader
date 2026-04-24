@@ -20,17 +20,12 @@ import { useLocationSearch } from "@/app/components/useLocationSearch";
 import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
-import {
-  createGreekLearningQuizSelections,
-  getGreekTokenOccurrenceKey
-} from "@/lib/bible/greek";
 import type {
   BookMeta,
   BundledBookChapterMap,
   Chapter,
   EsvInterlinearDisplayChapter,
-  EsvInterlinearDisplayVerse,
-  GreekLearningQuizSelection
+  EsvInterlinearDisplayVerse
 } from "@/lib/bible/types";
 import { getBibleVersionBadge } from "@/lib/bible/version";
 
@@ -76,8 +71,6 @@ type LazyBookChapterSectionProps = {
   showGreekTransliteration: boolean;
   showStrongs: boolean;
   showVerseText: boolean;
-  greekLearningQueue: GreekLearningQuizSelection[];
-  greekLearningScopeKey: string;
   onRenderChapter: (chapterNumber: number) => void;
   annotationMode: boolean;
   version: string;
@@ -98,8 +91,6 @@ function LazyBookChapterSection({
   showGreekTransliteration,
   showStrongs,
   showVerseText,
-  greekLearningQueue,
-  greekLearningScopeKey,
   onRenderChapter,
   annotationMode,
   version
@@ -170,8 +161,6 @@ function LazyBookChapterSection({
         <VerseList
           bookSlug={bookSlug}
           chapterNumber={chapter.chapterNumber}
-          greekLearningQueue={greekLearningQueue}
-          greekLearningScopeKey={greekLearningScopeKey}
           highlightedVerseNumber={highlightedVerseNumber}
           highlightedVerseRange={highlightedVerseRange}
           interlinearVerseMap={interlinearVerseMap}
@@ -313,43 +302,6 @@ export function WholeBookContent({
   const [renderedChapterNumbers, setRenderedChapterNumbers] = useState<number[]>(
     initialRenderedChapterNumbers
   );
-  const renderedChapterNumbersKey = renderedChapterNumbers.join(",");
-  const greekLearningQueue = useMemo(
-    () =>
-      chapters
-        .filter((chapter) => renderedChapterNumbers.includes(chapter.chapterNumber))
-        .flatMap((chapter) =>
-          chapter.verses.flatMap((verse) => {
-            const greekVersionInterlinearVerse =
-              version === "greek" && verse.greekTokens?.length
-                ? {
-                    number: verse.number,
-                    baseGreek: verse.text,
-                    greek: verse.text,
-                    tokens: verse.greekTokens
-                  }
-                : null;
-            const activeGreekVerse =
-              greekVersionInterlinearVerse ??
-              interlinearByChapter?.get(chapter.chapterNumber)?.[verse.number] ??
-              null;
-
-            return createGreekLearningQuizSelections(
-              activeGreekVerse?.tokens,
-              (token, tokenIndex) =>
-                token.occurrenceKey ??
-                getGreekTokenOccurrenceKey(
-                  book.slug,
-                  chapter.chapterNumber,
-                  verse.number,
-                  tokenIndex
-                )
-            );
-          })
-        ),
-    [book.slug, chapters, interlinearByChapter, renderedChapterNumbers, version]
-  );
-  const greekLearningScopeKey = `book:${version}:${book.slug}:${renderedChapterNumbersKey}`;
 
   const handleRenderChapter = useCallback((chapterNumber: number) => {
     setRenderedChapterNumbers((current) =>
@@ -365,7 +317,7 @@ export function WholeBookContent({
 
   useEffect(() => {
     clearGreekLearningQuiz();
-  }, [clearGreekLearningQuiz, greekLearningScopeKey]);
+  }, [book.slug, clearGreekLearningQuiz, renderedChapterNumbers, version]);
 
   useEffect(() => {
     syncCurrentChapterData(book.slug, focusedChapter?.chapterNumber ?? 1, null);
@@ -514,8 +466,6 @@ export function WholeBookContent({
                 annotationMode={annotationMode}
                 bookSlug={book.slug}
                 chapter={chapter}
-                greekLearningQueue={greekLearningQueue}
-                greekLearningScopeKey={greekLearningScopeKey}
                 highlightedVerseNumber={
                   chapter.chapterNumber === activeHighlightedChapterNumber
                     ? activeHighlightedVerseNumber

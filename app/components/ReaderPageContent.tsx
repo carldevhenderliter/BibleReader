@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
@@ -20,10 +20,6 @@ import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { VerseList } from "@/app/components/VerseList";
-import {
-  createGreekLearningQuizSelections,
-  getGreekTokenOccurrenceKey
-} from "@/lib/bible/greek";
 import type {
   BookMeta,
   BundledChapterMap,
@@ -124,31 +120,6 @@ export function ReaderPageContent({
       )) ||
     (showEsvInterlinear &&
       chapter.verses.some((verse) => Boolean(interlinearVerseMap?.[verse.number]?.tokens?.length)));
-  const greekLearningQueue = useMemo(
-    () =>
-      chapter.verses.flatMap((verse) => {
-        const greekVersionInterlinearVerse =
-          version === "greek" && verse.greekTokens?.length
-            ? {
-                number: verse.number,
-                baseGreek: verse.text,
-                greek: verse.text,
-                tokens: verse.greekTokens
-              }
-            : null;
-        const activeGreekVerse =
-          greekVersionInterlinearVerse ?? interlinearVerseMap?.[verse.number] ?? null;
-
-        return createGreekLearningQuizSelections(
-          activeGreekVerse?.tokens,
-          (token, tokenIndex) =>
-            token.occurrenceKey ??
-            getGreekTokenOccurrenceKey(book.slug, chapter.chapterNumber, verse.number, tokenIndex)
-        );
-      }),
-    [book.slug, chapter.chapterNumber, chapter.verses, interlinearVerseMap, version]
-  );
-  const greekLearningScopeKey = `chapter:${version}:${book.slug}:${chapter.chapterNumber}`;
 
   if (!chapter) {
     return null;
@@ -187,7 +158,7 @@ export function ReaderPageContent({
 
   useEffect(() => {
     clearGreekLearningQuiz();
-  }, [clearGreekLearningQuiz, greekLearningScopeKey]);
+  }, [book.slug, chapter.chapterNumber, clearGreekLearningQuiz, version]);
 
   return (
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
@@ -297,8 +268,6 @@ export function ReaderPageContent({
             <VerseList
               bookSlug={book.slug}
               chapterNumber={chapter.chapterNumber}
-              greekLearningQueue={greekLearningQueue}
-              greekLearningScopeKey={greekLearningScopeKey}
               highlightedVerseNumber={activeHighlightedVerseNumber}
               highlightedVerseRange={activeHighlightedVerseRange}
               interlinearVerseMap={interlinearVerseMap}

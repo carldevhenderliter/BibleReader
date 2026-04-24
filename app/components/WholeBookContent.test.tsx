@@ -584,7 +584,7 @@ describe("WholeBookContent", () => {
     expect(screen.getByRole("button", { name: "Add Greek undertext for Jude" })).toBeInTheDocument();
   });
 
-  it("opens a Greek learning quiz from whole-book view when Learn Greek is enabled", async () => {
+  it("checks a whole Greek sentence from whole-book view when Learn Greek is enabled", async () => {
     window.localStorage.setItem(
       "bible-reader:customization",
       JSON.stringify({
@@ -615,32 +615,14 @@ describe("WholeBookContent", () => {
     fireEvent.click(await screen.findByRole("button", { name: "Learn Greek" }));
     fireEvent.click(screen.getByRole("button", { name: /Ἰούδας Ἰούδας G2455/i }));
 
-    const inlineAnswer = await screen.findByLabelText("Type meaning");
-
-    expect(inlineAnswer).toBeInTheDocument();
-    fireEvent.change(inlineAnswer, {
+    fireEvent.change(await screen.findByLabelText("Type meaning for Ἰούδας"), {
       target: {
         value: "Judas"
       }
     });
-    fireEvent.click(screen.getByRole("button", { name: "Check" }));
+    fireEvent.click(screen.getByRole("button", { name: "Check sentence" }));
 
-    await waitFor(() => {
-      const nextTokenWrap = screen
-        .getByRole("button", { name: /Ἀγαπητοί ἀγαπητός G27/i })
-        .closest(".verse-greek-token-wrap");
-
-      expect(nextTokenWrap?.querySelector(".greek-inline-quiz-input")).toBeInTheDocument();
-    });
-
-    fireEvent.change(await screen.findByLabelText("Type meaning"), {
-      target: {
-        value: "beloved"
-      }
-    });
-    fireEvent.click(screen.getByRole("button", { name: "Check" }));
-
-    expect(await screen.findByText("Finished")).toBeInTheDocument();
+    expect(await screen.findByText("Sentence complete")).toBeInTheDocument();
     expect(screen.queryByText("Greek Learning")).not.toBeInTheDocument();
   });
 

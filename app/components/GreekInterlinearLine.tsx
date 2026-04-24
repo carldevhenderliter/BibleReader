@@ -2,10 +2,11 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-import { GreekInlineQuizAnswer } from "@/app/components/GreekInlineQuizAnswer";
 import { useGreekGlossOverrides } from "@/app/components/GreekGlossOverridesProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
+import { useGreekSentenceQuiz } from "@/app/components/useGreekSentenceQuiz";
 import {
+  createGreekLearningQuizSelections,
   getGreekGlossOptions,
   getGreekLemmaEntry,
   getGreekTokenOccurrenceKey,
@@ -24,6 +25,7 @@ type GreekInterlinearLineProps = {
   chapterNumber: number;
   verse: EsvInterlinearDisplayVerse;
   onOpenGreekDictionary: (token: GreekToken) => void;
+  greekLearningScopeKey?: string;
   showSurface?: boolean;
   showLemma?: boolean;
   showTransliteration?: boolean;
@@ -35,12 +37,13 @@ export function GreekInterlinearLine({
   chapterNumber,
   verse,
   onOpenGreekDictionary,
+  greekLearningScopeKey,
   showSurface = true,
   showLemma = true,
   showTransliteration = true,
   showGloss = true
 }: GreekInterlinearLineProps) {
-  const { activeGreekLearningQuizSelection, isGreekLearningMode } = useReaderWorkspace();
+  const { isGreekLearningMode } = useReaderWorkspace();
   const {
     clearLemmaDefault,
     clearOverride,
@@ -53,6 +56,30 @@ export function GreekInterlinearLine({
   const [openOccurrenceKey, setOpenOccurrenceKey] = useState<string | null>(null);
   const [isCustomMode, setIsCustomMode] = useState(false);
   const [customDraft, setCustomDraft] = useState("");
+  const greekLearningSelections = useMemo(
+    () =>
+      createGreekLearningQuizSelections(
+        verse.tokens,
+        (token, tokenIndex) =>
+          token.occurrenceKey ??
+          getGreekTokenOccurrenceKey(bookSlug, chapterNumber, verse.number, tokenIndex)
+      ),
+    [bookSlug, chapterNumber, verse.number, verse.tokens]
+  );
+  const activeGreekLearningScopeKey =
+    greekLearningScopeKey ?? `verse:${bookSlug}:${chapterNumber}:${verse.number}`;
+  const {
+    answers,
+    checkSentence,
+    focusOccurrenceKey,
+    hasUncheckedAnswers,
+    isActive: isSentenceQuizActive,
+    isLoading: isSentenceQuizLoading,
+    resetSentence,
+    results,
+    setAnswer,
+    wrongCount
+  } = useGreekSentenceQuiz(greekLearningSelections, activeGreekLearningScopeKey);
 
   const tokenEntries = useMemo(
     () =>
@@ -456,9 +483,41 @@ export function GreekInterlinearLine({
                   ) : null}
                 </>
               ) : null}
-              {isGreekLearningMode &&
-              activeGreekLearningQuizSelection?.occurrenceKey === occurrenceKey ? (
-                <GreekInlineQuizAnswer selection={activeGreekLearningQuizSelection} />
+              {isGreekLearningMode && isSentenceQuizActive ? (
+                <div
+                  className={`greek-sentence-quiz-field${
+                    results?.[occurrenceKey]?.isCorrect === true
+                      ? " is-correct"
+                      : results?.[occurrenceKey]?.isCorrect === false
+                        ? " is-wrong"
+                        : ""
+                  }`}
+                >
+                  <label className="sr-only" htmlFor={`greek-sentence-quiz:${occurrenceKey}`}>
+                    Type meaning for {token.surface}
+                  </label>
+                  <input
+                    autoFocus={focusOccurrenceKey === occurrenceKey}
+                    className="greek-sentence-quiz-input"
+                    disabled={isSentenceQuizLoading}
+                    id={`greek-sentence-quiz:${occurrenceKey}`}
+                    onChange={(event) => {
+                      if (results) {
+                        resetSentence();
+                      }
+
+                      setAnswer(occurrenceKey, event.currentTarget.value);
+                    }}
+                    placeholder="Type meaning"
+                    type="text"
+                    value={answers[occurrenceKey] ?? ""}
+                  />
+                  {results?.[occurrenceKey]?.isCorrect === false ? (
+                    <small className="greek-sentence-quiz-correction">
+                      Wrong: {results[occurrenceKey]?.correctAnswer}
+                    </small>
+                  ) : null}
+                </div>
               ) : null}
             </span>
             {token.trailingPunctuation ? (
@@ -469,6 +528,29 @@ export function GreekInterlinearLine({
           </span>
         )
       )}
+      {isGreekLearningMode && isSentenceQuizActive ? (
+        <div className="greek-sentence-quiz-actions">
+          <button
+            className="greek-inline-quiz-button"
+            disabled={isSentenceQuizLoading || hasUncheckedAnswers}
+            onClick={checkSentence}
+            type="button"
+          >
+            Check sentence
+          </button>
+          {results ? (
+            <p
+              className={`greek-sentence-quiz-summary${
+                wrongCount === 0 ? " is-correct" : " is-wrong"
+              }`}
+            >
+              {wrongCount === 0
+                ? "Sentence complete"
+                : `${wrongCount} word${wrongCount === 1 ? "" : "s"} wrong`}
+            </p>
+          ) : null}
+        </div>
+      ) : null}
     </div>
   );
 }

@@ -12,7 +12,6 @@ import { useReaderCustomization } from "@/app/components/ReaderCustomizationProv
 import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
-import { createGreekLearningQuizSelections } from "@/lib/bible/greek";
 import type { EnglishUndertextAnnotation, GreekToken } from "@/lib/bible/types";
 import { saveFathersAnnotationFile } from "@/lib/fathers/annotation-save";
 import { isNa1GreekAnnotationWork } from "@/lib/fathers/annotations";
@@ -186,20 +185,6 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
       })),
     [works]
   );
-  const greekLearningQueue = useMemo(
-    () =>
-      payload.segments
-        .filter((segment) => renderedSectionIds.includes(segment.id))
-        .flatMap((segment) =>
-          createGreekLearningQuizSelections(
-            (segment.greekLexicalTokens as GreekToken[] | undefined) ?? undefined,
-            (token, tokenIndex) => token.occurrenceKey ?? `${segment.id}:${tokenIndex}`
-          )
-        ),
-    [payload.segments, renderedSectionIds]
-  );
-  const greekLearningScopeKey = `fathers:${payload.work.slug}:${renderedSectionIds.join(",")}`;
-
   useEffect(() => {
     setActiveSectionId(payload.segments[0]?.id ?? "");
   }, [payload.segments]);
@@ -219,7 +204,7 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
 
   useEffect(() => {
     clearGreekLearningQuiz();
-  }, [clearGreekLearningQuiz, greekLearningScopeKey]);
+  }, [clearGreekLearningQuiz, payload.work.slug, renderedSectionIds]);
 
   const handleRenderSection = useCallback((segmentId: string) => {
     setRenderedSectionIds((current) =>
@@ -494,15 +479,33 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
                 <GreekVerseTextContent
                   className="verse-text verse-text-greek fathers-segment-greek"
                   displayMode="stacked"
+                  greekLearningScopeKey={`fathers:${payload.work.slug}:${segment.id}`}
                   getOccurrenceKey={(token, tokenIndex) =>
                     token.occurrenceKey ?? `${segment.id}:${tokenIndex}`
                   }
                   onOpenGreekDictionary={(selection) => {
                     if (isGreekLearningMode) {
+                      const segmentGreekLearningQueue =
+                        ((segment.greekLexicalTokens as GreekToken[] | undefined) ?? []).map(
+                          (token, tokenIndex) => ({
+                            entryKey: token.entryKey ?? token.strongs ?? token.lemma,
+                            strongs: token.strongs ?? null,
+                            lemma: token.lemma,
+                            label: token.lemma,
+                            occurrenceKey: token.occurrenceKey ?? `${segment.id}:${tokenIndex}`,
+                            selectedForm: token.surface,
+                            selectedFormMorphology: token.morphology ?? null,
+                            selectedFormDecodedMorphology: token.decodedMorphology ?? null,
+                            matchedQuery: token.surface,
+                            transliteration: token.transliteration ?? null,
+                            gloss: token.gloss ?? null
+                          })
+                        );
+
                       startGreekLearningSession(
-                        greekLearningQueue,
+                        segmentGreekLearningQueue,
                         selection.occurrenceKey ?? null,
-                        greekLearningScopeKey
+                        `fathers:${payload.work.slug}:${segment.id}`
                       );
                       return;
                     }

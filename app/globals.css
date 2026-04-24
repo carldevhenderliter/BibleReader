@@ -2733,6 +2733,75 @@ button.fathers-annotation-anchor:focus-visible {
   border-color: rgba(224, 107, 107, 0.42);
 }
 
+.greek-sentence-quiz-field {
+  display: grid;
+  gap: 0.22rem;
+  width: 100%;
+  margin-top: 0.34rem;
+}
+
+.greek-sentence-quiz-input {
+  min-width: 0;
+  width: 100%;
+  padding: 0.42rem 0.48rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.62rem;
+  background: rgba(255, 255, 255, 0.055);
+  color: rgba(255, 255, 255, 0.94);
+  font-family: var(--reader-ui-font);
+  font-size: 0.72rem;
+  line-height: 1.2;
+  outline: none;
+}
+
+.greek-sentence-quiz-input:focus-visible {
+  border-color: rgba(var(--reader-accent-rgb), 0.36);
+  box-shadow: 0 0 0 3px rgba(var(--reader-accent-rgb), 0.1);
+}
+
+.greek-sentence-quiz-field.is-correct .greek-sentence-quiz-input {
+  border-color: rgba(73, 194, 124, 0.42);
+  background: rgba(73, 194, 124, 0.1);
+}
+
+.greek-sentence-quiz-field.is-wrong .greek-sentence-quiz-input {
+  border-color: rgba(224, 107, 107, 0.42);
+  background: rgba(224, 107, 107, 0.1);
+}
+
+.greek-sentence-quiz-correction {
+  color: rgba(255, 198, 198, 0.88);
+  font-family: var(--reader-ui-font);
+  font-size: 0.66rem;
+  line-height: 1.3;
+  text-align: left;
+}
+
+.greek-sentence-quiz-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  margin-top: 0.6rem;
+}
+
+.greek-sentence-quiz-summary {
+  margin: 0;
+  font-family: var(--reader-ui-font);
+  font-size: 0.74rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.greek-sentence-quiz-summary.is-correct {
+  color: rgba(164, 237, 194, 0.92);
+}
+
+.greek-sentence-quiz-summary.is-wrong {
+  color: rgba(255, 198, 198, 0.92);
+}
+
 @media (max-width: 48rem) {
   .verse-interlinear {
     gap: 0.72rem 0.42rem;

@@ -287,13 +287,14 @@ describe("FathersReaderContent", () => {
     expect(screen.getByText("Transliteration: ekklēsia")).toBeInTheDocument();
   });
 
-  it("opens a Greek learning quiz when Learn Greek is enabled for Fathers text", async () => {
+  it("opens a Greek sentence quiz when Learn Greek is enabled for Fathers text", async () => {
     renderFathersReader();
 
     fireEvent.click(screen.getByRole("button", { name: "Learn Greek" }));
     fireEvent.click(screen.getByRole("button", { name: /ἐκκλησία ἐκκλησία G1577/i }));
 
-    expect(await screen.findByLabelText("Type meaning")).toBeInTheDocument();
+    expect(await screen.findByLabelText("Type meaning for ἐκκλησία")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Check sentence" })).toBeInTheDocument();
     expect(screen.queryByText("Greek Learning")).not.toBeInTheDocument();
     expect(screen.queryByText("Which meaning matches this word?")).not.toBeInTheDocument();
   });

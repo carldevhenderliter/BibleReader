@@ -480,7 +480,7 @@ describe("ReaderPageContent", () => {
     ).toBeInTheDocument();
   });
 
-  it("advances through consecutive Greek words in chapter view when Learn Greek is enabled", async () => {
+  it("checks a whole Greek sentence in chapter view when Learn Greek is enabled", async () => {
     window.localStorage.setItem(
       "bible-reader:customization",
       JSON.stringify({
@@ -507,50 +507,33 @@ describe("ReaderPageContent", () => {
     fireEvent.click(await screen.findByRole("button", { name: "Learn Greek" }));
     fireEvent.click(screen.getByRole("button", { name: /Βίβλος βίβλος G976/i }));
 
-    const answerCurrentQuiz = async (value: string) => {
-      const inlineAnswer = await screen.findByLabelText("Type meaning");
-      fireEvent.change(inlineAnswer, {
-        target: {
-          value
-        }
-      });
-      fireEvent.click(screen.getByRole("button", { name: "Check" }));
-    };
-
-    await answerCurrentQuiz("book");
-    await waitFor(() => {
-      const nextTokenWrap = screen
-        .getByRole("button", { name: /γενέσεως γένεσις G1078/i })
-        .closest(".verse-greek-token-wrap");
-
-      expect(nextTokenWrap?.querySelector(".greek-inline-quiz-input")).toBeInTheDocument();
+    fireEvent.change(await screen.findByLabelText("Type meaning for Βίβλος"), {
+      target: {
+        value: "book"
+      }
     });
-
-    await answerCurrentQuiz("genealogy");
-    await waitFor(() => {
-      const nextTokenWrap = screen
-        .getByRole("button", { name: /Ἰησοῦ Ἰησοῦς G2424/i })
-        .closest(".verse-greek-token-wrap");
-
-      expect(nextTokenWrap?.querySelector(".greek-inline-quiz-input")).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText("Type meaning for γενέσεως"), {
+      target: {
+        value: "genealogy"
+      }
     });
-
-    await answerCurrentQuiz("Jesus");
-    await waitFor(() => {
-      const nextTokenWrap = screen
-        .getByRole("button", { name: /χριστοῦ Χριστός G5547/i })
-        .closest(".verse-greek-token-wrap");
-
-      expect(nextTokenWrap?.querySelector(".greek-inline-quiz-input")).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText("Type meaning for Ἰησοῦ"), {
+      target: {
+        value: "Jesus"
+      }
     });
+    fireEvent.change(screen.getByLabelText("Type meaning for χριστοῦ"), {
+      target: {
+        value: "Christ"
+      }
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Check sentence" }));
 
-    await answerCurrentQuiz("Christ");
-
-    expect(await screen.findByText("Finished")).toBeInTheDocument();
+    expect(await screen.findByText("Sentence complete")).toBeInTheDocument();
     expect(screen.queryByText("Greek Learning")).not.toBeInTheDocument();
   });
 
-  it("shows correction and waits for Continue after a wrong Greek learning answer", async () => {
+  it("shows which Greek sentence answers are wrong in chapter view", async () => {
     window.localStorage.setItem(
       "bible-reader:customization",
       JSON.stringify({
@@ -577,26 +560,30 @@ describe("ReaderPageContent", () => {
     fireEvent.click(await screen.findByRole("button", { name: "Learn Greek" }));
     fireEvent.click(screen.getByRole("button", { name: /Βίβλος βίβλος G976/i }));
 
-    fireEvent.change(await screen.findByLabelText("Type meaning"), {
+    fireEvent.change(await screen.findByLabelText("Type meaning for Βίβλος"), {
+      target: {
+        value: "book"
+      }
+    });
+    fireEvent.change(screen.getByLabelText("Type meaning for γενέσεως"), {
       target: {
         value: "wrong"
       }
     });
-    fireEvent.click(screen.getByRole("button", { name: "Check" }));
-
-    expect(await screen.findByText("Correct answer")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Continue" })).toBeInTheDocument();
-    expect(screen.getByText(/papyrus plant/i)).toBeInTheDocument();
-
-    fireEvent.click(screen.getByRole("button", { name: "Continue" }));
-
-    await waitFor(() => {
-      const nextTokenWrap = screen
-        .getByRole("button", { name: /γενέσεως γένεσις G1078/i })
-        .closest(".verse-greek-token-wrap");
-
-      expect(nextTokenWrap?.querySelector(".greek-inline-quiz-input")).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText("Type meaning for Ἰησοῦ"), {
+      target: {
+        value: "Jesus"
+      }
     });
+    fireEvent.change(screen.getByLabelText("Type meaning for χριστοῦ"), {
+      target: {
+        value: "Christ"
+      }
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Check sentence" }));
+
+    expect(await screen.findByText("1 word wrong")).toBeInTheDocument();
+    expect(screen.getByText(/Wrong: source, origin/i)).toBeInTheDocument();
   });
 
   it("renders custom verse translation editors in chapter view", () => {
