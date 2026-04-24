@@ -94,6 +94,7 @@ export function GreekInlineQuizAnswer({ selection }: GreekInlineQuizAnswerProps)
             trimmedAnswer,
             selection.gloss,
             quiz.entry.shortDefinition,
+            quiz.entry.longDefinition,
             quiz.correctAnswer
           )
             ? "correct"

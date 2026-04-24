@@ -275,4 +275,15 @@ describe("Greek dictionary lookup", () => {
       )
     ).toBe(true);
   });
+
+  it("accepts article answers like 'the' from long lemma definitions", () => {
+    expect(
+      isTypedGreekQuizAnswerCorrect(
+        "The",
+        null,
+        "this, that, or these",
+        "nullho,ho the definite article the sometimes to besupplied, at others omitted, in English idiom — the, this, that, one,he, she, it, etc.\nthis, that, these, etc.\nthe\nthis, that, or these"
+      )
+    ).toBe(true);
+  });
 });

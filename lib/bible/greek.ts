@@ -1248,7 +1248,7 @@ export function getAcceptedGreekQuizAnswers(correctAnswer: string) {
     answers.add(normalizedFullAnswer);
   }
 
-  for (const part of correctAnswer.split(/[;,]|\s+or\s+/i)) {
+  for (const part of correctAnswer.split(/[;,\n]|—|–|\s+or\s+/i)) {
     const normalizedPart = normalizeGreekQuizAnswer(part);
 
     if (normalizedPart) {
