@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 
 import { HomePageContent } from "@/app/components/HomePageContent";
 import type { BookMeta } from "@/lib/bible/types";
@@ -29,6 +29,15 @@ const books: BookMeta[] = [
     chapterCount: 28,
     order: 40,
     compositionDate: "c. 70–90 AD"
+  },
+  {
+    slug: "james",
+    name: "James",
+    abbreviation: "Jas",
+    testament: "New",
+    chapterCount: 5,
+    order: 59,
+    compositionDate: "c. 45–62 AD"
   }
 ];
 
@@ -61,6 +70,13 @@ describe("HomePageContent", () => {
   it("renders books in canonical order grouped by testament", () => {
     render(<HomePageContent books={books} fathersWorks={fathersWorks} />);
 
+    const canonicalNewTestamentSection = screen
+      .getByRole("heading", { name: "Matthew to Revelation" })
+      .closest("section");
+    const chronologicalNewTestamentSection = screen
+      .getByRole("heading", { name: "James to Revelation" })
+      .closest("section");
+
     expect(screen.getByRole("link", { name: "Open Genesis" })).toHaveAttribute(
       "href",
       "/read/genesis"
@@ -69,11 +85,22 @@ describe("HomePageContent", () => {
       "href",
       "/read/exodus"
     );
-    expect(screen.getByRole("link", { name: "Open Matthew" })).toHaveAttribute(
+    expect(canonicalNewTestamentSection).not.toBeNull();
+    expect(
+      within(canonicalNewTestamentSection as HTMLElement).getByRole("link", {
+        name: "Open Matthew"
+      })
+    ).toHaveAttribute(
       "href",
       "/read/matthew"
     );
-    expect(screen.getByText("c. 70–90 AD")).toBeInTheDocument();
+    expect(chronologicalNewTestamentSection).not.toBeNull();
+    expect(
+      within(canonicalNewTestamentSection as HTMLElement).getByText("c. 70–90 AD")
+    ).toBeInTheDocument();
+    expect(
+      within(chronologicalNewTestamentSection as HTMLElement).getByText("c. 45–62 AD")
+    ).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Open 1 Clement" })).toHaveAttribute(
       "href",
       "/fathers/1-clement"
@@ -82,5 +109,22 @@ describe("HomePageContent", () => {
       "href",
       "/fathers/recognitions-of-clement"
     );
+  });
+
+  it("renders the chronological New Testament section in the configured order", () => {
+    render(<HomePageContent books={books} fathersWorks={[]} />);
+
+    const chronologicalSection = screen
+      .getByRole("heading", { name: "James to Revelation" })
+      .closest("section");
+
+    expect(chronologicalSection).not.toBeNull();
+
+    const chronologicalLinks = within(chronologicalSection as HTMLElement).getAllByRole("link");
+
+    expect(chronologicalLinks.map((link) => link.getAttribute("href"))).toEqual([
+      "/read/james",
+      "/read/matthew"
+    ]);
   });
 });

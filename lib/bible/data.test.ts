@@ -1,4 +1,9 @@
-import { getBookBySlug, getBooks, getChapter } from "@/lib/bible/data";
+import {
+  getBookBySlug,
+  getBooks,
+  getChapter,
+  getChronologicalNewTestamentBooks
+} from "@/lib/bible/data";
 
 describe("bible data", () => {
   it("loads bundled books for WEB, KJV, and ESV", async () => {
@@ -61,5 +66,28 @@ describe("bible data", () => {
     expect(chapter?.chapterNumber).toBe(1);
     expect(chapter?.verses[0]?.text).toContain("In the beginning, God created the heavens");
     expect(chapter?.verses[0]?.tokens).toBeUndefined();
+  });
+
+  it("returns New Testament books in the configured chronological order", async () => {
+    const books = await getBooks("web");
+    const chronologicalBooks = getChronologicalNewTestamentBooks(books);
+
+    expect(chronologicalBooks).toHaveLength(27);
+    expect(chronologicalBooks.slice(0, 7).map((book) => book.slug)).toEqual([
+      "james",
+      "galatians",
+      "1-thessalonians",
+      "2-thessalonians",
+      "1-corinthians",
+      "2-corinthians",
+      "romans"
+    ]);
+    expect(chronologicalBooks.slice(-5).map((book) => book.slug)).toEqual([
+      "john",
+      "1-john",
+      "2-john",
+      "3-john",
+      "revelation"
+    ]);
   });
 });

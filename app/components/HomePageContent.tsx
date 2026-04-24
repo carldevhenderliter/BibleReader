@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { ContinueReading } from "@/app/components/ContinueReading";
+import { getChronologicalNewTestamentBooks } from "@/lib/bible/data";
 import type { BookMeta } from "@/lib/bible/types";
 import type { FathersWorkMeta } from "@/lib/fathers/types";
 import { getBookHref } from "@/lib/bible/utils";
@@ -13,6 +14,7 @@ type HomePageContentProps = {
 export function HomePageContent({ books, fathersWorks = [] }: HomePageContentProps) {
   const oldTestament = books.filter((book) => book.testament === "Old");
   const newTestament = books.filter((book) => book.testament === "New");
+  const chronologicalNewTestament = getChronologicalNewTestamentBooks(books);
 
   return (
     <div className="page-stack">
@@ -105,6 +107,36 @@ export function HomePageContent({ books, fathersWorks = [] }: HomePageContentPro
               key={book.slug}
             >
               <span className="book-chip">NT</span>
+              <span className="book-title-line">
+                <strong>{book.name}</strong>
+                {book.compositionDate ? (
+                  <span className="book-date-chip">{book.compositionDate}</span>
+                ) : null}
+              </span>
+              <span className="book-meta">{book.chapterCount} chapters</span>
+              <span className="book-cta">Open whole book</span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section className="content-card testament-card">
+        <div className="section-header">
+          <div>
+            <p className="eyebrow">Chronological New Testament</p>
+            <h2 className="section-title">James to Revelation</h2>
+          </div>
+          <p className="muted-copy testament-meta">{chronologicalNewTestament.length} books</p>
+        </div>
+        <div className="book-grid">
+          {chronologicalNewTestament.map((book) => (
+            <Link
+              aria-label={`Open ${book.name}`}
+              className="book-link"
+              href={getBookHref(book.slug)}
+              key={`chronological:${book.slug}`}
+            >
+              <span className="book-chip">NT Chron</span>
               <span className="book-title-line">
                 <strong>{book.name}</strong>
                 {book.compositionDate ? (
