@@ -795,11 +795,13 @@ select {
   gap: 0.7rem;
   align-items: center;
   width: 100%;
+  flex-wrap: wrap;
 }
 
 .reader-controls-primary {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.55rem;
   min-width: 0;
   flex: 1 1 auto;
@@ -820,8 +822,9 @@ select {
 }
 
 .control-group-compact {
-  flex: 0 1 10.5rem;
-  min-width: 0;
+  flex: 1 1 10.5rem;
+  min-width: 8.5rem;
+  max-width: 100%;
 }
 
 .control-group select,
@@ -845,7 +848,10 @@ select {
 .control-group select {
   width: 100%;
   max-width: 100%;
+  min-width: 0;
   outline: none;
+  font-size: 0.94rem;
+  line-height: 1.2;
 }
 
 .control-group select:hover,
@@ -5413,18 +5419,28 @@ button.fathers-annotation-anchor:focus-visible {
   }
 
   .reader-controls-bar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: 0.6rem;
   }
 
   .reader-controls-primary {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
     align-items: center;
+    width: 100%;
   }
 
   .reader-controls-actions {
     width: 100%;
-    justify-content: flex-end;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .control-group,
+  .control-group-compact {
+    width: 100%;
+    min-width: 0;
   }
 
   .reader-menu-button {
@@ -5441,6 +5457,8 @@ button.fathers-annotation-anchor:focus-visible {
 
   .control-group select {
     max-width: none;
+    width: 100%;
+    font-size: 0.96rem;
   }
 
   .reading-surface {
