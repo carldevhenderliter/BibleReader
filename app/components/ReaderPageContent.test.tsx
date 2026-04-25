@@ -130,6 +130,22 @@ const masoreticChapter: Chapter = {
 
 const ntBooks: BookMeta[] = [
   {
+    slug: "james",
+    name: "James",
+    abbreviation: "Jas",
+    testament: "New",
+    chapterCount: 5,
+    order: 59
+  },
+  {
+    slug: "romans",
+    name: "Romans",
+    abbreviation: "Rom",
+    testament: "New",
+    chapterCount: 16,
+    order: 45
+  },
+  {
     slug: "matthew",
     name: "Matthew",
     abbreviation: "Matt",
@@ -377,6 +393,28 @@ describe("ReaderPageContent", () => {
     expect(
       screen.getByText("Βίβλος γενέσεως Ἰησοῦ χριστοῦ υἱοῦ Δαυὶδ υἱοῦ Ἀβραάμ.")
     ).toBeInTheDocument();
+  });
+
+  it("lets the reader switch the book selector to chronological New Testament order", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={ntBooks[2]}
+        books={ntBooks}
+        chaptersByVersion={{ esv: esvNtChapter }}
+        esvInterlinearChapter={esvNtInterlinearChapter}
+      />,
+      {
+        version: "esv"
+      }
+    );
+
+    fireEvent.change(screen.getByLabelText("Book order"), {
+      target: { value: "chronological" }
+    });
+
+    expect(
+      within(screen.getByLabelText("Book")).getAllByRole("option").map((option) => option.textContent)
+    ).toEqual(["James", "Romans", "Matthew"]);
   });
 
   it("can show only Greek without the English verse text in ESV interlinear mode", () => {

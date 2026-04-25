@@ -1,14 +1,18 @@
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { useRouter } from "next/navigation";
 
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
+import { getChronologicalNewTestamentBooks } from "@/lib/bible/book-order";
 import type { BookMeta, ReadingView } from "@/lib/bible/types";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { getBookChapterHref, getBookHref, getChapterHref } from "@/lib/bible/utils";
 import { BIBLE_VERSION_METADATA } from "@/lib/bible/version";
+
+const NEW_TESTAMENT_BOOK_ORDER_STORAGE_KEY = "bible-reader.new-testament-book-order";
 
 type ReaderControlOption = {
   value: string;
@@ -53,6 +57,46 @@ export function ReaderControls({
   const { version } = useReaderVersion();
   const versionMeta = BIBLE_VERSION_METADATA[version] ?? null;
   const isBibleMode = mode !== "fathers";
+  const [newTestamentBookOrder, setNewTestamentBookOrder] = useState<
+    "canonical" | "chronological"
+  >("canonical");
+  const displayedBooks = useMemo(() => {
+    if (!isBibleMode) {
+      return [];
+    }
+
+    const { books } = props as BibleReaderControlsProps;
+
+    if (newTestamentBookOrder === "canonical") {
+      return books;
+    }
+
+    const oldTestament = books.filter((book) => book.testament === "Old");
+    const chronologicalNewTestament = getChronologicalNewTestamentBooks(books);
+
+    return [...oldTestament, ...chronologicalNewTestament];
+  }, [isBibleMode, newTestamentBookOrder, props]);
+  const hasNewTestamentBooks = isBibleMode
+    ? (props as BibleReaderControlsProps).books.some((book) => book.testament === "New")
+    : false;
+
+  useEffect(() => {
+    if (!isBibleMode || typeof window === "undefined") {
+      return;
+    }
+
+    const storedValue = window.localStorage.getItem(NEW_TESTAMENT_BOOK_ORDER_STORAGE_KEY);
+
+    setNewTestamentBookOrder(storedValue === "chronological" ? "chronological" : "canonical");
+  }, [isBibleMode]);
+
+  useEffect(() => {
+    if (!isBibleMode || typeof window === "undefined") {
+      return;
+    }
+
+    window.localStorage.setItem(NEW_TESTAMENT_BOOK_ORDER_STORAGE_KEY, newTestamentBookOrder);
+  }, [isBibleMode, newTestamentBookOrder]);
 
   const handleBookChange = (nextBookSlug: string) => {
     if (!isBibleMode) {
@@ -109,6 +153,26 @@ export function ReaderControls({
           {isBibleMode ? (
             <>
               <div className="control-group control-group-compact">
+                <label className="sr-only" htmlFor="book-order-select">
+                  Book order
+                </label>
+                <select
+                  aria-label="Book order"
+                  id="book-order-select"
+                  value={newTestamentBookOrder}
+                  onChange={(event) =>
+                    setNewTestamentBookOrder(
+                      event.target.value === "chronological" ? "chronological" : "canonical"
+                    )
+                  }
+                >
+                  <option value="canonical">Canonical</option>
+                  {hasNewTestamentBooks ? (
+                    <option value="chronological">Chronological NT</option>
+                  ) : null}
+                </select>
+              </div>
+              <div className="control-group control-group-compact">
                 <label className="sr-only" htmlFor="book-select">
                   Book
                 </label>
@@ -118,7 +182,7 @@ export function ReaderControls({
                   value={(props as BibleReaderControlsProps).book.slug}
                   onChange={(event) => handleBookChange(event.target.value)}
                 >
-                  {(props as BibleReaderControlsProps).books.map((item) => (
+                  {displayedBooks.map((item) => (
                     <option key={item.slug} value={item.slug}>
                       {item.name}
                     </option>
