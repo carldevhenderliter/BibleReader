@@ -129,6 +129,23 @@ describe("VerseList", () => {
     expect(screen.queryByText("H7225")).not.toBeInTheDocument();
   });
 
+  it("can hide verse numbers", () => {
+    const { container } = renderWithReaderCustomization(
+      <VerseList
+        bookSlug="genesis"
+        chapterNumber={1}
+        showStrongs={false}
+        showVerseNumbers={false}
+        verses={verses}
+      />
+    );
+
+    expect(container.querySelector(".verse-number")).toBeNull();
+    expect(
+      screen.getByText("In the beginning God created the heaven and the earth.")
+    ).toBeInTheDocument();
+  });
+
   it("renders a custom translation editor under each verse", () => {
     renderWithReaderCustomization(
       <VerseList

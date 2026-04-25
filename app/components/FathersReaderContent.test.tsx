@@ -377,6 +377,25 @@ describe("FathersReaderContent", () => {
     expect(screen.getAllByText("Prologue").length).toBeGreaterThan(0);
   });
 
+  it("can hide Fathers section labels", async () => {
+    window.localStorage.setItem(
+      READER_CUSTOMIZATION_STORAGE_KEY,
+      JSON.stringify({
+        ...DEFAULT_READER_CUSTOMIZATION,
+        showVerseNumbers: false
+      })
+    );
+
+    const { container } = renderFathersReader();
+
+    await waitFor(() => {
+      expect(container.querySelector(".fathers-segment-label")).toBeNull();
+    });
+
+    expect(screen.getByLabelText("Section")).toBeInTheDocument();
+    expect(screen.getByText("The church.")).toBeInTheDocument();
+  });
+
   it("adds NA1 Greek undertext annotations and saves them through the local save flow", async () => {
     buildGreekUndertextSuggestionsMock.mockResolvedValue([
       {

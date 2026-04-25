@@ -70,6 +70,7 @@ type LazyBookChapterSectionProps = {
   showGreekSurface: boolean;
   showGreekTransliteration: boolean;
   showStrongs: boolean;
+  showVerseNumbers: boolean;
   showVerseText: boolean;
   onRenderChapter: (chapterNumber: number) => void;
   annotationMode: boolean;
@@ -90,6 +91,7 @@ function LazyBookChapterSection({
   showGreekSurface,
   showGreekTransliteration,
   showStrongs,
+  showVerseNumbers,
   showVerseText,
   onRenderChapter,
   annotationMode,
@@ -173,6 +175,7 @@ function LazyBookChapterSection({
           showGreekSurface={showGreekSurface}
           showGreekTransliteration={showGreekTransliteration}
           showStrongs={showStrongs}
+          showVerseNumbers={showVerseNumbers}
           showVerseText={showVerseText}
           verses={chapter.verses}
         />
@@ -490,6 +493,7 @@ export function WholeBookContent({
                 showGreekSurface={settings.showGreekSurface}
                 showGreekTransliteration={settings.showGreekTransliteration}
                 showStrongs={showStrongs}
+                showVerseNumbers={settings.showVerseNumbers}
                 showVerseText={settings.showVerseText}
                 version={version}
               />

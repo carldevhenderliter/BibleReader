@@ -280,6 +280,7 @@ export function ReaderPageContent({
               showGreekSurface={settings.showGreekSurface}
               showGreekTransliteration={settings.showGreekTransliteration}
               showStrongs={showStrongs}
+              showVerseNumbers={settings.showVerseNumbers}
               showVerseText={settings.showVerseText}
               verses={chapter.verses}
             />

@@ -139,6 +139,7 @@ export const DEFAULT_READER_CUSTOMIZATION: ReaderCustomizationSettings = {
   showStrongs: false,
   showEsvInterlinear: false,
   showEsvGreekOnly: false,
+  showVerseNumbers: true,
   showVerseText: true,
   showCompanionVerseTranslation: true,
   showGreekSurface: true,
@@ -312,6 +313,10 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
       typeof candidate.showEsvGreekOnly === "boolean"
         ? candidate.showEsvGreekOnly
         : DEFAULT_READER_CUSTOMIZATION.showEsvGreekOnly,
+    showVerseNumbers:
+      typeof candidate.showVerseNumbers === "boolean"
+        ? candidate.showVerseNumbers
+        : DEFAULT_READER_CUSTOMIZATION.showVerseNumbers,
     showVerseText:
       typeof candidate.showVerseText === "boolean"
         ? candidate.showVerseText

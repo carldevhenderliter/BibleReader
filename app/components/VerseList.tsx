@@ -30,6 +30,7 @@ type VerseListProps = {
   chapterNumber: number;
   interlinearVerseMap?: Record<number, EsvInterlinearDisplayVerse>;
   showInterlinearOnly?: boolean;
+  showVerseNumbers?: boolean;
   showVerseText?: boolean;
   showCompanionVerseTranslation?: boolean;
   showCustomVerseTranslation?: boolean;
@@ -52,6 +53,7 @@ export function VerseList({
   chapterNumber,
   interlinearVerseMap,
   showInterlinearOnly = false,
+  showVerseNumbers = true,
   showVerseText,
   showCompanionVerseTranslation = true,
   showCustomVerseTranslation = true,
@@ -207,9 +209,11 @@ export function VerseList({
             id={`verse-${bookSlug}-${chapterNumber}-${verse.number}`}
             key={verse.number}
           >
-            <span className="verse-number" aria-hidden="true">
-              {verse.number}
-            </span>
+            {showVerseNumbers ? (
+              <span className="verse-number" aria-hidden="true">
+                {verse.number}
+              </span>
+            ) : null}
             <div className="verse-content">
               {shouldShowVerseText || (version === "greek" && showCompanionVerseTranslation) ? (
                 <>

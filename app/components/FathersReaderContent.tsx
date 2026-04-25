@@ -475,12 +475,14 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
               onRenderSection={handleRenderSection}
               segmentId={segment.id}
             >
-              <div className="fathers-segment-header">
-                <p className="reader-toolbar-summary fathers-segment-label">{segment.label}</p>
-                {segment.ref !== segment.label ? (
-                  <p className="reader-toolbar-meta fathers-segment-ref">{segment.ref}</p>
-                ) : null}
-              </div>
+              {settings.showVerseNumbers ? (
+                <div className="fathers-segment-header">
+                  <p className="reader-toolbar-summary fathers-segment-label">{segment.label}</p>
+                  {segment.ref !== segment.label ? (
+                    <p className="reader-toolbar-meta fathers-segment-ref">{segment.ref}</p>
+                  ) : null}
+                </div>
+              ) : null}
               {segment.greek.trim() && shouldShowFathersGreek ? (
                 <GreekVerseTextContent
                   className="verse-text verse-text-greek fathers-segment-greek"

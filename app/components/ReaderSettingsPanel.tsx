@@ -171,6 +171,7 @@ export function ReaderSettingsPanel({
 
   const toggleLayer = (
     key:
+      | "showVerseNumbers"
       | "showVerseText"
       | "showCompanionVerseTranslation"
       | "showCustomVerseTranslation"
@@ -189,6 +190,7 @@ export function ReaderSettingsPanel({
   const applyEverythingOnPreset = () => {
     if (isFathersMode) {
       updateSettings({
+        showVerseNumbers: true,
         showVerseText: true,
         showGreekSurface: true,
         showGreekLemma: true,
@@ -201,6 +203,7 @@ export function ReaderSettingsPanel({
     updateSettings({
       showEsvInterlinear: version === "esv" ? true : settings.showEsvInterlinear,
       showEsvGreekOnly: false,
+      showVerseNumbers: true,
       showVerseText: true,
       showCompanionVerseTranslation: version === "greek",
       showGreekSurface: true,
@@ -214,6 +217,7 @@ export function ReaderSettingsPanel({
   const applyEverythingOffPreset = () => {
     if (isFathersMode) {
       updateSettings({
+        showVerseNumbers: false,
         showVerseText: false,
         showGreekSurface: false,
         showGreekLemma: false,
@@ -226,6 +230,7 @@ export function ReaderSettingsPanel({
     updateSettings({
       showEsvInterlinear: version === "esv" ? false : settings.showEsvInterlinear,
       showEsvGreekOnly: false,
+      showVerseNumbers: false,
       showVerseText: false,
       showCompanionVerseTranslation: false,
       showGreekSurface: false,
@@ -239,6 +244,7 @@ export function ReaderSettingsPanel({
   const applyGreekOnlyPreset = () => {
     if (isFathersMode) {
       updateSettings({
+        showVerseNumbers: false,
         showVerseText: false,
         showGreekSurface: true,
         showGreekLemma: false,
@@ -250,6 +256,7 @@ export function ReaderSettingsPanel({
 
     if (version === "greek") {
       updateSettings({
+        showVerseNumbers: false,
         showVerseText: true,
         showCompanionVerseTranslation: false,
         showCustomVerseTranslation: false,
@@ -264,6 +271,7 @@ export function ReaderSettingsPanel({
     updateSettings({
       showEsvInterlinear: true,
       showEsvGreekOnly: true,
+      showVerseNumbers: false,
       showVerseText: false,
       showGreekSurface: true,
       showGreekLemma: false,
@@ -466,6 +474,19 @@ export function ReaderSettingsPanel({
           <div className="reader-settings-subsection">
             <p className="reader-settings-subsection-label">Verse display</p>
             <div className="settings-option-grid settings-option-grid-compact">
+                <button
+                  className={`settings-option-card${settings.showVerseNumbers ? " is-active" : ""}`}
+                  key="showVerseNumbers"
+                  onClick={() => toggleLayer("showVerseNumbers")}
+                  type="button"
+                >
+                  <strong>{isFathersMode ? "Section labels" : "Verse numbers"}</strong>
+                  <span>
+                    {isFathersMode
+                      ? "Show the section label and reference above each Fathers section."
+                      : "Show the small verse numbers beside each Bible verse."}
+                  </span>
+                </button>
                 <button
                   className={`settings-option-card${settings.showVerseText ? " is-active" : ""}`}
                   key="showVerseText"
