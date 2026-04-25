@@ -5584,6 +5584,62 @@ button.fathers-annotation-anchor:focus-visible {
   }
 }
 
+@media print {
+  @page {
+    margin: 0.6in;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .site-header,
+  .reader-topline,
+  .reader-content-tabs,
+  .reader-settings-backdrop,
+  .reader-settings-panel,
+  .reader-notebook-surface,
+  .reader-ot-compare-study-panel,
+  .lookup-pane-shell,
+  .bottom-search-bar {
+    display: none !important;
+  }
+
+  .site-main,
+  .page-stack,
+  .reader-shell,
+  .reader-card,
+  .reading-surface,
+  .chapter-stack,
+  .book-section,
+  .verse-row {
+    max-width: none !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    color: #000 !important;
+  }
+
+  .reader-shell::before,
+  .hero-backdrop,
+  .hero-glow {
+    display: none !important;
+  }
+
+  .verse-text,
+  .book-section-title,
+  .book-section-subtitle,
+  .verse-number,
+  .book-title-line,
+  .book-meta,
+  .reader-toolbar-summary,
+  .reader-toolbar-meta {
+    color: #000 !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

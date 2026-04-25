@@ -235,7 +235,9 @@ export function WholeBookContent({
   const showStrongsInline = !isSplitViewActive && activeUtilityPane === "strongs";
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
   const [annotationMode, setAnnotationMode] = useState(false);
+  const hasTriggeredPrintRef = useRef(false);
   const searchParams = new URLSearchParams(locationSearch);
+  const shouldAutoPrint = searchParams.get("print") === "1";
   const urlFocusedChapterNumber = parsePositiveNumber(searchParams.get("chapter"));
   const urlHighlightedChapterNumber = parsePositiveNumber(searchParams.get("highlightChapter"));
   const urlHighlightedVerseNumber = parsePositiveNumber(searchParams.get("highlight"));
@@ -349,6 +351,15 @@ export function WholeBookContent({
   }, [activeFocusedChapterNumber, book.chapterCount, book.slug]);
 
   useEffect(() => {
+    if (!shouldAutoPrint || hasTriggeredPrintRef.current || typeof window.print !== "function") {
+      return;
+    }
+
+    hasTriggeredPrintRef.current = true;
+    window.print();
+  }, [shouldAutoPrint]);
+
+  useEffect(() => {
     if (!isOldTestament && activeReaderPane === "ot-compare") {
       setActiveReaderPane("reading");
     }
@@ -403,6 +414,13 @@ export function WholeBookContent({
                         {isGreekLearningMode ? "Stop Learning" : "Learn Greek"}
                       </button>
                     ) : null}
+                    <button
+                      className="reader-inline-button"
+                      onClick={() => window.print()}
+                      type="button"
+                    >
+                      Book PDF
+                    </button>
                     {isSplitViewActive ? (
                       <button
                         aria-label="Hide reader pane"
