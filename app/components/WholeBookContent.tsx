@@ -56,6 +56,7 @@ type WholeBookContentProps = {
 type LazyBookChapterSectionProps = {
   bookSlug: string;
   chapter: Chapter;
+  forceRender: boolean;
   initialRender: boolean;
   highlightedVerseNumber: number | null;
   highlightedVerseRange: {
@@ -80,6 +81,7 @@ type LazyBookChapterSectionProps = {
 function LazyBookChapterSection({
   bookSlug,
   chapter,
+  forceRender,
   initialRender,
   highlightedVerseNumber,
   highlightedVerseRange,
@@ -97,14 +99,14 @@ function LazyBookChapterSection({
   annotationMode,
   version
 }: LazyBookChapterSectionProps) {
-  const [shouldRenderChapter, setShouldRenderChapter] = useState(initialRender);
+  const [shouldRenderChapter, setShouldRenderChapter] = useState(initialRender || forceRender);
   const sectionRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    if (initialRender) {
+    if (initialRender || forceRender) {
       setShouldRenderChapter(true);
     }
-  }, [initialRender]);
+  }, [forceRender, initialRender]);
 
   useEffect(() => {
     if (!shouldRenderChapter) {
@@ -115,7 +117,7 @@ function LazyBookChapterSection({
   }, [chapter.chapterNumber, onRenderChapter, shouldRenderChapter]);
 
   useEffect(() => {
-    if (shouldRenderChapter) {
+    if (shouldRenderChapter || forceRender) {
       return;
     }
 
@@ -146,7 +148,7 @@ function LazyBookChapterSection({
     return () => {
       observer.disconnect();
     };
-  }, [shouldRenderChapter]);
+  }, [forceRender, shouldRenderChapter]);
 
   return (
     <section
@@ -238,6 +240,7 @@ export function WholeBookContent({
   const hasTriggeredPrintRef = useRef(false);
   const searchParams = new URLSearchParams(locationSearch);
   const shouldAutoPrint = searchParams.get("print") === "1";
+  const forceRenderAllChapters = shouldAutoPrint;
   const urlFocusedChapterNumber = parsePositiveNumber(searchParams.get("chapter"));
   const urlHighlightedChapterNumber = parsePositiveNumber(searchParams.get("highlightChapter"));
   const urlHighlightedVerseNumber = parsePositiveNumber(searchParams.get("highlight"));
@@ -295,14 +298,16 @@ export function WholeBookContent({
       ));
   const initialRenderedChapterNumbers = useMemo(
     () =>
-      chapters
-        .filter(
-          (chapter) =>
-            Math.abs(chapter.chapterNumber - activeFocusedChapterNumber) <= 1 ||
-            chapter.chapterNumber === activeHighlightedChapterNumber
-        )
-        .map((chapter) => chapter.chapterNumber),
-    [activeFocusedChapterNumber, activeHighlightedChapterNumber, chapters]
+      forceRenderAllChapters
+        ? chapters.map((chapter) => chapter.chapterNumber)
+        : chapters
+            .filter(
+              (chapter) =>
+                Math.abs(chapter.chapterNumber - activeFocusedChapterNumber) <= 1 ||
+                chapter.chapterNumber === activeHighlightedChapterNumber
+            )
+            .map((chapter) => chapter.chapterNumber),
+    [activeFocusedChapterNumber, activeHighlightedChapterNumber, chapters, forceRenderAllChapters]
   );
   const [renderedChapterNumbers, setRenderedChapterNumbers] = useState<number[]>(
     initialRenderedChapterNumbers
@@ -487,6 +492,7 @@ export function WholeBookContent({
                 annotationMode={annotationMode}
                 bookSlug={book.slug}
                 chapter={chapter}
+                forceRender={forceRenderAllChapters}
                 highlightedVerseNumber={
                   chapter.chapterNumber === activeHighlightedChapterNumber
                     ? activeHighlightedVerseNumber
@@ -498,6 +504,7 @@ export function WholeBookContent({
                     : null
                 }
                 initialRender={
+                  forceRenderAllChapters ||
                   Math.abs(chapter.chapterNumber - activeFocusedChapterNumber) <= 1 ||
                   chapter.chapterNumber === activeHighlightedChapterNumber
                 }

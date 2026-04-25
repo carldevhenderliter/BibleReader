@@ -433,6 +433,28 @@ describe("WholeBookContent", () => {
     expect(window.print).toHaveBeenCalled();
   });
 
+  it("renders every chapter before printing a whole-book PDF", () => {
+    const largerBook: BookMeta = {
+      ...books[0],
+      chapterCount: 4
+    };
+
+    window.history.replaceState({}, "", "/read/jude?print=1");
+
+    renderWithReaderCustomization(
+      <WholeBookContent
+        book={largerBook}
+        books={[largerBook]}
+        chaptersByVersion={{ web: manyChapters }}
+        focusedChapterNumber={1}
+      />
+    );
+
+    expect(screen.getByText("Chapter four opening.")).toBeInTheDocument();
+    expect(screen.queryByLabelText("Loading chapter 4")).not.toBeInTheDocument();
+    expect(window.print).toHaveBeenCalled();
+  });
+
   it("renders three versions in whole-book compare with chapter sections", () => {
     renderWithReaderCustomization(
       <WholeBookContent
