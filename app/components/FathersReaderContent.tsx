@@ -140,6 +140,12 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
     setIsGreekLearningMode
   } = useReaderWorkspace();
   const hasGreekReaderAid = payload.segments.some((segment) => segment.greek.trim().length > 0);
+  const shouldShowFathersGreek =
+    settings.showGreekSurface ||
+    settings.showGreekLemma ||
+    settings.showGreekTransliteration ||
+    settings.showGreekGloss;
+  const shouldShowFathersEnglish = settings.showVerseText;
   const hasGreekLearningSurface = payload.segments.some((segment) =>
     Boolean(segment.greekLexicalTokens?.length)
   );
@@ -475,7 +481,7 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
                   <p className="reader-toolbar-meta fathers-segment-ref">{segment.ref}</p>
                 ) : null}
               </div>
-              {segment.greek.trim() ? (
+              {segment.greek.trim() && shouldShowFathersGreek ? (
                 <GreekVerseTextContent
                   className="verse-text verse-text-greek fathers-segment-greek"
                   displayMode="stacked"
@@ -523,31 +529,33 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
                   }}
                 />
               ) : null}
-              {isNa1AnnotationWork ? (
-                <FathersEnglishUndertextContent
-                  annotationMode={annotationMode}
-                  annotations={(segmentAnnotations[segment.id] ?? []).map((annotation) => ({
-                    contentId: segment.id,
-                    startToken: annotation.startToken,
-                    endToken: annotation.endToken,
-                    greekText: annotation.greekText,
-                    entryKey: annotation.entryKey,
-                    lemma: annotation.lemma,
-                    strongs: annotation.strongs,
-                    transliteration: annotation.transliteration,
-                    gloss: annotation.gloss,
-                    source: annotation.source
-                  }))}
-                  contentId={segment.id}
-                  english={segment.english}
-                  englishTokens={segment.englishTokens}
-                  onChangeAnnotations={handleAnnotationsChange}
-                  onOpenGreekDictionary={openGreekDictionary}
-                  separateSentencesByLine={settings.showFathersSentenceLines}
-                />
-              ) : (
-                renderFathersEnglishBlock(segment.english, settings.showFathersSentenceLines)
-              )}
+              {shouldShowFathersEnglish
+                ? isNa1AnnotationWork ? (
+                    <FathersEnglishUndertextContent
+                      annotationMode={annotationMode}
+                      annotations={(segmentAnnotations[segment.id] ?? []).map((annotation) => ({
+                        contentId: segment.id,
+                        startToken: annotation.startToken,
+                        endToken: annotation.endToken,
+                        greekText: annotation.greekText,
+                        entryKey: annotation.entryKey,
+                        lemma: annotation.lemma,
+                        strongs: annotation.strongs,
+                        transliteration: annotation.transliteration,
+                        gloss: annotation.gloss,
+                        source: annotation.source
+                      }))}
+                      contentId={segment.id}
+                      english={segment.english}
+                      englishTokens={segment.englishTokens}
+                      onChangeAnnotations={handleAnnotationsChange}
+                      onOpenGreekDictionary={openGreekDictionary}
+                      separateSentencesByLine={settings.showFathersSentenceLines}
+                    />
+                  ) : (
+                    renderFathersEnglishBlock(segment.english, settings.showFathersSentenceLines)
+                  )
+                : null}
             </LazyFathersSegmentSection>
           ))}
         </div>

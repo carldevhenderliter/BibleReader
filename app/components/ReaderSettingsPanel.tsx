@@ -189,6 +189,7 @@ export function ReaderSettingsPanel({
   const applyEverythingOnPreset = () => {
     if (isFathersMode) {
       updateSettings({
+        showVerseText: true,
         showGreekSurface: true,
         showGreekLemma: true,
         showGreekTransliteration: true,
@@ -213,6 +214,7 @@ export function ReaderSettingsPanel({
   const applyEverythingOffPreset = () => {
     if (isFathersMode) {
       updateSettings({
+        showVerseText: false,
         showGreekSurface: false,
         showGreekLemma: false,
         showGreekTransliteration: false,
@@ -237,6 +239,7 @@ export function ReaderSettingsPanel({
   const applyGreekOnlyPreset = () => {
     if (isFathersMode) {
       updateSettings({
+        showVerseText: false,
         showGreekSurface: true,
         showGreekLemma: false,
         showGreekTransliteration: false,
@@ -460,26 +463,25 @@ export function ReaderSettingsPanel({
               </p>
             </div>
           ) : null}
-          {!isFathersMode || hasGreekReaderAid ? (
-            <div className="reader-settings-subsection">
-              <p className="reader-settings-subsection-label">Verse display</p>
-              <div className="settings-option-grid settings-option-grid-compact">
-                {!isFathersMode ? (
-                  <button
-                    className={`settings-option-card${settings.showVerseText ? " is-active" : ""}`}
-                    key="showVerseText"
-                    onClick={() => toggleLayer("showVerseText")}
-                    type="button"
-                  >
-                    <strong>Verse text</strong>
-                    <span>
-                      {version === "greek"
+          <div className="reader-settings-subsection">
+            <p className="reader-settings-subsection-label">Verse display</p>
+            <div className="settings-option-grid settings-option-grid-compact">
+                <button
+                  className={`settings-option-card${settings.showVerseText ? " is-active" : ""}`}
+                  key="showVerseText"
+                  onClick={() => toggleLayer("showVerseText")}
+                  type="button"
+                >
+                  <strong>{isFathersMode ? "English text" : "Verse text"}</strong>
+                  <span>
+                    {isFathersMode
+                      ? "Show the English translation block for each Fathers section."
+                      : version === "greek"
                         ? "Show the main Greek verse line."
                         : "Show the translation line for the verse."}
-                    </span>
-                  </button>
-                ) : null}
-                {!isFathersMode && version === "greek" ? (
+                  </span>
+                </button>
+                {!isFathersMode ? (
                   <button
                     className={`settings-option-card${
                       settings.showCompanionVerseTranslation ? " is-active" : ""
@@ -562,9 +564,8 @@ export function ReaderSettingsPanel({
                     <span>Put each English sentence on its own line in Fathers reading.</span>
                   </button>
                 ) : null}
-              </div>
             </div>
-          ) : null}
+          </div>
           <div className="reader-settings-subsection">
             <p className="reader-settings-subsection-label">Quick controls</p>
             <div className="reader-settings-shortcuts">

@@ -352,6 +352,31 @@ describe("FathersReaderContent", () => {
     expect(document.body.textContent).toContain("Third sentence!");
   });
 
+  it("honors Fathers visibility settings for Greek and English layers", async () => {
+    window.localStorage.setItem(
+      READER_CUSTOMIZATION_STORAGE_KEY,
+      JSON.stringify({
+        ...DEFAULT_READER_CUSTOMIZATION,
+        showVerseText: false,
+        showGreekSurface: false,
+        showGreekLemma: false,
+        showGreekTransliteration: false,
+        showGreekGloss: false
+      })
+    );
+
+    renderFathersReader();
+
+    await waitFor(() => {
+      expect(screen.queryByText("The church.")).not.toBeInTheDocument();
+    });
+
+    expect(screen.queryByText("Ἡ")).not.toBeInTheDocument();
+    expect(screen.queryByText("Ē")).not.toBeInTheDocument();
+    expect(screen.queryByText("assembly")).not.toBeInTheDocument();
+    expect(screen.getAllByText("Prologue").length).toBeGreaterThan(0);
+  });
+
   it("adds NA1 Greek undertext annotations and saves them through the local save flow", async () => {
     buildGreekUndertextSuggestionsMock.mockResolvedValue([
       {

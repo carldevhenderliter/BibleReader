@@ -85,6 +85,10 @@ export function GreekVerseTextContent({
   }
 
   if (!verse.greekTokens?.length || !onOpenGreekDictionary) {
+    if (!showSurface) {
+      return null;
+    }
+
     return (
       <p className={className ?? "verse-text verse-text-greek"} lang="el">
         {verse.text}
