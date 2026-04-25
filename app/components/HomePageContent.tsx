@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 
 import { ContinueReading } from "@/app/components/ContinueReading";
-import { getChronologicalNewTestamentBooks } from "@/lib/bible/data";
+import { getChronologicalNewTestamentBooks } from "@/lib/bible/book-order";
 import type { BookMeta } from "@/lib/bible/types";
 import type { FathersWorkMeta } from "@/lib/fathers/types";
 import { getBookHref } from "@/lib/bible/utils";
