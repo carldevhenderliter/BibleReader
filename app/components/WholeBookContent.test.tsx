@@ -329,10 +329,6 @@ describe("WholeBookContent", () => {
     setMockPathname("/read/jude");
     window.history.replaceState({}, "", "/read/jude");
     setSplitViewActive(false);
-    Object.defineProperty(window, "print", {
-      writable: true,
-      value: jest.fn()
-    });
   });
 
   it("renders a continuous book view", () => {
@@ -403,56 +399,6 @@ describe("WholeBookContent", () => {
 
     expect(screen.getByText("King James")).toBeInTheDocument();
     expect(screen.getByText("Mercy unto you, and peace, and love, be multiplied.")).toBeInTheDocument();
-  });
-
-  it("opens the print dialog from whole-book view for PDF export", () => {
-    renderWithReaderCustomization(
-      <WholeBookContent
-        book={books[0]}
-        books={books}
-        chaptersByVersion={{ web: chapters, kjv: kjvChapters }}
-      />
-    );
-
-    fireEvent.click(screen.getByRole("button", { name: "Book PDF" }));
-
-    expect(window.print).toHaveBeenCalled();
-  });
-
-  it("auto-prints whole-book view when the print query is present", () => {
-    window.history.replaceState({}, "", "/read/jude?print=1");
-
-    renderWithReaderCustomization(
-      <WholeBookContent
-        book={books[0]}
-        books={books}
-        chaptersByVersion={{ web: chapters, kjv: kjvChapters }}
-      />
-    );
-
-    expect(window.print).toHaveBeenCalled();
-  });
-
-  it("renders every chapter before printing a whole-book PDF", () => {
-    const largerBook: BookMeta = {
-      ...books[0],
-      chapterCount: 4
-    };
-
-    window.history.replaceState({}, "", "/read/jude?print=1");
-
-    renderWithReaderCustomization(
-      <WholeBookContent
-        book={largerBook}
-        books={[largerBook]}
-        chaptersByVersion={{ web: manyChapters }}
-        focusedChapterNumber={1}
-      />
-    );
-
-    expect(screen.getByText("Chapter four opening.")).toBeInTheDocument();
-    expect(screen.queryByLabelText("Loading chapter 4")).not.toBeInTheDocument();
-    expect(window.print).toHaveBeenCalled();
   });
 
   it("renders three versions in whole-book compare with chapter sections", () => {

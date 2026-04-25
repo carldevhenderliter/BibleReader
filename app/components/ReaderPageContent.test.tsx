@@ -250,10 +250,6 @@ describe("ReaderPageContent", () => {
     setMockPathname("/read/genesis/1");
     window.history.replaceState({}, "", "/read/genesis/1");
     setSplitViewActive(false);
-    Object.defineProperty(window, "print", {
-      writable: true,
-      value: jest.fn()
-    });
   });
 
   it("renders chapter content and navigation", () => {
@@ -306,20 +302,6 @@ describe("ReaderPageContent", () => {
       "href",
       "/read/genesis?version=kjv"
     );
-  });
-
-  it("routes chapter view PDF export to the whole-book print URL", () => {
-    renderWithReaderCustomization(
-      <ReaderPageContent
-        book={books[0]}
-        books={books}
-        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
-      />
-    );
-
-    fireEvent.click(screen.getByRole("button", { name: "Book PDF" }));
-
-    expect(mockRouter.push).toHaveBeenCalledWith("/read/genesis?print=1");
   });
 
   it("opens compare in the reader view from the menu", () => {

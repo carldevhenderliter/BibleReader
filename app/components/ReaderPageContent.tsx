@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
@@ -27,7 +26,6 @@ import type {
   Chapter,
   EsvInterlinearDisplayChapter
 } from "@/lib/bible/types";
-import { getBookHref } from "@/lib/bible/utils";
 import { getBibleVersionBadge } from "@/lib/bible/version";
 
 function parsePositiveNumber(value: string | null) {
@@ -61,7 +59,6 @@ export function ReaderPageContent({
   highlightedVerseNumber,
   highlightedVerseRange
 }: ReaderPageContentProps) {
-  const router = useRouter();
   const locationSearch = useLocationSearch();
   const { version } = useReaderVersion();
   const { isPanelOpen, settings } = useReaderCustomization();
@@ -208,15 +205,6 @@ export function ReaderPageContent({
                         {isGreekLearningMode ? "Stop Learning" : "Learn Greek"}
                       </button>
                     ) : null}
-                    <button
-                      className="reader-inline-button"
-                      onClick={() => {
-                        router.push(`${getBookHref(book.slug, version)}${version === "web" ? "?" : "&"}print=1`);
-                      }}
-                      type="button"
-                    >
-                      Book PDF
-                    </button>
                     {isSplitViewActive ? (
                       <button
                         aria-label="Hide reader pane"
