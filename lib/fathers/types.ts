@@ -1,6 +1,6 @@
 import type { EnglishToken, GreekToken } from "@/lib/bible/types";
 
-export type FathersCorpus = "apostolic-fathers";
+export type FathersCorpus = "apostolic-fathers" | "church-fathers";
 
 export type FathersAuthenticityStatus = "accepted" | "fragmentary" | "excluded";
 

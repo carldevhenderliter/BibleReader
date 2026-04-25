@@ -13,7 +13,7 @@ describe("FathersPage", () => {
     jest.clearAllMocks();
   });
 
-  it("renders the authentic Apostolic Fathers library", async () => {
+  it("renders the authentic Fathers library", async () => {
     mockedGetAuthenticFathersWorks.mockResolvedValue([
       {
         slug: "1-clement",
@@ -59,6 +59,6 @@ describe("FathersPage", () => {
       "href",
       "/fathers/papias-fragments"
     );
-    expect(screen.getByText("Authentic Apostolic Fathers")).toBeInTheDocument();
+    expect(screen.getByText("Authentic Church Fathers")).toBeInTheDocument();
   });
 });

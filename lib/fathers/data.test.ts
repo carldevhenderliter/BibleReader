@@ -6,15 +6,15 @@ import {
 } from "@/lib/fathers/data";
 
 describe("fathers data", () => {
-  it("loads the Apostolic Fathers manifest", async () => {
+  it("loads the Fathers manifest", async () => {
     const works = await getFathersWorks();
 
-    expect(works).toHaveLength(19);
+    expect(works).toHaveLength(25);
     expect(works[0]?.slug).toBe("1-clement");
-    expect(works.at(-1)?.slug).toBe("sinai-arabic-summary");
+    expect(works.at(-1)?.slug).toBe("theophilus-to-autolycus");
   });
 
-  it("filters the authentic Apostolic Fathers corpus", async () => {
+  it("filters the authentic Fathers corpus", async () => {
     const works = await getAuthenticFathersWorks();
 
     expect(works.map((work) => work.slug)).toEqual([
@@ -27,7 +27,13 @@ describe("fathers data", () => {
       "ignatius-smyrnaeans",
       "ignatius-polycarp",
       "polycarp-to-philippians",
-      "papias-fragments"
+      "papias-fragments",
+      "justin-first-apology",
+      "justin-second-apology",
+      "justin-dialogue-with-trypho",
+      "athenagoras-plea-for-the-christians",
+      "athenagoras-on-the-resurrection",
+      "theophilus-to-autolycus"
     ]);
     expect(works.find((work) => work.slug === "2-clement")).toBeUndefined();
     expect(works.find((work) => work.slug === "didache")).toBeUndefined();
@@ -98,6 +104,20 @@ describe("fathers data", () => {
     expect(payload?.segments).toHaveLength(10);
     expect(payload?.segments[0]?.label).toBe("Fragment I");
     expect(payload?.segments[0]?.english).toContain("Exposition of the Oracles of the Lord");
+    expect(payload?.segments[0]?.greek).toBe("");
+    expect(payload?.segments[0]?.greekTokens).toEqual([]);
+  });
+
+  it("loads Justin's First Apology as an authentic English-first Fathers work", async () => {
+    const [work, payload] = await Promise.all([
+      getFathersWorkBySlug("justin-first-apology"),
+      getFathersWorkPayload("justin-first-apology")
+    ]);
+
+    expect(work?.authenticityStatus).toBe("accepted");
+    expect(work?.fullTextUrl).toBe("https://www.newadvent.org/fathers/0126.htm");
+    expect(payload?.segments[0]?.label).toBe("Chapter 1 · Address");
+    expect(payload?.segments[0]?.english).toContain("To the Emperor Titus Ælius Adrianus Antoninus");
     expect(payload?.segments[0]?.greek).toBe("");
     expect(payload?.segments[0]?.greekTokens).toEqual([]);
   });

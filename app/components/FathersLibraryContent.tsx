@@ -13,16 +13,16 @@ export function FathersLibraryContent({ works }: FathersLibraryContentProps) {
         <div className="section-header">
           <div>
             <p className="eyebrow">Fathers Reader</p>
-            <h1 className="section-title">Authentic Apostolic Fathers</h1>
+            <h1 className="section-title">Authentic Church Fathers</h1>
           </div>
           <p className="muted-copy testament-meta">
             {works.length} {works.length === 1 ? "work" : "works"} available
           </p>
         </div>
         <p className="muted-copy fathers-library-copy">
-          A curated corpus of writings widely accepted as authentic, ordered from Clement through
-          Papias. Greek-backed works include study tokens, transliteration, glosses, and dictionary
-          lookup.
+          A curated corpus of writings widely accepted as authentic, beginning with the Apostolic
+          Fathers and extending into Justin, Athenagoras, and Theophilus. Greek-backed works include
+          study tokens, transliteration, glosses, and dictionary lookup.
         </p>
         <div className="book-grid">
           {works.map((work) => (
