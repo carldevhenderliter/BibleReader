@@ -134,6 +134,7 @@ export function ReaderSettingsPanel({
   const hasGreekReaderAid = isFathersMode
     ? (props as FathersReaderSettingsPanelProps).hasGreekReaderAid
     : false;
+  const supportsFullRenderToggle = isFathersMode || view === "book";
   const isOldTestament = book?.testament === "Old";
   const supportsGreekReading = isFathersMode
     ? hasGreekReaderAid
@@ -583,6 +584,25 @@ export function ReaderSettingsPanel({
                   >
                     <strong>Sentence lines</strong>
                     <span>Put each English sentence on its own line in Fathers reading.</span>
+                  </button>
+                ) : null}
+                {supportsFullRenderToggle ? (
+                  <button
+                    className={`settings-option-card${
+                      settings.disableLazyLoading ? " is-active" : ""
+                    }`}
+                    key="disableLazyLoading"
+                    onClick={() =>
+                      updateSettings({ disableLazyLoading: !settings.disableLazyLoading })
+                    }
+                    type="button"
+                  >
+                    <strong>{isFathersMode ? "Load full work" : "Load full book"}</strong>
+                    <span>
+                      {isFathersMode
+                        ? "Render every section immediately instead of lazy loading as you scroll."
+                        : "Render every chapter immediately instead of lazy loading as you scroll."}
+                    </span>
                   </button>
                 ) : null}
             </div>

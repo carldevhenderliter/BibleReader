@@ -84,6 +84,7 @@ export type ReaderCustomizationSettings = {
   showGreekGloss: boolean;
   showCustomVerseTranslation: boolean;
   showFathersSentenceLines: boolean;
+  disableLazyLoading: boolean;
   bodyTextSize: number;
   greekTextSize: number;
   hebrewTextSize: number;

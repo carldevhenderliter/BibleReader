@@ -68,6 +68,7 @@ describe("reader customization", () => {
       showGreekGloss: false,
       showCustomVerseTranslation: false,
       showFathersSentenceLines: false,
+      disableLazyLoading: false,
       bodyTextSize: 3.25,
       greekTextSize: 4,
       hebrewTextSize: 4,
@@ -111,6 +112,7 @@ describe("reader customization", () => {
       showGreekGloss: true,
       showCustomVerseTranslation: true,
       showFathersSentenceLines: false,
+      disableLazyLoading: false,
       bodyTextSize: 1.2,
       greekTextSize: 1.8,
       hebrewTextSize: 1.7,
@@ -193,5 +195,13 @@ describe("reader customization", () => {
       showCompanionVerseTranslation: false,
       showCustomVerseTranslation: false
     });
+  });
+
+  it("preserves the lazy loading toggle when provided", () => {
+    expect(
+      normalizeReaderCustomization({
+        disableLazyLoading: true
+      }).disableLazyLoading
+    ).toBe(true);
   });
 });

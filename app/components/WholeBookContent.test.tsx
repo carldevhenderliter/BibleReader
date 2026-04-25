@@ -379,6 +379,32 @@ describe("WholeBookContent", () => {
     });
   });
 
+  it("can disable lazy loading and render the full whole-book view immediately", () => {
+    const largerBook: BookMeta = {
+      ...books[0],
+      chapterCount: 4
+    };
+
+    window.localStorage.setItem(
+      "bible-reader:customization",
+      JSON.stringify({
+        disableLazyLoading: true
+      })
+    );
+
+    renderWithReaderCustomization(
+      <WholeBookContent
+        book={largerBook}
+        books={[largerBook]}
+        chaptersByVersion={{ web: manyChapters }}
+        focusedChapterNumber={1}
+      />
+    );
+
+    expect(screen.getByText("Chapter four opening.")).toBeInTheDocument();
+    expect(screen.queryByLabelText("Loading chapter 4")).not.toBeInTheDocument();
+  });
+
   it("switches whole-book content between bundled versions", () => {
     renderWithReaderCustomization(
       <WholeBookContent

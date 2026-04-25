@@ -816,6 +816,38 @@ describe("FathersReaderContent", () => {
     });
   });
 
+  it("can disable lazy loading and render the full Fathers work immediately", () => {
+    const largePayload: FathersWorkPayload = {
+      ...englishOnlyPayload,
+      work: {
+        ...englishOnlyPayload.work,
+        sectionCount: 10
+      },
+      segments: Array.from({ length: 10 }, (_, index) => ({
+        id: `preaching-of-peter:section-${index + 1}`,
+        ref: `section-${index + 1}`,
+        label: `Section ${index + 1}`,
+        greek: "",
+        english: `Large work section ${index + 1}.`,
+        greekNormalized: "",
+        greekTokens: [],
+        englishTokens: tokenizeFathersEnglishText(`Large work section ${index + 1}.`),
+        greekUndertextAnnotations: []
+      }))
+    };
+
+    window.localStorage.setItem(
+      READER_CUSTOMIZATION_STORAGE_KEY,
+      JSON.stringify({
+        disableLazyLoading: true
+      })
+    );
+
+    renderFathersReader(largePayload);
+
+    expect(document.body.textContent).toContain("Large work section 10.");
+  });
+
   it("uses shared reader controls for work navigation and section selection", () => {
     const scrollIntoView = jest.fn();
     const originalScrollIntoView = Element.prototype.scrollIntoView;

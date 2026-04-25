@@ -30,6 +30,7 @@ type FathersReaderContentProps = {
 
 type LazyFathersSegmentSectionProps = {
   segmentId: string;
+  forceRender: boolean;
   initialRender: boolean;
   onRenderSection: (segmentId: string) => void;
   children: React.ReactNode;
@@ -66,18 +67,19 @@ function renderFathersEnglishBlock(text: string, separateSentencesByLine: boolea
 
 function LazyFathersSegmentSection({
   segmentId,
+  forceRender,
   initialRender,
   onRenderSection,
   children
 }: LazyFathersSegmentSectionProps) {
-  const [shouldRenderSection, setShouldRenderSection] = useState(initialRender);
+  const [shouldRenderSection, setShouldRenderSection] = useState(initialRender || forceRender);
   const sectionRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    if (initialRender) {
+    if (initialRender || forceRender) {
       setShouldRenderSection(true);
     }
-  }, [initialRender]);
+  }, [forceRender, initialRender]);
 
   useEffect(() => {
     if (!shouldRenderSection) {
@@ -88,7 +90,7 @@ function LazyFathersSegmentSection({
   }, [onRenderSection, segmentId, shouldRenderSection]);
 
   useEffect(() => {
-    if (shouldRenderSection) {
+    if (shouldRenderSection || forceRender) {
       return;
     }
 
@@ -119,7 +121,7 @@ function LazyFathersSegmentSection({
     return () => {
       observer.disconnect();
     };
-  }, [shouldRenderSection]);
+  }, [forceRender, shouldRenderSection]);
 
   return (
     <article className="fathers-segment-card" id={segmentId} ref={sectionRef}>
@@ -150,6 +152,7 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
     Boolean(segment.greekLexicalTokens?.length)
   );
   const isNa1AnnotationWork = isNa1GreekAnnotationWork(payload.work);
+  const forceRenderAllSections = settings.disableLazyLoading;
   const [activeSectionId, setActiveSectionId] = useState(payload.segments[0]?.id ?? "");
   const [annotationMode, setAnnotationMode] = useState(false);
   const [annotationSaveStatus, setAnnotationSaveStatus] = useState<
@@ -157,10 +160,14 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
   >("idle");
   const [annotationSaveMessage, setAnnotationSaveMessage] = useState<string | null>(null);
   const [prioritizedSectionIds, setPrioritizedSectionIds] = useState<string[]>(() =>
-    payload.segments.slice(0, 8).map((segment) => segment.id)
+    (settings.disableLazyLoading ? payload.segments : payload.segments.slice(0, 8)).map(
+      (segment) => segment.id
+    )
   );
   const [renderedSectionIds, setRenderedSectionIds] = useState<string[]>(() =>
-    payload.segments.slice(0, 8).map((segment) => segment.id)
+    (settings.disableLazyLoading ? payload.segments : payload.segments.slice(0, 8)).map(
+      (segment) => segment.id
+    )
   );
   const [segmentAnnotations, setSegmentAnnotations] = useState<FathersGreekUndertextAnnotationRecord>(
     () =>
@@ -202,11 +209,14 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
     const nextAnnotations = Object.fromEntries(
       payload.segments.map((segment) => [segment.id, segment.greekUndertextAnnotations ?? []])
     );
-    setPrioritizedSectionIds(payload.segments.slice(0, 8).map((segment) => segment.id));
-    setRenderedSectionIds(payload.segments.slice(0, 8).map((segment) => segment.id));
+    const initialSectionIds = (
+      settings.disableLazyLoading ? payload.segments : payload.segments.slice(0, 8)
+    ).map((segment) => segment.id);
+    setPrioritizedSectionIds(initialSectionIds);
+    setRenderedSectionIds(initialSectionIds);
     setSegmentAnnotations(nextAnnotations);
     setPersistedSegmentAnnotations(nextAnnotations);
-  }, [payload.segments, payload.work.slug]);
+  }, [payload.segments, payload.work.slug, settings.disableLazyLoading]);
 
   useEffect(() => {
     clearGreekLearningQuiz();
@@ -470,6 +480,7 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
           ) : null}
           {payload.segments.map((segment, index) => (
             <LazyFathersSegmentSection
+              forceRender={forceRenderAllSections}
               initialRender={prioritizedSectionIds.includes(segment.id) || index < 8}
               key={segment.id}
               onRenderSection={handleRenderSection}
