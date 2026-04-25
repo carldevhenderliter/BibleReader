@@ -6,13 +6,16 @@ import type { ReactNode } from "react";
 import { useRouter } from "next/navigation";
 
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
-import { getChronologicalNewTestamentBooks } from "@/lib/bible/book-order";
+import {
+  getBooksForOrderMode,
+  type BibleBookOrderMode
+} from "@/lib/bible/book-order";
 import type { BookMeta, ReadingView } from "@/lib/bible/types";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { getBookChapterHref, getBookHref, getChapterHref } from "@/lib/bible/utils";
 import { BIBLE_VERSION_METADATA } from "@/lib/bible/version";
 
-const NEW_TESTAMENT_BOOK_ORDER_STORAGE_KEY = "bible-reader.new-testament-book-order";
+const BIBLE_BOOK_ORDER_STORAGE_KEY = "bible-reader.book-order";
 
 type ReaderControlOption = {
   value: string;
@@ -57,25 +60,18 @@ export function ReaderControls({
   const { version } = useReaderVersion();
   const versionMeta = BIBLE_VERSION_METADATA[version] ?? null;
   const isBibleMode = mode !== "fathers";
-  const [newTestamentBookOrder, setNewTestamentBookOrder] = useState<
-    "canonical" | "chronological"
-  >("canonical");
+  const [bookOrderMode, setBookOrderMode] = useState<BibleBookOrderMode>("canonical");
   const displayedBooks = useMemo(() => {
     if (!isBibleMode) {
       return [];
     }
 
     const { books } = props as BibleReaderControlsProps;
-
-    if (newTestamentBookOrder === "canonical") {
-      return books;
-    }
-
-    const oldTestament = books.filter((book) => book.testament === "Old");
-    const chronologicalNewTestament = getChronologicalNewTestamentBooks(books);
-
-    return [...oldTestament, ...chronologicalNewTestament];
-  }, [isBibleMode, newTestamentBookOrder, props]);
+    return getBooksForOrderMode(books, bookOrderMode);
+  }, [bookOrderMode, isBibleMode, props]);
+  const hasOldTestamentBooks = isBibleMode
+    ? (props as BibleReaderControlsProps).books.some((book) => book.testament === "Old")
+    : false;
   const hasNewTestamentBooks = isBibleMode
     ? (props as BibleReaderControlsProps).books.some((book) => book.testament === "New")
     : false;
@@ -85,9 +81,22 @@ export function ReaderControls({
       return;
     }
 
-    const storedValue = window.localStorage.getItem(NEW_TESTAMENT_BOOK_ORDER_STORAGE_KEY);
+    const storedValue = window.localStorage.getItem(BIBLE_BOOK_ORDER_STORAGE_KEY);
 
-    setNewTestamentBookOrder(storedValue === "chronological" ? "chronological" : "canonical");
+    if (
+      storedValue === "chronological-old-testament" ||
+      storedValue === "chronological-new-testament"
+    ) {
+      setBookOrderMode(storedValue);
+      return;
+    }
+
+    if (storedValue === "chronological") {
+      setBookOrderMode("chronological-new-testament");
+      return;
+    }
+
+    setBookOrderMode("canonical");
   }, [isBibleMode]);
 
   useEffect(() => {
@@ -95,8 +104,8 @@ export function ReaderControls({
       return;
     }
 
-    window.localStorage.setItem(NEW_TESTAMENT_BOOK_ORDER_STORAGE_KEY, newTestamentBookOrder);
-  }, [isBibleMode, newTestamentBookOrder]);
+    window.localStorage.setItem(BIBLE_BOOK_ORDER_STORAGE_KEY, bookOrderMode);
+  }, [bookOrderMode, isBibleMode]);
 
   const handleBookChange = (nextBookSlug: string) => {
     if (!isBibleMode) {
@@ -159,16 +168,22 @@ export function ReaderControls({
                 <select
                   aria-label="Book order"
                   id="book-order-select"
-                  value={newTestamentBookOrder}
+                  value={bookOrderMode}
                   onChange={(event) =>
-                    setNewTestamentBookOrder(
-                      event.target.value === "chronological" ? "chronological" : "canonical"
+                    setBookOrderMode(
+                      event.target.value === "chronological-old-testament" ||
+                        event.target.value === "chronological-new-testament"
+                        ? event.target.value
+                        : "canonical"
                     )
                   }
                 >
                   <option value="canonical">Canonical</option>
+                  {hasOldTestamentBooks ? (
+                    <option value="chronological-old-testament">Chronological OT</option>
+                  ) : null}
                   {hasNewTestamentBooks ? (
-                    <option value="chronological">Chronological NT</option>
+                    <option value="chronological-new-testament">Chronological NT</option>
                   ) : null}
                 </select>
               </div>

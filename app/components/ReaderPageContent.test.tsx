@@ -25,6 +25,14 @@ const books: BookMeta[] = [
     testament: "Old",
     chapterCount: 40,
     order: 2
+  },
+  {
+    slug: "job",
+    name: "Job",
+    abbreviation: "Job",
+    testament: "Old",
+    chapterCount: 42,
+    order: 18
   }
 ];
 
@@ -409,12 +417,30 @@ describe("ReaderPageContent", () => {
     );
 
     fireEvent.change(screen.getByLabelText("Book order"), {
-      target: { value: "chronological" }
+      target: { value: "chronological-new-testament" }
     });
 
     expect(
       within(screen.getByLabelText("Book")).getAllByRole("option").map((option) => option.textContent)
     ).toEqual(["James", "Romans", "Matthew"]);
+  });
+
+  it("lets the reader switch the book selector to chronological Old Testament order", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+      />
+    );
+
+    fireEvent.change(screen.getByLabelText("Book order"), {
+      target: { value: "chronological-old-testament" }
+    });
+
+    expect(
+      within(screen.getByLabelText("Book")).getAllByRole("option").map((option) => option.textContent)
+    ).toEqual(["Genesis", "Job", "Exodus"]);
   });
 
   it("can show only Greek without the English verse text in ESV interlinear mode", () => {

@@ -2,7 +2,8 @@ import {
   getBookBySlug,
   getBooks,
   getChapter,
-  getChronologicalNewTestamentBooks
+  getChronologicalNewTestamentBooks,
+  getChronologicalOldTestamentBooks
 } from "@/lib/bible/data";
 
 describe("bible data", () => {
@@ -88,6 +89,29 @@ describe("bible data", () => {
       "2-john",
       "3-john",
       "revelation"
+    ]);
+  });
+
+  it("returns Old Testament books in the configured chronological order", async () => {
+    const books = await getBooks("web");
+    const chronologicalBooks = getChronologicalOldTestamentBooks(books);
+
+    expect(chronologicalBooks).toHaveLength(39);
+    expect(chronologicalBooks.slice(0, 7).map((book) => book.slug)).toEqual([
+      "genesis",
+      "job",
+      "exodus",
+      "leviticus",
+      "numbers",
+      "deuteronomy",
+      "joshua"
+    ]);
+    expect(chronologicalBooks.slice(-5).map((book) => book.slug)).toEqual([
+      "ezra",
+      "nehemiah",
+      "haggai",
+      "zechariah",
+      "malachi"
     ]);
   });
 });

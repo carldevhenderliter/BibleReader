@@ -2,7 +2,10 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { cache } from "react";
 
-import { getChronologicalNewTestamentBooks } from "@/lib/bible/book-order";
+import {
+  getChronologicalNewTestamentBooks,
+  getChronologicalOldTestamentBooks
+} from "@/lib/bible/book-order";
 import { DEFAULT_BIBLE_VERSION } from "@/lib/bible/constants";
 import type {
   BibleVersion,
@@ -13,7 +16,10 @@ import type {
 } from "@/lib/bible/types";
 import { isBundledBibleVersion } from "@/lib/bible/version";
 
-export { getChronologicalNewTestamentBooks } from "@/lib/bible/book-order";
+export {
+  getChronologicalNewTestamentBooks,
+  getChronologicalOldTestamentBooks
+} from "@/lib/bible/book-order";
 
 type SourceBook = BookMeta & {
   sourceKey: string;

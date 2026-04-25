@@ -1,5 +1,52 @@
 import type { BookMeta } from "@/lib/bible/types";
 
+export type BibleBookOrderMode =
+  | "canonical"
+  | "chronological-old-testament"
+  | "chronological-new-testament";
+
+export const CHRONOLOGICAL_OLD_TESTAMENT_ORDER = [
+  "genesis",
+  "job",
+  "exodus",
+  "leviticus",
+  "numbers",
+  "deuteronomy",
+  "joshua",
+  "judges",
+  "ruth",
+  "1-samuel",
+  "2-samuel",
+  "psalms",
+  "song-of-solomon",
+  "proverbs",
+  "ecclesiastes",
+  "1-kings",
+  "2-kings",
+  "1-chronicles",
+  "2-chronicles",
+  "obadiah",
+  "joel",
+  "jonah",
+  "amos",
+  "hosea",
+  "isaiah",
+  "micah",
+  "nahum",
+  "zephaniah",
+  "habakkuk",
+  "jeremiah",
+  "lamentations",
+  "ezekiel",
+  "daniel",
+  "esther",
+  "ezra",
+  "nehemiah",
+  "haggai",
+  "zechariah",
+  "malachi"
+] as const;
+
 export const CHRONOLOGICAL_NEW_TESTAMENT_ORDER = [
   "james",
   "galatians",
@@ -30,9 +77,27 @@ export const CHRONOLOGICAL_NEW_TESTAMENT_ORDER = [
   "revelation"
 ] as const;
 
+const CHRONOLOGICAL_OLD_TESTAMENT_ORDER_INDEX = Object.fromEntries(
+  CHRONOLOGICAL_OLD_TESTAMENT_ORDER.map((slug, index) => [slug, index])
+) as Record<string, number>;
+
 const CHRONOLOGICAL_NEW_TESTAMENT_ORDER_INDEX = Object.fromEntries(
   CHRONOLOGICAL_NEW_TESTAMENT_ORDER.map((slug, index) => [slug, index])
 ) as Record<string, number>;
+
+export function getChronologicalOldTestamentBooks<T extends BookMeta>(books: T[]): T[] {
+  return books
+    .filter(
+      (book) =>
+        book.testament === "Old" &&
+        typeof CHRONOLOGICAL_OLD_TESTAMENT_ORDER_INDEX[book.slug] === "number"
+    )
+    .sort(
+      (left, right) =>
+        CHRONOLOGICAL_OLD_TESTAMENT_ORDER_INDEX[left.slug] -
+        CHRONOLOGICAL_OLD_TESTAMENT_ORDER_INDEX[right.slug]
+    );
+}
 
 export function getChronologicalNewTestamentBooks<T extends BookMeta>(books: T[]): T[] {
   return books
@@ -46,4 +111,25 @@ export function getChronologicalNewTestamentBooks<T extends BookMeta>(books: T[]
         CHRONOLOGICAL_NEW_TESTAMENT_ORDER_INDEX[left.slug] -
         CHRONOLOGICAL_NEW_TESTAMENT_ORDER_INDEX[right.slug]
     );
+}
+
+export function getBooksForOrderMode<T extends BookMeta>(
+  books: T[],
+  mode: BibleBookOrderMode
+): T[] {
+  if (mode === "chronological-old-testament") {
+    return [
+      ...getChronologicalOldTestamentBooks(books),
+      ...books.filter((book) => book.testament === "New")
+    ];
+  }
+
+  if (mode === "chronological-new-testament") {
+    return [
+      ...books.filter((book) => book.testament === "Old"),
+      ...getChronologicalNewTestamentBooks(books)
+    ];
+  }
+
+  return books;
 }
