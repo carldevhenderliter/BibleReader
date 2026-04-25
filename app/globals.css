@@ -577,6 +577,13 @@ select {
   letter-spacing: -0.03em;
 }
 
+.book-order-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 0.8rem;
+}
+
 .testament-meta {
   font-size: 0.94rem;
 }

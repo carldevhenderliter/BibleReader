@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 
 import { HomePageContent } from "@/app/components/HomePageContent";
 import type { BookMeta } from "@/lib/bible/types";
@@ -70,11 +70,8 @@ describe("HomePageContent", () => {
   it("renders books in canonical order grouped by testament", () => {
     render(<HomePageContent books={books} fathersWorks={fathersWorks} />);
 
-    const canonicalNewTestamentSection = screen
+    const newTestamentSection = screen
       .getByRole("heading", { name: "Matthew to Revelation" })
-      .closest("section");
-    const chronologicalNewTestamentSection = screen
-      .getByRole("heading", { name: "James to Revelation" })
       .closest("section");
 
     expect(screen.getByRole("link", { name: "Open Genesis" })).toHaveAttribute(
@@ -85,21 +82,20 @@ describe("HomePageContent", () => {
       "href",
       "/read/exodus"
     );
-    expect(canonicalNewTestamentSection).not.toBeNull();
+    expect(newTestamentSection).not.toBeNull();
     expect(
-      within(canonicalNewTestamentSection as HTMLElement).getByRole("link", {
+      within(newTestamentSection as HTMLElement).getByRole("link", {
         name: "Open Matthew"
       })
     ).toHaveAttribute(
       "href",
       "/read/matthew"
     );
-    expect(chronologicalNewTestamentSection).not.toBeNull();
     expect(
-      within(canonicalNewTestamentSection as HTMLElement).getByText("c. 70–90 AD")
+      within(newTestamentSection as HTMLElement).getByText("c. 70–90 AD")
     ).toBeInTheDocument();
     expect(
-      within(chronologicalNewTestamentSection as HTMLElement).getByText("c. 45–62 AD")
+      within(newTestamentSection as HTMLElement).getByText("c. 45–62 AD")
     ).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Open 1 Clement" })).toHaveAttribute(
       "href",
@@ -114,12 +110,13 @@ describe("HomePageContent", () => {
   it("renders the chronological New Testament section in the configured order", () => {
     render(<HomePageContent books={books} fathersWorks={[]} />);
 
+    fireEvent.click(screen.getByRole("button", { name: "Chronological" }));
+
     const chronologicalSection = screen
       .getByRole("heading", { name: "James to Revelation" })
       .closest("section");
 
     expect(chronologicalSection).not.toBeNull();
-
     const chronologicalLinks = within(chronologicalSection as HTMLElement).getAllByRole("link");
 
     expect(chronologicalLinks.map((link) => link.getAttribute("href"))).toEqual([

@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 
 import { ContinueReading } from "@/app/components/ContinueReading";
@@ -15,6 +18,13 @@ export function HomePageContent({ books, fathersWorks = [] }: HomePageContentPro
   const oldTestament = books.filter((book) => book.testament === "Old");
   const newTestament = books.filter((book) => book.testament === "New");
   const chronologicalNewTestament = getChronologicalNewTestamentBooks(books);
+  const [newTestamentOrder, setNewTestamentOrder] = useState<"canonical" | "chronological">(
+    "canonical"
+  );
+  const displayedNewTestament =
+    newTestamentOrder === "chronological" ? chronologicalNewTestament : newTestament;
+  const newTestamentTitle =
+    newTestamentOrder === "chronological" ? "James to Revelation" : "Matthew to Revelation";
 
   return (
     <div className="page-stack">
@@ -94,12 +104,32 @@ export function HomePageContent({ books, fathersWorks = [] }: HomePageContentPro
         <div className="section-header">
           <div>
             <p className="eyebrow">New Testament</p>
-            <h2 className="section-title">Matthew to Revelation</h2>
+            <h2 className="section-title">{newTestamentTitle}</h2>
+            <div className="book-order-controls" role="group" aria-label="New Testament order">
+              <button
+                className={`reader-inline-button${
+                  newTestamentOrder === "canonical" ? " is-active" : ""
+                }`}
+                onClick={() => setNewTestamentOrder("canonical")}
+                type="button"
+              >
+                Canonical
+              </button>
+              <button
+                className={`reader-inline-button${
+                  newTestamentOrder === "chronological" ? " is-active" : ""
+                }`}
+                onClick={() => setNewTestamentOrder("chronological")}
+                type="button"
+              >
+                Chronological
+              </button>
+            </div>
           </div>
           <p className="muted-copy testament-meta">{newTestament.length} books</p>
         </div>
         <div className="book-grid">
-          {newTestament.map((book) => (
+          {displayedNewTestament.map((book) => (
             <Link
               aria-label={`Open ${book.name}`}
               className="book-link"
@@ -107,36 +137,6 @@ export function HomePageContent({ books, fathersWorks = [] }: HomePageContentPro
               key={book.slug}
             >
               <span className="book-chip">NT</span>
-              <span className="book-title-line">
-                <strong>{book.name}</strong>
-                {book.compositionDate ? (
-                  <span className="book-date-chip">{book.compositionDate}</span>
-                ) : null}
-              </span>
-              <span className="book-meta">{book.chapterCount} chapters</span>
-              <span className="book-cta">Open whole book</span>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className="content-card testament-card">
-        <div className="section-header">
-          <div>
-            <p className="eyebrow">Chronological New Testament</p>
-            <h2 className="section-title">James to Revelation</h2>
-          </div>
-          <p className="muted-copy testament-meta">{chronologicalNewTestament.length} books</p>
-        </div>
-        <div className="book-grid">
-          {chronologicalNewTestament.map((book) => (
-            <Link
-              aria-label={`Open ${book.name}`}
-              className="book-link"
-              href={getBookHref(book.slug)}
-              key={`chronological:${book.slug}`}
-            >
-              <span className="book-chip">NT Chron</span>
               <span className="book-title-line">
                 <strong>{book.name}</strong>
                 {book.compositionDate ? (
