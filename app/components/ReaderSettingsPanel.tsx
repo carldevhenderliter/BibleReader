@@ -481,10 +481,10 @@ export function ReaderSettingsPanel({
                   onClick={() => toggleLayer("showVerseNumbers")}
                   type="button"
                 >
-                  <strong>{isFathersMode ? "Section labels" : "Verse numbers"}</strong>
+                  <strong>{isFathersMode ? "Section references" : "Verse numbers"}</strong>
                   <span>
                     {isFathersMode
-                      ? "Show the section label and reference above each Fathers section."
+                      ? "Show the small section reference line above each Fathers section."
                       : "Show the small verse numbers beside each Bible verse."}
                   </span>
                 </button>

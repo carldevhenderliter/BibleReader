@@ -377,7 +377,7 @@ describe("FathersReaderContent", () => {
     expect(screen.getAllByText("Prologue").length).toBeGreaterThan(0);
   });
 
-  it("can hide Fathers section labels", async () => {
+  it("can hide Fathers section references while keeping the heading above the text", async () => {
     window.localStorage.setItem(
       READER_CUSTOMIZATION_STORAGE_KEY,
       JSON.stringify({
@@ -389,7 +389,8 @@ describe("FathersReaderContent", () => {
     const { container } = renderFathersReader();
 
     await waitFor(() => {
-      expect(container.querySelector(".fathers-segment-label")).toBeNull();
+      expect(container.querySelector(".fathers-segment-label")).not.toBeNull();
+      expect(container.querySelector(".fathers-segment-ref")).toBeNull();
     });
 
     expect(screen.getByLabelText("Section")).toBeInTheDocument();
