@@ -113,12 +113,13 @@ export function ReaderSettingsPanel({
   const { isPanelOpen, resetSettings, setIsPanelOpen, settings, updateSettings } =
     useReaderCustomization();
   const {
+    createHarmony,
+    getHarmonyDocuments,
     openCompare,
     openCrossReferences,
     openNotebook,
     openOtCompare,
     openSermons,
-    setActiveUtilityPane,
     setActiveReaderPane
   } = useReaderWorkspace();
   const { version, setVersion } = useReaderVersion();
@@ -309,7 +310,11 @@ export function ReaderSettingsPanel({
   };
 
   const handleHarmonyOpen = () => {
-    setActiveUtilityPane("harmony");
+    if (getHarmonyDocuments().length === 0) {
+      createHarmony();
+    }
+
+    setActiveReaderPane("harmony");
     setIsPanelOpen(false);
   };
 

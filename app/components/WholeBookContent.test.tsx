@@ -446,6 +446,23 @@ describe("WholeBookContent", () => {
     expect(screen.getByText("Dear friends, I had been eagerly planning to write to you...")).toBeInTheDocument();
   });
 
+  it("renders the harmony pane in whole-book view", async () => {
+    renderWithReaderCustomization(
+      <WholeBookContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapters, kjv: kjvChapters, nlt: nltChapters }}
+        focusedChapterNumber={2}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("tab", { name: "Harmony" }));
+
+    expect(screen.getByRole("tab", { name: "Harmony" })).toHaveAttribute("aria-selected", "true");
+    expect(await screen.findByText("Chronological Harmony of the Gospels")).toBeInTheDocument();
+    expect(screen.getByText("Prologue and Genealogies")).toBeInTheDocument();
+  });
+
   it("renders OT compare sections in whole-book view", () => {
     renderWithReaderCustomization(
       <WholeBookContent

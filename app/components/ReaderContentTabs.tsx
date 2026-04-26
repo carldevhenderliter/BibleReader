@@ -4,9 +4,13 @@ import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 
 type ReaderContentTabsProps = {
   showOtCompare?: boolean;
+  showHarmony?: boolean;
 };
 
-export function ReaderContentTabs({ showOtCompare = false }: ReaderContentTabsProps) {
+export function ReaderContentTabs({
+  showOtCompare = false,
+  showHarmony = true
+}: ReaderContentTabsProps) {
   const { activeReaderPane, setActiveReaderPane } = useReaderWorkspace();
 
   return (
@@ -29,6 +33,17 @@ export function ReaderContentTabs({ showOtCompare = false }: ReaderContentTabsPr
       >
         Compare
       </button>
+      {showHarmony ? (
+        <button
+          aria-selected={activeReaderPane === "harmony"}
+          className={`reader-content-tab${activeReaderPane === "harmony" ? " is-active" : ""}`}
+          onClick={() => setActiveReaderPane("harmony")}
+          role="tab"
+          type="button"
+        >
+          Harmony
+        </button>
+      ) : null}
       {showOtCompare ? (
         <button
           aria-selected={activeReaderPane === "ot-compare"}

@@ -321,6 +321,24 @@ describe("ReaderPageContent", () => {
     expect(screen.getByLabelText("Parallel translation comparison")).toBeInTheDocument();
   });
 
+  it("opens harmony in the reader view from the menu", async () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "Harmony" }));
+
+    expect(screen.getByRole("tab", { name: "Harmony" })).toHaveAttribute("aria-selected", "true");
+    expect(await screen.findByText("Chronological Harmony of the Gospels")).toBeInTheDocument();
+    expect(screen.getByText("Prologue and Genealogies")).toBeInTheDocument();
+    expect(screen.getByLabelText("Harmony event")).toBeInTheDocument();
+  });
+
   it("opens OT compare from the menu for Old Testament passages", async () => {
     renderWithReaderCustomization(
       <>

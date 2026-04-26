@@ -70,7 +70,7 @@ import {
 } from "@/lib/study-workspace";
 import { getInstalledBundledBibleVersions } from "@/lib/bible/version";
 
-type ReaderPane = "reading" | "compare" | "ot-compare" | "study-sets";
+type ReaderPane = "reading" | "compare" | "ot-compare" | "study-sets" | "harmony";
 type LeftReaderMode = "scripture" | "search";
 type UtilityPane =
   | "search"
@@ -259,7 +259,11 @@ function normalizeCompareVersions(
 }
 
 function shouldPreserveReaderPane(activeReaderPane: ReaderPane) {
-  return activeReaderPane === "compare" || activeReaderPane === "ot-compare";
+  return (
+    activeReaderPane === "compare" ||
+    activeReaderPane === "ot-compare" ||
+    activeReaderPane === "harmony"
+  );
 }
 
 export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {

@@ -7,6 +7,7 @@ import { useReaderCustomization } from "@/app/components/ReaderCustomizationProv
 import { ReaderContentTabs } from "@/app/components/ReaderContentTabs";
 import { ReaderComparePanel } from "@/app/components/ReaderComparePanel";
 import { ReaderControls } from "@/app/components/ReaderControls";
+import { ReaderHarmonyPanel } from "@/app/components/ReaderHarmonyPanel";
 import { ReaderHarmonyWorkspace } from "@/app/components/ReaderHarmonyWorkspace";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
 import { ReaderOtComparePanel } from "@/app/components/ReaderOtComparePanel";
@@ -428,10 +429,14 @@ export function WholeBookContent({
             </div>
           </div>
         </div>
-        <ReaderContentTabs showOtCompare={isOldTestament} />
+        <ReaderContentTabs showHarmony showOtCompare={isOldTestament} />
         {activeReaderPane === "study-sets" ? (
           <div className="reading-surface reader-notebook-surface">
             <ReaderStudySetsPanel bookSlug={book.slug} chapterNumber={1} />
+          </div>
+        ) : activeReaderPane === "harmony" ? (
+          <div className="reading-surface reader-notebook-surface">
+            <ReaderHarmonyPanel />
           </div>
         ) : activeReaderPane === "compare" ? (
           <div className="reading-surface reader-notebook-surface">
