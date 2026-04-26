@@ -87,4 +87,45 @@ describe("BookPage", () => {
 
     expect(notFound).toHaveBeenCalled();
   });
+
+  it("renders the harmony book when the special Gospel harmony slug is requested", async () => {
+    mockedGetBooks.mockResolvedValue([
+      {
+        slug: "genesis",
+        name: "Genesis",
+        abbreviation: "Gen",
+        testament: "Old",
+        chapterCount: 50,
+        order: 1
+      },
+      {
+        slug: "gospel-harmony",
+        name: "Gospel Harmony",
+        abbreviation: "Harmony",
+        testament: "New",
+        chapterCount: 1,
+        order: 67
+      }
+    ]);
+    mockedGetBookBySlug.mockResolvedValue({
+      slug: "gospel-harmony",
+      name: "Gospel Harmony",
+      abbreviation: "Harmony",
+      testament: "New",
+      chapterCount: 1,
+      order: 67
+    });
+
+    const element = await BookPage({
+      params: Promise.resolve({
+        book: "gospel-harmony"
+      })
+    });
+
+    renderWithReaderCustomization(element);
+
+    expect(screen.getByText("ESV Gospel Harmony")).toBeInTheDocument();
+    expect(screen.getAllByText("Gospel Harmony").length).toBeGreaterThan(0);
+    expect(screen.getByText("Chronological Harmony of the Gospels")).toBeInTheDocument();
+  });
 });

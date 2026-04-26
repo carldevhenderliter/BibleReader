@@ -86,7 +86,7 @@ const CHRONOLOGICAL_NEW_TESTAMENT_ORDER_INDEX = Object.fromEntries(
 ) as Record<string, number>;
 
 export function getChronologicalOldTestamentBooks<T extends BookMeta>(books: T[]): T[] {
-  return books
+  const orderedBooks = books
     .filter(
       (book) =>
         book.testament === "Old" &&
@@ -97,10 +97,19 @@ export function getChronologicalOldTestamentBooks<T extends BookMeta>(books: T[]
         CHRONOLOGICAL_OLD_TESTAMENT_ORDER_INDEX[left.slug] -
         CHRONOLOGICAL_OLD_TESTAMENT_ORDER_INDEX[right.slug]
     );
+  const remainingBooks = books
+    .filter(
+      (book) =>
+        book.testament === "Old" &&
+        typeof CHRONOLOGICAL_OLD_TESTAMENT_ORDER_INDEX[book.slug] !== "number"
+    )
+    .sort((left, right) => left.order - right.order);
+
+  return [...orderedBooks, ...remainingBooks];
 }
 
 export function getChronologicalNewTestamentBooks<T extends BookMeta>(books: T[]): T[] {
-  return books
+  const orderedBooks = books
     .filter(
       (book) =>
         book.testament === "New" &&
@@ -111,6 +120,15 @@ export function getChronologicalNewTestamentBooks<T extends BookMeta>(books: T[]
         CHRONOLOGICAL_NEW_TESTAMENT_ORDER_INDEX[left.slug] -
         CHRONOLOGICAL_NEW_TESTAMENT_ORDER_INDEX[right.slug]
     );
+  const remainingBooks = books
+    .filter(
+      (book) =>
+        book.testament === "New" &&
+        typeof CHRONOLOGICAL_NEW_TESTAMENT_ORDER_INDEX[book.slug] !== "number"
+    )
+    .sort((left, right) => left.order - right.order);
+
+  return [...orderedBooks, ...remainingBooks];
 }
 
 export function getBooksForOrderMode<T extends BookMeta>(

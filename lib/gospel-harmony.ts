@@ -4,6 +4,7 @@ import {
   GOSPEL_HARMONY_DOCUMENTS_STORAGE_KEY
 } from "@/lib/bible/constants";
 import type {
+  BookMeta,
   HarmonyDocument,
   HarmonyEvent,
   HarmonyLine,
@@ -17,6 +18,16 @@ export {
 };
 
 export type HarmonyDocumentStorage = Record<string, HarmonyDocument>;
+
+export const GOSPEL_HARMONY_BOOK_SLUG = "gospel-harmony";
+export const GOSPEL_HARMONY_BOOK_META: BookMeta = {
+  slug: GOSPEL_HARMONY_BOOK_SLUG,
+  name: "Gospel Harmony",
+  abbreviation: "Harmony",
+  testament: "New",
+  chapterCount: 1,
+  order: 67
+};
 
 const DEFAULT_HARMONY_TITLE = "Chronological Harmony of the Gospels";
 
@@ -33,6 +44,15 @@ type HarmonyTemplate = {
   sourceVersion: "esv";
   events: HarmonyTemplateEvent[];
 };
+
+export function isGospelHarmonyBookSlug(bookSlug: string) {
+  return bookSlug === GOSPEL_HARMONY_BOOK_SLUG;
+}
+
+export function getGospelHarmonyTemplateEvents(): HarmonyEvent[] {
+  const template = gospelHarmonyTemplate as HarmonyTemplate;
+  return template.events.map(hydrateTemplateEvent);
+}
 
 function cloneReference(reference: PassageReference): PassageReference {
   return createPassageReference({
@@ -205,7 +225,7 @@ export function createDefaultHarmonyDocument(title = DEFAULT_HARMONY_TITLE): Har
     id: createHarmonyId(safeTitle),
     title: safeTitle,
     sourceVersion: "esv",
-    events: template.events.map(hydrateTemplateEvent),
+    events: getGospelHarmonyTemplateEvents(),
     updatedAt: new Date().toISOString()
   };
 }

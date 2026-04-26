@@ -46,6 +46,14 @@ const books: BookMeta[] = [
     chapterCount: 5,
     order: 59,
     compositionDate: "c. 45–62 AD"
+  },
+  {
+    slug: "gospel-harmony",
+    name: "Gospel Harmony",
+    abbreviation: "Harmony",
+    testament: "New",
+    chapterCount: 1,
+    order: 67
   }
 ];
 
@@ -112,6 +120,11 @@ describe("HomePageContent", () => {
     expect(
       within(newTestamentSection as HTMLElement).getByText("c. 45–62 AD")
     ).toBeInTheDocument();
+    expect(
+      within(newTestamentSection as HTMLElement).getByRole("link", {
+        name: "Open Gospel Harmony"
+      })
+    ).toHaveAttribute("href", "/read/gospel-harmony");
     expect(screen.getByRole("link", { name: "Open 1 Clement" })).toHaveAttribute(
       "href",
       "/fathers/1-clement"
@@ -163,7 +176,8 @@ describe("HomePageContent", () => {
 
     expect(chronologicalLinks.map((link) => link.getAttribute("href"))).toEqual([
       "/read/james",
-      "/read/matthew"
+      "/read/matthew",
+      "/read/gospel-harmony"
     ]);
   });
 });

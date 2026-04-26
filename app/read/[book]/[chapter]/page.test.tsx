@@ -98,4 +98,47 @@ describe("ReaderChapterPage", () => {
       ).toHaveClass("is-highlighted");
     });
   });
+
+  it("renders the harmony book from the chapter route at chapter 1", async () => {
+    mockedGetBooks.mockResolvedValue([
+      {
+        slug: "genesis",
+        name: "Genesis",
+        abbreviation: "Gen",
+        testament: "Old",
+        chapterCount: 50,
+        order: 1
+      },
+      {
+        slug: "gospel-harmony",
+        name: "Gospel Harmony",
+        abbreviation: "Harmony",
+        testament: "New",
+        chapterCount: 1,
+        order: 67
+      }
+    ]);
+    mockedGetBookBySlug.mockResolvedValue({
+      slug: "gospel-harmony",
+      name: "Gospel Harmony",
+      abbreviation: "Harmony",
+      testament: "New",
+      chapterCount: 1,
+      order: 67
+    });
+    window.history.replaceState({}, "", "/read/gospel-harmony/1");
+
+    const element = await ReaderChapterPage({
+      params: Promise.resolve({
+        book: "gospel-harmony",
+        chapter: "1"
+      })
+    });
+
+    renderWithReaderCustomization(element);
+
+    expect(screen.getByText("ESV Gospel Harmony")).toBeInTheDocument();
+    expect(screen.getByText("Chronological Harmony of the Gospels")).toBeInTheDocument();
+    expect(screen.getByText("Prologue and Genealogies")).toBeInTheDocument();
+  });
 });

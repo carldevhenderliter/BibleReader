@@ -14,6 +14,7 @@ import type {
   BundledBibleVersion,
   Chapter
 } from "@/lib/bible/types";
+import { GOSPEL_HARMONY_BOOK_META, isGospelHarmonyBookSlug } from "@/lib/gospel-harmony";
 import { isBundledBibleVersion } from "@/lib/bible/version";
 
 export {
@@ -70,6 +71,16 @@ function addBookCompositionDates<T extends BookMeta>(books: T[]): T[] {
   });
 }
 
+function withSpecialBooks<T extends BookMeta>(books: T[]): BookMeta[] {
+  const hasHarmony = books.some((book) => isGospelHarmonyBookSlug(book.slug));
+
+  if (hasHarmony) {
+    return books;
+  }
+
+  return [...books, GOSPEL_HARMONY_BOOK_META];
+}
+
 const readSourceBooks = cache(async (): Promise<BookMeta[]> => {
   const file = await readFile(sourceBooksPath, "utf8");
   const books = JSON.parse(file) as SourceBook[];
@@ -112,10 +123,10 @@ export async function getBooks(version: BibleVersion = DEFAULT_BIBLE_VERSION): P
   if (isBundledBibleVersion(version)) {
     const books = await readBundledBooksFile(version);
 
-    return addBookCompositionDates(books).sort((left, right) => left.order - right.order);
+    return withSpecialBooks(addBookCompositionDates(books).sort((left, right) => left.order - right.order));
   }
 
-  return readSourceBooks();
+  return withSpecialBooks(await readSourceBooks());
 }
 
 export async function getBookBySlug(
@@ -131,6 +142,10 @@ export async function getBookPayload(
   bookSlug: string,
   version: BibleVersion = DEFAULT_BIBLE_VERSION
 ): Promise<BookPayload | null> {
+  if (isGospelHarmonyBookSlug(bookSlug)) {
+    return null;
+  }
+
   if (!isBundledBibleVersion(version)) {
     return null;
   }
@@ -143,6 +158,10 @@ export async function getChapter(
   chapterNumber: number,
   version: BibleVersion = DEFAULT_BIBLE_VERSION
 ): Promise<Chapter | null> {
+  if (isGospelHarmonyBookSlug(bookSlug)) {
+    return null;
+  }
+
   const bookPayload = isBundledBibleVersion(version)
     ? await getBookPayload(bookSlug, version)
     : null;

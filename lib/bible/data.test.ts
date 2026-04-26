@@ -14,15 +14,16 @@ describe("bible data", () => {
       getBooks("esv")
     ]);
 
-    expect(webBooks).toHaveLength(66);
-    expect(kjvBooks).toHaveLength(66);
-    expect(esvBooks).toHaveLength(66);
+    expect(webBooks).toHaveLength(67);
+    expect(kjvBooks).toHaveLength(67);
+    expect(esvBooks).toHaveLength(67);
     expect(webBooks[0]?.slug).toBe("genesis");
     expect(webBooks[0]?.compositionDate).toBeUndefined();
     expect(webBooks.find((book) => book.slug === "matthew")?.compositionDate).toBe("c. 70–90 AD");
     expect(kjvBooks.find((book) => book.slug === "revelation")?.compositionDate).toBe("c. 95–96 AD");
-    expect(kjvBooks.at(-1)?.slug).toBe("revelation");
+    expect(kjvBooks.at(-1)?.slug).toBe("gospel-harmony");
     expect(esvBooks[0]?.slug).toBe("genesis");
+    expect(esvBooks.at(-1)?.name).toBe("Gospel Harmony");
   });
 
   it("loads Genesis 1 from KJV", async () => {
@@ -73,7 +74,7 @@ describe("bible data", () => {
     const books = await getBooks("web");
     const chronologicalBooks = getChronologicalNewTestamentBooks(books);
 
-    expect(chronologicalBooks).toHaveLength(27);
+    expect(chronologicalBooks).toHaveLength(28);
     expect(chronologicalBooks.slice(0, 7).map((book) => book.slug)).toEqual([
       "james",
       "galatians",
@@ -83,12 +84,13 @@ describe("bible data", () => {
       "2-corinthians",
       "romans"
     ]);
-    expect(chronologicalBooks.slice(-5).map((book) => book.slug)).toEqual([
+    expect(chronologicalBooks.slice(-6).map((book) => book.slug)).toEqual([
       "john",
       "1-john",
       "2-john",
       "3-john",
-      "revelation"
+      "revelation",
+      "gospel-harmony"
     ]);
   });
 

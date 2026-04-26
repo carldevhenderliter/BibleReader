@@ -22,6 +22,7 @@ import {
   UI_FONT_OPTIONS
 } from "@/lib/reader-customization";
 import { getViewToggleHref } from "@/lib/bible/utils";
+import { GOSPEL_HARMONY_BOOK_SLUG } from "@/lib/gospel-harmony";
 import { getBibleVersionOptions, isInstalledBundledBibleVersion } from "@/lib/bible/version";
 
 const TEXT_ALIGNMENT_OPTIONS = [
@@ -138,6 +139,7 @@ export function ReaderSettingsPanel({
     : false;
   const supportsFullRenderToggle = isFathersMode || view === "book";
   const isOldTestament = book?.testament === "Old";
+  const isHarmonyBook = book?.slug === GOSPEL_HARMONY_BOOK_SLUG;
   const supportsGreekReading = isFathersMode
     ? hasGreekReaderAid
     : version === "esv" || version === "greek";
@@ -723,14 +725,16 @@ export function ReaderSettingsPanel({
                 >
                   Cross refs
                 </button>
-                <button
-                  className="reader-inline-button reader-settings-link"
-                  onClick={handleCompareOpen}
-                  type="button"
-                >
-                  Compare
-                </button>
-                {isOldTestament ? (
+                {!isHarmonyBook ? (
+                  <button
+                    className="reader-inline-button reader-settings-link"
+                    onClick={handleCompareOpen}
+                    type="button"
+                  >
+                    Compare
+                  </button>
+                ) : null}
+                {isOldTestament && !isHarmonyBook ? (
                   <button
                     className="reader-inline-button reader-settings-link"
                     onClick={handleOtCompareOpen}

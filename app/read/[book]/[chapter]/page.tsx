@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
 
+import { HarmonyBookReaderContent } from "@/app/components/HarmonyBookReaderContent";
 import { ReaderPageContent } from "@/app/components/ReaderPageContent";
 import { getBookBySlug, getBooks, getChapter } from "@/lib/bible/data";
 import { getEsvInterlinearChapter } from "@/lib/bible/esv-interlinear";
+import { isGospelHarmonyBookSlug } from "@/lib/gospel-harmony";
 import { getMasoreticChapter } from "@/lib/bible/masoretic";
 import { isValidChapter, parseChapterParam } from "@/lib/bible/utils";
 import { getInstalledBundledBibleVersions } from "@/lib/bible/version";
@@ -33,6 +35,20 @@ export default async function ReaderChapterPage({ params }: ReaderChapterPagePro
 
   if (!chapterNumber) {
     notFound();
+  }
+
+  if (isGospelHarmonyBookSlug(bookSlug)) {
+    if (chapterNumber !== 1) {
+      notFound();
+    }
+
+    const [books, book] = await Promise.all([getBooks("web"), getBookBySlug(bookSlug, "web")]);
+
+    if (!book) {
+      notFound();
+    }
+
+    return <HarmonyBookReaderContent book={book} books={books} view="chapter" />;
   }
 
   const installedBundledVersions = getInstalledBundledBibleVersions();
