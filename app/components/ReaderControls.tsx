@@ -10,6 +10,10 @@ import {
   getBooksForOrderMode,
   type BibleBookOrderMode
 } from "@/lib/bible/book-order";
+import {
+  getGospelHarmonyChapterOptions,
+  isGospelHarmonyBookSlug
+} from "@/lib/gospel-harmony";
 import type { BookMeta, ReadingView } from "@/lib/bible/types";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { getBookChapterHref, getBookHref, getChapterHref } from "@/lib/bible/utils";
@@ -69,6 +73,25 @@ export function ReaderControls({
     const { books } = props as BibleReaderControlsProps;
     return getBooksForOrderMode(books, bookOrderMode);
   }, [bookOrderMode, isBibleMode, props]);
+  const displayedChapterOptions = useMemo(() => {
+    if (!isBibleMode) {
+      return [];
+    }
+
+    const { book } = props as BibleReaderControlsProps;
+
+    if (isGospelHarmonyBookSlug(book.slug)) {
+      return getGospelHarmonyChapterOptions().map((option) => ({
+        value: String(option.chapterNumber),
+        label: option.label
+      }));
+    }
+
+    return Array.from({ length: book.chapterCount }, (_, index) => ({
+      value: String(index + 1),
+      label: `Chapter ${index + 1}`
+    }));
+  }, [isBibleMode, props]);
   const hasOldTestamentBooks = isBibleMode
     ? (props as BibleReaderControlsProps).books.some((book) => book.testament === "Old")
     : false;
@@ -214,12 +237,9 @@ export function ReaderControls({
                   value={String((props as BibleReaderControlsProps).currentChapter)}
                   onChange={(event) => handleChapterChange(Number(event.target.value))}
                 >
-                  {Array.from(
-                    { length: (props as BibleReaderControlsProps).book.chapterCount },
-                    (_, index) => index + 1
-                  ).map((chapter) => (
-                    <option key={chapter} value={chapter}>
-                      Chapter {chapter}
+                  {displayedChapterOptions.map((chapter) => (
+                    <option key={chapter.value} value={chapter.value}>
+                      {chapter.label}
                     </option>
                   ))}
                 </select>

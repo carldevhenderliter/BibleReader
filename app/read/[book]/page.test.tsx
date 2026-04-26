@@ -127,6 +127,8 @@ describe("BookPage", () => {
     expect(screen.getByText("ESV Gospel Harmony")).toBeInTheDocument();
     expect(screen.getAllByText("Gospel Harmony").length).toBeGreaterThan(0);
     expect(screen.getByText("Chronological Harmony of the Gospels")).toBeInTheDocument();
-    expect(screen.getByRole("option", { name: "Chapter 68" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("option", { name: "68. The Ascension" })
+    ).toBeInTheDocument();
   });
 });

@@ -142,5 +142,8 @@ describe("ReaderChapterPage", () => {
     expect(screen.getAllByText("Gospel Harmony 2").length).toBeGreaterThan(0);
     expect(screen.getByText("Announcements Before the Birth of Jesus")).toBeInTheDocument();
     expect(screen.getByLabelText("Chapter")).toHaveValue("2");
+    expect(
+      screen.getByRole("option", { name: "2. Announcements Before the Birth of Jesus" })
+    ).toBeInTheDocument();
   });
 });

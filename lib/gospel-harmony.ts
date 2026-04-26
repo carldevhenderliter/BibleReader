@@ -53,6 +53,13 @@ export function getGospelHarmonyChapterCount() {
   return getHarmonyTemplate().events.length;
 }
 
+export function getGospelHarmonyChapterOptions() {
+  return getHarmonyTemplate().events.map((event, index) => ({
+    chapterNumber: index + 1,
+    label: `${index + 1}. ${event.title}`
+  }));
+}
+
 export function isGospelHarmonyBookSlug(bookSlug: string) {
   return bookSlug === GOSPEL_HARMONY_BOOK_SLUG;
 }
