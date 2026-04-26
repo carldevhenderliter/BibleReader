@@ -4478,6 +4478,73 @@ button.fathers-annotation-anchor:focus-visible {
   gap: 0.4rem;
 }
 
+.reader-harmony-editor,
+.reader-harmony-events,
+.reader-harmony-lines {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.reader-harmony-event {
+  gap: 0.95rem;
+}
+
+.reader-harmony-event-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.reader-harmony-note {
+  margin-top: 0.35rem;
+}
+
+.reader-harmony-references,
+.reader-harmony-line-references {
+  gap: 0.45rem;
+}
+
+.reader-harmony-line {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.reader-harmony-line.is-difference {
+  border-color: rgba(var(--reader-accent-rgb), 0.2);
+  background: rgba(var(--reader-accent-rgb), 0.06);
+}
+
+.reader-harmony-line.is-unique {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.reader-harmony-line.is-teaching-break {
+  border-style: dashed;
+}
+
+.reader-harmony-line-label,
+.reader-harmony-line-text {
+  margin: 0;
+}
+
+.reader-harmony-line-label {
+  color: rgba(255, 245, 235, 0.72);
+  font-size: 0.83rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+}
+
+.reader-harmony-line-text {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
 .reader-study-summary {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));

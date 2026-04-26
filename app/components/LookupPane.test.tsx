@@ -87,6 +87,7 @@ describe("LookupPane", () => {
     expect(within(studyPane).getByRole("tab", { name: "Notes" })).toBeInTheDocument();
     expect(within(studyPane).getByRole("tab", { name: "Strongs" })).toBeInTheDocument();
     expect(within(studyPane).getByRole("tab", { name: "Sermons" })).toBeInTheDocument();
+    expect(within(studyPane).getByRole("tab", { name: "Harmony" })).toBeInTheDocument();
   });
 
   it("restores a collapsed study rail from local storage and reopens it", async () => {

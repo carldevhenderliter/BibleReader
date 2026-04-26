@@ -6,6 +6,7 @@ import { FathersEnglishUndertextContent } from "@/app/components/FathersEnglishU
 import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
+import { ReaderHarmonyWorkspace } from "@/app/components/ReaderHarmonyWorkspace";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
 import { ReaderStrongsPanel } from "@/app/components/ReaderStrongsPanel";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
@@ -573,6 +574,10 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
         {!isSplitViewActive && activeUtilityPane === "strongs" ? (
           <div className="reading-surface reader-notebook-surface">
             <ReaderStrongsPanel />
+          </div>
+        ) : !isSplitViewActive && activeUtilityPane === "harmony" ? (
+          <div className="reading-surface reader-notebook-surface">
+            <ReaderHarmonyWorkspace />
           </div>
         ) : null}
       </section>

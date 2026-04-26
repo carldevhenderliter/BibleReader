@@ -118,6 +118,7 @@ export function ReaderSettingsPanel({
     openNotebook,
     openOtCompare,
     openSermons,
+    setActiveUtilityPane,
     setActiveReaderPane
   } = useReaderWorkspace();
   const { version, setVersion } = useReaderVersion();
@@ -304,6 +305,11 @@ export function ReaderSettingsPanel({
 
   const handleSermonsOpen = () => {
     openSermons();
+    setIsPanelOpen(false);
+  };
+
+  const handleHarmonyOpen = () => {
+    setActiveUtilityPane("harmony");
     setIsPanelOpen(false);
   };
 
@@ -690,6 +696,13 @@ export function ReaderSettingsPanel({
                   type="button"
                 >
                   Sermons
+                </button>
+                <button
+                  className="reader-inline-button reader-settings-link"
+                  onClick={handleHarmonyOpen}
+                  type="button"
+                >
+                  Harmony
                 </button>
                 <button
                   className="reader-inline-button reader-settings-link"

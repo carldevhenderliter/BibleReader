@@ -149,6 +149,37 @@ export type SermonDocument = {
   updatedAt: string;
 };
 
+export type HarmonyLineKind = "merged" | "difference" | "unique" | "teaching-break";
+
+export type HarmonySpeaker = "Matthew" | "Mark" | "Luke" | "John";
+
+export type HarmonyLine = {
+  id: string;
+  kind: HarmonyLineKind;
+  speaker?: HarmonySpeaker;
+  label?: string;
+  text: string;
+  references: PassageReference[];
+};
+
+export type HarmonyEvent = {
+  id: string;
+  eventNumber: number;
+  title: string;
+  timeline: string;
+  references: PassageReference[];
+  chronologyNote?: string;
+  lines: HarmonyLine[];
+};
+
+export type HarmonyDocument = {
+  id: string;
+  title: string;
+  sourceVersion: "esv";
+  events: HarmonyEvent[];
+  updatedAt: string;
+};
+
 export type StudyHighlightColor = "gold" | "sky" | "rose";
 
 export type Highlight = {

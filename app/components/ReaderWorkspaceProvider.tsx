@@ -20,6 +20,7 @@ import type {
   GreekDictionarySelection,
   GreekLearningSession,
   GreekLearningQuizSelection,
+  HarmonyDocument,
   Highlight,
   NotebookDocument,
   PassageReference,
@@ -28,6 +29,13 @@ import type {
   SermonDocumentSection,
   StudySet
 } from "@/lib/bible/types";
+import {
+  ACTIVE_GOSPEL_HARMONY_STORAGE_KEY,
+  GOSPEL_HARMONY_DOCUMENTS_STORAGE_KEY,
+  createDefaultHarmonyDocument,
+  normalizeHarmonyDocumentStorage,
+  type HarmonyDocumentStorage
+} from "@/lib/gospel-harmony";
 import {
   ACTIVE_NOTEBOOK_STORAGE_KEY,
   PASSAGE_NOTEBOOK_STORAGE_KEY,
@@ -64,7 +72,14 @@ import { getInstalledBundledBibleVersions } from "@/lib/bible/version";
 
 type ReaderPane = "reading" | "compare" | "ot-compare" | "study-sets";
 type LeftReaderMode = "scripture" | "search";
-type UtilityPane = "search" | "cross-references" | "compare" | "notebook" | "sermons" | "strongs";
+type UtilityPane =
+  | "search"
+  | "cross-references"
+  | "compare"
+  | "notebook"
+  | "sermons"
+  | "harmony"
+  | "strongs";
 
 type CurrentPassage = {
   bookSlug: string;
@@ -175,6 +190,13 @@ type ReaderWorkspaceContextValue = {
   deleteSermon: (sermonId: string) => void;
   addReferenceToSermon: (sermonId: string, reference: PassageReference) => void;
   removeReferenceFromSermon: (sermonId: string, referenceId: string) => void;
+  activeHarmonyId: string | null;
+  setActiveHarmonyId: (id: string | null) => void;
+  getHarmonyDocuments: () => HarmonyDocument[];
+  getActiveHarmony: () => HarmonyDocument | null;
+  createHarmony: (title?: string) => HarmonyDocument;
+  deleteHarmony: (harmonyId: string) => void;
+  updateHarmonyTitle: (harmonyId: string, title: string) => void;
 };
 
 const ReaderWorkspaceContext = createContext<ReaderWorkspaceContextValue | null>(null);
@@ -190,6 +212,10 @@ function getSortedNotebooks(documents: NotebookDocumentStorage) {
 }
 
 function getSortedSermons(documents: SermonDocumentStorage) {
+  return Object.values(documents).sort((left, right) => right.updatedAt.localeCompare(left.updatedAt));
+}
+
+function getSortedHarmonies(documents: HarmonyDocumentStorage) {
   return Object.values(documents).sort((left, right) => right.updatedAt.localeCompare(left.updatedAt));
 }
 
@@ -241,6 +267,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   const { version } = useReaderVersion();
   const [notebooks, setNotebooks] = useState<NotebookDocumentStorage>({});
   const [sermonDocuments, setSermonDocuments] = useState<SermonDocumentStorage>({});
+  const [harmonyDocuments, setHarmonyDocuments] = useState<HarmonyDocumentStorage>({});
   const [highlights, setHighlights] = useState<HighlightStorage>({});
   const [bookmarks, setBookmarks] = useState<BookmarkStorage>({});
   const [studySets, setStudySets] = useState<StudySetStorage>({});
@@ -263,6 +290,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
     useState<GreekLearningSession | null>(null);
   const [isGreekLearningMode, setIsGreekLearningMode] = useState(false);
   const [activeSermonId, setActiveSermonId] = useState<string | null>(null);
+  const [activeHarmonyId, setActiveHarmonyId] = useState<string | null>(null);
   const [compareVersionOverrides, setCompareVersionOverrides] = useState<BundledBibleVersion[]>([]);
   const [utilityPaneRequestKey, setUtilityPaneRequestKey] = useState(0);
   const isReaderRoute = pathname.startsWith("/read");
@@ -492,7 +520,9 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       const storedBookmarks = window.localStorage.getItem(STUDY_BOOKMARKS_STORAGE_KEY);
       const storedStudySets = window.localStorage.getItem(STUDY_SETS_STORAGE_KEY);
       const storedSermons = window.localStorage.getItem(SERMON_DOCUMENTS_STORAGE_KEY);
+      const storedHarmonies = window.localStorage.getItem(GOSPEL_HARMONY_DOCUMENTS_STORAGE_KEY);
       const storedActiveNotebookId = window.localStorage.getItem(ACTIVE_NOTEBOOK_STORAGE_KEY);
+      const storedActiveHarmonyId = window.localStorage.getItem(ACTIVE_GOSPEL_HARMONY_STORAGE_KEY);
 
       if (storedNotebooks) {
         const normalizedNotebooks = normalizePassageNotebookStorage(JSON.parse(storedNotebooks));
@@ -518,10 +548,21 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       if (storedSermons) {
         setSermonDocuments(normalizeSermonDocumentStorage(JSON.parse(storedSermons)));
       }
+
+      if (storedHarmonies) {
+        const normalizedHarmonies = normalizeHarmonyDocumentStorage(JSON.parse(storedHarmonies));
+        setHarmonyDocuments(normalizedHarmonies);
+
+        if (storedActiveHarmonyId && normalizedHarmonies[storedActiveHarmonyId]) {
+          setActiveHarmonyId(storedActiveHarmonyId);
+        }
+      }
     } catch {
       window.localStorage.removeItem(PASSAGE_NOTEBOOK_STORAGE_KEY);
       window.localStorage.removeItem(ACTIVE_NOTEBOOK_STORAGE_KEY);
       window.localStorage.removeItem(SERMON_DOCUMENTS_STORAGE_KEY);
+      window.localStorage.removeItem(GOSPEL_HARMONY_DOCUMENTS_STORAGE_KEY);
+      window.localStorage.removeItem(ACTIVE_GOSPEL_HARMONY_STORAGE_KEY);
       window.localStorage.removeItem(STUDY_HIGHLIGHTS_STORAGE_KEY);
       window.localStorage.removeItem(STUDY_BOOKMARKS_STORAGE_KEY);
       window.localStorage.removeItem(STUDY_SETS_STORAGE_KEY);
@@ -579,6 +620,30 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       return;
     }
 
+    window.localStorage.setItem(
+      GOSPEL_HARMONY_DOCUMENTS_STORAGE_KEY,
+      JSON.stringify(harmonyDocuments)
+    );
+  }, [harmonyDocuments, hasLoadedState]);
+
+  useEffect(() => {
+    if (!hasLoadedState) {
+      return;
+    }
+
+    if (activeHarmonyId) {
+      window.localStorage.setItem(ACTIVE_GOSPEL_HARMONY_STORAGE_KEY, activeHarmonyId);
+      return;
+    }
+
+    window.localStorage.removeItem(ACTIVE_GOSPEL_HARMONY_STORAGE_KEY);
+  }, [activeHarmonyId, hasLoadedState]);
+
+  useEffect(() => {
+    if (!hasLoadedState) {
+      return;
+    }
+
     window.localStorage.setItem(STUDY_HIGHLIGHTS_STORAGE_KEY, JSON.stringify(highlights));
   }, [hasLoadedState, highlights]);
 
@@ -597,6 +662,21 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
 
     window.localStorage.setItem(STUDY_SETS_STORAGE_KEY, JSON.stringify(studySets));
   }, [hasLoadedState, studySets]);
+
+  useEffect(() => {
+    const sortedHarmonies = getSortedHarmonies(harmonyDocuments);
+
+    if (sortedHarmonies.length === 0) {
+      if (activeHarmonyId !== null) {
+        setActiveHarmonyId(null);
+      }
+      return;
+    }
+
+    if (!activeHarmonyId || !harmonyDocuments[activeHarmonyId]) {
+      setActiveHarmonyId(sortedHarmonies[0]?.id ?? null);
+    }
+  }, [activeHarmonyId, harmonyDocuments]);
 
   useEffect(() => {
     if (!isGreekLearningMode) {
@@ -619,6 +699,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       setActiveGreekSelection(null);
       setActiveGreekLearningSession(null);
       setActiveSermonId(null);
+      setActiveHarmonyId(null);
     }
   }, [isReaderRoute, pathname]);
 
@@ -1174,10 +1255,62 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
             }
           };
         });
+      },
+      activeHarmonyId,
+      setActiveHarmonyId,
+      getHarmonyDocuments: () => getSortedHarmonies(harmonyDocuments),
+      getActiveHarmony: () =>
+        activeHarmonyId && harmonyDocuments[activeHarmonyId]
+          ? harmonyDocuments[activeHarmonyId]
+          : getSortedHarmonies(harmonyDocuments)[0] ?? null,
+      createHarmony: (title = "Chronological Harmony of the Gospels") => {
+        const harmony = createDefaultHarmonyDocument(title);
+
+        setHarmonyDocuments((current) => ({
+          ...current,
+          [harmony.id]: harmony
+        }));
+        setActiveHarmonyId(harmony.id);
+        setActiveUtilityPaneState("harmony");
+        setUtilityPaneRequestKey((current) => current + 1);
+        setLastReaderUtilityPane("harmony");
+
+        return harmony;
+      },
+      deleteHarmony: (harmonyId) => {
+        setHarmonyDocuments((current) => {
+          if (!(harmonyId in current)) {
+            return current;
+          }
+
+          const next = { ...current };
+          delete next[harmonyId];
+          return next;
+        });
+        setActiveHarmonyId((current) => (current === harmonyId ? null : current));
+      },
+      updateHarmonyTitle: (harmonyId, title) => {
+        setHarmonyDocuments((current) => {
+          const harmony = current[harmonyId];
+
+          if (!harmony) {
+            return current;
+          }
+
+          return {
+            ...current,
+            [harmonyId]: {
+              ...harmony,
+              title,
+              updatedAt: new Date().toISOString()
+            }
+          };
+        });
       }
     }),
     [
       activeReaderPane,
+      activeHarmonyId,
       activeNotebookId,
       activeSermonId,
       activeStrongsLabel,
@@ -1195,6 +1328,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       currentChapterByVersion,
       currentPassage,
       highlights,
+      harmonyDocuments,
       lastReaderUtilityPane,
       leftReaderMode,
       notebooks,

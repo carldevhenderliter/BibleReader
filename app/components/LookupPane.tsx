@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 
 import { ReaderCrossReferencesPanel } from "@/app/components/ReaderCrossReferencesPanel";
+import { ReaderHarmonyWorkspace } from "@/app/components/ReaderHarmonyWorkspace";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
 import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
 import { ReaderStrongsPanel } from "@/app/components/ReaderStrongsPanel";
@@ -110,6 +111,15 @@ export function LookupPane() {
           >
             Sermons
           </button>
+          <button
+            aria-selected={activeUtilityPane === "harmony"}
+            className={`lookup-pane-tab${activeUtilityPane === "harmony" ? " is-active" : ""}`}
+            onClick={() => setActiveUtilityPane("harmony")}
+            role="tab"
+            type="button"
+          >
+            Harmony
+          </button>
         </div>
         <div className="lookup-pane-study-body">
           {activeUtilityPane === "notebook" ? (
@@ -118,6 +128,8 @@ export function LookupPane() {
             <ReaderStrongsPanel />
           ) : activeUtilityPane === "sermons" ? (
             <ReaderSermonWorkspace />
+          ) : activeUtilityPane === "harmony" ? (
+            <ReaderHarmonyWorkspace />
           ) : activeUtilityPane === "cross-references" ? (
             isReaderRoute ? (
               <ReaderCrossReferencesPanel />

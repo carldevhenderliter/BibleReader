@@ -7,6 +7,7 @@ import { useReaderCustomization } from "@/app/components/ReaderCustomizationProv
 import { ReaderContentTabs } from "@/app/components/ReaderContentTabs";
 import { ReaderComparePanel } from "@/app/components/ReaderComparePanel";
 import { ReaderControls } from "@/app/components/ReaderControls";
+import { ReaderHarmonyWorkspace } from "@/app/components/ReaderHarmonyWorkspace";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
 import { ReaderOtComparePanel } from "@/app/components/ReaderOtComparePanel";
 import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
@@ -236,6 +237,7 @@ export function WholeBookContent({
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
   const showStrongsInline = !isSplitViewActive && activeUtilityPane === "strongs";
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
+  const showHarmonyInline = !isSplitViewActive && activeUtilityPane === "harmony";
   const [annotationMode, setAnnotationMode] = useState(false);
   const searchParams = new URLSearchParams(locationSearch);
   const forceRenderAllChapters = settings.disableLazyLoading;
@@ -466,6 +468,10 @@ export function WholeBookContent({
         ) : showSermonsInline ? (
           <div className="reading-surface reader-notebook-surface">
             <ReaderSermonWorkspace currentChapter={chapters[0] ?? null} />
+          </div>
+        ) : showHarmonyInline ? (
+          <div className="reading-surface reader-notebook-surface">
+            <ReaderHarmonyWorkspace />
           </div>
         ) : (
           <div className="reading-surface chapter-stack">
