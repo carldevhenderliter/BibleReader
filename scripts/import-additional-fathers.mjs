@@ -287,15 +287,16 @@ function parseNewAdventChapterSegments(workSlug, html, labelPrefix) {
 
 function parseNewAdventPageSegments(workSlug, content, labelPrefix) {
   const headingText = cleanText(content.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1] ?? "");
+  const headingSubtitle = cleanText(
+    content.match(/<span[^>]*class=["'][^"']*\bh1a\b[^"']*["'][^>]*>([\s\S]*?)<\/span>/i)?.[1] ?? ""
+  );
 
   if (!headingText) {
     return [];
   }
 
-  const label =
-    headingText.match(/\(([^)]+)\)/)?.[1]?.trim() ||
-    labelPrefix ||
-    headingText;
+  const labelBase = headingText.match(/\(([^)]+)\)/)?.[1]?.trim() || labelPrefix || headingText;
+  const label = headingSubtitle ? `${labelBase} · ${headingSubtitle}` : labelBase;
   const ref = normalizeRef(label);
   const skipParagraphPattern =
     /please help support the mission of new advent|return to (the )?(home page|table of contents)|translated by|this document|contact information\. the editor of new advent|contact us \| advertise with new advent/i;

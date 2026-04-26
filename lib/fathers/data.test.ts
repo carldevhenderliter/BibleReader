@@ -133,6 +133,9 @@ describe("fathers data", () => {
     expect(work?.fullTextUrl).toBe("https://www.newadvent.org/fathers/0103.htm");
     expect(payload?.segments).toHaveLength(173);
     expect(payload?.segments[0]?.label).toBe("Book I, Preface");
+    expect(payload?.segments[1]?.label).toBe(
+      "Book I, Chapter 1 · Absurd ideas of the disciples of Valentinus as to the origin, name, order, and conjugal productions of their fancied Æons, with the passages of Scripture which they adapt to their opinions."
+    );
     expect(payload?.segments[0]?.english).toContain("Inasmuch as certain men have set the truth aside");
     expect(payload?.segments[0]?.greek).toBe("");
     expect(payload?.segments[0]?.greekTokens).toEqual([]);
