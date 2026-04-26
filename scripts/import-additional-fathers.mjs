@@ -102,6 +102,19 @@ const TARGET_WORKS = [
       { path: "02042.htm", labelPrefix: "Book II" },
       { path: "02043.htm", labelPrefix: "Book III" }
     ]
+  },
+  {
+    slug: "irenaeus-against-heresies",
+    title: "Against Heresies",
+    shortTitle: "Haer.",
+    author: "Irenaeus of Lyons",
+    order: 26,
+    corpus: "church-fathers",
+    compositionDate: "c. 180–189 AD",
+    fullTextUrl: `${SOURCE_BASE_URL}0103.htm`,
+    fullTextSource: "New Advent, Roberts-Donaldson",
+    authenticityStatus: "accepted",
+    indexPath: "0103.htm"
   }
 ];
 
@@ -147,9 +160,10 @@ async function main() {
 }
 
 async function importEnglishOnlySegments(work) {
+  const pages = work.pages ?? (await loadIndexPages(work.indexPath));
   const segments = [];
 
-  for (const page of work.pages) {
+  for (const page of pages) {
     const response = await fetch(`${SOURCE_BASE_URL}${page.path}`, {
       headers: {
         "user-agent": "BibleReader Fathers Importer"
@@ -165,6 +179,35 @@ async function importEnglishOnlySegments(work) {
   }
 
   return segments;
+}
+
+async function loadIndexPages(indexPath) {
+  if (!indexPath) {
+    return [];
+  }
+
+  const response = await fetch(`${SOURCE_BASE_URL}${indexPath}`, {
+    headers: {
+      "user-agent": "BibleReader Fathers Importer"
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to download ${indexPath}: ${response.status}`);
+  }
+
+  const html = await response.text();
+  const prefix = indexPath.replace(/\.htm$/i, "");
+  const matches = Array.from(
+    html.matchAll(new RegExp(`href="[^"]*?(${prefix}\\d+\\.htm)"`, "gi")),
+    (match) => match[1]
+  );
+  const uniqueMatches = Array.from(new Set(matches));
+
+  return uniqueMatches.map((path) => ({
+    path,
+    labelPrefix: ""
+  }));
 }
 
 function parseNewAdventChapterSegments(workSlug, html, labelPrefix) {
@@ -235,7 +278,47 @@ function parseNewAdventChapterSegments(workSlug, html, labelPrefix) {
       : paragraphText;
   }
 
+  if (segments.length === 0) {
+    return parseNewAdventPageSegments(workSlug, content, labelPrefix);
+  }
+
   return segments;
+}
+
+function parseNewAdventPageSegments(workSlug, content, labelPrefix) {
+  const headingText = cleanText(content.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1] ?? "");
+
+  if (!headingText) {
+    return [];
+  }
+
+  const label =
+    headingText.match(/\(([^)]+)\)/)?.[1]?.trim() ||
+    labelPrefix ||
+    headingText;
+  const ref = normalizeRef(label);
+  const skipParagraphPattern =
+    /please help support the mission of new advent|return to (the )?(home page|table of contents)|translated by|this document|contact information\. the editor of new advent|contact us \| advertise with new advent/i;
+  const paragraphs = Array.from(
+    content.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi),
+    (match) => cleanText(match[1] ?? "")
+  ).filter((paragraph) => paragraph && !skipParagraphPattern.test(paragraph));
+
+  if (paragraphs.length === 0) {
+    return [];
+  }
+
+  return [
+    {
+      id: `${workSlug}:${ref}`,
+      ref,
+      label,
+      greek: "",
+      english: paragraphs.join("\n\n"),
+      greekNormalized: "",
+      greekTokens: []
+    }
+  ];
 }
 
 function cleanText(html) {

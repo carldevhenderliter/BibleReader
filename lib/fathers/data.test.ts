@@ -9,9 +9,9 @@ describe("fathers data", () => {
   it("loads the Fathers manifest", async () => {
     const works = await getFathersWorks();
 
-    expect(works).toHaveLength(25);
+    expect(works).toHaveLength(26);
     expect(works[0]?.slug).toBe("1-clement");
-    expect(works.at(-1)?.slug).toBe("theophilus-to-autolycus");
+    expect(works.at(-1)?.slug).toBe("irenaeus-against-heresies");
   });
 
   it("filters the authentic Fathers corpus", async () => {
@@ -33,7 +33,8 @@ describe("fathers data", () => {
       "justin-dialogue-with-trypho",
       "athenagoras-plea-for-the-christians",
       "athenagoras-on-the-resurrection",
-      "theophilus-to-autolycus"
+      "theophilus-to-autolycus",
+      "irenaeus-against-heresies"
     ]);
     expect(works.find((work) => work.slug === "2-clement")).toBeUndefined();
     expect(works.find((work) => work.slug === "didache")).toBeUndefined();
@@ -118,6 +119,21 @@ describe("fathers data", () => {
     expect(work?.fullTextUrl).toBe("https://www.newadvent.org/fathers/0126.htm");
     expect(payload?.segments[0]?.label).toBe("Chapter 1 · Address");
     expect(payload?.segments[0]?.english).toContain("To the Emperor Titus Ælius Adrianus Antoninus");
+    expect(payload?.segments[0]?.greek).toBe("");
+    expect(payload?.segments[0]?.greekTokens).toEqual([]);
+  });
+
+  it("loads Irenaeus's Against Heresies as an authentic English-first Fathers work", async () => {
+    const [work, payload] = await Promise.all([
+      getFathersWorkBySlug("irenaeus-against-heresies"),
+      getFathersWorkPayload("irenaeus-against-heresies")
+    ]);
+
+    expect(work?.authenticityStatus).toBe("accepted");
+    expect(work?.fullTextUrl).toBe("https://www.newadvent.org/fathers/0103.htm");
+    expect(payload?.segments).toHaveLength(173);
+    expect(payload?.segments[0]?.label).toBe("Book I, Preface");
+    expect(payload?.segments[0]?.english).toContain("Inasmuch as certain men have set the truth aside");
     expect(payload?.segments[0]?.greek).toBe("");
     expect(payload?.segments[0]?.greekTokens).toEqual([]);
   });

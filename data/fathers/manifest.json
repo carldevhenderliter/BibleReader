@@ -381,5 +381,20 @@
     "fullTextUrl": "https://www.newadvent.org/fathers/0204.htm",
     "fullTextSource": "New Advent, Roberts-Donaldson",
     "authenticityStatus": "accepted"
+  },
+  {
+    "slug": "irenaeus-against-heresies",
+    "title": "Against Heresies",
+    "shortTitle": "Haer.",
+    "author": "Irenaeus of Lyons",
+    "order": 26,
+    "corpus": "church-fathers",
+    "sectionCount": 173,
+    "greekSource": "",
+    "englishSource": "https://www.newadvent.org/fathers/0103.htm",
+    "compositionDate": "c. 180–189 AD",
+    "fullTextUrl": "https://www.newadvent.org/fathers/0103.htm",
+    "fullTextSource": "New Advent, Roberts-Donaldson",
+    "authenticityStatus": "accepted"
   }
 ]
