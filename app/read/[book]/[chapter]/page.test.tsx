@@ -114,7 +114,7 @@ describe("ReaderChapterPage", () => {
         name: "Gospel Harmony",
         abbreviation: "Harmony",
         testament: "New",
-        chapterCount: 1,
+        chapterCount: 68,
         order: 67
       }
     ]);
@@ -123,15 +123,15 @@ describe("ReaderChapterPage", () => {
       name: "Gospel Harmony",
       abbreviation: "Harmony",
       testament: "New",
-      chapterCount: 1,
+      chapterCount: 68,
       order: 67
     });
-    window.history.replaceState({}, "", "/read/gospel-harmony/1");
+    window.history.replaceState({}, "", "/read/gospel-harmony/2");
 
     const element = await ReaderChapterPage({
       params: Promise.resolve({
         book: "gospel-harmony",
-        chapter: "1"
+        chapter: "2"
       })
     });
 
@@ -139,6 +139,8 @@ describe("ReaderChapterPage", () => {
 
     expect(screen.getByText("ESV Gospel Harmony")).toBeInTheDocument();
     expect(screen.getByText("Chronological Harmony of the Gospels")).toBeInTheDocument();
-    expect(screen.getByText("Prologue and Genealogies")).toBeInTheDocument();
+    expect(screen.getAllByText("Gospel Harmony 2").length).toBeGreaterThan(0);
+    expect(screen.getByText("Announcements Before the Birth of Jesus")).toBeInTheDocument();
+    expect(screen.getByLabelText("Chapter")).toHaveValue("2");
   });
 });

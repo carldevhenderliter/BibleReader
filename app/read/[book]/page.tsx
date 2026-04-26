@@ -32,7 +32,7 @@ export default async function BookPage({ params }: BookPageProps) {
       notFound();
     }
 
-    return <HarmonyBookReaderContent book={book} books={books} view="book" />;
+    return <HarmonyBookReaderContent book={book} books={books} currentChapter={1} view="book" />;
   }
 
   const installedBundledVersions = getInstalledBundledBibleVersions();

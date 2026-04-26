@@ -1,5 +1,6 @@
 import {
   createDefaultHarmonyDocument,
+  getGospelHarmonyChapterCount,
   normalizeHarmonyDocumentStorage
 } from "@/lib/gospel-harmony";
 
@@ -33,6 +34,12 @@ describe("gospel harmony documents", () => {
         expect(line.references.length).toBeGreaterThan(0);
       });
     });
+  });
+
+  it("exposes the template event count as the harmony chapter count", () => {
+    const harmony = createDefaultHarmonyDocument();
+
+    expect(getGospelHarmonyChapterCount()).toBe(harmony.events.length);
   });
 
   it("normalizes only valid stored harmony documents", () => {

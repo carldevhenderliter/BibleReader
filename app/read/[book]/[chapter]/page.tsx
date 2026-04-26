@@ -38,17 +38,20 @@ export default async function ReaderChapterPage({ params }: ReaderChapterPagePro
   }
 
   if (isGospelHarmonyBookSlug(bookSlug)) {
-    if (chapterNumber !== 1) {
-      notFound();
-    }
-
     const [books, book] = await Promise.all([getBooks("web"), getBookBySlug(bookSlug, "web")]);
 
-    if (!book) {
+    if (!book || !isValidChapter(book, chapterNumber)) {
       notFound();
     }
 
-    return <HarmonyBookReaderContent book={book} books={books} view="chapter" />;
+    return (
+      <HarmonyBookReaderContent
+        book={book}
+        books={books}
+        currentChapter={chapterNumber}
+        view="chapter"
+      />
+    );
   }
 
   const installedBundledVersions = getInstalledBundledBibleVersions();

@@ -103,7 +103,7 @@ describe("BookPage", () => {
         name: "Gospel Harmony",
         abbreviation: "Harmony",
         testament: "New",
-        chapterCount: 1,
+        chapterCount: 68,
         order: 67
       }
     ]);
@@ -112,7 +112,7 @@ describe("BookPage", () => {
       name: "Gospel Harmony",
       abbreviation: "Harmony",
       testament: "New",
-      chapterCount: 1,
+      chapterCount: 68,
       order: 67
     });
 
@@ -127,5 +127,6 @@ describe("BookPage", () => {
     expect(screen.getByText("ESV Gospel Harmony")).toBeInTheDocument();
     expect(screen.getAllByText("Gospel Harmony").length).toBeGreaterThan(0);
     expect(screen.getByText("Chronological Harmony of the Gospels")).toBeInTheDocument();
+    expect(screen.getByRole("option", { name: "Chapter 68" })).toBeInTheDocument();
   });
 });

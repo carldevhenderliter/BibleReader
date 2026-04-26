@@ -25,7 +25,7 @@ export const GOSPEL_HARMONY_BOOK_META: BookMeta = {
   name: "Gospel Harmony",
   abbreviation: "Harmony",
   testament: "New",
-  chapterCount: 1,
+  chapterCount: (gospelHarmonyTemplate as { events: unknown[] }).events.length,
   order: 67
 };
 
@@ -45,13 +45,20 @@ type HarmonyTemplate = {
   events: HarmonyTemplateEvent[];
 };
 
+function getHarmonyTemplate() {
+  return gospelHarmonyTemplate as HarmonyTemplate;
+}
+
+export function getGospelHarmonyChapterCount() {
+  return getHarmonyTemplate().events.length;
+}
+
 export function isGospelHarmonyBookSlug(bookSlug: string) {
   return bookSlug === GOSPEL_HARMONY_BOOK_SLUG;
 }
 
 export function getGospelHarmonyTemplateEvents(): HarmonyEvent[] {
-  const template = gospelHarmonyTemplate as HarmonyTemplate;
-  return template.events.map(hydrateTemplateEvent);
+  return getHarmonyTemplate().events.map(hydrateTemplateEvent);
 }
 
 function cloneReference(reference: PassageReference): PassageReference {

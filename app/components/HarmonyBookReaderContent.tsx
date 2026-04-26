@@ -22,12 +22,14 @@ import { getGospelHarmonyTemplateEvents } from "@/lib/gospel-harmony";
 type HarmonyBookReaderContentProps = {
   books: BookMeta[];
   book: BookMeta;
+  currentChapter: number;
   view: ReadingView;
 };
 
 export function HarmonyBookReaderContent({
   books,
   book,
+  currentChapter,
   view
 }: HarmonyBookReaderContentProps) {
   const { isPanelOpen } = useReaderCustomization();
@@ -40,25 +42,25 @@ export function HarmonyBookReaderContent({
     setActiveStudyVerseNumber,
     syncCurrentChapterData
   } = useReaderWorkspace();
-  const [selectedEventId, setSelectedEventId] = useState("all");
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
   const showStrongsInline = !isSplitViewActive && activeUtilityPane === "strongs";
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
   const showHarmonyInline = !isSplitViewActive && activeUtilityPane === "harmony";
   const events = useMemo(() => getGospelHarmonyTemplateEvents(), []);
-  const visibleEvents = useMemo(
-    () =>
-      selectedEventId === "all"
-        ? events
-        : events.filter((event) => event.id === selectedEventId),
-    [events, selectedEventId]
-  );
+  const currentEvent = events[currentChapter - 1] ?? null;
+  const visibleEvents = useMemo(() => {
+    if (view === "book") {
+      return events;
+    }
+
+    return currentEvent ? [currentEvent] : [];
+  }, [currentEvent, events, view]);
 
   useEffect(() => {
-    syncCurrentChapterData(book.slug, 1, null);
+    syncCurrentChapterData(book.slug, currentChapter, null);
     setActiveStudyVerseNumber(null);
-  }, [book.slug, setActiveStudyVerseNumber, syncCurrentChapterData]);
+  }, [book.slug, currentChapter, setActiveStudyVerseNumber, syncCurrentChapterData]);
 
   useEffect(() => {
     if (activeReaderPane !== "reading" && activeReaderPane !== "study-sets") {
@@ -68,41 +70,34 @@ export function HarmonyBookReaderContent({
 
   useEffect(() => {
     clearGreekLearningQuiz();
-  }, [book.slug, clearGreekLearningQuiz]);
-
-  useEffect(() => {
-    if (selectedEventId === "all") {
-      return;
-    }
-
-    if (!events.some((event) => event.id === selectedEventId)) {
-      setSelectedEventId("all");
-    }
-  }, [events, selectedEventId]);
+  }, [book.slug, clearGreekLearningQuiz, currentChapter]);
 
   return (
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
-      <ReadingSessionSync book={book.slug} chapter={1} view={view} />
-      <ReaderSettingsPanel book={book} currentChapter={1} view={view} />
+      <ReadingSessionSync book={book.slug} chapter={currentChapter} view={view} />
+      <ReaderSettingsPanel book={book} currentChapter={currentChapter} view={view} />
       <section className="reader-card reader-reading-card">
         <div className={`reader-topline${isToplineVisible ? "" : " is-hidden"}`}>
           <div className="reader-toolbar">
             <div className="reader-toolbar-copy">
               <p className="reader-toolbar-summary">ESV Gospel Harmony</p>
-              <p className="reader-toolbar-title">{book.name}</p>
+              <p className="reader-toolbar-title">
+                {book.name}
+                {view === "chapter" ? ` ${currentChapter}` : ""}
+              </p>
               <p className="reader-toolbar-meta">
-                {events.length} events
+                {view === "chapter" && currentEvent ? currentEvent.title : `${events.length} events`}
                 <span className="reader-meta-separator" aria-hidden="true">
                   ·
                 </span>
-                {view === "book" ? "Continuous reading" : "Harmony reading"}
+                {view === "book" ? "Continuous reading" : "Chapter view"}
               </p>
             </div>
             <div className="reader-toolbar-actions">
               <ReaderControls
                 book={book}
                 books={books}
-                currentChapter={1}
+                currentChapter={currentChapter}
                 trailingActions={
                   isSplitViewActive ? (
                     <button
@@ -123,8 +118,8 @@ export function HarmonyBookReaderContent({
         </div>
 
         {activeReaderPane === "study-sets" ? (
-          <div className="reading-surface reader-notebook-surface">
-            <ReaderStudySetsPanel bookSlug={book.slug} chapterNumber={1} />
+            <div className="reading-surface reader-notebook-surface">
+            <ReaderStudySetsPanel bookSlug={book.slug} chapterNumber={currentChapter} />
           </div>
         ) : showNotebookInline ? (
           <div className="reading-surface reader-notebook-surface">
@@ -153,23 +148,6 @@ export function HarmonyBookReaderContent({
                     Read Matthew, Mark, Luke, and John together as a single chronological book while keeping parallel references visible.
                   </p>
                 </div>
-
-                <label className="reader-settings-field reader-compare-select" htmlFor="harmony-book-event-select">
-                  <span>Event</span>
-                  <select
-                    aria-label="Harmony event"
-                    id="harmony-book-event-select"
-                    onChange={(event) => setSelectedEventId(event.target.value)}
-                    value={selectedEventId}
-                  >
-                    <option value="all">All events</option>
-                    {events.map((event) => (
-                      <option key={event.id} value={event.id}>
-                        {event.eventNumber}. {event.title}
-                      </option>
-                    ))}
-                  </select>
-                </label>
               </div>
 
               <ReaderHarmonyContent events={visibleEvents} />

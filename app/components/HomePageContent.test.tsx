@@ -52,7 +52,7 @@ const books: BookMeta[] = [
     name: "Gospel Harmony",
     abbreviation: "Harmony",
     testament: "New",
-    chapterCount: 1,
+    chapterCount: 68,
     order: 67
   }
 ];
