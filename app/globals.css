@@ -718,6 +718,7 @@ select {
 
 .reader-audio-bar {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
@@ -730,12 +731,28 @@ select {
 .reader-audio-copy {
   display: grid;
   gap: 0.16rem;
+  flex: 1 1 13rem;
   min-width: 0;
 }
 
 .reader-audio-player {
-  width: min(28rem, 100%);
+  display: block;
+  flex: 1 1 22rem;
+  width: min(32rem, 100%);
   max-width: 100%;
+  min-width: min(18rem, 100%);
+}
+
+.reader-audio-link {
+  color: rgba(var(--reader-accent-rgb), 0.92);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.reader-audio-link:hover,
+.reader-audio-link:focus-visible {
+  text-decoration: underline;
 }
 
 .reader-toolbar-copy {
