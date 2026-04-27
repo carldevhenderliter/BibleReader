@@ -252,7 +252,6 @@ export function WholeBookContent({
   const showHarmonyInline = !isSplitViewActive && activeUtilityPane === "harmony";
   const readingSurfaceRef = useRef<HTMLDivElement | null>(null);
   const [annotationMode, setAnnotationMode] = useState(false);
-  const [isAudioPlayerOpen, setIsAudioPlayerOpen] = useState(Boolean(bookAudioSource));
   const searchParams = new URLSearchParams(locationSearch);
   const forceRenderAllChapters = settings.disableLazyLoading;
   const urlFocusedChapterNumber = parsePositiveNumber(searchParams.get("chapter"));
@@ -344,10 +343,6 @@ export function WholeBookContent({
   }, [book.slug, clearGreekLearningQuiz, renderedChapterNumbers, version]);
 
   useEffect(() => {
-    setIsAudioPlayerOpen(Boolean(bookAudioSource));
-  }, [book.slug, bookAudioSource]);
-
-  useEffect(() => {
     syncCurrentChapterData(book.slug, focusedChapter?.chapterNumber ?? 1, null);
     setActiveStudyVerseNumber(
       activeHighlightedVerseRange?.start ??
@@ -429,15 +424,6 @@ export function WholeBookContent({
                       </button>
                     ) : null}
                     <ReaderCopyButton targetRef={readingSurfaceRef} />
-                    {bookAudioSource ? (
-                      <button
-                        className={`reader-inline-button${isAudioPlayerOpen ? " is-active" : ""}`}
-                        onClick={() => setIsAudioPlayerOpen((current) => !current)}
-                        type="button"
-                      >
-                        {isAudioPlayerOpen ? "Hide Audio" : "Audio"}
-                      </button>
-                    ) : null}
                     {isSplitViewActive ? (
                       <button
                         aria-label="Hide reader pane"
@@ -456,9 +442,7 @@ export function WholeBookContent({
             </div>
           </div>
         </div>
-        {bookAudioSource && isAudioPlayerOpen ? (
-          <ReaderBookAudioPlayer audioSource={bookAudioSource} />
-        ) : null}
+        <ReaderBookAudioPlayer audioSource={bookAudioSource} />
         <ReaderContentTabs showHarmony showOtCompare={isOldTestament} />
         {activeReaderPane === "study-sets" ? (
           <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>

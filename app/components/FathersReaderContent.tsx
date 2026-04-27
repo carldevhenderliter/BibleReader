@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { FathersEnglishUndertextContent } from "@/app/components/FathersEnglishUndertextContent";
 import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
+import { ReaderBookAudioPlayer } from "@/app/components/ReaderBookAudioPlayer";
 import { ReaderCopyButton } from "@/app/components/ReaderCopyButton";
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
@@ -14,6 +15,7 @@ import { useReaderCustomization } from "@/app/components/ReaderCustomizationProv
 import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
+import { getBookAudioSource } from "@/lib/bible/book-audio";
 import type { EnglishUndertextAnnotation, GreekToken } from "@/lib/bible/types";
 import { saveFathersAnnotationFile } from "@/lib/fathers/annotation-save";
 import { isNa1GreekAnnotationWork } from "@/lib/fathers/annotations";
@@ -184,6 +186,7 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
       )
     );
   const readingSurfaceRef = useRef<HTMLDivElement | null>(null);
+  const workAudioSource = getBookAudioSource(payload.work.slug);
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
   const sectionOptions = useMemo(
     () =>
@@ -462,6 +465,10 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
             </div>
           </div>
         </div>
+        <ReaderBookAudioPlayer
+          audioSource={workAudioSource}
+          emptyMessage="No audio file available for this Fathers work yet."
+        />
         <div className="reading-surface fathers-reading-surface" ref={readingSurfaceRef}>
           {payload.work.fullTextUrl ? (
             <p className="muted-copy fathers-source-link">

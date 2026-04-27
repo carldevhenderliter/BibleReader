@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
+import { ReaderBookAudioPlayer } from "@/app/components/ReaderBookAudioPlayer";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderCopyButton } from "@/app/components/ReaderCopyButton";
@@ -17,6 +18,7 @@ import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
+import { getBookAudioSource } from "@/lib/bible/book-audio";
 import type { BookMeta, ReadingView } from "@/lib/bible/types";
 import { getGospelHarmonyTemplateEvents } from "@/lib/gospel-harmony";
 
@@ -49,6 +51,7 @@ export function HarmonyBookReaderContent({
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
   const showHarmonyInline = !isSplitViewActive && activeUtilityPane === "harmony";
   const readingSurfaceRef = useRef<HTMLDivElement | null>(null);
+  const bookAudioSource = getBookAudioSource(book.slug);
   const events = useMemo(() => getGospelHarmonyTemplateEvents(), []);
   const currentEvent = events[currentChapter - 1] ?? null;
   const visibleEvents = useMemo(() => {
@@ -121,6 +124,10 @@ export function HarmonyBookReaderContent({
             </div>
           </div>
         </div>
+        <ReaderBookAudioPlayer
+          audioSource={bookAudioSource}
+          emptyMessage="No audio file available for the Gospel Harmony yet."
+        />
 
         {activeReaderPane === "study-sets" ? (
             <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
