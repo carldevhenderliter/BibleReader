@@ -142,6 +142,7 @@ export const DEFAULT_READER_CUSTOMIZATION: ReaderCustomizationSettings = {
   showVerseNumbers: true,
   showVerseText: true,
   showCompanionVerseTranslation: true,
+  showAnnotatedGreekUndertext: true,
   showGreekSurface: true,
   showGreekLemma: true,
   showGreekTransliteration: true,
@@ -338,6 +339,10 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
             !hasGranularCustomVerseTranslation
           ? false
           : DEFAULT_READER_CUSTOMIZATION.showCompanionVerseTranslation,
+    showAnnotatedGreekUndertext:
+      typeof candidate.showAnnotatedGreekUndertext === "boolean"
+        ? candidate.showAnnotatedGreekUndertext
+        : DEFAULT_READER_CUSTOMIZATION.showAnnotatedGreekUndertext,
     showGreekSurface:
       typeof candidate.showGreekSurface === "boolean"
         ? candidate.showGreekSurface

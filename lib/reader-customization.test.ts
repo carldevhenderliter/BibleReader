@@ -61,6 +61,7 @@ describe("reader customization", () => {
       showVerseNumbers: true,
       showVerseText: false,
       showCompanionVerseTranslation: true,
+      showAnnotatedGreekUndertext: true,
       showGreekSurface: false,
       showGreekLemma: false,
       showGreekTransliteration: false,
@@ -203,5 +204,13 @@ describe("reader customization", () => {
         disableLazyLoading: true
       }).disableLazyLoading
     ).toBe(true);
+  });
+
+  it("preserves the annotated Greek undertext toggle when provided", () => {
+    expect(
+      normalizeReaderCustomization({
+        showAnnotatedGreekUndertext: false
+      }).showAnnotatedGreekUndertext
+    ).toBe(false);
   });
 });

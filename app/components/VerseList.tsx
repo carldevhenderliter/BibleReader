@@ -33,6 +33,7 @@ type VerseListProps = {
   showVerseNumbers?: boolean;
   showVerseText?: boolean;
   showCompanionVerseTranslation?: boolean;
+  showAnnotatedGreekUndertext?: boolean;
   showCustomVerseTranslation?: boolean;
   showGreekSurface?: boolean;
   showGreekLemma?: boolean;
@@ -56,6 +57,7 @@ export function VerseList({
   showVerseNumbers = true,
   showVerseText,
   showCompanionVerseTranslation = true,
+  showAnnotatedGreekUndertext = true,
   showCustomVerseTranslation = true,
   showGreekSurface = true,
   showGreekLemma = true,
@@ -150,7 +152,9 @@ export function VerseList({
           })
         );
         const showBibleAnnotationLine =
-          (annotationMode || undertextAnnotations.length > 0) && bibleAnnotationTokens.length > 0;
+          (annotationMode ||
+            (showAnnotatedGreekUndertext && undertextAnnotations.length > 0)) &&
+          bibleAnnotationTokens.length > 0;
         const greekLearningScopeKey = `verse:${version}:${bookSlug}:${chapterNumber}:${verse.number}`;
         const startLearningSession = (occurrenceKey: string | null) => {
           const activeGreekLearningQueue =
@@ -253,6 +257,7 @@ export function VerseList({
                     ) : canAnnotateInterlinearVerse && showBibleAnnotationLine ? (
                       <FathersEnglishUndertextContent
                         annotationMode={annotationMode}
+                        showAnnotatedUndertext={showAnnotatedGreekUndertext}
                         annotationInteractionMode="word-click"
                         annotationModePrompt="Click any English word to place the matching Greek under it."
                         annotations={undertextAnnotations}
@@ -297,6 +302,7 @@ export function VerseList({
                     canAnnotateGreekVersionTranslation && showBibleAnnotationLine ? (
                       <FathersEnglishUndertextContent
                         annotationMode={annotationMode}
+                        showAnnotatedUndertext={showAnnotatedGreekUndertext}
                         annotationInteractionMode="word-click"
                         annotationModePrompt="Click any English word to place the matching Greek under it."
                         annotations={undertextAnnotations}

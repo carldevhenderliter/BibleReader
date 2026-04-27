@@ -77,6 +77,7 @@ export type ReaderCustomizationSettings = {
   showVerseNumbers: boolean;
   showVerseText: boolean;
   showCompanionVerseTranslation: boolean;
+  showAnnotatedGreekUndertext: boolean;
   showGreekSurface: boolean;
   showGreekLemma: boolean;
   showGreekTransliteration: boolean;

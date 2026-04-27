@@ -543,8 +543,9 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
               ) : null}
               {shouldShowFathersEnglish
                 ? isNa1AnnotationWork ? (
-                    <FathersEnglishUndertextContent
+                      <FathersEnglishUndertextContent
                       annotationMode={annotationMode}
+                      showAnnotatedUndertext={settings.showAnnotatedGreekUndertext}
                       annotations={(segmentAnnotations[segment.id] ?? []).map((annotation) => ({
                         contentId: segment.id,
                         startToken: annotation.startToken,

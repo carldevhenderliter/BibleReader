@@ -67,6 +67,7 @@ type LazyBookChapterSectionProps = {
   } | null;
   interlinearVerseMap?: Record<number, EsvInterlinearDisplayVerse>;
   showCompanionVerseTranslation: boolean;
+  showAnnotatedGreekUndertext: boolean;
   showCustomVerseTranslation: boolean;
   showGreekGloss: boolean;
   showGreekLemma: boolean;
@@ -89,6 +90,7 @@ function LazyBookChapterSection({
   highlightedVerseRange,
   interlinearVerseMap,
   showCompanionVerseTranslation,
+  showAnnotatedGreekUndertext,
   showCustomVerseTranslation,
   showGreekGloss,
   showGreekLemma,
@@ -172,6 +174,7 @@ function LazyBookChapterSection({
           interlinearVerseMap={interlinearVerseMap}
           key={`${version}:${bookSlug}:${chapter.chapterNumber}`}
           annotationMode={annotationMode}
+          showAnnotatedGreekUndertext={showAnnotatedGreekUndertext}
           showCompanionVerseTranslation={showCompanionVerseTranslation}
           showCustomVerseTranslation={showCustomVerseTranslation}
           showGreekGloss={showGreekGloss}
@@ -505,6 +508,7 @@ export function WholeBookContent({
                 key={chapter.chapterNumber}
                 onRenderChapter={handleRenderChapter}
                 showCompanionVerseTranslation={settings.showCompanionVerseTranslation}
+                showAnnotatedGreekUndertext={settings.showAnnotatedGreekUndertext}
                 showCustomVerseTranslation={settings.showCustomVerseTranslation}
                 showGreekGloss={settings.showGreekGloss}
                 showGreekLemma={settings.showGreekLemma}

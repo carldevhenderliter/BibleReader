@@ -179,6 +179,7 @@ export function ReaderSettingsPanel({
       | "showVerseNumbers"
       | "showVerseText"
       | "showCompanionVerseTranslation"
+      | "showAnnotatedGreekUndertext"
       | "showCustomVerseTranslation"
       | "showGreekSurface"
       | "showGreekLemma"
@@ -197,6 +198,7 @@ export function ReaderSettingsPanel({
       updateSettings({
         showVerseNumbers: true,
         showVerseText: true,
+        showAnnotatedGreekUndertext: true,
         showGreekSurface: true,
         showGreekLemma: true,
         showGreekTransliteration: true,
@@ -210,6 +212,7 @@ export function ReaderSettingsPanel({
       showEsvGreekOnly: false,
       showVerseNumbers: true,
       showVerseText: true,
+      showAnnotatedGreekUndertext: true,
       showCompanionVerseTranslation: version === "greek",
       showGreekSurface: true,
       showGreekLemma: true,
@@ -224,6 +227,7 @@ export function ReaderSettingsPanel({
       updateSettings({
         showVerseNumbers: false,
         showVerseText: false,
+        showAnnotatedGreekUndertext: false,
         showGreekSurface: false,
         showGreekLemma: false,
         showGreekTransliteration: false,
@@ -237,6 +241,7 @@ export function ReaderSettingsPanel({
       showEsvGreekOnly: false,
       showVerseNumbers: false,
       showVerseText: false,
+      showAnnotatedGreekUndertext: false,
       showCompanionVerseTranslation: false,
       showGreekSurface: false,
       showGreekLemma: false,
@@ -251,6 +256,7 @@ export function ReaderSettingsPanel({
       updateSettings({
         showVerseNumbers: false,
         showVerseText: false,
+        showAnnotatedGreekUndertext: false,
         showGreekSurface: true,
         showGreekLemma: false,
         showGreekTransliteration: false,
@@ -263,6 +269,7 @@ export function ReaderSettingsPanel({
       updateSettings({
         showVerseNumbers: false,
         showVerseText: true,
+        showAnnotatedGreekUndertext: false,
         showCompanionVerseTranslation: false,
         showCustomVerseTranslation: false,
         showGreekSurface: false,
@@ -278,6 +285,7 @@ export function ReaderSettingsPanel({
       showEsvGreekOnly: true,
       showVerseNumbers: false,
       showVerseText: false,
+      showAnnotatedGreekUndertext: false,
       showGreekSurface: true,
       showGreekLemma: false,
       showGreekTransliteration: false,
@@ -527,6 +535,32 @@ export function ReaderSettingsPanel({
                   >
                     <strong>English companion</strong>
                     <span>Show the English verse line under the Greek text.</span>
+                  </button>
+                ) : null}
+                {!isFathersMode ? (
+                  <button
+                    className={`settings-option-card${
+                      settings.showAnnotatedGreekUndertext ? " is-active" : ""
+                    }`}
+                    key="showAnnotatedGreekUndertext"
+                    onClick={() => toggleLayer("showAnnotatedGreekUndertext")}
+                    type="button"
+                  >
+                    <strong>Annotated Greek</strong>
+                    <span>Show saved Greek undertext beneath the English words.</span>
+                  </button>
+                ) : null}
+                {isFathersMode ? (
+                  <button
+                    className={`settings-option-card${
+                      settings.showAnnotatedGreekUndertext ? " is-active" : ""
+                    }`}
+                    key="showAnnotatedGreekUndertext"
+                    onClick={() => toggleLayer("showAnnotatedGreekUndertext")}
+                    type="button"
+                  >
+                    <strong>Annotated Greek</strong>
+                    <span>Show saved Greek undertext beneath the English reading line.</span>
                   </button>
                 ) : null}
                 {!isFathersMode ? (

@@ -116,7 +116,7 @@ describe("VerseList", () => {
   });
 
   it("renders plain text when Strongs is disabled", () => {
-    renderWithReaderCustomization(
+    const { container } = renderWithReaderCustomization(
       <VerseList
         bookSlug="genesis"
         chapterNumber={1}
@@ -147,7 +147,7 @@ describe("VerseList", () => {
   });
 
   it("renders a custom translation editor under each verse", () => {
-    renderWithReaderCustomization(
+    const { container } = renderWithReaderCustomization(
       <VerseList
         bookSlug="genesis"
         chapterNumber={1}
@@ -165,7 +165,7 @@ describe("VerseList", () => {
   });
 
   it("can hide verse text, custom verse translation, and selected Greek sub-lines independently", async () => {
-    renderWithReaderCustomization(
+    const { container } = renderWithReaderCustomization(
       <VerseList
         bookSlug="john"
         chapterNumber={1}
@@ -220,7 +220,7 @@ describe("VerseList", () => {
   });
 
   it("shows the lemma under tagged words in reader view", async () => {
-    renderWithReaderCustomization(
+    const { container } = renderWithReaderCustomization(
       <VerseList
         bookSlug="genesis"
         chapterNumber={1}
@@ -344,6 +344,57 @@ describe("VerseList", () => {
         "\"source\":\"verse-token\""
       );
     });
+  });
+
+  it("can hide saved Bible Greek undertext without removing the verse text", async () => {
+    window.localStorage.setItem(READER_VERSION_STORAGE_KEY, "greek");
+    window.localStorage.setItem(
+      BIBLE_GREEK_UNDERTEXT_STORAGE_KEY,
+      JSON.stringify({
+        "genesis:1:1": [
+          {
+            verseKey: "genesis:1:1",
+            startToken: 2,
+            endToken: 2,
+            greekText: "ἀρχῇ",
+            entryKey: "G746",
+            lemma: "ἀρχή",
+            strongs: "G746",
+            transliteration: "archē",
+            gloss: "beginning",
+            source: "verse-token"
+          }
+        ]
+      })
+    );
+
+    const { container } = renderWithReaderCustomization(
+      <VerseList
+        bookSlug="genesis"
+        chapterNumber={1}
+        showAnnotatedGreekUndertext={false}
+        verses={[
+          {
+            number: 1,
+            text: "ἐν ἀρχῇ",
+            translationText: "In the beginning",
+            greekTokens: [
+              {
+                surface: "ἀρχῇ",
+                lemma: "ἀρχή",
+                entryKey: "G746",
+                strongs: "G746",
+                gloss: "beginning",
+                transliteration: "archē"
+              }
+            ]
+          }
+        ]}
+      />
+    );
+
+    expect(await screen.findByText("In the beginning")).toBeInTheDocument();
+    expect(container.querySelector(".fathers-annotation-undertext")).toBeNull();
   });
 
   it("can hide the standalone Greek English companion line independently", () => {

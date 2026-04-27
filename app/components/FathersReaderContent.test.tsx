@@ -315,6 +315,45 @@ describe("FathersReaderContent", () => {
     expect(screen.queryByRole("button", { name: "Learn Greek" })).not.toBeInTheDocument();
   });
 
+  it("can hide saved Greek undertext in Fathers reading without removing the English text", async () => {
+    window.localStorage.setItem(
+      READER_CUSTOMIZATION_STORAGE_KEY,
+      JSON.stringify({
+        ...DEFAULT_READER_CUSTOMIZATION,
+        showAnnotatedGreekUndertext: false
+      })
+    );
+
+    const annotatedPayload: FathersWorkPayload = {
+      ...englishOnlyPayload,
+      segments: [
+        {
+          ...englishOnlyPayload.segments[0]!,
+          greekUndertextAnnotations: [
+            {
+              segmentId: "preaching-of-peter:introduction",
+              startToken: 0,
+              endToken: 0,
+              greekText: "Κηφᾶς",
+              entryKey: "G2786",
+              lemma: "Κηφᾶς",
+              strongs: "G2786",
+              transliteration: "Kēphas",
+              gloss: "Cephas",
+              source: "lexicon"
+            }
+          ]
+        },
+        englishOnlyPayload.segments[1]!
+      ]
+    };
+
+    renderFathersReader(annotatedPayload);
+
+    expect(await screen.findByText("Kefa’s")).toBeInTheDocument();
+    expect(screen.queryByText("Κηφᾶς")).not.toBeInTheDocument();
+  });
+
   it("can place each Fathers sentence on its own line", async () => {
     const sentencePayload: FathersWorkPayload = {
       ...englishOnlyPayload,

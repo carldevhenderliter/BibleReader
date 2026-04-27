@@ -284,6 +284,7 @@ export function ReaderPageContent({
               interlinearVerseMap={interlinearVerseMap}
               key={`${version}:${book.slug}:${chapter.chapterNumber}`}
               annotationMode={annotationMode}
+              showAnnotatedGreekUndertext={settings.showAnnotatedGreekUndertext}
               showCompanionVerseTranslation={settings.showCompanionVerseTranslation}
               showCustomVerseTranslation={settings.showCustomVerseTranslation}
               showGreekGloss={settings.showGreekGloss}

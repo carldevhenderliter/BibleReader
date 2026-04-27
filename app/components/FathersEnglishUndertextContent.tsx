@@ -31,6 +31,7 @@ type FathersEnglishUndertextContentProps = {
   englishTokens?: EnglishToken[];
   annotations: EnglishUndertextAnnotation[];
   annotationMode: boolean;
+  showAnnotatedUndertext?: boolean;
   annotationInteractionMode?: "button" | "word-click";
   annotationModePrompt?: string;
   autoApplySingleWordSuggestion?: boolean;
@@ -195,6 +196,7 @@ export function FathersEnglishUndertextContent({
   englishTokens,
   annotations,
   annotationMode,
+  showAnnotatedUndertext = true,
   annotationInteractionMode = "button",
   annotationModePrompt = "Use `+` on any unannotated word to add Greek undertext wherever you want.",
   autoApplySingleWordSuggestion = false,
@@ -244,6 +246,9 @@ export function FathersEnglishUndertextContent({
 
     return getSelectedWords(englishTokens, activeEditor.startToken, activeEditor.endToken);
   }, [activeEditor, englishTokens]);
+
+  const renderedAnnotations =
+    annotationMode || showAnnotatedUndertext ? annotations : [];
 
   useEffect(() => {
     if (!annotationMode) {
@@ -781,7 +786,7 @@ export function FathersEnglishUndertextContent({
 
   for (let tokenIndex = 0; tokenIndex < englishTokens.length; tokenIndex += 1) {
     const token = englishTokens[tokenIndex];
-    const nextAnnotation = annotations[annotationIndex];
+    const nextAnnotation = renderedAnnotations[annotationIndex];
 
     if (
       nextAnnotation &&
