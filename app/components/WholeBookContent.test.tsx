@@ -4,6 +4,10 @@ import { LookupPane } from "@/app/components/LookupPane";
 import { SearchPane } from "@/app/components/SearchPane";
 import { WholeBookContent } from "@/app/components/WholeBookContent";
 import type { BookMeta, Chapter, EsvInterlinearDisplayChapter } from "@/lib/bible/types";
+import {
+  DEFAULT_READER_CUSTOMIZATION,
+  READER_CUSTOMIZATION_STORAGE_KEY
+} from "@/lib/reader-customization";
 import { setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
 
@@ -741,6 +745,27 @@ describe("WholeBookContent", () => {
     expect(screen.getByRole("button", { name: "New notebook" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "WEB search" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Chapter 1" })).toBeInTheDocument();
+  });
+
+  it("can hide Bible chapter headings in whole-book view", () => {
+    window.localStorage.setItem(
+      READER_CUSTOMIZATION_STORAGE_KEY,
+      JSON.stringify({
+        ...DEFAULT_READER_CUSTOMIZATION,
+        showChapterHeadings: false
+      })
+    );
+
+    renderWithReaderCustomization(
+      <WholeBookContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapters, kjv: kjvChapters }}
+      />
+    );
+
+    expect(screen.queryByRole("heading", { name: "Chapter 1" })).not.toBeInTheDocument();
+    expect(screen.getByText("Jude, a servant of Jesus Christ...")).toBeInTheDocument();
   });
 
   it("highlights and scrolls to the requested verse in whole-book view", () => {

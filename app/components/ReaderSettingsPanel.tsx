@@ -178,6 +178,7 @@ export function ReaderSettingsPanel({
     key:
       | "showVerseNumbers"
       | "showVerseText"
+      | "showChapterHeadings"
       | "showCompanionVerseTranslation"
       | "showAnnotatedGreekUndertext"
       | "showCustomVerseTranslation"
@@ -197,6 +198,7 @@ export function ReaderSettingsPanel({
     if (isFathersMode) {
       updateSettings({
         showVerseNumbers: true,
+        showChapterHeadings: true,
         showVerseText: true,
         showAnnotatedGreekUndertext: true,
         showGreekSurface: true,
@@ -211,6 +213,7 @@ export function ReaderSettingsPanel({
       showEsvInterlinear: version === "esv" ? true : settings.showEsvInterlinear,
       showEsvGreekOnly: false,
       showVerseNumbers: true,
+      showChapterHeadings: true,
       showVerseText: true,
       showAnnotatedGreekUndertext: true,
       showCompanionVerseTranslation: version === "greek",
@@ -226,6 +229,7 @@ export function ReaderSettingsPanel({
     if (isFathersMode) {
       updateSettings({
         showVerseNumbers: false,
+        showChapterHeadings: false,
         showVerseText: false,
         showAnnotatedGreekUndertext: false,
         showGreekSurface: false,
@@ -240,6 +244,7 @@ export function ReaderSettingsPanel({
       showEsvInterlinear: version === "esv" ? false : settings.showEsvInterlinear,
       showEsvGreekOnly: false,
       showVerseNumbers: false,
+      showChapterHeadings: false,
       showVerseText: false,
       showAnnotatedGreekUndertext: false,
       showCompanionVerseTranslation: false,
@@ -255,6 +260,7 @@ export function ReaderSettingsPanel({
     if (isFathersMode) {
       updateSettings({
         showVerseNumbers: false,
+        showChapterHeadings: false,
         showVerseText: false,
         showAnnotatedGreekUndertext: false,
         showGreekSurface: true,
@@ -268,6 +274,7 @@ export function ReaderSettingsPanel({
     if (version === "greek") {
       updateSettings({
         showVerseNumbers: false,
+        showChapterHeadings: false,
         showVerseText: true,
         showAnnotatedGreekUndertext: false,
         showCompanionVerseTranslation: false,
@@ -284,6 +291,7 @@ export function ReaderSettingsPanel({
       showEsvInterlinear: true,
       showEsvGreekOnly: true,
       showVerseNumbers: false,
+      showChapterHeadings: false,
       showVerseText: false,
       showAnnotatedGreekUndertext: false,
       showGreekSurface: true,
@@ -509,6 +517,19 @@ export function ReaderSettingsPanel({
                       : "Show the small verse numbers beside each Bible verse."}
                   </span>
                 </button>
+                {!isFathersMode ? (
+                  <button
+                    className={`settings-option-card${
+                      settings.showChapterHeadings ? " is-active" : ""
+                    }`}
+                    key="showChapterHeadings"
+                    onClick={() => toggleLayer("showChapterHeadings")}
+                    type="button"
+                  >
+                    <strong>Chapter headings</strong>
+                    <span>Show the chapter header blocks in whole-book Bible reading.</span>
+                  </button>
+                ) : null}
                 <button
                   className={`settings-option-card${settings.showVerseText ? " is-active" : ""}`}
                   key="showVerseText"

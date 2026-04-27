@@ -59,6 +59,7 @@ describe("reader customization", () => {
       showEsvInterlinear: false,
       showEsvGreekOnly: true,
       showVerseNumbers: true,
+      showChapterHeadings: true,
       showVerseText: false,
       showCompanionVerseTranslation: true,
       showAnnotatedGreekUndertext: true,
@@ -104,6 +105,7 @@ describe("reader customization", () => {
       showEsvInterlinear: false,
       showEsvGreekOnly: false,
       showVerseNumbers: true,
+      showChapterHeadings: true,
       showVerseText: true,
       showCompanionVerseTranslation: true,
       showGreekSurface: true,
@@ -211,6 +213,14 @@ describe("reader customization", () => {
       normalizeReaderCustomization({
         showAnnotatedGreekUndertext: false
       }).showAnnotatedGreekUndertext
+    ).toBe(false);
+  });
+
+  it("preserves the chapter headings toggle when provided", () => {
+    expect(
+      normalizeReaderCustomization({
+        showChapterHeadings: false
+      }).showChapterHeadings
     ).toBe(false);
   });
 });

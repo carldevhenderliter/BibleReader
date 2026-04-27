@@ -74,6 +74,7 @@ type LazyBookChapterSectionProps = {
   showGreekSurface: boolean;
   showGreekTransliteration: boolean;
   showStrongs: boolean;
+  showChapterHeadings: boolean;
   showVerseNumbers: boolean;
   showVerseText: boolean;
   onRenderChapter: (chapterNumber: number) => void;
@@ -97,6 +98,7 @@ function LazyBookChapterSection({
   showGreekSurface,
   showGreekTransliteration,
   showStrongs,
+  showChapterHeadings,
   showVerseNumbers,
   showVerseText,
   onRenderChapter,
@@ -161,10 +163,12 @@ function LazyBookChapterSection({
       key={chapter.chapterNumber}
       ref={sectionRef}
     >
-      <div className="book-section-header">
-        <h2 className="book-section-title">Chapter {chapter.chapterNumber}</h2>
-        <p className="book-section-subtitle">{chapter.verses.length} verses</p>
-      </div>
+      {showChapterHeadings ? (
+        <div className="book-section-header">
+          <h2 className="book-section-title">Chapter {chapter.chapterNumber}</h2>
+          <p className="book-section-subtitle">{chapter.verses.length} verses</p>
+        </div>
+      ) : null}
       {shouldRenderChapter ? (
         <VerseList
           bookSlug={bookSlug}
@@ -515,6 +519,7 @@ export function WholeBookContent({
                 showGreekSurface={settings.showGreekSurface}
                 showGreekTransliteration={settings.showGreekTransliteration}
                 showStrongs={showStrongs}
+                showChapterHeadings={settings.showChapterHeadings}
                 showVerseNumbers={settings.showVerseNumbers}
                 showVerseText={settings.showVerseText}
                 version={version}

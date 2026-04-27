@@ -140,6 +140,7 @@ export const DEFAULT_READER_CUSTOMIZATION: ReaderCustomizationSettings = {
   showEsvInterlinear: false,
   showEsvGreekOnly: false,
   showVerseNumbers: true,
+  showChapterHeadings: true,
   showVerseText: true,
   showCompanionVerseTranslation: true,
   showAnnotatedGreekUndertext: true,
@@ -319,6 +320,10 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
       typeof candidate.showVerseNumbers === "boolean"
         ? candidate.showVerseNumbers
         : DEFAULT_READER_CUSTOMIZATION.showVerseNumbers,
+    showChapterHeadings:
+      typeof candidate.showChapterHeadings === "boolean"
+        ? candidate.showChapterHeadings
+        : DEFAULT_READER_CUSTOMIZATION.showChapterHeadings,
     showVerseText:
       typeof candidate.showVerseText === "boolean"
         ? candidate.showVerseText

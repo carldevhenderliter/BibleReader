@@ -75,6 +75,7 @@ export type ReaderCustomizationSettings = {
   showEsvInterlinear: boolean;
   showEsvGreekOnly: boolean;
   showVerseNumbers: boolean;
+  showChapterHeadings: boolean;
   showVerseText: boolean;
   showCompanionVerseTranslation: boolean;
   showAnnotatedGreekUndertext: boolean;
