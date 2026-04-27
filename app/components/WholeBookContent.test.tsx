@@ -19,6 +19,14 @@ const books: BookMeta[] = [
     testament: "New",
     chapterCount: 2,
     order: 65
+  },
+  {
+    slug: "galatians",
+    name: "Galatians",
+    abbreviation: "Gal",
+    testament: "New",
+    chapterCount: 6,
+    order: 48
   }
 ];
 
@@ -35,6 +43,24 @@ const chapters: Chapter[] = [
     bookSlug: "jude",
     chapterNumber: 2,
     verses: [{ number: 1, text: "Beloved, while I was very eager to write to you..." }]
+  }
+];
+
+const galatiansChapters: Chapter[] = [
+  {
+    bookSlug: "galatians",
+    chapterNumber: 1,
+    verses: [
+      {
+        number: 1,
+        text: "Paul, an apostle not from men nor through man, but through Jesus Christ."
+      }
+    ]
+  },
+  {
+    bookSlug: "galatians",
+    chapterNumber: 2,
+    verses: [{ number: 1, text: "Then after fourteen years I went up again to Jerusalem." }]
   }
 ];
 
@@ -379,6 +405,28 @@ describe("WholeBookContent", () => {
     });
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
       expect.stringContaining("Beloved, while I was very eager to write to you...")
+    );
+  });
+
+  it("shows a book audio player in whole-book view when local audio exists", () => {
+    renderWithReaderCustomization(
+      <WholeBookContent
+        book={books[1]}
+        books={books}
+        chaptersByVersion={{
+          web: galatiansChapters,
+          kjv: galatiansChapters,
+          nlt: galatiansChapters,
+          esv: galatiansChapters
+        }}
+      />
+    );
+
+    expect(screen.getByRole("region", { name: "Book audio" })).toBeInTheDocument();
+    expect(screen.getByText("Galatians.pdf.mp3")).toBeInTheDocument();
+    expect(document.querySelector(".reader-audio-player")).toHaveAttribute(
+      "src",
+      "/book-audio/galatians.mp3"
     );
   });
 

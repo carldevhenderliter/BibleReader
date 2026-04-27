@@ -6,6 +6,7 @@ import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationSh
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderContentTabs } from "@/app/components/ReaderContentTabs";
 import { ReaderComparePanel } from "@/app/components/ReaderComparePanel";
+import { ReaderBookAudioPlayer } from "@/app/components/ReaderBookAudioPlayer";
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderCopyButton } from "@/app/components/ReaderCopyButton";
 import { ReaderHarmonyPanel } from "@/app/components/ReaderHarmonyPanel";
@@ -23,6 +24,7 @@ import { useLocationSearch } from "@/app/components/useLocationSearch";
 import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
+import { getBookAudioSource } from "@/lib/bible/book-audio";
 import type {
   BookMeta,
   BundledBookChapterMap,
@@ -242,6 +244,7 @@ export function WholeBookContent({
       )
     : null;
   const versionBadge = getBibleVersionBadge(version);
+  const bookAudioSource = getBookAudioSource(book.slug);
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
   const showStrongsInline = !isSplitViewActive && activeUtilityPane === "strongs";
@@ -439,6 +442,7 @@ export function WholeBookContent({
             </div>
           </div>
         </div>
+        {bookAudioSource ? <ReaderBookAudioPlayer audioSource={bookAudioSource} /> : null}
         <ReaderContentTabs showHarmony showOtCompare={isOldTestament} />
         {activeReaderPane === "study-sets" ? (
           <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>

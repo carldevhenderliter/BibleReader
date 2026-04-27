@@ -716,6 +716,28 @@ select {
   min-width: 0;
 }
 
+.reader-audio-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(12, 18, 30, 0.34);
+}
+
+.reader-audio-copy {
+  display: grid;
+  gap: 0.16rem;
+  min-width: 0;
+}
+
+.reader-audio-player {
+  width: min(28rem, 100%);
+  max-width: 100%;
+}
+
 .reader-toolbar-copy {
   display: grid;
   gap: 0.16rem;

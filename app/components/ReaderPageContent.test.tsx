@@ -33,6 +33,14 @@ const books: BookMeta[] = [
     testament: "Old",
     chapterCount: 42,
     order: 18
+  },
+  {
+    slug: "galatians",
+    name: "Galatians",
+    abbreviation: "Gal",
+    testament: "New",
+    chapterCount: 6,
+    order: 48
   }
 ];
 
@@ -174,6 +182,17 @@ const esvNtChapter: Chapter = {
   ]
 };
 
+const galatiansChapter: Chapter = {
+  bookSlug: "galatians",
+  chapterNumber: 1,
+  verses: [
+    {
+      number: 1,
+      text: "Paul, an apostle not from men nor through man, but through Jesus Christ."
+    }
+  ]
+};
+
 const esvNtInterlinearChapter: EsvInterlinearDisplayChapter = {
   bookSlug: "matthew",
   chapterNumber: 1,
@@ -302,6 +321,28 @@ describe("ReaderPageContent", () => {
     });
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
       expect.stringContaining("The earth was formless and empty.")
+    );
+  });
+
+  it("shows a book audio player when local audio exists for the current book", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[3]}
+        books={books}
+        chaptersByVersion={{
+          web: galatiansChapter,
+          kjv: galatiansChapter,
+          nlt: galatiansChapter,
+          esv: galatiansChapter
+        }}
+      />
+    );
+
+    expect(screen.getByRole("region", { name: "Book audio" })).toBeInTheDocument();
+    expect(screen.getByText("Galatians.pdf.mp3")).toBeInTheDocument();
+    expect(document.querySelector(".reader-audio-player")).toHaveAttribute(
+      "src",
+      "/book-audio/galatians.mp3"
     );
   });
 
@@ -486,7 +527,7 @@ describe("ReaderPageContent", () => {
 
     expect(
       within(screen.getByLabelText("Book")).getAllByRole("option").map((option) => option.textContent)
-    ).toEqual(["Genesis", "Job", "Exodus"]);
+    ).toEqual(["Genesis", "Job", "Exodus", "Galatians"]);
   });
 
   it("can show only Greek without the English verse text in ESV interlinear mode", () => {
