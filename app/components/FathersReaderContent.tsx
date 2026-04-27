@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { FathersEnglishUndertextContent } from "@/app/components/FathersEnglishUndertextContent";
 import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
+import { ReaderCopyButton } from "@/app/components/ReaderCopyButton";
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
 import { ReaderHarmonyWorkspace } from "@/app/components/ReaderHarmonyWorkspace";
@@ -182,6 +183,7 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
         payload.segments.map((segment) => [segment.id, segment.greekUndertextAnnotations ?? []])
       )
     );
+  const readingSurfaceRef = useRef<HTMLDivElement | null>(null);
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
   const sectionOptions = useMemo(
     () =>
@@ -414,6 +416,7 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
           {isGreekLearningMode ? "Stop Learning" : "Learn Greek"}
         </button>
       ) : null}
+      <ReaderCopyButton targetRef={readingSurfaceRef} />
       {annotationActions}
     </>
   );
@@ -459,7 +462,7 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
             </div>
           </div>
         </div>
-        <div className="reading-surface fathers-reading-surface">
+        <div className="reading-surface fathers-reading-surface" ref={readingSurfaceRef}>
           {payload.work.fullTextUrl ? (
             <p className="muted-copy fathers-source-link">
               Full text source:{" "}

@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderControls } from "@/app/components/ReaderControls";
+import { ReaderCopyButton } from "@/app/components/ReaderCopyButton";
 import { ReaderHarmonyContent } from "@/app/components/ReaderHarmonyContent";
 import { ReaderHarmonyWorkspace } from "@/app/components/ReaderHarmonyWorkspace";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
@@ -47,6 +48,7 @@ export function HarmonyBookReaderContent({
   const showStrongsInline = !isSplitViewActive && activeUtilityPane === "strongs";
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
   const showHarmonyInline = !isSplitViewActive && activeUtilityPane === "harmony";
+  const readingSurfaceRef = useRef<HTMLDivElement | null>(null);
   const events = useMemo(() => getGospelHarmonyTemplateEvents(), []);
   const currentEvent = events[currentChapter - 1] ?? null;
   const visibleEvents = useMemo(() => {
@@ -99,17 +101,20 @@ export function HarmonyBookReaderContent({
                 books={books}
                 currentChapter={currentChapter}
                 trailingActions={
-                  isSplitViewActive ? (
-                    <button
-                      aria-label="Hide reader pane"
-                      className="split-pane-hide-button reader-pane-hide-button"
-                      disabled={!canCollapseSplitPane("reader")}
-                      onClick={() => collapseSplitPane("reader")}
-                      type="button"
-                    >
-                      Hide
-                    </button>
-                  ) : null
+                  <>
+                    <ReaderCopyButton targetRef={readingSurfaceRef} />
+                    {isSplitViewActive ? (
+                      <button
+                        aria-label="Hide reader pane"
+                        className="split-pane-hide-button reader-pane-hide-button"
+                        disabled={!canCollapseSplitPane("reader")}
+                        onClick={() => collapseSplitPane("reader")}
+                        type="button"
+                      >
+                        Hide
+                      </button>
+                    ) : null}
+                  </>
                 }
                 view={view}
               />
@@ -118,27 +123,27 @@ export function HarmonyBookReaderContent({
         </div>
 
         {activeReaderPane === "study-sets" ? (
-            <div className="reading-surface reader-notebook-surface">
+            <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderStudySetsPanel bookSlug={book.slug} chapterNumber={currentChapter} />
           </div>
         ) : showNotebookInline ? (
-          <div className="reading-surface reader-notebook-surface">
+          <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderNotebookEditor />
           </div>
         ) : showStrongsInline ? (
-          <div className="reading-surface reader-notebook-surface">
+          <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderStrongsPanel />
           </div>
         ) : showSermonsInline ? (
-          <div className="reading-surface reader-notebook-surface">
+          <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderSermonWorkspace currentChapter={null} />
           </div>
         ) : showHarmonyInline ? (
-          <div className="reading-surface reader-notebook-surface">
+          <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderHarmonyWorkspace />
           </div>
         ) : (
-          <div className="reading-surface reader-notebook-surface">
+          <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <div className="reader-compare-panel reader-harmony-panel" role="tabpanel">
               <div className="reader-compare-header">
                 <div>

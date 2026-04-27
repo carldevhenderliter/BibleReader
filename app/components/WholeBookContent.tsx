@@ -7,6 +7,7 @@ import { useReaderCustomization } from "@/app/components/ReaderCustomizationProv
 import { ReaderContentTabs } from "@/app/components/ReaderContentTabs";
 import { ReaderComparePanel } from "@/app/components/ReaderComparePanel";
 import { ReaderControls } from "@/app/components/ReaderControls";
+import { ReaderCopyButton } from "@/app/components/ReaderCopyButton";
 import { ReaderHarmonyPanel } from "@/app/components/ReaderHarmonyPanel";
 import { ReaderHarmonyWorkspace } from "@/app/components/ReaderHarmonyWorkspace";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
@@ -246,6 +247,7 @@ export function WholeBookContent({
   const showStrongsInline = !isSplitViewActive && activeUtilityPane === "strongs";
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
   const showHarmonyInline = !isSplitViewActive && activeUtilityPane === "harmony";
+  const readingSurfaceRef = useRef<HTMLDivElement | null>(null);
   const [annotationMode, setAnnotationMode] = useState(false);
   const searchParams = new URLSearchParams(locationSearch);
   const forceRenderAllChapters = settings.disableLazyLoading;
@@ -418,6 +420,7 @@ export function WholeBookContent({
                         {isGreekLearningMode ? "Stop Learning" : "Learn Greek"}
                       </button>
                     ) : null}
+                    <ReaderCopyButton targetRef={readingSurfaceRef} />
                     {isSplitViewActive ? (
                       <button
                         aria-label="Hide reader pane"
@@ -438,15 +441,15 @@ export function WholeBookContent({
         </div>
         <ReaderContentTabs showHarmony showOtCompare={isOldTestament} />
         {activeReaderPane === "study-sets" ? (
-          <div className="reading-surface reader-notebook-surface">
+          <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderStudySetsPanel bookSlug={book.slug} chapterNumber={1} />
           </div>
         ) : activeReaderPane === "harmony" ? (
-          <div className="reading-surface reader-notebook-surface">
+          <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderHarmonyPanel />
           </div>
         ) : activeReaderPane === "compare" ? (
-          <div className="reading-surface reader-notebook-surface">
+          <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderComparePanel
               book={book}
               chaptersByVersion={chaptersByVersion}
@@ -455,7 +458,7 @@ export function WholeBookContent({
             />
           </div>
         ) : activeReaderPane === "ot-compare" ? (
-          <div className="reading-surface reader-notebook-surface">
+          <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderOtComparePanel
               book={book}
               focusedChapterNumber={activeFocusedChapterNumber}
@@ -470,23 +473,23 @@ export function WholeBookContent({
             ) : null}
           </div>
         ) : showNotebookInline ? (
-          <div className="reading-surface reader-notebook-surface">
+          <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderNotebookEditor />
           </div>
         ) : showStrongsInline ? (
-          <div className="reading-surface reader-notebook-surface">
+          <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderStrongsPanel />
           </div>
         ) : showSermonsInline ? (
-          <div className="reading-surface reader-notebook-surface">
+          <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderSermonWorkspace currentChapter={chapters[0] ?? null} />
           </div>
         ) : showHarmonyInline ? (
-          <div className="reading-surface reader-notebook-surface">
+          <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderHarmonyWorkspace />
           </div>
         ) : (
-          <div className="reading-surface chapter-stack">
+          <div className="reading-surface chapter-stack" ref={readingSurfaceRef}>
             {chapters.map((chapter) => (
               <LazyBookChapterSection
                 annotationMode={annotationMode}

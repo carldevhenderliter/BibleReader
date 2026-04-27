@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderContentTabs } from "@/app/components/ReaderContentTabs";
 import { ReaderComparePanel } from "@/app/components/ReaderComparePanel";
 import { ReaderControls } from "@/app/components/ReaderControls";
+import { ReaderCopyButton } from "@/app/components/ReaderCopyButton";
 import { ReaderHarmonyPanel } from "@/app/components/ReaderHarmonyPanel";
 import { ReaderHarmonyWorkspace } from "@/app/components/ReaderHarmonyWorkspace";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
@@ -93,6 +94,7 @@ export function ReaderPageContent({
   const showStrongsInline = !isSplitViewActive && activeUtilityPane === "strongs";
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
   const showHarmonyInline = !isSplitViewActive && activeUtilityPane === "harmony";
+  const readingSurfaceRef = useRef<HTMLDivElement | null>(null);
   const [annotationMode, setAnnotationMode] = useState(false);
   const searchParams = new URLSearchParams(locationSearch);
   const urlHighlightedVerseNumber = parsePositiveNumber(searchParams.get("highlight"));
@@ -208,6 +210,7 @@ export function ReaderPageContent({
                         {isGreekLearningMode ? "Stop Learning" : "Learn Greek"}
                       </button>
                     ) : null}
+                    <ReaderCopyButton targetRef={readingSurfaceRef} />
                     {isSplitViewActive ? (
                       <button
                         aria-label="Hide reader pane"
@@ -228,15 +231,15 @@ export function ReaderPageContent({
         </div>
         <ReaderContentTabs showHarmony showOtCompare={isOldTestament} />
         {activeReaderPane === "study-sets" ? (
-          <div className="reading-surface reader-notebook-surface">
+          <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderStudySetsPanel bookSlug={book.slug} chapterNumber={chapter.chapterNumber} />
           </div>
         ) : activeReaderPane === "harmony" ? (
-          <div className="reading-surface reader-notebook-surface">
+          <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderHarmonyPanel />
           </div>
         ) : activeReaderPane === "compare" ? (
-          <div className="reading-surface reader-notebook-surface">
+          <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderComparePanel
               book={book}
               chaptersByVersion={chaptersByVersion}
@@ -244,7 +247,7 @@ export function ReaderPageContent({
             />
           </div>
         ) : activeReaderPane === "ot-compare" ? (
-          <div className="reading-surface reader-notebook-surface">
+          <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderOtComparePanel
               book={book}
               focusedChapterNumber={chapter.chapterNumber}
@@ -259,23 +262,23 @@ export function ReaderPageContent({
             ) : null}
           </div>
         ) : showNotebookInline ? (
-          <div className="reading-surface reader-notebook-surface">
+          <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderNotebookEditor />
           </div>
         ) : showStrongsInline ? (
-          <div className="reading-surface reader-notebook-surface">
+          <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderStrongsPanel />
           </div>
         ) : showSermonsInline ? (
-          <div className="reading-surface reader-notebook-surface">
+          <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderSermonWorkspace currentChapter={chapter} />
           </div>
         ) : showHarmonyInline ? (
-          <div className="reading-surface reader-notebook-surface">
+          <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderHarmonyWorkspace />
           </div>
         ) : (
-          <div className="reading-surface">
+          <div className="reading-surface" ref={readingSurfaceRef}>
             <VerseList
               bookSlug={book.slug}
               chapterNumber={chapter.chapterNumber}

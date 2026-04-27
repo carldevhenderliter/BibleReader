@@ -333,6 +333,13 @@ describe("WholeBookContent", () => {
     setMockPathname("/read/jude");
     window.history.replaceState({}, "", "/read/jude");
     setSplitViewActive(false);
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      writable: true,
+      value: {
+        writeText: jest.fn().mockResolvedValue(undefined)
+      }
+    });
   });
 
   it("renders a continuous book view", () => {
@@ -352,6 +359,27 @@ describe("WholeBookContent", () => {
     expect(screen.getByRole("heading", { name: "Chapter 1" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Chapter 2" })).toBeInTheDocument();
     expect(screen.getByText("Mercy to you and peace and love be multiplied.")).toBeInTheDocument();
+  });
+
+  it("copies the visible whole-book reading text from the toolbar", async () => {
+    renderWithReaderCustomization(
+      <WholeBookContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapters, kjv: kjvChapters }}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Copy text" }));
+
+    await waitFor(() => {
+      expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
+        expect.stringContaining("Jude, a servant of Jesus Christ...")
+      );
+    });
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
+      expect.stringContaining("Beloved, while I was very eager to write to you...")
+    );
   });
 
   it("lazy loads distant chapter verse content in whole-book view", async () => {

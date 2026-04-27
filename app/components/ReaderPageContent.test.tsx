@@ -250,6 +250,13 @@ describe("ReaderPageContent", () => {
     setMockPathname("/read/genesis/1");
     window.history.replaceState({}, "", "/read/genesis/1");
     setSplitViewActive(false);
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      writable: true,
+      value: {
+        writeText: jest.fn().mockResolvedValue(undefined)
+      }
+    });
   });
 
   it("renders chapter content and navigation", () => {
@@ -274,6 +281,27 @@ describe("ReaderPageContent", () => {
     expect(screen.getByRole("link", { name: /Whole book view/i })).toHaveAttribute(
       "href",
       "/read/genesis"
+    );
+  });
+
+  it("copies the visible chapter reading text from the toolbar", async () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter, nlt: nltChapter, esv: esvChapter }}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Copy text" }));
+
+    await waitFor(() => {
+      expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
+        expect.stringContaining("In the beginning, God created the heavens and the earth.")
+      );
+    });
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
+      expect.stringContaining("The earth was formless and empty.")
     );
   });
 

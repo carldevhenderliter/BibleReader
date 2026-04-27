@@ -263,6 +263,13 @@ describe("FathersReaderContent", () => {
     resolveCustomGreekUndertextMock.mockResolvedValue(null);
     saveFathersAnnotationFileMock.mockResolvedValue("download");
     getStrongsEntryMock.mockResolvedValue(null);
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      writable: true,
+      value: {
+        writeText: jest.fn().mockResolvedValue(undefined)
+      }
+    });
   });
 
   it("renders Greek study tokens with transliteration and gloss lines", () => {
@@ -273,6 +280,21 @@ describe("FathersReaderContent", () => {
     expect(screen.getByText("assembly")).toBeInTheDocument();
     expect(screen.getByText("The church.")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Learn Greek" })).toBeInTheDocument();
+  });
+
+  it("copies the visible Fathers reading text from the toolbar", async () => {
+    renderFathersReader();
+
+    fireEvent.click(screen.getByRole("button", { name: "Copy text" }));
+
+    await waitFor(() => {
+      expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
+        expect.stringContaining("Prologue")
+      );
+    });
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
+      expect.stringContaining("The church.")
+    );
   });
 
   it("opens the Greek dictionary when a Fathers token is clicked", async () => {
