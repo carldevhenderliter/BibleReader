@@ -31,6 +31,9 @@ type FathersEnglishUndertextContentProps = {
   englishTokens?: EnglishToken[];
   annotations: EnglishUndertextAnnotation[];
   annotationMode: boolean;
+  annotationInteractionMode?: "button" | "word-click";
+  annotationModePrompt?: string;
+  autoApplySingleWordSuggestion?: boolean;
   separateSentencesByLine?: boolean;
   lineClassName?: string;
   autoSuggestionsBuilder?: (
@@ -192,6 +195,9 @@ export function FathersEnglishUndertextContent({
   englishTokens,
   annotations,
   annotationMode,
+  annotationInteractionMode = "button",
+  annotationModePrompt = "Use `+` on any unannotated word to add Greek undertext wherever you want.",
+  autoApplySingleWordSuggestion = false,
   separateSentencesByLine = false,
   lineClassName = "verse-text verse-text-body fathers-segment-english",
   autoSuggestionsBuilder = buildGreekUndertextSuggestions,
@@ -373,6 +379,11 @@ export function FathersEnglishUndertextContent({
       return;
     }
 
+    if (annotationInteractionMode === "word-click" && autoApplySingleWordSuggestion) {
+      void handleDirectWordClick(wordIndex, anchorElement);
+      return;
+    }
+
     openEditor(wordIndex, wordIndex, anchorElement);
   };
 
@@ -448,6 +459,52 @@ export function FathersEnglishUndertextContent({
     });
     setCustomGreekText(nextAnnotation.greekText);
     setEditorError(null);
+  };
+
+  const applySuggestionToRange = (
+    startToken: number,
+    endToken: number,
+    suggestion: UndertextSuggestion
+  ) => {
+    const nextAnnotation = {
+      contentId,
+      startToken,
+      endToken,
+      greekText: suggestion.greekText,
+      entryKey: suggestion.entryKey,
+      lemma: suggestion.lemma,
+      strongs: suggestion.strongs,
+      transliteration: suggestion.transliteration,
+      gloss: suggestion.gloss,
+      source: suggestion.source ?? ("lexicon" as const)
+    };
+
+    onChangeAnnotations(contentId, replaceSegmentAnnotation(annotations, nextAnnotation));
+    return nextAnnotation;
+  };
+
+  const handleDirectWordClick = async (wordIndex: number, anchorElement: HTMLElement) => {
+    if (!englishTokens?.length) {
+      openEditor(wordIndex, wordIndex, anchorElement);
+      return;
+    }
+
+    const selectedText = getFathersEnglishSpanText(englishTokens, wordIndex, wordIndex);
+    const selectedWords = getSelectedWords(englishTokens, wordIndex, wordIndex);
+
+    try {
+      const nextSuggestions = await autoSuggestionsBuilder(selectedText, selectedWords);
+
+      if (nextSuggestions[0]) {
+        applySuggestionToRange(wordIndex, wordIndex, nextSuggestions[0]);
+        setEditorError(null);
+        return;
+      }
+    } catch {
+      // Fall through to the editor when suggestion lookup fails.
+    }
+
+    openEditor(wordIndex, wordIndex, anchorElement);
   };
 
   const handleCustomSave = async () => {
@@ -835,8 +892,21 @@ export function FathersEnglishUndertextContent({
           className={`fathers-annotation-word-wrap${isSelectedInEditor ? " is-selected" : ""}`}
           key={`${contentId}:word:${token.wordIndex}`}
         >
-          <span className="fathers-annotation-word-text">{token.text}</span>
-          {canAddAnnotation ? (
+          {canAddAnnotation && annotationInteractionMode === "word-click" ? (
+            <button
+              aria-label={`Show Greek undertext for ${token.text}`}
+              className="fathers-annotation-word-button"
+              onClick={(event) =>
+                handleWordSelection(token.wordIndex as number, event.currentTarget)
+              }
+              type="button"
+            >
+              <span className="fathers-annotation-word-text">{token.text}</span>
+            </button>
+          ) : (
+            <span className="fathers-annotation-word-text">{token.text}</span>
+          )}
+          {canAddAnnotation && annotationInteractionMode === "button" ? (
             <button
               aria-label={`Add Greek undertext for ${token.text}`}
               className="fathers-annotation-add-button"
@@ -885,7 +955,7 @@ export function FathersEnglishUndertextContent({
             </p>
           ) : (
             <p className="reader-toolbar-meta">
-              Use `+` on any unannotated word to add Greek undertext wherever you want.
+              {annotationModePrompt}
             </p>
           )}
         </div>

@@ -624,7 +624,9 @@ describe("WholeBookContent", () => {
     fireEvent.click(await screen.findByRole("button", { name: "Annotate Greek" }));
 
     expect(screen.getByRole("button", { name: "Done annotating" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Add Greek undertext for Jude" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Show Greek undertext for Jude" })
+    ).toBeInTheDocument();
   });
 
   it("checks a whole Greek sentence from whole-book view when Learn Greek is enabled", async () => {

@@ -253,7 +253,10 @@ export function VerseList({
                     ) : canAnnotateInterlinearVerse && showBibleAnnotationLine ? (
                       <FathersEnglishUndertextContent
                         annotationMode={annotationMode}
+                        annotationInteractionMode="word-click"
+                        annotationModePrompt="Click any English word to place the matching Greek under it."
                         annotations={undertextAnnotations}
+                        autoApplySingleWordSuggestion
                         autoSuggestionsBuilder={(selectedText, selectedWords) =>
                           buildBibleGreekUndertextSuggestions(
                             selectedText,
@@ -294,7 +297,10 @@ export function VerseList({
                     canAnnotateGreekVersionTranslation && showBibleAnnotationLine ? (
                       <FathersEnglishUndertextContent
                         annotationMode={annotationMode}
+                        annotationInteractionMode="word-click"
+                        annotationModePrompt="Click any English word to place the matching Greek under it."
                         annotations={undertextAnnotations}
+                        autoApplySingleWordSuggestion
                         autoSuggestionsBuilder={(selectedText, selectedWords) =>
                           buildBibleGreekUndertextSuggestions(
                             selectedText,

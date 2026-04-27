@@ -558,7 +558,7 @@ describe("ReaderPageContent", () => {
 
     expect(screen.getByRole("button", { name: "Done annotating" })).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Add Greek undertext for genealogy" })
+      screen.getByRole("button", { name: "Show Greek undertext for genealogy" })
     ).toBeInTheDocument();
   });
 

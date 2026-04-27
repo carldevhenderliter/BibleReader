@@ -304,7 +304,7 @@ describe("VerseList", () => {
     ).toBeInTheDocument();
   });
 
-  it("adds Bible Greek undertext on the companion English line in the standalone Greek version", async () => {
+  it("adds Bible Greek undertext by clicking the English word in the standalone Greek version", async () => {
     window.localStorage.setItem(READER_VERSION_STORAGE_KEY, "greek");
 
     renderWithReaderCustomization(
@@ -333,18 +333,17 @@ describe("VerseList", () => {
     );
 
     fireEvent.click(
-      await screen.findByRole("button", { name: "Add Greek undertext for beginning" })
+      await screen.findByRole("button", { name: "Show Greek undertext for beginning" })
     );
-
-    const editor = await screen.findByRole("dialog", { name: "Greek undertext editor" });
-    fireEvent.click(within(editor).getByRole("button", { name: /ἀρχῇ/ }));
 
     await waitFor(() => {
       expect(screen.getAllByText("ἀρχῇ").length).toBeGreaterThan(1);
     });
-    expect(window.localStorage.getItem(BIBLE_GREEK_UNDERTEXT_STORAGE_KEY)).toContain(
-      "\"source\":\"verse-token\""
-    );
+    await waitFor(() => {
+      expect(window.localStorage.getItem(BIBLE_GREEK_UNDERTEXT_STORAGE_KEY)).toContain(
+        "\"source\":\"verse-token\""
+      );
+    });
   });
 
   it("can hide the standalone Greek English companion line independently", () => {

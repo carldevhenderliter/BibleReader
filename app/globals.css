@@ -1107,6 +1107,25 @@ button.fathers-annotation-anchor:focus-visible {
   display: inline;
 }
 
+.fathers-annotation-word-button {
+  display: inline;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  cursor: pointer;
+}
+
+.fathers-annotation-word-button:hover .fathers-annotation-word-text,
+.fathers-annotation-word-button:focus-visible .fathers-annotation-word-text {
+  border-radius: 0.35rem;
+  background: rgba(var(--reader-accent-rgb), 0.12);
+  box-shadow: 0 0 0 1px rgba(var(--reader-accent-rgb), 0.16);
+  outline: none;
+}
+
 .fathers-annotation-add-button {
   display: inline-flex;
   align-items: center;
