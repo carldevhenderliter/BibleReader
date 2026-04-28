@@ -1,12 +1,37 @@
 {
+  "1-corinthians": {
+    "bookSlug": "1-corinthians",
+    "sourceFilename": "1 Corinthians.mp3",
+    "src": "/book-audio/1-corinthians.mp3"
+  },
+  "1-thessalonians": {
+    "bookSlug": "1-thessalonians",
+    "sourceFilename": "1 Thessalonians.mp3",
+    "src": "/book-audio/1-thessalonians.mp3"
+  },
+  "2-thessalonians": {
+    "bookSlug": "2-thessalonians",
+    "sourceFilename": "2 Thessalonians.mp3",
+    "src": "/book-audio/2-thessalonians.mp3"
+  },
   "ephesians": {
     "bookSlug": "ephesians",
-    "sourceFilename": "Ephesians.pdf.mp3",
+    "sourceFilename": "Ephesians.mp3",
     "src": "/book-audio/ephesians.mp3"
   },
   "galatians": {
     "bookSlug": "galatians",
-    "sourceFilename": "Galatians.pdf.mp3",
+    "sourceFilename": "Galatians.mp3",
     "src": "/book-audio/galatians.mp3"
+  },
+  "james": {
+    "bookSlug": "james",
+    "sourceFilename": "James.mp3",
+    "src": "/book-audio/james.mp3"
+  },
+  "matthew": {
+    "bookSlug": "matthew",
+    "sourceFilename": "Matthew.mp3",
+    "src": "/book-audio/matthew.mp3"
   }
 }

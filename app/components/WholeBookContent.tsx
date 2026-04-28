@@ -26,6 +26,10 @@ import {
   getNextBookForOrderMode,
   normalizeBibleBookOrderMode
 } from "@/lib/bible/book-order";
+import {
+  BOOK_AUDIO_AUTOPLAY_STORAGE_KEY,
+  getBookAudioSource
+} from "@/lib/bible/book-audio";
 import { useLookup } from "@/app/components/LookupProvider";
 import { useLocationSearch } from "@/app/components/useLocationSearch";
 import { useBookAudioSource } from "@/app/components/useBookAudioSource";
@@ -271,13 +275,25 @@ export function WholeBookContent({
       return;
     }
 
+    if (typeof window !== "undefined") {
+      if (getBookAudioSource(nextBook.slug)) {
+        window.sessionStorage.setItem(BOOK_AUDIO_AUTOPLAY_STORAGE_KEY, nextBook.slug);
+      } else {
+        window.sessionStorage.removeItem(BOOK_AUDIO_AUTOPLAY_STORAGE_KEY);
+      }
+    }
+
     router.push(getBookHref(nextBook.slug, version));
   }, [book.slug, bookAudioSource, books, router, version]);
   const bottomBarPanel = useMemo(
     () => (
-      <ReaderBookAudioPlayer audioSource={bookAudioSource} onEnded={handleBookAudioEnded} />
+      <ReaderBookAudioPlayer
+        audioSource={bookAudioSource}
+        autoPlayBookSlug={book.slug}
+        onEnded={handleBookAudioEnded}
+      />
     ),
-    [bookAudioSource, handleBookAudioEnded]
+    [book.slug, bookAudioSource, handleBookAudioEnded]
   );
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";

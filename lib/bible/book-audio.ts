@@ -13,6 +13,8 @@ export type BookAudioSource = BookAudioManifestEntry & {
   assetPath: string;
 };
 
+export const BOOK_AUDIO_AUTOPLAY_STORAGE_KEY = "bible-reader.book-audio-autoplay";
+
 const BOOK_AUDIO_MANIFEST = manifest as BookAudioManifest;
 const BOOK_AUDIO_EXTENSIONS = [".mp3", ".m4a", ".wav", ".ogg", ".aac", ".flac"] as const;
 

@@ -432,7 +432,7 @@ describe("WholeBookContent", () => {
     );
 
     expect(screen.getByRole("region", { name: "Book audio" })).toBeInTheDocument();
-    expect(screen.getByText("Galatians.pdf.mp3")).toBeInTheDocument();
+    expect(screen.getByText("Galatians.mp3")).toBeInTheDocument();
     expect(document.querySelector(".reader-audio-player")).toHaveAttribute(
       "src",
       "/book-audio/galatians.mp3"
