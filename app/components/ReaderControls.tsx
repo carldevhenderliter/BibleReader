@@ -192,12 +192,16 @@ export function ReaderControls({
 
   return (
     <section
-      className="reader-controls"
+      className={`reader-controls ${isBibleMode ? "reader-controls-bible" : "reader-controls-fathers"}`}
       aria-label={isBibleMode ? "Passage controls" : "Fathers reader controls"}
     >
       <div className="reader-controls-bar">
         {showNavigationControls ? (
-          <div className="reader-controls-primary">
+          <div
+            className={`reader-controls-primary ${
+              isBibleMode ? "reader-controls-primary-bible" : "reader-controls-primary-fathers"
+            }`}
+          >
             {isBibleMode ? (
               <>
                 <div className="control-group control-group-compact">
