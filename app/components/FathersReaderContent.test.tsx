@@ -492,15 +492,15 @@ describe("FathersReaderContent", () => {
     expect(screen.getByText("The church.")).toBeInTheDocument();
   });
 
-  it("shows only the bottom Fathers navigation selectors on compact layouts", () => {
+  it("keeps the Fathers navigation selectors in the top toolbar on compact layouts", () => {
     setCompactReaderMode();
 
     renderFathersReader();
 
-    expect(screen.queryByLabelText("Work")).not.toBeInTheDocument();
-    expect(screen.queryByLabelText("Section")).not.toBeInTheDocument();
-    expect(screen.getByLabelText("Bottom Work")).toBeInTheDocument();
-    expect(screen.getByLabelText("Bottom Section")).toBeInTheDocument();
+    expect(screen.getByLabelText("Work")).toBeInTheDocument();
+    expect(screen.getByLabelText("Section")).toBeInTheDocument();
+    expect(screen.queryByLabelText("Bottom Work")).not.toBeInTheDocument();
+    expect(screen.queryByLabelText("Bottom Section")).not.toBeInTheDocument();
   });
 
   it("adds NA1 Greek undertext annotations and saves them through the local save flow", async () => {

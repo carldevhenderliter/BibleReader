@@ -367,7 +367,7 @@ describe("ReaderPageContent", () => {
     );
   });
 
-  it("shows only the bottom navigation selectors on compact layouts", () => {
+  it("keeps the navigation selectors in the top toolbar on compact layouts", () => {
     setCompactReaderMode();
 
     renderWithReaderCustomization(
@@ -378,10 +378,10 @@ describe("ReaderPageContent", () => {
       />
     );
 
-    expect(screen.queryByLabelText("Book")).not.toBeInTheDocument();
-    expect(screen.queryByLabelText("Chapter")).not.toBeInTheDocument();
-    expect(screen.getByLabelText("Bottom Book")).toBeInTheDocument();
-    expect(screen.getByLabelText("Bottom Chapter")).toBeInTheDocument();
+    expect(screen.getByLabelText("Book")).toBeInTheDocument();
+    expect(screen.getByLabelText("Chapter")).toBeInTheDocument();
+    expect(screen.queryByLabelText("Bottom Book")).not.toBeInTheDocument();
+    expect(screen.queryByLabelText("Bottom Chapter")).not.toBeInTheDocument();
   });
 
   it("switches versions while preserving the current passage", () => {

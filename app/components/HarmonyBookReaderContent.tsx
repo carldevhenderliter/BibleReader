@@ -4,7 +4,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
 import { ReaderBookAudioPlayer } from "@/app/components/ReaderBookAudioPlayer";
-import { ReaderBottomControlsDock } from "@/app/components/ReaderBottomControlsDock";
 import { useRegisterReaderBottomBarPanel } from "@/app/components/ReaderBottomBarProvider";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderControls } from "@/app/components/ReaderControls";
@@ -17,7 +16,6 @@ import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
 import { ReaderStrongsPanel } from "@/app/components/ReaderStrongsPanel";
 import { ReaderStudySetsPanel } from "@/app/components/ReaderStudySetsPanel";
 import { useBookAudioSource } from "@/app/components/useBookAudioSource";
-import { useBottomReaderControlsDock } from "@/app/components/useBottomReaderControlsDock";
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
@@ -64,8 +62,6 @@ export function HarmonyBookReaderContent({
     ),
     [bookAudioSource]
   );
-  const shouldShowBottomReaderControls = useBottomReaderControlsDock();
-  const showBottomNavigationDock = !isSplitViewActive && shouldShowBottomReaderControls;
   const events = useMemo(() => getGospelHarmonyTemplateEvents(), []);
   const currentEvent = events[currentChapter - 1] ?? null;
   const visibleEvents = useMemo(() => {
@@ -118,7 +114,6 @@ export function HarmonyBookReaderContent({
                 book={book}
                 books={books}
                 currentChapter={currentChapter}
-                showNavigationControls={!showBottomNavigationDock}
                 trailingActions={
                   <>
                     <ReaderCopyButton targetRef={readingSurfaceRef} />
@@ -178,19 +173,6 @@ export function HarmonyBookReaderContent({
           </div>
         )}
       </section>
-      {showBottomNavigationDock ? (
-        <ReaderBottomControlsDock>
-          <ReaderControls
-            book={book}
-            books={books}
-            controlLabelPrefix="Bottom"
-            currentChapter={currentChapter}
-            idPrefix="bottom-harmony"
-            showUtilityActions={false}
-            view={view}
-          />
-        </ReaderBottomControlsDock>
-      ) : null}
     </ReaderCustomizationShell>
   );
 }

@@ -5,7 +5,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FathersEnglishUndertextContent } from "@/app/components/FathersEnglishUndertextContent";
 import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
 import { ReaderBookAudioPlayer } from "@/app/components/ReaderBookAudioPlayer";
-import { ReaderBottomControlsDock } from "@/app/components/ReaderBottomControlsDock";
 import { useRegisterReaderBottomBarPanel } from "@/app/components/ReaderBottomBarProvider";
 import { ReaderCopyButton } from "@/app/components/ReaderCopyButton";
 import { ReaderControls } from "@/app/components/ReaderControls";
@@ -14,7 +13,6 @@ import { ReaderHarmonyWorkspace } from "@/app/components/ReaderHarmonyWorkspace"
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
 import { ReaderStrongsPanel } from "@/app/components/ReaderStrongsPanel";
 import { useBookAudioSource } from "@/app/components/useBookAudioSource";
-import { useBottomReaderControlsDock } from "@/app/components/useBottomReaderControlsDock";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { useLookup } from "@/app/components/LookupProvider";
@@ -199,8 +197,6 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
     ),
     [workAudioSource]
   );
-  const shouldShowBottomReaderControls = useBottomReaderControlsDock();
-  const showBottomNavigationDock = !isSplitViewActive && shouldShowBottomReaderControls;
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
   const sectionOptions = useMemo(
     () =>
@@ -473,7 +469,6 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
                 mode="fathers"
                 onSectionChange={handleSectionChange}
                 sections={sectionOptions}
-                showNavigationControls={!showBottomNavigationDock}
                 trailingActions={trailingActions}
                 works={workOptions}
                 libraryHref="/fathers"
@@ -604,22 +599,6 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
           </div>
         ) : null}
       </section>
-      {showBottomNavigationDock ? (
-        <ReaderBottomControlsDock>
-          <ReaderControls
-            controlLabelPrefix="Bottom"
-            currentSectionId={activeSectionId}
-            currentWorkSlug={payload.work.slug}
-            idPrefix="bottom-fathers"
-            libraryHref="/fathers"
-            mode="fathers"
-            onSectionChange={handleSectionChange}
-            sections={sectionOptions}
-            showUtilityActions={false}
-            works={workOptions}
-          />
-        </ReaderBottomControlsDock>
-      ) : null}
     </ReaderCustomizationShell>
   );
 }

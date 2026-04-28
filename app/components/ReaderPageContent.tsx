@@ -8,7 +8,6 @@ import { ReaderContentTabs } from "@/app/components/ReaderContentTabs";
 import { ReaderComparePanel } from "@/app/components/ReaderComparePanel";
 import { ReaderBookAudioPlayer } from "@/app/components/ReaderBookAudioPlayer";
 import { useRegisterReaderBottomBarPanel } from "@/app/components/ReaderBottomBarProvider";
-import { ReaderBottomControlsDock } from "@/app/components/ReaderBottomControlsDock";
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderCopyButton } from "@/app/components/ReaderCopyButton";
 import { ReaderHarmonyPanel } from "@/app/components/ReaderHarmonyPanel";
@@ -20,7 +19,6 @@ import { ReaderStrongsPanel } from "@/app/components/ReaderStrongsPanel";
 import { ReaderStudySetsPanel } from "@/app/components/ReaderStudySetsPanel";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
 import { useBookAudioSource } from "@/app/components/useBookAudioSource";
-import { useBottomReaderControlsDock } from "@/app/components/useBottomReaderControlsDock";
 import { useLocationSearch } from "@/app/components/useLocationSearch";
 import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { useLookup } from "@/app/components/LookupProvider";
@@ -105,8 +103,6 @@ export function ReaderPageContent({
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
   const showHarmonyInline = !isSplitViewActive && activeUtilityPane === "harmony";
   const readingSurfaceRef = useRef<HTMLDivElement | null>(null);
-  const shouldShowBottomReaderControls = useBottomReaderControlsDock();
-  const showBottomNavigationDock = !isSplitViewActive && shouldShowBottomReaderControls;
   const [annotationMode, setAnnotationMode] = useState(false);
   const searchParams = new URLSearchParams(locationSearch);
   const urlHighlightedVerseNumber = parsePositiveNumber(searchParams.get("highlight"));
@@ -203,7 +199,6 @@ export function ReaderPageContent({
                 book={book}
                 books={books}
                 currentChapter={chapter.chapterNumber}
-                showNavigationControls={!showBottomNavigationDock}
                 trailingActions={
                   <>
                     {hasBibleGreekAnnotationSurface ? (
@@ -316,19 +311,6 @@ export function ReaderPageContent({
           </div>
         )}
       </section>
-      {showBottomNavigationDock ? (
-        <ReaderBottomControlsDock>
-          <ReaderControls
-            book={book}
-            books={books}
-            controlLabelPrefix="Bottom"
-            currentChapter={chapter.chapterNumber}
-            idPrefix="bottom-reader"
-            showUtilityActions={false}
-            view="chapter"
-          />
-        </ReaderBottomControlsDock>
-      ) : null}
     </ReaderCustomizationShell>
   );
 }
