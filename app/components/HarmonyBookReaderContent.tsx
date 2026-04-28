@@ -16,6 +16,7 @@ import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
 import { ReaderStrongsPanel } from "@/app/components/ReaderStrongsPanel";
 import { ReaderStudySetsPanel } from "@/app/components/ReaderStudySetsPanel";
 import { useBookAudioSource } from "@/app/components/useBookAudioSource";
+import { useBottomReaderControlsDock } from "@/app/components/useBottomReaderControlsDock";
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
@@ -53,6 +54,7 @@ export function HarmonyBookReaderContent({
   const showHarmonyInline = !isSplitViewActive && activeUtilityPane === "harmony";
   const readingSurfaceRef = useRef<HTMLDivElement | null>(null);
   const bookAudioSource = useBookAudioSource(book.slug);
+  const shouldShowBottomReaderControls = useBottomReaderControlsDock();
   const events = useMemo(() => getGospelHarmonyTemplateEvents(), []);
   const currentEvent = events[currentChapter - 1] ?? null;
   const visibleEvents = useMemo(() => {
@@ -168,7 +170,7 @@ export function HarmonyBookReaderContent({
           </div>
         )}
       </section>
-      {!isSplitViewActive ? (
+      {!isSplitViewActive && shouldShowBottomReaderControls ? (
         <ReaderBottomControlsDock>
           <ReaderControls
             book={book}

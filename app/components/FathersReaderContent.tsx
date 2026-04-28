@@ -13,6 +13,7 @@ import { ReaderHarmonyWorkspace } from "@/app/components/ReaderHarmonyWorkspace"
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
 import { ReaderStrongsPanel } from "@/app/components/ReaderStrongsPanel";
 import { useBookAudioSource } from "@/app/components/useBookAudioSource";
+import { useBottomReaderControlsDock } from "@/app/components/useBottomReaderControlsDock";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { useLookup } from "@/app/components/LookupProvider";
@@ -188,6 +189,7 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
     );
   const readingSurfaceRef = useRef<HTMLDivElement | null>(null);
   const workAudioSource = useBookAudioSource(payload.work.slug);
+  const shouldShowBottomReaderControls = useBottomReaderControlsDock();
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
   const sectionOptions = useMemo(
     () =>
@@ -593,7 +595,7 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
           </div>
         ) : null}
       </section>
-      {!isSplitViewActive ? (
+      {!isSplitViewActive && shouldShowBottomReaderControls ? (
         <ReaderBottomControlsDock>
           <ReaderControls
             controlLabelPrefix="Bottom"

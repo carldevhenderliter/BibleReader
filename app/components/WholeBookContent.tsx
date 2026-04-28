@@ -23,6 +23,7 @@ import { VerseList } from "@/app/components/VerseList";
 import { useLookup } from "@/app/components/LookupProvider";
 import { useLocationSearch } from "@/app/components/useLocationSearch";
 import { useBookAudioSource } from "@/app/components/useBookAudioSource";
+import { useBottomReaderControlsDock } from "@/app/components/useBottomReaderControlsDock";
 import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
@@ -252,6 +253,7 @@ export function WholeBookContent({
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
   const showHarmonyInline = !isSplitViewActive && activeUtilityPane === "harmony";
   const readingSurfaceRef = useRef<HTMLDivElement | null>(null);
+  const shouldShowBottomReaderControls = useBottomReaderControlsDock();
   const [annotationMode, setAnnotationMode] = useState(false);
   const searchParams = new URLSearchParams(locationSearch);
   const forceRenderAllChapters = settings.disableLazyLoading;
@@ -536,7 +538,7 @@ export function WholeBookContent({
           </div>
         )}
       </section>
-      {!isSplitViewActive ? (
+      {!isSplitViewActive && shouldShowBottomReaderControls ? (
         <ReaderBottomControlsDock>
           <ReaderControls
             book={book}

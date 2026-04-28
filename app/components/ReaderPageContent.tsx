@@ -19,6 +19,7 @@ import { ReaderStrongsPanel } from "@/app/components/ReaderStrongsPanel";
 import { ReaderStudySetsPanel } from "@/app/components/ReaderStudySetsPanel";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
 import { useBookAudioSource } from "@/app/components/useBookAudioSource";
+import { useBottomReaderControlsDock } from "@/app/components/useBottomReaderControlsDock";
 import { useLocationSearch } from "@/app/components/useLocationSearch";
 import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { useLookup } from "@/app/components/LookupProvider";
@@ -99,6 +100,7 @@ export function ReaderPageContent({
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
   const showHarmonyInline = !isSplitViewActive && activeUtilityPane === "harmony";
   const readingSurfaceRef = useRef<HTMLDivElement | null>(null);
+  const shouldShowBottomReaderControls = useBottomReaderControlsDock();
   const [annotationMode, setAnnotationMode] = useState(false);
   const searchParams = new URLSearchParams(locationSearch);
   const urlHighlightedVerseNumber = parsePositiveNumber(searchParams.get("highlight"));
@@ -307,7 +309,7 @@ export function ReaderPageContent({
           </div>
         )}
       </section>
-      {!isSplitViewActive ? (
+      {!isSplitViewActive && shouldShowBottomReaderControls ? (
         <ReaderBottomControlsDock>
           <ReaderControls
             book={book}
