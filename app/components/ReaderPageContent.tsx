@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderContentTabs } from "@/app/components/ReaderContentTabs";
+import { ReaderBottomAudioDock } from "@/app/components/ReaderBottomAudioDock";
 import { ReaderComparePanel } from "@/app/components/ReaderComparePanel";
 import { ReaderBookAudioPlayer } from "@/app/components/ReaderBookAudioPlayer";
 import { ReaderBottomControlsDock } from "@/app/components/ReaderBottomControlsDock";
@@ -307,8 +308,13 @@ export function ReaderPageContent({
             />
           </div>
         )}
-        <ReaderBookAudioPlayer audioSource={bookAudioSource} />
+        {isSplitViewActive ? <ReaderBookAudioPlayer audioSource={bookAudioSource} /> : null}
       </section>
+      {!isSplitViewActive ? (
+        <ReaderBottomAudioDock>
+          <ReaderBookAudioPlayer audioSource={bookAudioSource} />
+        </ReaderBottomAudioDock>
+      ) : null}
       {!isSplitViewActive && shouldShowBottomReaderControls ? (
         <ReaderBottomControlsDock>
           <ReaderControls

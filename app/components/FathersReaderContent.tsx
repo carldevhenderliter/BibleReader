@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FathersEnglishUndertextContent } from "@/app/components/FathersEnglishUndertextContent";
 import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
 import { ReaderBookAudioPlayer } from "@/app/components/ReaderBookAudioPlayer";
+import { ReaderBottomAudioDock } from "@/app/components/ReaderBottomAudioDock";
 import { ReaderBottomControlsDock } from "@/app/components/ReaderBottomControlsDock";
 import { ReaderCopyButton } from "@/app/components/ReaderCopyButton";
 import { ReaderControls } from "@/app/components/ReaderControls";
@@ -590,11 +591,21 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
             <ReaderHarmonyWorkspace />
           </div>
         ) : null}
-        <ReaderBookAudioPlayer
-          audioSource={workAudioSource}
-          emptyMessage="No audio file available for this Fathers work yet."
-        />
+        {isSplitViewActive ? (
+          <ReaderBookAudioPlayer
+            audioSource={workAudioSource}
+            emptyMessage="No audio file available for this Fathers work yet."
+          />
+        ) : null}
       </section>
+      {!isSplitViewActive ? (
+        <ReaderBottomAudioDock>
+          <ReaderBookAudioPlayer
+            audioSource={workAudioSource}
+            emptyMessage="No audio file available for this Fathers work yet."
+          />
+        </ReaderBottomAudioDock>
+      ) : null}
       {!isSplitViewActive && shouldShowBottomReaderControls ? (
         <ReaderBottomControlsDock>
           <ReaderControls

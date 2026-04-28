@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
 import { ReaderBookAudioPlayer } from "@/app/components/ReaderBookAudioPlayer";
+import { ReaderBottomAudioDock } from "@/app/components/ReaderBottomAudioDock";
 import { ReaderBottomControlsDock } from "@/app/components/ReaderBottomControlsDock";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderControls } from "@/app/components/ReaderControls";
@@ -164,11 +165,21 @@ export function HarmonyBookReaderContent({
             </div>
           </div>
         )}
-        <ReaderBookAudioPlayer
-          audioSource={bookAudioSource}
-          emptyMessage="No audio file available for the Gospel Harmony yet."
-        />
+        {isSplitViewActive ? (
+          <ReaderBookAudioPlayer
+            audioSource={bookAudioSource}
+            emptyMessage="No audio file available for the Gospel Harmony yet."
+          />
+        ) : null}
       </section>
+      {!isSplitViewActive ? (
+        <ReaderBottomAudioDock>
+          <ReaderBookAudioPlayer
+            audioSource={bookAudioSource}
+            emptyMessage="No audio file available for the Gospel Harmony yet."
+          />
+        </ReaderBottomAudioDock>
+      ) : null}
       {!isSplitViewActive && shouldShowBottomReaderControls ? (
         <ReaderBottomControlsDock>
           <ReaderControls
