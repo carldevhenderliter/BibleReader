@@ -7,7 +7,9 @@ import { useRouter } from "next/navigation";
 
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import {
+  BIBLE_BOOK_ORDER_STORAGE_KEY,
   getBooksForOrderMode,
+  normalizeBibleBookOrderMode,
   type BibleBookOrderMode
 } from "@/lib/bible/book-order";
 import {
@@ -18,8 +20,6 @@ import type { BookMeta, ReadingView } from "@/lib/bible/types";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { getBookChapterHref, getBookHref, getChapterHref } from "@/lib/bible/utils";
 import { BIBLE_VERSION_METADATA } from "@/lib/bible/version";
-
-const BIBLE_BOOK_ORDER_STORAGE_KEY = "bible-reader.book-order";
 
 type ReaderControlOption = {
   value: string;
@@ -119,22 +119,9 @@ export function ReaderControls({
       return;
     }
 
-    const storedValue = window.localStorage.getItem(BIBLE_BOOK_ORDER_STORAGE_KEY);
-
-    if (
-      storedValue === "chronological-old-testament" ||
-      storedValue === "chronological-new-testament"
-    ) {
-      setBookOrderMode(storedValue);
-      return;
-    }
-
-    if (storedValue === "chronological") {
-      setBookOrderMode("chronological-new-testament");
-      return;
-    }
-
-    setBookOrderMode("canonical");
+    setBookOrderMode(
+      normalizeBibleBookOrderMode(window.localStorage.getItem(BIBLE_BOOK_ORDER_STORAGE_KEY))
+    );
   }, [isBibleMode]);
 
   useEffect(() => {

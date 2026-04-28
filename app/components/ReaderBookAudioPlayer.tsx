@@ -3,11 +3,13 @@ import type { BookAudioSource } from "@/lib/bible/book-audio";
 type ReaderBookAudioPlayerProps = {
   audioSource: BookAudioSource | null;
   emptyMessage?: string;
+  onEnded?: () => void;
 };
 
 export function ReaderBookAudioPlayer({
   audioSource,
-  emptyMessage = "No audio file available for this reader yet."
+  emptyMessage = "No audio file available for this reader yet.",
+  onEnded
 }: ReaderBookAudioPlayerProps) {
   return (
     <div className="reader-audio-bar" role="region" aria-label="Book audio">
@@ -30,6 +32,7 @@ export function ReaderBookAudioPlayer({
       <audio
         className="reader-audio-player"
         controls
+        onEnded={onEnded}
         preload="none"
         src={audioSource?.assetPath}
         aria-disabled={audioSource ? undefined : true}

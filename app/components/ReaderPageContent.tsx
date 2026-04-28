@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
@@ -26,12 +27,18 @@ import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { VerseList } from "@/app/components/VerseList";
+import {
+  BIBLE_BOOK_ORDER_STORAGE_KEY,
+  getNextBookForOrderMode,
+  normalizeBibleBookOrderMode
+} from "@/lib/bible/book-order";
 import type {
   BookMeta,
   BundledChapterMap,
   Chapter,
   EsvInterlinearDisplayChapter
 } from "@/lib/bible/types";
+import { getChapterHref } from "@/lib/bible/utils";
 import { getBibleVersionBadge } from "@/lib/bible/version";
 
 function parsePositiveNumber(value: string | null) {
@@ -65,6 +72,7 @@ export function ReaderPageContent({
   highlightedVerseNumber,
   highlightedVerseRange
 }: ReaderPageContentProps) {
+  const router = useRouter();
   const locationSearch = useLocationSearch();
   const { version } = useReaderVersion();
   const { isPanelOpen, settings } = useReaderCustomization();
@@ -93,9 +101,30 @@ export function ReaderPageContent({
     : undefined;
   const versionBadge = getBibleVersionBadge(version);
   const bookAudioSource = useBookAudioSource(book.slug);
+  const handleBookAudioEnded = useCallback(() => {
+    if (!bookAudioSource) {
+      return;
+    }
+
+    const bookOrderMode =
+      typeof window === "undefined"
+        ? "canonical"
+        : normalizeBibleBookOrderMode(
+            window.localStorage.getItem(BIBLE_BOOK_ORDER_STORAGE_KEY)
+          );
+    const nextBook = getNextBookForOrderMode(books, book.slug, bookOrderMode);
+
+    if (!nextBook) {
+      return;
+    }
+
+    router.push(getChapterHref(nextBook.slug, 1, version));
+  }, [book.slug, bookAudioSource, books, router, version]);
   const bottomBarPanel = useMemo(
-    () => <ReaderBookAudioPlayer audioSource={bookAudioSource} />,
-    [bookAudioSource]
+    () => (
+      <ReaderBookAudioPlayer audioSource={bookAudioSource} onEnded={handleBookAudioEnded} />
+    ),
+    [bookAudioSource, handleBookAudioEnded]
   );
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";

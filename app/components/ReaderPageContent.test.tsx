@@ -41,6 +41,14 @@ const books: BookMeta[] = [
     testament: "New",
     chapterCount: 6,
     order: 48
+  },
+  {
+    slug: "ephesians",
+    name: "Ephesians",
+    abbreviation: "Eph",
+    testament: "New",
+    chapterCount: 6,
+    order: 49
   }
 ];
 
@@ -287,6 +295,7 @@ function setCompactReaderMode() {
 describe("ReaderPageContent", () => {
   beforeEach(() => {
     window.localStorage.clear();
+    mockRouter.push.mockClear();
     setMockPathname("/read/genesis/1");
     window.history.replaceState({}, "", "/read/genesis/1");
     setSplitViewActive(false);
@@ -365,6 +374,28 @@ describe("ReaderPageContent", () => {
       "src",
       "/book-audio/galatians.mp3"
     );
+  });
+
+  it("advances to the next book when chapter-view book audio finishes", () => {
+    setMockPathname("/read/galatians/1");
+    window.history.replaceState({}, "", "/read/galatians/1");
+
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[3]}
+        books={books}
+        chaptersByVersion={{
+          web: galatiansChapter,
+          kjv: galatiansChapter,
+          nlt: galatiansChapter,
+          esv: galatiansChapter
+        }}
+      />
+    );
+
+    fireEvent.ended(document.querySelector(".reader-audio-player")!);
+
+    expect(mockRouter.push).toHaveBeenCalledWith("/read/ephesians/1");
   });
 
   it("keeps the navigation selectors in the top toolbar on compact layouts", () => {
@@ -565,7 +596,7 @@ describe("ReaderPageContent", () => {
 
     expect(
       within(screen.getByLabelText("Book")).getAllByRole("option").map((option) => option.textContent)
-    ).toEqual(["Genesis", "Job", "Exodus", "Galatians"]);
+    ).toEqual(["Genesis", "Job", "Exodus", "Galatians", "Ephesians"]);
   });
 
   it("can show only Greek without the English verse text in ESV interlinear mode", () => {

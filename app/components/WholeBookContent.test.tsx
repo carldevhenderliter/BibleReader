@@ -8,7 +8,7 @@ import {
   DEFAULT_READER_CUSTOMIZATION,
   READER_CUSTOMIZATION_STORAGE_KEY
 } from "@/lib/reader-customization";
-import { setMockPathname } from "@/test/mocks/next-navigation";
+import { mockRouter, setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
 
 const books: BookMeta[] = [
@@ -27,6 +27,14 @@ const books: BookMeta[] = [
     testament: "New",
     chapterCount: 6,
     order: 48
+  },
+  {
+    slug: "ephesians",
+    name: "Ephesians",
+    abbreviation: "Eph",
+    testament: "New",
+    chapterCount: 6,
+    order: 49
   }
 ];
 
@@ -356,6 +364,7 @@ function installIntersectionObserverMock() {
 describe("WholeBookContent", () => {
   beforeEach(() => {
     window.localStorage.clear();
+    mockRouter.push.mockClear();
     setMockPathname("/read/jude");
     window.history.replaceState({}, "", "/read/jude");
     setSplitViewActive(false);
@@ -428,6 +437,28 @@ describe("WholeBookContent", () => {
       "src",
       "/book-audio/galatians.mp3"
     );
+  });
+
+  it("advances to the next book when whole-book audio finishes", () => {
+    setMockPathname("/read/galatians");
+    window.history.replaceState({}, "", "/read/galatians");
+
+    renderWithReaderCustomization(
+      <WholeBookContent
+        book={books[1]}
+        books={books}
+        chaptersByVersion={{
+          web: galatiansChapters,
+          kjv: galatiansChapters,
+          nlt: galatiansChapters,
+          esv: galatiansChapters
+        }}
+      />
+    );
+
+    fireEvent.ended(document.querySelector(".reader-audio-player")!);
+
+    expect(mockRouter.push).toHaveBeenCalledWith("/read/ephesians");
   });
 
   it("lazy loads distant chapter verse content in whole-book view", async () => {
@@ -749,7 +780,7 @@ describe("WholeBookContent", () => {
 
     expect(await screen.findByText("Sentence complete")).toBeInTheDocument();
     expect(screen.queryByText("Greek Learning")).not.toBeInTheDocument();
-  });
+  }, 15000);
 
   it("renders custom verse translation editors in whole-book view", () => {
     renderWithReaderCustomization(

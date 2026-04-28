@@ -5,6 +5,8 @@ export type BibleBookOrderMode =
   | "chronological-old-testament"
   | "chronological-new-testament";
 
+export const BIBLE_BOOK_ORDER_STORAGE_KEY = "bible-reader.book-order";
+
 export const CHRONOLOGICAL_OLD_TESTAMENT_ORDER = [
   "genesis",
   "job",
@@ -150,4 +152,36 @@ export function getBooksForOrderMode<T extends BookMeta>(
   }
 
   return books;
+}
+
+export function normalizeBibleBookOrderMode(
+  value: string | null | undefined
+): BibleBookOrderMode {
+  if (
+    value === "chronological-old-testament" ||
+    value === "chronological-new-testament"
+  ) {
+    return value;
+  }
+
+  if (value === "chronological") {
+    return "chronological-new-testament";
+  }
+
+  return "canonical";
+}
+
+export function getNextBookForOrderMode<T extends BookMeta>(
+  books: T[],
+  currentBookSlug: string,
+  mode: BibleBookOrderMode
+): T | null {
+  const orderedBooks = getBooksForOrderMode(books, mode);
+  const currentBookIndex = orderedBooks.findIndex((book) => book.slug === currentBookSlug);
+
+  if (currentBookIndex === -1 || currentBookIndex >= orderedBooks.length - 1) {
+    return null;
+  }
+
+  return orderedBooks[currentBookIndex + 1] ?? null;
 }
