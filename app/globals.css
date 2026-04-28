@@ -3343,6 +3343,41 @@ button.fathers-annotation-anchor:focus-visible {
   font-family: var(--search-ui-font, "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif);
 }
 
+.reader-bottom-controls-dock {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: calc(max(1rem, env(safe-area-inset-bottom)) + 4.8rem);
+  left: max(1rem, env(safe-area-inset-left));
+  z-index: 44;
+  display: grid;
+  justify-items: center;
+  pointer-events: none;
+}
+
+.reader-bottom-controls-dock-inner {
+  pointer-events: auto;
+  width: min(100%, 58rem);
+  padding: 0.7rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.15rem;
+  background: linear-gradient(180deg, rgba(24, 28, 34, 0.9), rgba(15, 18, 23, 0.94));
+  backdrop-filter: blur(18px);
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.24);
+}
+
+.reader-bottom-controls-dock .reader-controls-bar {
+  justify-content: center;
+}
+
+.reader-bottom-controls-dock .reader-controls-primary {
+  justify-content: center;
+}
+
+.reader-bottom-controls-dock .reader-controls-actions {
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 .search-tray,
 .search-bar {
   pointer-events: auto;
@@ -5590,6 +5625,16 @@ button.fathers-annotation-anchor:focus-visible {
   .reader-controls-status {
     min-height: 2.5rem;
     padding-inline: 0.78rem;
+  }
+
+  .reader-bottom-controls-dock {
+    bottom: calc(max(1rem, env(safe-area-inset-bottom)) + 4.5rem);
+  }
+
+  .reader-bottom-controls-dock-inner {
+    width: min(100%, 34rem);
+    padding: 0.72rem;
+    border-radius: 1rem;
   }
 
   .control-group select {

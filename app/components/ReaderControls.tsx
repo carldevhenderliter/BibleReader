@@ -31,7 +31,10 @@ type BibleReaderControlsProps = {
   books: BookMeta[];
   book: BookMeta;
   currentChapter: number;
+  controlLabelPrefix?: string;
+  idPrefix?: string;
   leadingActions?: ReactNode;
+  showUtilityActions?: boolean;
   trailingActions?: ReactNode;
   view: ReadingView;
 };
@@ -42,11 +45,14 @@ type FathersReaderControlsProps = {
     slug: string;
     title: string;
   }>;
+  controlLabelPrefix?: string;
   currentWorkSlug: string;
+  idPrefix?: string;
   sections: ReaderControlOption[];
   currentSectionId: string;
   libraryHref?: string;
   leadingActions?: ReactNode;
+  showUtilityActions?: boolean;
   trailingActions?: ReactNode;
   onSectionChange: (sectionId: string) => void;
 };
@@ -64,6 +70,12 @@ export function ReaderControls({
   const { version } = useReaderVersion();
   const versionMeta = BIBLE_VERSION_METADATA[version] ?? null;
   const isBibleMode = mode !== "fathers";
+  const controlLabelPrefix = props.controlLabelPrefix?.trim();
+  const idPrefix = props.idPrefix?.trim() || (isBibleMode ? "reader-controls" : "fathers-reader-controls");
+  const getControlLabel = (label: string) =>
+    controlLabelPrefix ? `${controlLabelPrefix} ${label}` : label;
+  const showUtilityActions = props.showUtilityActions ?? true;
+  const getControlId = (id: string) => `${idPrefix}-${id}`;
   const [bookOrderMode, setBookOrderMode] = useState<BibleBookOrderMode>("canonical");
   const displayedBooks = useMemo(() => {
     if (!isBibleMode) {
@@ -185,12 +197,12 @@ export function ReaderControls({
           {isBibleMode ? (
             <>
               <div className="control-group control-group-compact">
-                <label className="sr-only" htmlFor="book-order-select">
-                  Book order
+                <label className="sr-only" htmlFor={getControlId("book-order-select")}>
+                  {getControlLabel("Book order")}
                 </label>
                 <select
-                  aria-label="Book order"
-                  id="book-order-select"
+                  aria-label={getControlLabel("Book order")}
+                  id={getControlId("book-order-select")}
                   value={bookOrderMode}
                   onChange={(event) =>
                     setBookOrderMode(
@@ -211,12 +223,12 @@ export function ReaderControls({
                 </select>
               </div>
               <div className="control-group control-group-compact">
-                <label className="sr-only" htmlFor="book-select">
-                  Book
+                <label className="sr-only" htmlFor={getControlId("book-select")}>
+                  {getControlLabel("Book")}
                 </label>
                 <select
-                  aria-label="Book"
-                  id="book-select"
+                  aria-label={getControlLabel("Book")}
+                  id={getControlId("book-select")}
                   value={(props as BibleReaderControlsProps).book.slug}
                   onChange={(event) => handleBookChange(event.target.value)}
                 >
@@ -228,12 +240,12 @@ export function ReaderControls({
                 </select>
               </div>
               <div className="control-group control-group-compact">
-                <label className="sr-only" htmlFor="chapter-select">
-                  Chapter
+                <label className="sr-only" htmlFor={getControlId("chapter-select")}>
+                  {getControlLabel("Chapter")}
                 </label>
                 <select
-                  aria-label="Chapter"
-                  id="chapter-select"
+                  aria-label={getControlLabel("Chapter")}
+                  id={getControlId("chapter-select")}
                   value={String((props as BibleReaderControlsProps).currentChapter)}
                   onChange={(event) => handleChapterChange(Number(event.target.value))}
                 >
@@ -248,12 +260,12 @@ export function ReaderControls({
           ) : (
             <>
               <div className="control-group control-group-compact">
-                <label className="sr-only" htmlFor="fathers-work-select">
-                  Work
+                <label className="sr-only" htmlFor={getControlId("fathers-work-select")}>
+                  {getControlLabel("Work")}
                 </label>
                 <select
-                  aria-label="Work"
-                  id="fathers-work-select"
+                  aria-label={getControlLabel("Work")}
+                  id={getControlId("fathers-work-select")}
                   value={(props as FathersReaderControlsProps).currentWorkSlug}
                   onChange={(event) => handleWorkChange(event.target.value)}
                 >
@@ -265,12 +277,12 @@ export function ReaderControls({
                 </select>
               </div>
               <div className="control-group control-group-compact">
-                <label className="sr-only" htmlFor="fathers-section-select">
-                  Section
+                <label className="sr-only" htmlFor={getControlId("fathers-section-select")}>
+                  {getControlLabel("Section")}
                 </label>
                 <select
-                  aria-label="Section"
-                  id="fathers-section-select"
+                  aria-label={getControlLabel("Section")}
+                  id={getControlId("fathers-section-select")}
                   value={(props as FathersReaderControlsProps).currentSectionId}
                   onChange={(event) =>
                     (props as FathersReaderControlsProps).onSectionChange(event.target.value)
@@ -286,30 +298,36 @@ export function ReaderControls({
             </>
           )}
         </div>
-        <div className="reader-controls-actions">
-          {leadingActions}
-          <Link className="reader-inline-action reader-settings-link" href="/">
-            Home
-          </Link>
-          <button
-            aria-controls="reader-settings-panel"
-            aria-expanded={isPanelOpen}
-            className="reader-inline-button reader-menu-button"
-            onClick={() => setIsPanelOpen((current) => !current)}
-            type="button"
-          >
-            Menu
-          </button>
-          {!isBibleMode && (props as FathersReaderControlsProps).libraryHref ? (
-            <Link
-              className="reader-inline-action reader-settings-link"
-              href={(props as FathersReaderControlsProps).libraryHref ?? "/fathers"}
-            >
-              Library
-            </Link>
-          ) : null}
-          {trailingActions}
-        </div>
+        {showUtilityActions || leadingActions || trailingActions ? (
+          <div className="reader-controls-actions">
+            {leadingActions}
+            {showUtilityActions ? (
+              <>
+                <Link className="reader-inline-action reader-settings-link" href="/">
+                  Home
+                </Link>
+                <button
+                  aria-controls="reader-settings-panel"
+                  aria-expanded={isPanelOpen}
+                  className="reader-inline-button reader-menu-button"
+                  onClick={() => setIsPanelOpen((current) => !current)}
+                  type="button"
+                >
+                  Menu
+                </button>
+                {!isBibleMode && (props as FathersReaderControlsProps).libraryHref ? (
+                  <Link
+                    className="reader-inline-action reader-settings-link"
+                    href={(props as FathersReaderControlsProps).libraryHref ?? "/fathers"}
+                  >
+                    Library
+                  </Link>
+                ) : null}
+              </>
+            ) : null}
+            {trailingActions}
+          </div>
+        ) : null}
       </div>
     </section>
   );

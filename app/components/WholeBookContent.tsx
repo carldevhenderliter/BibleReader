@@ -7,6 +7,7 @@ import { useReaderCustomization } from "@/app/components/ReaderCustomizationProv
 import { ReaderContentTabs } from "@/app/components/ReaderContentTabs";
 import { ReaderComparePanel } from "@/app/components/ReaderComparePanel";
 import { ReaderBookAudioPlayer } from "@/app/components/ReaderBookAudioPlayer";
+import { ReaderBottomControlsDock } from "@/app/components/ReaderBottomControlsDock";
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderCopyButton } from "@/app/components/ReaderCopyButton";
 import { ReaderHarmonyPanel } from "@/app/components/ReaderHarmonyPanel";
@@ -535,6 +536,19 @@ export function WholeBookContent({
           </div>
         )}
       </section>
+      {!isSplitViewActive ? (
+        <ReaderBottomControlsDock>
+          <ReaderControls
+            book={book}
+            books={books}
+            controlLabelPrefix="Bottom"
+            currentChapter={1}
+            idPrefix="bottom-reader"
+            showUtilityActions={false}
+            view="book"
+          />
+        </ReaderBottomControlsDock>
+      ) : null}
     </ReaderCustomizationShell>
   );
 }

@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FathersEnglishUndertextContent } from "@/app/components/FathersEnglishUndertextContent";
 import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
 import { ReaderBookAudioPlayer } from "@/app/components/ReaderBookAudioPlayer";
+import { ReaderBottomControlsDock } from "@/app/components/ReaderBottomControlsDock";
 import { ReaderCopyButton } from "@/app/components/ReaderCopyButton";
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
@@ -592,6 +593,22 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
           </div>
         ) : null}
       </section>
+      {!isSplitViewActive ? (
+        <ReaderBottomControlsDock>
+          <ReaderControls
+            controlLabelPrefix="Bottom"
+            currentSectionId={activeSectionId}
+            currentWorkSlug={payload.work.slug}
+            idPrefix="bottom-fathers"
+            libraryHref="/fathers"
+            mode="fathers"
+            onSectionChange={handleSectionChange}
+            sections={sectionOptions}
+            showUtilityActions={false}
+            works={workOptions}
+          />
+        </ReaderBottomControlsDock>
+      ) : null}
     </ReaderCustomizationShell>
   );
 }

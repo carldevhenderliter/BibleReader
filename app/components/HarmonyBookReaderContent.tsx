@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
 import { ReaderBookAudioPlayer } from "@/app/components/ReaderBookAudioPlayer";
+import { ReaderBottomControlsDock } from "@/app/components/ReaderBottomControlsDock";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderCopyButton } from "@/app/components/ReaderCopyButton";
@@ -167,6 +168,19 @@ export function HarmonyBookReaderContent({
           </div>
         )}
       </section>
+      {!isSplitViewActive ? (
+        <ReaderBottomControlsDock>
+          <ReaderControls
+            book={book}
+            books={books}
+            controlLabelPrefix="Bottom"
+            currentChapter={currentChapter}
+            idPrefix="bottom-harmony"
+            showUtilityActions={false}
+            view={view}
+          />
+        </ReaderBottomControlsDock>
+      ) : null}
     </ReaderCustomizationShell>
   );
 }
