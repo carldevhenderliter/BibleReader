@@ -5,6 +5,7 @@ import type { PropsWithChildren } from "react";
 import { GreekGlossOverridesProvider } from "@/app/components/GreekGlossOverridesProvider";
 import { BibleGreekUndertextProvider } from "@/app/components/BibleGreekUndertextProvider";
 import { LookupProvider } from "@/app/components/LookupProvider";
+import { ReaderBottomBarProvider } from "@/app/components/ReaderBottomBarProvider";
 import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizationProvider";
 import { VerseTranslationOverridesProvider } from "@/app/components/VerseTranslationOverridesProvider";
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
@@ -22,7 +23,9 @@ export function AppProviders({ children }: PropsWithChildren) {
               <BibleGreekUndertextProvider>
                 <GreekGlossOverridesProvider>
                   <ReaderCustomizationProvider>
-                    <SearchCustomizationProvider>{children}</SearchCustomizationProvider>
+                    <ReaderBottomBarProvider>
+                      <SearchCustomizationProvider>{children}</SearchCustomizationProvider>
+                    </ReaderBottomBarProvider>
                   </ReaderCustomizationProvider>
                 </GreekGlossOverridesProvider>
               </BibleGreekUndertextProvider>

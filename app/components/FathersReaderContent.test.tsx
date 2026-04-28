@@ -1,9 +1,11 @@
 import { jest } from "@jest/globals";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 
+import { BottomSearchBar } from "@/app/components/BottomSearchBar";
 import { FathersReaderContent } from "@/app/components/FathersReaderContent";
 import { GreekGlossOverridesProvider } from "@/app/components/GreekGlossOverridesProvider";
 import { LookupProvider } from "@/app/components/LookupProvider";
+import { ReaderBottomBarProvider } from "@/app/components/ReaderBottomBarProvider";
 import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderVersionProvider } from "@/app/components/ReaderVersionProvider";
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
@@ -235,9 +237,12 @@ function renderFathersReader(currentPayload: FathersWorkPayload = payload) {
             <VerseTranslationOverridesProvider>
               <GreekGlossOverridesProvider>
                 <ReaderCustomizationProvider>
-                  <SearchCustomizationProvider>
-                    <FathersReaderContent payload={currentPayload} works={works} />
-                  </SearchCustomizationProvider>
+                  <ReaderBottomBarProvider>
+                    <SearchCustomizationProvider>
+                      <FathersReaderContent payload={currentPayload} works={works} />
+                      <BottomSearchBar />
+                    </SearchCustomizationProvider>
+                  </ReaderBottomBarProvider>
                 </ReaderCustomizationProvider>
               </GreekGlossOverridesProvider>
             </VerseTranslationOverridesProvider>

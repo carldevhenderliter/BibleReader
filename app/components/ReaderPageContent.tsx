@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderContentTabs } from "@/app/components/ReaderContentTabs";
-import { ReaderBottomAudioDock } from "@/app/components/ReaderBottomAudioDock";
 import { ReaderComparePanel } from "@/app/components/ReaderComparePanel";
 import { ReaderBookAudioPlayer } from "@/app/components/ReaderBookAudioPlayer";
+import { useRegisterReaderBottomBarPanel } from "@/app/components/ReaderBottomBarProvider";
 import { ReaderBottomControlsDock } from "@/app/components/ReaderBottomControlsDock";
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderCopyButton } from "@/app/components/ReaderCopyButton";
@@ -95,6 +95,10 @@ export function ReaderPageContent({
     : undefined;
   const versionBadge = getBibleVersionBadge(version);
   const bookAudioSource = useBookAudioSource(book.slug);
+  const bottomBarPanel = useMemo(
+    () => <ReaderBookAudioPlayer audioSource={bookAudioSource} />,
+    [bookAudioSource]
+  );
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
   const showStrongsInline = !isSplitViewActive && activeUtilityPane === "strongs";
@@ -120,6 +124,7 @@ export function ReaderPageContent({
   const activeHighlightedVerseNumber =
     activeHighlightedVerseRange !== null ? null : (highlightedVerseNumber ?? urlHighlightedVerseNumber);
   const isOldTestament = book.testament === "Old";
+  useRegisterReaderBottomBarPanel(bottomBarPanel);
   const hasGreekLearningSurface =
     version === "greek"
       ? chapter.verses.some((verse) => Boolean(verse.greekTokens?.length))
@@ -308,13 +313,7 @@ export function ReaderPageContent({
             />
           </div>
         )}
-        {isSplitViewActive ? <ReaderBookAudioPlayer audioSource={bookAudioSource} /> : null}
       </section>
-      {!isSplitViewActive ? (
-        <ReaderBottomAudioDock>
-          <ReaderBookAudioPlayer audioSource={bookAudioSource} />
-        </ReaderBottomAudioDock>
-      ) : null}
       {!isSplitViewActive && shouldShowBottomReaderControls ? (
         <ReaderBottomControlsDock>
           <ReaderControls

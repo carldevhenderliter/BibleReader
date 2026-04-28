@@ -5,8 +5,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FathersEnglishUndertextContent } from "@/app/components/FathersEnglishUndertextContent";
 import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
 import { ReaderBookAudioPlayer } from "@/app/components/ReaderBookAudioPlayer";
-import { ReaderBottomAudioDock } from "@/app/components/ReaderBottomAudioDock";
 import { ReaderBottomControlsDock } from "@/app/components/ReaderBottomControlsDock";
+import { useRegisterReaderBottomBarPanel } from "@/app/components/ReaderBottomBarProvider";
 import { ReaderCopyButton } from "@/app/components/ReaderCopyButton";
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
@@ -190,6 +190,15 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
     );
   const readingSurfaceRef = useRef<HTMLDivElement | null>(null);
   const workAudioSource = useBookAudioSource(payload.work.slug);
+  const bottomBarPanel = useMemo(
+    () => (
+      <ReaderBookAudioPlayer
+        audioSource={workAudioSource}
+        emptyMessage="No audio file available for this Fathers work yet."
+      />
+    ),
+    [workAudioSource]
+  );
   const shouldShowBottomReaderControls = useBottomReaderControlsDock();
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
   const sectionOptions = useMemo(
@@ -231,6 +240,7 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
   useEffect(() => {
     clearGreekLearningQuiz();
   }, [clearGreekLearningQuiz, payload.work.slug, renderedSectionIds]);
+  useRegisterReaderBottomBarPanel(bottomBarPanel);
 
   const handleRenderSection = useCallback((segmentId: string) => {
     setRenderedSectionIds((current) =>
@@ -591,21 +601,7 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
             <ReaderHarmonyWorkspace />
           </div>
         ) : null}
-        {isSplitViewActive ? (
-          <ReaderBookAudioPlayer
-            audioSource={workAudioSource}
-            emptyMessage="No audio file available for this Fathers work yet."
-          />
-        ) : null}
       </section>
-      {!isSplitViewActive ? (
-        <ReaderBottomAudioDock>
-          <ReaderBookAudioPlayer
-            audioSource={workAudioSource}
-            emptyMessage="No audio file available for this Fathers work yet."
-          />
-        </ReaderBottomAudioDock>
-      ) : null}
       {!isSplitViewActive && shouldShowBottomReaderControls ? (
         <ReaderBottomControlsDock>
           <ReaderControls

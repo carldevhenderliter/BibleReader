@@ -3,6 +3,7 @@ import { act, fireEvent, render, screen, waitFor, within } from "@testing-librar
 import { AppSplitLayout } from "@/app/components/AppSplitLayout";
 import { BottomSearchBar } from "@/app/components/BottomSearchBar";
 import { LookupProvider } from "@/app/components/LookupProvider";
+import { ReaderBottomBarProvider } from "@/app/components/ReaderBottomBarProvider";
 import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
 import { ReaderVersionProvider } from "@/app/components/ReaderVersionProvider";
@@ -32,12 +33,14 @@ function renderSplitLayout() {
       <ReaderWorkspaceProvider>
         <LookupProvider>
           <ReaderCustomizationProvider>
-            <SearchCustomizationProvider>
-              <AppSplitLayout>
-                <div>Reader content</div>
-              </AppSplitLayout>
-              <BottomSearchBar />
-            </SearchCustomizationProvider>
+            <ReaderBottomBarProvider>
+              <SearchCustomizationProvider>
+                <AppSplitLayout>
+                  <div>Reader content</div>
+                </AppSplitLayout>
+                <BottomSearchBar />
+              </SearchCustomizationProvider>
+            </ReaderBottomBarProvider>
           </ReaderCustomizationProvider>
         </LookupProvider>
       </ReaderWorkspaceProvider>

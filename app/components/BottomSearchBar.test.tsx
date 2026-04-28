@@ -3,6 +3,7 @@ import { fireEvent, render, screen, waitFor, waitForElementToBeRemoved, within }
 import { BottomSearchBar } from "@/app/components/BottomSearchBar";
 import { LookupPane } from "@/app/components/LookupPane";
 import { LookupProvider } from "@/app/components/LookupProvider";
+import { ReaderBottomBarProvider } from "@/app/components/ReaderBottomBarProvider";
 import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
 import { ReaderVersionProvider, useReaderVersion } from "@/app/components/ReaderVersionProvider";
@@ -32,15 +33,17 @@ function renderSearchUi(ui?: React.ReactNode) {
       <ReaderWorkspaceProvider>
         <LookupProvider>
           <ReaderCustomizationProvider>
-            <SearchCustomizationProvider>
-              {ui ?? (
-                <>
-                  <BottomSearchBar />
-                  <SearchPane />
-                  <LookupPane />
-                </>
-              )}
-            </SearchCustomizationProvider>
+            <ReaderBottomBarProvider>
+              <SearchCustomizationProvider>
+                {ui ?? (
+                  <>
+                    <BottomSearchBar />
+                    <SearchPane />
+                    <LookupPane />
+                  </>
+                )}
+              </SearchCustomizationProvider>
+            </ReaderBottomBarProvider>
           </ReaderCustomizationProvider>
         </LookupProvider>
       </ReaderWorkspaceProvider>

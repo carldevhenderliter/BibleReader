@@ -4,8 +4,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
 import { ReaderBookAudioPlayer } from "@/app/components/ReaderBookAudioPlayer";
-import { ReaderBottomAudioDock } from "@/app/components/ReaderBottomAudioDock";
 import { ReaderBottomControlsDock } from "@/app/components/ReaderBottomControlsDock";
+import { useRegisterReaderBottomBarPanel } from "@/app/components/ReaderBottomBarProvider";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderCopyButton } from "@/app/components/ReaderCopyButton";
@@ -55,6 +55,15 @@ export function HarmonyBookReaderContent({
   const showHarmonyInline = !isSplitViewActive && activeUtilityPane === "harmony";
   const readingSurfaceRef = useRef<HTMLDivElement | null>(null);
   const bookAudioSource = useBookAudioSource(book.slug);
+  const bottomBarPanel = useMemo(
+    () => (
+      <ReaderBookAudioPlayer
+        audioSource={bookAudioSource}
+        emptyMessage="No audio file available for the Gospel Harmony yet."
+      />
+    ),
+    [bookAudioSource]
+  );
   const shouldShowBottomReaderControls = useBottomReaderControlsDock();
   const events = useMemo(() => getGospelHarmonyTemplateEvents(), []);
   const currentEvent = events[currentChapter - 1] ?? null;
@@ -80,6 +89,7 @@ export function HarmonyBookReaderContent({
   useEffect(() => {
     clearGreekLearningQuiz();
   }, [book.slug, clearGreekLearningQuiz, currentChapter]);
+  useRegisterReaderBottomBarPanel(bottomBarPanel);
 
   return (
     <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
@@ -165,21 +175,7 @@ export function HarmonyBookReaderContent({
             </div>
           </div>
         )}
-        {isSplitViewActive ? (
-          <ReaderBookAudioPlayer
-            audioSource={bookAudioSource}
-            emptyMessage="No audio file available for the Gospel Harmony yet."
-          />
-        ) : null}
       </section>
-      {!isSplitViewActive ? (
-        <ReaderBottomAudioDock>
-          <ReaderBookAudioPlayer
-            audioSource={bookAudioSource}
-            emptyMessage="No audio file available for the Gospel Harmony yet."
-          />
-        </ReaderBottomAudioDock>
-      ) : null}
       {!isSplitViewActive && shouldShowBottomReaderControls ? (
         <ReaderBottomControlsDock>
           <ReaderControls

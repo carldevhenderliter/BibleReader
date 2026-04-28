@@ -3,6 +3,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 
 import { useLookup } from "@/app/components/LookupProvider";
+import { useReaderBottomBar } from "@/app/components/ReaderBottomBarProvider";
 import { SearchCustomizationMenu } from "@/app/components/SearchCustomizationMenu";
 import { SearchVersionFilters } from "@/app/components/SearchVersionFilters";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
@@ -18,6 +19,7 @@ import {
 export function BottomSearchBar() {
   const { version } = useReaderVersion();
   const { style } = useSearchCustomization();
+  const { bottomBarPanel } = useReaderBottomBar();
   const {
     clearSearch,
     closeSearch,
@@ -161,6 +163,9 @@ export function BottomSearchBar() {
             />
           )}
           </section>
+        ) : null}
+        {bottomBarPanel ? (
+          <div className="search-shell-reader-panel">{bottomBarPanel}</div>
         ) : null}
         <div
           className={`search-bar${shouldCollapseBar ? " search-bar-collapsed" : ""}`}
