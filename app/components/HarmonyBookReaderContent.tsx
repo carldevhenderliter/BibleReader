@@ -127,11 +127,6 @@ export function HarmonyBookReaderContent({
             </div>
           </div>
         </div>
-        <ReaderBookAudioPlayer
-          audioSource={bookAudioSource}
-          emptyMessage="No audio file available for the Gospel Harmony yet."
-        />
-
         {activeReaderPane === "study-sets" ? (
             <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderStudySetsPanel bookSlug={book.slug} chapterNumber={currentChapter} />
@@ -169,6 +164,10 @@ export function HarmonyBookReaderContent({
             </div>
           </div>
         )}
+        <ReaderBookAudioPlayer
+          audioSource={bookAudioSource}
+          emptyMessage="No audio file available for the Gospel Harmony yet."
+        />
       </section>
       {!isSplitViewActive && shouldShowBottomReaderControls ? (
         <ReaderBottomControlsDock>

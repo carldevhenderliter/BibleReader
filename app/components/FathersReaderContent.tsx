@@ -468,10 +468,6 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
             </div>
           </div>
         </div>
-        <ReaderBookAudioPlayer
-          audioSource={workAudioSource}
-          emptyMessage="No audio file available for this Fathers work yet."
-        />
         <div className="reading-surface fathers-reading-surface" ref={readingSurfaceRef}>
           {payload.work.fullTextUrl ? (
             <p className="muted-copy fathers-source-link">
@@ -594,6 +590,10 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
             <ReaderHarmonyWorkspace />
           </div>
         ) : null}
+        <ReaderBookAudioPlayer
+          audioSource={workAudioSource}
+          emptyMessage="No audio file available for this Fathers work yet."
+        />
       </section>
       {!isSplitViewActive && shouldShowBottomReaderControls ? (
         <ReaderBottomControlsDock>

@@ -235,7 +235,6 @@ export function ReaderPageContent({
             </div>
           </div>
         </div>
-        <ReaderBookAudioPlayer audioSource={bookAudioSource} />
         <ReaderContentTabs showHarmony showOtCompare={isOldTestament} />
         {activeReaderPane === "study-sets" ? (
           <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
@@ -308,6 +307,7 @@ export function ReaderPageContent({
             />
           </div>
         )}
+        <ReaderBookAudioPlayer audioSource={bookAudioSource} />
       </section>
       {!isSplitViewActive && shouldShowBottomReaderControls ? (
         <ReaderBottomControlsDock>
