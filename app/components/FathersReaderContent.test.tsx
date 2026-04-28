@@ -1,11 +1,13 @@
 import { jest } from "@jest/globals";
 import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 
-import { BottomSearchBar } from "@/app/components/BottomSearchBar";
 import { FathersReaderContent } from "@/app/components/FathersReaderContent";
 import { GreekGlossOverridesProvider } from "@/app/components/GreekGlossOverridesProvider";
 import { LookupProvider } from "@/app/components/LookupProvider";
-import { ReaderBottomBarProvider } from "@/app/components/ReaderBottomBarProvider";
+import {
+  ReaderBottomBarProvider,
+  useReaderBottomBar
+} from "@/app/components/ReaderBottomBarProvider";
 import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderVersionProvider } from "@/app/components/ReaderVersionProvider";
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
@@ -224,6 +226,27 @@ function installIntersectionObserverMock() {
   };
 }
 
+function setCompactReaderMode() {
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: jest.fn().mockImplementation((query: string) => ({
+      matches:
+        query === "(max-width: 63.99rem)"
+          ? true
+          : query === "(min-width: 64rem)"
+            ? false
+            : false,
+      media: query,
+      onchange: null,
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+      dispatchEvent: jest.fn()
+    }))
+  });
+}
+
 function renderFathersReader(currentPayload: FathersWorkPayload = payload) {
   setMockPathname(`/fathers/${currentPayload.work.slug}`);
   window.history.replaceState({}, "", `/fathers/${currentPayload.work.slug}`);
@@ -240,7 +263,7 @@ function renderFathersReader(currentPayload: FathersWorkPayload = payload) {
                   <ReaderBottomBarProvider>
                     <SearchCustomizationProvider>
                       <FathersReaderContent payload={currentPayload} works={works} />
-                      <BottomSearchBar />
+                      <ReaderBottomBarTestHost />
                     </SearchCustomizationProvider>
                   </ReaderBottomBarProvider>
                 </ReaderCustomizationProvider>
@@ -251,6 +274,12 @@ function renderFathersReader(currentPayload: FathersWorkPayload = payload) {
       </ReaderWorkspaceProvider>
     </ReaderVersionProvider>
   );
+}
+
+function ReaderBottomBarTestHost() {
+  const { bottomBarPanel } = useReaderBottomBar();
+
+  return bottomBarPanel ? <div data-testid="reader-bottom-bar-test-host">{bottomBarPanel}</div> : null;
 }
 
 describe("FathersReaderContent", () => {
@@ -461,6 +490,17 @@ describe("FathersReaderContent", () => {
 
     expect(screen.getByLabelText("Section")).toBeInTheDocument();
     expect(screen.getByText("The church.")).toBeInTheDocument();
+  });
+
+  it("shows only the bottom Fathers navigation selectors on compact layouts", () => {
+    setCompactReaderMode();
+
+    renderFathersReader();
+
+    expect(screen.queryByLabelText("Work")).not.toBeInTheDocument();
+    expect(screen.queryByLabelText("Section")).not.toBeInTheDocument();
+    expect(screen.getByLabelText("Bottom Work")).toBeInTheDocument();
+    expect(screen.getByLabelText("Bottom Section")).toBeInTheDocument();
   });
 
   it("adds NA1 Greek undertext annotations and saves them through the local save flow", async () => {
@@ -922,7 +962,7 @@ describe("FathersReaderContent", () => {
 
     renderFathersReader();
 
-    fireEvent.change(screen.getByLabelText("Work"), {
+    fireEvent.change(screen.queryByLabelText("Work") ?? screen.getByLabelText("Bottom Work"), {
       target: {
         value: "preaching-of-peter"
       }
@@ -930,11 +970,14 @@ describe("FathersReaderContent", () => {
 
     expect(mockRouter.push).toHaveBeenCalledWith("/fathers/preaching-of-peter");
 
-    fireEvent.change(screen.getByLabelText("Section"), {
-      target: {
-        value: "1-clement:prologue"
+    fireEvent.change(
+      screen.queryByLabelText("Section") ?? screen.getByLabelText("Bottom Section"),
+      {
+        target: {
+          value: "1-clement:prologue"
+        }
       }
-    });
+    );
 
     expect(scrollIntoView).toHaveBeenCalled();
     expect(screen.getByRole("button", { name: "Menu" })).toBeInTheDocument();

@@ -106,6 +106,7 @@ export function ReaderPageContent({
   const showHarmonyInline = !isSplitViewActive && activeUtilityPane === "harmony";
   const readingSurfaceRef = useRef<HTMLDivElement | null>(null);
   const shouldShowBottomReaderControls = useBottomReaderControlsDock();
+  const showBottomNavigationDock = !isSplitViewActive && shouldShowBottomReaderControls;
   const [annotationMode, setAnnotationMode] = useState(false);
   const searchParams = new URLSearchParams(locationSearch);
   const urlHighlightedVerseNumber = parsePositiveNumber(searchParams.get("highlight"));
@@ -202,6 +203,7 @@ export function ReaderPageContent({
                 book={book}
                 books={books}
                 currentChapter={chapter.chapterNumber}
+                showNavigationControls={!showBottomNavigationDock}
                 trailingActions={
                   <>
                     {hasBibleGreekAnnotationSurface ? (
@@ -314,7 +316,7 @@ export function ReaderPageContent({
           </div>
         )}
       </section>
-      {!isSplitViewActive && shouldShowBottomReaderControls ? (
+      {showBottomNavigationDock ? (
         <ReaderBottomControlsDock>
           <ReaderControls
             book={book}

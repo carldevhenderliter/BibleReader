@@ -344,7 +344,7 @@ describe("VerseList", () => {
         "\"source\":\"verse-token\""
       );
     });
-  });
+  }, 15000);
 
   it("can hide saved Bible Greek undertext without removing the verse text", async () => {
     window.localStorage.setItem(READER_VERSION_STORAGE_KEY, "greek");

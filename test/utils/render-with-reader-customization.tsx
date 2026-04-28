@@ -2,9 +2,11 @@ import type { ReactElement, ReactNode } from "react";
 import { render } from "@testing-library/react";
 
 import { BibleGreekUndertextProvider } from "@/app/components/BibleGreekUndertextProvider";
-import { BottomSearchBar } from "@/app/components/BottomSearchBar";
 import { GreekGlossOverridesProvider } from "@/app/components/GreekGlossOverridesProvider";
-import { ReaderBottomBarProvider } from "@/app/components/ReaderBottomBarProvider";
+import {
+  ReaderBottomBarProvider,
+  useReaderBottomBar
+} from "@/app/components/ReaderBottomBarProvider";
 import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizationProvider";
 import { VerseTranslationOverridesProvider } from "@/app/components/VerseTranslationOverridesProvider";
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
@@ -16,6 +18,12 @@ import { WritingAssistantProvider } from "@/app/components/WritingAssistantProvi
 type WrapperProps = {
   children: ReactNode;
 };
+
+function ReaderBottomBarTestHost() {
+  const { bottomBarPanel } = useReaderBottomBar();
+
+  return bottomBarPanel ? <div data-testid="reader-bottom-bar-test-host">{bottomBarPanel}</div> : null;
+}
 
 function Wrapper({ children }: WrapperProps) {
   return (
@@ -30,7 +38,7 @@ function Wrapper({ children }: WrapperProps) {
                     <ReaderBottomBarProvider>
                       <SearchCustomizationProvider>
                         {children}
-                        <BottomSearchBar />
+                        <ReaderBottomBarTestHost />
                       </SearchCustomizationProvider>
                     </ReaderBottomBarProvider>
                   </ReaderCustomizationProvider>

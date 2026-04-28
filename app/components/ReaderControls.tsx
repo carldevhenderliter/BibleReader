@@ -34,6 +34,7 @@ type BibleReaderControlsProps = {
   controlLabelPrefix?: string;
   idPrefix?: string;
   leadingActions?: ReactNode;
+  showNavigationControls?: boolean;
   showUtilityActions?: boolean;
   trailingActions?: ReactNode;
   view: ReadingView;
@@ -52,6 +53,7 @@ type FathersReaderControlsProps = {
   currentSectionId: string;
   libraryHref?: string;
   leadingActions?: ReactNode;
+  showNavigationControls?: boolean;
   showUtilityActions?: boolean;
   trailingActions?: ReactNode;
   onSectionChange: (sectionId: string) => void;
@@ -74,6 +76,7 @@ export function ReaderControls({
   const idPrefix = props.idPrefix?.trim() || (isBibleMode ? "reader-controls" : "fathers-reader-controls");
   const getControlLabel = (label: string) =>
     controlLabelPrefix ? `${controlLabelPrefix} ${label}` : label;
+  const showNavigationControls = props.showNavigationControls ?? true;
   const showUtilityActions = props.showUtilityActions ?? true;
   const getControlId = (id: string) => `${idPrefix}-${id}`;
   const [bookOrderMode, setBookOrderMode] = useState<BibleBookOrderMode>("canonical");
@@ -193,111 +196,113 @@ export function ReaderControls({
       aria-label={isBibleMode ? "Passage controls" : "Fathers reader controls"}
     >
       <div className="reader-controls-bar">
-        <div className="reader-controls-primary">
-          {isBibleMode ? (
-            <>
-              <div className="control-group control-group-compact">
-                <label className="sr-only" htmlFor={getControlId("book-order-select")}>
-                  {getControlLabel("Book order")}
-                </label>
-                <select
-                  aria-label={getControlLabel("Book order")}
-                  id={getControlId("book-order-select")}
-                  value={bookOrderMode}
-                  onChange={(event) =>
-                    setBookOrderMode(
-                      event.target.value === "chronological-old-testament" ||
-                        event.target.value === "chronological-new-testament"
-                        ? event.target.value
-                        : "canonical"
-                    )
-                  }
-                >
-                  <option value="canonical">Canonical</option>
-                  {hasOldTestamentBooks ? (
-                    <option value="chronological-old-testament">Chronological OT</option>
-                  ) : null}
-                  {hasNewTestamentBooks ? (
-                    <option value="chronological-new-testament">Chronological NT</option>
-                  ) : null}
-                </select>
-              </div>
-              <div className="control-group control-group-compact">
-                <label className="sr-only" htmlFor={getControlId("book-select")}>
-                  {getControlLabel("Book")}
-                </label>
-                <select
-                  aria-label={getControlLabel("Book")}
-                  id={getControlId("book-select")}
-                  value={(props as BibleReaderControlsProps).book.slug}
-                  onChange={(event) => handleBookChange(event.target.value)}
-                >
-                  {displayedBooks.map((item) => (
-                    <option key={item.slug} value={item.slug}>
-                      {item.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="control-group control-group-compact">
-                <label className="sr-only" htmlFor={getControlId("chapter-select")}>
-                  {getControlLabel("Chapter")}
-                </label>
-                <select
-                  aria-label={getControlLabel("Chapter")}
-                  id={getControlId("chapter-select")}
-                  value={String((props as BibleReaderControlsProps).currentChapter)}
-                  onChange={(event) => handleChapterChange(Number(event.target.value))}
-                >
-                  {displayedChapterOptions.map((chapter) => (
-                    <option key={chapter.value} value={chapter.value}>
-                      {chapter.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="control-group control-group-compact">
-                <label className="sr-only" htmlFor={getControlId("fathers-work-select")}>
-                  {getControlLabel("Work")}
-                </label>
-                <select
-                  aria-label={getControlLabel("Work")}
-                  id={getControlId("fathers-work-select")}
-                  value={(props as FathersReaderControlsProps).currentWorkSlug}
-                  onChange={(event) => handleWorkChange(event.target.value)}
-                >
-                  {(props as FathersReaderControlsProps).works.map((work) => (
-                    <option key={work.slug} value={work.slug}>
-                      {work.title}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="control-group control-group-compact">
-                <label className="sr-only" htmlFor={getControlId("fathers-section-select")}>
-                  {getControlLabel("Section")}
-                </label>
-                <select
-                  aria-label={getControlLabel("Section")}
-                  id={getControlId("fathers-section-select")}
-                  value={(props as FathersReaderControlsProps).currentSectionId}
-                  onChange={(event) =>
-                    (props as FathersReaderControlsProps).onSectionChange(event.target.value)
-                  }
-                >
-                  {(props as FathersReaderControlsProps).sections.map((section) => (
-                    <option key={section.value} value={section.value}>
-                      {section.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </>
-          )}
-        </div>
+        {showNavigationControls ? (
+          <div className="reader-controls-primary">
+            {isBibleMode ? (
+              <>
+                <div className="control-group control-group-compact">
+                  <label className="sr-only" htmlFor={getControlId("book-order-select")}>
+                    {getControlLabel("Book order")}
+                  </label>
+                  <select
+                    aria-label={getControlLabel("Book order")}
+                    id={getControlId("book-order-select")}
+                    value={bookOrderMode}
+                    onChange={(event) =>
+                      setBookOrderMode(
+                        event.target.value === "chronological-old-testament" ||
+                          event.target.value === "chronological-new-testament"
+                          ? event.target.value
+                          : "canonical"
+                      )
+                    }
+                  >
+                    <option value="canonical">Canonical</option>
+                    {hasOldTestamentBooks ? (
+                      <option value="chronological-old-testament">Chronological OT</option>
+                    ) : null}
+                    {hasNewTestamentBooks ? (
+                      <option value="chronological-new-testament">Chronological NT</option>
+                    ) : null}
+                  </select>
+                </div>
+                <div className="control-group control-group-compact">
+                  <label className="sr-only" htmlFor={getControlId("book-select")}>
+                    {getControlLabel("Book")}
+                  </label>
+                  <select
+                    aria-label={getControlLabel("Book")}
+                    id={getControlId("book-select")}
+                    value={(props as BibleReaderControlsProps).book.slug}
+                    onChange={(event) => handleBookChange(event.target.value)}
+                  >
+                    {displayedBooks.map((item) => (
+                      <option key={item.slug} value={item.slug}>
+                        {item.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="control-group control-group-compact">
+                  <label className="sr-only" htmlFor={getControlId("chapter-select")}>
+                    {getControlLabel("Chapter")}
+                  </label>
+                  <select
+                    aria-label={getControlLabel("Chapter")}
+                    id={getControlId("chapter-select")}
+                    value={String((props as BibleReaderControlsProps).currentChapter)}
+                    onChange={(event) => handleChapterChange(Number(event.target.value))}
+                  >
+                    {displayedChapterOptions.map((chapter) => (
+                      <option key={chapter.value} value={chapter.value}>
+                        {chapter.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="control-group control-group-compact">
+                  <label className="sr-only" htmlFor={getControlId("fathers-work-select")}>
+                    {getControlLabel("Work")}
+                  </label>
+                  <select
+                    aria-label={getControlLabel("Work")}
+                    id={getControlId("fathers-work-select")}
+                    value={(props as FathersReaderControlsProps).currentWorkSlug}
+                    onChange={(event) => handleWorkChange(event.target.value)}
+                  >
+                    {(props as FathersReaderControlsProps).works.map((work) => (
+                      <option key={work.slug} value={work.slug}>
+                        {work.title}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="control-group control-group-compact">
+                  <label className="sr-only" htmlFor={getControlId("fathers-section-select")}>
+                    {getControlLabel("Section")}
+                  </label>
+                  <select
+                    aria-label={getControlLabel("Section")}
+                    id={getControlId("fathers-section-select")}
+                    value={(props as FathersReaderControlsProps).currentSectionId}
+                    onChange={(event) =>
+                      (props as FathersReaderControlsProps).onSectionChange(event.target.value)
+                    }
+                  >
+                    {(props as FathersReaderControlsProps).sections.map((section) => (
+                      <option key={section.value} value={section.value}>
+                        {section.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </>
+            )}
+          </div>
+        ) : null}
         {showUtilityActions || leadingActions || trailingActions ? (
           <div className="reader-controls-actions">
             {leadingActions}

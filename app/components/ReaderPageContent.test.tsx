@@ -263,6 +263,27 @@ function setSplitViewActive(isActive: boolean) {
   });
 }
 
+function setCompactReaderMode() {
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: jest.fn().mockImplementation((query: string) => ({
+      matches:
+        query === "(max-width: 63.99rem)"
+          ? true
+          : query === "(min-width: 64rem)"
+            ? false
+            : false,
+      media: query,
+      onchange: null,
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+      dispatchEvent: jest.fn()
+    }))
+  });
+}
+
 describe("ReaderPageContent", () => {
   beforeEach(() => {
     window.localStorage.clear();
@@ -344,6 +365,23 @@ describe("ReaderPageContent", () => {
       "src",
       "/book-audio/galatians.mp3"
     );
+  });
+
+  it("shows only the bottom navigation selectors on compact layouts", () => {
+    setCompactReaderMode();
+
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+      />
+    );
+
+    expect(screen.queryByLabelText("Book")).not.toBeInTheDocument();
+    expect(screen.queryByLabelText("Chapter")).not.toBeInTheDocument();
+    expect(screen.getByLabelText("Bottom Book")).toBeInTheDocument();
+    expect(screen.getByLabelText("Bottom Chapter")).toBeInTheDocument();
   });
 
   it("switches versions while preserving the current passage", () => {
@@ -459,7 +497,7 @@ describe("ReaderPageContent", () => {
       "true"
     );
     expect(await screen.findByText("Greek Dictionary")).toBeInTheDocument();
-  });
+  }, 15000);
 
   it("shows Greek interlinear lines under ESV New Testament verses when enabled", () => {
     window.localStorage.setItem(

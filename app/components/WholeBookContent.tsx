@@ -259,6 +259,7 @@ export function WholeBookContent({
   const showHarmonyInline = !isSplitViewActive && activeUtilityPane === "harmony";
   const readingSurfaceRef = useRef<HTMLDivElement | null>(null);
   const shouldShowBottomReaderControls = useBottomReaderControlsDock();
+  const showBottomNavigationDock = !isSplitViewActive && shouldShowBottomReaderControls;
   const [annotationMode, setAnnotationMode] = useState(false);
   useRegisterReaderBottomBarPanel(bottomBarPanel);
   const searchParams = new URLSearchParams(locationSearch);
@@ -412,6 +413,7 @@ export function WholeBookContent({
                 book={book}
                 books={books}
                 currentChapter={1}
+                showNavigationControls={!showBottomNavigationDock}
                 trailingActions={
                   <>
                     {hasBibleGreekAnnotationSurface ? (
@@ -543,7 +545,7 @@ export function WholeBookContent({
           </div>
         )}
       </section>
-      {!isSplitViewActive && shouldShowBottomReaderControls ? (
+      {showBottomNavigationDock ? (
         <ReaderBottomControlsDock>
           <ReaderControls
             book={book}

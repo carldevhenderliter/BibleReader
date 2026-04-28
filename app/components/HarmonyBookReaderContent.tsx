@@ -65,6 +65,7 @@ export function HarmonyBookReaderContent({
     [bookAudioSource]
   );
   const shouldShowBottomReaderControls = useBottomReaderControlsDock();
+  const showBottomNavigationDock = !isSplitViewActive && shouldShowBottomReaderControls;
   const events = useMemo(() => getGospelHarmonyTemplateEvents(), []);
   const currentEvent = events[currentChapter - 1] ?? null;
   const visibleEvents = useMemo(() => {
@@ -117,6 +118,7 @@ export function HarmonyBookReaderContent({
                 book={book}
                 books={books}
                 currentChapter={currentChapter}
+                showNavigationControls={!showBottomNavigationDock}
                 trailingActions={
                   <>
                     <ReaderCopyButton targetRef={readingSurfaceRef} />
@@ -176,7 +178,7 @@ export function HarmonyBookReaderContent({
           </div>
         )}
       </section>
-      {!isSplitViewActive && shouldShowBottomReaderControls ? (
+      {showBottomNavigationDock ? (
         <ReaderBottomControlsDock>
           <ReaderControls
             book={book}

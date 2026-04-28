@@ -200,6 +200,7 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
     [workAudioSource]
   );
   const shouldShowBottomReaderControls = useBottomReaderControlsDock();
+  const showBottomNavigationDock = !isSplitViewActive && shouldShowBottomReaderControls;
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
   const sectionOptions = useMemo(
     () =>
@@ -472,6 +473,7 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
                 mode="fathers"
                 onSectionChange={handleSectionChange}
                 sections={sectionOptions}
+                showNavigationControls={!showBottomNavigationDock}
                 trailingActions={trailingActions}
                 works={workOptions}
                 libraryHref="/fathers"
@@ -602,7 +604,7 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
           </div>
         ) : null}
       </section>
-      {!isSplitViewActive && shouldShowBottomReaderControls ? (
+      {showBottomNavigationDock ? (
         <ReaderBottomControlsDock>
           <ReaderControls
             controlLabelPrefix="Bottom"

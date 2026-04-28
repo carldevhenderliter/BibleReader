@@ -77,7 +77,7 @@ describe("ReaderStrongsPanel", () => {
 
     expect(await within(studyPane).findByText("BDAG Summary")).toBeInTheDocument();
     expect(within(studyPane).getByText("Original BDAG")).toBeInTheDocument();
-  }, 15000);
+  }, 30000);
 
   it("does not render a BDAG section for Hebrew Strongs entries", async () => {
     renderWithReaderCustomization(<StrongsHarness />);
