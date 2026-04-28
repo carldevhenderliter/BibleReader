@@ -6,6 +6,7 @@ const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), ".."
 const sourceDir = path.join(repoRoot, "Audio_Files");
 const outputDir = path.join(repoRoot, "public", "book-audio");
 const manifestPath = path.join(repoRoot, "data", "source", "book-audio-manifest.json");
+const publicManifestPath = path.join(outputDir, "manifest.json");
 
 const AUDIO_EXTENSIONS = new Set([".mp3", ".m4a", ".wav", ".ogg", ".aac", ".flac"]);
 
@@ -32,6 +33,8 @@ async function main() {
   } catch {
     await rm(outputDir, { recursive: true, force: true });
     await writeFile(manifestPath, "{}\n", "utf8");
+    await mkdir(outputDir, { recursive: true });
+    await writeFile(publicManifestPath, "{}\n", "utf8");
     return;
   }
 
@@ -67,7 +70,9 @@ async function main() {
     };
   }
 
-  await writeFile(`${manifestPath}`, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
+  const serializedManifest = `${JSON.stringify(manifest, null, 2)}\n`;
+  await writeFile(manifestPath, serializedManifest, "utf8");
+  await writeFile(publicManifestPath, serializedManifest, "utf8");
 }
 
 main().catch((error) => {

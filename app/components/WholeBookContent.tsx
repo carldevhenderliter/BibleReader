@@ -21,10 +21,10 @@ import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
 import { VerseList } from "@/app/components/VerseList";
 import { useLookup } from "@/app/components/LookupProvider";
 import { useLocationSearch } from "@/app/components/useLocationSearch";
+import { useBookAudioSource } from "@/app/components/useBookAudioSource";
 import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
-import { getBookAudioSource } from "@/lib/bible/book-audio";
 import type {
   BookMeta,
   BundledBookChapterMap,
@@ -244,7 +244,7 @@ export function WholeBookContent({
       )
     : null;
   const versionBadge = getBibleVersionBadge(version);
-  const bookAudioSource = getBookAudioSource(book.slug);
+  const bookAudioSource = useBookAudioSource(book.slug);
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
   const showStrongsInline = !isSplitViewActive && activeUtilityPane === "strongs";

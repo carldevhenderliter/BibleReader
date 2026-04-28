@@ -11,11 +11,11 @@ import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationSh
 import { ReaderHarmonyWorkspace } from "@/app/components/ReaderHarmonyWorkspace";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
 import { ReaderStrongsPanel } from "@/app/components/ReaderStrongsPanel";
+import { useBookAudioSource } from "@/app/components/useBookAudioSource";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
-import { getBookAudioSource } from "@/lib/bible/book-audio";
 import type { EnglishUndertextAnnotation, GreekToken } from "@/lib/bible/types";
 import { saveFathersAnnotationFile } from "@/lib/fathers/annotation-save";
 import { isNa1GreekAnnotationWork } from "@/lib/fathers/annotations";
@@ -186,7 +186,7 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
       )
     );
   const readingSurfaceRef = useRef<HTMLDivElement | null>(null);
-  const workAudioSource = getBookAudioSource(payload.work.slug);
+  const workAudioSource = useBookAudioSource(payload.work.slug);
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
   const sectionOptions = useMemo(
     () =>

@@ -14,11 +14,11 @@ import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
 import { ReaderStrongsPanel } from "@/app/components/ReaderStrongsPanel";
 import { ReaderStudySetsPanel } from "@/app/components/ReaderStudySetsPanel";
+import { useBookAudioSource } from "@/app/components/useBookAudioSource";
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
-import { getBookAudioSource } from "@/lib/bible/book-audio";
 import type { BookMeta, ReadingView } from "@/lib/bible/types";
 import { getGospelHarmonyTemplateEvents } from "@/lib/gospel-harmony";
 
@@ -51,7 +51,7 @@ export function HarmonyBookReaderContent({
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
   const showHarmonyInline = !isSplitViewActive && activeUtilityPane === "harmony";
   const readingSurfaceRef = useRef<HTMLDivElement | null>(null);
-  const bookAudioSource = getBookAudioSource(book.slug);
+  const bookAudioSource = useBookAudioSource(book.slug);
   const events = useMemo(() => getGospelHarmonyTemplateEvents(), []);
   const currentEvent = events[currentChapter - 1] ?? null;
   const visibleEvents = useMemo(() => {

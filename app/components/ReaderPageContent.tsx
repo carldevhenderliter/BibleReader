@@ -17,6 +17,7 @@ import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
 import { ReaderStrongsPanel } from "@/app/components/ReaderStrongsPanel";
 import { ReaderStudySetsPanel } from "@/app/components/ReaderStudySetsPanel";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
+import { useBookAudioSource } from "@/app/components/useBookAudioSource";
 import { useLocationSearch } from "@/app/components/useLocationSearch";
 import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { useLookup } from "@/app/components/LookupProvider";
@@ -24,7 +25,6 @@ import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { VerseList } from "@/app/components/VerseList";
-import { getBookAudioSource } from "@/lib/bible/book-audio";
 import type {
   BookMeta,
   BundledChapterMap,
@@ -91,7 +91,7 @@ export function ReaderPageContent({
       )
     : undefined;
   const versionBadge = getBibleVersionBadge(version);
-  const bookAudioSource = getBookAudioSource(book.slug);
+  const bookAudioSource = useBookAudioSource(book.slug);
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
   const showStrongsInline = !isSplitViewActive && activeUtilityPane === "strongs";
