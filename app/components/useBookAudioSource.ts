@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 
 import {
-  getBookAudioCandidateSources,
   getBookAudioSource,
   getBookAudioSourceFromManifest,
   type BookAudioSource
@@ -17,19 +16,6 @@ type RuntimeBookAudioManifestEntry = {
 };
 
 type RuntimeBookAudioManifest = Record<string, RuntimeBookAudioManifestEntry>;
-
-async function canLoadAudioSource(source: BookAudioSource) {
-  try {
-    const response = await fetch(source.assetPath, {
-      method: "HEAD",
-      cache: "no-store"
-    });
-
-    return response.ok;
-  } catch {
-    return false;
-  }
-}
 
 export function useBookAudioSource(bookSlug: string) {
   const [audioSource, setAudioSource] = useState<BookAudioSource | null>(() =>
@@ -58,16 +44,7 @@ export function useBookAudioSource(bookSlug: string) {
           }
         }
       } catch {
-        // Ignore manifest fetch failures and fall back to probing common paths.
-      }
-
-      for (const candidateSource of getBookAudioCandidateSources(bookSlug)) {
-        if (await canLoadAudioSource(candidateSource)) {
-          if (!isCancelled) {
-            setAudioSource(candidateSource);
-          }
-          return;
-        }
+        // Ignore manifest fetch failures and fall back to the bundled manifest.
       }
 
       if (!isCancelled && !staticAudioSource) {
