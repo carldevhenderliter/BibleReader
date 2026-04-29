@@ -4,15 +4,65 @@
     "sourceFilename": "1 Corinthians.mp3",
     "src": "/book-audio/1-corinthians.mp3"
   },
+  "1-john": {
+    "bookSlug": "1-john",
+    "sourceFilename": "1 John.mp3",
+    "src": "/book-audio/1-john.mp3"
+  },
+  "1-peter": {
+    "bookSlug": "1-peter",
+    "sourceFilename": "1 Peter.mp3",
+    "src": "/book-audio/1-peter.mp3"
+  },
   "1-thessalonians": {
     "bookSlug": "1-thessalonians",
     "sourceFilename": "1 Thessalonians.mp3",
     "src": "/book-audio/1-thessalonians.mp3"
   },
+  "1-timothy": {
+    "bookSlug": "1-timothy",
+    "sourceFilename": "1 Timothy.mp3",
+    "src": "/book-audio/1-timothy.mp3"
+  },
+  "2-corinthians": {
+    "bookSlug": "2-corinthians",
+    "sourceFilename": "2 Corinthians.mp3",
+    "src": "/book-audio/2-corinthians.mp3"
+  },
+  "2-john": {
+    "bookSlug": "2-john",
+    "sourceFilename": "2 John.mp3",
+    "src": "/book-audio/2-john.mp3"
+  },
+  "2-peter": {
+    "bookSlug": "2-peter",
+    "sourceFilename": "2 Peter.mp3",
+    "src": "/book-audio/2-peter.mp3"
+  },
   "2-thessalonians": {
     "bookSlug": "2-thessalonians",
     "sourceFilename": "2 Thessalonians.mp3",
     "src": "/book-audio/2-thessalonians.mp3"
+  },
+  "2-timothy": {
+    "bookSlug": "2-timothy",
+    "sourceFilename": "2 Timothy.mp3",
+    "src": "/book-audio/2-timothy.mp3"
+  },
+  "3-john": {
+    "bookSlug": "3-john",
+    "sourceFilename": "3 John.mp3",
+    "src": "/book-audio/3-john.mp3"
+  },
+  "acts": {
+    "bookSlug": "acts",
+    "sourceFilename": "Acts.mp3",
+    "src": "/book-audio/acts.mp3"
+  },
+  "colossians": {
+    "bookSlug": "colossians",
+    "sourceFilename": "Colossians.mp3",
+    "src": "/book-audio/colossians.mp3"
   },
   "ephesians": {
     "bookSlug": "ephesians",
@@ -24,14 +74,64 @@
     "sourceFilename": "Galatians.mp3",
     "src": "/book-audio/galatians.mp3"
   },
+  "hebrews": {
+    "bookSlug": "hebrews",
+    "sourceFilename": "Hebrews.mp3",
+    "src": "/book-audio/hebrews.mp3"
+  },
   "james": {
     "bookSlug": "james",
     "sourceFilename": "James.mp3",
     "src": "/book-audio/james.mp3"
   },
+  "john": {
+    "bookSlug": "john",
+    "sourceFilename": "John.mp3",
+    "src": "/book-audio/john.mp3"
+  },
+  "jude": {
+    "bookSlug": "jude",
+    "sourceFilename": "Jude.mp3",
+    "src": "/book-audio/jude.mp3"
+  },
+  "luke": {
+    "bookSlug": "luke",
+    "sourceFilename": "Luke.mp3",
+    "src": "/book-audio/luke.mp3"
+  },
+  "mark": {
+    "bookSlug": "mark",
+    "sourceFilename": "Mark.mp3",
+    "src": "/book-audio/mark.mp3"
+  },
   "matthew": {
     "bookSlug": "matthew",
     "sourceFilename": "Matthew.mp3",
     "src": "/book-audio/matthew.mp3"
+  },
+  "philemon": {
+    "bookSlug": "philemon",
+    "sourceFilename": "Philemon.mp3",
+    "src": "/book-audio/philemon.mp3"
+  },
+  "philippians": {
+    "bookSlug": "philippians",
+    "sourceFilename": "Philippians.mp3",
+    "src": "/book-audio/philippians.mp3"
+  },
+  "revelation": {
+    "bookSlug": "revelation",
+    "sourceFilename": "Revelation.mp3",
+    "src": "/book-audio/revelation.mp3"
+  },
+  "romans": {
+    "bookSlug": "romans",
+    "sourceFilename": "Romans.mp3",
+    "src": "/book-audio/romans.mp3"
+  },
+  "titus": {
+    "bookSlug": "titus",
+    "sourceFilename": "Titus.mp3",
+    "src": "/book-audio/titus.mp3"
   }
 }
