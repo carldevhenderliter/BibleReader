@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import {
   BOOK_AUDIO_AUTOPLAY_STORAGE_KEY,
@@ -19,13 +19,25 @@ export function ReaderBookAudioPlayer({
   onEnded
 }: ReaderBookAudioPlayerProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isAutoplayPending, setIsAutoplayPending] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !autoPlayBookSlug || !audioSource) {
+      setIsAutoplayPending(false);
+      return;
+    }
+
+    setIsAutoplayPending(
+      window.sessionStorage.getItem(BOOK_AUDIO_AUTOPLAY_STORAGE_KEY) === autoPlayBookSlug
+    );
+  }, [audioSource, autoPlayBookSlug]);
 
   useEffect(() => {
     if (
       typeof window === "undefined" ||
       !autoPlayBookSlug ||
       !audioSource ||
-      window.sessionStorage.getItem(BOOK_AUDIO_AUTOPLAY_STORAGE_KEY) !== autoPlayBookSlug
+      !isAutoplayPending
     ) {
       return;
     }
@@ -36,31 +48,54 @@ export function ReaderBookAudioPlayer({
       return;
     }
 
-    window.sessionStorage.removeItem(BOOK_AUDIO_AUTOPLAY_STORAGE_KEY);
+    let isCancelled = false;
 
-    const attemptPlay = () => {
-      void audioElement.play().catch(() => {
-        // Ignore autoplay failures and leave the player ready for manual playback.
-      });
+    const clearAutoplayPending = () => {
+      if (isCancelled) {
+        return;
+      }
+
+      if (
+        window.sessionStorage.getItem(BOOK_AUDIO_AUTOPLAY_STORAGE_KEY) === autoPlayBookSlug
+      ) {
+        window.sessionStorage.removeItem(BOOK_AUDIO_AUTOPLAY_STORAGE_KEY);
+      }
+
+      setIsAutoplayPending(false);
     };
 
-    if (audioElement.readyState >= 2) {
-      attemptPlay();
-      return;
-    }
+    const attemptPlay = () => {
+      const playResult = audioElement.play();
+
+      if (typeof playResult?.then === "function") {
+        void playResult.then(clearAutoplayPending).catch(() => {
+          // Ignore autoplay failures and leave the player ready for manual playback.
+        });
+        return;
+      }
+
+      clearAutoplayPending();
+    };
 
     const handleCanPlay = () => {
-      audioElement.removeEventListener("canplay", handleCanPlay);
       attemptPlay();
+    };
+
+    const handlePlay = () => {
+      clearAutoplayPending();
     };
 
     audioElement.addEventListener("canplay", handleCanPlay);
+    audioElement.addEventListener("play", handlePlay);
     audioElement.load();
+    attemptPlay();
 
     return () => {
+      isCancelled = true;
       audioElement.removeEventListener("canplay", handleCanPlay);
+      audioElement.removeEventListener("play", handlePlay);
     };
-  }, [audioSource, autoPlayBookSlug]);
+  }, [audioSource, autoPlayBookSlug, isAutoplayPending]);
 
   return (
     <div className="reader-audio-bar" role="region" aria-label="Book audio">
@@ -81,6 +116,7 @@ export function ReaderBookAudioPlayer({
         ) : null}
       </div>
       <audio
+        autoPlay={isAutoplayPending}
         className="reader-audio-player"
         controls
         onEnded={onEnded}
