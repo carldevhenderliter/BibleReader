@@ -69,7 +69,7 @@ describe("ReaderStrongsPanel", () => {
     expect(within(studyPane).getByRole("tab", { name: "BDAG" })).toBeInTheDocument();
     expect(within(studyPane).getByRole("tab", { name: "Outside Bible" })).toBeInTheDocument();
     expect(within(studyPane).getByRole("heading", { name: "G3056" })).toBeInTheDocument();
-    expect(await within(studyPane).findByText(/Matthew 5:32/)).toBeInTheDocument();
+    expect(await within(studyPane).findByRole("link", { name: /Open Matthew 5:32/i })).toBeInTheDocument();
     const matchedToken = await within(studyPane).findByText(/for the cause/i);
     expect(matchedToken.closest("button")).toHaveClass("strongs-token-match");
 

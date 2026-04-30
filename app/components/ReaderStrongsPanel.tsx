@@ -391,21 +391,9 @@ export function ReaderStrongsPanel() {
             className="strongs-entry-bible-verse"
             key={`${entryId}:${match.bookSlug}:${match.chapterNumber}:${match.verseNumber}`}
           >
-            <a
-              className="strongs-entry-bible-verse-link"
-              href={
-                "href" in match && typeof match.href === "string"
-                  ? match.href
-                  : getBookHighlightedVerseHref(
-                      match.bookSlug,
-                      match.chapterNumber,
-                      match.verseNumber,
-                      mode === "greek" ? "greek" : "kjv"
-                    )
-              }
-            >
+            <p className="strongs-entry-meta">
               {match.bookName} {match.chapterNumber}:{match.verseNumber}
-            </a>
+            </p>
             {mode === "greek" ? (
               <GreekVerseTextContent
                 className="strongs-entry-copy strongs-entry-bible-verse-text verse-text-greek"
@@ -432,6 +420,23 @@ export function ReaderStrongsPanel() {
                 }}
               />
             )}
+            <div className="strongs-entry-bible-verse-actions">
+              <a
+                className="reader-inline-action strongs-entry-bible-verse-button"
+                href={
+                  "href" in match && typeof match.href === "string"
+                    ? match.href
+                    : getBookHighlightedVerseHref(
+                        match.bookSlug,
+                        match.chapterNumber,
+                        match.verseNumber,
+                        mode === "greek" ? "greek" : "kjv"
+                      )
+                }
+              >
+                Open {match.bookName} {match.chapterNumber}:{match.verseNumber}
+              </a>
+            </div>
           </article>
         ))}
       </div>

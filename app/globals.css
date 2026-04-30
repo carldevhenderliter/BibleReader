@@ -2441,6 +2441,15 @@ button.fathers-annotation-anchor:focus-visible {
   white-space: normal;
 }
 
+.strongs-entry-bible-verse-actions {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.strongs-entry-bible-verse-button {
+  margin-top: 0.1rem;
+}
+
 .strongs-entry-outside-scripture-results,
 .strongs-entry-fathers-group,
 .strongs-entry-fathers-list {
