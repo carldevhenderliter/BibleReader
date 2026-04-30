@@ -289,10 +289,11 @@ export function SearchStrongsParallelRows({
               key={`${row.bookSlug}:${row.chapterNumber}:${row.verseNumber}`}
             >
               <div className="search-strongs-parallel-row-header">
+                <strong className="search-result-reference">{referenceLabel}</strong>
                 <button
                   aria-controls={`search-strongs-verse-expansion:${expansionKey}`}
                   aria-expanded={isExpanded}
-                  className="search-strongs-parallel-row-toggle"
+                  className="reader-inline-button search-strongs-parallel-row-button"
                   onClick={(event) => {
                     event.preventDefault();
                     event.stopPropagation();
@@ -300,10 +301,7 @@ export function SearchStrongsParallelRows({
                   }}
                   type="button"
                 >
-                  <strong className="search-result-reference">{referenceLabel}</strong>
-                  <span className="search-strongs-parallel-row-state">
-                    {isExpanded ? "Collapse" : "Expand"}
-                  </span>
+                  {isExpanded ? "Hide versions" : "Show versions"}
                 </button>
               </div>
               {isExpanded ? (

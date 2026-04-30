@@ -99,7 +99,11 @@ describe("SearchStrongsParallelRows", () => {
       screen.queryByRole("region", { name: "Versions for Genesis 1:1" })
     ).not.toBeInTheDocument();
 
-    const firstVerseToggle = screen.getByRole("button", { name: /Genesis 1:1/i });
+    const firstRow = screen.getByText("Genesis 1:1").closest("article");
+    expect(firstRow).not.toBeNull();
+    const firstVerseToggle = within(firstRow as HTMLElement).getByRole("button", {
+      name: "Show versions"
+    });
     expect(firstVerseToggle).toHaveAttribute("aria-expanded", "false");
 
     fireEvent.click(firstVerseToggle);
@@ -109,9 +113,13 @@ describe("SearchStrongsParallelRows", () => {
     expect(within(expandedVerse).getByText("WEB")).toBeInTheDocument();
     expect(within(expandedVerse).getByText("KJV")).toBeInTheDocument();
 
-    fireEvent.click(firstVerseToggle);
+    fireEvent.click(
+      within(firstRow as HTMLElement).getByRole("button", { name: "Hide versions" })
+    );
 
-    expect(firstVerseToggle).toHaveAttribute("aria-expanded", "false");
+    expect(
+      within(firstRow as HTMLElement).getByRole("button", { name: "Show versions" })
+    ).toHaveAttribute("aria-expanded", "false");
     expect(
       screen.queryByRole("region", { name: "Versions for Genesis 1:1" })
     ).not.toBeInTheDocument();
@@ -120,8 +128,18 @@ describe("SearchStrongsParallelRows", () => {
   it("allows multiple verse rows to stay open without rendering navigation buttons", () => {
     render(<Harness />);
 
-    fireEvent.click(screen.getByRole("button", { name: /Genesis 1:1/i }));
-    fireEvent.click(screen.getByRole("button", { name: /Genesis 2:4/i }));
+    const firstRow = screen.getByText("Genesis 1:1").closest("article");
+    const secondRow = screen.getByText("Genesis 2:4").closest("article");
+
+    expect(firstRow).not.toBeNull();
+    expect(secondRow).not.toBeNull();
+
+    fireEvent.click(
+      within(firstRow as HTMLElement).getByRole("button", { name: "Show versions" })
+    );
+    fireEvent.click(
+      within(secondRow as HTMLElement).getByRole("button", { name: "Show versions" })
+    );
 
     const firstExpandedVerse = screen.getByRole("region", {
       name: "Versions for Genesis 1:1"
@@ -144,7 +162,12 @@ describe("SearchStrongsParallelRows", () => {
       </div>
     );
 
-    fireEvent.click(screen.getByRole("button", { name: /Genesis 1:1/i }));
+    const firstRow = screen.getByText("Genesis 1:1").closest("article");
+    expect(firstRow).not.toBeNull();
+
+    fireEvent.click(
+      within(firstRow as HTMLElement).getByRole("button", { name: "Show versions" })
+    );
 
     expect(onParentClick).not.toHaveBeenCalled();
 
