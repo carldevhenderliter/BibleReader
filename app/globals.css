@@ -4147,6 +4147,37 @@ button.fathers-annotation-anchor:focus-visible {
   gap: 0.65rem;
 }
 
+.search-strongs-parallel-row-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.search-strongs-parallel-row-toggle:focus-visible {
+  outline: none;
+}
+
+.search-strongs-parallel-row-toggle:hover .search-result-reference,
+.search-strongs-parallel-row-toggle:focus-visible .search-result-reference {
+  color: rgba(var(--reader-accent-rgb), 0.96);
+}
+
+.search-strongs-parallel-row-state {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .search-strongs-parallel-cells {
   display: grid;
   gap: 0.65rem;

@@ -38,6 +38,13 @@ type StrongsExpansionState = {
   rows: StrongsParallelVerseRow[];
 };
 
+function getStrongsVerseExpansionKey(
+  strongsNumber: string,
+  row: Pick<StrongsParallelVerseRow, "bookSlug" | "chapterNumber" | "verseNumber">
+) {
+  return `${strongsNumber}:${row.bookSlug}:${row.chapterNumber}:${row.verseNumber}`;
+}
+
 function getResultTypeLabel(type: BibleSearchResultGroup["results"][number]["type"]) {
   if (type === "book") {
     return "Book";
@@ -255,12 +262,16 @@ function SearchTopicVerseButton({
   );
 }
 
-function SearchStrongsParallelRows({
+export function SearchStrongsParallelRows({
+  expandedVerseRows,
+  onToggleVerseRow,
   rows,
   strongsNumber,
   onOpenStrongs,
   onSelectResult
 }: {
+  expandedVerseRows: Record<string, boolean>;
+  onToggleVerseRow: (row: StrongsParallelVerseRow) => void;
   rows: StrongsParallelVerseRow[];
   strongsNumber: string;
   onOpenStrongs: (strongsNumbers: string[], label?: string | null) => void;
@@ -269,80 +280,104 @@ function SearchStrongsParallelRows({
   return (
     <div className="search-strongs-parallel-rows">
       {rows.map((row) => (
-        <article
-          className="search-strongs-parallel-row"
-          key={`${row.bookSlug}:${row.chapterNumber}:${row.verseNumber}`}
-        >
-          <div className="search-strongs-parallel-row-header">
-            <strong className="search-result-reference">
-              {row.bookName} {row.chapterNumber}:{row.verseNumber}
-            </strong>
-          </div>
-          <div className="search-strongs-parallel-cells">
-            {row.versions.map(({ entry, href, version }) => {
-              const verse = entry
-                ? {
-                    number: row.verseNumber,
-                    text: entry.text,
-                    translationText: entry.translationText,
-                    tokens: entry.tokens,
-                    greekTokens: entry.greekTokens
-                  }
-                : null;
+        (() => {
+          const expansionKey = getStrongsVerseExpansionKey(strongsNumber, row);
+          const isExpanded = expandedVerseRows[expansionKey] === true;
+          const referenceLabel = `${row.bookName} ${row.chapterNumber}:${row.verseNumber}`;
 
-              return (
-                <section
-                  className="search-strongs-parallel-cell"
-                  key={`${row.bookSlug}:${row.chapterNumber}:${row.verseNumber}:${version}`}
+          return (
+            <article
+              className="search-strongs-parallel-row"
+              key={`${row.bookSlug}:${row.chapterNumber}:${row.verseNumber}`}
+            >
+              <div className="search-strongs-parallel-row-header">
+                <button
+                  aria-controls={`search-strongs-verse-expansion:${expansionKey}`}
+                  aria-expanded={isExpanded}
+                  className="search-strongs-parallel-row-toggle"
+                  onClick={() => onToggleVerseRow(row)}
+                  type="button"
                 >
-                  <div className="search-strongs-parallel-cell-header">
-                    <span className="search-strongs-parallel-version">
-                      {getBibleVersionLabel(version)}
-                    </span>
-                    {entry ? (
-                      <button
-                        className="reader-inline-button"
-                        onClick={() =>
-                          onSelectResult({
-                            type: "verse",
-                            id: `search-strongs-inline:${version}:${row.bookSlug}:${row.chapterNumber}:${row.verseNumber}`,
-                            version,
-                            bookSlug: row.bookSlug,
-                            chapterNumber: row.chapterNumber,
-                            verseNumber: row.verseNumber,
-                            label: `${row.bookName} ${row.chapterNumber}:${row.verseNumber}`,
-                            description: `${getBibleVersionLabel(version)} verse`,
-                            href,
-                            preview: entry.text,
-                            tokens: entry.tokens
-                          })
+                  <strong className="search-result-reference">{referenceLabel}</strong>
+                  <span className="search-strongs-parallel-row-state">
+                    {isExpanded ? "Collapse" : "Expand"}
+                  </span>
+                </button>
+              </div>
+              {isExpanded ? (
+                <div
+                  aria-label={`Versions for ${referenceLabel}`}
+                  className="search-strongs-parallel-cells"
+                  id={`search-strongs-verse-expansion:${expansionKey}`}
+                  role="region"
+                >
+                  {row.versions.map(({ entry, href, version }) => {
+                    const verse = entry
+                      ? {
+                          number: row.verseNumber,
+                          text: entry.text,
+                          translationText: entry.translationText,
+                          tokens: entry.tokens,
+                          greekTokens: entry.greekTokens
                         }
-                        type="button"
+                      : null;
+
+                    return (
+                      <section
+                        className="search-strongs-parallel-cell"
+                        key={`${row.bookSlug}:${row.chapterNumber}:${row.verseNumber}:${version}`}
                       >
-                        Open
-                      </button>
-                    ) : null}
-                  </div>
-                  {entry ? (
-                    <VerseTextContent
-                      className={`verse-text${version === "kjv" ? " verse-text-rich" : ""}`}
-                      highlightedStrongsNumber={version === "kjv" ? strongsNumber : null}
-                      onOpenStrongs={(strongsNumbers) =>
-                        onOpenStrongs(strongsNumbers, strongsNumber)
-                      }
-                      showStrongs={version === "kjv"}
-                      verse={verse}
-                    />
-                  ) : (
-                    <p className="search-result-group-empty">
-                      This reference is not available in {getBibleVersionLabel(version)}.
-                    </p>
-                  )}
-                </section>
-              );
-            })}
-          </div>
-        </article>
+                        <div className="search-strongs-parallel-cell-header">
+                          <span className="search-strongs-parallel-version">
+                            {getBibleVersionLabel(version)}
+                          </span>
+                          {entry ? (
+                            <button
+                              className="reader-inline-button"
+                              onClick={() =>
+                                onSelectResult({
+                                  type: "verse",
+                                  id: `search-strongs-inline:${version}:${row.bookSlug}:${row.chapterNumber}:${row.verseNumber}`,
+                                  version,
+                                  bookSlug: row.bookSlug,
+                                  chapterNumber: row.chapterNumber,
+                                  verseNumber: row.verseNumber,
+                                  label: referenceLabel,
+                                  description: `${getBibleVersionLabel(version)} verse`,
+                                  href,
+                                  preview: entry.text,
+                                  tokens: entry.tokens
+                                })
+                              }
+                              type="button"
+                            >
+                              Open
+                            </button>
+                          ) : null}
+                        </div>
+                        {entry ? (
+                          <VerseTextContent
+                            className={`verse-text${version === "kjv" ? " verse-text-rich" : ""}`}
+                            highlightedStrongsNumber={version === "kjv" ? strongsNumber : null}
+                            onOpenStrongs={(strongsNumbers) =>
+                              onOpenStrongs(strongsNumbers, strongsNumber)
+                            }
+                            showStrongs={version === "kjv"}
+                            verse={verse}
+                          />
+                        ) : (
+                          <p className="search-result-group-empty">
+                            This reference is not available in {getBibleVersionLabel(version)}.
+                          </p>
+                        )}
+                      </section>
+                    );
+                  })}
+                </div>
+              ) : null}
+            </article>
+          );
+        })()
       ))}
     </div>
   );
@@ -362,6 +397,9 @@ export function SearchResultGroups({
     null
   );
   const [expandedStrongs, setExpandedStrongs] = useState<Record<string, boolean>>({});
+  const [expandedStrongsVerseRows, setExpandedStrongsVerseRows] = useState<
+    Record<string, boolean>
+  >({});
   const [expandedStrongsVersions, setExpandedStrongsVersions] = useState<
     Record<string, BundledBibleVersion[]>
   >({});
@@ -407,6 +445,7 @@ export function SearchResultGroups({
   useEffect(() => {
     setActiveResultTabOverride(null);
     setExpandedStrongs({});
+    setExpandedStrongsVerseRows({});
     setExpandedStrongsVersions({});
     setStrongsExpansionState({});
   }, [groupsSignature]);
@@ -532,6 +571,18 @@ export function SearchResultGroups({
         [strongsNumber]: nextExpanded
       };
     });
+  };
+
+  const toggleExpandedStrongsVerseRow = (
+    strongsNumber: string,
+    row: StrongsParallelVerseRow
+  ) => {
+    const expansionKey = getStrongsVerseExpansionKey(strongsNumber, row);
+
+    setExpandedStrongsVerseRows((current) => ({
+      ...current,
+      [expansionKey]: !current[expansionKey]
+    }));
   };
 
   return (
@@ -850,9 +901,13 @@ export function SearchResultGroups({
                             </p>
                           ) : (
                             <SearchStrongsParallelRows
+                              expandedVerseRows={expandedStrongsVerseRows}
                               onOpenStrongs={openStrongs}
                               onSelectResult={(inlineResult) =>
                                 onSelectResult(inlineResult, group.query)
+                              }
+                              onToggleVerseRow={(row) =>
+                                toggleExpandedStrongsVerseRow(result.strongsNumber, row)
                               }
                               rows={
                                 strongsExpansionState[result.strongsNumber]?.rows ?? []

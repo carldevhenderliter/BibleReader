@@ -381,6 +381,9 @@ describe("BottomSearchBar", () => {
     const expansion = await screen.findByText("Matching Verses");
     expect(expansion).toBeInTheDocument();
     expect(screen.getByRole("group", { name: "Versions for H7225" })).toBeInTheDocument();
+    expect(
+      screen.queryByRole("region", { name: "Versions for Genesis 1:1" })
+    ).not.toBeInTheDocument();
 
     const kjvVersionToggle = within(
       screen.getByRole("group", { name: "Versions for H7225" })
