@@ -134,4 +134,22 @@ describe("SearchStrongsParallelRows", () => {
     expect(within(firstExpandedVerse).queryByRole("button", { name: "Open" })).toBeNull();
     expect(within(secondExpandedVerse).getByText("KJV")).toBeInTheDocument();
   });
+
+  it("stops verse-row clicks from bubbling to a parent click handler", () => {
+    const onParentClick = jest.fn();
+
+    render(
+      <div onClick={onParentClick}>
+        <Harness />
+      </div>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: /Genesis 1:1/i }));
+
+    expect(onParentClick).not.toHaveBeenCalled();
+
+    fireEvent.click(screen.getByRole("region", { name: "Versions for Genesis 1:1" }));
+
+    expect(onParentClick).not.toHaveBeenCalled();
+  });
 });

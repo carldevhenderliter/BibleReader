@@ -293,7 +293,11 @@ export function SearchStrongsParallelRows({
                   aria-controls={`search-strongs-verse-expansion:${expansionKey}`}
                   aria-expanded={isExpanded}
                   className="search-strongs-parallel-row-toggle"
-                  onClick={() => onToggleVerseRow(row)}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    onToggleVerseRow(row);
+                  }}
                   type="button"
                 >
                   <strong className="search-result-reference">{referenceLabel}</strong>
@@ -307,6 +311,10 @@ export function SearchStrongsParallelRows({
                   aria-label={`Versions for ${referenceLabel}`}
                   className="search-strongs-parallel-cells"
                   id={`search-strongs-verse-expansion:${expansionKey}`}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    event.stopPropagation();
+                  }}
                   role="region"
                 >
                   {row.versions.map(({ entry, version }) => {
