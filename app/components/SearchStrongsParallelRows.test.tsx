@@ -2,7 +2,6 @@ import { fireEvent, render, screen, within } from "@testing-library/react";
 import { useState } from "react";
 
 import { SearchStrongsParallelRows } from "@/app/components/SearchResultGroups";
-import type { BibleSearchResult } from "@/lib/bible/types";
 import type { StrongsParallelVerseRow } from "@/lib/bible/strongs";
 
 const rows: StrongsParallelVerseRow[] = [
@@ -69,10 +68,8 @@ const rows: StrongsParallelVerseRow[] = [
 ];
 
 function Harness({
-  onSelectResult = jest.fn(),
   onOpenStrongs = jest.fn()
 }: {
-  onSelectResult?: (result: BibleSearchResult) => void;
   onOpenStrongs?: (strongsNumbers: string[], label?: string | null) => void;
 }) {
   const [expandedVerseRows, setExpandedVerseRows] = useState<Record<string, boolean>>({});
@@ -81,7 +78,6 @@ function Harness({
     <SearchStrongsParallelRows
       expandedVerseRows={expandedVerseRows}
       onOpenStrongs={onOpenStrongs}
-      onSelectResult={onSelectResult}
       onToggleVerseRow={(row) =>
         setExpandedVerseRows((current) => ({
           ...current,
@@ -121,10 +117,8 @@ describe("SearchStrongsParallelRows", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("allows multiple verse rows to stay open and keeps inline actions inside the same expansion", () => {
-    const onSelectResult = jest.fn();
-
-    render(<Harness onSelectResult={onSelectResult} />);
+  it("allows multiple verse rows to stay open without rendering navigation buttons", () => {
+    render(<Harness />);
 
     fireEvent.click(screen.getByRole("button", { name: /Genesis 1:1/i }));
     fireEvent.click(screen.getByRole("button", { name: /Genesis 2:4/i }));
@@ -137,18 +131,7 @@ describe("SearchStrongsParallelRows", () => {
     });
 
     expect(screen.getAllByRole("region", { name: /Versions for Genesis/i })).toHaveLength(2);
-
-    fireEvent.click(within(firstExpandedVerse).getAllByRole("button", { name: "Open" })[0]!);
-
-    expect(onSelectResult).toHaveBeenCalledWith(
-      expect.objectContaining({
-        type: "verse",
-        bookSlug: "genesis",
-        chapterNumber: 1,
-        verseNumber: 1
-      })
-    );
-
+    expect(within(firstExpandedVerse).queryByRole("button", { name: "Open" })).toBeNull();
     expect(within(secondExpandedVerse).getByText("KJV")).toBeInTheDocument();
   });
 });

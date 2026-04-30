@@ -267,15 +267,13 @@ export function SearchStrongsParallelRows({
   onToggleVerseRow,
   rows,
   strongsNumber,
-  onOpenStrongs,
-  onSelectResult
+  onOpenStrongs
 }: {
   expandedVerseRows: Record<string, boolean>;
   onToggleVerseRow: (row: StrongsParallelVerseRow) => void;
   rows: StrongsParallelVerseRow[];
   strongsNumber: string;
   onOpenStrongs: (strongsNumbers: string[], label?: string | null) => void;
-  onSelectResult: (result: BibleSearchResult) => void;
 }) {
   return (
     <div className="search-strongs-parallel-rows">
@@ -311,7 +309,7 @@ export function SearchStrongsParallelRows({
                   id={`search-strongs-verse-expansion:${expansionKey}`}
                   role="region"
                 >
-                  {row.versions.map(({ entry, href, version }) => {
+                  {row.versions.map(({ entry, version }) => {
                     const verse = entry
                       ? {
                           number: row.verseNumber,
@@ -331,29 +329,6 @@ export function SearchStrongsParallelRows({
                           <span className="search-strongs-parallel-version">
                             {getBibleVersionLabel(version)}
                           </span>
-                          {entry ? (
-                            <button
-                              className="reader-inline-button"
-                              onClick={() =>
-                                onSelectResult({
-                                  type: "verse",
-                                  id: `search-strongs-inline:${version}:${row.bookSlug}:${row.chapterNumber}:${row.verseNumber}`,
-                                  version,
-                                  bookSlug: row.bookSlug,
-                                  chapterNumber: row.chapterNumber,
-                                  verseNumber: row.verseNumber,
-                                  label: referenceLabel,
-                                  description: `${getBibleVersionLabel(version)} verse`,
-                                  href,
-                                  preview: entry.text,
-                                  tokens: entry.tokens
-                                })
-                              }
-                              type="button"
-                            >
-                              Open
-                            </button>
-                          ) : null}
                         </div>
                         {entry ? (
                           <VerseTextContent
@@ -903,9 +878,6 @@ export function SearchResultGroups({
                             <SearchStrongsParallelRows
                               expandedVerseRows={expandedStrongsVerseRows}
                               onOpenStrongs={openStrongs}
-                              onSelectResult={(inlineResult) =>
-                                onSelectResult(inlineResult, group.query)
-                              }
                               onToggleVerseRow={(row) =>
                                 toggleExpandedStrongsVerseRow(result.strongsNumber, row)
                               }
