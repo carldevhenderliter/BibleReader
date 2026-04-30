@@ -2450,6 +2450,20 @@ button.fathers-annotation-anchor:focus-visible {
   margin-top: 0.1rem;
 }
 
+.strongs-entry-bible-verse-versions {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.strongs-entry-bible-verse-version {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.8rem;
+  background: rgba(255, 255, 255, 0.025);
+}
+
 .strongs-entry-outside-scripture-results,
 .strongs-entry-fathers-group,
 .strongs-entry-fathers-list {

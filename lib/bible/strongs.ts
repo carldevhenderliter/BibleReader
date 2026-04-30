@@ -207,6 +207,32 @@ export async function getStrongsVerseOccurrencesWithTokens(strongsNumber: string
     }));
 }
 
+export async function getParallelVerseVersionsForReference(
+  bookSlug: string,
+  chapterNumber: number,
+  verseNumber: number,
+  versions: readonly BundledBibleVersion[]
+) {
+  const uniqueVersions = Array.from(new Set(versions));
+  const verseIndexes = await Promise.all(uniqueVersions.map((version) => loadVerseSearchIndex(version)));
+
+  return uniqueVersions.map<StrongsParallelVerseVersion>((version, index) => {
+    const entry =
+      verseIndexes[index]?.find(
+        (candidate) =>
+          candidate.bookSlug === bookSlug &&
+          candidate.chapterNumber === chapterNumber &&
+          candidate.verseNumber === verseNumber
+      ) ?? null;
+
+    return {
+      version,
+      entry,
+      href: getBookHighlightedVerseHref(bookSlug, chapterNumber, verseNumber, version)
+    };
+  });
+}
+
 export async function getStrongsParallelVerseRows(
   strongsNumber: string,
   versions: readonly BundledBibleVersion[]

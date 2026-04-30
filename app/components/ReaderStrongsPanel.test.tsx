@@ -69,8 +69,19 @@ describe("ReaderStrongsPanel", () => {
     expect(within(studyPane).getByRole("tab", { name: "BDAG" })).toBeInTheDocument();
     expect(within(studyPane).getByRole("tab", { name: "Outside Bible" })).toBeInTheDocument();
     expect(within(studyPane).getByRole("heading", { name: "G3056" })).toBeInTheDocument();
-    expect(await within(studyPane).findByRole("link", { name: /Open Matthew 5:32/i })).toBeInTheDocument();
-    const matchedToken = await within(studyPane).findByText(/for the cause/i);
+    const matthewOccurrence = await within(studyPane).findByText(/Matthew 5:32/);
+    const occurrenceCard = matthewOccurrence.closest(".strongs-entry-bible-verse");
+    expect(occurrenceCard).not.toBeNull();
+    const occurrenceButton = within(occurrenceCard as HTMLElement).getByRole("button", {
+      name: "Show all versions"
+    });
+    fireEvent.click(occurrenceButton);
+    expect(await within(studyPane).findByText("WEB")).toBeInTheDocument();
+    expect(within(studyPane).getByText("KJV")).toBeInTheDocument();
+    const matchedToken = (
+      await within(studyPane).findAllByText(/for the cause/i)
+    ).find((node) => node.closest("button.strongs-token-match"));
+    expect(matchedToken).toBeDefined();
     expect(matchedToken.closest("button")).toHaveClass("strongs-token-match");
 
     fireEvent.click(within(studyPane).getByRole("tab", { name: "BDAG" }));
