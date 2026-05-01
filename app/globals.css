@@ -5898,6 +5898,30 @@ button.fathers-annotation-anchor:focus-visible {
   }
 }
 
+@media (max-width: 47.99rem) and (orientation: portrait) {
+  .verse-row {
+    display: block;
+    width: 100%;
+  }
+
+  .verse-number {
+    display: inline-block;
+    min-width: 0;
+    margin: 0 0.38rem 0 0;
+    padding-top: 0;
+    vertical-align: baseline;
+  }
+
+  .verse-content {
+    display: block;
+    width: 100%;
+  }
+
+  .verse-content > * + * {
+    margin-top: 0.42rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
