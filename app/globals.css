@@ -1791,6 +1791,7 @@ button.fathers-annotation-anchor:focus-visible {
 .verse-content {
   display: grid;
   gap: 0.55rem;
+  min-width: 0;
 }
 
 .verse-interlinear-text {
@@ -5709,6 +5710,7 @@ button.fathers-annotation-anchor:focus-visible {
 
   .reading-surface {
     width: 100%;
+    max-width: none;
     padding: 0.72rem 0.64rem 0.85rem;
     border-radius: 0.95rem;
   }
@@ -5719,8 +5721,9 @@ button.fathers-annotation-anchor:focus-visible {
   }
 
   .verse-row {
-    grid-template-columns: 1.2rem 1fr;
+    grid-template-columns: minmax(1rem, 1.2rem) minmax(0, 1fr);
     gap: 0.5rem;
+    width: 100%;
   }
 
   .verse-number {
@@ -5731,6 +5734,16 @@ button.fathers-annotation-anchor:focus-visible {
 
   .verse-content {
     gap: 0.42rem;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .verse-text,
+  .verse-text-body,
+  .verse-text-greek,
+  .verse-text-companion-translation {
+    width: 100%;
+    max-width: none;
   }
 
   .search-shell {
