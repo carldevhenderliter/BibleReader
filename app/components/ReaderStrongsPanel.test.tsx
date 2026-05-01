@@ -78,6 +78,7 @@ describe("ReaderStrongsPanel", () => {
     await waitFor(() =>
       expect(studyPane.querySelector(".verse-text-greek .strongs-inline-match")).not.toBeNull()
     );
+    expect(studyPane.querySelectorAll(".strongs-entry-bible-verse-text").length).toBeGreaterThan(0);
     fireEvent.click(within(studyPane).getByRole("button", { name: "WEB" }));
     expect(within(studyPane).getByRole("button", { name: "WEB" })).toHaveAttribute(
       "aria-pressed",
@@ -96,6 +97,9 @@ describe("ReaderStrongsPanel", () => {
         "aria-pressed",
         "true"
       )
+    );
+    await waitFor(() =>
+      expect(studyPane.querySelectorAll(".strongs-entry-bible-verse-text").length).toBeGreaterThan(0)
     );
 
     fireEvent.click(within(studyPane).getByRole("tab", { name: "BDAG" }));

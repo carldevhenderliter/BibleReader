@@ -435,18 +435,12 @@ export function ReaderStrongsPanel() {
   }, [entries, greekEntry, installedVersions]);
 
   useEffect(() => {
-    let isCancelled = false;
-
     const loadEntriesForVersion = async (
       entryId: string,
       version: BundledBibleVersion,
       anchors: readonly VerseReferenceAnchor[]
     ) => {
       const matches = await getVerseEntriesForVersion(anchors, version);
-
-      if (isCancelled) {
-        return;
-      }
 
       setBibleOccurrenceVersionEntries((current) => ({
         ...current,
@@ -460,24 +454,57 @@ export function ReaderStrongsPanel() {
       }));
     };
 
-    for (const [entryId, selectedVersion] of Object.entries(selectedBibleOccurrenceVersions)) {
-      const occurrences = bibleOccurrences[entryId];
-
-      if (occurrences?.status !== "loaded" || occurrences.matches.length === 0) {
-        continue;
+    const loadTargets = new Map<
+      string,
+      {
+        version: BundledBibleVersion;
+        anchors: VerseReferenceAnchor[];
       }
+    >();
 
+    if (greekEntry) {
+      const occurrences = bibleOccurrences[greekEntry.entryKey];
+      const defaultVersion = getDefaultBibleOccurrenceVersion("greek-dictionary");
+      const selectedVersion =
+        selectedBibleOccurrenceVersions[greekEntry.entryKey] ?? defaultVersion;
+
+      if (selectedVersion && occurrences?.status === "loaded" && occurrences.matches.length > 0) {
+        loadTargets.set(greekEntry.entryKey, {
+          version: selectedVersion,
+          anchors: occurrences.matches.map(
+            (match): VerseReferenceAnchor => ({
+              bookSlug: match.bookSlug,
+              chapterNumber: match.chapterNumber,
+              verseNumber: match.verseNumber
+            })
+          )
+        });
+      }
+    }
+
+    for (const entry of entries) {
+      const occurrences = bibleOccurrences[entry.id];
+      const defaultVersion = getDefaultBibleOccurrenceVersion(entry.language);
+      const selectedVersion = selectedBibleOccurrenceVersions[entry.id] ?? defaultVersion;
+
+      if (selectedVersion && occurrences?.status === "loaded" && occurrences.matches.length > 0) {
+        loadTargets.set(entry.id, {
+          version: selectedVersion,
+          anchors: occurrences.matches.map(
+            (match): VerseReferenceAnchor => ({
+              bookSlug: match.bookSlug,
+              chapterNumber: match.chapterNumber,
+              verseNumber: match.verseNumber
+            })
+          )
+        });
+      }
+    }
+
+    for (const [entryId, { version: selectedVersion, anchors }] of loadTargets.entries()) {
       if (bibleOccurrenceVersionEntries[entryId]?.[selectedVersion]) {
         continue;
       }
-
-      const anchors = occurrences.matches.map(
-        (match): VerseReferenceAnchor => ({
-          bookSlug: match.bookSlug,
-          chapterNumber: match.chapterNumber,
-          verseNumber: match.verseNumber
-        })
-      );
 
       setBibleOccurrenceVersionEntries((current) => ({
         ...current,
@@ -492,11 +519,7 @@ export function ReaderStrongsPanel() {
 
       void loadEntriesForVersion(entryId, selectedVersion, anchors);
     }
-
-    return () => {
-      isCancelled = true;
-    };
-  }, [bibleOccurrenceVersionEntries, bibleOccurrences, selectedBibleOccurrenceVersions]);
+  }, [bibleOccurrenceVersionEntries, bibleOccurrences, entries, greekEntry, selectedBibleOccurrenceVersions]);
 
   async function handleFindOutsideScripture(lemma: string, strongsKey: string) {
     setOutsideScripture((current) => ({
@@ -622,7 +645,8 @@ export function ReaderStrongsPanel() {
   ) {
     const occurrences = bibleOccurrences[entryId];
     const availableVersions = getAvailableBibleOccurrenceVersions(language);
-    const selectedVersion = selectedBibleOccurrenceVersions[entryId] ?? null;
+    const selectedVersion =
+      selectedBibleOccurrenceVersions[entryId] ?? getDefaultBibleOccurrenceVersion(language);
     const versionState = selectedVersion
       ? bibleOccurrenceVersionEntries[entryId]?.[selectedVersion] ?? null
       : null;
