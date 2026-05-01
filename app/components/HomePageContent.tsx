@@ -22,16 +22,64 @@ export function HomePageContent({ books, fathersWorks = [] }: HomePageContentPro
   const newTestament = books.filter((book) => book.testament === "New");
   const chronologicalOldTestament = getChronologicalOldTestamentBooks(books);
   const chronologicalNewTestament = getChronologicalNewTestamentBooks(books);
+  const [testamentFilter, setTestamentFilter] = useState<"all" | "old" | "new">("all");
+  const [selectedBookSlugs, setSelectedBookSlugs] = useState<string[]>(
+    books.map((book) => book.slug)
+  );
   const [oldTestamentOrder, setOldTestamentOrder] = useState<"canonical" | "chronological">(
     "canonical"
   );
   const [newTestamentOrder, setNewTestamentOrder] = useState<"canonical" | "chronological">(
     "canonical"
   );
+  const selectedBookSlugSet = new Set(selectedBookSlugs);
   const displayedOldTestament =
     oldTestamentOrder === "chronological" ? chronologicalOldTestament : oldTestament;
   const displayedNewTestament =
     newTestamentOrder === "chronological" ? chronologicalNewTestament : newTestament;
+  const scopedBooks = books.filter((book) => {
+    if (testamentFilter === "old") {
+      return book.testament === "Old";
+    }
+
+    if (testamentFilter === "new") {
+      return book.testament === "New";
+    }
+
+    return true;
+  });
+  const filteredOldTestament = displayedOldTestament.filter((book) =>
+    selectedBookSlugSet.has(book.slug)
+  );
+  const filteredNewTestament = displayedNewTestament.filter((book) =>
+    selectedBookSlugSet.has(book.slug)
+  );
+
+  function toggleBookVisibility(bookSlug: string) {
+    setSelectedBookSlugs((current) =>
+      current.includes(bookSlug)
+        ? current.filter((slug) => slug !== bookSlug)
+        : [...current, bookSlug]
+    );
+  }
+
+  function showScopedBooks() {
+    setSelectedBookSlugs((current) => {
+      const next = new Set(current);
+
+      scopedBooks.forEach((book) => next.add(book.slug));
+
+      return books
+        .map((book) => book.slug)
+        .filter((slug) => next.has(slug));
+    });
+  }
+
+  function hideScopedBooks() {
+    setSelectedBookSlugs((current) =>
+      current.filter((slug) => !scopedBooks.some((book) => book.slug === slug))
+    );
+  }
 
   return (
     <div className="page-stack">
@@ -85,6 +133,70 @@ export function HomePageContent({ books, fathersWorks = [] }: HomePageContentPro
       <section className="content-card testament-card">
         <div className="section-header">
           <div>
+            <p className="eyebrow">Bible Filter</p>
+            <h2 className="section-title">Choose Which Books To Show</h2>
+            <div className="book-filter-controls" role="group" aria-label="Bible testament filter">
+              <button
+                className={`reader-inline-button${testamentFilter === "all" ? " is-active" : ""}`}
+                onClick={() => setTestamentFilter("all")}
+                type="button"
+              >
+                All Books
+              </button>
+              <button
+                className={`reader-inline-button${testamentFilter === "old" ? " is-active" : ""}`}
+                onClick={() => setTestamentFilter("old")}
+                type="button"
+              >
+                Old Testament
+              </button>
+              <button
+                className={`reader-inline-button${testamentFilter === "new" ? " is-active" : ""}`}
+                onClick={() => setTestamentFilter("new")}
+                type="button"
+              >
+                New Testament
+              </button>
+            </div>
+            <div className="book-filter-controls" role="group" aria-label="Book visibility actions">
+              <button className="reader-inline-button" onClick={showScopedBooks} type="button">
+                Show Filtered Books
+              </button>
+              <button className="reader-inline-button" onClick={hideScopedBooks} type="button">
+                Hide Filtered Books
+              </button>
+            </div>
+          </div>
+          <p className="muted-copy testament-meta">
+            {selectedBookSlugs.length} of {books.length} books visible
+          </p>
+        </div>
+        <div className="book-filter-chip-grid" role="group" aria-label="Book visibility filter">
+          {scopedBooks.map((book) => {
+            const isVisible = selectedBookSlugSet.has(book.slug);
+
+            return (
+              <button
+                aria-pressed={isVisible}
+                className={`book-filter-chip${isVisible ? " is-active" : ""}`}
+                key={book.slug}
+                onClick={() => toggleBookVisibility(book.slug)}
+                type="button"
+              >
+                <span className="book-filter-chip-kicker">
+                  {book.testament === "Old" ? "OT" : "NT"}
+                </span>
+                <span>{book.name}</span>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      {testamentFilter !== "new" ? (
+      <section className="content-card testament-card">
+        <div className="section-header">
+          <div>
             <p className="eyebrow">Old Testament</p>
             <h2 className="section-title">Genesis to Malachi</h2>
             <div className="book-order-controls" role="group" aria-label="Old Testament order">
@@ -108,10 +220,12 @@ export function HomePageContent({ books, fathersWorks = [] }: HomePageContentPro
               </button>
             </div>
           </div>
-          <p className="muted-copy testament-meta">{oldTestament.length} books</p>
+          <p className="muted-copy testament-meta">
+            {filteredOldTestament.length} of {oldTestament.length} books
+          </p>
         </div>
         <div className="book-grid">
-          {displayedOldTestament.map((book) => (
+          {filteredOldTestament.map((book) => (
             <Link
               aria-label={`Open ${book.name}`}
               className="book-link"
@@ -126,7 +240,9 @@ export function HomePageContent({ books, fathersWorks = [] }: HomePageContentPro
           ))}
         </div>
       </section>
+      ) : null}
 
+      {testamentFilter !== "old" ? (
       <section className="content-card testament-card">
         <div className="section-header">
           <div>
@@ -153,10 +269,12 @@ export function HomePageContent({ books, fathersWorks = [] }: HomePageContentPro
               </button>
             </div>
           </div>
-          <p className="muted-copy testament-meta">{newTestament.length} books</p>
+          <p className="muted-copy testament-meta">
+            {filteredNewTestament.length} of {newTestament.length} books
+          </p>
         </div>
         <div className="book-grid">
-          {displayedNewTestament.map((book) => (
+          {filteredNewTestament.map((book) => (
             <Link
               aria-label={`Open ${book.name}`}
               className="book-link"
@@ -176,6 +294,7 @@ export function HomePageContent({ books, fathersWorks = [] }: HomePageContentPro
           ))}
         </div>
       </section>
+      ) : null}
 
       {fathersWorks.length > 0 ? (
         <section className="content-card testament-card">

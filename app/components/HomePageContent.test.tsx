@@ -180,4 +180,25 @@ describe("HomePageContent", () => {
       "/read/gospel-harmony"
     ]);
   });
+
+  it("filters the library by testament", () => {
+    render(<HomePageContent books={books} fathersWorks={[]} />);
+
+    fireEvent.click(screen.getByRole("button", { name: "New Testament" }));
+
+    expect(screen.queryByRole("heading", { name: "Genesis to Malachi" })).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Matthew to Revelation" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "NT Matthew" })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.queryByRole("button", { name: "OT Genesis" })).not.toBeInTheDocument();
+  });
+
+  it("lets the user hide individual books from the library lists", () => {
+    render(<HomePageContent books={books} fathersWorks={[]} />);
+
+    fireEvent.click(screen.getByRole("button", { name: "OT Exodus" }));
+
+    expect(screen.getByRole("button", { name: "OT Exodus" })).toHaveAttribute("aria-pressed", "false");
+    expect(screen.queryByRole("link", { name: "Open Exodus" })).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Open Genesis" })).toBeInTheDocument();
+  });
 });
