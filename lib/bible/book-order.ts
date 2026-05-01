@@ -1,4 +1,4 @@
-import type { BookMeta } from "@/lib/bible/types";
+import type { BookMeta, Testament } from "@/lib/bible/types";
 
 export type BibleBookOrderMode =
   | "canonical"
@@ -79,6 +79,39 @@ export const CHRONOLOGICAL_NEW_TESTAMENT_ORDER = [
   "revelation"
 ] as const;
 
+export const NEW_TESTAMENT_BOOK_SLUGS = [
+  "matthew",
+  "mark",
+  "luke",
+  "john",
+  "acts",
+  "romans",
+  "1-corinthians",
+  "2-corinthians",
+  "galatians",
+  "ephesians",
+  "philippians",
+  "colossians",
+  "1-thessalonians",
+  "2-thessalonians",
+  "1-timothy",
+  "2-timothy",
+  "titus",
+  "philemon",
+  "hebrews",
+  "james",
+  "1-peter",
+  "2-peter",
+  "1-john",
+  "2-john",
+  "3-john",
+  "jude",
+  "revelation",
+  "gospel-harmony"
+] as const;
+
+const NEW_TESTAMENT_BOOK_SLUG_SET = new Set<string>(NEW_TESTAMENT_BOOK_SLUGS);
+
 const CHRONOLOGICAL_OLD_TESTAMENT_ORDER_INDEX = Object.fromEntries(
   CHRONOLOGICAL_OLD_TESTAMENT_ORDER.map((slug, index) => [slug, index])
 ) as Record<string, number>;
@@ -86,6 +119,10 @@ const CHRONOLOGICAL_OLD_TESTAMENT_ORDER_INDEX = Object.fromEntries(
 const CHRONOLOGICAL_NEW_TESTAMENT_ORDER_INDEX = Object.fromEntries(
   CHRONOLOGICAL_NEW_TESTAMENT_ORDER.map((slug, index) => [slug, index])
 ) as Record<string, number>;
+
+export function getBookTestamentBySlug(bookSlug: string): Testament {
+  return NEW_TESTAMENT_BOOK_SLUG_SET.has(bookSlug) ? "New" : "Old";
+}
 
 export function getChronologicalOldTestamentBooks<T extends BookMeta>(books: T[]): T[] {
   const orderedBooks = books

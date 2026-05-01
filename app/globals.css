@@ -2474,6 +2474,62 @@ button.fathers-annotation-anchor:focus-visible {
   gap: 0.4rem;
 }
 
+.strongs-entry-bible-book-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.05rem;
+}
+
+.strongs-entry-bible-book-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2rem;
+  padding: 0.38rem 0.72rem;
+  border: 1px solid rgba(138, 162, 191, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.045);
+  color: rgba(206, 221, 239, 0.88);
+  font-family: var(--reader-ui-font);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.strongs-entry-bible-book-chip:hover,
+.strongs-entry-bible-book-chip:focus-visible {
+  transform: translateY(-1px);
+  border-color: rgba(var(--reader-accent-rgb), 0.32);
+  background: rgba(var(--reader-accent-rgb), 0.08);
+  outline: none;
+}
+
+.strongs-entry-bible-book-chip.is-active {
+  border-color: rgba(var(--reader-accent-rgb), 0.44);
+  background: rgba(var(--reader-accent-rgb), 0.16);
+  color: rgba(255, 255, 255, 0.96);
+}
+
+.strongs-entry-bible-book-chip-kicker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.85rem;
+  padding: 0.14rem 0.4rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(207, 221, 237, 0.82);
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
 .strongs-entry-bible-version-button.is-active {
   border-color: rgba(var(--reader-accent-rgb), 0.44);
   background: rgba(var(--reader-accent-rgb), 0.16);

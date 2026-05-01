@@ -179,6 +179,34 @@ describe("ReaderStrongsPanel", () => {
     expect(selectedFormRow?.closest(".greek-dictionary-form-row")).toHaveClass("is-selected");
   });
 
+  it("filters Strong's Bible occurrences by testament and book inside the study pane", async () => {
+    renderWithReaderCustomization(<StrongsHarness />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Open Greek Dictionary" }));
+
+    const studyPane = screen.getByLabelText("Study pane");
+
+    expect(await within(studyPane).findByRole("heading", { name: "ἀρχή" })).toBeInTheDocument();
+    expect(await within(studyPane).findByText("Genesis 1:1")).toBeInTheDocument();
+
+    fireEvent.click(within(studyPane).getByRole("button", { name: "New Testament" }));
+
+    await waitFor(() =>
+      expect(within(studyPane).queryByText("Genesis 1:1")).not.toBeInTheDocument()
+    );
+    expect(await within(studyPane).findByText("Matthew 19:4")).toBeInTheDocument();
+
+    fireEvent.click(within(studyPane).getByRole("button", { name: /NT Matthew/i }));
+
+    await waitFor(() =>
+      expect(within(studyPane).queryByText("Matthew 19:4")).not.toBeInTheDocument()
+    );
+    expect(within(studyPane).getByRole("button", { name: /NT Matthew/i })).toHaveAttribute(
+      "aria-pressed",
+      "false"
+    );
+  });
+
   it("does not render Greek learning inside the study pane", () => {
     renderWithReaderCustomization(<StrongsHarness />);
 
