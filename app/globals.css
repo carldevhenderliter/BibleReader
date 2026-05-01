@@ -5523,9 +5523,9 @@ button.fathers-annotation-anchor:focus-visible {
   .site-shell {
     padding:
       max(0.75rem, env(safe-area-inset-top))
-      max(0.75rem, env(safe-area-inset-right))
+      max(0.5rem, env(safe-area-inset-right))
       max(1rem, env(safe-area-inset-bottom))
-      max(0.75rem, env(safe-area-inset-left));
+      max(0.5rem, env(safe-area-inset-left));
   }
 
   .site-header {
@@ -5557,7 +5557,7 @@ button.fathers-annotation-anchor:focus-visible {
   .hero-card,
   .content-card,
   .reader-card {
-    padding: 0.72rem;
+    padding: 0.62rem;
     border-radius: 1.1rem;
   }
 
@@ -5711,7 +5711,7 @@ button.fathers-annotation-anchor:focus-visible {
   .reading-surface {
     width: 100%;
     max-width: none;
-    padding: 0.72rem 0.64rem 0.85rem;
+    padding: 0.58rem 0.42rem 0.78rem;
     border-radius: 0.95rem;
   }
 
@@ -5744,6 +5744,23 @@ button.fathers-annotation-anchor:focus-visible {
   .verse-text-companion-translation {
     width: 100%;
     max-width: none;
+  }
+
+  .verse-text-body .strongs-token-interlinear {
+    display: inline;
+    vertical-align: baseline;
+  }
+
+  .verse-text-body .strongs-token-lemma {
+    display: none;
+  }
+
+  .verse-text-body .strongs-token-match {
+    padding: 0.02rem 0.08rem;
+  }
+
+  .verse-text-body .strongs-token-numbers {
+    font-size: 0.5em;
   }
 
   .search-shell {
