@@ -30,6 +30,11 @@ export type StrongsParallelVerseVersion = {
   href: string;
 };
 
+export type VerseReferenceAnchor = Pick<
+  BibleSearchVerseEntry,
+  "bookSlug" | "chapterNumber" | "verseNumber"
+>;
+
 export type StrongsParallelVerseRow = {
   strongsNumber: string;
   bookSlug: string;
@@ -207,28 +212,30 @@ export async function getStrongsVerseOccurrencesWithTokens(strongsNumber: string
     }));
 }
 
-export async function getParallelVerseVersionsForReference(
-  bookSlug: string,
-  chapterNumber: number,
-  verseNumber: number,
-  versions: readonly BundledBibleVersion[]
+export async function getVerseEntriesForVersion(
+  anchors: readonly VerseReferenceAnchor[],
+  version: BundledBibleVersion
 ) {
-  const uniqueVersions = Array.from(new Set(versions));
-  const verseIndexes = await Promise.all(uniqueVersions.map((version) => loadVerseSearchIndex(version)));
+  const verseIndex = await loadVerseSearchIndex(version);
 
-  return uniqueVersions.map<StrongsParallelVerseVersion>((version, index) => {
+  return anchors.map<StrongsParallelVerseVersion>((anchor) => {
     const entry =
-      verseIndexes[index]?.find(
+      verseIndex.find(
         (candidate) =>
-          candidate.bookSlug === bookSlug &&
-          candidate.chapterNumber === chapterNumber &&
-          candidate.verseNumber === verseNumber
+          candidate.bookSlug === anchor.bookSlug &&
+          candidate.chapterNumber === anchor.chapterNumber &&
+          candidate.verseNumber === anchor.verseNumber
       ) ?? null;
 
     return {
       version,
       entry,
-      href: getBookHighlightedVerseHref(bookSlug, chapterNumber, verseNumber, version)
+      href: getBookHighlightedVerseHref(
+        anchor.bookSlug,
+        anchor.chapterNumber,
+        anchor.verseNumber,
+        version
+      )
     };
   });
 }

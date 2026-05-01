@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 import { getStrongsEntries, normalizeStrongsNumber } from "@/lib/bible/strongs";
 import type { Verse } from "@/lib/bible/types";
@@ -11,14 +11,63 @@ type VerseTextContentProps = {
   onOpenStrongs?: (strongsNumbers: string[]) => void;
   className?: string;
   highlightedStrongsNumber?: string | null;
+  highlightedPhrases?: string[];
 };
+
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function renderTextWithHighlights(text: string, phrases: readonly string[]) {
+  const normalizedPhrases = Array.from(
+    new Set(
+      phrases
+        .map((phrase) => phrase.trim())
+        .filter(Boolean)
+        .sort((left, right) => right.length - left.length)
+    )
+  );
+
+  if (normalizedPhrases.length === 0) {
+    return text;
+  }
+
+  const pattern = new RegExp(
+    normalizedPhrases.map((phrase) => escapeRegExp(phrase)).join("|"),
+    "gi"
+  );
+  const parts: ReactNode[] = [];
+  let cursor = 0;
+
+  for (const match of text.matchAll(pattern)) {
+    const index = match.index ?? 0;
+
+    if (index > cursor) {
+      parts.push(text.slice(cursor, index));
+    }
+
+    parts.push(
+      <mark className="strongs-inline-match" key={`${index}:${match[0]}`}>
+        {text.slice(index, index + match[0].length)}
+      </mark>
+    );
+    cursor = index + match[0].length;
+  }
+
+  if (cursor < text.length) {
+    parts.push(text.slice(cursor));
+  }
+
+  return parts.length > 0 ? parts : text;
+}
 
 export function VerseTextContent({
   verse,
   showStrongs = false,
   onOpenStrongs,
   className,
-  highlightedStrongsNumber = null
+  highlightedStrongsNumber = null,
+  highlightedPhrases = []
 }: VerseTextContentProps) {
   const [tokenLemmas, setTokenLemmas] = useState<Record<string, string>>({});
   const strongsNumbers = useMemo(
@@ -113,5 +162,9 @@ export function VerseTextContent({
     );
   }
 
-  return <p className={className ?? "verse-text"}>{verse.text}</p>;
+  return (
+    <p className={className ?? "verse-text"}>
+      {renderTextWithHighlights(verse.text, highlightedPhrases)}
+    </p>
+  );
 }

@@ -1,4 +1,4 @@
-import { fireEvent, screen, within } from "@testing-library/react";
+import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 
 import { LookupPane } from "@/app/components/LookupPane";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
@@ -69,20 +69,34 @@ describe("ReaderStrongsPanel", () => {
     expect(within(studyPane).getByRole("tab", { name: "BDAG" })).toBeInTheDocument();
     expect(within(studyPane).getByRole("tab", { name: "Outside Bible" })).toBeInTheDocument();
     expect(within(studyPane).getByRole("heading", { name: "G3056" })).toBeInTheDocument();
+    await waitFor(() =>
+      expect(within(studyPane).getByRole("button", { name: "Greek" })).toHaveAttribute(
+        "aria-pressed",
+        "true"
+      )
+    );
+    await waitFor(() =>
+      expect(studyPane.querySelector(".verse-text-greek .strongs-inline-match")).not.toBeNull()
+    );
+    fireEvent.click(within(studyPane).getByRole("button", { name: "WEB" }));
+    expect(within(studyPane).getByRole("button", { name: "WEB" })).toHaveAttribute(
+      "aria-pressed",
+      "true"
+    );
     const matthewOccurrence = await within(studyPane).findByText(/Matthew 5:32/);
     const occurrenceCard = matthewOccurrence.closest(".strongs-entry-bible-verse");
     expect(occurrenceCard).not.toBeNull();
-    const occurrenceButton = within(occurrenceCard as HTMLElement).getByRole("button", {
-      name: "Show all versions"
-    });
-    fireEvent.click(occurrenceButton);
-    expect(await within(studyPane).findByText("WEB")).toBeInTheDocument();
-    expect(within(studyPane).getByText("KJV")).toBeInTheDocument();
-    const matchedToken = (
-      await within(studyPane).findAllByText(/for the cause/i)
-    ).find((node) => node.closest("button.strongs-token-match"));
-    expect(matchedToken).toBeDefined();
-    expect(matchedToken.closest("button")).toHaveClass("strongs-token-match");
+    expect(within(studyPane).queryByRole("button", { name: "Show all versions" })).toBeNull();
+    expect((occurrenceCard as HTMLElement).textContent).toMatch(/Matthew 5:32/i);
+
+    fireEvent.click(within(studyPane).getByRole("button", { name: "KJV" }));
+
+    await waitFor(() =>
+      expect(within(studyPane).getByRole("button", { name: "KJV" })).toHaveAttribute(
+        "aria-pressed",
+        "true"
+      )
+    );
 
     fireEvent.click(within(studyPane).getByRole("tab", { name: "BDAG" }));
 
@@ -99,6 +113,13 @@ describe("ReaderStrongsPanel", () => {
 
     expect(await within(studyPane).findByRole("heading", { name: "H7225" })).toBeInTheDocument();
     expect(await within(studyPane).findByRole("tab", { name: "Verses In Bible" })).toBeInTheDocument();
+    expect(within(studyPane).queryByRole("button", { name: "Greek" })).not.toBeInTheDocument();
+    await waitFor(() =>
+      expect(within(studyPane).getByRole("button", { name: "KJV" })).toHaveAttribute(
+        "aria-pressed",
+        "true"
+      )
+    );
     expect(within(studyPane).queryByRole("tab", { name: "BDAG" })).not.toBeInTheDocument();
     expect(within(studyPane).queryByRole("tab", { name: "Outside Bible" })).not.toBeInTheDocument();
   });

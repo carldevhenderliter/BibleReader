@@ -19,6 +19,7 @@ type GreekVerseTextContentProps = {
   showLemma?: boolean;
   showGloss?: boolean;
   enableGreekLearning?: boolean;
+  highlightedEntryKey?: string | null;
   getOccurrenceKey?: (token: GreekToken, index: number) => string;
   greekLearningScopeKey?: string;
   onOpenGreekDictionary?: NonNullable<{
@@ -49,6 +50,7 @@ export function GreekVerseTextContent({
   showLemma = true,
   showGloss = true,
   enableGreekLearning = true,
+  highlightedEntryKey = null,
   getOccurrenceKey,
   greekLearningScopeKey,
   onOpenGreekDictionary
@@ -114,7 +116,12 @@ export function GreekVerseTextContent({
               >
                 <button
                   aria-label={`${token.surface} ${token.lemma} ${token.strongs ?? ""}`.trim()}
-                  className="verse-greek-token verse-compare-token"
+                  className={`verse-greek-token verse-compare-token${
+                    highlightedEntryKey &&
+                    (entryKey === highlightedEntryKey || token.strongs === highlightedEntryKey)
+                      ? " strongs-token-match"
+                      : ""
+                  }`}
                   onClick={() => {
                     if (!entryKey) {
                       return;
@@ -240,7 +247,12 @@ export function GreekVerseTextContent({
             <span className="verse-greek-inline-head">
               {entryKey ? (
                 <button
-                  className="verse-greek-inline-token"
+                  className={`verse-greek-inline-token${
+                    highlightedEntryKey &&
+                    (entryKey === highlightedEntryKey || token.strongs === highlightedEntryKey)
+                      ? " strongs-token-match"
+                      : ""
+                  }`}
                   onClick={() =>
                     onOpenGreekDictionary({
                       entryKey,

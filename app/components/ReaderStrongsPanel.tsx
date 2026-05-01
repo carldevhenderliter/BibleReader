@@ -12,14 +12,17 @@ import {
   normalizeGreekFormLookupValue
 } from "@/lib/bible/greek";
 import {
-  getParallelVerseVersionsForReference,
   getStrongsEntries,
   getStrongsEntry,
   getStrongsVerseOccurrencesWithTokens,
-  type StrongsParallelVerseVersion
+  getVerseEntriesForVersion,
+  normalizeStrongsNumber,
+  type StrongsParallelVerseVersion,
+  type VerseReferenceAnchor
 } from "@/lib/bible/strongs";
 import type {
   BibleSearchVerseEntry,
+  BundledBibleVersion,
   GreekInflectedForm,
   GreekLemmaEntry,
   StrongsEntry
@@ -38,9 +41,9 @@ type BibleOccurrencesState = {
   matches: Array<BibleSearchVerseEntry & { href?: string }>;
 };
 
-type BibleParallelVersionsState = {
+type BibleOccurrenceVersionEntriesState = {
   status: "loading" | "loaded";
-  versions: StrongsParallelVerseVersion[];
+  matches: StrongsParallelVerseVersion[];
 };
 
 type StrongsTab = "bible" | "bdag" | "outside-bible";
@@ -157,14 +160,17 @@ export function ReaderStrongsPanel() {
   const [entries, setEntries] = useState<StrongsEntry[]>([]);
   const [greekEntry, setGreekEntry] = useState<GreekLemmaEntry | null>(null);
   const [greekStrongsEntry, setGreekStrongsEntry] = useState<StrongsEntry | null>(null);
+  const [greekOccurrenceEntries, setGreekOccurrenceEntries] = useState<
+    Record<string, GreekLemmaEntry | null>
+  >({});
   const [isLoading, setIsLoading] = useState(false);
   const [activeTabs, setActiveTabs] = useState<Record<string, StrongsTab>>({});
   const [bibleOccurrences, setBibleOccurrences] = useState<Record<string, BibleOccurrencesState>>({});
-  const [expandedBibleOccurrenceVersions, setExpandedBibleOccurrenceVersions] = useState<
-    Record<string, boolean>
+  const [selectedBibleOccurrenceVersions, setSelectedBibleOccurrenceVersions] = useState<
+    Record<string, BundledBibleVersion>
   >({});
-  const [parallelBibleVersions, setParallelBibleVersions] = useState<
-    Record<string, BibleParallelVersionsState>
+  const [bibleOccurrenceVersionEntries, setBibleOccurrenceVersionEntries] = useState<
+    Record<string, Partial<Record<BundledBibleVersion, BibleOccurrenceVersionEntriesState>>>
   >({});
   const [outsideScripture, setOutsideScripture] = useState<
     Record<string, OutsideScriptureLookupState>
@@ -246,8 +252,8 @@ export function ReaderStrongsPanel() {
     setEntries([]);
     setActiveTabs({});
     setBibleOccurrences({});
-    setExpandedBibleOccurrenceVersions({});
-    setParallelBibleVersions({});
+    setSelectedBibleOccurrenceVersions({});
+    setBibleOccurrenceVersionEntries({});
     setOutsideScripture({});
 
     void Promise.all([
@@ -290,8 +296,9 @@ export function ReaderStrongsPanel() {
       setIsLoading(false);
       setActiveTabs({});
       setBibleOccurrences({});
-      setExpandedBibleOccurrenceVersions({});
-      setParallelBibleVersions({});
+      setSelectedBibleOccurrenceVersions({});
+      setBibleOccurrenceVersionEntries({});
+      setGreekOccurrenceEntries({});
       setOutsideScripture({});
       return;
     }
@@ -300,8 +307,9 @@ export function ReaderStrongsPanel() {
     setIsLoading(true);
     setActiveTabs({});
     setBibleOccurrences({});
-    setExpandedBibleOccurrenceVersions({});
-    setParallelBibleVersions({});
+    setSelectedBibleOccurrenceVersions({});
+    setBibleOccurrenceVersionEntries({});
+    setGreekOccurrenceEntries({});
     setOutsideScripture({});
 
     void getStrongsEntries(activeStrongsNumbers).then((nextEntries) => {
@@ -355,6 +363,141 @@ export function ReaderStrongsPanel() {
     });
   }, [bibleOccurrences, entries, greekEntry]);
 
+  useEffect(() => {
+    const greekEntryIds = entries
+      .filter((entry) => entry.language === "greek")
+      .map((entry) => entry.id)
+      .filter((entryId) => !(entryId in greekOccurrenceEntries));
+
+    if (greekEntryIds.length === 0) {
+      return;
+    }
+
+    let isCancelled = false;
+
+    greekEntryIds.forEach((entryId) => {
+      void getGreekLemmaEntry(entryId).then((entry) => {
+        if (isCancelled) {
+          return;
+        }
+
+        setGreekOccurrenceEntries((current) => ({
+          ...current,
+          [entryId]: entry
+        }));
+      });
+    });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [entries, greekOccurrenceEntries]);
+
+  useEffect(() => {
+    const nextDefaults: Record<string, BundledBibleVersion> = {};
+    const nextAvailableVersions: Record<string, readonly BundledBibleVersion[]> = {};
+
+    if (greekEntry) {
+      nextAvailableVersions[greekEntry.entryKey] =
+        getAvailableBibleOccurrenceVersions("greek-dictionary");
+      const defaultVersion = getDefaultBibleOccurrenceVersion("greek-dictionary");
+
+      if (defaultVersion) {
+        nextDefaults[greekEntry.entryKey] = defaultVersion;
+      }
+    }
+
+    for (const entry of entries) {
+      nextAvailableVersions[entry.id] = getAvailableBibleOccurrenceVersions(entry.language);
+      const defaultVersion = getDefaultBibleOccurrenceVersion(entry.language);
+
+      if (defaultVersion) {
+        nextDefaults[entry.id] = defaultVersion;
+      }
+    }
+
+    setSelectedBibleOccurrenceVersions((current) => {
+      let changed = false;
+      const nextState = { ...current };
+
+      for (const [entryId, defaultVersion] of Object.entries(nextDefaults)) {
+        const selectedVersion = nextState[entryId];
+        const availableVersions = nextAvailableVersions[entryId] ?? [];
+
+        if (!selectedVersion || !availableVersions.includes(selectedVersion)) {
+          nextState[entryId] = defaultVersion;
+          changed = true;
+        }
+      }
+
+      return changed ? nextState : current;
+    });
+  }, [entries, greekEntry, installedVersions]);
+
+  useEffect(() => {
+    let isCancelled = false;
+
+    const loadEntriesForVersion = async (
+      entryId: string,
+      version: BundledBibleVersion,
+      anchors: readonly VerseReferenceAnchor[]
+    ) => {
+      const matches = await getVerseEntriesForVersion(anchors, version);
+
+      if (isCancelled) {
+        return;
+      }
+
+      setBibleOccurrenceVersionEntries((current) => ({
+        ...current,
+        [entryId]: {
+          ...(current[entryId] ?? {}),
+          [version]: {
+            status: "loaded",
+            matches
+          }
+        }
+      }));
+    };
+
+    for (const [entryId, selectedVersion] of Object.entries(selectedBibleOccurrenceVersions)) {
+      const occurrences = bibleOccurrences[entryId];
+
+      if (occurrences?.status !== "loaded" || occurrences.matches.length === 0) {
+        continue;
+      }
+
+      if (bibleOccurrenceVersionEntries[entryId]?.[selectedVersion]) {
+        continue;
+      }
+
+      const anchors = occurrences.matches.map(
+        (match): VerseReferenceAnchor => ({
+          bookSlug: match.bookSlug,
+          chapterNumber: match.chapterNumber,
+          verseNumber: match.verseNumber
+        })
+      );
+
+      setBibleOccurrenceVersionEntries((current) => ({
+        ...current,
+        [entryId]: {
+          ...(current[entryId] ?? {}),
+          [selectedVersion]: {
+            status: "loading",
+            matches: []
+          }
+        }
+      }));
+
+      void loadEntriesForVersion(entryId, selectedVersion, anchors);
+    }
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [bibleOccurrenceVersionEntries, bibleOccurrences, selectedBibleOccurrenceVersions]);
+
   async function handleFindOutsideScripture(lemma: string, strongsKey: string) {
     setOutsideScripture((current) => ({
       ...current,
@@ -386,81 +529,156 @@ export function ReaderStrongsPanel() {
     }
   }
 
-  function getBibleOccurrenceKey(
-    entryId: string,
-    match: Pick<BibleSearchVerseEntry, "bookSlug" | "chapterNumber" | "verseNumber">
-  ) {
-    return `${entryId}:${match.bookSlug}:${match.chapterNumber}:${match.verseNumber}`;
-  }
-
-  function toggleBibleOccurrenceVersions(
-    entryId: string,
-    match: Pick<BibleSearchVerseEntry, "bookSlug" | "chapterNumber" | "verseNumber">
-  ) {
-    const occurrenceKey = getBibleOccurrenceKey(entryId, match);
-    const shouldExpand = expandedBibleOccurrenceVersions[occurrenceKey] !== true;
-
-    setExpandedBibleOccurrenceVersions((current) => ({
-      ...current,
-      [occurrenceKey]: shouldExpand
-    }));
-
-    if (!shouldExpand || parallelBibleVersions[occurrenceKey]) {
-      return;
+  function getAvailableBibleOccurrenceVersions(language: StrongsEntry["language"] | "greek-dictionary") {
+    if (language === "greek" || language === "greek-dictionary") {
+      return installedVersions;
     }
 
-    setParallelBibleVersions((current) => ({
-      ...current,
-      [occurrenceKey]: {
-        status: "loading",
-        versions: []
-      }
-    }));
-
-    void getParallelVerseVersionsForReference(
-      match.bookSlug,
-      match.chapterNumber,
-      match.verseNumber,
-      installedVersions
-    ).then((versions) => {
-      setParallelBibleVersions((current) => ({
-        ...current,
-        [occurrenceKey]: {
-          status: "loaded",
-          versions
-        }
-      }));
-    });
+    return installedVersions.filter((version) => version !== "greek");
   }
 
-  function renderBibleOccurrences(entryId: string, mode: "strongs" | "greek") {
+  function getDefaultBibleOccurrenceVersion(
+    language: StrongsEntry["language"] | "greek-dictionary"
+  ) {
+    const versions = getAvailableBibleOccurrenceVersions(language);
+
+    if (versions.length === 0) {
+      return null;
+    }
+
+    if ((language === "greek" || language === "greek-dictionary") && versions.includes("greek")) {
+      return "greek";
+    }
+
+    if (versions.includes("kjv")) {
+      return "kjv";
+    }
+
+    return versions[0] ?? null;
+  }
+
+  function getEnglishHighlightPhrases(
+    entryId: string,
+    match: BibleSearchVerseEntry,
+    mode: "strongs" | "greek"
+  ) {
+    const tokenTextMatches = Array.from(
+      new Set(
+        (match.tokens ?? [])
+          .filter((token) =>
+            token.strongsNumbers?.some((strongsNumber) => normalizeStrongsNumber(strongsNumber) === entryId)
+          )
+          .map((token) => token.text.trim())
+          .filter(Boolean)
+      )
+    );
+
+    if (tokenTextMatches.length > 0) {
+      return tokenTextMatches;
+    }
+
+    if (mode === "greek") {
+      return Array.from(
+        new Set(
+          (match.greekTokens ?? [])
+            .filter((token) => {
+              const tokenEntryKey = token.entryKey ?? token.strongs ?? null;
+              return tokenEntryKey === entryId;
+            })
+            .map((token) => token.gloss?.trim() ?? "")
+            .filter(Boolean)
+        )
+      );
+    }
+
+    return [];
+  }
+
+  function getGreekHighlightPhrases(entryId: string) {
+    const sourceEntry =
+      (greekEntry?.entryKey === entryId ? greekEntry : null) ?? greekOccurrenceEntries[entryId] ?? null;
+
+    if (!sourceEntry) {
+      return [];
+    }
+
+    return Array.from(
+      new Set(
+        [
+          sourceEntry.lemma,
+          ...sourceEntry.forms.map((form) => form.form)
+        ]
+          .map((phrase) => phrase.trim())
+          .filter(Boolean)
+      )
+    );
+  }
+
+  function renderBibleOccurrences(
+    entryId: string,
+    mode: "strongs" | "greek",
+    language: StrongsEntry["language"] | "greek-dictionary",
+    highlightStrongsNumber: string | null = null
+  ) {
     const occurrences = bibleOccurrences[entryId];
-
-    if (occurrences?.status === "loading") {
-      return (
-        <p className="strongs-entry-meta">
-          {mode === "greek" ? "Loading Greek verse occurrences…" : "Loading KJV verse occurrences…"}
-        </p>
-      );
-    }
-
-    if (!occurrences?.matches.length) {
-      return (
-        <p className="strongs-entry-copy">
-          {mode === "greek"
-            ? "No Greek Bible occurrences were found for this entry."
-            : "No KJV verse occurrences were found for this Strong’s number."}
-        </p>
-      );
-    }
+    const availableVersions = getAvailableBibleOccurrenceVersions(language);
+    const selectedVersion = selectedBibleOccurrenceVersions[entryId] ?? null;
+    const versionState = selectedVersion
+      ? bibleOccurrenceVersionEntries[entryId]?.[selectedVersion] ?? null
+      : null;
+    const isOccurrencesLoading = !occurrences || occurrences.status === "loading";
+    const hasOccurrences = (occurrences?.matches.length ?? 0) > 0;
 
     return (
-      <div className="strongs-entry-bible-verses">
-        {occurrences.matches.map((match) => (
-          (() => {
-            const occurrenceKey = getBibleOccurrenceKey(entryId, match);
-            const isExpanded = expandedBibleOccurrenceVersions[occurrenceKey] === true;
-            const parallelVersionsState = parallelBibleVersions[occurrenceKey];
+      <div className="strongs-entry-bible-section">
+        <div className="strongs-entry-bible-toolbar">
+          <p className="strongs-entry-section-label">Verses In Bible</p>
+          <div
+            aria-label={`Display version for ${entryId}`}
+            className="strongs-entry-bible-version-selector"
+            role="group"
+          >
+            {availableVersions.map((version) => (
+              <button
+                aria-pressed={selectedVersion === version}
+                className={`reader-inline-button strongs-entry-bible-version-button${
+                  selectedVersion === version ? " is-active" : ""
+                }`}
+                key={`${entryId}:${version}`}
+                onClick={() =>
+                  setSelectedBibleOccurrenceVersions((current) => ({
+                    ...current,
+                    [entryId]: version
+                  }))
+                }
+                type="button"
+              >
+                {getBibleVersionLabel(version)}
+              </button>
+            ))}
+          </div>
+        </div>
+        {isOccurrencesLoading ? (
+          <p className="strongs-entry-meta">
+            {mode === "greek" ? "Loading Greek verse occurrences…" : "Loading KJV verse occurrences…"}
+          </p>
+        ) : null}
+        {!isOccurrencesLoading && !hasOccurrences ? (
+          <p className="strongs-entry-copy">
+            {mode === "greek"
+              ? "No Greek Bible occurrences were found for this entry."
+              : "No KJV verse occurrences were found for this Strong’s number."}
+          </p>
+        ) : null}
+        {selectedVersion && (!versionState || versionState.status === "loading") ? (
+          <p className="strongs-entry-meta">Loading {getBibleVersionLabel(selectedVersion)} verses…</p>
+        ) : null}
+        {hasOccurrences ? (
+          <div className="strongs-entry-bible-verses">
+            {occurrences?.matches.map((match, index) => {
+            const versionMatch = versionState?.matches[index]?.entry ?? null;
+            const highlightPhrases = getEnglishHighlightPhrases(entryId, match, mode);
+            const greekHighlightPhrases = getGreekHighlightPhrases(entryId);
 
             return (
               <article
@@ -470,102 +688,61 @@ export function ReaderStrongsPanel() {
                 <p className="strongs-entry-meta">
                   {match.bookName} {match.chapterNumber}:{match.verseNumber}
                 </p>
-                {mode === "greek" ? (
-                  <GreekVerseTextContent
-                    className="strongs-entry-copy strongs-entry-bible-verse-text verse-text-greek"
-                    enableGreekLearning={false}
-                    onOpenGreekDictionary={openGreekDictionary}
-                    verse={{
-                      number: match.verseNumber,
-                      text: match.text,
-                      greekTokens: match.greekTokens
-                    }}
-                  />
-                ) : (
-                  <VerseTextContent
-                    className="strongs-entry-copy strongs-entry-bible-verse-text"
-                    highlightedStrongsNumber={entryId}
-                    onOpenStrongs={(strongsNumbers) =>
-                      openStrongs(strongsNumbers, strongsNumbers.join(" "))
-                    }
-                    showStrongs
-                    verse={{
-                      number: match.verseNumber,
-                      text: match.text,
-                      tokens: match.tokens
-                    }}
-                  />
-                )}
-                <div className="strongs-entry-bible-verse-actions">
-                  <button
-                    aria-controls={`strongs-entry-bible-verse-versions:${occurrenceKey}`}
-                    aria-expanded={isExpanded}
-                    className="reader-inline-button strongs-entry-bible-verse-button"
-                    onClick={() => toggleBibleOccurrenceVersions(entryId, match)}
-                    type="button"
-                  >
-                    {isExpanded ? "Hide all versions" : "Show all versions"}
-                  </button>
-                </div>
-                {isExpanded ? (
-                  <div
-                    className="strongs-entry-bible-verse-versions"
-                    id={`strongs-entry-bible-verse-versions:${occurrenceKey}`}
-                  >
-                    {parallelVersionsState?.status === "loading" ? (
-                      <p className="strongs-entry-meta">Loading versions…</p>
+                {selectedVersion && versionMatch ? (
+                  selectedVersion === "greek" ? (
+                    versionMatch.greekTokens?.length ? (
+                      <GreekVerseTextContent
+                        className="strongs-entry-copy strongs-entry-bible-verse-text verse-text-greek"
+                        enableGreekLearning={false}
+                        highlightedEntryKey={entryId}
+                        onOpenGreekDictionary={openGreekDictionary}
+                        verse={{
+                          number: versionMatch.verseNumber,
+                          text: versionMatch.text,
+                          greekTokens: versionMatch.greekTokens
+                        }}
+                      />
                     ) : (
-                      parallelVersionsState?.versions.map(({ entry, version }) => (
-                        <section
-                          className="strongs-entry-bible-verse-version"
-                          key={`${occurrenceKey}:${version}`}
-                        >
-                          <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
-                            {getBibleVersionLabel(version)}
-                          </p>
-                          {entry ? (
-                            version === "greek" ? (
-                              <GreekVerseTextContent
-                                className="strongs-entry-copy strongs-entry-bible-verse-text verse-text-greek"
-                                enableGreekLearning={false}
-                                onOpenGreekDictionary={openGreekDictionary}
-                                verse={{
-                                  number: entry.verseNumber,
-                                  text: entry.text,
-                                  greekTokens: entry.greekTokens
-                                }}
-                              />
-                            ) : (
-                              <VerseTextContent
-                                className="strongs-entry-copy strongs-entry-bible-verse-text"
-                                highlightedStrongsNumber={version === "kjv" ? entryId : null}
-                                onOpenStrongs={(strongsNumbers) =>
-                                  openStrongs(strongsNumbers, strongsNumbers.join(" "))
-                                }
-                                showStrongs={version === "kjv"}
-                                verse={{
-                                  number: entry.verseNumber,
-                                  text: entry.text,
-                                  translationText: entry.translationText,
-                                  tokens: entry.tokens,
-                                  greekTokens: entry.greekTokens
-                                }}
-                              />
-                            )
-                          ) : (
-                            <p className="strongs-entry-copy">
-                              This verse is not available in {getBibleVersionLabel(version)}.
-                            </p>
-                          )}
-                        </section>
-                      ))
-                    )}
-                  </div>
-                ) : null}
+                      <VerseTextContent
+                        className="strongs-entry-copy strongs-entry-bible-verse-text verse-text-greek"
+                        highlightedPhrases={greekHighlightPhrases}
+                        verse={{
+                          number: versionMatch.verseNumber,
+                          text: versionMatch.text
+                        }}
+                      />
+                    )
+                  ) : (
+                    <VerseTextContent
+                      className="strongs-entry-copy strongs-entry-bible-verse-text"
+                      highlightedPhrases={selectedVersion === "kjv" ? [] : highlightPhrases}
+                      highlightedStrongsNumber={
+                        selectedVersion === "kjv" ? highlightStrongsNumber : null
+                      }
+                      onOpenStrongs={(strongsNumbers) =>
+                        openStrongs(strongsNumbers, strongsNumbers.join(" "))
+                      }
+                      showStrongs={selectedVersion === "kjv"}
+                      verse={{
+                        number: versionMatch.verseNumber,
+                        text: versionMatch.text,
+                        translationText: versionMatch.translationText,
+                        tokens: versionMatch.tokens,
+                        greekTokens: versionMatch.greekTokens
+                      }}
+                    />
+                  )
+                ) : selectedVersion && (!versionState || versionState.status === "loading") ? null : (
+                  <p className="strongs-entry-copy">
+                    This verse is not available in{" "}
+                    {selectedVersion ? getBibleVersionLabel(selectedVersion) : "that version"}.
+                  </p>
+                )}
               </article>
             );
-          })()
-        ))}
+            })}
+          </div>
+        ) : null}
       </div>
     );
   }
@@ -759,8 +936,12 @@ export function ReaderStrongsPanel() {
         </div>
         {activeTab === "bible" ? (
           <div className="strongs-entry-tab-panel">
-            <p className="strongs-entry-section-label">Verses In Bible</p>
-            {renderBibleOccurrences(entry.entryKey, "greek")}
+            {renderBibleOccurrences(
+              entry.entryKey,
+              "greek",
+              "greek-dictionary",
+              entry.strongs ?? greekStrongsEntry?.id ?? null
+            )}
           </div>
         ) : null}
         {activeTab === "bdag" ? (
@@ -820,8 +1001,7 @@ export function ReaderStrongsPanel() {
         </div>
         {activeTab === "bible" ? (
           <div className="strongs-entry-tab-panel">
-            <p className="strongs-entry-section-label">Verses In Bible</p>
-            {renderBibleOccurrences(entry.id, "strongs")}
+            {renderBibleOccurrences(entry.id, "strongs", entry.language, entry.id)}
           </div>
         ) : null}
         {activeTab === "bdag" && entry.bdagArticles?.length ? (
