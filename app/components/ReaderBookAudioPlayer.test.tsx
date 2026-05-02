@@ -1,7 +1,8 @@
-import { render, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
 import { ReaderBookAudioPlayer } from "@/app/components/ReaderBookAudioPlayer";
 import { BOOK_AUDIO_AUTOPLAY_STORAGE_KEY } from "@/lib/bible/book-audio";
+import { AUDIO_PLAYER_VISIBILITY_STORAGE_KEY } from "@/lib/bible/constants";
 
 describe("ReaderBookAudioPlayer", () => {
   const originalPlay = HTMLMediaElement.prototype.play;
@@ -12,6 +13,7 @@ describe("ReaderBookAudioPlayer", () => {
   );
 
   beforeEach(() => {
+    window.localStorage.clear();
     window.sessionStorage.clear();
     HTMLMediaElement.prototype.play = jest.fn().mockResolvedValue(undefined);
     HTMLMediaElement.prototype.load = jest.fn();
@@ -48,5 +50,31 @@ describe("ReaderBookAudioPlayer", () => {
       expect(HTMLMediaElement.prototype.play).toHaveBeenCalled();
     });
     expect(window.sessionStorage.getItem(BOOK_AUDIO_AUTOPLAY_STORAGE_KEY)).toBeNull();
+  });
+
+  it("lets the reader hide and show the audio player", () => {
+    render(
+      <ReaderBookAudioPlayer
+        audioSource={{
+          bookSlug: "galatians",
+          sourceFilename: "Galatians.mp3",
+          src: "/book-audio/galatians.mp3",
+          assetPath: "/book-audio/galatians.mp3"
+        }}
+      />
+    );
+
+    const audioElement = screen.getByLabelText("Book audio");
+    fireEvent.click(screen.getByRole("button", { name: "Hide audio" }));
+
+    expect(screen.getByRole("button", { name: "Show audio" })).toBeInTheDocument();
+    expect(audioElement.querySelector("audio")).toHaveAttribute("hidden");
+    expect(window.localStorage.getItem(AUDIO_PLAYER_VISIBILITY_STORAGE_KEY)).toBe("false");
+
+    fireEvent.click(screen.getByRole("button", { name: "Show audio" }));
+
+    expect(screen.getByRole("button", { name: "Hide audio" })).toBeInTheDocument();
+    expect(audioElement.querySelector("audio")).not.toHaveAttribute("hidden");
+    expect(window.localStorage.getItem(AUDIO_PLAYER_VISIBILITY_STORAGE_KEY)).toBe("true");
   });
 });

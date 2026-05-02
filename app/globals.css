@@ -811,11 +811,20 @@ select {
   background: rgba(12, 18, 30, 0.34);
 }
 
+.reader-audio-bar.is-collapsed {
+  gap: 0.65rem;
+  padding-bottom: 0.85rem;
+}
+
 .reader-audio-copy {
   display: grid;
   gap: 0.16rem;
   flex: 1 1 13rem;
   min-width: 0;
+}
+
+.reader-audio-bar.is-collapsed .reader-audio-copy {
+  flex-basis: auto;
 }
 
 .reader-audio-player {
@@ -824,6 +833,10 @@ select {
   width: min(32rem, 100%);
   max-width: 100%;
   min-width: min(18rem, 100%);
+}
+
+.reader-audio-toggle {
+  flex: 0 0 auto;
 }
 
 .reader-audio-link {
@@ -5974,10 +5987,20 @@ button.fathers-annotation-anchor:focus-visible {
     border-radius: 0.9rem;
   }
 
+  .search-shell-reader-panel .reader-audio-bar.is-collapsed {
+    padding-bottom: 0.42rem;
+  }
+
   .reader-audio-copy {
     gap: 0.04rem;
     flex: 0 0 auto;
     align-items: start;
+  }
+
+  .reader-audio-toggle {
+    min-height: 2.2rem;
+    padding: 0.45rem 0.7rem;
+    font-size: 0.76rem;
   }
 
   .reader-audio-player {

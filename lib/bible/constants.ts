@@ -1,5 +1,6 @@
 export const LAST_READING_STORAGE_KEY = "bible-reader:last-location";
 export const LAST_AUDIO_SESSION_STORAGE_KEY = "bible-reader:last-audio-session";
+export const AUDIO_PLAYER_VISIBILITY_STORAGE_KEY = "bible-reader:audio-player-visible";
 export const READER_VERSION_STORAGE_KEY = "bible-reader:selected-version";
 export const DEFAULT_BIBLE_VERSION = "web" as const;
 export const PASSAGE_NOTEBOOK_STORAGE_KEY = "bible-reader:passage-notebooks";

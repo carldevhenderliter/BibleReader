@@ -4,7 +4,10 @@ import {
   BOOK_AUDIO_AUTOPLAY_STORAGE_KEY,
   type BookAudioSource
 } from "@/lib/bible/book-audio";
-import { LAST_AUDIO_SESSION_STORAGE_KEY } from "@/lib/bible/constants";
+import {
+  AUDIO_PLAYER_VISIBILITY_STORAGE_KEY,
+  LAST_AUDIO_SESSION_STORAGE_KEY
+} from "@/lib/bible/constants";
 import type { BibleVersion, ReadingView } from "@/lib/bible/types";
 
 type ReaderAudioResumeSession = {
@@ -37,6 +40,33 @@ export function ReaderBookAudioPlayer({
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isAutoplayPending, setIsAutoplayPending] = useState(false);
   const [hasFinishedQueue, setHasFinishedQueue] = useState(false);
+  const [isPlayerVisible, setIsPlayerVisible] = useState(true);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    setIsPlayerVisible(
+      window.localStorage.getItem(AUDIO_PLAYER_VISIBILITY_STORAGE_KEY) !== "false"
+    );
+  }, []);
+
+  const persistPlayerVisibility = (isVisible: boolean) => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    window.localStorage.setItem(
+      AUDIO_PLAYER_VISIBILITY_STORAGE_KEY,
+      isVisible ? "true" : "false"
+    );
+  };
+
+  const setPlayerVisibility = (isVisible: boolean) => {
+    setIsPlayerVisible(isVisible);
+    persistPlayerVisibility(isVisible);
+  };
 
   const persistResumeSession = () => {
     if (typeof window === "undefined" || !audioSource || !resumeSession) {
@@ -67,6 +97,12 @@ export function ReaderBookAudioPlayer({
   useEffect(() => {
     setHasFinishedQueue(false);
   }, [audioSource?.assetPath]);
+
+  useEffect(() => {
+    if (audioSource && isAutoplayPending) {
+      setPlayerVisibility(true);
+    }
+  }, [audioSource, isAutoplayPending]);
 
   useEffect(() => {
     if (
@@ -134,38 +170,54 @@ export function ReaderBookAudioPlayer({
   }, [audioSource, autoPlayBookSlug, isAutoplayPending]);
 
   return (
-    <div className="reader-audio-bar" role="region" aria-label="Book audio">
+    <div
+      className={`reader-audio-bar${isPlayerVisible ? "" : " is-collapsed"}`}
+      role="region"
+      aria-label="Book audio"
+    >
       <div className="reader-audio-copy">
         <p className="reader-toolbar-summary">Book audio</p>
-        <p className="reader-toolbar-meta">{audioSource?.sourceFilename ?? emptyMessage}</p>
-        {audioSource && resumeSession ? (
-          <p className="reader-toolbar-meta">
-            Now playing:{" "}
-            {resumeSession.view === "chapter"
-              ? `${resumeSession.bookName} ${resumeSession.chapter}`
-              : resumeSession.bookName}
-          </p>
-        ) : null}
-        {audioSource ? (
-          <p className="reader-toolbar-meta">
-            {nextUpLabel
-              ? `Next audio: ${nextUpLabel}`
-              : hasFinishedQueue
-                ? "Audio queue complete."
-                : "No later book audio in the current queue."}
-          </p>
-        ) : null}
-        {audioSource ? (
-          <a
-            className="reader-audio-link"
-            href={audioSource.assetPath}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Open audio file
-          </a>
+        {isPlayerVisible ? (
+          <>
+            <p className="reader-toolbar-meta">{audioSource?.sourceFilename ?? emptyMessage}</p>
+            {audioSource && resumeSession ? (
+              <p className="reader-toolbar-meta">
+                Now playing:{" "}
+                {resumeSession.view === "chapter"
+                  ? `${resumeSession.bookName} ${resumeSession.chapter}`
+                  : resumeSession.bookName}
+              </p>
+            ) : null}
+            {audioSource ? (
+              <p className="reader-toolbar-meta">
+                {nextUpLabel
+                  ? `Next audio: ${nextUpLabel}`
+                  : hasFinishedQueue
+                    ? "Audio queue complete."
+                    : "No later book audio in the current queue."}
+              </p>
+            ) : null}
+            {audioSource ? (
+              <a
+                className="reader-audio-link"
+                href={audioSource.assetPath}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Open audio file
+              </a>
+            ) : null}
+          </>
         ) : null}
       </div>
+      <button
+        aria-expanded={isPlayerVisible}
+        className="reader-inline-button reader-audio-toggle"
+        onClick={() => setPlayerVisibility(!isPlayerVisible)}
+        type="button"
+      >
+        {isPlayerVisible ? "Hide audio" : "Show audio"}
+      </button>
       <audio
         autoPlay={isAutoplayPending}
         className="reader-audio-player"
@@ -176,6 +228,7 @@ export function ReaderBookAudioPlayer({
         }}
         onPause={persistResumeSession}
         onPlay={() => {
+          setPlayerVisibility(true);
           setHasFinishedQueue(false);
           persistResumeSession();
         }}
@@ -183,6 +236,7 @@ export function ReaderBookAudioPlayer({
         ref={audioRef}
         src={audioSource?.assetPath}
         aria-disabled={audioSource ? undefined : true}
+        hidden={!isPlayerVisible}
       >
         Your browser does not support audio playback.
       </audio>
