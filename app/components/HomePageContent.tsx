@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 
 import { ContinueReading } from "@/app/components/ContinueReading";
+import { ContinueListening } from "@/app/components/ContinueListening";
 import {
   getChronologicalNewTestamentBooks,
   getChronologicalOldTestamentBooks
@@ -80,6 +81,25 @@ export function HomePageContent({ books, fathersWorks = [] }: HomePageContentPro
               <p>Optimized for immersive reading, fast scanning, and mobile navigation.</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="content-card testament-card">
+        <div className="section-header">
+          <div>
+            <p className="eyebrow">Quick Start</p>
+            <h2 className="section-title">Start Where You Left Off</h2>
+          </div>
+        </div>
+        <div className="hero-actions hero-actions-quick">
+          <ContinueReading />
+          <ContinueListening />
+          <Link className="secondary-link" href="/read/gospel-harmony">
+            Open Harmony
+          </Link>
+          <Link className="secondary-link" href="/fathers">
+            Open Fathers
+          </Link>
         </div>
       </section>
 

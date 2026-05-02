@@ -12,6 +12,7 @@ import type {
   BookMeta,
   ReaderCustomizationSettings,
   ReadingView,
+  ReaderPreset,
   ThemePreset
 } from "@/lib/bible/types";
 import {
@@ -121,7 +122,8 @@ export function ReaderSettingsPanel({
     openNotebook,
     openOtCompare,
     openSermons,
-    setActiveReaderPane
+    setActiveReaderPane,
+    setActiveUtilityPane
   } = useReaderWorkspace();
   const { version, setVersion } = useReaderVersion();
   const pathname = usePathname();
@@ -174,6 +176,77 @@ export function ReaderSettingsPanel({
     } as Partial<ReaderCustomizationSettings>);
   };
 
+  const enterReadingSurface = () => {
+    setActiveReaderPane("reading");
+    setActiveUtilityPane("search");
+  };
+
+  const applyReaderPreset = (preset: ReaderPreset) => {
+    if (preset === "reading") {
+      enterReadingSurface();
+      updateSettings({
+        readerPreset: "reading",
+        focusReadingMode: true,
+        showVerseNumbers: false,
+        showChapterHeadings: false,
+        showVerseText: true,
+        showCompanionVerseTranslation: version === "greek",
+        showAnnotatedGreekUndertext: false,
+        showGreekSurface: false,
+        showGreekLemma: false,
+        showGreekTransliteration: false,
+        showGreekGloss: false,
+        showCustomVerseTranslation: false,
+        showFathersSentenceLines: false,
+        disableLazyLoading: false,
+        contentWidth: 58
+      });
+      return;
+    }
+
+    if (preset === "study") {
+      updateSettings({
+        readerPreset: "study",
+        focusReadingMode: false,
+        showEsvInterlinear: !isFathersMode && supportsEsvInterlinear ? true : settings.showEsvInterlinear,
+        showEsvGreekOnly: false,
+        showVerseNumbers: true,
+        showChapterHeadings: true,
+        showVerseText: true,
+        showCompanionVerseTranslation: !isFathersMode,
+        showAnnotatedGreekUndertext: true,
+        showGreekSurface: true,
+        showGreekLemma: true,
+        showGreekTransliteration: true,
+        showGreekGloss: true,
+        showCustomVerseTranslation: true,
+        showFathersSentenceLines: false,
+        disableLazyLoading: false
+      });
+      return;
+    }
+
+    enterReadingSurface();
+    updateSettings({
+      readerPreset: "audio",
+      focusReadingMode: true,
+      showVerseNumbers: false,
+      showChapterHeadings: false,
+      showVerseText: true,
+      showCompanionVerseTranslation: false,
+      showAnnotatedGreekUndertext: false,
+      showGreekSurface: false,
+      showGreekLemma: false,
+      showGreekTransliteration: false,
+      showGreekGloss: false,
+      showCustomVerseTranslation: false,
+      showFathersSentenceLines: false,
+      disableLazyLoading: false,
+      bodyTextSize: Math.max(settings.bodyTextSize, 1.18),
+      contentWidth: 60
+    });
+  };
+
   const toggleLayer = (
     key:
       | "showVerseNumbers"
@@ -192,68 +265,6 @@ export function ReaderSettingsPanel({
       [key]: !settings[key],
       showEsvGreekOnly: false
     } as Partial<ReaderCustomizationSettings>);
-  };
-
-  const applyEverythingOnPreset = () => {
-    if (isFathersMode) {
-      updateSettings({
-        showVerseNumbers: true,
-        showChapterHeadings: true,
-        showVerseText: true,
-        showAnnotatedGreekUndertext: true,
-        showGreekSurface: true,
-        showGreekLemma: true,
-        showGreekTransliteration: true,
-        showGreekGloss: true
-      });
-      return;
-    }
-
-    updateSettings({
-      showEsvInterlinear: version === "esv" ? true : settings.showEsvInterlinear,
-      showEsvGreekOnly: false,
-      showVerseNumbers: true,
-      showChapterHeadings: true,
-      showVerseText: true,
-      showAnnotatedGreekUndertext: true,
-      showCompanionVerseTranslation: version === "greek",
-      showGreekSurface: true,
-      showGreekLemma: true,
-      showGreekTransliteration: true,
-      showGreekGloss: true,
-      showCustomVerseTranslation: true
-    });
-  };
-
-  const applyEverythingOffPreset = () => {
-    if (isFathersMode) {
-      updateSettings({
-        showVerseNumbers: false,
-        showChapterHeadings: false,
-        showVerseText: false,
-        showAnnotatedGreekUndertext: false,
-        showGreekSurface: false,
-        showGreekLemma: false,
-        showGreekTransliteration: false,
-        showGreekGloss: false
-      });
-      return;
-    }
-
-    updateSettings({
-      showEsvInterlinear: version === "esv" ? false : settings.showEsvInterlinear,
-      showEsvGreekOnly: false,
-      showVerseNumbers: false,
-      showChapterHeadings: false,
-      showVerseText: false,
-      showAnnotatedGreekUndertext: false,
-      showCompanionVerseTranslation: false,
-      showGreekSurface: false,
-      showGreekLemma: false,
-      showGreekTransliteration: false,
-      showGreekGloss: false,
-      showCustomVerseTranslation: false
-    });
   };
 
   const applyGreekOnlyPreset = () => {
@@ -463,35 +474,69 @@ export function ReaderSettingsPanel({
           </div>
           <div className="reader-settings-subsection">
             <div className="reader-settings-field-grid">
-              {supportsGreekStudyLayers ? (
-                <div className="reader-settings-field">
-                  <span>Display presets</span>
-                  <div className="reader-settings-shortcuts">
+              <div className="reader-settings-field">
+                <span>Session presets</span>
+                <div className="reader-settings-shortcuts">
+                  <button
+                    className={`reader-inline-button reader-settings-link${
+                      settings.readerPreset === "reading" ? " is-active" : ""
+                    }`}
+                    onClick={() => applyReaderPreset("reading")}
+                    type="button"
+                  >
+                    Reading
+                  </button>
+                  <button
+                    className={`reader-inline-button reader-settings-link${
+                      settings.readerPreset === "study" ? " is-active" : ""
+                    }`}
+                    onClick={() => applyReaderPreset("study")}
+                    type="button"
+                  >
+                    Study
+                  </button>
+                  <button
+                    className={`reader-inline-button reader-settings-link${
+                      settings.readerPreset === "audio" ? " is-active" : ""
+                    }`}
+                    onClick={() => applyReaderPreset("audio")}
+                    type="button"
+                  >
+                    Audio
+                  </button>
+                </div>
+              </div>
+              <div className="reader-settings-field">
+                <span>Reading focus</span>
+                <div className="reader-settings-shortcuts">
+                  <button
+                    className={`reader-inline-button reader-settings-link${
+                      settings.focusReadingMode ? " is-active" : ""
+                    }`}
+                    onClick={() => {
+                      if (!settings.focusReadingMode) {
+                        enterReadingSurface();
+                      }
+
+                      updateSettings({
+                        focusReadingMode: !settings.focusReadingMode
+                      });
+                    }}
+                    type="button"
+                  >
+                    {settings.focusReadingMode ? "Focus reading on" : "Focus reading off"}
+                  </button>
+                  {supportsGreekReading ? (
                     <button
                       className="reader-inline-button reader-settings-link"
-                      disabled={!supportsGreekReading}
                       onClick={applyGreekOnlyPreset}
                       type="button"
                     >
                       Greek only
                     </button>
-                    <button
-                      className="reader-inline-button reader-settings-link"
-                      onClick={applyEverythingOnPreset}
-                      type="button"
-                    >
-                      Everything on
-                    </button>
-                    <button
-                      className="reader-inline-button reader-settings-link"
-                      onClick={applyEverythingOffPreset}
-                      type="button"
-                    >
-                      Everything off
-                    </button>
-                  </div>
+                  ) : null}
                 </div>
-              ) : null}
+              </div>
             </div>
           </div>
           {isFathersMode && !hasGreekReaderAid ? (
@@ -802,6 +847,9 @@ export function ReaderSettingsPanel({
             </div>
           ) : null}
         </section>
+
+        <details className="reader-settings-advanced">
+          <summary className="reader-settings-advanced-summary">Customize</summary>
 
         <section className="reader-settings-section">
           <div className="reader-settings-section-header">
@@ -1160,6 +1208,7 @@ export function ReaderSettingsPanel({
             </div>
           </div>
         </section>
+        </details>
 
         <div className="reader-settings-actions">
           <button className="secondary-button" onClick={resetSettings} type="button">

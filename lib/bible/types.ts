@@ -63,7 +63,11 @@ export type UiFontOption = "sans" | "technical";
 
 export type TextAlignOption = "left" | "justify";
 
+export type ReaderPreset = "reading" | "study" | "audio" | "custom";
+
 export type ReaderCustomizationSettings = {
+  readerPreset: ReaderPreset;
+  focusReadingMode: boolean;
   themePreset: ThemePreset;
   bodyFont: BodyFontOption;
   greekFont: GreekFontOption;

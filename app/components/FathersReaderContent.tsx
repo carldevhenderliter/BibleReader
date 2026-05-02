@@ -188,14 +188,24 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
     );
   const readingSurfaceRef = useRef<HTMLDivElement | null>(null);
   const workAudioSource = useBookAudioSource(payload.work.slug);
+  const isFocusReading = settings.focusReadingMode;
   const bottomBarPanel = useMemo(
     () => (
       <ReaderBookAudioPlayer
         audioSource={workAudioSource}
         emptyMessage="No audio file available for this Fathers work yet."
+        resumeSession={{
+          autoplayKey: payload.work.slug,
+          bookSlug: payload.work.slug,
+          bookName: payload.work.title,
+          chapter: 1,
+          view: "book",
+          version: "web",
+          href: `/fathers/${payload.work.slug}`
+        }}
       />
     ),
-    [workAudioSource]
+    [payload.work.slug, payload.work.title, workAudioSource]
   );
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
   const sectionOptions = useMemo(
@@ -421,7 +431,7 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
 
   const trailingActions = (
     <>
-      {hasGreekLearningSurface ? (
+      {!isFocusReading && hasGreekLearningSurface ? (
         <button
           className={`reader-inline-button${isGreekLearningMode ? " is-active" : ""}`}
           onClick={() => setIsGreekLearningMode(!isGreekLearningMode)}
@@ -430,13 +440,15 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
           {isGreekLearningMode ? "Stop Learning" : "Learn Greek"}
         </button>
       ) : null}
-      <ReaderCopyButton targetRef={readingSurfaceRef} />
-      {annotationActions}
+      {!isFocusReading ? <ReaderCopyButton targetRef={readingSurfaceRef} /> : null}
+      {!isFocusReading ? annotationActions : null}
     </>
   );
 
   return (
-    <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
+    <ReaderCustomizationShell
+      className={`reader-shell reader-customizable-shell${isFocusReading ? " is-focus-reading" : ""}`}
+    >
       <ReaderSettingsPanel hasGreekReaderAid={hasGreekReaderAid} mode="fathers" />
       <section className="reader-card reader-reading-card">
         <div className={`reader-topline${isToplineVisible ? "" : " is-hidden"}`}>
@@ -470,6 +482,7 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
                 onSectionChange={handleSectionChange}
                 sections={sectionOptions}
                 trailingActions={trailingActions}
+                utilityMode={isFocusReading ? "menu-only" : "full"}
                 works={workOptions}
                 libraryHref="/fathers"
               />

@@ -1,5 +1,7 @@
 import manifest from "@/data/source/book-audio-manifest.json";
 import { getAssetPath } from "@/lib/asset-path";
+import { getBooksForOrderMode, type BibleBookOrderMode } from "@/lib/bible/book-order";
+import type { BookMeta } from "@/lib/bible/types";
 
 type BookAudioManifestEntry = {
   bookSlug: string;
@@ -52,4 +54,27 @@ export function getBookAudioCandidateSources(bookSlug: string): BookAudioSource[
       assetPath: getAssetPath(src)
     };
   });
+}
+
+export function getNextBookWithAudio(
+  books: BookMeta[],
+  currentBookSlug: string,
+  mode: BibleBookOrderMode
+): BookMeta | null {
+  const orderedBooks = getBooksForOrderMode(books, mode);
+  const currentBookIndex = orderedBooks.findIndex((book) => book.slug === currentBookSlug);
+
+  if (currentBookIndex === -1) {
+    return null;
+  }
+
+  for (let index = currentBookIndex + 1; index < orderedBooks.length; index += 1) {
+    const nextBook = orderedBooks[index];
+
+    if (nextBook && getBookAudioSource(nextBook.slug)) {
+      return nextBook;
+    }
+  }
+
+  return null;
 }

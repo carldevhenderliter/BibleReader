@@ -91,6 +91,14 @@ describe("HomePageContent", () => {
       .closest("section");
 
     expect(oldTestamentSection).not.toBeNull();
+    expect(screen.getByRole("link", { name: "Open Harmony" })).toHaveAttribute(
+      "href",
+      "/read/gospel-harmony"
+    );
+    expect(screen.getByRole("link", { name: "Open Fathers" })).toHaveAttribute(
+      "href",
+      "/fathers"
+    );
     expect(screen.getByRole("link", { name: "Open Genesis" })).toHaveAttribute(
       "href",
       "/read/genesis"

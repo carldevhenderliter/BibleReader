@@ -59,7 +59,15 @@ export function ReaderCustomizationProvider({ children }: PropsWithChildren) {
       setIsPanelOpen,
       settings,
       updateSettings: (updates) => {
-        setSettings((current) => normalizeReaderCustomization({ ...current, ...updates }));
+        setSettings((current) =>
+          normalizeReaderCustomization({
+            ...current,
+            ...updates,
+            ...(Object.prototype.hasOwnProperty.call(updates, "readerPreset")
+              ? {}
+              : { readerPreset: "custom" })
+          })
+        );
       },
       resetSettings: () => {
         setSettings(DEFAULT_READER_CUSTOMIZATION);

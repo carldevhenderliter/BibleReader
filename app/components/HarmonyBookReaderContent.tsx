@@ -36,7 +36,7 @@ export function HarmonyBookReaderContent({
   currentChapter,
   view
 }: HarmonyBookReaderContentProps) {
-  const { isPanelOpen } = useReaderCustomization();
+  const { isPanelOpen, settings } = useReaderCustomization();
   const { canCollapseSplitPane, collapseSplitPane, isSplitViewActive } = useLookup();
   const {
     activeReaderPane,
@@ -58,10 +58,20 @@ export function HarmonyBookReaderContent({
       <ReaderBookAudioPlayer
         audioSource={bookAudioSource}
         emptyMessage="No audio file available for the Gospel Harmony yet."
+        resumeSession={{
+          autoplayKey: book.slug,
+          bookSlug: book.slug,
+          bookName: book.name,
+          chapter: currentChapter,
+          view,
+          version: "esv",
+          href: view === "book" ? `/read/${book.slug}` : `/read/${book.slug}/${currentChapter}`
+        }}
       />
     ),
-    [bookAudioSource]
+    [book.name, book.slug, bookAudioSource, currentChapter, view]
   );
+  const isFocusReading = settings.focusReadingMode;
   const events = useMemo(() => getGospelHarmonyTemplateEvents(), []);
   const currentEvent = events[currentChapter - 1] ?? null;
   const visibleEvents = useMemo(() => {
@@ -89,7 +99,9 @@ export function HarmonyBookReaderContent({
   useRegisterReaderBottomBarPanel(bottomBarPanel);
 
   return (
-    <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
+    <ReaderCustomizationShell
+      className={`reader-shell reader-customizable-shell${isFocusReading ? " is-focus-reading" : ""}`}
+    >
       <ReadingSessionSync book={book.slug} chapter={currentChapter} view={view} />
       <ReaderSettingsPanel book={book} currentChapter={currentChapter} view={view} />
       <section className="reader-card reader-reading-card">
@@ -116,7 +128,7 @@ export function HarmonyBookReaderContent({
                 currentChapter={currentChapter}
                 trailingActions={
                   <>
-                    <ReaderCopyButton targetRef={readingSurfaceRef} />
+                    {!isFocusReading ? <ReaderCopyButton targetRef={readingSurfaceRef} /> : null}
                     {isSplitViewActive ? (
                       <button
                         aria-label="Hide reader pane"
@@ -130,6 +142,8 @@ export function HarmonyBookReaderContent({
                     ) : null}
                   </>
                 }
+                showBookOrderControl={!isFocusReading}
+                utilityMode={isFocusReading ? "menu-only" : "full"}
                 view={view}
               />
             </div>

@@ -2,6 +2,7 @@ import type {
   BodyFontOption,
   GreekFontOption,
   HebrewFontOption,
+  ReaderPreset,
   ReaderCustomizationSettings,
   TextAlignOption,
   ThemePreset,
@@ -129,6 +130,8 @@ export const UI_FONT_OPTIONS = [
 ] satisfies Array<{ id: UiFontOption; name: string; description: string }>;
 
 export const DEFAULT_READER_CUSTOMIZATION: ReaderCustomizationSettings = {
+  readerPreset: "reading",
+  focusReadingMode: false,
   themePreset: "neon",
   bodyFont: "serif",
   greekFont: "classic",
@@ -236,6 +239,10 @@ function isTextAlignOption(value: unknown): value is TextAlignOption {
   return value === "left" || value === "justify";
 }
 
+function isReaderPreset(value: unknown): value is ReaderPreset {
+  return value === "reading" || value === "study" || value === "audio" || value === "custom";
+}
+
 export function normalizeReaderCustomization(value: unknown): ReaderCustomizationSettings {
   if (!value || typeof value !== "object") {
     return DEFAULT_READER_CUSTOMIZATION;
@@ -285,6 +292,13 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
     (typeof candidate.bodyTextSize === "number" || typeof candidate.textSize === "number");
 
   return {
+    readerPreset: isReaderPreset(candidate.readerPreset)
+      ? candidate.readerPreset
+      : DEFAULT_READER_CUSTOMIZATION.readerPreset,
+    focusReadingMode:
+      typeof candidate.focusReadingMode === "boolean"
+        ? candidate.focusReadingMode
+        : DEFAULT_READER_CUSTOMIZATION.focusReadingMode,
     themePreset: isThemePreset(candidate.themePreset)
       ? candidate.themePreset
       : DEFAULT_READER_CUSTOMIZATION.themePreset,

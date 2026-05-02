@@ -29,12 +29,12 @@ import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { VerseList } from "@/app/components/VerseList";
 import {
   BIBLE_BOOK_ORDER_STORAGE_KEY,
-  getNextBookForOrderMode,
   normalizeBibleBookOrderMode
 } from "@/lib/bible/book-order";
 import {
   BOOK_AUDIO_AUTOPLAY_STORAGE_KEY,
-  getBookAudioSource
+  getBookAudioSource,
+  getNextBookWithAudio
 } from "@/lib/bible/book-audio";
 import type {
   BookMeta,
@@ -105,6 +105,24 @@ export function ReaderPageContent({
     : undefined;
   const versionBadge = getBibleVersionBadge(version);
   const bookAudioSource = useBookAudioSource(book.slug);
+  const [audioBookOrderMode, setAudioBookOrderMode] = useState<
+    "canonical" | "chronological-old-testament" | "chronological-new-testament"
+  >("canonical");
+  const nextAudioBook = useMemo(
+    () => getNextBookWithAudio(books, book.slug, audioBookOrderMode),
+    [audioBookOrderMode, book.slug, books]
+  );
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    setAudioBookOrderMode(
+      normalizeBibleBookOrderMode(window.localStorage.getItem(BIBLE_BOOK_ORDER_STORAGE_KEY))
+    );
+  }, [book.slug]);
+
   const handleBookAudioEnded = useCallback(() => {
     if (!bookAudioSource) {
       return;
@@ -116,18 +134,17 @@ export function ReaderPageContent({
         : normalizeBibleBookOrderMode(
             window.localStorage.getItem(BIBLE_BOOK_ORDER_STORAGE_KEY)
           );
-    const nextBook = getNextBookForOrderMode(books, book.slug, bookOrderMode);
+    const nextBook = getNextBookWithAudio(books, book.slug, bookOrderMode);
 
     if (!nextBook) {
+      if (typeof window !== "undefined") {
+        window.sessionStorage.removeItem(BOOK_AUDIO_AUTOPLAY_STORAGE_KEY);
+      }
       return;
     }
 
-    if (typeof window !== "undefined") {
-      if (getBookAudioSource(nextBook.slug)) {
-        window.sessionStorage.setItem(BOOK_AUDIO_AUTOPLAY_STORAGE_KEY, nextBook.slug);
-      } else {
-        window.sessionStorage.removeItem(BOOK_AUDIO_AUTOPLAY_STORAGE_KEY);
-      }
+    if (typeof window !== "undefined" && getBookAudioSource(nextBook.slug)) {
+      window.sessionStorage.setItem(BOOK_AUDIO_AUTOPLAY_STORAGE_KEY, nextBook.slug);
     }
 
     router.push(getChapterHref(nextBook.slug, 1, version));
@@ -137,10 +154,28 @@ export function ReaderPageContent({
       <ReaderBookAudioPlayer
         audioSource={bookAudioSource}
         autoPlayBookSlug={book.slug}
+        nextUpLabel={nextAudioBook?.name ?? null}
         onEnded={handleBookAudioEnded}
+        resumeSession={{
+          autoplayKey: book.slug,
+          bookSlug: book.slug,
+          bookName: book.name,
+          chapter: chapter?.chapterNumber ?? 1,
+          view: "chapter",
+          version,
+          href: getChapterHref(book.slug, chapter?.chapterNumber ?? 1, version)
+        }}
       />
     ),
-    [book.slug, bookAudioSource, handleBookAudioEnded]
+    [
+      book.name,
+      book.slug,
+      bookAudioSource,
+      chapter?.chapterNumber,
+      handleBookAudioEnded,
+      nextAudioBook?.name,
+      version
+    ]
   );
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
@@ -166,6 +201,7 @@ export function ReaderPageContent({
   const activeHighlightedVerseNumber =
     activeHighlightedVerseRange !== null ? null : (highlightedVerseNumber ?? urlHighlightedVerseNumber);
   const isOldTestament = book.testament === "Old";
+  const isFocusReading = settings.focusReadingMode;
   useRegisterReaderBottomBarPanel(bottomBarPanel);
   const hasGreekLearningSurface =
     version === "greek"
@@ -220,7 +256,9 @@ export function ReaderPageContent({
   }, [book.slug, chapter.chapterNumber, clearGreekLearningQuiz, version]);
 
   return (
-    <ReaderCustomizationShell className="reader-shell reader-customizable-shell">
+    <ReaderCustomizationShell
+      className={`reader-shell reader-customizable-shell${isFocusReading ? " is-focus-reading" : ""}`}
+    >
       <ReadingSessionSync book={book.slug} chapter={chapter.chapterNumber} view="chapter" />
       <ReaderSettingsPanel book={book} currentChapter={chapter.chapterNumber} view="chapter" />
       <section className="reader-card reader-reading-card">
@@ -244,9 +282,10 @@ export function ReaderPageContent({
                 book={book}
                 books={books}
                 currentChapter={chapter.chapterNumber}
+                showBookOrderControl={!isFocusReading}
                 trailingActions={
                   <>
-                    {hasBibleGreekAnnotationSurface ? (
+                    {!isFocusReading && hasBibleGreekAnnotationSurface ? (
                       <button
                         className={`reader-inline-button${annotationMode ? " is-active" : ""}`}
                         onClick={() => setAnnotationMode((current) => !current)}
@@ -255,7 +294,7 @@ export function ReaderPageContent({
                         {annotationMode ? "Done annotating" : "Annotate Greek"}
                       </button>
                     ) : null}
-                    {hasGreekLearningSurface ? (
+                    {!isFocusReading && hasGreekLearningSurface ? (
                       <button
                         className={`reader-inline-button${isGreekLearningMode ? " is-active" : ""}`}
                         onClick={() => setIsGreekLearningMode(!isGreekLearningMode)}
@@ -264,7 +303,7 @@ export function ReaderPageContent({
                         {isGreekLearningMode ? "Stop Learning" : "Learn Greek"}
                       </button>
                     ) : null}
-                    <ReaderCopyButton targetRef={readingSurfaceRef} />
+                    {!isFocusReading ? <ReaderCopyButton targetRef={readingSurfaceRef} /> : null}
                     {isSplitViewActive ? (
                       <button
                         aria-label="Hide reader pane"
@@ -278,12 +317,13 @@ export function ReaderPageContent({
                     ) : null}
                   </>
                 }
+                utilityMode={isFocusReading ? "menu-only" : "full"}
                 view="chapter"
               />
             </div>
           </div>
         </div>
-        <ReaderContentTabs showHarmony showOtCompare={isOldTestament} />
+        {!isFocusReading ? <ReaderContentTabs showHarmony showOtCompare={isOldTestament} /> : null}
         {activeReaderPane === "study-sets" ? (
           <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderStudySetsPanel bookSlug={book.slug} chapterNumber={chapter.chapterNumber} />

@@ -4,11 +4,25 @@ import {
   BOOK_AUDIO_AUTOPLAY_STORAGE_KEY,
   type BookAudioSource
 } from "@/lib/bible/book-audio";
+import { LAST_AUDIO_SESSION_STORAGE_KEY } from "@/lib/bible/constants";
+import type { BibleVersion, ReadingView } from "@/lib/bible/types";
+
+type ReaderAudioResumeSession = {
+  autoplayKey: string;
+  bookSlug: string;
+  bookName: string;
+  chapter: number;
+  view: ReadingView;
+  version: BibleVersion;
+  href: string;
+};
 
 type ReaderBookAudioPlayerProps = {
   audioSource: BookAudioSource | null;
   autoPlayBookSlug?: string | null;
   emptyMessage?: string;
+  nextUpLabel?: string | null;
+  resumeSession?: ReaderAudioResumeSession | null;
   onEnded?: () => void;
 };
 
@@ -16,10 +30,28 @@ export function ReaderBookAudioPlayer({
   audioSource,
   autoPlayBookSlug = null,
   emptyMessage = "No audio file available for this reader yet.",
+  nextUpLabel = null,
+  resumeSession = null,
   onEnded
 }: ReaderBookAudioPlayerProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isAutoplayPending, setIsAutoplayPending] = useState(false);
+  const [hasFinishedQueue, setHasFinishedQueue] = useState(false);
+
+  const persistResumeSession = () => {
+    if (typeof window === "undefined" || !audioSource || !resumeSession) {
+      return;
+    }
+
+    window.localStorage.setItem(
+      LAST_AUDIO_SESSION_STORAGE_KEY,
+      JSON.stringify({
+        ...resumeSession,
+        sourceFilename: audioSource.sourceFilename,
+        updatedAt: new Date().toISOString()
+      })
+    );
+  };
 
   useEffect(() => {
     if (typeof window === "undefined" || !autoPlayBookSlug || !audioSource) {
@@ -31,6 +63,10 @@ export function ReaderBookAudioPlayer({
       window.sessionStorage.getItem(BOOK_AUDIO_AUTOPLAY_STORAGE_KEY) === autoPlayBookSlug
     );
   }, [audioSource, autoPlayBookSlug]);
+
+  useEffect(() => {
+    setHasFinishedQueue(false);
+  }, [audioSource?.assetPath]);
 
   useEffect(() => {
     if (
@@ -101,9 +137,24 @@ export function ReaderBookAudioPlayer({
     <div className="reader-audio-bar" role="region" aria-label="Book audio">
       <div className="reader-audio-copy">
         <p className="reader-toolbar-summary">Book audio</p>
-        <p className="reader-toolbar-meta">
-          {audioSource?.sourceFilename ?? emptyMessage}
-        </p>
+        <p className="reader-toolbar-meta">{audioSource?.sourceFilename ?? emptyMessage}</p>
+        {audioSource && resumeSession ? (
+          <p className="reader-toolbar-meta">
+            Now playing:{" "}
+            {resumeSession.view === "chapter"
+              ? `${resumeSession.bookName} ${resumeSession.chapter}`
+              : resumeSession.bookName}
+          </p>
+        ) : null}
+        {audioSource ? (
+          <p className="reader-toolbar-meta">
+            {nextUpLabel
+              ? `Next audio: ${nextUpLabel}`
+              : hasFinishedQueue
+                ? "Audio queue complete."
+                : "No later book audio in the current queue."}
+          </p>
+        ) : null}
         {audioSource ? (
           <a
             className="reader-audio-link"
@@ -119,7 +170,15 @@ export function ReaderBookAudioPlayer({
         autoPlay={isAutoplayPending}
         className="reader-audio-player"
         controls
-        onEnded={onEnded}
+        onEnded={() => {
+          setHasFinishedQueue(!nextUpLabel);
+          onEnded?.();
+        }}
+        onPause={persistResumeSession}
+        onPlay={() => {
+          setHasFinishedQueue(false);
+          persistResumeSession();
+        }}
         preload="none"
         ref={audioRef}
         src={audioSource?.assetPath}

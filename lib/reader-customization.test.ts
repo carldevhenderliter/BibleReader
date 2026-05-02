@@ -48,6 +48,8 @@ describe("reader customization", () => {
         surfaceDepth: 9
       })
     ).toEqual({
+      readerPreset: "reading",
+      focusReadingMode: false,
       themePreset: "ember",
       bodyFont: "mono",
       greekFont: "modern",
@@ -94,6 +96,8 @@ describe("reader customization", () => {
 
   it("maps settings to per-layer css custom properties", () => {
     const variables = getReaderCustomizationVariables({
+      readerPreset: "reading",
+      focusReadingMode: false,
       themePreset: "aurora",
       bodyFont: "humanist",
       greekFont: "scholarly",
