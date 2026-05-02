@@ -243,7 +243,7 @@ export function ReaderBookAudioPlayer({
         <button
           aria-controls="reader-audio-panel"
           aria-label="Show audio"
-          className="reader-inline-button reader-audio-drawer-tab"
+          className="split-pane-rail-button reader-audio-drawer-tab"
           onClick={() => setPlayerVisibility(true)}
           type="button"
         >
