@@ -14,25 +14,32 @@ import {
 
 type ReaderBottomBarContextValue = {
   bottomBarPanel: ReactNode;
+  bottomBarDockControl: ReactNode;
   setBottomBarPanel: Dispatch<SetStateAction<ReactNode>>;
+  setBottomBarDockControl: Dispatch<SetStateAction<ReactNode>>;
 };
 
 const noop = () => {};
 
 const ReaderBottomBarContext = createContext<ReaderBottomBarContextValue>({
   bottomBarPanel: null,
-  setBottomBarPanel: noop as Dispatch<SetStateAction<ReactNode>>
+  bottomBarDockControl: null,
+  setBottomBarPanel: noop as Dispatch<SetStateAction<ReactNode>>,
+  setBottomBarDockControl: noop as Dispatch<SetStateAction<ReactNode>>
 });
 
 export function ReaderBottomBarProvider({ children }: PropsWithChildren) {
   const [bottomBarPanel, setBottomBarPanel] = useState<ReactNode>(null);
+  const [bottomBarDockControl, setBottomBarDockControl] = useState<ReactNode>(null);
 
   const value = useMemo(
     () => ({
       bottomBarPanel,
-      setBottomBarPanel
+      bottomBarDockControl,
+      setBottomBarPanel,
+      setBottomBarDockControl
     }),
-    [bottomBarPanel]
+    [bottomBarDockControl, bottomBarPanel]
   );
 
   return (
@@ -56,4 +63,16 @@ export function useRegisterReaderBottomBarPanel(panel: ReactNode) {
       setBottomBarPanel(null);
     };
   }, [panel, setBottomBarPanel]);
+}
+
+export function useRegisterReaderBottomBarDockControl(control: ReactNode) {
+  const { setBottomBarDockControl } = useReaderBottomBar();
+
+  useEffect(() => {
+    setBottomBarDockControl(control);
+
+    return () => {
+      setBottomBarDockControl(null);
+    };
+  }, [control, setBottomBarDockControl]);
 }

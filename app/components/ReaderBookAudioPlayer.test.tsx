@@ -1,8 +1,18 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 
 import { ReaderBookAudioPlayer } from "@/app/components/ReaderBookAudioPlayer";
+import {
+  ReaderBottomBarProvider,
+  useReaderBottomBar
+} from "@/app/components/ReaderBottomBarProvider";
 import { BOOK_AUDIO_AUTOPLAY_STORAGE_KEY } from "@/lib/bible/book-audio";
 import { AUDIO_PLAYER_VISIBILITY_STORAGE_KEY } from "@/lib/bible/constants";
+
+function ReaderBottomBarDockControlHost() {
+  const { bottomBarDockControl } = useReaderBottomBar();
+
+  return bottomBarDockControl ? <div data-testid="reader-bottom-bar-dock-control">{bottomBarDockControl}</div> : null;
+}
 
 describe("ReaderBookAudioPlayer", () => {
   const originalPlay = HTMLMediaElement.prototype.play;
@@ -54,14 +64,17 @@ describe("ReaderBookAudioPlayer", () => {
 
   it("lets the reader hide and show the audio player", () => {
     render(
-      <ReaderBookAudioPlayer
-        audioSource={{
-          bookSlug: "galatians",
-          sourceFilename: "Galatians.mp3",
-          src: "/book-audio/galatians.mp3",
-          assetPath: "/book-audio/galatians.mp3"
-        }}
-      />
+      <ReaderBottomBarProvider>
+        <ReaderBookAudioPlayer
+          audioSource={{
+            bookSlug: "galatians",
+            sourceFilename: "Galatians.mp3",
+            src: "/book-audio/galatians.mp3",
+            assetPath: "/book-audio/galatians.mp3"
+          }}
+        />
+        <ReaderBottomBarDockControlHost />
+      </ReaderBottomBarProvider>
     );
 
     fireEvent.click(screen.getByRole("button", { name: "Hide audio" }));

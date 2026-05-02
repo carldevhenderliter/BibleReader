@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import {
   BOOK_AUDIO_AUTOPLAY_STORAGE_KEY,
@@ -8,6 +8,7 @@ import {
   AUDIO_PLAYER_VISIBILITY_STORAGE_KEY,
   LAST_AUDIO_SESSION_STORAGE_KEY
 } from "@/lib/bible/constants";
+import { useRegisterReaderBottomBarDockControl } from "@/app/components/ReaderBottomBarProvider";
 import type { BibleVersion, ReadingView } from "@/lib/bible/types";
 
 type ReaderAudioResumeSession = {
@@ -169,6 +170,24 @@ export function ReaderBookAudioPlayer({
     };
   }, [audioSource, autoPlayBookSlug, isAutoplayPending]);
 
+  const dockControl = useMemo(
+    () =>
+      !isPlayerVisible ? (
+        <button
+          aria-controls="reader-audio-panel"
+          aria-label="Show audio"
+          className="split-pane-rail-button reader-audio-drawer-tab"
+          onClick={() => setPlayerVisibility(true)}
+          type="button"
+        >
+          Audio
+        </button>
+      ) : null,
+    [isPlayerVisible]
+  );
+
+  useRegisterReaderBottomBarDockControl(dockControl);
+
   return (
     <div className={`reader-audio-drawer${isPlayerVisible ? " is-visible" : " is-hidden"}`}>
       <div
@@ -239,17 +258,6 @@ export function ReaderBookAudioPlayer({
           </audio>
         </div>
       </div>
-      {!isPlayerVisible ? (
-        <button
-          aria-controls="reader-audio-panel"
-          aria-label="Show audio"
-          className="split-pane-rail-button reader-audio-drawer-tab"
-          onClick={() => setPlayerVisibility(true)}
-          type="button"
-        >
-          Audio
-        </button>
-      ) : null}
     </div>
   );
 }

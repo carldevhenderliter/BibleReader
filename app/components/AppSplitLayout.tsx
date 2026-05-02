@@ -4,6 +4,7 @@ import type { PropsWithChildren } from "react";
 import { useMemo } from "react";
 
 import { LookupPane } from "@/app/components/LookupPane";
+import { useReaderBottomBar } from "@/app/components/ReaderBottomBarProvider";
 import { SearchPane } from "@/app/components/SearchPane";
 import { useLookup } from "@/app/components/LookupProvider";
 
@@ -12,6 +13,7 @@ function getRootFontSize() {
 }
 
 export function AppSplitLayout({ children }: PropsWithChildren) {
+  const { bottomBarDockControl } = useReaderBottomBar();
   const {
     collapsedSplitPanes,
     expandSplitPane,
@@ -26,7 +28,12 @@ export function AppSplitLayout({ children }: PropsWithChildren) {
 
   const hasCollapsedPaneDock =
     isSplitViewActive &&
-    (collapsedSplitPanes.reader || collapsedSplitPanes.search || collapsedSplitPanes.study);
+    (
+      collapsedSplitPanes.reader ||
+      collapsedSplitPanes.search ||
+      collapsedSplitPanes.study ||
+      bottomBarDockControl
+    );
   const showReaderPane = isSplitViewActive ? !collapsedSplitPanes.reader : true;
   const showSearchPane = isSplitViewActive ? !collapsedSplitPanes.search : false;
   const showStudyPane = isSplitViewActive ? !collapsedSplitPanes.study : false;
@@ -155,6 +162,7 @@ export function AppSplitLayout({ children }: PropsWithChildren) {
               Study
             </button>
           ) : null}
+          {bottomBarDockControl}
         </aside>
       ) : null}
       {showReaderPane ? (

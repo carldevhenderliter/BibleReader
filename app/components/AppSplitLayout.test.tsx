@@ -1,9 +1,13 @@
 import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import { useMemo } from "react";
 
 import { AppSplitLayout } from "@/app/components/AppSplitLayout";
 import { BottomSearchBar } from "@/app/components/BottomSearchBar";
 import { LookupProvider } from "@/app/components/LookupProvider";
-import { ReaderBottomBarProvider } from "@/app/components/ReaderBottomBarProvider";
+import {
+  ReaderBottomBarProvider,
+  useRegisterReaderBottomBarDockControl
+} from "@/app/components/ReaderBottomBarProvider";
 import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
 import { ReaderVersionProvider } from "@/app/components/ReaderVersionProvider";
@@ -46,6 +50,21 @@ function renderSplitLayout() {
       </ReaderWorkspaceProvider>
     </ReaderVersionProvider>
   );
+}
+
+function AudioDockControlHarness() {
+  const control = useMemo(
+    () => (
+      <button aria-label="Show audio" className="split-pane-rail-button" type="button">
+        Audio
+      </button>
+    ),
+    []
+  );
+
+  useRegisterReaderBottomBarDockControl(control);
+
+  return null;
 }
 
 function setDesktopMode(isDesktop: boolean) {
@@ -246,6 +265,30 @@ describe("AppSplitLayout", () => {
       "Show reader pane",
       "Show search pane"
     ]);
+  });
+
+  it("shows the hidden audio tab in the collapsed panes dock", async () => {
+    render(
+      <ReaderVersionProvider>
+        <ReaderWorkspaceProvider>
+          <LookupProvider>
+            <ReaderCustomizationProvider>
+              <ReaderBottomBarProvider>
+                <SearchCustomizationProvider>
+                  <AudioDockControlHarness />
+                  <AppSplitLayout>
+                    <div>Reader content</div>
+                  </AppSplitLayout>
+                </SearchCustomizationProvider>
+              </ReaderBottomBarProvider>
+            </ReaderCustomizationProvider>
+          </LookupProvider>
+        </ReaderWorkspaceProvider>
+      </ReaderVersionProvider>
+    );
+
+    const dock = await screen.findByLabelText("Collapsed panes dock");
+    expect(within(dock).getByRole("button", { name: "Show audio" })).toBeInTheDocument();
   });
 
   it("does not render split dividers on mobile", () => {

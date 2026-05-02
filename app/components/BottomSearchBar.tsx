@@ -19,7 +19,7 @@ import {
 export function BottomSearchBar() {
   const { version } = useReaderVersion();
   const { style } = useSearchCustomization();
-  const { bottomBarPanel } = useReaderBottomBar();
+  const { bottomBarDockControl, bottomBarPanel } = useReaderBottomBar();
   const {
     clearSearch,
     closeSearch,
@@ -167,6 +167,9 @@ export function BottomSearchBar() {
         <div className="search-shell-dock-row">
           {bottomBarPanel ? (
             <div className="search-shell-reader-panel">{bottomBarPanel}</div>
+          ) : null}
+          {!isSplitViewActive && bottomBarDockControl ? (
+            <div className="search-shell-reader-dock-control">{bottomBarDockControl}</div>
           ) : null}
           <div
             className={`search-bar${shouldCollapseBar ? " search-bar-collapsed" : ""}`}

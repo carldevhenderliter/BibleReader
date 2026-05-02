@@ -3634,6 +3634,10 @@ button.fathers-annotation-anchor:focus-visible {
   width: min(100%, 58rem);
 }
 
+.search-shell-reader-dock-control {
+  pointer-events: auto;
+}
+
 .search-shell-reader-panel .reader-audio-bar {
   width: 100%;
   margin: 0;
