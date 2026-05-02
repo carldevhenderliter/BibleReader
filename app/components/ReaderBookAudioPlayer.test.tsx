@@ -64,17 +64,16 @@ describe("ReaderBookAudioPlayer", () => {
       />
     );
 
-    const audioElement = screen.getByLabelText("Book audio");
     fireEvent.click(screen.getByRole("button", { name: "Hide audio" }));
 
     expect(screen.getByRole("button", { name: "Show audio" })).toBeInTheDocument();
-    expect(audioElement.querySelector("audio")).toHaveAttribute("hidden");
+    expect(screen.queryByRole("region", { name: "Book audio" })).not.toBeInTheDocument();
     expect(window.localStorage.getItem(AUDIO_PLAYER_VISIBILITY_STORAGE_KEY)).toBe("false");
 
     fireEvent.click(screen.getByRole("button", { name: "Show audio" }));
 
     expect(screen.getByRole("button", { name: "Hide audio" })).toBeInTheDocument();
-    expect(audioElement.querySelector("audio")).not.toHaveAttribute("hidden");
+    expect(screen.getByRole("region", { name: "Book audio" })).toBeInTheDocument();
     expect(window.localStorage.getItem(AUDIO_PLAYER_VISIBILITY_STORAGE_KEY)).toBe("true");
   });
 });

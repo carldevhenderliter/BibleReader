@@ -799,6 +799,32 @@ select {
   padding-top: 0.95rem;
 }
 
+.reader-audio-drawer {
+  position: relative;
+  width: 100%;
+}
+
+.reader-audio-drawer-panel {
+  max-height: 18rem;
+  opacity: 1;
+  overflow: hidden;
+  transition:
+    max-height 220ms ease,
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+.reader-audio-drawer.is-hidden {
+  width: auto;
+}
+
+.reader-audio-drawer.is-hidden .reader-audio-drawer-panel {
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-1rem);
+}
+
 .reader-audio-bar {
   display: flex;
   flex-wrap: wrap;
@@ -811,20 +837,11 @@ select {
   background: rgba(12, 18, 30, 0.34);
 }
 
-.reader-audio-bar.is-collapsed {
-  gap: 0.65rem;
-  padding-bottom: 0.85rem;
-}
-
 .reader-audio-copy {
   display: grid;
   gap: 0.16rem;
   flex: 1 1 13rem;
   min-width: 0;
-}
-
-.reader-audio-bar.is-collapsed .reader-audio-copy {
-  flex-basis: auto;
 }
 
 .reader-audio-player {
@@ -837,6 +854,14 @@ select {
 
 .reader-audio-toggle {
   flex: 0 0 auto;
+}
+
+.reader-audio-drawer-tab {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  min-height: 0;
+  padding: 0.75rem 0.38rem;
+  border-radius: 1rem;
 }
 
 .reader-audio-link {
@@ -5987,8 +6012,11 @@ button.fathers-annotation-anchor:focus-visible {
     border-radius: 0.9rem;
   }
 
-  .search-shell-reader-panel .reader-audio-bar.is-collapsed {
-    padding-bottom: 0.42rem;
+  .search-shell-reader-panel .reader-audio-drawer-tab {
+    margin-left: 0;
+    padding: 0.62rem 0.32rem;
+    border-radius: 0.82rem;
+    font-size: 0.72rem;
   }
 
   .reader-audio-copy {

@@ -170,15 +170,15 @@ export function ReaderBookAudioPlayer({
   }, [audioSource, autoPlayBookSlug, isAutoplayPending]);
 
   return (
-    <div
-      className={`reader-audio-bar${isPlayerVisible ? "" : " is-collapsed"}`}
-      role="region"
-      aria-label="Book audio"
-    >
-      <div className="reader-audio-copy">
-        <p className="reader-toolbar-summary">Book audio</p>
-        {isPlayerVisible ? (
-          <>
+    <div className={`reader-audio-drawer${isPlayerVisible ? " is-visible" : " is-hidden"}`}>
+      <div
+        aria-hidden={!isPlayerVisible}
+        className="reader-audio-drawer-panel"
+        id="reader-audio-panel"
+      >
+        <div className="reader-audio-bar" role="region" aria-label="Book audio">
+          <div className="reader-audio-copy">
+            <p className="reader-toolbar-summary">Book audio</p>
             <p className="reader-toolbar-meta">{audioSource?.sourceFilename ?? emptyMessage}</p>
             {audioSource && resumeSession ? (
               <p className="reader-toolbar-meta">
@@ -207,39 +207,49 @@ export function ReaderBookAudioPlayer({
                 Open audio file
               </a>
             ) : null}
-          </>
-        ) : null}
+          </div>
+          <button
+            aria-expanded={isPlayerVisible}
+            className="reader-inline-button reader-audio-toggle"
+            onClick={() => setPlayerVisibility(false)}
+            type="button"
+          >
+            Hide audio
+          </button>
+          <audio
+            autoPlay={isAutoplayPending}
+            className="reader-audio-player"
+            controls
+            onEnded={() => {
+              setHasFinishedQueue(!nextUpLabel);
+              onEnded?.();
+            }}
+            onPause={persistResumeSession}
+            onPlay={() => {
+              setPlayerVisibility(true);
+              setHasFinishedQueue(false);
+              persistResumeSession();
+            }}
+            preload="none"
+            ref={audioRef}
+            src={audioSource?.assetPath}
+            aria-disabled={audioSource ? undefined : true}
+          >
+            Your browser does not support audio playback.
+          </audio>
+        </div>
       </div>
-      <button
-        aria-expanded={isPlayerVisible}
-        className="reader-inline-button reader-audio-toggle"
-        onClick={() => setPlayerVisibility(!isPlayerVisible)}
-        type="button"
-      >
-        {isPlayerVisible ? "Hide audio" : "Show audio"}
-      </button>
-      <audio
-        autoPlay={isAutoplayPending}
-        className="reader-audio-player"
-        controls
-        onEnded={() => {
-          setHasFinishedQueue(!nextUpLabel);
-          onEnded?.();
-        }}
-        onPause={persistResumeSession}
-        onPlay={() => {
-          setPlayerVisibility(true);
-          setHasFinishedQueue(false);
-          persistResumeSession();
-        }}
-        preload="none"
-        ref={audioRef}
-        src={audioSource?.assetPath}
-        aria-disabled={audioSource ? undefined : true}
-        hidden={!isPlayerVisible}
-      >
-        Your browser does not support audio playback.
-      </audio>
+      {!isPlayerVisible ? (
+        <button
+          aria-controls="reader-audio-panel"
+          aria-label="Show audio"
+          className="reader-inline-button reader-audio-drawer-tab"
+          onClick={() => setPlayerVisibility(true)}
+          type="button"
+        >
+          Audio
+        </button>
+      ) : null}
     </div>
   );
 }
