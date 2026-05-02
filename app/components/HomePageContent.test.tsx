@@ -83,14 +83,11 @@ const fathersWorks: FathersWorkMeta[] = [
 ];
 
 describe("HomePageContent", () => {
-  it("renders books in canonical order grouped by testament", () => {
+  it("renders the Old Testament by default", () => {
     render(<HomePageContent books={books} fathersWorks={fathersWorks} />);
 
     const oldTestamentSection = screen
       .getByRole("heading", { name: "Genesis to Malachi" })
-      .closest("section");
-    const newTestamentSection = screen
-      .getByRole("heading", { name: "Matthew to Revelation" })
       .closest("section");
 
     expect(oldTestamentSection).not.toBeNull();
@@ -105,34 +102,8 @@ describe("HomePageContent", () => {
     expect(
       within(oldTestamentSection as HTMLElement).getAllByRole("link").map((link) => link.getAttribute("href"))
     ).toEqual(["/read/genesis", "/read/exodus", "/read/job"]);
-    expect(newTestamentSection).not.toBeNull();
-    expect(
-      within(newTestamentSection as HTMLElement).getByRole("link", {
-        name: "Open Matthew"
-      })
-    ).toHaveAttribute(
-      "href",
-      "/read/matthew"
-    );
-    expect(
-      within(newTestamentSection as HTMLElement).getByText("c. 70–90 AD")
-    ).toBeInTheDocument();
-    expect(
-      within(newTestamentSection as HTMLElement).getByText("c. 45–62 AD")
-    ).toBeInTheDocument();
-    expect(
-      within(newTestamentSection as HTMLElement).getByRole("link", {
-        name: "Open Gospel Harmony"
-      })
-    ).toHaveAttribute("href", "/read/gospel-harmony");
-    expect(screen.getByRole("link", { name: "Open 1 Clement" })).toHaveAttribute(
-      "href",
-      "/fathers/1-clement"
-    );
-    expect(screen.getByRole("link", { name: "Open The Recognitions of Clement" })).toHaveAttribute(
-      "href",
-      "/fathers/recognitions-of-clement"
-    );
+    expect(screen.queryByRole("heading", { name: "Matthew to Revelation" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Early Christian Study Texts" })).not.toBeInTheDocument();
   });
 
   it("renders the chronological Old Testament section in the configured order", () => {
@@ -161,6 +132,8 @@ describe("HomePageContent", () => {
   it("renders the chronological New Testament section in the configured order", () => {
     render(<HomePageContent books={books} fathersWorks={[]} />);
 
+    fireEvent.click(screen.getByRole("button", { name: "New Testament" }));
+
     fireEvent.click(
       within(
         screen.getByRole("heading", { name: "Matthew to Revelation" }).closest("section") as HTMLElement
@@ -182,23 +155,27 @@ describe("HomePageContent", () => {
   });
 
   it("filters the library by testament", () => {
-    render(<HomePageContent books={books} fathersWorks={[]} />);
+    render(<HomePageContent books={books} fathersWorks={fathersWorks} />);
 
     fireEvent.click(screen.getByRole("button", { name: "New Testament" }));
 
     expect(screen.queryByRole("heading", { name: "Genesis to Malachi" })).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Matthew to Revelation" })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "NT Matthew" })).toHaveAttribute("aria-pressed", "true");
-    expect(screen.queryByRole("button", { name: "OT Genesis" })).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Open Matthew" })).toHaveAttribute("href", "/read/matthew");
+    expect(screen.queryByRole("heading", { name: "Early Christian Study Texts" })).not.toBeInTheDocument();
   });
 
-  it("lets the user hide individual books from the library lists", () => {
-    render(<HomePageContent books={books} fathersWorks={[]} />);
+  it("shows Church Fathers as a separate top-level filter", () => {
+    render(<HomePageContent books={books} fathersWorks={fathersWorks} />);
 
-    fireEvent.click(screen.getByRole("button", { name: "OT Exodus" }));
+    fireEvent.click(screen.getByRole("button", { name: "Church Fathers" }));
 
-    expect(screen.getByRole("button", { name: "OT Exodus" })).toHaveAttribute("aria-pressed", "false");
-    expect(screen.queryByRole("link", { name: "Open Exodus" })).not.toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Open Genesis" })).toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Genesis to Malachi" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Matthew to Revelation" })).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Early Christian Study Texts" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Open 1 Clement" })).toHaveAttribute(
+      "href",
+      "/fathers/1-clement"
+    );
   });
 });

@@ -9,8 +9,8 @@ import {
   getChronologicalOldTestamentBooks
 } from "@/lib/bible/book-order";
 import type { BookMeta } from "@/lib/bible/types";
-import type { FathersWorkMeta } from "@/lib/fathers/types";
 import { getBookHref } from "@/lib/bible/utils";
+import type { FathersWorkMeta } from "@/lib/fathers/types";
 
 type HomePageContentProps = {
   books: BookMeta[];
@@ -22,64 +22,17 @@ export function HomePageContent({ books, fathersWorks = [] }: HomePageContentPro
   const newTestament = books.filter((book) => book.testament === "New");
   const chronologicalOldTestament = getChronologicalOldTestamentBooks(books);
   const chronologicalNewTestament = getChronologicalNewTestamentBooks(books);
-  const [testamentFilter, setTestamentFilter] = useState<"all" | "old" | "new">("all");
-  const [selectedBookSlugs, setSelectedBookSlugs] = useState<string[]>(
-    books.map((book) => book.slug)
-  );
+  const [libraryFilter, setLibraryFilter] = useState<"old" | "new" | "fathers">("old");
   const [oldTestamentOrder, setOldTestamentOrder] = useState<"canonical" | "chronological">(
     "canonical"
   );
   const [newTestamentOrder, setNewTestamentOrder] = useState<"canonical" | "chronological">(
     "canonical"
   );
-  const selectedBookSlugSet = new Set(selectedBookSlugs);
   const displayedOldTestament =
     oldTestamentOrder === "chronological" ? chronologicalOldTestament : oldTestament;
   const displayedNewTestament =
     newTestamentOrder === "chronological" ? chronologicalNewTestament : newTestament;
-  const scopedBooks = books.filter((book) => {
-    if (testamentFilter === "old") {
-      return book.testament === "Old";
-    }
-
-    if (testamentFilter === "new") {
-      return book.testament === "New";
-    }
-
-    return true;
-  });
-  const filteredOldTestament = displayedOldTestament.filter((book) =>
-    selectedBookSlugSet.has(book.slug)
-  );
-  const filteredNewTestament = displayedNewTestament.filter((book) =>
-    selectedBookSlugSet.has(book.slug)
-  );
-
-  function toggleBookVisibility(bookSlug: string) {
-    setSelectedBookSlugs((current) =>
-      current.includes(bookSlug)
-        ? current.filter((slug) => slug !== bookSlug)
-        : [...current, bookSlug]
-    );
-  }
-
-  function showScopedBooks() {
-    setSelectedBookSlugs((current) => {
-      const next = new Set(current);
-
-      scopedBooks.forEach((book) => next.add(book.slug));
-
-      return books
-        .map((book) => book.slug)
-        .filter((slug) => next.has(slug));
-    });
-  }
-
-  function hideScopedBooks() {
-    setSelectedBookSlugs((current) =>
-      current.filter((slug) => !scopedBooks.some((book) => book.slug === slug))
-    );
-  }
 
   return (
     <div className="page-stack">
@@ -133,170 +86,146 @@ export function HomePageContent({ books, fathersWorks = [] }: HomePageContentPro
       <section className="content-card testament-card">
         <div className="section-header">
           <div>
-            <p className="eyebrow">Bible Filter</p>
-            <h2 className="section-title">Choose Which Books To Show</h2>
-            <div className="book-filter-controls" role="group" aria-label="Bible testament filter">
+            <p className="eyebrow">Library Filter</p>
+            <h2 className="section-title">Choose What To Show</h2>
+            <div className="book-filter-controls" role="group" aria-label="Home page library filter">
               <button
-                className={`reader-inline-button${testamentFilter === "all" ? " is-active" : ""}`}
-                onClick={() => setTestamentFilter("all")}
-                type="button"
-              >
-                All Books
-              </button>
-              <button
-                className={`reader-inline-button${testamentFilter === "old" ? " is-active" : ""}`}
-                onClick={() => setTestamentFilter("old")}
+                className={`reader-inline-button${libraryFilter === "old" ? " is-active" : ""}`}
+                onClick={() => setLibraryFilter("old")}
                 type="button"
               >
                 Old Testament
               </button>
               <button
-                className={`reader-inline-button${testamentFilter === "new" ? " is-active" : ""}`}
-                onClick={() => setTestamentFilter("new")}
+                className={`reader-inline-button${libraryFilter === "new" ? " is-active" : ""}`}
+                onClick={() => setLibraryFilter("new")}
                 type="button"
               >
                 New Testament
               </button>
-            </div>
-            <div className="book-filter-controls" role="group" aria-label="Book visibility actions">
-              <button className="reader-inline-button" onClick={showScopedBooks} type="button">
-                Show Filtered Books
-              </button>
-              <button className="reader-inline-button" onClick={hideScopedBooks} type="button">
-                Hide Filtered Books
+              <button
+                className={`reader-inline-button${libraryFilter === "fathers" ? " is-active" : ""}`}
+                onClick={() => setLibraryFilter("fathers")}
+                type="button"
+              >
+                Church Fathers
               </button>
             </div>
           </div>
           <p className="muted-copy testament-meta">
-            {selectedBookSlugs.length} of {books.length} books visible
+            {libraryFilter === "old"
+              ? `${oldTestament.length} books`
+              : libraryFilter === "new"
+                ? `${newTestament.length} books`
+                : `${fathersWorks.length} ${fathersWorks.length === 1 ? "work" : "works"}`}
           </p>
         </div>
-        <div className="book-filter-chip-grid" role="group" aria-label="Book visibility filter">
-          {scopedBooks.map((book) => {
-            const isVisible = selectedBookSlugSet.has(book.slug);
+      </section>
 
-            return (
-              <button
-                aria-pressed={isVisible}
-                className={`book-filter-chip${isVisible ? " is-active" : ""}`}
+      {libraryFilter === "old" ? (
+        <section className="content-card testament-card">
+          <div className="section-header">
+            <div>
+              <p className="eyebrow">Old Testament</p>
+              <h2 className="section-title">Genesis to Malachi</h2>
+              <div className="book-order-controls" role="group" aria-label="Old Testament order">
+                <button
+                  className={`reader-inline-button${
+                    oldTestamentOrder === "canonical" ? " is-active" : ""
+                  }`}
+                  onClick={() => setOldTestamentOrder("canonical")}
+                  type="button"
+                >
+                  Canonical
+                </button>
+                <button
+                  className={`reader-inline-button${
+                    oldTestamentOrder === "chronological" ? " is-active" : ""
+                  }`}
+                  onClick={() => setOldTestamentOrder("chronological")}
+                  type="button"
+                >
+                  Chronological
+                </button>
+              </div>
+            </div>
+            <p className="muted-copy testament-meta">
+              {displayedOldTestament.length} of {oldTestament.length} books
+            </p>
+          </div>
+          <div className="book-grid">
+            {displayedOldTestament.map((book) => (
+              <Link
+                aria-label={`Open ${book.name}`}
+                className="book-link"
+                href={getBookHref(book.slug)}
                 key={book.slug}
-                onClick={() => toggleBookVisibility(book.slug)}
-                type="button"
               >
-                <span className="book-filter-chip-kicker">
-                  {book.testament === "Old" ? "OT" : "NT"}
-                </span>
-                <span>{book.name}</span>
-              </button>
-            );
-          })}
-        </div>
-      </section>
-
-      {testamentFilter !== "new" ? (
-      <section className="content-card testament-card">
-        <div className="section-header">
-          <div>
-            <p className="eyebrow">Old Testament</p>
-            <h2 className="section-title">Genesis to Malachi</h2>
-            <div className="book-order-controls" role="group" aria-label="Old Testament order">
-              <button
-                className={`reader-inline-button${
-                  oldTestamentOrder === "canonical" ? " is-active" : ""
-                }`}
-                onClick={() => setOldTestamentOrder("canonical")}
-                type="button"
-              >
-                Canonical
-              </button>
-              <button
-                className={`reader-inline-button${
-                  oldTestamentOrder === "chronological" ? " is-active" : ""
-                }`}
-                onClick={() => setOldTestamentOrder("chronological")}
-                type="button"
-              >
-                Chronological
-              </button>
-            </div>
-          </div>
-          <p className="muted-copy testament-meta">
-            {filteredOldTestament.length} of {oldTestament.length} books
-          </p>
-        </div>
-        <div className="book-grid">
-          {filteredOldTestament.map((book) => (
-            <Link
-              aria-label={`Open ${book.name}`}
-              className="book-link"
-              href={getBookHref(book.slug)}
-              key={book.slug}
-            >
-              <span className="book-chip">OT</span>
-              <strong>{book.name}</strong>
-              <span className="book-meta">{book.chapterCount} chapters</span>
-              <span className="book-cta">Open whole book</span>
-            </Link>
-          ))}
-        </div>
-      </section>
-      ) : null}
-
-      {testamentFilter !== "old" ? (
-      <section className="content-card testament-card">
-        <div className="section-header">
-          <div>
-            <p className="eyebrow">New Testament</p>
-            <h2 className="section-title">Matthew to Revelation</h2>
-            <div className="book-order-controls" role="group" aria-label="New Testament order">
-              <button
-                className={`reader-inline-button${
-                  newTestamentOrder === "canonical" ? " is-active" : ""
-                }`}
-                onClick={() => setNewTestamentOrder("canonical")}
-                type="button"
-              >
-                Canonical
-              </button>
-              <button
-                className={`reader-inline-button${
-                  newTestamentOrder === "chronological" ? " is-active" : ""
-                }`}
-                onClick={() => setNewTestamentOrder("chronological")}
-                type="button"
-              >
-                Chronological
-              </button>
-            </div>
-          </div>
-          <p className="muted-copy testament-meta">
-            {filteredNewTestament.length} of {newTestament.length} books
-          </p>
-        </div>
-        <div className="book-grid">
-          {filteredNewTestament.map((book) => (
-            <Link
-              aria-label={`Open ${book.name}`}
-              className="book-link"
-              href={getBookHref(book.slug)}
-              key={book.slug}
-            >
-              <span className="book-chip">NT</span>
-              <span className="book-title-line">
+                <span className="book-chip">OT</span>
                 <strong>{book.name}</strong>
-                {book.compositionDate ? (
-                  <span className="book-date-chip">{book.compositionDate}</span>
-                ) : null}
-              </span>
-              <span className="book-meta">{book.chapterCount} chapters</span>
-              <span className="book-cta">Open whole book</span>
-            </Link>
-          ))}
-        </div>
-      </section>
+                <span className="book-meta">{book.chapterCount} chapters</span>
+                <span className="book-cta">Open whole book</span>
+              </Link>
+            ))}
+          </div>
+        </section>
       ) : null}
 
-      {fathersWorks.length > 0 ? (
+      {libraryFilter === "new" ? (
+        <section className="content-card testament-card">
+          <div className="section-header">
+            <div>
+              <p className="eyebrow">New Testament</p>
+              <h2 className="section-title">Matthew to Revelation</h2>
+              <div className="book-order-controls" role="group" aria-label="New Testament order">
+                <button
+                  className={`reader-inline-button${
+                    newTestamentOrder === "canonical" ? " is-active" : ""
+                  }`}
+                  onClick={() => setNewTestamentOrder("canonical")}
+                  type="button"
+                >
+                  Canonical
+                </button>
+                <button
+                  className={`reader-inline-button${
+                    newTestamentOrder === "chronological" ? " is-active" : ""
+                  }`}
+                  onClick={() => setNewTestamentOrder("chronological")}
+                  type="button"
+                >
+                  Chronological
+                </button>
+              </div>
+            </div>
+            <p className="muted-copy testament-meta">
+              {displayedNewTestament.length} of {newTestament.length} books
+            </p>
+          </div>
+          <div className="book-grid">
+            {displayedNewTestament.map((book) => (
+              <Link
+                aria-label={`Open ${book.name}`}
+                className="book-link"
+                href={getBookHref(book.slug)}
+                key={book.slug}
+              >
+                <span className="book-chip">NT</span>
+                <span className="book-title-line">
+                  <strong>{book.name}</strong>
+                  {book.compositionDate ? (
+                    <span className="book-date-chip">{book.compositionDate}</span>
+                  ) : null}
+                </span>
+                <span className="book-meta">{book.chapterCount} chapters</span>
+                <span className="book-cta">Open whole book</span>
+              </Link>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {libraryFilter === "fathers" && fathersWorks.length > 0 ? (
         <section className="content-card testament-card">
           <div className="section-header">
             <div>
