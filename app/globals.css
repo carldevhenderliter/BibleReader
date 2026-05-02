@@ -3566,6 +3566,24 @@ button.fathers-annotation-anchor:focus-visible {
   font-family: var(--search-ui-font, "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif);
 }
 
+.search-shell-dock-row {
+  display: grid;
+  justify-items: center;
+  gap: var(--search-density-gap, 1rem);
+  width: 100%;
+}
+
+.search-shell-dock-row:has(.reader-audio-drawer.is-hidden):has(.search-bar.search-bar-collapsed) {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+}
+
+.search-shell-dock-row:has(.reader-audio-drawer.is-hidden):has(.search-bar.search-bar-collapsed)
+  .search-shell-reader-panel {
+  width: auto;
+}
+
 .reader-bottom-controls-dock {
   position: fixed;
   right: max(1rem, env(safe-area-inset-right));
@@ -5931,6 +5949,10 @@ button.fathers-annotation-anchor:focus-visible {
 
   .search-shell-reader-panel {
     width: 100%;
+  }
+
+  .search-shell-dock-row:has(.reader-audio-drawer.is-hidden):has(.search-bar.search-bar-collapsed) {
+    gap: 0.42rem;
   }
 
   .control-group select {

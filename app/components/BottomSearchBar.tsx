@@ -164,72 +164,74 @@ export function BottomSearchBar() {
           )}
           </section>
         ) : null}
-        {bottomBarPanel ? (
-          <div className="search-shell-reader-panel">{bottomBarPanel}</div>
-        ) : null}
-        <div
-          className={`search-bar${shouldCollapseBar ? " search-bar-collapsed" : ""}`}
-          role="search"
-        >
-          <label className="sr-only" htmlFor={inputId}>
-            Search books, references, Strong’s numbers, Greek lemmas, inflected forms, glosses,
-            phrases, or use Topic: or Greek:
-          </label>
-          <button
-            aria-label={shouldCollapseBar ? "Open search" : "Search"}
-            className="search-icon-button"
-            onClick={expandBar}
-            type="button"
+        <div className="search-shell-dock-row">
+          {bottomBarPanel ? (
+            <div className="search-shell-reader-panel">{bottomBarPanel}</div>
+          ) : null}
+          <div
+            className={`search-bar${shouldCollapseBar ? " search-bar-collapsed" : ""}`}
+            role="search"
           >
-            <svg
-              aria-hidden="true"
-              className="search-icon"
-              fill="none"
-              height="18"
-              viewBox="0 0 18 18"
-              width="18"
-            >
-              <circle cx="8" cy="8" r="4.75" stroke="currentColor" strokeWidth="1.5" />
-              <path d="m11.5 11.5 3.75 3.75" stroke="currentColor" strokeLinecap="round" strokeWidth="1.5" />
-            </svg>
-          </button>
-          <input
-            aria-controls={trayId}
-            aria-expanded={isSplitViewActive ? true : isOpen}
-            autoComplete="off"
-            className="search-input"
-            id={inputId}
-            onChange={(event) => {
-              setQuery(event.target.value);
-            }}
-            onFocus={() => {
-              setIsBarExpanded(true);
-              openSearch();
-            }}
-            placeholder="Search references, Strong’s, Greek lemmas/forms, glosses, or Topic:/Greek:"
-            ref={inputRef}
-            type="search"
-            value={query}
-          />
-          {query ? (
+            <label className="sr-only" htmlFor={inputId}>
+              Search books, references, Strong’s numbers, Greek lemmas, inflected forms, glosses,
+              phrases, or use Topic: or Greek:
+            </label>
             <button
-              aria-label="Clear search"
-              className="search-action-button"
-              onClick={() => {
-                clearSearch();
-                inputRef.current?.focus();
-              }}
+              aria-label={shouldCollapseBar ? "Open search" : "Search"}
+              className="search-icon-button"
+              onClick={expandBar}
               type="button"
             >
-              Clear
+              <svg
+                aria-hidden="true"
+                className="search-icon"
+                fill="none"
+                height="18"
+                viewBox="0 0 18 18"
+                width="18"
+              >
+                <circle cx="8" cy="8" r="4.75" stroke="currentColor" strokeWidth="1.5" />
+                <path d="m11.5 11.5 3.75 3.75" stroke="currentColor" strokeLinecap="round" strokeWidth="1.5" />
+              </svg>
             </button>
-          ) : (
-            <span className="search-version-pill">
-              {searchVersions.length === 1
-                ? getBibleVersionLabel(searchVersions[0] ?? version).toUpperCase()
-                : getBibleVersionSelectionLabel(searchVersions)}
-            </span>
-          )}
+            <input
+              aria-controls={trayId}
+              aria-expanded={isSplitViewActive ? true : isOpen}
+              autoComplete="off"
+              className="search-input"
+              id={inputId}
+              onChange={(event) => {
+                setQuery(event.target.value);
+              }}
+              onFocus={() => {
+                setIsBarExpanded(true);
+                openSearch();
+              }}
+              placeholder="Search references, Strong’s, Greek lemmas/forms, glosses, or Topic:/Greek:"
+              ref={inputRef}
+              type="search"
+              value={query}
+            />
+            {query ? (
+              <button
+                aria-label="Clear search"
+                className="search-action-button"
+                onClick={() => {
+                  clearSearch();
+                  inputRef.current?.focus();
+                }}
+                type="button"
+              >
+                Clear
+              </button>
+            ) : (
+              <span className="search-version-pill">
+                {searchVersions.length === 1
+                  ? getBibleVersionLabel(searchVersions[0] ?? version).toUpperCase()
+                  : getBibleVersionSelectionLabel(searchVersions)}
+              </span>
+            )}
+          </div>
         </div>
       </div>
     </>
