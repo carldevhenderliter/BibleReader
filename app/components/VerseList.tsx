@@ -70,6 +70,7 @@ export function VerseList({
   verses
 }: VerseListProps) {
   const { version } = useReaderVersion();
+  const isStandaloneGreekVersion = version === "greek" || version === "tr";
   const {
     isGreekLearningMode,
     openGreekDictionary,
@@ -102,7 +103,7 @@ export function VerseList({
     <div className="verse-stack">
       {verses.map((verse) => {
         const greekVersionInterlinearVerse =
-          version === "greek" && verse.greekTokens?.length
+          isStandaloneGreekVersion && verse.greekTokens?.length
             ? {
                 number: verse.number,
                 baseGreek: verse.text,
@@ -121,12 +122,12 @@ export function VerseList({
         const verseAnnotations = getVerseAnnotations(verseKey);
         const activeGreekTokens = activeGreekVerse?.tokens ?? verse.greekTokens ?? [];
         const canAnnotateGreekVersionTranslation =
-          version === "greek" &&
+          isStandaloneGreekVersion &&
           Boolean(verse.greekTokens?.length) &&
           Boolean(verse.translationText?.trim()) &&
           showCompanionVerseTranslation;
         const canAnnotateInterlinearVerse =
-          version !== "greek" &&
+          !isStandaloneGreekVersion &&
           Boolean(activeGreekVerse?.tokens?.length) &&
           shouldShowVerseText;
         const bibleAnnotationText = canAnnotateGreekVersionTranslation
@@ -219,10 +220,10 @@ export function VerseList({
               </span>
             ) : null}
             <div className="verse-content">
-              {shouldShowVerseText || (version === "greek" && showCompanionVerseTranslation) ? (
+              {shouldShowVerseText || (isStandaloneGreekVersion && showCompanionVerseTranslation) ? (
                 <>
                   {shouldShowVerseText ? (
-                    version === "greek" && verse.greekTokens?.length ? (
+                    isStandaloneGreekVersion && verse.greekTokens?.length ? (
                       <GreekVerseTextContent
                         className="verse-text verse-text-greek"
                         greekLearningScopeKey={greekLearningScopeKey}
@@ -303,7 +304,7 @@ export function VerseList({
                       <VerseTextContent className="verse-text verse-text-body" verse={verse} />
                     )
                   ) : null}
-                  {version === "greek" &&
+                  {isStandaloneGreekVersion &&
                   showCompanionVerseTranslation &&
                   verse.translationText?.trim() ? (
                     canAnnotateGreekVersionTranslation && showBibleAnnotationLine ? (

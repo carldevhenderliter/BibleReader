@@ -7,11 +7,12 @@ import {
 } from "@/lib/bible/data";
 
 describe("bible data", () => {
-  it("loads bundled books for WEB, KJV, and ESV", async () => {
-    const [webBooks, kjvBooks, esvBooks] = await Promise.all([
+  it("loads bundled books for WEB, KJV, ESV, and TR", async () => {
+    const [webBooks, kjvBooks, esvBooks, trBooks] = await Promise.all([
       getBooks("web"),
       getBooks("kjv"),
-      getBooks("esv")
+      getBooks("esv"),
+      getBooks("tr")
     ]);
 
     expect(webBooks).toHaveLength(67);
@@ -24,6 +25,9 @@ describe("bible data", () => {
     expect(kjvBooks.at(-1)?.slug).toBe("gospel-harmony");
     expect(esvBooks[0]?.slug).toBe("genesis");
     expect(esvBooks.at(-1)?.name).toBe("Gospel Harmony");
+    expect(trBooks[0]?.slug).toBe("matthew");
+    expect(trBooks.find((book) => book.slug === "matthew")?.compositionDate).toBe("c. 70–90 AD");
+    expect(trBooks.at(-1)?.slug).toBe("gospel-harmony");
   });
 
   it("loads Genesis 1 from KJV", async () => {
@@ -68,6 +72,19 @@ describe("bible data", () => {
     expect(chapter?.chapterNumber).toBe(1);
     expect(chapter?.verses[0]?.text).toContain("In the beginning, God created the heavens");
     expect(chapter?.verses[0]?.tokens).toBeUndefined();
+  });
+
+  it("loads Matthew 1 from bundled Textus Receptus and omits Old Testament books", async () => {
+    const [matthew, genesis] = await Promise.all([
+      getChapter("matthew", 1, "tr"),
+      getChapter("genesis", 1, "tr")
+    ]);
+
+    expect(matthew?.chapterNumber).toBe(1);
+    expect(matthew?.verses[0]?.text).toContain("βιβλος γενεσεως ιησου χριστου");
+    expect(matthew?.verses[0]?.translationText).toContain("The book of the genealogy of Jesus Christ");
+    expect(matthew?.verses[0]?.greekTokens?.[0]?.strongs).toBe("G976");
+    expect(genesis).toBeNull();
   });
 
   it("returns New Testament books in the configured chronological order", async () => {

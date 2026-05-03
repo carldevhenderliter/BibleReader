@@ -305,6 +305,7 @@ export function ReaderComparePanel({
                     <span className="reader-compare-verse-number">{row.number}</span>
                     {row.cells.map((cell) => {
                       const showStrongs = cell.version === "kjv" && Boolean(cell.verse?.tokens?.length);
+                      const isGreekTextVersion = cell.version === "greek" || cell.version === "tr";
 
                       return (
                         <div className="reader-compare-cell" key={`${section.chapterNumber}:${row.number}:${cell.version}`}>
@@ -312,7 +313,13 @@ export function ReaderComparePanel({
                             {getBibleVersionLabel(cell.version)}
                           </span>
                           <VerseTextContent
-                            className={`verse-text${showStrongs ? " verse-text-rich" : ""} reader-compare-text`}
+                            className={`verse-text${
+                              showStrongs
+                                ? " verse-text-rich"
+                                : isGreekTextVersion
+                                  ? " verse-text-greek"
+                                  : ""
+                            } reader-compare-text`}
                             onOpenStrongs={(strongsNumbers) =>
                               openStrongs(strongsNumbers, strongsNumbers.join(" "))
                             }

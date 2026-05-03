@@ -38,6 +38,7 @@ import {
 } from "@/lib/bible/book-audio";
 import type {
   BookMeta,
+  BundledBibleVersion,
   BundledChapterMap,
   Chapter,
   EsvInterlinearDisplayChapter
@@ -78,7 +79,7 @@ export function ReaderPageContent({
 }: ReaderPageContentProps) {
   const router = useRouter();
   const locationSearch = useLocationSearch();
-  const { version } = useReaderVersion();
+  const { version, setVersion } = useReaderVersion();
   const { isPanelOpen, settings } = useReaderCustomization();
   const { canCollapseSplitPane, collapseSplitPane, isSplitViewActive } = useLookup();
   const {
@@ -91,15 +92,22 @@ export function ReaderPageContent({
     setActiveStudyVerseNumber,
     syncCurrentChapterData
   } = useReaderWorkspace();
-  const chapter = chaptersByVersion[version] ?? Object.values(chaptersByVersion)[0] ?? null;
-  const showStrongs = version === "kjv" && settings.showStrongs;
+  const fallbackVersion =
+    (Object.entries(chaptersByVersion).find(([, candidateChapter]) => Boolean(candidateChapter))?.[0] as
+      | BundledBibleVersion
+      | undefined) ?? version;
+  const effectiveVersion = chaptersByVersion[version] ? version : fallbackVersion;
+  const isStandaloneGreekVersion =
+    effectiveVersion === "greek" || effectiveVersion === "tr";
+  const chapter = chaptersByVersion[effectiveVersion] ?? Object.values(chaptersByVersion)[0] ?? null;
+  const showStrongs = effectiveVersion === "kjv" && settings.showStrongs;
   const showEsvInterlinear =
-    version === "esv" &&
+    effectiveVersion === "esv" &&
     book.testament === "New" &&
     settings.showEsvInterlinear &&
     esvInterlinearChapter !== null;
   const showKjvGreekCompanion =
-    version === "kjv" &&
+    effectiveVersion === "kjv" &&
     book.testament === "New" &&
     settings.showStrongs &&
     esvInterlinearChapter !== null;
@@ -108,7 +116,7 @@ export function ReaderPageContent({
         esvInterlinearChapter.verses.map((verse) => [verse.number, verse])
       )
     : undefined;
-  const versionBadge = getBibleVersionBadge(version);
+  const versionBadge = getBibleVersionBadge(effectiveVersion);
   const bookAudioSource = useBookAudioSource(book.slug);
   const [audioBookOrderMode, setAudioBookOrderMode] = useState<
     "canonical" | "chronological-old-testament" | "chronological-new-testament"
@@ -152,8 +160,8 @@ export function ReaderPageContent({
       window.sessionStorage.setItem(BOOK_AUDIO_AUTOPLAY_STORAGE_KEY, nextBook.slug);
     }
 
-    router.push(getChapterHref(nextBook.slug, 1, version));
-  }, [book.slug, bookAudioSource, books, router, version]);
+    router.push(getChapterHref(nextBook.slug, 1, effectiveVersion));
+  }, [book.slug, bookAudioSource, books, effectiveVersion, router]);
   const bottomBarPanel = useMemo(
     () => (
       <ReaderBookAudioPlayer
@@ -167,8 +175,8 @@ export function ReaderPageContent({
           bookName: book.name,
           chapter: chapter?.chapterNumber ?? 1,
           view: "chapter",
-          version,
-          href: getChapterHref(book.slug, chapter?.chapterNumber ?? 1, version)
+          version: effectiveVersion,
+          href: getChapterHref(book.slug, chapter?.chapterNumber ?? 1, effectiveVersion)
         }}
       />
     ),
@@ -179,7 +187,7 @@ export function ReaderPageContent({
       chapter?.chapterNumber,
       handleBookAudioEnded,
       nextAudioBook?.name,
-      version
+      effectiveVersion
     ]
   );
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
@@ -209,17 +217,23 @@ export function ReaderPageContent({
   const isFocusReading = settings.focusReadingMode;
   useRegisterReaderBottomBarPanel(bottomBarPanel);
   const hasGreekLearningSurface =
-    version === "greek"
+    isStandaloneGreekVersion
       ? chapter.verses.some((verse) => Boolean(verse.greekTokens?.length))
       : showEsvInterlinear &&
         chapter.verses.some((verse) => Boolean(interlinearVerseMap?.[verse.number]?.tokens?.length));
   const hasBibleGreekAnnotationSurface =
-    (version === "greek" &&
+    (isStandaloneGreekVersion &&
       chapter.verses.some(
         (verse) => Boolean(verse.greekTokens?.length) && Boolean(verse.translationText?.trim())
       )) ||
     (showEsvInterlinear &&
       chapter.verses.some((verse) => Boolean(interlinearVerseMap?.[verse.number]?.tokens?.length)));
+
+  useEffect(() => {
+    if (effectiveVersion !== version) {
+      setVersion(effectiveVersion);
+    }
+  }, [effectiveVersion, setVersion, version]);
 
   if (!chapter) {
     return null;
@@ -258,13 +272,18 @@ export function ReaderPageContent({
 
   useEffect(() => {
     clearGreekLearningQuiz();
-  }, [book.slug, chapter.chapterNumber, clearGreekLearningQuiz, version]);
+  }, [book.slug, chapter.chapterNumber, clearGreekLearningQuiz, effectiveVersion]);
 
   return (
     <ReaderCustomizationShell
       className={`reader-shell reader-customizable-shell${isFocusReading ? " is-focus-reading" : ""}`}
     >
-      <ReadingSessionSync book={book.slug} chapter={chapter.chapterNumber} view="chapter" />
+      <ReadingSessionSync
+        book={book.slug}
+        chapter={chapter.chapterNumber}
+        view="chapter"
+        version={effectiveVersion}
+      />
       <ReaderSettingsPanel book={book} currentChapter={chapter.chapterNumber} view="chapter" />
       <section className="reader-card reader-reading-card">
         <div className={`reader-topline${isToplineVisible ? "" : " is-hidden"}`}>
@@ -384,7 +403,7 @@ export function ReaderPageContent({
               highlightedVerseNumber={activeHighlightedVerseNumber}
               highlightedVerseRange={activeHighlightedVerseRange}
               interlinearVerseMap={interlinearVerseMap}
-              key={`${version}:${book.slug}:${chapter.chapterNumber}`}
+              key={`${effectiveVersion}:${book.slug}:${chapter.chapterNumber}`}
               annotationMode={annotationMode}
               showAnnotatedGreekUndertext={settings.showAnnotatedGreekUndertext}
               showCompanionVerseTranslation={settings.showCompanionVerseTranslation}

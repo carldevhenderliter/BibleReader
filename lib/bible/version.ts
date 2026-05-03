@@ -14,8 +14,22 @@ type BibleVersionMetadata = Omit<BibleVersionOption, "disabled"> & {
   badge: string;
 };
 
-export const BIBLE_VERSIONS = ["web", "kjv", "nlt", "esv", "greek"] as const satisfies readonly BibleVersion[];
-export const BUNDLED_BIBLE_VERSIONS = ["web", "kjv", "nlt", "esv", "greek"] as const satisfies readonly BundledBibleVersion[];
+export const BIBLE_VERSIONS = [
+  "web",
+  "kjv",
+  "nlt",
+  "esv",
+  "greek",
+  "tr"
+] as const satisfies readonly BibleVersion[];
+export const BUNDLED_BIBLE_VERSIONS = [
+  "web",
+  "kjv",
+  "nlt",
+  "esv",
+  "greek",
+  "tr"
+] as const satisfies readonly BundledBibleVersion[];
 
 export const BIBLE_VERSION_METADATA: Record<BibleVersion, BibleVersionMetadata> = {
   web: {
@@ -51,6 +65,13 @@ export const BIBLE_VERSION_METADATA: Record<BibleVersion, BibleVersionMetadata> 
     label: "Greek",
     badge: "Rahlfs LXX + SBLGNT",
     description: "Bundled locally. Standalone Greek OT and NT reading text with dictionary lookup.",
+    supportsWholeBook: true
+  },
+  tr: {
+    id: "tr",
+    label: "TR",
+    badge: "Textus Receptus",
+    description: "Bundled locally. Public-domain Greek New Testament with Strong’s-linked morphology.",
     supportsWholeBook: true
   }
 };

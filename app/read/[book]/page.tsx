@@ -47,7 +47,7 @@ export default async function BookPage({ params }: BookPageProps) {
     installedBundledVersions.map((version, index) => [version, payloads[index]?.chapters ?? null])
   );
 
-  if (!book || installedBundledVersions.some((version) => !chaptersByVersion[version])) {
+  if (!book || !Object.values(chaptersByVersion).some((chapters) => Boolean(chapters?.length))) {
     notFound();
   }
 

@@ -66,11 +66,7 @@ export default async function ReaderChapterPage({ params }: ReaderChapterPagePro
     installedBundledVersions.map((version, index) => [version, chapters[index] ?? null])
   );
 
-  if (
-    !book ||
-    !isValidChapter(book, chapterNumber) ||
-    installedBundledVersions.some((version) => !chaptersByVersion[version])
-  ) {
+  if (!book || !isValidChapter(book, chapterNumber) || !Object.values(chaptersByVersion).some(Boolean)) {
     notFound();
   }
 

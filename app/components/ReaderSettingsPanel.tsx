@@ -142,6 +142,7 @@ export function ReaderSettingsPanel({
   const supportsFullRenderToggle = isFathersMode || view === "book";
   const isOldTestament = book?.testament === "Old";
   const isHarmonyBook = book?.slug === GOSPEL_HARMONY_BOOK_SLUG;
+  const isStandaloneGreekVersion = !isFathersMode && (version === "greek" || version === "tr");
   const originalLanguageLabel = isFathersMode
     ? "Greek"
     : version === "kjv"
@@ -151,20 +152,20 @@ export function ReaderSettingsPanel({
       : "Greek";
   const supportsGreekReading = isFathersMode
     ? hasGreekReaderAid
-    : version === "esv" || version === "greek";
+    : version === "esv" || isStandaloneGreekVersion;
   const supportsEsvInterlinear = !isFathersMode && version === "esv";
   const supportsQuickGreekInterlinear = !isFathersMode && (version === "esv" || version === "kjv");
   const supportsGreekStudyLayers = isFathersMode
     ? hasGreekReaderAid
-    : version === "esv" || version === "greek" || version === "kjv";
+    : version === "esv" || isStandaloneGreekVersion || version === "kjv";
   const greekStudyLayersEnabled = isFathersMode
     ? hasGreekReaderAid
-    : version === "greek" ||
+    : isStandaloneGreekVersion ||
         settings.showEsvInterlinear ||
         (version === "kjv" && settings.showStrongs);
   const supportsOriginalWordSurface = isFathersMode
     ? hasGreekReaderAid
-    : version === "esv" || version === "greek" || (version === "kjv" && !isOldTestament);
+    : version === "esv" || isStandaloneGreekVersion || (version === "kjv" && !isOldTestament);
   const hasVisibleGreekStudyLayer =
     settings.showGreekSurface ||
     settings.showGreekLemma ||
@@ -238,7 +239,7 @@ export function ReaderSettingsPanel({
         showVerseNumbers: false,
         showChapterHeadings: false,
         showVerseText: true,
-        showCompanionVerseTranslation: version === "greek",
+        showCompanionVerseTranslation: isStandaloneGreekVersion,
         showAnnotatedGreekUndertext: false,
         showGreekSurface: false,
         showGreekLemma: false,
@@ -330,7 +331,7 @@ export function ReaderSettingsPanel({
       return;
     }
 
-    if (version === "greek") {
+    if (isStandaloneGreekVersion) {
       updateSettings({
         showVerseNumbers: false,
         showChapterHeadings: false,
@@ -633,7 +634,7 @@ export function ReaderSettingsPanel({
                   <span>
                     {isFathersMode
                       ? "Show the English translation block for each Fathers section."
-                      : version === "greek"
+                      : isStandaloneGreekVersion
                         ? "Show the main Greek verse line."
                         : "Show the translation line for the verse."}
                   </span>

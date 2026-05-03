@@ -35,9 +35,12 @@ export type BookPayload = {
 
 export type ReadingView = "chapter" | "book";
 
-export type BibleVersion = "web" | "kjv" | "nlt" | "esv" | "greek";
+export type BibleVersion = "web" | "kjv" | "nlt" | "esv" | "greek" | "tr";
 
-export type BundledBibleVersion = Extract<BibleVersion, "web" | "kjv" | "nlt" | "esv" | "greek">;
+export type BundledBibleVersion = Extract<
+  BibleVersion,
+  "web" | "kjv" | "nlt" | "esv" | "greek" | "tr"
+>;
 
 export type ReadingLocation = {
   book: string;
