@@ -193,6 +193,9 @@ describe("ReaderStrongsPanel", () => {
     await waitFor(() =>
       expect(studyPane.querySelectorAll(".strongs-entry-bible-verse-text-greek-companion").length).toBeGreaterThan(0)
     );
+    await waitFor(() =>
+      expect(studyPane.querySelectorAll(".strongs-entry-bible-verse .strongs-token-lemma").length).toBeGreaterThan(0)
+    );
   });
 
   it("filters Strong's Bible occurrences by testament and book inside the study pane", async () => {

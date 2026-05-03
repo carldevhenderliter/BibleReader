@@ -618,9 +618,7 @@ export function ReaderStrongsPanel() {
       setStrongsTokenLemmaMap((current) => ({
         ...current,
         ...resolvedEntries.reduce<Record<string, string>>((lemmaMap, entry) => {
-          if (entry.language === "greek") {
-            lemmaMap[entry.id] = entry.lemma;
-          }
+          lemmaMap[entry.id] = entry.lemma;
 
           return lemmaMap;
         }, {})
