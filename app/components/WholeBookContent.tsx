@@ -90,6 +90,7 @@ type LazyBookChapterSectionProps = {
   showGreekSurface: boolean;
   showGreekTransliteration: boolean;
   showStrongs: boolean;
+  showVerseStrongs: boolean;
   showChapterHeadings: boolean;
   showVerseNumbers: boolean;
   showVerseText: boolean;
@@ -114,6 +115,7 @@ function LazyBookChapterSection({
   showGreekSurface,
   showGreekTransliteration,
   showStrongs,
+  showVerseStrongs,
   showChapterHeadings,
   showVerseNumbers,
   showVerseText,
@@ -202,6 +204,7 @@ function LazyBookChapterSection({
           showGreekSurface={showGreekSurface}
           showGreekTransliteration={showGreekTransliteration}
           showStrongs={showStrongs}
+          showVerseStrongs={showVerseStrongs}
           showVerseNumbers={showVerseNumbers}
           showVerseText={showVerseText}
           verses={chapter.verses}
@@ -251,6 +254,7 @@ export function WholeBookContent({
     effectiveVersion === "greek" || effectiveVersion === "tr";
   const chapters = chaptersByVersion[effectiveVersion] ?? Object.values(chaptersByVersion)[0] ?? [];
   const showStrongs = effectiveVersion === "kjv" && settings.showStrongs;
+  const showVerseStrongs = settings.showVerseStrongs;
   const showEsvInterlinear =
     effectiveVersion === "esv" &&
     book.testament === "New" &&
@@ -634,6 +638,7 @@ export function WholeBookContent({
                 showGreekSurface={settings.showGreekSurface}
                 showGreekTransliteration={settings.showGreekTransliteration}
                 showStrongs={showStrongs}
+                showVerseStrongs={showVerseStrongs}
                 showChapterHeadings={settings.showChapterHeadings}
                 showVerseNumbers={settings.showVerseNumbers}
                 showVerseText={settings.showVerseText}

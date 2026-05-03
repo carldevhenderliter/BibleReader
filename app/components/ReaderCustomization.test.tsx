@@ -346,6 +346,29 @@ describe("Reader customization", () => {
     expect(stored).toContain('"showCustomVerseTranslation":false');
   });
 
+  it("persists the verse-display Strong's number toggle for ESV interlinear", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={ntBooks[0]}
+        books={ntBooks}
+        chaptersByVersion={{ esv: esvChapter, web: esvChapter }}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: {
+        value: "esv"
+      }
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Show Greek interlinear" }));
+    fireEvent.click(screen.getByRole("button", { name: /Strong's numbers/i }));
+
+    const stored = window.localStorage.getItem(READER_CUSTOMIZATION_STORAGE_KEY) ?? "";
+
+    expect(stored).toContain('"showVerseStrongs":false');
+  });
+
   it("persists the English companion toggle for the standalone Greek version", () => {
     renderWithReaderCustomization(
       <ReaderPageContent

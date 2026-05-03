@@ -90,6 +90,7 @@ type VerseListProps = {
     end: number;
   } | null;
   showStrongs?: boolean;
+  showVerseStrongs?: boolean;
   verses: Verse[];
 };
 
@@ -199,6 +200,7 @@ export function VerseList({
   highlightedVerseNumber,
   highlightedVerseRange,
   showStrongs = false,
+  showVerseStrongs = true,
   verses
 }: VerseListProps) {
   const { version } = useReaderVersion();
@@ -380,7 +382,7 @@ export function VerseList({
 
                           openGreekDictionary(selection);
                         }}
-                        showStrongsNumbers={version === "tr"}
+                        showStrongsNumbers={version === "tr" && showVerseStrongs}
                         verse={verse}
                       />
                     ) : showStrongs && verse.tokens?.length ? (
@@ -400,6 +402,7 @@ export function VerseList({
                         verse={verse}
                       />
                     ) : version === "esv" &&
+                      showVerseStrongs &&
                       activeGreekVerse?.tokens?.length &&
                       esvEnglishStrongsMatches &&
                       !showBibleAnnotationLine ? (

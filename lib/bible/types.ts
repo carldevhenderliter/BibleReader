@@ -79,6 +79,7 @@ export type ReaderCustomizationSettings = {
   customVerseFont: BodyFontOption;
   uiFont: UiFontOption;
   showStrongs: boolean;
+  showVerseStrongs: boolean;
   showEsvInterlinear: boolean;
   showEsvGreekOnly: boolean;
   showVerseNumbers: boolean;

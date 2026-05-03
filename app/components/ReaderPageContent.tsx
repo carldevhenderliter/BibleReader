@@ -101,6 +101,7 @@ export function ReaderPageContent({
     effectiveVersion === "greek" || effectiveVersion === "tr";
   const chapter = chaptersByVersion[effectiveVersion] ?? Object.values(chaptersByVersion)[0] ?? null;
   const showStrongs = effectiveVersion === "kjv" && settings.showStrongs;
+  const showVerseStrongs = settings.showVerseStrongs;
   const showEsvInterlinear =
     effectiveVersion === "esv" &&
     book.testament === "New" &&
@@ -413,6 +414,7 @@ export function ReaderPageContent({
               showGreekSurface={settings.showGreekSurface}
               showGreekTransliteration={settings.showGreekTransliteration}
               showStrongs={showStrongs}
+              showVerseStrongs={showVerseStrongs}
               showVerseNumbers={settings.showVerseNumbers}
               showVerseText={settings.showVerseText}
               verses={chapter.verses}

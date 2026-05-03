@@ -140,6 +140,7 @@ export const DEFAULT_READER_CUSTOMIZATION: ReaderCustomizationSettings = {
   customVerseFont: "serif",
   uiFont: "sans",
   showStrongs: false,
+  showVerseStrongs: true,
   showEsvInterlinear: false,
   showEsvGreekOnly: false,
   showVerseNumbers: true,
@@ -322,6 +323,10 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
       typeof candidate.showStrongs === "boolean"
         ? candidate.showStrongs
         : DEFAULT_READER_CUSTOMIZATION.showStrongs,
+    showVerseStrongs:
+      typeof candidate.showVerseStrongs === "boolean"
+        ? candidate.showVerseStrongs
+        : DEFAULT_READER_CUSTOMIZATION.showVerseStrongs,
     showEsvInterlinear:
       typeof candidate.showEsvInterlinear === "boolean"
         ? candidate.showEsvInterlinear

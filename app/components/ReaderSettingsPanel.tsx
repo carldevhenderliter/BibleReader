@@ -166,6 +166,8 @@ export function ReaderSettingsPanel({
   const supportsOriginalWordSurface = isFathersMode
     ? hasGreekReaderAid
     : version === "esv" || isStandaloneGreekVersion || (version === "kjv" && !isOldTestament);
+  const supportsVerseStrongs = !isFathersMode &&
+    (version === "kjv" || version === "tr" || (version === "esv" && !isOldTestament));
   const hasVisibleGreekStudyLayer =
     settings.showGreekSurface ||
     settings.showGreekLemma ||
@@ -689,6 +691,29 @@ export function ReaderSettingsPanel({
                   >
                     <strong>Your translation</strong>
                     <span>Show your saved custom verse under the text.</span>
+                  </button>
+                ) : null}
+                {supportsVerseStrongs ? (
+                  <button
+                    className={`settings-option-card${
+                      (version === "kjv" ? settings.showStrongs : settings.showVerseStrongs)
+                        ? " is-active"
+                        : ""
+                    }`}
+                    key="showVerseStrongs"
+                    onClick={() =>
+                      version === "kjv"
+                        ? updateSettings({ showStrongs: !settings.showStrongs })
+                        : toggleLayer("showVerseStrongs")
+                    }
+                    type="button"
+                  >
+                    <strong>{version === "kjv" ? "Strongs tags" : "Strong's numbers"}</strong>
+                    <span>
+                      {version === "kjv"
+                        ? "Show the Strong's-linked tagged words in the verse text."
+                        : "Show Strong's numbers beside matched verse words where Greek alignment is available."}
+                    </span>
                   </button>
                 ) : null}
                 <button
