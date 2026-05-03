@@ -12,6 +12,8 @@ type VerseTextContentProps = {
   showOriginalLanguageLemma?: boolean;
   showOriginalLanguageTransliteration?: boolean;
   showOriginalLanguageGloss?: boolean;
+  showOriginalLanguageSourceLine?: boolean;
+  originalLanguageSourceLineLabel?: string;
   onOpenStrongs?: (strongsNumbers: string[]) => void;
   className?: string;
   highlightedStrongsNumber?: string | null;
@@ -69,6 +71,61 @@ function getStrongsUndertextGloss(entry: StrongsEntry) {
   return entry.outlineUsage?.trim() || entry.definition.trim();
 }
 
+function getTrailingPunctuation(text: string) {
+  return text.match(/[.,;:!?·]+$/u)?.[0] ?? "";
+}
+
+function buildOriginalLanguageSourceLine(
+  tokens: NonNullable<Verse["tokens"]>,
+  tokenStrongsEntries: Record<string, StrongsEntry>
+) {
+  const parts: string[] = [];
+  let language: "greek" | "hebrew" | null = null;
+
+  for (const token of tokens) {
+    const tokenEntries = Array.from(
+      new Map(
+        (token.strongsNumbers ?? [])
+          .map((strongsNumber) => {
+            const normalizedNumber = normalizeStrongsNumber(strongsNumber);
+            return [normalizedNumber, tokenStrongsEntries[normalizedNumber] ?? null] as const;
+          })
+          .filter((entry): entry is readonly [string, StrongsEntry] => entry[1] !== null)
+      ).values()
+    );
+
+    if (tokenEntries.length > 0) {
+      const lemmaText = tokenEntries.map((entry) => entry.lemma.trim()).filter(Boolean).join(" ");
+      const trailingPunctuation = getTrailingPunctuation(token.text);
+
+      if (!language) {
+        language = tokenEntries[0].language;
+      }
+
+      if (lemmaText) {
+        parts.push(`${lemmaText}${trailingPunctuation}`);
+      }
+
+      continue;
+    }
+
+    const trailingPunctuation = getTrailingPunctuation(token.text);
+
+    if (trailingPunctuation && parts.length > 0) {
+      parts[parts.length - 1] = `${parts[parts.length - 1]}${trailingPunctuation}`;
+    }
+  }
+
+  if (!language || parts.length === 0) {
+    return null;
+  }
+
+  return {
+    language,
+    text: parts.join(" ")
+  };
+}
+
 export function VerseTextContent({
   verse,
   showStrongs = false,
@@ -76,6 +133,8 @@ export function VerseTextContent({
   showOriginalLanguageLemma = true,
   showOriginalLanguageTransliteration = false,
   showOriginalLanguageGloss = false,
+  showOriginalLanguageSourceLine = false,
+  originalLanguageSourceLineLabel,
   onOpenStrongs,
   className,
   highlightedStrongsNumber = null,
@@ -130,7 +189,17 @@ export function VerseTextContent({
   }
 
   if (showStrongs && verse.tokens?.length && onOpenStrongs) {
-    return (
+    const originalLanguageSourceLine =
+      showOriginalLanguageSourceLine
+        ? buildOriginalLanguageSourceLine(verse.tokens, tokenStrongsEntries)
+        : null;
+    const originalLanguageLineLabel =
+      originalLanguageSourceLineLabel ??
+      (originalLanguageSourceLine?.language === "hebrew"
+        ? "KJV Strong's Hebrew"
+        : "KJV Strong's Greek");
+
+    const mainVerseLine = (
       <p className={className ?? "verse-text verse-text-rich"}>
         {verse.tokens.map((token, index) =>
           token.strongsNumbers?.length ? (
@@ -209,6 +278,30 @@ export function VerseTextContent({
           )
         )}
       </p>
+    );
+
+    if (!originalLanguageSourceLine) {
+      return mainVerseLine;
+    }
+
+    return (
+      <div className="verse-text-source-stack">
+        {mainVerseLine}
+        <div className="verse-source-language-line">
+          <p className="verse-source-language-label">{originalLanguageLineLabel}</p>
+          <p
+            className={`verse-text verse-text-greek verse-source-language-text${
+              originalLanguageSourceLine.language === "hebrew"
+                ? " verse-source-language-text-hebrew"
+                : ""
+            }`}
+            dir={originalLanguageSourceLine.language === "hebrew" ? "rtl" : "ltr"}
+            lang={originalLanguageSourceLine.language === "hebrew" ? "he" : "el"}
+          >
+            {originalLanguageSourceLine.text}
+          </p>
+        </div>
+      </div>
     );
   }
 

@@ -253,6 +253,9 @@ export function VerseList({
                         }
                         showOriginalLanguageGloss={showGreekGloss}
                         showOriginalLanguageLemma={showGreekLemma}
+                        showOriginalLanguageSourceLine={
+                          version === "kjv" && showGreekSurface
+                        }
                         showOriginalLanguageSurface={showGreekSurface}
                         showOriginalLanguageTransliteration={showGreekTransliteration}
                         showStrongs

@@ -2359,6 +2359,37 @@ button.fathers-annotation-anchor:focus-visible {
   text-align: left;
 }
 
+.verse-text-source-stack {
+  display: grid;
+  gap: 0.38rem;
+}
+
+.verse-source-language-line {
+  display: grid;
+  gap: 0.16rem;
+}
+
+.verse-source-language-label {
+  margin: 0;
+  color: rgba(151, 180, 222, 0.72);
+  font-family: var(--reader-ui-font);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.verse-source-language-text {
+  margin: 0;
+  color: rgba(196, 223, 255, 0.84);
+  font-size: 0.9em;
+  font-style: italic;
+}
+
+.verse-source-language-text-hebrew {
+  font-family: var(--reader-hebrew-font);
+}
+
 .strongs-popover-backdrop {
   position: fixed;
   inset: 0;

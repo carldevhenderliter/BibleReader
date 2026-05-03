@@ -606,7 +606,7 @@ describe("WholeBookContent", () => {
       })
     );
 
-    renderWithReaderCustomization(
+    const { container } = renderWithReaderCustomization(
       <>
         <WholeBookContent
           book={books[0]}
@@ -639,7 +639,7 @@ describe("WholeBookContent", () => {
       })
     );
 
-    renderWithReaderCustomization(
+    const { container } = renderWithReaderCustomization(
       <>
         <WholeBookContent
           book={books[0]}
@@ -659,6 +659,8 @@ describe("WholeBookContent", () => {
       }
     });
 
+    expect(await screen.findByText("KJV Strong's Greek")).toBeInTheDocument();
+    expect(container.querySelector(".verse-source-language-text")?.textContent).toBe("Ἰησοῦς...");
     expect(await screen.findByText("Ἰούδας Ἰησοῦ χριστοῦ δοῦλος ἀδελφὸς δὲ Ἰακώβου.")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Jesus G2424/i })).toBeInTheDocument();
   });

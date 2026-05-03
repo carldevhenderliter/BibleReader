@@ -588,7 +588,7 @@ describe("ReaderPageContent", () => {
       })
     );
 
-    renderWithReaderCustomization(
+    const { container } = renderWithReaderCustomization(
       <ReaderPageContent
         book={ntBooks[2]}
         books={ntBooks}
@@ -604,6 +604,10 @@ describe("ReaderPageContent", () => {
       }
     });
 
+    expect(await screen.findByText("KJV Strong's Greek")).toBeInTheDocument();
+    expect(container.querySelector(".verse-source-language-text")?.textContent).toBe(
+      "βίβλος γένεσις Ἰησοῦς Χριστός υἱός Δαβίδ υἱός."
+    );
     expect(await screen.findByText("Βίβλος γενέσεως Ἰησοῦ χριστοῦ υἱοῦ Δαυὶδ υἱοῦ Ἀβραάμ.")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /The book G976/i })).toBeInTheDocument();
   });
