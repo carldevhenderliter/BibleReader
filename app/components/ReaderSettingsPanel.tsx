@@ -164,7 +164,7 @@ export function ReaderSettingsPanel({
         (version === "kjv" && settings.showStrongs);
   const supportsOriginalWordSurface = isFathersMode
     ? hasGreekReaderAid
-    : version === "esv" || version === "greek";
+    : version === "esv" || version === "greek" || (version === "kjv" && !isOldTestament);
   const hasVisibleGreekStudyLayer =
     settings.showGreekSurface ||
     settings.showGreekLemma ||
@@ -173,12 +173,14 @@ export function ReaderSettingsPanel({
 
   useEffect(() => {
     // Older stored settings and reading/audio presets can leave every Greek layer disabled.
-    // If ESV interlinear is active, ensure at least one visible Greek layer is restored.
+    // If a reader surface with available Greek companion text is active, restore one visible layer.
     if (
       isFathersMode ||
-      version !== "esv" ||
-      !settings.showEsvInterlinear ||
-      hasVisibleGreekStudyLayer
+      hasVisibleGreekStudyLayer ||
+      !(
+        (version === "esv" && settings.showEsvInterlinear) ||
+        (version === "kjv" && !isOldTestament && settings.showStrongs)
+      )
     ) {
       return;
     }
@@ -189,7 +191,9 @@ export function ReaderSettingsPanel({
   }, [
     hasVisibleGreekStudyLayer,
     isFathersMode,
+    isOldTestament,
     settings.showEsvInterlinear,
+    settings.showStrongs,
     updateSettings,
     version
   ]);
@@ -816,7 +820,12 @@ export function ReaderSettingsPanel({
                     onClick={() => {
                       if (version === "kjv") {
                         updateSettings({
-                          showStrongs: !settings.showStrongs
+                          showStrongs: !settings.showStrongs,
+                          ...(!settings.showStrongs &&
+                          !isOldTestament &&
+                          !hasVisibleGreekStudyLayer
+                            ? { showGreekSurface: true }
+                            : {})
                         });
                         return;
                       }

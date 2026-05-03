@@ -190,6 +190,27 @@ const esvNtChapter: Chapter = {
   ]
 };
 
+const kjvNtChapter: Chapter = {
+  bookSlug: "matthew",
+  chapterNumber: 1,
+  verses: [
+    {
+      number: 1,
+      text: "The book of the generation of Jesus Christ, the son of David, the son of Abraham.",
+      tokens: [
+        { text: "The book", strongsNumbers: ["G976"] },
+        { text: " of the generation", strongsNumbers: ["G1078"] },
+        { text: " of Jesus", strongsNumbers: ["G2424"] },
+        { text: " Christ, ", strongsNumbers: ["G5547"] },
+        { text: " the son", strongsNumbers: ["G5207"] },
+        { text: " of David, ", strongsNumbers: ["G1138"] },
+        { text: " the son", strongsNumbers: ["G5207"] },
+        { text: " of Abraham." }
+      ]
+    }
+  ]
+};
+
 const galatiansChapter: Chapter = {
   bookSlug: "galatians",
   chapterNumber: 1,
@@ -557,6 +578,34 @@ describe("ReaderPageContent", () => {
     expect(
       screen.getByText("Βίβλος γενέσεως Ἰησοῦ χριστοῦ υἱοῦ Δαυὶδ υἱοῦ Ἀβραάμ.")
     ).toBeInTheDocument();
+  });
+
+  it("shows the ESV-backed Greek verse under KJV New Testament verses when Strongs is enabled", async () => {
+    window.localStorage.setItem(
+      "bible-reader:customization",
+      JSON.stringify({
+        showStrongs: true
+      })
+    );
+
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={ntBooks[2]}
+        books={ntBooks}
+        chaptersByVersion={{ kjv: kjvNtChapter, web: esvNtChapter }}
+        esvInterlinearChapter={esvNtInterlinearChapter}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: {
+        value: "kjv"
+      }
+    });
+
+    expect(await screen.findByText("Βίβλος γενέσεως Ἰησοῦ χριστοῦ υἱοῦ Δαυὶδ υἱοῦ Ἀβραάμ.")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /The book G976/i })).toBeInTheDocument();
   });
 
   it("restores a visible Greek layer when ESV interlinear is enabled from older off-state settings", () => {

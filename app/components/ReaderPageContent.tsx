@@ -98,7 +98,12 @@ export function ReaderPageContent({
     book.testament === "New" &&
     settings.showEsvInterlinear &&
     esvInterlinearChapter !== null;
-  const interlinearVerseMap = showEsvInterlinear
+  const showKjvGreekCompanion =
+    version === "kjv" &&
+    book.testament === "New" &&
+    settings.showStrongs &&
+    esvInterlinearChapter !== null;
+  const interlinearVerseMap = showEsvInterlinear || showKjvGreekCompanion
     ? Object.fromEntries(
         esvInterlinearChapter.verses.map((verse) => [verse.number, verse])
       )

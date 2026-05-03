@@ -248,7 +248,12 @@ export function WholeBookContent({
     book.testament === "New" &&
     settings.showEsvInterlinear &&
     esvInterlinearBook !== null;
-  const interlinearByChapter = showEsvInterlinear
+  const showKjvGreekCompanion =
+    version === "kjv" &&
+    book.testament === "New" &&
+    settings.showStrongs &&
+    esvInterlinearBook !== null;
+  const interlinearByChapter = showEsvInterlinear || showKjvGreekCompanion
     ? new Map(
         (esvInterlinearBook ?? []).map((chapter) => [
           chapter.chapterNumber,

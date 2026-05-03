@@ -631,6 +631,38 @@ describe("WholeBookContent", () => {
     ).toBeInTheDocument();
   });
 
+  it("shows the ESV-backed Greek verse under KJV New Testament verses in whole-book view", async () => {
+    window.localStorage.setItem(
+      "bible-reader:customization",
+      JSON.stringify({
+        showStrongs: true
+      })
+    );
+
+    renderWithReaderCustomization(
+      <>
+        <WholeBookContent
+          book={books[0]}
+          books={books}
+          chaptersByVersion={{ kjv: kjvChapters, web: chapters }}
+          esvInterlinearBook={ntInterlinearBook}
+        />
+        <SearchPane />
+        <LookupPane />
+      </>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: {
+        value: "kjv"
+      }
+    });
+
+    expect(await screen.findByText("Ἰούδας Ἰησοῦ χριστοῦ δοῦλος ἀδελφὸς δὲ Ἰακώβου.")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Jesus G2424/i })).toBeInTheDocument();
+  });
+
   it("can show only Greek in whole-book ESV interlinear mode", () => {
     window.localStorage.setItem(
       "bible-reader:customization",
