@@ -244,6 +244,7 @@ export function VerseList({
 
                           openGreekDictionary(selection);
                         }}
+                        showStrongsNumbers={version === "tr"}
                         verse={verse}
                       />
                     ) : showStrongs && verse.tokens?.length ? (

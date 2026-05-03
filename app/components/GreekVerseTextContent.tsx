@@ -15,6 +15,7 @@ type GreekVerseTextContentProps = {
   className?: string;
   displayMode?: "inline" | "stacked";
   showSurface?: boolean;
+  showStrongsNumbers?: boolean;
   showTransliteration?: boolean;
   showLemma?: boolean;
   showGloss?: boolean;
@@ -46,6 +47,7 @@ export function GreekVerseTextContent({
   className,
   displayMode = "inline",
   showSurface = true,
+  showStrongsNumbers = false,
   showTransliteration = true,
   showLemma = true,
   showGloss = true,
@@ -147,6 +149,11 @@ export function GreekVerseTextContent({
                   {showSurface ? (
                     <span className="verse-greek-surface verse-compare-token-surface">
                       {token.surface}
+                    </span>
+                  ) : null}
+                  {showStrongsNumbers && token.strongs ? (
+                    <span className="verse-greek-strongs verse-compare-token-strongs">
+                      {token.strongs}
                     </span>
                   ) : null}
                   {showTransliteration ? (
@@ -276,6 +283,9 @@ export function GreekVerseTextContent({
               ) : (
                 <span className="verse-greek-inline-token-text">{token.surface}</span>
               )}
+              {showStrongsNumbers && token.strongs ? (
+                <span className="verse-greek-inline-strongs">{token.strongs}</span>
+              ) : null}
               {token.trailingPunctuation ? (
                 <span aria-hidden="true" className="verse-greek-inline-punctuation">
                   {token.trailingPunctuation}

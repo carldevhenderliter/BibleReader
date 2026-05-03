@@ -1807,6 +1807,16 @@ button.fathers-annotation-anchor:focus-visible {
   color: rgba(240, 247, 255, 0.88);
 }
 
+.verse-greek-inline-strongs {
+  color: rgba(150, 198, 255, 0.82);
+  font-family: var(--reader-ui-font);
+  font-size: max(0.62rem, calc(var(--reader-body-text-size) * 0.66));
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
 .verse-text-hebrew-line {
   margin: 0;
   display: flex;
@@ -1987,6 +1997,16 @@ button.fathers-annotation-anchor:focus-visible {
   color: rgba(198, 215, 235, 0.72);
   font-family: var(--reader-body-font);
   font-size: max(0.72rem, calc(var(--reader-body-text-size) * 0.76));
+  line-height: 1.18;
+  white-space: nowrap;
+}
+
+.verse-greek-strongs {
+  color: rgba(150, 198, 255, 0.82);
+  font-family: var(--reader-ui-font);
+  font-size: max(0.64rem, calc(var(--reader-body-text-size) * 0.68));
+  font-weight: 700;
+  letter-spacing: 0.02em;
   line-height: 1.18;
   white-space: nowrap;
 }

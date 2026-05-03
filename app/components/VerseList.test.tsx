@@ -332,6 +332,45 @@ describe("VerseList", () => {
     ).toBeInTheDocument();
   });
 
+  it("shows Strong's numbers beside each word in the Textus Receptus reader", async () => {
+    window.localStorage.setItem(READER_VERSION_STORAGE_KEY, "tr");
+    window.history.replaceState({}, "", "http://localhost/read/matthew/1?version=tr");
+
+    renderWithReaderCustomization(
+      <VerseList
+        bookSlug="matthew"
+        chapterNumber={1}
+        verses={[
+          {
+            number: 1,
+            text: "βίβλος γενέσεως",
+            translationText: "The book of the generation",
+            greekTokens: [
+              {
+                surface: "βίβλος",
+                lemma: "βίβλος",
+                entryKey: "G976",
+                strongs: "G976",
+                gloss: "book"
+              },
+              {
+                surface: "γενέσεως",
+                lemma: "γένεσις",
+                entryKey: "G1078",
+                strongs: "G1078",
+                gloss: "generation"
+              }
+            ]
+          }
+        ]}
+      />
+    );
+
+    expect((await screen.findAllByText("βίβλος")).length).toBeGreaterThan(0);
+    expect(screen.getByText("G976")).toBeInTheDocument();
+    expect(screen.getByText("G1078")).toBeInTheDocument();
+  });
+
   it("adds Bible Greek undertext by clicking the English word in the standalone Greek version", async () => {
     window.localStorage.setItem(READER_VERSION_STORAGE_KEY, "greek");
 
