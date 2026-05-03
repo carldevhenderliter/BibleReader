@@ -35,6 +35,39 @@ function StrongsHarness() {
       >
         Open Greek Dictionary
       </button>
+      <button
+        onClick={() =>
+          openGreekDictionary({
+            entryKey: "G1096",
+            strongs: "G1096",
+            lemma: "γίνομαι",
+            label: "γίνομαι",
+            selectedForm: "ἐγένετο",
+            selectedFormMorphology: "V-3AMI-S",
+            selectedFormDecodedMorphology:
+              "verb aorist middle indicative third person singular"
+          })
+        }
+        type="button"
+      >
+        Open Greek Verb Dictionary
+      </button>
+      <button
+        onClick={() =>
+          openGreekDictionary({
+            entryKey: "G1096",
+            strongs: "G1096",
+            lemma: "γίνομαι",
+            label: "γίνομαι",
+            selectedForm: "γίνεσθαι",
+            selectedFormMorphology: "V-PAN",
+            selectedFormDecodedMorphology: "verb present active infinitive"
+          })
+        }
+        type="button"
+      >
+        Open Greek Verb Nonfinite
+      </button>
       <LookupPane />
     </>
   );
@@ -196,6 +229,30 @@ describe("ReaderStrongsPanel", () => {
     await waitFor(() =>
       expect(studyPane.querySelectorAll(".strongs-entry-bible-verse .strongs-token-lemma").length).toBeGreaterThan(0)
     );
+  });
+
+  it("renders a verb paradigm chart for finite Greek forms and a note for non-finite ones", async () => {
+    renderWithReaderCustomization(<StrongsHarness />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Open Greek Verb Dictionary" }));
+
+    const studyPane = screen.getByLabelText("Study pane");
+
+    expect(await within(studyPane).findByText("Paradigm Endings")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Aorist Middle Indicative")).toBeInTheDocument();
+    expect(within(studyPane).getByRole("columnheader", { name: "Singular" })).toBeInTheDocument();
+    expect(within(studyPane).getByRole("columnheader", { name: "Plural" })).toBeInTheDocument();
+    expect(within(studyPane).getByRole("cell", { name: "ατο" })).toHaveClass(
+      "greek-verb-paradigm-cell",
+      "is-active"
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Open Greek Verb Nonfinite" }));
+
+    expect(await within(studyPane).findByText("Present Middle Infinitive")).toBeInTheDocument();
+    expect(
+      within(studyPane).getByText("Paradigm chart not available for this verb form.")
+    ).toBeInTheDocument();
   });
 
   it("filters Strong's Bible occurrences by testament and book inside the study pane", async () => {
