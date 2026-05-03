@@ -26,6 +26,7 @@ export type GreekVerbParadigmCell = {
   personLabel: "1st" | "2nd" | "3rd";
   number: GreekVerbNumber;
   ending: string;
+  displayText: string;
 };
 
 export type GreekVerbParadigm = {
@@ -568,12 +569,14 @@ function createParadigmCells(table: ParadigmTable) {
   return CELL_IDS.map((cellId) => {
     const personValue = Number(cellId[0]) as GreekVerbPerson;
     const number = cellId.endsWith("s") ? "singular" : "plural";
+    const ending = table[cellId];
 
     return {
       id: cellId,
       personLabel: PERSON_LABELS[personValue],
       number,
-      ending: table[cellId]
+      ending,
+      displayText: `stem-${ending}`
     } satisfies GreekVerbParadigmCell;
   });
 }

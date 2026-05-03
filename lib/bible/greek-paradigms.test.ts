@@ -24,6 +24,7 @@ describe("getGreekVerbParadigmForToken", () => {
     expect(paradigm?.highlightedCellId).toBe("3s");
     expect(paradigm?.availabilityNote).toBeUndefined();
     expect(paradigm?.cells.find((cell) => cell.id === "3s")?.ending).toBe("ατο");
+    expect(paradigm?.cells.find((cell) => cell.id === "3s")?.displayText).toBe("stem-ατο");
     expect(paradigm?.cells.find((cell) => cell.id === "1p")?.ending).toBe("αμεθα");
   });
 

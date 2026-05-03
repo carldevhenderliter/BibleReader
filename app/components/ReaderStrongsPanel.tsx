@@ -1334,7 +1334,7 @@ export function ReaderStrongsPanel() {
                                     : ""
                                 }`}
                               >
-                                {singularCell?.ending ?? "—"}
+                                {singularCell?.displayText ?? "—"}
                               </td>
                               <td
                                 className={`greek-verb-paradigm-cell${
@@ -1343,7 +1343,7 @@ export function ReaderStrongsPanel() {
                                     : ""
                                 }`}
                               >
-                                {pluralCell?.ending ?? "—"}
+                                {pluralCell?.displayText ?? "—"}
                               </td>
                             </tr>
                           );

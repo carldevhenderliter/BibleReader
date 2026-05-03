@@ -650,7 +650,7 @@ describe("VerseList", () => {
     expect(within(studyPane).getByText("Paradigm Endings")).toBeInTheDocument();
     expect(within(studyPane).getByText("Aorist Middle Indicative")).toBeInTheDocument();
     expect(within(studyPane).getByRole("columnheader", { name: "Singular" })).toBeInTheDocument();
-    expect(within(studyPane).getByRole("cell", { name: "ατο" })).toHaveClass(
+    expect(within(studyPane).getByRole("cell", { name: "stem-ατο" })).toHaveClass(
       "greek-verb-paradigm-cell",
       "is-active"
     );
