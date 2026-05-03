@@ -367,8 +367,47 @@ describe("VerseList", () => {
     );
 
     expect((await screen.findAllByText("βίβλος")).length).toBeGreaterThan(0);
-    expect(screen.getByText("G976")).toBeInTheDocument();
-    expect(screen.getByText("G1078")).toBeInTheDocument();
+    expect(screen.getAllByText("G976").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("G1078").length).toBeGreaterThan(0);
+  });
+
+  it("shows a Strong's-linked English gloss line for the Textus Receptus reader", async () => {
+    window.localStorage.setItem(READER_VERSION_STORAGE_KEY, "tr");
+    window.history.replaceState({}, "", "http://localhost/read/matthew/1?version=tr");
+
+    renderWithReaderCustomization(
+      <VerseList
+        bookSlug="matthew"
+        chapterNumber={1}
+        verses={[
+          {
+            number: 1,
+            text: "βίβλος γενέσεως",
+            translationText: "The book of the genealogy",
+            greekTokens: [
+              {
+                surface: "βίβλος",
+                lemma: "βίβλος",
+                entryKey: "G976",
+                strongs: "G976",
+                gloss: "a written book, a roll, a scroll"
+              },
+              {
+                surface: "γενέσεως",
+                lemma: "γένεσις",
+                entryKey: "G1078",
+                strongs: "G1078",
+                gloss: "source, origin, a book of one's lineage"
+              }
+            ]
+          }
+        ]}
+      />
+    );
+
+    expect(await screen.findByRole("button", { name: "a written book G976" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "source G1078" })).toBeInTheDocument();
+    expect(screen.getByText("The book of the genealogy")).toBeInTheDocument();
   });
 
   it("adds Bible Greek undertext by clicking the English word in the standalone Greek version", async () => {

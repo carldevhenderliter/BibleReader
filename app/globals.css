@@ -1817,6 +1817,49 @@ button.fathers-annotation-anchor:focus-visible {
   white-space: nowrap;
 }
 
+.verse-text-tr-gloss-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.36rem 0.44rem;
+  margin-bottom: 0.18rem;
+}
+
+.verse-tr-gloss-token {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.26rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: rgba(235, 241, 251, 0.88);
+  font: inherit;
+  cursor: pointer;
+  transition:
+    color 160ms ease,
+    text-shadow 160ms ease;
+}
+
+.verse-tr-gloss-token:hover,
+.verse-tr-gloss-token:focus-visible {
+  color: rgba(var(--reader-accent-rgb), 1);
+  outline: none;
+  text-shadow: 0 0 0.7rem rgba(var(--reader-accent-rgb), 0.26);
+}
+
+.verse-tr-gloss-text {
+  white-space: nowrap;
+}
+
+.verse-tr-gloss-strongs {
+  color: rgba(150, 198, 255, 0.82);
+  font-family: var(--reader-ui-font);
+  font-size: max(0.62rem, calc(var(--reader-body-text-size) * 0.66));
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
 .verse-text-hebrew-line {
   margin: 0;
   display: flex;

@@ -49,6 +49,31 @@ type VerseListProps = {
   verses: Verse[];
 };
 
+function getTrEnglishGlossToken(gloss?: string | null) {
+  if (!gloss) {
+    return "";
+  }
+
+  const normalizedGloss = gloss
+    .replace(/\s+/g, " ")
+    .replace(/^["'\s]+|["'\s]+$/g, "")
+    .trim();
+
+  if (!normalizedGloss) {
+    return "";
+  }
+
+  const firstSegment = normalizedGloss.split(/[;,/]/)[0]?.trim() ?? "";
+  const cleanedSegment = firstSegment.replace(/\([^)]*\)/g, "").trim();
+
+  if (!cleanedSegment) {
+    return "";
+  }
+
+  const firstWords = cleanedSegment.split(/\s+/).slice(0, 3).join(" ").trim();
+  return firstWords;
+}
+
 export function VerseList({
   bookSlug,
   chapterNumber,
@@ -308,49 +333,75 @@ export function VerseList({
                   {isStandaloneGreekVersion &&
                   showCompanionVerseTranslation &&
                   verse.translationText?.trim() ? (
-                    canAnnotateGreekVersionTranslation && showBibleAnnotationLine ? (
-                      <FathersEnglishUndertextContent
-                        annotationMode={annotationMode}
-                        showAnnotatedUndertext={showAnnotatedGreekUndertext}
-                        annotationInteractionMode="word-click"
-                        annotationModePrompt="Click any English word to place the matching Greek under it."
-                        annotations={undertextAnnotations}
-                        autoApplySingleWordSuggestion
-                        autoSuggestionsBuilder={(selectedText, selectedWords) =>
-                          buildBibleGreekUndertextSuggestions(
-                            selectedText,
-                            selectedWords,
-                            activeGreekTokens
-                          )
-                        }
-                        contentId={verseKey}
-                        english={verse.translationText}
-                        englishTokens={bibleAnnotationTokens}
-                        lineClassName="verse-text verse-text-companion-translation"
-                        onChangeAnnotations={(contentId, nextAnnotations) =>
-                          saveVerseAnnotations(
-                            contentId,
-                            nextAnnotations.map((annotation) => ({
-                              verseKey: contentId,
-                              startToken: annotation.startToken,
-                              endToken: annotation.endToken,
-                              greekText: annotation.greekText,
-                              entryKey: annotation.entryKey,
-                              lemma: annotation.lemma,
-                              strongs: annotation.strongs,
-                              transliteration: annotation.transliteration,
-                              gloss: annotation.gloss,
-                              source: annotation.source
-                            }))
-                          )
-                        }
-                        onOpenGreekDictionary={openGreekDictionary}
-                      />
-                    ) : (
-                      <p className="verse-text verse-text-companion-translation">
-                        {verse.translationText}
-                      </p>
-                    )
+                    <>
+                      {version === "tr" && verse.greekTokens?.length ? (
+                        <div className="verse-text verse-text-companion-translation verse-text-tr-gloss-line">
+                          {verse.greekTokens.map((token, tokenIndex) => {
+                            const glossToken = getTrEnglishGlossToken(token.gloss);
+
+                            if (!glossToken || !token.strongs) {
+                              return null;
+                            }
+
+                            return (
+                              <button
+                                aria-label={`${glossToken} ${token.strongs}`}
+                                className="verse-tr-gloss-token"
+                                key={`${verse.number}:${tokenIndex}:${token.surface}:${token.strongs}`}
+                                onClick={() => handleGreekTokenSelection(token)}
+                                type="button"
+                              >
+                                <span className="verse-tr-gloss-text">{glossToken}</span>
+                                <span className="verse-tr-gloss-strongs">{token.strongs}</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      ) : null}
+                      {canAnnotateGreekVersionTranslation && showBibleAnnotationLine ? (
+                        <FathersEnglishUndertextContent
+                          annotationMode={annotationMode}
+                          showAnnotatedUndertext={showAnnotatedGreekUndertext}
+                          annotationInteractionMode="word-click"
+                          annotationModePrompt="Click any English word to place the matching Greek under it."
+                          annotations={undertextAnnotations}
+                          autoApplySingleWordSuggestion
+                          autoSuggestionsBuilder={(selectedText, selectedWords) =>
+                            buildBibleGreekUndertextSuggestions(
+                              selectedText,
+                              selectedWords,
+                              activeGreekTokens
+                            )
+                          }
+                          contentId={verseKey}
+                          english={verse.translationText}
+                          englishTokens={bibleAnnotationTokens}
+                          lineClassName="verse-text verse-text-companion-translation"
+                          onChangeAnnotations={(contentId, nextAnnotations) =>
+                            saveVerseAnnotations(
+                              contentId,
+                              nextAnnotations.map((annotation) => ({
+                                verseKey: contentId,
+                                startToken: annotation.startToken,
+                                endToken: annotation.endToken,
+                                greekText: annotation.greekText,
+                                entryKey: annotation.entryKey,
+                                lemma: annotation.lemma,
+                                strongs: annotation.strongs,
+                                transliteration: annotation.transliteration,
+                                gloss: annotation.gloss,
+                                source: annotation.source
+                              }))
+                            )
+                          }
+                          onOpenGreekDictionary={openGreekDictionary}
+                        />
+                      ) : (
+                        <p className="verse-text verse-text-companion-translation">
+                          {verse.translationText}
+                        </p>
+                      )}
+                    </>
                   ) : null}
                 </>
               ) : null}
