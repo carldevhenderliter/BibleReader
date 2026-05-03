@@ -99,7 +99,16 @@ describe("ReaderStrongsPanel", () => {
       )
     );
     await waitFor(() =>
-      expect(studyPane.querySelectorAll(".strongs-entry-bible-verse-text").length).toBeGreaterThan(0)
+      expect(studyPane.querySelectorAll(".strongs-entry-bible-verse-text-greek-companion").length).toBeGreaterThan(0)
+    );
+    await waitFor(() =>
+      expect(studyPane.querySelectorAll(".strongs-entry-bible-verse .strongs-token-lemma").length).toBeGreaterThan(0)
+    );
+
+    fireEvent.click(within(studyPane).getByRole("button", { name: "WEB" }));
+
+    await waitFor(() =>
+      expect(studyPane.querySelector(".strongs-entry-bible-verse-text-greek-companion")).toBeNull()
     );
 
     fireEvent.click(within(studyPane).getByRole("tab", { name: "BDAG" }));
@@ -124,6 +133,7 @@ describe("ReaderStrongsPanel", () => {
         "true"
       )
     );
+    expect(studyPane.querySelector(".strongs-entry-bible-verse-text-greek-companion")).toBeNull();
     expect(within(studyPane).queryByRole("tab", { name: "BDAG" })).not.toBeInTheDocument();
     expect(within(studyPane).queryByRole("tab", { name: "Outside Bible" })).not.toBeInTheDocument();
   });
@@ -177,6 +187,12 @@ describe("ReaderStrongsPanel", () => {
       .find((node) => node.closest(".greek-dictionary-form-row"));
 
     expect(selectedFormRow?.closest(".greek-dictionary-form-row")).toHaveClass("is-selected");
+
+    fireEvent.click(within(studyPane).getByRole("button", { name: "KJV" }));
+
+    await waitFor(() =>
+      expect(studyPane.querySelectorAll(".strongs-entry-bible-verse-text-greek-companion").length).toBeGreaterThan(0)
+    );
   });
 
   it("filters Strong's Bible occurrences by testament and book inside the study pane", async () => {

@@ -2628,6 +2628,16 @@ button.fathers-annotation-anchor:focus-visible {
   white-space: normal;
 }
 
+.strongs-entry-bible-verse-stack {
+  display: grid;
+  gap: 0.42rem;
+}
+
+.strongs-entry-bible-verse-text-greek-companion {
+  padding-top: 0.2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
 .strongs-entry-outside-scripture-results,
 .strongs-entry-fathers-group,
 .strongs-entry-fathers-list {
