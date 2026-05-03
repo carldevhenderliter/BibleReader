@@ -811,15 +811,20 @@ export function ReaderStrongsPanel() {
           {(kjvVerse.tokens ?? []).map((token, index) => {
             if (!token.strongsNumbers?.length) {
               return (
-                <span className="strongs-text-segment" key={`${kjvVerse.number}:${index}:${token.text}`}>
+                <span
+                  className="strongs-text-segment"
+                  key={`${kjvVerse.verseNumber}:${index}:${token.text}`}
+                >
                   {token.text}
                 </span>
               );
             }
 
+            const tokenStrongsNumbers = token.strongsNumbers ?? [];
+
             const tokenLemmas = Array.from(
               new Set(
-                token.strongsNumbers
+                tokenStrongsNumbers
                   .map((strongsNumber) => strongsTokenLemmaMap[normalizeStrongsNumber(strongsNumber)] ?? "")
                   .filter(Boolean)
               )
@@ -827,10 +832,10 @@ export function ReaderStrongsPanel() {
 
             return (
               <button
-                aria-label={`${token.text.trim()} ${token.strongsNumbers.join(" ")}`}
+                aria-label={`${token.text.trim()} ${tokenStrongsNumbers.join(" ")}`}
                 className={`strongs-token${tokenLemmas.length ? " strongs-token-interlinear" : ""}${
                   highlightStrongsNumber &&
-                  token.strongsNumbers.some(
+                  tokenStrongsNumbers.some(
                     (strongsNumber) =>
                       normalizeStrongsNumber(strongsNumber) ===
                       normalizeStrongsNumber(highlightStrongsNumber)
@@ -839,12 +844,12 @@ export function ReaderStrongsPanel() {
                     : ""
                 }`}
                 key={`${kjvVerse.verseNumber}:${index}:${token.text}`}
-                onClick={() => openStrongs(token.strongsNumbers ?? [], token.strongsNumbers.join(" "))}
+                onClick={() => openStrongs(tokenStrongsNumbers, tokenStrongsNumbers.join(" "))}
                 type="button"
               >
                 <span className="strongs-token-surface">
                   <span>{token.text}</span>
-                  <span className="strongs-token-numbers">{token.strongsNumbers.join(" ")}</span>
+                  <span className="strongs-token-numbers">{tokenStrongsNumbers.join(" ")}</span>
                 </span>
                 {tokenLemmas.length ? (
                   <span className="strongs-token-lemma">{tokenLemmas.join(" · ")}</span>
