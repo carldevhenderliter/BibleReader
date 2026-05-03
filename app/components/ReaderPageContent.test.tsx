@@ -559,6 +559,39 @@ describe("ReaderPageContent", () => {
     ).toBeInTheDocument();
   });
 
+  it("restores a visible Greek layer when ESV interlinear is enabled from older off-state settings", () => {
+    window.localStorage.setItem(
+      "bible-reader:customization",
+      JSON.stringify({
+        showEsvInterlinear: true,
+        showGreekSurface: false,
+        showGreekLemma: false,
+        showGreekTransliteration: false,
+        showGreekGloss: false
+      })
+    );
+
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={ntBooks[0]}
+        books={ntBooks}
+        chaptersByVersion={{ esv: esvNtChapter, web: esvNtChapter }}
+        esvInterlinearChapter={esvNtInterlinearChapter}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: {
+        value: "esv"
+      }
+    });
+
+    expect(
+      screen.getByText("Βίβλος γενέσεως Ἰησοῦ χριστοῦ υἱοῦ Δαυὶδ υἱοῦ Ἀβραάμ.")
+    ).toBeInTheDocument();
+  });
+
   it("lets the reader switch the book selector to chronological New Testament order", () => {
     renderWithReaderCustomization(
       <ReaderPageContent

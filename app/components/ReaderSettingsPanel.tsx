@@ -152,6 +152,34 @@ export function ReaderSettingsPanel({
   const greekStudyLayersEnabled = isFathersMode
     ? hasGreekReaderAid
     : version === "greek" || settings.showEsvInterlinear;
+  const hasVisibleGreekStudyLayer =
+    settings.showGreekSurface ||
+    settings.showGreekLemma ||
+    settings.showGreekTransliteration ||
+    settings.showGreekGloss;
+
+  useEffect(() => {
+    // Older stored settings and reading/audio presets can leave every Greek layer disabled.
+    // If ESV interlinear is active, ensure at least one visible Greek layer is restored.
+    if (
+      isFathersMode ||
+      version !== "esv" ||
+      !settings.showEsvInterlinear ||
+      hasVisibleGreekStudyLayer
+    ) {
+      return;
+    }
+
+    updateSettings({
+      showGreekSurface: true
+    });
+  }, [
+    hasVisibleGreekStudyLayer,
+    isFathersMode,
+    settings.showEsvInterlinear,
+    updateSettings,
+    version
+  ]);
 
   const handleVersionChange = (nextVersion: string) => {
     if (!isInstalledBundledBibleVersion(nextVersion) || nextVersion === version) {
@@ -764,7 +792,10 @@ export function ReaderSettingsPanel({
                     onClick={() =>
                       updateSettings({
                         showEsvInterlinear: !settings.showEsvInterlinear,
-                        showEsvGreekOnly: false
+                        showEsvGreekOnly: false,
+                        ...(!settings.showEsvInterlinear && !hasVisibleGreekStudyLayer
+                          ? { showGreekSurface: true }
+                          : {})
                       })
                     }
                     type="button"

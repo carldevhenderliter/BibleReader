@@ -257,6 +257,16 @@ describe("Reader customization", () => {
   });
 
   it("persists the ESV interlinear toggle from the reader menu", () => {
+    window.localStorage.setItem(
+      READER_CUSTOMIZATION_STORAGE_KEY,
+      JSON.stringify({
+        showGreekSurface: false,
+        showGreekLemma: false,
+        showGreekTransliteration: false,
+        showGreekGloss: false
+      })
+    );
+
     renderWithReaderCustomization(
       <ReaderPageContent
         book={ntBooks[0]}
@@ -282,6 +292,7 @@ describe("Reader customization", () => {
     const stored = window.localStorage.getItem(READER_CUSTOMIZATION_STORAGE_KEY) ?? "";
 
     expect(stored).toContain('"showEsvInterlinear":true');
+    expect(stored).toContain('"showGreekSurface":true');
     expect(stored).toContain('"showEsvGreekOnly":true');
     expect(stored).toContain('"showVerseText":false');
     expect(stored).toContain('"greekTextSize":2.1');
