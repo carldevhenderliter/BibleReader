@@ -146,6 +146,7 @@ export function ReaderSettingsPanel({
     ? hasGreekReaderAid
     : version === "esv" || version === "greek";
   const supportsEsvInterlinear = !isFathersMode && version === "esv";
+  const supportsQuickGreekInterlinear = !isFathersMode && (version === "esv" || version === "kjv");
   const supportsGreekStudyLayers = isFathersMode
     ? hasGreekReaderAid
     : version === "esv" || version === "greek";
@@ -188,6 +189,9 @@ export function ReaderSettingsPanel({
 
     setVersion(nextVersion);
   };
+
+  const isQuickGreekInterlinearEnabled =
+    version === "esv" ? settings.showEsvInterlinear : version === "kjv" ? settings.showStrongs : false;
 
   const handleTextSizeShift = (delta: number) => {
     updateSettings({
@@ -786,25 +790,32 @@ export function ReaderSettingsPanel({
                       : "Strongs (KJV only)"}
                   </button>
                   <button
-                    aria-pressed={supportsEsvInterlinear ? settings.showEsvInterlinear : false}
+                    aria-pressed={supportsQuickGreekInterlinear ? isQuickGreekInterlinearEnabled : false}
                     className="reader-inline-button reader-settings-link"
-                    disabled={!supportsEsvInterlinear}
-                    onClick={() =>
+                    disabled={!supportsQuickGreekInterlinear}
+                    onClick={() => {
+                      if (version === "kjv") {
+                        updateSettings({
+                          showStrongs: !settings.showStrongs
+                        });
+                        return;
+                      }
+
                       updateSettings({
                         showEsvInterlinear: !settings.showEsvInterlinear,
                         showEsvGreekOnly: false,
                         ...(!settings.showEsvInterlinear && !hasVisibleGreekStudyLayer
                           ? { showGreekSurface: true }
                           : {})
-                      })
-                    }
+                      });
+                    }}
                     type="button"
                   >
-                    {supportsEsvInterlinear
-                      ? settings.showEsvInterlinear
+                    {supportsQuickGreekInterlinear
+                      ? isQuickGreekInterlinearEnabled
                         ? "Hide Greek interlinear"
                         : "Show Greek interlinear"
-                      : "Greek interlinear (ESV only)"}
+                      : "Greek interlinear (ESV/KJV only)"}
                   </button>
                   <Link
                     className="reader-inline-action reader-settings-link"

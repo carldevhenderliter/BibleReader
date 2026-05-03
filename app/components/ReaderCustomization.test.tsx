@@ -256,6 +256,28 @@ describe("Reader customization", () => {
     expect(stored).toContain('"showStrongs":true');
   });
 
+  it("lets the Greek interlinear quick control drive the KJV under-Greek display", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={chaptersByVersion}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: {
+        value: "kjv"
+      }
+    });
+    fireEvent.click(screen.getByRole("button", { name: "Show Greek interlinear" }));
+
+    const stored = window.localStorage.getItem(READER_CUSTOMIZATION_STORAGE_KEY) ?? "";
+
+    expect(stored).toContain('"showStrongs":true');
+  });
+
   it("persists the ESV interlinear toggle from the reader menu", () => {
     window.localStorage.setItem(
       READER_CUSTOMIZATION_STORAGE_KEY,
