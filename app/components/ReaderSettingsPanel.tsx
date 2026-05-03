@@ -305,6 +305,7 @@ export function ReaderSettingsPanel({
       | "showChapterHeadings"
       | "showCompanionVerseTranslation"
       | "showAnnotatedGreekUndertext"
+      | "showVerseStrongs"
       | "showCustomVerseTranslation"
       | "showGreekSurface"
       | "showGreekLemma"
