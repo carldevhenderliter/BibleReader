@@ -6,6 +6,7 @@ import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { useGreekSentenceQuiz } from "@/app/components/useGreekSentenceQuiz";
 import {
   createGreekLearningQuizSelections,
+  getGreekMorphologyDetails,
   transliterateGreekSurface
 } from "@/lib/bible/greek";
 import type { GreekToken, Verse } from "@/lib/bible/types";
@@ -84,6 +85,15 @@ export function GreekVerseTextContent({
     wrongCount
   } = useGreekSentenceQuiz(greekLearningSelections, activeGreekLearningScopeKey);
 
+  function getPartOfSpeechLabel(token: GreekToken) {
+    return (
+      getGreekMorphologyDetails({
+        morphology: token.morphology,
+        decodedMorphology: token.decodedMorphology
+      })?.terms.find((term) => term.group === "part-of-speech")?.label ?? null
+    );
+  }
+
   if (!verse) {
     return <p className={className ?? "verse-text verse-text-greek"} lang="el" />;
   }
@@ -110,6 +120,7 @@ export function GreekVerseTextContent({
               getOccurrenceKey?.(token, index) ??
               token.occurrenceKey ??
               `greek:${verse.number}:${index}`;
+            const partOfSpeechLabel = getPartOfSpeechLabel(token);
 
             return (
               <span
@@ -166,6 +177,9 @@ export function GreekVerseTextContent({
                   ) : null}
                   {showGloss && token.gloss ? (
                     <span className="verse-greek-gloss verse-compare-token-gloss">{token.gloss}</span>
+                  ) : null}
+                  {partOfSpeechLabel ? (
+                    <span className="verse-greek-part-of-speech">{partOfSpeechLabel}</span>
                   ) : null}
                 </button>
                 {enableGreekLearning &&
@@ -248,6 +262,7 @@ export function GreekVerseTextContent({
           getOccurrenceKey?.(token, index) ??
           token.occurrenceKey ??
           `greek:${verse.number}:${index}`;
+        const partOfSpeechLabel = getPartOfSpeechLabel(token);
 
         return (
           <span className="verse-greek-inline-wrap" key={`${verse.number}:${index}:${token.surface}`}>
@@ -329,6 +344,9 @@ export function GreekVerseTextContent({
                   </small>
                 ) : null}
               </div>
+            ) : null}
+            {partOfSpeechLabel ? (
+              <span className="verse-greek-inline-part-of-speech">{partOfSpeechLabel}</span>
             ) : null}
           </span>
         );

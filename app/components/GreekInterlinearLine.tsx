@@ -9,6 +9,7 @@ import {
   createGreekLearningQuizSelections,
   getGreekGlossOptions,
   getGreekLemmaEntry,
+  getGreekMorphologyDetails,
   getGreekTokenOccurrenceKey,
   resolveGreekTokenGloss,
   transliterateGreekSurface
@@ -278,6 +279,15 @@ export function GreekInterlinearLine({
     setCustomDraft(activeSource === "custom" ? effectiveGloss : "");
   }
 
+  function getPartOfSpeechLabel(token: GreekToken) {
+    return (
+      getGreekMorphologyDetails({
+        morphology: token.morphology,
+        decodedMorphology: token.decodedMorphology
+      })?.terms.find((term) => term.group === "part-of-speech")?.label ?? null
+    );
+  }
+
   return (
     <div className="verse-interlinear" lang="el">
       {tokenEntries.map(
@@ -293,7 +303,10 @@ export function GreekInterlinearLine({
           generatedGloss,
           defaultGloss,
           effectiveGloss
-        }) => (
+        }) => {
+          const partOfSpeechLabel = getPartOfSpeechLabel(token);
+
+          return (
           <span
             className="verse-greek-token-wrap"
             key={`${verse.number}:${tokenIndex}:${token.surface}`}
@@ -313,6 +326,9 @@ export function GreekInterlinearLine({
                   <span className="verse-greek-transliteration">
                     {transliterateGreekSurface(token.surface)}
                   </span>
+                ) : null}
+                {partOfSpeechLabel ? (
+                  <span className="verse-greek-part-of-speech">{partOfSpeechLabel}</span>
                 ) : null}
               </button>
               {showGloss ? (
@@ -524,9 +540,10 @@ export function GreekInterlinearLine({
               <span aria-hidden="true" className="verse-greek-punctuation">
                 {token.trailingPunctuation}
               </span>
-            ) : null}
-          </span>
-        )
+              ) : null}
+            </span>
+          );
+        }
       )}
       {isGreekLearningMode && isSentenceQuizActive ? (
         <div className="greek-sentence-quiz-actions">

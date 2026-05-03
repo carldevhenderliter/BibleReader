@@ -212,6 +212,23 @@ describe("VerseList", () => {
     expect(screen.getByText((content) => content.includes("God"))).toBeInTheDocument();
   });
 
+  it("shows the part of speech under ESV interlinear Greek words", async () => {
+    window.localStorage.setItem(READER_VERSION_STORAGE_KEY, "esv");
+    window.history.replaceState({}, "", "http://localhost/read/john/1?version=esv");
+
+    renderWithReaderCustomization(
+      <VerseList
+        bookSlug="john"
+        chapterNumber={1}
+        interlinearVerseMap={interlinearVerseMap}
+        verses={verses}
+      />
+    );
+
+    expect(await screen.findByText("Noun")).toBeInTheDocument();
+    expect(await screen.findByText("Verb")).toBeInTheDocument();
+  });
+
   it("opens Strongs details in the study pane from a tagged token", async () => {
     renderWithReaderCustomization(
       <>
@@ -334,6 +351,8 @@ describe("VerseList", () => {
                 lemma: "ἀρχή",
                 entryKey: "G746",
                 strongs: "G746",
+                morphology: "N-DSF",
+                decodedMorphology: "noun dative singular feminine",
                 gloss: "beginning"
               }
             ]
@@ -345,6 +364,7 @@ describe("VerseList", () => {
     expect((await screen.findAllByText("ἀρχῇ")).length).toBeGreaterThan(0);
     expect(screen.getByText("In the beginning")).toBeInTheDocument();
     expect(await screen.findByText("archē")).toBeInTheDocument();
+    expect((await screen.findAllByText("Noun")).length).toBeGreaterThan(0);
     expect(
       await screen.findByRole("button", { name: "Choose English gloss for ἀρχῇ" })
     ).toBeInTheDocument();
@@ -369,6 +389,8 @@ describe("VerseList", () => {
                 lemma: "βίβλος",
                 entryKey: "G976",
                 strongs: "G976",
+                morphology: "N-NSF",
+                decodedMorphology: "noun nominative singular feminine",
                 gloss: "book"
               },
               {
@@ -376,6 +398,8 @@ describe("VerseList", () => {
                 lemma: "γένεσις",
                 entryKey: "G1078",
                 strongs: "G1078",
+                morphology: "N-GSF",
+                decodedMorphology: "noun genitive singular feminine",
                 gloss: "generation"
               }
             ]
@@ -387,6 +411,7 @@ describe("VerseList", () => {
     expect((await screen.findAllByText("βίβλος")).length).toBeGreaterThan(0);
     expect(screen.getAllByText("G976").length).toBeGreaterThan(0);
     expect(screen.getAllByText("G1078").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("Noun").length).toBeGreaterThan(0);
   });
 
   it("shows a Strong's-linked English gloss line for the Textus Receptus reader", async () => {
