@@ -142,6 +142,13 @@ export function ReaderSettingsPanel({
   const supportsFullRenderToggle = isFathersMode || view === "book";
   const isOldTestament = book?.testament === "Old";
   const isHarmonyBook = book?.slug === GOSPEL_HARMONY_BOOK_SLUG;
+  const originalLanguageLabel = isFathersMode
+    ? "Greek"
+    : version === "kjv"
+      ? isOldTestament
+        ? "Hebrew"
+        : "Greek"
+      : "Greek";
   const supportsGreekReading = isFathersMode
     ? hasGreekReaderAid
     : version === "esv" || version === "greek";
@@ -149,10 +156,15 @@ export function ReaderSettingsPanel({
   const supportsQuickGreekInterlinear = !isFathersMode && (version === "esv" || version === "kjv");
   const supportsGreekStudyLayers = isFathersMode
     ? hasGreekReaderAid
-    : version === "esv" || version === "greek";
+    : version === "esv" || version === "greek" || version === "kjv";
   const greekStudyLayersEnabled = isFathersMode
     ? hasGreekReaderAid
-    : version === "greek" || settings.showEsvInterlinear;
+    : version === "greek" ||
+        settings.showEsvInterlinear ||
+        (version === "kjv" && settings.showStrongs);
+  const supportsOriginalWordSurface = isFathersMode
+    ? hasGreekReaderAid
+    : version === "esv" || version === "greek";
   const hasVisibleGreekStudyLayer =
     settings.showGreekSurface ||
     settings.showGreekLemma ||
@@ -678,13 +690,17 @@ export function ReaderSettingsPanel({
                   className={`settings-option-card${
                     settings.showGreekSurface ? " is-active" : ""
                   }`}
-                  disabled={!supportsGreekStudyLayers || !greekStudyLayersEnabled}
+                  disabled={!supportsOriginalWordSurface || !greekStudyLayersEnabled}
                   key="showGreekSurface"
                   onClick={() => toggleLayer("showGreekSurface")}
                   type="button"
                 >
-                  <strong>Greek words</strong>
-                  <span>Show the actual Greek word forms.</span>
+                  <strong>{originalLanguageLabel} words</strong>
+                  <span>
+                    {version === "kjv"
+                      ? "Show the exact original word forms when full interlinear text is available."
+                      : `Show the actual ${originalLanguageLabel.toLowerCase()} word forms.`}
+                  </span>
                 </button>
                 <button
                   className={`settings-option-card${settings.showGreekLemma ? " is-active" : ""}`}
@@ -693,7 +709,7 @@ export function ReaderSettingsPanel({
                   onClick={() => toggleLayer("showGreekLemma")}
                   type="button"
                 >
-                  <strong>Greek lemma</strong>
+                  <strong>{originalLanguageLabel} lemma</strong>
                   <span>Show the dictionary form under each word.</span>
                 </button>
                 <button
@@ -706,7 +722,9 @@ export function ReaderSettingsPanel({
                   type="button"
                 >
                   <strong>Transliteration</strong>
-                  <span>Show the English-letter pronunciation line.</span>
+                  <span>
+                    Show the English-letter pronunciation line for the {originalLanguageLabel.toLowerCase()} word.
+                  </span>
                 </button>
                 <button
                   className={`settings-option-card${settings.showGreekGloss ? " is-active" : ""}`}
@@ -716,7 +734,9 @@ export function ReaderSettingsPanel({
                   type="button"
                 >
                   <strong>English gloss</strong>
-                  <span>Show the editable one-word gloss line.</span>
+                  <span>
+                    Show the editable short meaning beneath each {originalLanguageLabel.toLowerCase()} word.
+                  </span>
                 </button>
                 {isFathersMode ? (
                   <button

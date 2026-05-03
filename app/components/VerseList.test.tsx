@@ -229,7 +229,35 @@ describe("VerseList", () => {
       />
     );
 
-    expect(await screen.findByText("רֵאשִׁית")).toBeInTheDocument();
+    expect(await screen.findByText(/רֵאשִׁית/)).toBeInTheDocument();
+  });
+
+  it("lets KJV Strongs undertext follow the reader transliteration and gloss toggles", async () => {
+    window.localStorage.setItem(
+      "bible-reader:customization",
+      JSON.stringify({
+        showStrongs: true,
+        showGreekLemma: false,
+        showGreekTransliteration: true,
+        showGreekGloss: true
+      })
+    );
+
+    renderWithReaderCustomization(
+      <VerseList
+        bookSlug="genesis"
+        chapterNumber={1}
+        showGreekGloss
+        showGreekLemma={false}
+        showGreekTransliteration
+        showStrongs
+        verses={verses}
+      />
+    );
+
+    expect(await screen.findByText(/rē'šîṯ/i)).toBeInTheDocument();
+    expect(screen.getByText(/first, beginning/i)).toBeInTheDocument();
+    expect(screen.queryByText("רֵאשִׁית")).not.toBeInTheDocument();
   });
 
   it("renders Greek interlinear tokens and opens the Greek dictionary from a clicked form", async () => {

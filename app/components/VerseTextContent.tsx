@@ -3,11 +3,15 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 
 import { getStrongsEntries, normalizeStrongsNumber } from "@/lib/bible/strongs";
-import type { Verse } from "@/lib/bible/types";
+import type { StrongsEntry, Verse } from "@/lib/bible/types";
 
 type VerseTextContentProps = {
   verse: Verse | null;
   showStrongs?: boolean;
+  showOriginalLanguageSurface?: boolean;
+  showOriginalLanguageLemma?: boolean;
+  showOriginalLanguageTransliteration?: boolean;
+  showOriginalLanguageGloss?: boolean;
   onOpenStrongs?: (strongsNumbers: string[]) => void;
   className?: string;
   highlightedStrongsNumber?: string | null;
@@ -61,15 +65,23 @@ function renderTextWithHighlights(text: string, phrases: readonly string[]) {
   return parts.length > 0 ? parts : text;
 }
 
+function getStrongsUndertextGloss(entry: StrongsEntry) {
+  return entry.outlineUsage?.trim() || entry.definition.trim();
+}
+
 export function VerseTextContent({
   verse,
   showStrongs = false,
+  showOriginalLanguageSurface = false,
+  showOriginalLanguageLemma = true,
+  showOriginalLanguageTransliteration = false,
+  showOriginalLanguageGloss = false,
   onOpenStrongs,
   className,
   highlightedStrongsNumber = null,
   highlightedPhrases = []
 }: VerseTextContentProps) {
-  const [tokenLemmas, setTokenLemmas] = useState<Record<string, string>>({});
+  const [tokenStrongsEntries, setTokenStrongsEntries] = useState<Record<string, StrongsEntry>>({});
   const strongsNumbers = useMemo(
     () => {
       const numbers = (verse?.tokens ?? []).reduce<string[]>((items, token) => {
@@ -89,7 +101,7 @@ export function VerseTextContent({
 
   useEffect(() => {
     if (!showStrongs || strongsNumbers.length === 0) {
-      setTokenLemmas({});
+      setTokenStrongsEntries({});
       return;
     }
 
@@ -100,10 +112,10 @@ export function VerseTextContent({
         return;
       }
 
-      setTokenLemmas(
-        entries.reduce<Record<string, string>>((lemmaMap, entry) => {
-          lemmaMap[entry.id] = entry.lemma;
-          return lemmaMap;
+      setTokenStrongsEntries(
+        entries.reduce<Record<string, StrongsEntry>>((entryMap, entry) => {
+          entryMap[entry.id] = entry;
+          return entryMap;
         }, {})
       );
     });
@@ -123,14 +135,50 @@ export function VerseTextContent({
         {verse.tokens.map((token, index) =>
           token.strongsNumbers?.length ? (
             (() => {
-              const lemma = (token.strongsNumbers ?? [])
-                .map((strongsNumber) => tokenLemmas[strongsNumber] ?? "")
-                .find(Boolean);
+              const tokenEntries = Array.from(
+                new Map(
+                  (token.strongsNumbers ?? [])
+                    .map((strongsNumber) => {
+                      const normalizedNumber = normalizeStrongsNumber(strongsNumber);
+                      return [normalizedNumber, tokenStrongsEntries[normalizedNumber] ?? null] as const;
+                    })
+                    .filter((entry): entry is readonly [string, StrongsEntry] => entry[1] !== null)
+                ).values()
+              );
+              const tokenUndertext = Array.from(
+                new Set(
+                  tokenEntries.flatMap((entry) => {
+                    const parts: string[] = [];
+
+                    if (showOriginalLanguageSurface) {
+                      parts.push(entry.lemma);
+                    }
+
+                    if (showOriginalLanguageLemma) {
+                      parts.push(entry.lemma);
+                    }
+
+                    if (showOriginalLanguageTransliteration && entry.transliteration.trim()) {
+                      parts.push(entry.transliteration.trim());
+                    }
+
+                    if (showOriginalLanguageGloss) {
+                      const gloss = getStrongsUndertextGloss(entry);
+
+                      if (gloss) {
+                        parts.push(gloss);
+                      }
+                    }
+
+                    return parts.map((part) => part.trim()).filter(Boolean);
+                  })
+                )
+              );
 
               return (
                 <button
                   aria-label={`${token.text.trim()} ${token.strongsNumbers.join(" ")}`}
-                  className={`strongs-token${lemma ? " strongs-token-interlinear" : ""}${
+                  className={`strongs-token${tokenUndertext.length ? " strongs-token-interlinear" : ""}${
                     highlightedStrongsNumber &&
                     token.strongsNumbers.some(
                       (strongsNumber) =>
@@ -148,7 +196,9 @@ export function VerseTextContent({
                     <span>{token.text}</span>
                     <span className="strongs-token-numbers">{token.strongsNumbers.join(" ")}</span>
                   </span>
-                  {lemma ? <span className="strongs-token-lemma">{lemma}</span> : null}
+                  {tokenUndertext.length ? (
+                    <span className="strongs-token-lemma">{tokenUndertext.join(" · ")}</span>
+                  ) : null}
                 </button>
               );
             })()

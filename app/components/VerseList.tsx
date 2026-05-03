@@ -251,6 +251,10 @@ export function VerseList({
                         onOpenStrongs={(strongsNumbers) =>
                           openStrongs(strongsNumbers, strongsNumbers.join(" "))
                         }
+                        showOriginalLanguageGloss={showGreekGloss}
+                        showOriginalLanguageLemma={showGreekLemma}
+                        showOriginalLanguageSurface={showGreekSurface}
+                        showOriginalLanguageTransliteration={showGreekTransliteration}
                         showStrongs
                         verse={verse}
                       />
