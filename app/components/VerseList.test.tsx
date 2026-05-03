@@ -100,6 +100,7 @@ describe("VerseList", () => {
   beforeEach(() => {
     window.localStorage.clear();
     setMockPathname("/read/genesis/1");
+    window.history.replaceState({}, "", "http://localhost/read/genesis/1");
     Object.defineProperty(window, "matchMedia", {
       writable: true,
       value: jest.fn().mockImplementation(() => ({
@@ -192,6 +193,23 @@ describe("VerseList", () => {
         name: "Explain morphology for ἀρχῆς: Noun · Genitive Singular Feminine"
       })
     ).not.toBeInTheDocument();
+  });
+
+  it("shows Greek Strong's numbers beside matched ESV English words in interlinear mode", async () => {
+    window.localStorage.setItem(READER_VERSION_STORAGE_KEY, "esv");
+    window.history.replaceState({}, "", "http://localhost/read/john/1?version=esv");
+
+    renderWithReaderCustomization(
+      <VerseList
+        bookSlug="john"
+        chapterNumber={1}
+        interlinearVerseMap={interlinearVerseMap}
+        verses={verses}
+      />
+    );
+
+    expect(await screen.findByRole("button", { name: "beginning G746" })).toBeInTheDocument();
+    expect(screen.getByText((content) => content.includes("God"))).toBeInTheDocument();
   });
 
   it("opens Strongs details in the study pane from a tagged token", async () => {

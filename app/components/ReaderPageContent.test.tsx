@@ -580,6 +580,36 @@ describe("ReaderPageContent", () => {
     ).toBeInTheDocument();
   });
 
+  it("shows Greek Strong's numbers beside matched ESV English words when interlinear is enabled", async () => {
+    window.localStorage.setItem(
+      "bible-reader:customization",
+      JSON.stringify({
+        showEsvInterlinear: true
+      })
+    );
+
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={ntBooks[0]}
+        books={ntBooks}
+        chaptersByVersion={{ esv: esvNtChapter, web: esvNtChapter }}
+        esvInterlinearChapter={esvNtInterlinearChapterWithTokenGlosses}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: {
+        value: "esv"
+      }
+    });
+
+    expect(await screen.findByRole("button", { name: "book G976" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "genealogy G1078" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Jesus G2424" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Christ G5547" })).toBeInTheDocument();
+  });
+
   it("shows the ESV-backed Greek verse under KJV New Testament verses when Strongs is enabled", async () => {
     window.localStorage.setItem(
       "bible-reader:customization",

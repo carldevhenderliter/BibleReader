@@ -1824,6 +1824,46 @@ button.fathers-annotation-anchor:focus-visible {
   margin-bottom: 0.18rem;
 }
 
+.verse-text-esv-strongs {
+  display: block;
+}
+
+.verse-esv-strongs-word {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.22rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition:
+    color 160ms ease,
+    text-shadow 160ms ease;
+}
+
+.verse-esv-strongs-word:hover,
+.verse-esv-strongs-word:focus-visible {
+  color: rgba(var(--reader-accent-rgb), 1);
+  outline: none;
+  text-shadow: 0 0 0.7rem rgba(var(--reader-accent-rgb), 0.26);
+}
+
+.verse-esv-strongs-word-text {
+  white-space: nowrap;
+}
+
+.verse-esv-strongs-number {
+  color: rgba(150, 198, 255, 0.82);
+  font-family: var(--reader-ui-font);
+  font-size: max(0.62rem, calc(var(--reader-body-text-size) * 0.66));
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
 .verse-tr-gloss-token {
   display: inline-flex;
   align-items: baseline;

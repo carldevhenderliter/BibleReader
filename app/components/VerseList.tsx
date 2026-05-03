@@ -25,6 +25,50 @@ import type {
   Verse
 } from "@/lib/bible/types";
 
+const ESV_STRONGS_STOPWORDS = new Set([
+  "a",
+  "an",
+  "and",
+  "as",
+  "at",
+  "by",
+  "for",
+  "from",
+  "he",
+  "her",
+  "his",
+  "i",
+  "in",
+  "is",
+  "it",
+  "its",
+  "me",
+  "my",
+  "of",
+  "on",
+  "or",
+  "our",
+  "she",
+  "that",
+  "the",
+  "their",
+  "them",
+  "these",
+  "they",
+  "this",
+  "those",
+  "through",
+  "to",
+  "us",
+  "was",
+  "we",
+  "with",
+  "you",
+  "your"
+]);
+
+const ESV_STRONGS_WORD_PATTERN = /[\p{L}\p{N}]+(?:['’\-][\p{L}\p{N}]+)*/gu;
+
 type VerseListProps = {
   bookSlug: string;
   chapterNumber: number;
@@ -72,6 +116,69 @@ function getTrEnglishGlossToken(gloss?: string | null) {
 
   const firstWords = cleanedSegment.split(/\s+/).slice(0, 3).join(" ").trim();
   return firstWords;
+}
+
+function getEsvStrongsCandidateWords(gloss?: string | null) {
+  if (!gloss) {
+    return [];
+  }
+
+  const normalizedGloss = gloss
+    .replace(/\([^)]*\)/g, " ")
+    .split(/[;,/]/)[0]
+    ?.trim()
+    .toLowerCase();
+
+  if (!normalizedGloss) {
+    return [];
+  }
+
+  ESV_STRONGS_WORD_PATTERN.lastIndex = 0;
+  const matches = normalizedGloss.match(ESV_STRONGS_WORD_PATTERN) ?? [];
+  ESV_STRONGS_WORD_PATTERN.lastIndex = 0;
+
+  return Array.from(
+    new Set(
+      matches.filter((word) => !ESV_STRONGS_STOPWORDS.has(word) && word.length > 1)
+    )
+  );
+}
+
+function buildEsvEnglishStrongsMatches(english: string, greekTokens: GreekToken[]) {
+  const englishTokens = tokenizeBibleEnglishText(english);
+  const matchingTokensByWord = new Map<string, GreekToken[]>();
+
+  for (const greekToken of greekTokens) {
+    if (!greekToken.strongs) {
+      continue;
+    }
+
+    for (const candidateWord of getEsvStrongsCandidateWords(greekToken.gloss)) {
+      const existingMatches = matchingTokensByWord.get(candidateWord) ?? [];
+      existingMatches.push(greekToken);
+      matchingTokensByWord.set(candidateWord, existingMatches);
+    }
+  }
+
+  const occurrenceByWord = new Map<string, number>();
+
+  return englishTokens.map((englishToken) => {
+    if (englishToken.type !== "word") {
+      return {
+        token: englishToken,
+        matchedGreekToken: null as GreekToken | null
+      };
+    }
+
+    const normalizedWord = englishToken.text.trim().toLowerCase();
+    const wordOccurrence = occurrenceByWord.get(normalizedWord) ?? 0;
+    occurrenceByWord.set(normalizedWord, wordOccurrence + 1);
+
+    return {
+      token: englishToken,
+      matchedGreekToken: matchingTokensByWord.get(normalizedWord)?.[wordOccurrence] ?? null
+    };
+  });
 }
 
 export function VerseList({
@@ -146,6 +253,10 @@ export function VerseList({
         const verseKey = getBibleVerseAnnotationKey(bookSlug, chapterNumber, verse.number);
         const verseAnnotations = getVerseAnnotations(verseKey);
         const activeGreekTokens = activeGreekVerse?.tokens ?? verse.greekTokens ?? [];
+        const esvEnglishStrongsMatches =
+          version === "esv" && activeGreekVerse?.tokens?.length
+            ? buildEsvEnglishStrongsMatches(verse.text, activeGreekVerse.tokens)
+            : null;
         const canAnnotateGreekVersionTranslation =
           isStandaloneGreekVersion &&
           Boolean(verse.greekTokens?.length) &&
@@ -288,6 +399,34 @@ export function VerseList({
                         showStrongs
                         verse={verse}
                       />
+                    ) : version === "esv" &&
+                      activeGreekVerse?.tokens?.length &&
+                      esvEnglishStrongsMatches &&
+                      !showBibleAnnotationLine ? (
+                      <p className="verse-text verse-text-body verse-text-esv-strongs">
+                        {esvEnglishStrongsMatches.map(({ token, matchedGreekToken }, tokenIndex) =>
+                          token.type === "separator" ? (
+                            <span key={`${verse.number}:separator:${tokenIndex}`}>{token.text}</span>
+                          ) : matchedGreekToken?.strongs ? (
+                            <button
+                              aria-label={`${token.text} ${matchedGreekToken.strongs}`}
+                              className="verse-esv-strongs-word"
+                              key={`${verse.number}:word:${tokenIndex}:${token.text}`}
+                              onClick={() => handleGreekTokenSelection(matchedGreekToken)}
+                              type="button"
+                            >
+                              <span className="verse-esv-strongs-word-text">{token.text}</span>
+                              <span className="verse-esv-strongs-number">
+                                {matchedGreekToken.strongs}
+                              </span>
+                            </button>
+                          ) : (
+                            <span key={`${verse.number}:word:${tokenIndex}:${token.text}`}>
+                              {token.text}
+                            </span>
+                          )
+                        )}
+                      </p>
                     ) : canAnnotateInterlinearVerse && showBibleAnnotationLine ? (
                       <FathersEnglishUndertextContent
                         annotationMode={annotationMode}
