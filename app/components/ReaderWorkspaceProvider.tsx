@@ -18,6 +18,7 @@ import type {
   BundledBibleVersion,
   Chapter,
   GreekDictionarySelection,
+  GreekGrammarChartSelection,
   GreekLearningSession,
   GreekLearningQuizSelection,
   HarmonyDocument,
@@ -76,6 +77,7 @@ type UtilityPane =
   | "search"
   | "cross-references"
   | "compare"
+  | "charts"
   | "notebook"
   | "sermons"
   | "harmony"
@@ -99,6 +101,7 @@ type ReaderWorkspaceContextValue = {
   openStrongsInCurrentPane: (strongsNumber: string | string[], label?: string | null) => void;
   openGreekDictionary: (selection: GreekDictionarySelection) => void;
   openGreekDictionaryInCurrentPane: (selection: GreekDictionarySelection) => void;
+  openGreekGrammarChart: (selection: GreekGrammarChartSelection) => void;
   activeGreekLearningSession: GreekLearningSession | null;
   startGreekLearningSession: (
     queue: GreekLearningQuizSelection[],
@@ -139,6 +142,7 @@ type ReaderWorkspaceContextValue = {
   activeStrongsNumbers: string[];
   activeStrongsLabel: string | null;
   activeGreekSelection: GreekDictionarySelection | null;
+  activeGreekGrammarChartSelection: GreekGrammarChartSelection | null;
   activeGreekLearningQuizSelection: GreekLearningQuizSelection | null;
   isGreekLearningMode: boolean;
   setIsGreekLearningMode: (value: boolean) => void;
@@ -290,6 +294,8 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   const [activeGreekSelection, setActiveGreekSelection] = useState<GreekDictionarySelection | null>(
     null
   );
+  const [activeGreekGrammarChartSelection, setActiveGreekGrammarChartSelection] =
+    useState<GreekGrammarChartSelection | null>(null);
   const [activeGreekLearningSession, setActiveGreekLearningSession] =
     useState<GreekLearningSession | null>(null);
   const [isGreekLearningMode, setIsGreekLearningMode] = useState(false);
@@ -395,6 +401,21 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
     },
     [activeReaderPane]
   );
+
+  const openGreekGrammarChart = useCallback((selection: GreekGrammarChartSelection) => {
+    const normalizedLabel = selection.label?.trim() || selection.lemma;
+
+    setActiveReaderPane("reading");
+    setLeftReaderMode("scripture");
+    setActiveUtilityPaneState("charts");
+    setUtilityPaneRequestKey((current) => current + 1);
+    setLastReaderUtilityPane("charts");
+    setActiveStrongsNumbers(selection.strongs ? [selection.strongs] : []);
+    setActiveStrongsLabel(normalizedLabel || null);
+    setActiveGreekSelection(selection);
+    setActiveGreekGrammarChartSelection(selection);
+    setActiveGreekLearningSession(null);
+  }, []);
 
   const startGreekLearningSession = useCallback(
     (
@@ -701,6 +722,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       setActiveStrongsNumbers([]);
       setActiveStrongsLabel(null);
       setActiveGreekSelection(null);
+      setActiveGreekGrammarChartSelection(null);
       setActiveGreekLearningSession(null);
       setActiveSermonId(null);
       setActiveHarmonyId(null);
@@ -730,6 +752,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       openStrongsInCurrentPane,
       openGreekDictionary,
       openGreekDictionaryInCurrentPane,
+      openGreekGrammarChart,
       startGreekLearningSession,
       advanceGreekLearningSession,
       clearGreekLearningQuiz,
@@ -847,6 +870,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       activeStrongsNumbers,
       activeStrongsLabel,
       activeGreekSelection,
+      activeGreekGrammarChartSelection,
       activeGreekLearningQuizSelection,
       activeGreekLearningSession,
       isGreekLearningMode,
@@ -1320,6 +1344,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       activeStrongsLabel,
       activeStrongsNumbers,
       activeGreekSelection,
+      activeGreekGrammarChartSelection,
       activeGreekLearningQuizSelection,
       isGreekLearningMode,
       activeStudyVerseNumber,
@@ -1340,6 +1365,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
       openStrongsInCurrentPane,
       openGreekDictionary,
       openGreekDictionaryInCurrentPane,
+      openGreekGrammarChart,
       startGreekLearningSession,
       advanceGreekLearningSession,
       clearGreekLearningQuiz,

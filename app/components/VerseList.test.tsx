@@ -619,6 +619,40 @@ describe("VerseList", () => {
     expect(within(studyPane).getByText("Genitive")).toBeInTheDocument();
     expect(within(studyPane).getByText("Example: λογου = of the word")).toBeInTheDocument();
     expect(within(studyPane).getByText(/noun genitive singular feminine \(N-GSF\)/i)).toBeInTheDocument();
+    expect(
+      within(studyPane).getByRole("button", { name: "Open 2nd declension chart" })
+    ).toBeInTheDocument();
+  });
+
+  it("opens the Charts study tab from a clicked Greek noun", async () => {
+    renderWithReaderCustomization(
+      <>
+        <VerseList
+          bookSlug="john"
+          chapterNumber={1}
+          interlinearVerseMap={interlinearVerseMap}
+          verses={verses}
+        />
+        <LookupPane />
+      </>
+    );
+
+    fireEvent.click(await screen.findByRole("button", { name: /ἀρχῆς ἀρχή G746/i }));
+
+    const studyPane = screen.getByLabelText("Study pane");
+    fireEvent.click(
+      await within(studyPane).findByRole("button", { name: "Open 2nd declension chart" })
+    );
+
+    await waitFor(() =>
+      expect(within(studyPane).getByRole("tab", { name: "Charts" })).toHaveAttribute(
+        "aria-selected",
+        "true"
+      )
+    );
+    expect(
+      within(studyPane).getByText("This noun does not use the current 2nd declension chart.")
+    ).toBeInTheDocument();
   });
 
   it("shows verb morphology in the Greek dictionary panel", async () => {

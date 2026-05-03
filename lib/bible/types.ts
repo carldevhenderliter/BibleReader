@@ -423,6 +423,16 @@ export type GreekLearningQuizSelection = {
   gloss?: string | null;
 };
 
+export type GreekGrammarChartSelection = {
+  entryKey: string;
+  strongs?: string | null;
+  lemma: string;
+  label?: string | null;
+  selectedForm?: string | null;
+  selectedFormMorphology?: string | null;
+  selectedFormDecodedMorphology?: string | null;
+};
+
 export type GreekLearningSession = {
   queue: GreekLearningQuizSelection[];
   currentIndex: number;

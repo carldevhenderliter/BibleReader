@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 
 import { ReaderCrossReferencesPanel } from "@/app/components/ReaderCrossReferencesPanel";
+import { ReaderGrammarChartsPanel } from "@/app/components/ReaderGrammarChartsPanel";
 import { ReaderHarmonyWorkspace } from "@/app/components/ReaderHarmonyWorkspace";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
 import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
@@ -94,6 +95,15 @@ export function LookupPane() {
             Cross References
           </button>
           <button
+            aria-selected={activeUtilityPane === "charts"}
+            className={`lookup-pane-tab${activeUtilityPane === "charts" ? " is-active" : ""}`}
+            onClick={() => setActiveUtilityPane("charts")}
+            role="tab"
+            type="button"
+          >
+            Charts
+          </button>
+          <button
             aria-selected={activeUtilityPane === "strongs"}
             className={`lookup-pane-tab${activeUtilityPane === "strongs" ? " is-active" : ""}`}
             onClick={() => setActiveUtilityPane("strongs")}
@@ -124,6 +134,8 @@ export function LookupPane() {
         <div className="lookup-pane-study-body">
           {activeUtilityPane === "notebook" ? (
             <ReaderNotebookEditor />
+          ) : activeUtilityPane === "charts" ? (
+            <ReaderGrammarChartsPanel />
           ) : activeUtilityPane === "strongs" ? (
             <ReaderStrongsPanel />
           ) : activeUtilityPane === "sermons" ? (
@@ -141,7 +153,7 @@ export function LookupPane() {
           ) : (
             <div className="lookup-panel-empty">
               <p className="search-empty-copy">
-                Open notes, Strongs, sermons, or cross references in the study pane.
+                Open notes, charts, Strongs, sermons, or cross references in the study pane.
               </p>
             </div>
           )}

@@ -158,6 +158,7 @@ export function ReaderStrongsPanel() {
     activeStrongsLabel,
     activeStrongsNumbers,
     openGreekDictionary,
+    openGreekGrammarChart,
     openStrongs
   } = useReaderWorkspace();
   const [entries, setEntries] = useState<StrongsEntry[]>([]);
@@ -242,6 +243,36 @@ export function ReaderStrongsPanel() {
       decodedMorphology: selectedGreekFormDetails?.decodedMorphology
     });
   }, [selectedGreekFormDetails?.decodedMorphology, selectedGreekFormDetails?.morphology]);
+  const shouldShowGrammarChartButton = useMemo(
+    () =>
+      selectedGreekMorphologyDetails?.terms.some(
+        (term) => term.group === "part-of-speech" && term.key === "noun"
+      ) ?? false,
+    [selectedGreekMorphologyDetails]
+  );
+  const activeGreekGrammarChartSelection = useMemo(() => {
+    if (!selectedGreekFormDetails) {
+      return null;
+    }
+
+    return {
+      entryKey: activeGreekEntryKey ?? activeGreekModeSelection?.entryKey ?? "",
+      strongs: activeGreekModeSelection?.strongs ?? greekEntry?.strongs ?? null,
+      lemma: greekEntry?.lemma ?? activeGreekModeSelection?.lemma ?? "",
+      label: activeGreekModeSelection?.label ?? greekEntry?.lemma ?? null,
+      selectedForm: selectedGreekFormDetails.form,
+      selectedFormMorphology: selectedGreekFormDetails.morphology ?? null,
+      selectedFormDecodedMorphology: selectedGreekFormDetails.decodedMorphology ?? null
+    };
+  }, [
+    activeGreekModeSelection?.label,
+    activeGreekModeSelection?.lemma,
+    activeGreekModeSelection?.strongs,
+    activeGreekEntryKey,
+    greekEntry?.lemma,
+    greekEntry?.strongs,
+    selectedGreekFormDetails
+  ]);
 
   useEffect(() => {
     if (!isGreekDictionaryMode) {
@@ -1288,6 +1319,15 @@ export function ReaderStrongsPanel() {
               ) : null}
               {selectedGreekFormDetails.definition ? (
                 <p className="strongs-entry-copy">{selectedGreekFormDetails.definition}</p>
+              ) : null}
+              {shouldShowGrammarChartButton && activeGreekGrammarChartSelection ? (
+                <button
+                  className="reader-inline-button"
+                  onClick={() => openGreekGrammarChart(activeGreekGrammarChartSelection)}
+                  type="button"
+                >
+                  Open 2nd declension chart
+                </button>
               ) : null}
             </div>
           </section>

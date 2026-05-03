@@ -22,6 +22,23 @@ function StrongsHarness() {
       <button
         onClick={() =>
           openGreekDictionary({
+            entryKey: "G3056",
+            strongs: "G3056",
+            lemma: "λόγος",
+            label: "λόγος",
+            selectedForm: "λόγου",
+            selectedFormMorphology: "N-GSM",
+            selectedFormDecodedMorphology: "noun genitive singular masculine",
+            matchedQuery: "λόγου"
+          })
+        }
+        type="button"
+      >
+        Open Greek Dictionary Masculine
+      </button>
+      <button
+        onClick={() =>
+          openGreekDictionary({
             entryKey: "G746",
             strongs: "G746",
             lemma: "ἀρχή",
@@ -34,6 +51,23 @@ function StrongsHarness() {
         type="button"
       >
         Open Greek Dictionary
+      </button>
+      <button
+        onClick={() =>
+          openGreekDictionary({
+            entryKey: "G1096",
+            strongs: "G1096",
+            lemma: "γίνομαι",
+            label: "γίνομαι",
+            selectedForm: "ἐγένετο",
+            selectedFormMorphology: "V-2ADI-3S",
+            selectedFormDecodedMorphology: "verb aorist middle indicative third person singular",
+            matchedQuery: "ἐγένετο"
+          })
+        }
+        type="button"
+      >
+        Open Greek Dictionary Verb
       </button>
       <LookupPane />
     </>
@@ -196,6 +230,61 @@ describe("ReaderStrongsPanel", () => {
     await waitFor(() =>
       expect(studyPane.querySelectorAll(".strongs-entry-bible-verse .strongs-token-lemma").length).toBeGreaterThan(0)
     );
+  });
+
+  it("opens the Charts tab from a noun dictionary entry and renders the 2nd declension chart", async () => {
+    renderWithReaderCustomization(<StrongsHarness />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Open Greek Dictionary Masculine" }));
+
+    const studyPane = screen.getByLabelText("Study pane");
+    const chartButton = await within(studyPane).findByRole("button", {
+      name: "Open 2nd declension chart"
+    });
+
+    fireEvent.click(chartButton);
+
+    await waitFor(() =>
+      expect(within(studyPane).getByRole("tab", { name: "Charts" })).toHaveAttribute(
+        "aria-selected",
+        "true"
+      )
+    );
+
+    expect(within(studyPane).getByRole("heading", { name: "2nd Declension Noun Chart" })).toBeInTheDocument();
+    expect(within(studyPane).getByText("Gender: Masculine")).toBeInTheDocument();
+    const chartTable = within(studyPane).getByRole("table", { name: "2nd Declension Noun Chart" });
+    expect(chartTable).toBeInTheDocument();
+    expect(within(chartTable).getByText("Vocative")).toBeInTheDocument();
+    expect(chartTable.querySelector("tr.is-active-row")).not.toBeNull();
+    expect(chartTable.querySelector("td.is-active-cell")).not.toBeNull();
+  });
+
+  it("shows an unsupported note in Charts for nouns outside the 2nd declension chart", async () => {
+    renderWithReaderCustomization(<StrongsHarness />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Open Greek Dictionary" }));
+
+    const studyPane = screen.getByLabelText("Study pane");
+    fireEvent.click(
+      await within(studyPane).findByRole("button", { name: "Open 2nd declension chart" })
+    );
+
+    expect(
+      await within(studyPane).findByText("This noun does not use the current 2nd declension chart.")
+    ).toBeInTheDocument();
+  });
+
+  it("does not show the chart button for non-noun Greek dictionary selections", async () => {
+    renderWithReaderCustomization(<StrongsHarness />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Open Greek Dictionary Verb" }));
+
+    const studyPane = screen.getByLabelText("Study pane");
+    expect(await within(studyPane).findByText("Selected Form")).toBeInTheDocument();
+    expect(
+      within(studyPane).queryByRole("button", { name: "Open 2nd declension chart" })
+    ).toBeNull();
   });
 
   it("filters Strong's Bible occurrences by testament and book inside the study pane", async () => {

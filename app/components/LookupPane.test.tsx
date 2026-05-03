@@ -85,6 +85,7 @@ describe("LookupPane", () => {
     expect(studyPane).toBeInTheDocument();
     expect(within(studyPane).queryByRole("tab", { name: "Compare" })).not.toBeInTheDocument();
     expect(within(studyPane).getByRole("tab", { name: "Notes" })).toBeInTheDocument();
+    expect(within(studyPane).getByRole("tab", { name: "Charts" })).toBeInTheDocument();
     expect(within(studyPane).getByRole("tab", { name: "Strongs" })).toBeInTheDocument();
     expect(within(studyPane).getByRole("tab", { name: "Sermons" })).toBeInTheDocument();
     expect(within(studyPane).getByRole("tab", { name: "Harmony" })).toBeInTheDocument();

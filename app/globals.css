@@ -2875,6 +2875,57 @@ button.fathers-annotation-anchor:focus-visible {
   box-shadow: inset 0 0 0 1px rgba(var(--reader-accent-rgb), 0.16);
 }
 
+.reader-grammar-chart-panel {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.reader-grammar-chart-card,
+.reader-grammar-chart-copy {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.reader-grammar-chart-title {
+  font-size: 1.18rem;
+}
+
+.reader-grammar-chart-table-wrap {
+  overflow-x: auto;
+}
+
+.reader-grammar-chart-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 24rem;
+}
+
+.reader-grammar-chart-table th,
+.reader-grammar-chart-table td {
+  padding: 0.6rem 0.7rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: left;
+}
+
+.reader-grammar-chart-table th {
+  color: rgba(255, 255, 255, 0.88);
+  font-weight: 600;
+}
+
+.reader-grammar-chart-table td {
+  color: rgba(235, 241, 251, 0.92);
+}
+
+.reader-grammar-chart-table .is-active-number,
+.reader-grammar-chart-table .is-active-row > th {
+  background: rgba(var(--reader-accent-rgb), 0.1);
+}
+
+.reader-grammar-chart-table .is-active-cell {
+  background: rgba(var(--reader-accent-rgb), 0.18);
+  box-shadow: inset 0 0 0 1px rgba(var(--reader-accent-rgb), 0.22);
+}
+
 .greek-dictionary-form-line {
   margin: 0;
   color: rgba(255, 255, 255, 0.88);
