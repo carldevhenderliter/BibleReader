@@ -619,7 +619,6 @@ describe("VerseList", () => {
     expect(within(studyPane).getByText("Genitive")).toBeInTheDocument();
     expect(within(studyPane).getByText("Example: λογου = of the word")).toBeInTheDocument();
     expect(within(studyPane).getByText(/noun genitive singular feminine \(N-GSF\)/i)).toBeInTheDocument();
-    expect(within(studyPane).queryByText("Paradigm Endings")).not.toBeInTheDocument();
   });
 
   it("shows verb morphology in the Greek dictionary panel", async () => {
@@ -647,13 +646,6 @@ describe("VerseList", () => {
     expect(await within(studyPane).findByText("Aorist")).toBeInTheDocument();
     expect(within(studyPane).getByText("Middle")).toBeInTheDocument();
     expect(within(studyPane).getByText("Indicative")).toBeInTheDocument();
-    expect(within(studyPane).getByText("Paradigm Endings")).toBeInTheDocument();
-    expect(within(studyPane).getByText("Aorist Middle Indicative")).toBeInTheDocument();
-    expect(within(studyPane).getByRole("columnheader", { name: "Singular" })).toBeInTheDocument();
-    expect(within(studyPane).getByRole("cell", { name: "stem-ατο" })).toHaveClass(
-      "greek-verb-paradigm-cell",
-      "is-active"
-    );
     expect(within(studyPane).getByText("Example: ειπεν = he said")).toBeInTheDocument();
     expect(within(studyPane).getByText("Example: λυεται = he loosens for himself")).toBeInTheDocument();
     expect(within(studyPane).getAllByText("Example: λεγει = he says").length).toBeGreaterThan(0);

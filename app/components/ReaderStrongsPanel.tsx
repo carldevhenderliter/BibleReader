@@ -12,7 +12,6 @@ import {
   getGreekVerseOccurrences,
   normalizeGreekFormLookupValue
 } from "@/lib/bible/greek";
-import { getGreekVerbParadigmForToken } from "@/lib/bible/greek-paradigms";
 import {
   getStrongsEntries,
   getStrongsEntry,
@@ -243,16 +242,6 @@ export function ReaderStrongsPanel() {
       decodedMorphology: selectedGreekFormDetails?.decodedMorphology
     });
   }, [selectedGreekFormDetails?.decodedMorphology, selectedGreekFormDetails?.morphology]);
-  const selectedGreekVerbParadigm = useMemo(() => {
-    if (!selectedGreekFormDetails) {
-      return null;
-    }
-
-    return getGreekVerbParadigmForToken({
-      morphology: selectedGreekFormDetails.morphology,
-      decodedMorphology: selectedGreekFormDetails.decodedMorphology
-    });
-  }, [selectedGreekFormDetails]);
 
   useEffect(() => {
     if (!isGreekDictionaryMode) {
@@ -1296,62 +1285,6 @@ export function ReaderStrongsPanel() {
                     </article>
                   ))}
                 </div>
-              ) : null}
-              {selectedGreekVerbParadigm ? (
-                <section className="greek-verb-paradigm">
-                  <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
-                    Paradigm Endings
-                  </p>
-                  <p className="strongs-entry-meta">{selectedGreekVerbParadigm.title}</p>
-                  {selectedGreekVerbParadigm.availabilityNote ? (
-                    <p className="strongs-entry-copy">
-                      {selectedGreekVerbParadigm.availabilityNote}
-                    </p>
-                  ) : (
-                    <table
-                      aria-label={`Paradigm Endings ${selectedGreekVerbParadigm.title}`}
-                      className="greek-verb-paradigm-table"
-                    >
-                      <thead>
-                        <tr>
-                          <th scope="col">Person</th>
-                          <th scope="col">Singular</th>
-                          <th scope="col">Plural</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {["1st", "2nd", "3rd"].map((personLabel, index) => {
-                          const singularCell = selectedGreekVerbParadigm.cells[index];
-                          const pluralCell = selectedGreekVerbParadigm.cells[index + 3];
-
-                          return (
-                            <tr key={`${entry.entryKey}:${selectedGreekFormDetails.form}:${personLabel}`}>
-                              <th scope="row">{personLabel}</th>
-                              <td
-                                className={`greek-verb-paradigm-cell${
-                                  selectedGreekVerbParadigm.highlightedCellId === singularCell?.id
-                                    ? " is-active"
-                                    : ""
-                                }`}
-                              >
-                                {singularCell?.displayText ?? "—"}
-                              </td>
-                              <td
-                                className={`greek-verb-paradigm-cell${
-                                  selectedGreekVerbParadigm.highlightedCellId === pluralCell?.id
-                                    ? " is-active"
-                                    : ""
-                                }`}
-                              >
-                                {pluralCell?.displayText ?? "—"}
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
-                  )}
-                </section>
               ) : null}
               {selectedGreekFormDetails.definition ? (
                 <p className="strongs-entry-copy">{selectedGreekFormDetails.definition}</p>
