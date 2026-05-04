@@ -766,7 +766,7 @@ export function ReaderSettingsPanel({
                 >
                   <strong>English gloss</strong>
                   <span>
-                    Show the editable short meaning beneath each {originalLanguageLabel.toLowerCase()} word.
+                    Keep saved glosses visible. Turn this on when you want to edit the glosses inline.
                   </span>
                 </button>
                 {isFathersMode ? (

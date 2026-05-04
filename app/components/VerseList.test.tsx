@@ -735,6 +735,37 @@ describe("VerseList", () => {
     expect(screen.getByLabelText("English gloss for ἐγένετο")).toHaveValue("");
   });
 
+  it("keeps a typed gloss visible after gloss editing is turned off", async () => {
+    const { rerender } = renderWithReaderCustomization(
+      <VerseList
+        bookSlug="john"
+        chapterNumber={1}
+        interlinearVerseMap={interlinearVerseMap}
+        showGreekGloss
+        verses={verses}
+      />
+    );
+
+    fireEvent.change(await screen.findByLabelText("English gloss for ἀρχῆς"), {
+      target: {
+        value: "origin"
+      }
+    });
+
+    rerender(
+      <VerseList
+        bookSlug="john"
+        chapterNumber={1}
+        interlinearVerseMap={interlinearVerseMap}
+        showGreekGloss={false}
+        verses={verses}
+      />
+    );
+
+    expect(screen.queryByLabelText("English gloss for ἀρχῆς")).not.toBeInTheDocument();
+    expect(screen.getByText("origin")).toBeInTheDocument();
+  });
+
   it("keeps repeated lemma occurrences independent unless I type each gloss", async () => {
     const { unmount } = renderWithReaderCustomization(
       <VerseList

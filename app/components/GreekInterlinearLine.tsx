@@ -174,6 +174,7 @@ export function GreekInterlinearLine({
           override
         }) => {
           const partOfSpeechLabel = getPartOfSpeechLabel(token);
+          const savedGloss = override?.selectedGloss?.trim() ?? "";
 
           return (
           <span
@@ -216,6 +217,8 @@ export function GreekInterlinearLine({
                   type="text"
                   value={override?.selectedGloss ?? ""}
                 />
+              ) : savedGloss ? (
+                <span className="verse-greek-gloss-readonly">{savedGloss}</span>
               ) : null}
               {isGreekLearningMode && isSentenceQuizActive ? (
                 <div
