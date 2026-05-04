@@ -265,6 +265,22 @@ describe("ReaderStrongsPanel", () => {
     expect(within(studyPane).getByText("ὁ λόγος ἐστίν")).toBeInTheDocument();
   });
 
+  it("renders charts when the Charts tab is opened directly from an active Greek dictionary selection", async () => {
+    renderWithReaderCustomization(<StrongsHarness />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Open Greek Dictionary Masculine" }));
+
+    const studyPane = screen.getByLabelText("Study pane");
+    expect(await within(studyPane).findByText("Selected Form")).toBeInTheDocument();
+
+    fireEvent.click(within(studyPane).getByRole("tab", { name: "Charts" }));
+
+    expect(
+      await within(studyPane).findByRole("heading", { name: "2nd Declension Noun Chart" })
+    ).toBeInTheDocument();
+    expect(within(studyPane).getByRole("table", { name: "Definite Articles Chart" })).toBeInTheDocument();
+  });
+
   it("shows an unsupported note in Charts for nouns outside the 2nd declension chart", async () => {
     renderWithReaderCustomization(<StrongsHarness />);
 

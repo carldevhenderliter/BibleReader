@@ -15,27 +15,44 @@ function formatChartGenderLabel(gender: "masculine" | "neuter") {
 }
 
 export function ReaderGrammarChartsPanel() {
-  const { activeGreekGrammarChartSelection } = useReaderWorkspace();
+  const { activeGreekGrammarChartSelection, activeGreekSelection } = useReaderWorkspace();
+  const resolvedChartSelection = useMemo(
+    () =>
+      activeGreekGrammarChartSelection ??
+      (activeGreekSelection
+        ? {
+            entryKey: activeGreekSelection.entryKey,
+            strongs: activeGreekSelection.strongs ?? null,
+            lemma: activeGreekSelection.lemma,
+            label: activeGreekSelection.label ?? null,
+            selectedForm: activeGreekSelection.selectedForm ?? null,
+            selectedFormMorphology: activeGreekSelection.selectedFormMorphology ?? null,
+            selectedFormDecodedMorphology:
+              activeGreekSelection.selectedFormDecodedMorphology ?? null
+          }
+        : null),
+    [activeGreekGrammarChartSelection, activeGreekSelection]
+  );
   const chart = useMemo(
     () =>
-      activeGreekGrammarChartSelection
-        ? getGreekSecondDeclensionChart(activeGreekGrammarChartSelection)
+      resolvedChartSelection
+        ? getGreekSecondDeclensionChart(resolvedChartSelection)
         : null,
-    [activeGreekGrammarChartSelection]
+    [resolvedChartSelection]
   );
   const definiteArticleChart = useMemo(
     () =>
-      activeGreekGrammarChartSelection
-        ? getGreekSecondDeclensionDefiniteArticleChart(activeGreekGrammarChartSelection)
+      resolvedChartSelection
+        ? getGreekSecondDeclensionDefiniteArticleChart(resolvedChartSelection)
         : null,
-    [activeGreekGrammarChartSelection]
+    [resolvedChartSelection]
   );
 
-  if (!activeGreekGrammarChartSelection) {
+  if (!resolvedChartSelection) {
     return (
       <div className="lookup-panel-empty">
         <p className="search-empty-copy">
-          Open a Greek noun and choose its chart to view declension endings here.
+          Open a Greek word and choose its charts here.
         </p>
       </div>
     );
@@ -51,12 +68,12 @@ export function ReaderGrammarChartsPanel() {
           </h3>
           <p className="strongs-entry-meta">
             {[
-              `Lemma: ${activeGreekGrammarChartSelection.lemma}`,
-              activeGreekGrammarChartSelection.selectedForm
-                ? `Selected form: ${activeGreekGrammarChartSelection.selectedForm}`
+              `Lemma: ${resolvedChartSelection.lemma}`,
+              resolvedChartSelection.selectedForm
+                ? `Selected form: ${resolvedChartSelection.selectedForm}`
                 : null,
-              activeGreekGrammarChartSelection.selectedFormDecodedMorphology ??
-                activeGreekGrammarChartSelection.selectedFormMorphology ??
+              resolvedChartSelection.selectedFormDecodedMorphology ??
+                resolvedChartSelection.selectedFormMorphology ??
                 null
             ]
               .filter(Boolean)
