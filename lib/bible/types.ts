@@ -516,41 +516,6 @@ export type SearchMatchMode = "partial" | "complete";
 
 export type SearchScope = "all" | "old-testament" | "new-testament" | `book:${string}`;
 
-export type LocalBibleAiStatus = "disabled" | "downloading" | "ready" | "generating" | "error";
-
-export type LocalBibleAiSource = {
-  id: string;
-  label: string;
-  href: string;
-  preview: string;
-  bookSlug: string;
-  chapterNumber: number;
-  verseNumber?: number;
-};
-
-export type AiWritingTarget = "notebook" | "sermon";
-
-export type AiWritingAction =
-  | "summarize-passage-notes"
-  | "rewrite-selected-block"
-  | "expand-notes"
-  | "create-outline"
-  | "turn-notes-into-sermon-points"
-  | "prompt-sermon-from-notebook"
-  | "generate-sermon-outline"
-  | "expand-selected-section"
-  | "write-introduction"
-  | "write-conclusion"
-  | "add-application-points"
-  | "rewrite-for-clarity";
-
-export type AiWritingResult = {
-  target: AiWritingTarget;
-  action: AiWritingAction;
-  title: string;
-  content: string;
-};
-
 export type VerseToken = {
   text: string;
   strongsNumbers?: string[];

@@ -163,7 +163,7 @@ export function HarmonyBookReaderContent({
           </div>
         ) : showSermonsInline ? (
           <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
-            <ReaderSermonWorkspace currentChapter={null} />
+            <ReaderSermonWorkspace />
           </div>
         ) : showHarmonyInline ? (
           <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>

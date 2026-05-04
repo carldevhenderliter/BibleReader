@@ -598,7 +598,7 @@ export function WholeBookContent({
           </div>
         ) : showSermonsInline ? (
           <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
-            <ReaderSermonWorkspace currentChapter={chapters[0] ?? null} />
+            <ReaderSermonWorkspace />
           </div>
         ) : showHarmonyInline ? (
           <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>

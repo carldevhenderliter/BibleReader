@@ -4984,68 +4984,12 @@ button.fathers-annotation-anchor:focus-visible {
   gap: 0.85rem;
 }
 
-.writing-ai-card,
-.writing-ai-state,
-.writing-ai-preview,
 .reader-sermon-list,
 .reader-sermon-editor,
 .reader-sermon-sections,
 .reader-sermons-layout {
   display: grid;
   gap: 0.9rem;
-}
-
-.writing-ai-card {
-  padding: 0.95rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1.1rem;
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.writing-ai-card-header {
-  display: grid;
-  gap: 0.35rem;
-}
-
-.writing-ai-card-title,
-.writing-ai-preview-title {
-  margin: 0;
-}
-
-.writing-ai-card-copy,
-.writing-ai-preview-label {
-  margin: 0;
-  color: rgba(255, 255, 255, 0.66);
-  line-height: 1.5;
-}
-
-.writing-ai-actions,
-.writing-ai-preview-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-}
-
-.writing-ai-preview {
-  padding: 0.9rem;
-  border: 1px solid rgba(var(--reader-accent-rgb), 0.18);
-  border-radius: 1rem;
-  background: rgba(var(--reader-accent-rgb), 0.08);
-}
-
-.writing-ai-preview-header {
-  display: flex;
-  align-items: start;
-  justify-content: space-between;
-  gap: 0.8rem;
-}
-
-.writing-ai-preview-content {
-  margin: 0;
-  white-space: pre-wrap;
-  color: rgba(255, 255, 255, 0.9);
-  font: inherit;
-  line-height: 1.6;
 }
 
 .reader-sermons-layout {
@@ -5612,112 +5556,6 @@ button.fathers-annotation-anchor:focus-visible {
   gap: 0.18rem 0.28rem;
   align-items: baseline;
   white-space: normal;
-}
-
-.search-ai-panel,
-.search-ai-response,
-.search-ai-sources,
-.search-ai-source-list {
-  display: grid;
-  gap: 0.85rem;
-}
-
-.search-ai-state {
-  display: grid;
-  gap: 0.9rem;
-  align-content: start;
-}
-
-.search-ai-action {
-  justify-self: start;
-}
-
-.search-ai-progress {
-  position: relative;
-  width: min(24rem, 100%);
-  height: 0.55rem;
-  overflow: hidden;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.search-ai-progress-bar {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--reader-accent), rgba(255, 255, 255, 0.92));
-}
-
-.search-ai-response-actions {
-  display: flex;
-  justify-content: flex-start;
-}
-
-.search-ai-question {
-  display: grid;
-  gap: 0.45rem;
-  padding: 0.95rem 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 0.95rem;
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.search-ai-question-title {
-  margin: 0;
-  font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.7);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.search-ai-question-copy {
-  margin: 0;
-  color: rgba(255, 255, 255, 0.94);
-  line-height: 1.55;
-}
-
-.search-ai-answer {
-  display: grid;
-  gap: 0.75rem;
-  padding: 1rem 1.05rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.search-ai-answer-paragraph {
-  margin: 0;
-  color: rgba(255, 255, 255, 0.88);
-  line-height: 1.7;
-}
-
-.search-ai-sources-title {
-  margin: 0;
-  font-size: 0.88rem;
-  color: rgba(255, 255, 255, 0.7);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.search-ai-source {
-  display: grid;
-  gap: 0.3rem;
-  padding: 0.9rem 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 0.95rem;
-  background: rgba(255, 255, 255, 0.04);
-  color: inherit;
-  text-align: left;
-  cursor: pointer;
-}
-
-.search-ai-source strong {
-  color: rgba(255, 255, 255, 0.95);
-}
-
-.search-ai-source span {
-  color: rgba(255, 255, 255, 0.66);
-  line-height: 1.5;
 }
 
 .search-preview-token {

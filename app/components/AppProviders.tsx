@@ -11,27 +11,24 @@ import { VerseTranslationOverridesProvider } from "@/app/components/VerseTransla
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
 import { ReaderVersionProvider } from "@/app/components/ReaderVersionProvider";
 import { SearchCustomizationProvider } from "@/app/components/SearchCustomizationProvider";
-import { WritingAssistantProvider } from "@/app/components/WritingAssistantProvider";
 
 export function AppProviders({ children }: PropsWithChildren) {
   return (
     <ReaderVersionProvider>
       <ReaderWorkspaceProvider>
-        <WritingAssistantProvider>
-          <LookupProvider>
-            <VerseTranslationOverridesProvider>
-              <BibleGreekUndertextProvider>
-                <GreekGlossOverridesProvider>
-                  <ReaderCustomizationProvider>
-                    <ReaderBottomBarProvider>
-                      <SearchCustomizationProvider>{children}</SearchCustomizationProvider>
-                    </ReaderBottomBarProvider>
-                  </ReaderCustomizationProvider>
-                </GreekGlossOverridesProvider>
-              </BibleGreekUndertextProvider>
-            </VerseTranslationOverridesProvider>
-          </LookupProvider>
-        </WritingAssistantProvider>
+        <LookupProvider>
+          <VerseTranslationOverridesProvider>
+            <BibleGreekUndertextProvider>
+              <GreekGlossOverridesProvider>
+                <ReaderCustomizationProvider>
+                  <ReaderBottomBarProvider>
+                    <SearchCustomizationProvider>{children}</SearchCustomizationProvider>
+                  </ReaderBottomBarProvider>
+                </ReaderCustomizationProvider>
+              </GreekGlossOverridesProvider>
+            </BibleGreekUndertextProvider>
+          </VerseTranslationOverridesProvider>
+        </LookupProvider>
       </ReaderWorkspaceProvider>
     </ReaderVersionProvider>
   );

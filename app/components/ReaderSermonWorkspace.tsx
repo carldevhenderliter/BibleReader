@@ -1,38 +1,16 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { WritingAssistantCard } from "@/app/components/WritingAssistantCard";
-import { useWritingAssistant } from "@/app/components/WritingAssistantProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
-import { buildSermonAiPrompt, normalizeAiWritingResult } from "@/lib/ai/writing-assistant";
 import { getChapterHref } from "@/lib/bible/utils";
-import type { AiWritingAction, AiWritingResult, Chapter } from "@/lib/bible/types";
-import {
-  createPassageReference,
-  formatBookLabel,
-  formatPassageReference
-} from "@/lib/study-workspace";
+import { createPassageReference, formatPassageReference } from "@/lib/study-workspace";
 
-type ReaderSermonWorkspaceProps = {
-  currentChapter?: Chapter | null;
-};
-
-const SERMON_AI_OPTIONS: Array<{ id: AiWritingAction; label: string }> = [
-  { id: "generate-sermon-outline", label: "Outline" },
-  { id: "expand-selected-section", label: "Expand section" },
-  { id: "write-introduction", label: "Introduction" },
-  { id: "write-conclusion", label: "Conclusion" },
-  { id: "add-application-points", label: "Applications" },
-  { id: "rewrite-for-clarity", label: "Rewrite" }
-];
-
-export function ReaderSermonWorkspace({ currentChapter = null }: ReaderSermonWorkspaceProps) {
+export function ReaderSermonWorkspace() {
   const router = useRouter();
   const { version } = useReaderVersion();
-  const { generateWritingDraft } = useWritingAssistant();
   const {
     activeSermonId,
     activeStudyVerseNumber,
@@ -56,14 +34,6 @@ export function ReaderSermonWorkspace({ currentChapter = null }: ReaderSermonWor
   const [selectedSectionId, setSelectedSectionId] = useState<string | null>(
     activeSermon?.sections[0]?.id ?? null
   );
-  const [preview, setPreview] = useState<AiWritingResult | null>(null);
-  const passageLabel = useMemo(() => {
-    if (!currentPassage) {
-      return null;
-    }
-
-    return `${formatBookLabel(currentPassage.bookSlug)} ${currentPassage.chapterNumber}`;
-  }, [currentPassage]);
   const relatedNotebook = getActiveNotebook();
 
   useEffect(() => {
@@ -73,35 +43,6 @@ export function ReaderSermonWorkspace({ currentChapter = null }: ReaderSermonWor
 
     setSelectedSectionId(activeSermon?.sections[0]?.id ?? null);
   }, [activeSermon, selectedSectionId]);
-
-  const handleRunWritingAction = async (action: AiWritingAction) => {
-    if (!activeSermon) {
-      return;
-    }
-
-    const prompt = buildSermonAiPrompt({
-      action: action as
-        | "generate-sermon-outline"
-        | "expand-selected-section"
-        | "write-introduction"
-        | "write-conclusion"
-        | "add-application-points"
-        | "rewrite-for-clarity",
-      version,
-      currentChapter,
-      currentPassageLabel: passageLabel,
-      notebook: relatedNotebook,
-      sermon: activeSermon,
-      selectedSectionId
-    });
-    const result = await generateWritingDraft(prompt);
-
-    if (!result) {
-      return;
-    }
-
-    setPreview(normalizeAiWritingResult(result));
-  };
 
   return (
     <div className="reader-sermons">
@@ -187,68 +128,6 @@ export function ReaderSermonWorkspace({ currentChapter = null }: ReaderSermonWor
                 value={activeSermon.summary}
               />
             </label>
-
-            <WritingAssistantCard
-              description="Use local AI to draft sermon outlines, introductions, applications, and clearer section content from the current sermon and passage context."
-              onRun={(action) => void handleRunWritingAction(action)}
-              options={SERMON_AI_OPTIONS.map((option) => ({
-                ...option,
-                disabled: option.id === "expand-selected-section" && !selectedSectionId
-              }))}
-              preview={preview}
-              previewActions={
-                preview ? (
-                  <>
-                    <button
-                      className="reader-inline-button"
-                      onClick={() => addSermonSection(activeSermon.id, preview.title, preview.content)}
-                      type="button"
-                    >
-                      New section
-                    </button>
-                    <button
-                      className="reader-inline-button"
-                      onClick={() => {
-                        const targetSectionId =
-                          selectedSectionId ?? activeSermon.sections[activeSermon.sections.length - 1]?.id;
-
-                        if (!targetSectionId) {
-                          return;
-                        }
-
-                        const section = activeSermon.sections.find((item) => item.id === targetSectionId);
-
-                        updateSermonSection(activeSermon.id, targetSectionId, {
-                          content: section?.content.trim()
-                            ? `${section.content.trim()}\n\n${preview.content}`
-                            : preview.content
-                        });
-                      }}
-                      type="button"
-                    >
-                      Append to section
-                    </button>
-                    <button
-                      className="reader-inline-button"
-                      disabled={!selectedSectionId}
-                      onClick={() => {
-                        if (!selectedSectionId) {
-                          return;
-                        }
-
-                        updateSermonSection(activeSermon.id, selectedSectionId, {
-                          content: preview.content
-                        });
-                      }}
-                      type="button"
-                    >
-                      Replace selected section
-                    </button>
-                  </>
-                ) : null
-              }
-              title="Sermon AI"
-            />
 
             <div className="reader-notebook-toolbar" role="toolbar" aria-label="Sermon controls">
               <button

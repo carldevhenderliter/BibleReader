@@ -13,7 +13,6 @@ import { ReaderVersionProvider } from "@/app/components/ReaderVersionProvider";
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
 import { SearchCustomizationProvider } from "@/app/components/SearchCustomizationProvider";
 import { VerseTranslationOverridesProvider } from "@/app/components/VerseTranslationOverridesProvider";
-import { WritingAssistantProvider } from "@/app/components/WritingAssistantProvider";
 import { tokenizeFathersEnglishText } from "@/lib/fathers/annotations";
 import type { FathersWorkPayload } from "@/lib/fathers/types";
 import {
@@ -255,22 +254,20 @@ function renderFathersReader(currentPayload: FathersWorkPayload = payload) {
   return render(
     <ReaderVersionProvider>
       <ReaderWorkspaceProvider>
-        <WritingAssistantProvider>
-          <LookupProvider>
-            <VerseTranslationOverridesProvider>
-              <GreekGlossOverridesProvider>
-                <ReaderCustomizationProvider>
-                  <ReaderBottomBarProvider>
-                    <SearchCustomizationProvider>
-                      <FathersReaderContent payload={currentPayload} works={works} />
-                      <ReaderBottomBarTestHost />
-                    </SearchCustomizationProvider>
-                  </ReaderBottomBarProvider>
-                </ReaderCustomizationProvider>
-              </GreekGlossOverridesProvider>
-            </VerseTranslationOverridesProvider>
-          </LookupProvider>
-        </WritingAssistantProvider>
+        <LookupProvider>
+          <VerseTranslationOverridesProvider>
+            <GreekGlossOverridesProvider>
+              <ReaderCustomizationProvider>
+                <ReaderBottomBarProvider>
+                  <SearchCustomizationProvider>
+                    <FathersReaderContent payload={currentPayload} works={works} />
+                    <ReaderBottomBarTestHost />
+                  </SearchCustomizationProvider>
+                </ReaderBottomBarProvider>
+              </ReaderCustomizationProvider>
+            </GreekGlossOverridesProvider>
+          </VerseTranslationOverridesProvider>
+        </LookupProvider>
       </ReaderWorkspaceProvider>
     </ReaderVersionProvider>
   );

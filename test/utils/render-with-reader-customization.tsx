@@ -13,7 +13,6 @@ import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvide
 import { LookupProvider } from "@/app/components/LookupProvider";
 import { ReaderVersionProvider } from "@/app/components/ReaderVersionProvider";
 import { SearchCustomizationProvider } from "@/app/components/SearchCustomizationProvider";
-import { WritingAssistantProvider } from "@/app/components/WritingAssistantProvider";
 
 type WrapperProps = {
   children: ReactNode;
@@ -29,24 +28,22 @@ function Wrapper({ children }: WrapperProps) {
   return (
     <ReaderVersionProvider>
       <ReaderWorkspaceProvider>
-        <WritingAssistantProvider>
-          <LookupProvider>
-            <VerseTranslationOverridesProvider>
-              <BibleGreekUndertextProvider>
-                <GreekGlossOverridesProvider>
-                  <ReaderCustomizationProvider>
-                    <ReaderBottomBarProvider>
-                      <SearchCustomizationProvider>
-                        {children}
-                        <ReaderBottomBarTestHost />
-                      </SearchCustomizationProvider>
-                    </ReaderBottomBarProvider>
-                  </ReaderCustomizationProvider>
-                </GreekGlossOverridesProvider>
-              </BibleGreekUndertextProvider>
-            </VerseTranslationOverridesProvider>
-          </LookupProvider>
-        </WritingAssistantProvider>
+        <LookupProvider>
+          <VerseTranslationOverridesProvider>
+            <BibleGreekUndertextProvider>
+              <GreekGlossOverridesProvider>
+                <ReaderCustomizationProvider>
+                  <ReaderBottomBarProvider>
+                    <SearchCustomizationProvider>
+                      {children}
+                      <ReaderBottomBarTestHost />
+                    </SearchCustomizationProvider>
+                  </ReaderBottomBarProvider>
+                </ReaderCustomizationProvider>
+              </GreekGlossOverridesProvider>
+            </BibleGreekUndertextProvider>
+          </VerseTranslationOverridesProvider>
+        </LookupProvider>
       </ReaderWorkspaceProvider>
     </ReaderVersionProvider>
   );
