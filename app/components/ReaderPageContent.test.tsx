@@ -918,7 +918,7 @@ describe("ReaderPageContent", () => {
     expect(screen.getByText(/Wrong: source, origin/i)).toBeInTheDocument();
   });
 
-  it("renders custom verse translation editors in chapter view", () => {
+  it("does not render an empty custom translation line in chapter view", () => {
     renderWithReaderCustomization(
       <ReaderPageContent
         book={books[0]}
@@ -927,8 +927,7 @@ describe("ReaderPageContent", () => {
       />
     );
 
-    expect(screen.getByLabelText("Custom translation for genesis 1:1")).toBeInTheDocument();
-    expect(screen.getByLabelText("Custom translation for genesis 1:2")).toBeInTheDocument();
+    expect(screen.queryByText("Your translation")).not.toBeInTheDocument();
   });
 
   it("renders three versions in chapter compare and routes KJV Strongs clicks to study", async () => {

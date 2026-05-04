@@ -689,10 +689,10 @@ export function ReaderSettingsPanel({
                     key="showCustomVerseTranslation"
                     onClick={() => toggleLayer("showCustomVerseTranslation")}
                     type="button"
-                  >
-                    <strong>Your translation</strong>
-                    <span>Show your saved custom verse under the text.</span>
-                  </button>
+                >
+                  <strong>Your translation</strong>
+                  <span>Show the verse line assembled from the glosses you typed under each Greek word.</span>
+                </button>
                 ) : null}
                 {supportsVerseStrongs ? (
                   <button

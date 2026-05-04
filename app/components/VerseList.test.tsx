@@ -3,7 +3,6 @@ import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 
 import { LookupPane } from "@/app/components/LookupPane";
 import { VerseList } from "@/app/components/VerseList";
-import { VERSE_TRANSLATION_OVERRIDES_STORAGE_KEY } from "@/app/components/VerseTranslationOverridesProvider";
 import { READER_VERSION_STORAGE_KEY } from "@/lib/bible/constants";
 import type { EsvInterlinearDisplayVerse, Verse } from "@/lib/bible/types";
 import { setMockPathname } from "@/test/mocks/next-navigation";
@@ -95,6 +94,36 @@ const repeatedLemmaInterlinearVerseMap: Record<number, EsvInterlinearDisplayVers
   }
 };
 
+const translationAssemblyVerses: Verse[] = [
+  {
+    number: 1,
+    text: "The book became."
+  }
+];
+
+const translationAssemblyInterlinearVerseMap: Record<number, EsvInterlinearDisplayVerse> = {
+  1: {
+    number: 1,
+    baseGreek: "βίβλος ἐγένετο.",
+    greek: "βίβλος ἐγένετο.",
+    tokens: [
+      {
+        surface: "βίβλος",
+        lemma: "βίβλος",
+        strongs: "G976",
+        gloss: "book"
+      },
+      {
+        surface: "ἐγένετο",
+        lemma: "γίνομαι",
+        strongs: "G1096",
+        gloss: "became",
+        trailingPunctuation: "."
+      }
+    ]
+  }
+};
+
 describe("VerseList", () => {
   beforeEach(() => {
     window.localStorage.clear();
@@ -146,8 +175,8 @@ describe("VerseList", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders a custom translation editor under each verse", () => {
-    const { container } = renderWithReaderCustomization(
+  it("does not render a custom translation line before any glosses are typed", () => {
+    renderWithReaderCustomization(
       <VerseList
         bookSlug="genesis"
         chapterNumber={1}
@@ -156,12 +185,7 @@ describe("VerseList", () => {
       />
     );
 
-    expect(
-      screen.getByLabelText("Custom translation for genesis 1:1")
-    ).toBeInTheDocument();
-    expect(
-      screen.getByLabelText("Custom translation for genesis 1:2")
-    ).toBeInTheDocument();
+    expect(screen.queryByText("Your translation")).not.toBeInTheDocument();
   });
 
   it("can hide verse text, custom verse translation, and selected Greek sub-lines independently", async () => {
@@ -180,7 +204,7 @@ describe("VerseList", () => {
     );
 
     expect(screen.queryByText("In the beginning God created the heaven and the earth.")).not.toBeInTheDocument();
-    expect(screen.queryByLabelText("Custom translation for john 1:1")).not.toBeInTheDocument();
+    expect(screen.queryByText("Your translation")).not.toBeInTheDocument();
     expect(await screen.findByText("ἀρχῆς")).toBeInTheDocument();
     expect(screen.queryByText("ἀρχή")).not.toBeInTheDocument();
     expect(screen.queryByText("archēs")).not.toBeInTheDocument();
@@ -763,7 +787,7 @@ describe("VerseList", () => {
     );
 
     expect(screen.queryByLabelText("English gloss for ἀρχῆς")).not.toBeInTheDocument();
-    expect(screen.getByText("origin")).toBeInTheDocument();
+    expect(screen.getAllByText("origin").length).toBeGreaterThan(0);
   });
 
   it("keeps repeated lemma occurrences independent unless I type each gloss", async () => {
@@ -806,53 +830,42 @@ describe("VerseList", () => {
     });
   });
 
-  it("saves and reloads a custom verse translation for the matching verse only", () => {
+  it("builds and reloads my translation from the typed glosses", async () => {
     const { unmount } = renderWithReaderCustomization(
       <VerseList
-        bookSlug="genesis"
+        bookSlug="john"
         chapterNumber={1}
-        showStrongs={false}
-        verses={verses}
+        interlinearVerseMap={translationAssemblyInterlinearVerseMap}
+        verses={translationAssemblyVerses}
       />
     );
 
-    fireEvent.change(screen.getByLabelText("Custom translation for genesis 1:1"), {
+    fireEvent.change(await screen.findByLabelText("English gloss for βίβλος"), {
       target: {
-        value: "At the first, God made the heavens and the earth."
+        value: "book"
       }
     });
-    fireEvent.click(screen.getAllByRole("button", { name: "Save translation" })[0]);
+    fireEvent.change(screen.getByLabelText("English gloss for ἐγένετο"), {
+      target: {
+        value: "became"
+      }
+    });
 
-    expect(screen.getByText("Saved in this app")).toBeInTheDocument();
-    expect(screen.queryByLabelText("Custom translation for genesis 1:1")).not.toBeInTheDocument();
-    expect(
-      screen.getByText("At the first, God made the heavens and the earth.")
-    ).toBeInTheDocument();
-    expect(screen.getByLabelText("Custom translation for genesis 1:2")).toHaveValue("");
-    expect(window.localStorage.getItem(VERSE_TRANSLATION_OVERRIDES_STORAGE_KEY)).toContain(
-      "At the first, God made the heavens and the earth."
-    );
-
-    fireEvent.click(screen.getByRole("button", { name: "Edit translation" }));
-    expect(screen.getByLabelText("Custom translation for genesis 1:1")).toHaveValue(
-      "At the first, God made the heavens and the earth."
-    );
+    expect(screen.getByText("Your translation")).toBeInTheDocument();
+    expect(screen.getByText("book became.")).toBeInTheDocument();
 
     unmount();
 
     renderWithReaderCustomization(
       <VerseList
-        bookSlug="genesis"
+        bookSlug="john"
         chapterNumber={1}
-        showStrongs={false}
-        verses={verses}
+        interlinearVerseMap={translationAssemblyInterlinearVerseMap}
+        verses={translationAssemblyVerses}
       />
     );
 
-    expect(screen.queryByLabelText("Custom translation for genesis 1:1")).not.toBeInTheDocument();
-    expect(
-      screen.getByText("At the first, God made the heavens and the earth.")
-    ).toBeInTheDocument();
-    expect(screen.getByLabelText("Custom translation for genesis 1:2")).toHaveValue("");
+    expect(screen.getByText("Your translation")).toBeInTheDocument();
+    expect(screen.getByText("book became.")).toBeInTheDocument();
   });
 });

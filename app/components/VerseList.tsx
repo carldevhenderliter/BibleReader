@@ -564,6 +564,7 @@ export function VerseList({
                 <VerseTranslationEditor
                   bookSlug={bookSlug}
                   chapterNumber={chapterNumber}
+                  greekTokens={activeGreekTokens}
                   verseNumber={verse.number}
                 />
               ) : null}

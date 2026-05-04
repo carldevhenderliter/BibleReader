@@ -812,7 +812,7 @@ describe("WholeBookContent", () => {
     expect(screen.queryByText("Greek Learning")).not.toBeInTheDocument();
   }, 15000);
 
-  it("renders custom verse translation editors in whole-book view", () => {
+  it("does not render an empty custom translation line in whole-book view", () => {
     renderWithReaderCustomization(
       <>
         <WholeBookContent
@@ -825,8 +825,7 @@ describe("WholeBookContent", () => {
       </>
     );
 
-    expect(screen.getByLabelText("Custom translation for jude 1:1")).toBeInTheDocument();
-    expect(screen.getByLabelText("Custom translation for jude 2:1")).toBeInTheDocument();
+    expect(screen.queryByText("Your translation")).not.toBeInTheDocument();
   });
 
   it("hides read-aloud controls in whole-book view", () => {
