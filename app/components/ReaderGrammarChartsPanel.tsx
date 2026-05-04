@@ -10,6 +10,7 @@ import {
   getGreekSecondDeclensionDefiniteArticleChartByGender,
   type GreekSecondDeclensionGender
 } from "@/lib/bible/greek-grammar-charts";
+import type { GreekGrammarChartSelection } from "@/lib/bible/types";
 
 const GENDERS: GreekSecondDeclensionGender[] = ["masculine", "neuter"];
 
@@ -22,17 +23,7 @@ function NounChartTable({
   selection
 }: {
   gender: GreekSecondDeclensionGender;
-  selection:
-    | {
-        entryKey: string;
-        strongs: string | null;
-        lemma: string;
-        label: string | null;
-        selectedForm: string | null;
-        selectedFormMorphology: string | null;
-        selectedFormDecodedMorphology: string | null;
-      }
-    | null;
+  selection: GreekGrammarChartSelection | null;
 }) {
   const chart = useMemo(
     () => getGreekSecondDeclensionChartByGender(gender, selection),
@@ -106,17 +97,7 @@ function ArticleChartTable({
   selection
 }: {
   gender: GreekSecondDeclensionGender;
-  selection:
-    | {
-        entryKey: string;
-        strongs: string | null;
-        lemma: string;
-        label: string | null;
-        selectedForm: string | null;
-        selectedFormMorphology: string | null;
-        selectedFormDecodedMorphology: string | null;
-      }
-    | null;
+  selection: GreekGrammarChartSelection | null;
 }) {
   const chart = useMemo(
     () => getGreekSecondDeclensionDefiniteArticleChartByGender(gender, selection),
@@ -198,7 +179,7 @@ function ArticleChartTable({
 
 export function ReaderGrammarChartsPanel() {
   const { activeGreekGrammarChartSelection, activeGreekSelection } = useReaderWorkspace();
-  const resolvedChartSelection = useMemo(
+  const resolvedChartSelection = useMemo<GreekGrammarChartSelection | null>(
     () =>
       activeGreekGrammarChartSelection ??
       (activeGreekSelection
