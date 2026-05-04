@@ -644,9 +644,7 @@ describe("VerseList", () => {
     expect(within(studyPane).getByText("Genitive")).toBeInTheDocument();
     expect(within(studyPane).getByText("Example: λογου = of the word")).toBeInTheDocument();
     expect(within(studyPane).getByText(/noun genitive singular feminine \(N-GSF\)/i)).toBeInTheDocument();
-    expect(
-      within(studyPane).getByRole("button", { name: "Open 2nd declension chart" })
-    ).toBeInTheDocument();
+    expect(within(studyPane).getByRole("button", { name: "Open charts" })).toBeInTheDocument();
   });
 
   it("opens the Charts study tab from a clicked Greek noun", async () => {
@@ -666,7 +664,7 @@ describe("VerseList", () => {
 
     const studyPane = screen.getByLabelText("Study pane");
     fireEvent.click(
-      await within(studyPane).findByRole("button", { name: "Open 2nd declension chart" })
+      await within(studyPane).findByRole("button", { name: "Open charts" })
     );
 
     await waitFor(() =>

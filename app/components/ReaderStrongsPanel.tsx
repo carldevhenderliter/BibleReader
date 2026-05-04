@@ -243,13 +243,6 @@ export function ReaderStrongsPanel() {
       decodedMorphology: selectedGreekFormDetails?.decodedMorphology
     });
   }, [selectedGreekFormDetails?.decodedMorphology, selectedGreekFormDetails?.morphology]);
-  const shouldShowGrammarChartButton = useMemo(
-    () =>
-      selectedGreekMorphologyDetails?.terms.some(
-        (term) => term.group === "part-of-speech" && term.key === "noun"
-      ) ?? false,
-    [selectedGreekMorphologyDetails]
-  );
   const activeGreekGrammarChartSelection = useMemo(() => {
     if (!selectedGreekFormDetails) {
       return null;
@@ -1320,13 +1313,13 @@ export function ReaderStrongsPanel() {
               {selectedGreekFormDetails.definition ? (
                 <p className="strongs-entry-copy">{selectedGreekFormDetails.definition}</p>
               ) : null}
-              {shouldShowGrammarChartButton && activeGreekGrammarChartSelection ? (
+              {activeGreekGrammarChartSelection ? (
                 <button
                   className="reader-inline-button"
                   onClick={() => openGreekGrammarChart(activeGreekGrammarChartSelection)}
                   type="button"
                 >
-                  Open 2nd declension chart
+                  Open charts
                 </button>
               ) : null}
             </div>

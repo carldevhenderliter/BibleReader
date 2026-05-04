@@ -239,7 +239,7 @@ describe("ReaderStrongsPanel", () => {
 
     const studyPane = screen.getByLabelText("Study pane");
     const chartButton = await within(studyPane).findByRole("button", {
-      name: "Open 2nd declension chart"
+      name: "Open charts"
     });
 
     fireEvent.click(chartButton);
@@ -272,7 +272,7 @@ describe("ReaderStrongsPanel", () => {
 
     const studyPane = screen.getByLabelText("Study pane");
     fireEvent.click(
-      await within(studyPane).findByRole("button", { name: "Open 2nd declension chart" })
+      await within(studyPane).findByRole("button", { name: "Open charts" })
     );
 
     expect(
@@ -280,16 +280,17 @@ describe("ReaderStrongsPanel", () => {
     ).toBeInTheDocument();
   });
 
-  it("does not show the chart button for non-noun Greek dictionary selections", async () => {
+  it("shows the chart button for non-noun Greek dictionary selections and falls back safely", async () => {
     renderWithReaderCustomization(<StrongsHarness />);
 
     fireEvent.click(screen.getByRole("button", { name: "Open Greek Dictionary Verb" }));
 
     const studyPane = screen.getByLabelText("Study pane");
     expect(await within(studyPane).findByText("Selected Form")).toBeInTheDocument();
+    fireEvent.click(await within(studyPane).findByRole("button", { name: "Open charts" }));
     expect(
-      within(studyPane).queryByRole("button", { name: "Open 2nd declension chart" })
-    ).toBeNull();
+      await within(studyPane).findByText("This chart is available for Greek nouns only.")
+    ).toBeInTheDocument();
   });
 
   it("filters Strong's Bible occurrences by testament and book inside the study pane", async () => {
