@@ -1,6 +1,14 @@
 import { normalizeGreekFormLookupValue } from "@/lib/bible/greek";
 import type { GreekGrammarChartSelection } from "@/lib/bible/types";
 
+export const GREEK_CHART_TAB_OPTIONS = [
+  { id: "nouns", label: "Nouns" },
+  { id: "articles", label: "Articles" },
+  { id: "verbs", label: "Verbs" }
+] as const;
+
+export type GreekChartTabKey = (typeof GREEK_CHART_TAB_OPTIONS)[number]["id"];
+
 export const GREEK_SECOND_DECLENSION_ROW_LABELS = [
   "Nominative",
   "Genitive",
@@ -103,7 +111,109 @@ const GREEK_SECOND_DECLENSION_ARTICLE_CHARTS = {
   }
 } as const;
 
+const GREEK_VERB_CHARTS = [
+  {
+    id: "present-active-indicative",
+    title: "Present Active Indicative",
+    tense: "present",
+    voice: "active",
+    mood: "indicative",
+    singular: ["ω", "εις", "ει"],
+    plural: ["ομεν", "ετε", "ουσι(ν)"]
+  },
+  {
+    id: "present-middle-passive-indicative",
+    title: "Present Middle/Passive Indicative",
+    tense: "present",
+    voice: "middle/passive",
+    mood: "indicative",
+    singular: ["ομαι", "ῃ", "εται"],
+    plural: ["ομεθα", "εσθε", "ονται"]
+  },
+  {
+    id: "imperfect-active-indicative",
+    title: "Imperfect Active Indicative",
+    tense: "imperfect",
+    voice: "active",
+    mood: "indicative",
+    singular: ["ον", "ες", "ε(ν)"],
+    plural: ["ομεν", "ετε", "ον"]
+  },
+  {
+    id: "imperfect-middle-passive-indicative",
+    title: "Imperfect Middle/Passive Indicative",
+    tense: "imperfect",
+    voice: "middle/passive",
+    mood: "indicative",
+    singular: ["ομην", "ου", "ετο"],
+    plural: ["ομεθα", "εσθε", "οντο"]
+  },
+  {
+    id: "future-active-indicative",
+    title: "Future Active Indicative",
+    tense: "future",
+    voice: "active",
+    mood: "indicative",
+    singular: ["ω", "εις", "ει"],
+    plural: ["ομεν", "ετε", "ουσι(ν)"]
+  },
+  {
+    id: "future-middle-indicative",
+    title: "Future Middle Indicative",
+    tense: "future",
+    voice: "middle",
+    mood: "indicative",
+    singular: ["ομαι", "ῃ", "εται"],
+    plural: ["ομεθα", "εσθε", "ονται"]
+  },
+  {
+    id: "future-passive-indicative",
+    title: "Future Passive Indicative",
+    tense: "future",
+    voice: "passive",
+    mood: "indicative",
+    singular: ["ησομαι", "ησῃ", "ησεται"],
+    plural: ["ησομεθα", "ησεσθε", "ησονται"]
+  },
+  {
+    id: "aorist-active-indicative",
+    title: "Aorist Active Indicative",
+    tense: "aorist",
+    voice: "active",
+    mood: "indicative",
+    singular: ["α", "ας", "ε(ν)"],
+    plural: ["αμεν", "ατε", "αν"]
+  },
+  {
+    id: "aorist-middle-indicative",
+    title: "Aorist Middle Indicative",
+    tense: "aorist",
+    voice: "middle",
+    mood: "indicative",
+    singular: ["αμην", "ω", "ατο"],
+    plural: ["αμεθα", "ασθε", "αντο"]
+  },
+  {
+    id: "aorist-passive-indicative",
+    title: "Aorist Passive Indicative",
+    tense: "aorist",
+    voice: "passive",
+    mood: "indicative",
+    singular: ["ην", "ης", "η"],
+    plural: ["ημεν", "ητε", "ησαν"]
+  }
+] as const;
+
 export type GreekSecondDeclensionGender = keyof typeof GREEK_SECOND_DECLENSION_ENDINGS;
+export type GreekVerbChartResult = {
+  id: (typeof GREEK_VERB_CHARTS)[number]["id"];
+  title: string;
+  singular: readonly string[];
+  plural: readonly string[];
+  isSelectedChart: boolean;
+  highlightedRowIndex: number | null;
+  highlightedNumber: "singular" | "plural" | null;
+};
 
 export type GreekSecondDeclensionArticleChart = {
   title: string;
@@ -174,6 +284,22 @@ function isNounSelection(selection: GreekGrammarChartSelection) {
   const morphologyText = getSelectionMorphologyText(selection);
 
   return morphologyText.includes("noun") || selection.selectedFormMorphology?.startsWith("N-") === true;
+}
+
+function isVerbSelection(selection: GreekGrammarChartSelection) {
+  const morphologyText = getSelectionMorphologyText(selection);
+
+  return morphologyText.includes("verb") || selection.selectedFormMorphology?.startsWith("V-") === true;
+}
+
+function isArticleSelection(selection: GreekGrammarChartSelection) {
+  const morphologyText = getSelectionMorphologyText(selection);
+
+  return (
+    morphologyText.includes("article") ||
+    morphologyText.includes("pronoun, article") ||
+    selection.selectedFormMorphology?.startsWith("RA-") === true
+  );
 }
 
 function getSupportedSecondDeclensionGender(selection: GreekGrammarChartSelection) {
@@ -317,6 +443,89 @@ function getChartHighlight(
   return { caseKey: null, number: getHighlightedNumber(selection) };
 }
 
+function getVerbPersonIndex(selection: GreekGrammarChartSelection | null | undefined) {
+  if (!selection) {
+    return null;
+  }
+
+  const morphologyText = getSelectionMorphologyText(selection);
+
+  if (morphologyText.includes("first person")) {
+    return 0;
+  }
+
+  if (morphologyText.includes("second person")) {
+    return 1;
+  }
+
+  if (morphologyText.includes("third person")) {
+    return 2;
+  }
+
+  const morphologyCode = selection.selectedFormMorphology?.toUpperCase() ?? "";
+  const personCode = morphologyCode.match(/([123])([SP])$/u)?.[1] ?? null;
+
+  if (personCode === "1") {
+    return 0;
+  }
+
+  if (personCode === "2") {
+    return 1;
+  }
+
+  if (personCode === "3") {
+    return 2;
+  }
+
+  return null;
+}
+
+function getVerbFamily(selection: GreekGrammarChartSelection | null | undefined) {
+  if (!selection || !isVerbSelection(selection)) {
+    return null;
+  }
+
+  const morphologyText = getSelectionMorphologyText(selection);
+
+  if (!morphologyText.includes("indicative")) {
+    return null;
+  }
+
+  const tense = morphologyText.includes("aorist")
+    ? "aorist"
+    : morphologyText.includes("future")
+      ? "future"
+      : morphologyText.includes("imperfect")
+        ? "imperfect"
+        : morphologyText.includes("present")
+          ? "present"
+          : null;
+
+  if (!tense) {
+    return null;
+  }
+
+  const voice = morphologyText.includes("middle/passive")
+    ? "middle/passive"
+    : morphologyText.includes("passive")
+      ? "passive"
+      : morphologyText.includes("middle")
+        ? "middle"
+        : morphologyText.includes("active")
+          ? "active"
+          : null;
+
+  if (!voice) {
+    return null;
+  }
+
+  return {
+    tense,
+    voice,
+    mood: "indicative" as const
+  };
+}
+
 function getHighlightedNumber(selection: GreekGrammarChartSelection | null | undefined) {
   if (!selection) {
     return null;
@@ -431,4 +640,48 @@ export function getGreekSecondDeclensionDefiniteArticleChartByGender(
     highlightedRowIndex: getArticleHighlightedRowIndex(selection ?? null),
     highlightedNumber: getHighlightedNumber(selection ?? null)
   };
+}
+
+export function getDefaultGreekChartTab(
+  selection: GreekGrammarChartSelection | null | undefined
+): GreekChartTabKey {
+  if (!selection) {
+    return "nouns";
+  }
+
+  if (isVerbSelection(selection)) {
+    return "verbs";
+  }
+
+  if (isArticleSelection(selection)) {
+    return "articles";
+  }
+
+  return "nouns";
+}
+
+export function getGreekVerbCharts(
+  selection?: GreekGrammarChartSelection | null
+): GreekVerbChartResult[] {
+  const selectedFamily = getVerbFamily(selection ?? null);
+  const highlightedRowIndex = selectedFamily ? getVerbPersonIndex(selection ?? null) : null;
+  const highlightedNumber = selectedFamily ? getHighlightedNumber(selection ?? null) : null;
+
+  return GREEK_VERB_CHARTS.map((chart) => {
+    const isSelectedChart =
+      selectedFamily != null &&
+      chart.tense === selectedFamily.tense &&
+      chart.voice === selectedFamily.voice &&
+      chart.mood === selectedFamily.mood;
+
+    return {
+      id: chart.id,
+      title: chart.title,
+      singular: chart.singular,
+      plural: chart.plural,
+      isSelectedChart,
+      highlightedRowIndex: isSelectedChart ? highlightedRowIndex : null,
+      highlightedNumber: isSelectedChart ? highlightedNumber : null
+    };
+  });
 }

@@ -1,6 +1,8 @@
 import {
+  getDefaultGreekChartTab,
   getGreekSecondDeclensionChart,
-  getGreekSecondDeclensionDefiniteArticleChart
+  getGreekSecondDeclensionDefiniteArticleChart,
+  getGreekVerbCharts
 } from "@/lib/bible/greek-grammar-charts";
 
 describe("getGreekSecondDeclensionChart", () => {
@@ -110,5 +112,48 @@ describe("getGreekSecondDeclensionChart", () => {
     expect(chart.forms[3]?.plural.combined).toBe("τά δῶρα");
     expect(chart.highlightedRowIndex).toBe(0);
     expect(chart.highlightedNumber).toBe("plural");
+  });
+
+  it("defaults the chart tab to nouns for noun selections", () => {
+    expect(
+      getDefaultGreekChartTab({
+        entryKey: "G3056",
+        strongs: "G3056",
+        lemma: "λόγος",
+        selectedForm: "λόγου",
+        selectedFormMorphology: "N-GSM",
+        selectedFormDecodedMorphology: "noun genitive singular masculine"
+      })
+    ).toBe("nouns");
+  });
+
+  it("defaults the chart tab to verbs for verb selections", () => {
+    expect(
+      getDefaultGreekChartTab({
+        entryKey: "G1096",
+        strongs: "G1096",
+        lemma: "γίνομαι",
+        selectedForm: "ἐγένετο",
+        selectedFormMorphology: "V-2ADI-3S",
+        selectedFormDecodedMorphology: "verb aorist middle indicative third person singular"
+      })
+    ).toBe("verbs");
+  });
+
+  it("returns a highlighted verb chart for the selected verb family", () => {
+    const charts = getGreekVerbCharts({
+      entryKey: "G1096",
+      strongs: "G1096",
+      lemma: "γίνομαι",
+      selectedForm: "ἐγένετο",
+      selectedFormMorphology: "V-2ADI-3S",
+      selectedFormDecodedMorphology: "verb aorist middle indicative third person singular"
+    });
+    const activeChart = charts.find((chart) => chart.isSelectedChart);
+
+    expect(activeChart?.title).toBe("Aorist Middle Indicative");
+    expect(activeChart?.highlightedRowIndex).toBe(2);
+    expect(activeChart?.highlightedNumber).toBe("singular");
+    expect(activeChart?.singular).toEqual(["αμην", "ω", "ατο"]);
   });
 });

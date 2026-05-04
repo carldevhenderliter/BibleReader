@@ -674,6 +674,10 @@ describe("VerseList", () => {
       )
     );
     expect(within(studyPane).getByRole("heading", { name: "Greek Charts" })).toBeInTheDocument();
+    expect(within(studyPane).getByRole("tab", { name: "Nouns" })).toHaveAttribute(
+      "aria-selected",
+      "true"
+    );
     expect(
       within(studyPane).getByRole("table", { name: "Masculine 2nd Declension Noun Chart" })
     ).toBeInTheDocument();

@@ -2913,6 +2913,12 @@ button.fathers-annotation-anchor:focus-visible {
   gap: 0.8rem;
 }
 
+.reader-grammar-chart-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
 .reader-grammar-chart-group {
   display: grid;
   gap: 1.1rem;

@@ -1,18 +1,23 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import {
+  GREEK_CHART_TAB_OPTIONS,
   GREEK_SECOND_DECLENSION_ARTICLE_ROW_LABELS,
   GREEK_SECOND_DECLENSION_ROW_LABELS,
+  getDefaultGreekChartTab,
   getGreekSecondDeclensionChartByGender,
   getGreekSecondDeclensionDefiniteArticleChartByGender,
+  getGreekVerbCharts,
+  type GreekChartTabKey,
   type GreekSecondDeclensionGender
 } from "@/lib/bible/greek-grammar-charts";
 import type { GreekGrammarChartSelection } from "@/lib/bible/types";
 
 const GENDERS: GreekSecondDeclensionGender[] = ["masculine", "neuter"];
+const VERB_PERSON_ROW_LABELS = ["1st Person", "2nd Person", "3rd Person"] as const;
 
 function formatChartGenderLabel(gender: GreekSecondDeclensionGender) {
   return gender === "masculine" ? "Masculine" : "Neuter";
@@ -177,6 +182,100 @@ function ArticleChartTable({
   );
 }
 
+function VerbChartTable({
+  selection
+}: {
+  selection: GreekGrammarChartSelection | null;
+}) {
+  const charts = useMemo(() => getGreekVerbCharts(selection), [selection]);
+  const hasSelectedChart = charts.some((chart) => chart.isSelectedChart);
+
+  return (
+    <div className="reader-grammar-chart-section">
+      <div className="reader-grammar-chart-copy">
+        <h3 className="strongs-entry-lemma reader-grammar-chart-title">Verb Charts</h3>
+        <p className="strongs-entry-meta">
+          {hasSelectedChart
+            ? "The matching tense, voice, and mood are highlighted below."
+            : "Indicative verb charts are shown below."}
+        </p>
+      </div>
+      <div className="reader-grammar-chart-stack">
+        {charts.map((chart) => (
+          <div className="reader-grammar-chart-section" key={chart.id}>
+            <div className="reader-grammar-chart-copy">
+              <h4 className="reader-grammar-chart-subtitle">
+                {chart.title}
+                {chart.isSelectedChart ? " · current form" : ""}
+              </h4>
+            </div>
+            <div className="reader-grammar-chart-table-wrap">
+              <table
+                aria-label={`${chart.title} Verb Chart`}
+                className="reader-grammar-chart-table"
+              >
+                <thead>
+                  <tr>
+                    <th scope="col">Person</th>
+                    <th
+                      className={
+                        chart.highlightedNumber === "singular" ? "is-active-number" : undefined
+                      }
+                      scope="col"
+                    >
+                      Singular
+                    </th>
+                    <th
+                      className={
+                        chart.highlightedNumber === "plural" ? "is-active-number" : undefined
+                      }
+                      scope="col"
+                    >
+                      Plural
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {VERB_PERSON_ROW_LABELS.map((label, index) => {
+                    const isActiveRow = chart.highlightedRowIndex === index;
+
+                    return (
+                      <tr
+                        className={isActiveRow ? "is-active-row" : undefined}
+                        key={`${chart.id}:${label}`}
+                      >
+                        <th scope="row">{label}</th>
+                        <td
+                          className={
+                            isActiveRow && chart.highlightedNumber === "singular"
+                              ? "is-active-cell"
+                              : undefined
+                          }
+                        >
+                          {chart.singular[index]}
+                        </td>
+                        <td
+                          className={
+                            isActiveRow && chart.highlightedNumber === "plural"
+                              ? "is-active-cell"
+                              : undefined
+                          }
+                        >
+                          {chart.plural[index]}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function ReaderGrammarChartsPanel() {
   const { activeGreekGrammarChartSelection, activeGreekSelection } = useReaderWorkspace();
   const resolvedChartSelection = useMemo<GreekGrammarChartSelection | null>(
@@ -196,6 +295,15 @@ export function ReaderGrammarChartsPanel() {
         : null),
     [activeGreekGrammarChartSelection, activeGreekSelection]
   );
+  const defaultTab = useMemo(
+    () => getDefaultGreekChartTab(resolvedChartSelection),
+    [resolvedChartSelection]
+  );
+  const [activeTab, setActiveTab] = useState<GreekChartTabKey>(defaultTab);
+
+  useEffect(() => {
+    setActiveTab(defaultTab);
+  }, [defaultTab]);
 
   return (
     <section className="reader-grammar-chart-panel">
@@ -223,14 +331,60 @@ export function ReaderGrammarChartsPanel() {
             </p>
           )}
         </div>
-        <div className="reader-grammar-chart-stack">
-          {GENDERS.map((gender) => (
-            <div className="reader-grammar-chart-group" key={gender}>
-              <NounChartTable gender={gender} selection={resolvedChartSelection} />
-              <ArticleChartTable gender={gender} selection={resolvedChartSelection} />
-            </div>
+        <div className="reader-grammar-chart-tabs" role="tablist" aria-label="Greek chart types">
+          {GREEK_CHART_TAB_OPTIONS.map((option) => (
+            <button
+              aria-controls={`reader-grammar-chart-panel-${option.id}`}
+              aria-selected={activeTab === option.id}
+              className={`reader-notebook-tab${activeTab === option.id ? " is-active" : ""}`}
+              id={`reader-grammar-chart-tab-${option.id}`}
+              key={option.id}
+              onClick={() => setActiveTab(option.id)}
+              role="tab"
+              type="button"
+            >
+              {option.label}
+            </button>
           ))}
         </div>
+        {activeTab === "nouns" ? (
+          <div
+            aria-labelledby="reader-grammar-chart-tab-nouns"
+            className="reader-grammar-chart-stack"
+            id="reader-grammar-chart-panel-nouns"
+            role="tabpanel"
+          >
+            {GENDERS.map((gender) => (
+              <div className="reader-grammar-chart-group" key={gender}>
+                <NounChartTable gender={gender} selection={resolvedChartSelection} />
+              </div>
+            ))}
+          </div>
+        ) : null}
+        {activeTab === "articles" ? (
+          <div
+            aria-labelledby="reader-grammar-chart-tab-articles"
+            className="reader-grammar-chart-stack"
+            id="reader-grammar-chart-panel-articles"
+            role="tabpanel"
+          >
+            {GENDERS.map((gender) => (
+              <div className="reader-grammar-chart-group" key={gender}>
+                <ArticleChartTable gender={gender} selection={resolvedChartSelection} />
+              </div>
+            ))}
+          </div>
+        ) : null}
+        {activeTab === "verbs" ? (
+          <div
+            aria-labelledby="reader-grammar-chart-tab-verbs"
+            className="reader-grammar-chart-stack"
+            id="reader-grammar-chart-panel-verbs"
+            role="tabpanel"
+          >
+            <VerbChartTable selection={resolvedChartSelection} />
+          </div>
+        ) : null}
       </article>
     </section>
   );
