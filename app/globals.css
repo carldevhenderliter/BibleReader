@@ -2906,8 +2906,24 @@ button.fathers-annotation-anchor:focus-visible {
   gap: 0.45rem;
 }
 
+.reader-grammar-chart-stack,
+.reader-grammar-chart-section,
+.reader-grammar-chart-examples {
+  display: grid;
+  gap: 0.8rem;
+}
+
 .reader-grammar-chart-title {
   font-size: 1.18rem;
+}
+
+.reader-grammar-chart-subtitle {
+  margin: 0;
+  color: rgba(235, 241, 251, 0.95);
+  font-family: var(--reader-ui-font);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .reader-grammar-chart-table-wrap {
@@ -2936,6 +2952,11 @@ button.fathers-annotation-anchor:focus-visible {
   color: rgba(235, 241, 251, 0.92);
 }
 
+.reader-grammar-chart-combined {
+  font-family: var(--reader-greek-font);
+  font-size: 0.98rem;
+}
+
 .reader-grammar-chart-table .is-active-number,
 .reader-grammar-chart-table .is-active-row > th {
   background: rgba(var(--reader-accent-rgb), 0.1);
@@ -2944,6 +2965,15 @@ button.fathers-annotation-anchor:focus-visible {
 .reader-grammar-chart-table .is-active-cell {
   background: rgba(var(--reader-accent-rgb), 0.18);
   box-shadow: inset 0 0 0 1px rgba(var(--reader-accent-rgb), 0.22);
+}
+
+.reader-grammar-chart-example {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.reader-grammar-chart-example-greek {
+  font-family: var(--reader-greek-font);
 }
 
 .greek-dictionary-form-line {

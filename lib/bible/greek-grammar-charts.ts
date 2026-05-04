@@ -12,6 +12,13 @@ export const GREEK_SECOND_DECLENSION_ROW_LABELS = [
   "Vocative"
 ] as const;
 
+export const GREEK_SECOND_DECLENSION_ARTICLE_ROW_LABELS = [
+  "Nominative",
+  "Genitive",
+  "Dative",
+  "Accusative"
+] as const;
+
 const GREEK_SECOND_DECLENSION_ENDINGS = {
   masculine: {
     singular: ["ος", "ου", "ου", "ῳ", "ῳ", "ῳ", "ον", "ε"],
@@ -23,7 +30,107 @@ const GREEK_SECOND_DECLENSION_ENDINGS = {
   }
 } as const;
 
+const GREEK_SECOND_DECLENSION_ARTICLE_CHARTS = {
+  masculine: {
+    baseNoun: "λόγος",
+    meaning: "word",
+    forms: [
+      {
+        case: "nominative",
+        function: "subject",
+        singular: { article: "ὁ", noun: "λόγος", combined: "ὁ λόγος" },
+        plural: { article: "οἱ", noun: "λόγοι", combined: "οἱ λόγοι" }
+      },
+      {
+        case: "genitive",
+        function: "of/from",
+        singular: { article: "τοῦ", noun: "λόγου", combined: "τοῦ λόγου" },
+        plural: { article: "τῶν", noun: "λόγων", combined: "τῶν λόγων" }
+      },
+      {
+        case: "dative",
+        function: "to/in/with",
+        singular: { article: "τῷ", noun: "λόγῳ", combined: "τῷ λόγῳ" },
+        plural: { article: "τοῖς", noun: "λόγοις", combined: "τοῖς λόγοις" }
+      },
+      {
+        case: "accusative",
+        function: "direct object",
+        singular: { article: "τόν", noun: "λόγον", combined: "τόν λόγον" },
+        plural: { article: "τούς", noun: "λόγους", combined: "τούς λόγους" }
+      }
+    ],
+    examples: [
+      { greek: "ὁ λόγος ἐστίν", english: "the word is" },
+      { greek: "βλέπω τόν λόγον", english: "I see the word" },
+      { greek: "ἀκούω τοῦ λόγου", english: "I hear of the word" }
+    ]
+  },
+  neuter: {
+    baseNoun: "δῶρον",
+    meaning: "gift",
+    forms: [
+      {
+        case: "nominative",
+        function: "subject",
+        singular: { article: "τό", noun: "δῶρον", combined: "τό δῶρον" },
+        plural: { article: "τά", noun: "δῶρα", combined: "τά δῶρα" }
+      },
+      {
+        case: "genitive",
+        function: "of/from",
+        singular: { article: "τοῦ", noun: "δώρου", combined: "τοῦ δώρου" },
+        plural: { article: "τῶν", noun: "δώρων", combined: "τῶν δώρων" }
+      },
+      {
+        case: "dative",
+        function: "to/in/with",
+        singular: { article: "τῷ", noun: "δώρῳ", combined: "τῷ δώρῳ" },
+        plural: { article: "τοῖς", noun: "δώροις", combined: "τοῖς δώροις" }
+      },
+      {
+        case: "accusative",
+        function: "direct object",
+        singular: { article: "τό", noun: "δῶρον", combined: "τό δῶρον" },
+        plural: { article: "τά", noun: "δῶρα", combined: "τά δῶρα" }
+      }
+    ],
+    examples: [
+      { greek: "τό δῶρον καλόν ἐστιν", english: "the gift is good" },
+      { greek: "βλέπω τά δῶρα", english: "I see the gifts" },
+      { greek: "ἐν τῷ δώρῳ", english: "in the gift" }
+    ]
+  }
+} as const;
+
 export type GreekSecondDeclensionGender = keyof typeof GREEK_SECOND_DECLENSION_ENDINGS;
+
+export type GreekSecondDeclensionArticleChart = {
+  title: string;
+  gender: GreekSecondDeclensionGender;
+  baseNoun: string;
+  meaning: string;
+  forms: readonly {
+    case: string;
+    function: string;
+    singular: {
+      article: string;
+      noun: string;
+      combined: string;
+    };
+    plural: {
+      article: string;
+      noun: string;
+      combined: string;
+    };
+  }[];
+  examples: readonly {
+    greek: string;
+    english: string;
+  }[];
+  highlightedRowIndex: number | null;
+  highlightedNumber: "singular" | "plural" | null;
+};
 
 export type GreekNounChartResult =
   | {
@@ -181,6 +288,29 @@ export function getGreekSecondDeclensionChart(
     gender,
     singular: GREEK_SECOND_DECLENSION_ENDINGS[gender].singular,
     plural: GREEK_SECOND_DECLENSION_ENDINGS[gender].plural,
+    highlightedRowIndex: getHighlightedRowIndex(selection),
+    highlightedNumber: getHighlightedNumber(selection)
+  };
+}
+
+export function getGreekSecondDeclensionDefiniteArticleChart(
+  selection: GreekGrammarChartSelection
+): GreekSecondDeclensionArticleChart | null {
+  const gender = getSupportedSecondDeclensionGender(selection);
+
+  if (!isNounSelection(selection) || !gender) {
+    return null;
+  }
+
+  const chart = GREEK_SECOND_DECLENSION_ARTICLE_CHARTS[gender];
+
+  return {
+    title: "Definite Articles",
+    gender,
+    baseNoun: chart.baseNoun,
+    meaning: chart.meaning,
+    forms: chart.forms,
+    examples: chart.examples,
     highlightedRowIndex: getHighlightedRowIndex(selection),
     highlightedNumber: getHighlightedNumber(selection)
   };

@@ -258,6 +258,11 @@ describe("ReaderStrongsPanel", () => {
     expect(within(chartTable).getByText("Vocative")).toBeInTheDocument();
     expect(chartTable.querySelector("tr.is-active-row")).not.toBeNull();
     expect(chartTable.querySelector("td.is-active-cell")).not.toBeNull();
+    expect(within(studyPane).getByRole("heading", { name: "Definite Articles" })).toBeInTheDocument();
+    const articleTable = within(studyPane).getByRole("table", { name: "Definite Articles Chart" });
+    expect(articleTable).toBeInTheDocument();
+    expect(within(articleTable).getByText("ὁ λόγος")).toBeInTheDocument();
+    expect(within(studyPane).getByText("ὁ λόγος ἐστίν")).toBeInTheDocument();
   });
 
   it("shows an unsupported note in Charts for nouns outside the 2nd declension chart", async () => {
