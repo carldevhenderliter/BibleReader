@@ -673,8 +673,9 @@ describe("VerseList", () => {
         "true"
       )
     );
+    expect(within(studyPane).getByRole("heading", { name: "Greek Charts" })).toBeInTheDocument();
     expect(
-      within(studyPane).getByText("This noun does not use the current 2nd declension chart.")
+      within(studyPane).getByRole("table", { name: "Masculine 2nd Declension Noun Chart" })
     ).toBeInTheDocument();
   });
 

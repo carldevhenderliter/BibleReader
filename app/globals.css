@@ -2913,6 +2913,18 @@ button.fathers-annotation-anchor:focus-visible {
   gap: 0.8rem;
 }
 
+.reader-grammar-chart-group {
+  display: grid;
+  gap: 1.1rem;
+  padding-top: 0.3rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.reader-grammar-chart-group:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
 .reader-grammar-chart-title {
   font-size: 1.18rem;
 }

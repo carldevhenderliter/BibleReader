@@ -251,18 +251,29 @@ describe("ReaderStrongsPanel", () => {
       )
     );
 
-    expect(within(studyPane).getByRole("heading", { name: "2nd Declension Noun Chart" })).toBeInTheDocument();
+    expect(within(studyPane).getByRole("heading", { name: "Greek Charts" })).toBeInTheDocument();
     expect(within(studyPane).getByText("Gender: Masculine")).toBeInTheDocument();
-    const chartTable = within(studyPane).getByRole("table", { name: "2nd Declension Noun Chart" });
+    expect(within(studyPane).getByText("Gender: Neuter")).toBeInTheDocument();
+    const chartTable = within(studyPane).getByRole("table", {
+      name: "Masculine 2nd Declension Noun Chart"
+    });
     expect(chartTable).toBeInTheDocument();
     expect(within(chartTable).getByText("Vocative")).toBeInTheDocument();
     expect(chartTable.querySelector("tr.is-active-row")).not.toBeNull();
     expect(chartTable.querySelector("td.is-active-cell")).not.toBeNull();
-    expect(within(studyPane).getByRole("heading", { name: "Definite Articles" })).toBeInTheDocument();
-    const articleTable = within(studyPane).getByRole("table", { name: "Definite Articles Chart" });
+    expect(within(studyPane).getAllByRole("heading", { name: "Definite Articles" }).length).toBeGreaterThan(0);
+    const articleTable = within(studyPane).getByRole("table", {
+      name: "Masculine Definite Articles Chart"
+    });
     expect(articleTable).toBeInTheDocument();
     expect(within(articleTable).getByText("ὁ λόγος")).toBeInTheDocument();
     expect(within(studyPane).getByText("ὁ λόγος ἐστίν")).toBeInTheDocument();
+    expect(
+      within(studyPane).getByRole("table", { name: "Neuter 2nd Declension Noun Chart" })
+    ).toBeInTheDocument();
+    expect(
+      within(studyPane).getByRole("table", { name: "Neuter Definite Articles Chart" })
+    ).toBeInTheDocument();
   });
 
   it("renders charts when the Charts tab is opened directly from an active Greek dictionary selection", async () => {
@@ -276,12 +287,14 @@ describe("ReaderStrongsPanel", () => {
     fireEvent.click(within(studyPane).getByRole("tab", { name: "Charts" }));
 
     expect(
-      await within(studyPane).findByRole("heading", { name: "2nd Declension Noun Chart" })
+      await within(studyPane).findByRole("heading", { name: "Greek Charts" })
     ).toBeInTheDocument();
-    expect(within(studyPane).getByRole("table", { name: "Definite Articles Chart" })).toBeInTheDocument();
+    expect(
+      within(studyPane).getByRole("table", { name: "Masculine Definite Articles Chart" })
+    ).toBeInTheDocument();
   });
 
-  it("shows an unsupported note in Charts for nouns outside the 2nd declension chart", async () => {
+  it("still shows the full chart catalog for nouns outside the current 2nd declension family", async () => {
     renderWithReaderCustomization(<StrongsHarness />);
 
     fireEvent.click(screen.getByRole("button", { name: "Open Greek Dictionary" }));
@@ -291,12 +304,13 @@ describe("ReaderStrongsPanel", () => {
       await within(studyPane).findByRole("button", { name: "Open charts" })
     );
 
+    expect(await within(studyPane).findByRole("heading", { name: "Greek Charts" })).toBeInTheDocument();
     expect(
-      await within(studyPane).findByText("This noun does not use the current 2nd declension chart.")
+      within(studyPane).getByRole("table", { name: "Masculine 2nd Declension Noun Chart" })
     ).toBeInTheDocument();
   });
 
-  it("shows the chart button for non-noun Greek dictionary selections and falls back safely", async () => {
+  it("shows the full chart catalog for non-noun Greek dictionary selections too", async () => {
     renderWithReaderCustomization(<StrongsHarness />);
 
     fireEvent.click(screen.getByRole("button", { name: "Open Greek Dictionary Verb" }));
@@ -304,8 +318,9 @@ describe("ReaderStrongsPanel", () => {
     const studyPane = screen.getByLabelText("Study pane");
     expect(await within(studyPane).findByText("Selected Form")).toBeInTheDocument();
     fireEvent.click(await within(studyPane).findByRole("button", { name: "Open charts" }));
+    expect(await within(studyPane).findByRole("heading", { name: "Greek Charts" })).toBeInTheDocument();
     expect(
-      await within(studyPane).findByText("This chart is available for Greek nouns only.")
+      within(studyPane).getByRole("table", { name: "Neuter Definite Articles Chart" })
     ).toBeInTheDocument();
   });
 

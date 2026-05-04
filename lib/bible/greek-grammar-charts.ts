@@ -132,6 +132,21 @@ export type GreekSecondDeclensionArticleChart = {
   highlightedNumber: "singular" | "plural" | null;
 };
 
+type GreekChartCaseKey =
+  | "nominative"
+  | "genitive"
+  | "ablative"
+  | "dative"
+  | "locative"
+  | "instrumental"
+  | "accusative"
+  | "vocative";
+
+type GreekChartHighlight = {
+  caseKey: GreekChartCaseKey | null;
+  number: "singular" | "plural" | null;
+};
+
 export type GreekNounChartResult =
   | {
       status: "supported";
@@ -175,68 +190,138 @@ function getSupportedSecondDeclensionGender(selection: GreekGrammarChartSelectio
   return null;
 }
 
-function getHighlightedRowIndex(selection: GreekGrammarChartSelection) {
-  const morphologyText = getSelectionMorphologyText(selection);
+function getHighlightedRowIndex(selection: GreekGrammarChartSelection | null | undefined) {
+  const highlight = getChartHighlight(selection);
 
-  if (morphologyText.includes("nominative")) {
+  if (highlight.caseKey === "nominative") {
     return 0;
   }
 
-  if (morphologyText.includes("genitive")) {
+  if (highlight.caseKey === "genitive") {
     return 1;
   }
 
-  if (morphologyText.includes("ablative")) {
+  if (highlight.caseKey === "ablative") {
     return 2;
   }
 
-  if (morphologyText.includes("dative")) {
+  if (highlight.caseKey === "dative") {
     return 3;
   }
 
-  if (morphologyText.includes("locative")) {
+  if (highlight.caseKey === "locative") {
     return 4;
   }
 
-  if (morphologyText.includes("instrumental")) {
+  if (highlight.caseKey === "instrumental") {
     return 5;
   }
 
-  if (morphologyText.includes("accusative")) {
+  if (highlight.caseKey === "accusative") {
     return 6;
   }
 
-  if (morphologyText.includes("vocative")) {
-    return 7;
-  }
-
-  const morphologyCode = selection.selectedFormMorphology?.toUpperCase() ?? "";
-  const caseCode = morphologyCode.match(/^[A-Z]+-([NGDAV])/u)?.[1] ?? null;
-
-  if (caseCode === "N") {
-    return 0;
-  }
-
-  if (caseCode === "G") {
-    return 1;
-  }
-
-  if (caseCode === "D") {
-    return 3;
-  }
-
-  if (caseCode === "A") {
-    return 6;
-  }
-
-  if (caseCode === "V") {
+  if (highlight.caseKey === "vocative") {
     return 7;
   }
 
   return null;
 }
 
-function getHighlightedNumber(selection: GreekGrammarChartSelection) {
+function getArticleHighlightedRowIndex(selection: GreekGrammarChartSelection | null | undefined) {
+  const highlight = getChartHighlight(selection);
+
+  if (highlight.caseKey === "nominative") {
+    return 0;
+  }
+
+  if (highlight.caseKey === "genitive") {
+    return 1;
+  }
+
+  if (highlight.caseKey === "dative") {
+    return 2;
+  }
+
+  if (highlight.caseKey === "accusative") {
+    return 3;
+  }
+
+  return null;
+}
+
+function getChartHighlight(
+  selection: GreekGrammarChartSelection | null | undefined
+): GreekChartHighlight {
+  if (!selection) {
+    return { caseKey: null, number: null };
+  }
+
+  const morphologyText = getSelectionMorphologyText(selection);
+
+  if (morphologyText.includes("nominative")) {
+    return { caseKey: "nominative", number: getHighlightedNumber(selection) };
+  }
+
+  if (morphologyText.includes("genitive")) {
+    return { caseKey: "genitive", number: getHighlightedNumber(selection) };
+  }
+
+  if (morphologyText.includes("ablative")) {
+    return { caseKey: "ablative", number: getHighlightedNumber(selection) };
+  }
+
+  if (morphologyText.includes("dative")) {
+    return { caseKey: "dative", number: getHighlightedNumber(selection) };
+  }
+
+  if (morphologyText.includes("locative")) {
+    return { caseKey: "locative", number: getHighlightedNumber(selection) };
+  }
+
+  if (morphologyText.includes("instrumental")) {
+    return { caseKey: "instrumental", number: getHighlightedNumber(selection) };
+  }
+
+  if (morphologyText.includes("accusative")) {
+    return { caseKey: "accusative", number: getHighlightedNumber(selection) };
+  }
+
+  if (morphologyText.includes("vocative")) {
+    return { caseKey: "vocative", number: getHighlightedNumber(selection) };
+  }
+
+  const morphologyCode = selection.selectedFormMorphology?.toUpperCase() ?? "";
+  const caseCode = morphologyCode.match(/^[A-Z]+-([NGDAV])/u)?.[1] ?? null;
+
+  if (caseCode === "N") {
+    return { caseKey: "nominative", number: getHighlightedNumber(selection) };
+  }
+
+  if (caseCode === "G") {
+    return { caseKey: "genitive", number: getHighlightedNumber(selection) };
+  }
+
+  if (caseCode === "D") {
+    return { caseKey: "dative", number: getHighlightedNumber(selection) };
+  }
+
+  if (caseCode === "A") {
+    return { caseKey: "accusative", number: getHighlightedNumber(selection) };
+  }
+
+  if (caseCode === "V") {
+    return { caseKey: "vocative", number: getHighlightedNumber(selection) };
+  }
+
+  return { caseKey: null, number: getHighlightedNumber(selection) };
+}
+
+function getHighlightedNumber(selection: GreekGrammarChartSelection | null | undefined) {
+  if (!selection) {
+    return null;
+  }
+
   const morphologyText = getSelectionMorphologyText(selection);
 
   if (morphologyText.includes("singular")) {
@@ -293,6 +378,20 @@ export function getGreekSecondDeclensionChart(
   };
 }
 
+export function getGreekSecondDeclensionChartByGender(
+  gender: GreekSecondDeclensionGender,
+  selection?: GreekGrammarChartSelection | null
+) {
+  return {
+    title: "2nd Declension Noun Chart",
+    gender,
+    singular: GREEK_SECOND_DECLENSION_ENDINGS[gender].singular,
+    plural: GREEK_SECOND_DECLENSION_ENDINGS[gender].plural,
+    highlightedRowIndex: getHighlightedRowIndex(selection ?? null),
+    highlightedNumber: getHighlightedNumber(selection ?? null)
+  };
+}
+
 export function getGreekSecondDeclensionDefiniteArticleChart(
   selection: GreekGrammarChartSelection
 ): GreekSecondDeclensionArticleChart | null {
@@ -311,7 +410,25 @@ export function getGreekSecondDeclensionDefiniteArticleChart(
     meaning: chart.meaning,
     forms: chart.forms,
     examples: chart.examples,
-    highlightedRowIndex: getHighlightedRowIndex(selection),
+    highlightedRowIndex: getArticleHighlightedRowIndex(selection),
     highlightedNumber: getHighlightedNumber(selection)
+  };
+}
+
+export function getGreekSecondDeclensionDefiniteArticleChartByGender(
+  gender: GreekSecondDeclensionGender,
+  selection?: GreekGrammarChartSelection | null
+): GreekSecondDeclensionArticleChart {
+  const chart = GREEK_SECOND_DECLENSION_ARTICLE_CHARTS[gender];
+
+  return {
+    title: "Definite Articles",
+    gender,
+    baseNoun: chart.baseNoun,
+    meaning: chart.meaning,
+    forms: chart.forms,
+    examples: chart.examples,
+    highlightedRowIndex: getArticleHighlightedRowIndex(selection ?? null),
+    highlightedNumber: getHighlightedNumber(selection ?? null)
   };
 }
