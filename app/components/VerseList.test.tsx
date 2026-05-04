@@ -2,7 +2,6 @@ import { BIBLE_GREEK_UNDERTEXT_STORAGE_KEY } from "@/app/components/BibleGreekUn
 import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 
 import { LookupPane } from "@/app/components/LookupPane";
-import { GREEK_GLOSS_DEFAULTS_STORAGE_KEY } from "@/app/components/GreekGlossOverridesProvider";
 import { VerseList } from "@/app/components/VerseList";
 import { VERSE_TRANSLATION_OVERRIDES_STORAGE_KEY } from "@/app/components/VerseTranslationOverridesProvider";
 import { READER_VERSION_STORAGE_KEY } from "@/lib/bible/constants";
@@ -186,7 +185,7 @@ describe("VerseList", () => {
     expect(screen.queryByText("ἀρχή")).not.toBeInTheDocument();
     expect(screen.queryByText("archēs")).not.toBeInTheDocument();
     expect(
-      screen.queryByRole("button", { name: "Choose English gloss for ἀρχῆς" })
+      screen.queryByLabelText("English gloss for ἀρχῆς")
     ).not.toBeInTheDocument();
     expect(
       screen.queryByRole("button", {
@@ -308,13 +307,11 @@ describe("VerseList", () => {
       </>
     );
 
-    expect(
-      await screen.findByRole("button", { name: "Choose English gloss for ἀρχῆς" })
-    ).toBeInTheDocument();
+    expect(await screen.findByLabelText("English gloss for ἀρχῆς")).toBeInTheDocument();
     expect(screen.getByText("ἀρχῆς")).toBeInTheDocument();
     expect(screen.getAllByText("ἀρχή").length).toBeGreaterThan(0);
     expect(await screen.findByText("archēs")).toBeInTheDocument();
-    expect(screen.getAllByText("beginning").length).toBeGreaterThan(0);
+    expect(screen.getByLabelText("English gloss for ἀρχῆς")).toHaveValue("");
     expect(
       screen.queryByRole("button", {
         name: "Explain morphology for ἀρχῆς: Noun · Genitive Singular Feminine"
@@ -365,9 +362,8 @@ describe("VerseList", () => {
     expect(screen.getByText("In the beginning")).toBeInTheDocument();
     expect(await screen.findByText("archē")).toBeInTheDocument();
     expect((await screen.findAllByText("Noun")).length).toBeGreaterThan(0);
-    expect(
-      await screen.findByRole("button", { name: "Choose English gloss for ἀρχῇ" })
-    ).toBeInTheDocument();
+    expect(await screen.findByLabelText("English gloss for ἀρχῇ")).toBeInTheDocument();
+    expect(screen.getByLabelText("English gloss for ἀρχῇ")).toHaveValue("");
   });
 
   it("shows Strong's numbers beside each word in the Textus Receptus reader", async () => {
@@ -577,7 +573,7 @@ describe("VerseList", () => {
     expect(screen.queryByText("In the beginning")).not.toBeInTheDocument();
   });
 
-  it("opens a gloss picker from the English line and updates only that occurrence", async () => {
+  it("lets me type an English gloss for one Greek word without changing another", async () => {
     renderWithReaderCustomization(
       <VerseList
         bookSlug="john"
@@ -587,23 +583,16 @@ describe("VerseList", () => {
       />
     );
 
-    expect(
-      await screen.findByRole("button", { name: "Choose English gloss for ἀρχῆς" })
-    ).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: "Choose English gloss for ἀρχῆς" }));
+    const firstGloss = await screen.findByLabelText("English gloss for ἀρχῆς");
+    const secondGloss = screen.getByLabelText("English gloss for ἐγένετο");
 
-    expect(await screen.findByRole("dialog", { name: "English gloss choices for ἀρχῆς" })).toBeInTheDocument();
+    fireEvent.change(firstGloss, { target: { value: "origin" } });
 
-    fireEvent.click(screen.getByRole("button", { name: "origin" }));
-
-    const glossButtons = screen.getAllByRole("button", { name: /Choose English gloss for ἀρχ/i });
-    expect(glossButtons[0]).toHaveTextContent("origin");
-    expect(screen.getByRole("button", { name: "Choose English gloss for ἐγένετο" })).toHaveTextContent(
-      "became"
-    );
+    expect(firstGloss).toHaveValue("origin");
+    expect(secondGloss).toHaveValue("");
   });
 
-  it("shows a single-word default gloss until a different gloss is selected", async () => {
+  it("starts each Greek gloss line empty until I type something", async () => {
     renderWithReaderCustomization(
       <VerseList
         bookSlug="john"
@@ -613,9 +602,8 @@ describe("VerseList", () => {
       />
     );
 
-    expect(
-      await screen.findByRole("button", { name: "Choose English gloss for ἀρχῆς" })
-    ).toHaveTextContent("beginning");
+    expect(await screen.findByLabelText("English gloss for ἀρχῆς")).toHaveValue("");
+    expect(screen.getByLabelText("English gloss for ἐγένετο")).toHaveValue("");
   });
 
   it("shows noun morphology in the Greek dictionary panel instead of inline in the reader", async () => {
@@ -723,21 +711,14 @@ describe("VerseList", () => {
       />
     );
 
-    expect(
-      await screen.findByRole("button", { name: "Choose English gloss for ἀρχῆς" })
-    ).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: "Choose English gloss for ἀρχῆς" }));
-    fireEvent.click(await screen.findByRole("button", { name: "Custom…" }));
-    fireEvent.change(screen.getByLabelText("Custom gloss"), {
+    const firstGloss = await screen.findByLabelText("English gloss for ἀρχῆς");
+    fireEvent.change(firstGloss, {
       target: {
         value: "first cause"
       }
     });
-    fireEvent.click(screen.getByRole("button", { name: "Save gloss" }));
 
-    expect(screen.getByRole("button", { name: "Choose English gloss for ἀρχῆς" })).toHaveTextContent(
-      "first cause"
-    );
+    expect(firstGloss).toHaveValue("first cause");
 
     unmount();
 
@@ -750,15 +731,11 @@ describe("VerseList", () => {
       />
     );
 
-    expect(screen.getByRole("button", { name: "Choose English gloss for ἀρχῆς" })).toHaveTextContent(
-      "first cause"
-    );
-    expect(screen.getByRole("button", { name: "Choose English gloss for ἐγένετο" })).toHaveTextContent(
-      "became"
-    );
+    expect(screen.getByLabelText("English gloss for ἀρχῆς")).toHaveValue("first cause");
+    expect(screen.getByLabelText("English gloss for ἐγένετο")).toHaveValue("");
   });
 
-  it("lets a lemma default apply across occurrences while preserving one-off token changes", async () => {
+  it("keeps repeated lemma occurrences independent unless I type each gloss", async () => {
     const { unmount } = renderWithReaderCustomization(
       <VerseList
         bookSlug="john"
@@ -768,32 +745,18 @@ describe("VerseList", () => {
       />
     );
 
-    fireEvent.click(await screen.findByRole("button", { name: "Choose English gloss for ἀρχῆς" }));
+    const firstGloss = await screen.findByLabelText("English gloss for ἀρχῆς");
+    const secondGloss = screen.getByLabelText("English gloss for ἀρχῇ");
 
-    const picker = await screen.findByRole("dialog", { name: "English gloss choices for ἀρχῆς" });
-    const originButton = within(picker).getByRole("button", { name: "origin" });
-    const originRow = originButton.closest(".verse-greek-gloss-option-row") as HTMLElement;
-    fireEvent.click(within(originRow).getByRole("button", { name: "Make default" }));
+    fireEvent.change(firstGloss, { target: { value: "origin" } });
 
-    expect(window.localStorage.getItem(GREEK_GLOSS_DEFAULTS_STORAGE_KEY)).toContain("origin");
-    await waitFor(() => {
-      expect(
-        screen.getByRole("button", { name: "Choose English gloss for ἀρχῆς" })
-      ).toHaveTextContent("origin");
-      expect(
-        screen.getByRole("button", { name: "Choose English gloss for ἀρχῇ" })
-      ).toHaveTextContent("origin");
-    });
+    expect(firstGloss).toHaveValue("origin");
+    expect(secondGloss).toHaveValue("");
 
-    fireEvent.click(screen.getByRole("button", { name: "Choose English gloss for ἀρχῇ" }));
-    fireEvent.click(await screen.findByRole("button", { name: "beginning" }));
+    fireEvent.change(secondGloss, { target: { value: "beginning" } });
 
-    expect(screen.getByRole("button", { name: "Choose English gloss for ἀρχῆς" })).toHaveTextContent(
-      "origin"
-    );
-    expect(screen.getByRole("button", { name: "Choose English gloss for ἀρχῇ" })).toHaveTextContent(
-      "beginning"
-    );
+    expect(firstGloss).toHaveValue("origin");
+    expect(secondGloss).toHaveValue("beginning");
 
     unmount();
 
@@ -807,12 +770,8 @@ describe("VerseList", () => {
     );
 
     await waitFor(() => {
-      expect(
-        screen.getByRole("button", { name: "Choose English gloss for ἀρχῆς" })
-      ).toHaveTextContent("origin");
-      expect(
-        screen.getByRole("button", { name: "Choose English gloss for ἀρχῇ" })
-      ).toHaveTextContent("beginning");
+      expect(screen.getByLabelText("English gloss for ἀρχῆς")).toHaveValue("origin");
+      expect(screen.getByLabelText("English gloss for ἀρχῇ")).toHaveValue("beginning");
     });
   });
 

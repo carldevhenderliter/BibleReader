@@ -728,12 +728,8 @@ describe("WholeBookContent", () => {
       }
     });
 
-    expect(screen.getByRole("button", { name: "Choose English gloss for Ἰούδας" })).toHaveTextContent(
-      "Jude"
-    );
-    expect(screen.getByRole("button", { name: "Choose English gloss for Ἀγαπητοί" })).toHaveTextContent(
-      "beloved"
-    );
+    expect(screen.getByLabelText("English gloss for Ἰούδας")).toHaveValue("");
+    expect(screen.getByLabelText("English gloss for Ἀγαπητοί")).toHaveValue("");
     expect(await screen.findByText("Ioudas")).toBeInTheDocument();
     expect(await screen.findByText("Agapētoi")).toBeInTheDocument();
   });

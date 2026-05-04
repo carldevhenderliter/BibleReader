@@ -2145,6 +2145,30 @@ button.fathers-annotation-anchor:focus-visible {
     color 160ms ease;
 }
 
+.verse-greek-gloss-input {
+  display: block;
+  width: 100%;
+  min-width: 100%;
+  max-width: none;
+  padding: 0.22rem 0.44rem 0.28rem;
+  border: 1px dashed rgba(var(--reader-accent-rgb), 0.18);
+  border-radius: 0.56rem;
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(224, 235, 248, 0.9);
+  font-family: var(--reader-body-font);
+  font-size: max(0.76rem, calc(var(--reader-body-text-size) * 0.84));
+  line-height: 1.16;
+  text-align: center;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    color 160ms ease;
+}
+
+.verse-greek-gloss-input::placeholder {
+  color: rgba(173, 198, 226, 0.42);
+}
+
 .verse-greek-morphology {
   padding: 0.12rem 0.5rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -2174,7 +2198,10 @@ button.fathers-annotation-anchor:focus-visible {
 .verse-greek-gloss:hover,
 .verse-greek-gloss:focus-visible,
 .verse-greek-gloss.is-overridden,
-.verse-greek-gloss.is-lemma-default {
+.verse-greek-gloss.is-lemma-default,
+.verse-greek-gloss-input:hover,
+.verse-greek-gloss-input:focus-visible,
+.verse-greek-gloss-input.is-overridden {
   border-color: rgba(var(--reader-accent-rgb), 0.42);
   background: rgba(var(--reader-accent-rgb), 0.1);
   color: rgba(244, 249, 255, 0.96);

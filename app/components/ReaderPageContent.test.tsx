@@ -750,7 +750,7 @@ describe("ReaderPageContent", () => {
     ).not.toBeInTheDocument();
   });
 
-  it("shows selectable English gloss lines under Greek tokens in chapter view", async () => {
+  it("shows empty editable English gloss lines under Greek tokens in chapter view", async () => {
     window.localStorage.setItem(
       "bible-reader:customization",
       JSON.stringify({
@@ -774,12 +774,8 @@ describe("ReaderPageContent", () => {
       }
     });
 
-    expect(screen.getByRole("button", { name: "Choose English gloss for Βίβλος" })).toHaveTextContent(
-      "book"
-    );
-    expect(screen.getByRole("button", { name: "Choose English gloss for γενέσεως" })).toHaveTextContent(
-      "genealogy"
-    );
+    expect(screen.getByLabelText("English gloss for Βίβλος")).toHaveValue("");
+    expect(screen.getByLabelText("English gloss for γενέσεως")).toHaveValue("");
     expect(await screen.findByText("Biblos")).toBeInTheDocument();
     expect(await screen.findByText("geneseōs")).toBeInTheDocument();
   });
