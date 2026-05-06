@@ -1299,6 +1299,24 @@ export function ReaderStrongsPanel() {
             <p className="strongs-entry-meta">Pronunciation: {entry.pronunciation}</p>
           ) : null}
         </div>
+        <div
+          className="strongs-entry-tabs"
+          role="tablist"
+          aria-label={`${entry.strongs ?? entry.entryKey} study tabs`}
+        >
+          {getGreekAvailableTabs(greekStrongsEntry).map((tab) => (
+            <button
+              aria-selected={activeTab === tab}
+              className={`lookup-pane-tab${activeTab === tab ? " is-active" : ""}`}
+              key={`${entry.entryKey}:${tab}`}
+              onClick={() => handleSelectTab(entry.entryKey, tab, entry.lemma)}
+              role="tab"
+              type="button"
+            >
+              {getTabLabel(tab)}
+            </button>
+          ))}
+        </div>
         {selectedGreekFormDetails ? (
           <section className="greek-dictionary-selected-form">
             <p className="strongs-entry-section-label">Selected Form</p>
@@ -1398,24 +1416,6 @@ export function ReaderStrongsPanel() {
             })}
           </div>
         </section>
-        <div
-          className="strongs-entry-tabs"
-          role="tablist"
-          aria-label={`${entry.strongs ?? entry.entryKey} study tabs`}
-        >
-          {getGreekAvailableTabs(greekStrongsEntry).map((tab) => (
-            <button
-              aria-selected={activeTab === tab}
-              className={`lookup-pane-tab${activeTab === tab ? " is-active" : ""}`}
-              key={`${entry.entryKey}:${tab}`}
-              onClick={() => handleSelectTab(entry.entryKey, tab, entry.lemma)}
-              role="tab"
-              type="button"
-            >
-              {getTabLabel(tab)}
-            </button>
-          ))}
-        </div>
         {activeTab === "bible" ? (
           <div className="strongs-entry-tab-panel">
             {renderBibleOccurrences(
