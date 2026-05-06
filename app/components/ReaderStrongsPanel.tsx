@@ -49,10 +49,14 @@ type BibleOccurrenceVersionEntriesState = {
 
 type OccurrenceTestamentFilter = "all" | "old" | "new";
 
-type StrongsTab = "bible" | "bdag" | "outside-bible";
+type StrongsTab = "bible" | "thayer" | "bdag" | "outside-bible";
 
 function getAvailableTabs(entry: StrongsEntry): StrongsTab[] {
   const tabs: StrongsTab[] = ["bible"];
+
+  if (entry.language === "greek" && entry.outlineUsage?.trim()) {
+    tabs.push("thayer");
+  }
 
   if (entry.bdagArticles?.length) {
     tabs.push("bdag");
@@ -68,6 +72,10 @@ function getAvailableTabs(entry: StrongsEntry): StrongsTab[] {
 function getGreekAvailableTabs(entry: StrongsEntry | null): StrongsTab[] {
   const tabs: StrongsTab[] = ["bible"];
 
+  if (entry?.outlineUsage?.trim()) {
+    tabs.push("thayer");
+  }
+
   if (entry?.bdagArticles?.length) {
     tabs.push("bdag");
   }
@@ -79,6 +87,10 @@ function getGreekAvailableTabs(entry: StrongsEntry | null): StrongsTab[] {
 function getTabLabel(tab: StrongsTab) {
   if (tab === "bible") {
     return "Verses In Bible";
+  }
+
+  if (tab === "thayer") {
+    return "Thayer";
   }
 
   if (tab === "bdag") {
@@ -148,6 +160,19 @@ function renderBdagArticles(entry: StrongsEntry) {
           </section>
         );
       })}
+    </>
+  );
+}
+
+function renderThayerSection(entry: StrongsEntry | null) {
+  if (!entry?.outlineUsage?.trim()) {
+    return <p className="strongs-entry-copy">No Thayer definition is available for this lemma.</p>;
+  }
+
+  return (
+    <>
+      <p className="strongs-entry-section-label">Thayer</p>
+      <p className="strongs-entry-copy">{entry.outlineUsage}</p>
     </>
   );
 }
@@ -1328,7 +1353,7 @@ export function ReaderStrongsPanel() {
         <div className="greek-dictionary-definition">
           <p className="strongs-entry-section-label">Lemma Definition</p>
           <p className="strongs-entry-copy">{entry.shortDefinition}</p>
-          {entry.longDefinition ? (
+          {entry.longDefinition && !greekStrongsEntry?.outlineUsage?.trim() ? (
             <p className="strongs-entry-copy greek-dictionary-long-definition">
               {entry.longDefinition}
             </p>
@@ -1401,6 +1426,11 @@ export function ReaderStrongsPanel() {
             )}
           </div>
         ) : null}
+        {activeTab === "thayer" ? (
+          <div className="strongs-entry-tab-panel">
+            {renderThayerSection(greekStrongsEntry)}
+          </div>
+        ) : null}
         {activeTab === "bdag" ? (
           <div className="strongs-entry-tab-panel strongs-entry-bdag-body">
             <p className="strongs-entry-section-label">BDAG</p>
@@ -1438,7 +1468,9 @@ export function ReaderStrongsPanel() {
           <p className="strongs-entry-meta">Part of speech: {entry.partOfSpeech}</p>
         ) : null}
         {entry.definition ? <p className="strongs-entry-copy">{entry.definition}</p> : null}
-        {entry.outlineUsage ? <p className="strongs-entry-copy">{entry.outlineUsage}</p> : null}
+        {entry.language !== "greek" && entry.outlineUsage ? (
+          <p className="strongs-entry-copy">{entry.outlineUsage}</p>
+        ) : null}
         {entry.rootWord ? <p className="strongs-entry-meta">Root word: {entry.rootWord}</p> : null}
         <div className="strongs-entry-tabs" role="tablist" aria-label={`${entry.id} study tabs`}>
           {getAvailableTabs(entry).map((tab) => (
@@ -1459,6 +1491,11 @@ export function ReaderStrongsPanel() {
         {activeTab === "bible" ? (
           <div className="strongs-entry-tab-panel">
             {renderBibleOccurrences(entry.id, "strongs", entry.language, entry.id)}
+          </div>
+        ) : null}
+        {activeTab === "thayer" ? (
+          <div className="strongs-entry-tab-panel">
+            {renderThayerSection(entry)}
           </div>
         ) : null}
         {activeTab === "bdag" && entry.bdagArticles?.length ? (

@@ -100,6 +100,7 @@ describe("ReaderStrongsPanel", () => {
     const studyPane = screen.getByLabelText("Study pane");
 
     expect(await within(studyPane).findByRole("tab", { name: "Verses In Bible" })).toBeInTheDocument();
+    expect(within(studyPane).getByRole("tab", { name: "Thayer" })).toBeInTheDocument();
     expect(within(studyPane).getByRole("tab", { name: "BDAG" })).toBeInTheDocument();
     expect(within(studyPane).getByRole("tab", { name: "Outside Bible" })).toBeInTheDocument();
     expect(within(studyPane).getByRole("heading", { name: "G3056" })).toBeInTheDocument();
@@ -151,6 +152,22 @@ describe("ReaderStrongsPanel", () => {
     expect(within(studyPane).getByText("Original BDAG")).toBeInTheDocument();
   }, 30000);
 
+  it("renders a separate Thayer tab for Greek Strongs entries", async () => {
+    renderWithReaderCustomization(<StrongsHarness />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Open Greek" }));
+
+    const studyPane = screen.getByLabelText("Study pane");
+    fireEvent.click(await within(studyPane).findByRole("tab", { name: "Thayer" }));
+
+    expect(within(studyPane).getByRole("tab", { name: "Thayer" })).toHaveAttribute(
+      "aria-selected",
+      "true"
+    );
+    expect(within(studyPane).getByText(/of speech, a word/i)).toBeInTheDocument();
+    expect(within(studyPane).queryByText("BDAG Summary")).not.toBeInTheDocument();
+  });
+
   it("does not render a BDAG section for Hebrew Strongs entries", async () => {
     renderWithReaderCustomization(<StrongsHarness />);
 
@@ -168,6 +185,7 @@ describe("ReaderStrongsPanel", () => {
       )
     );
     expect(studyPane.querySelector(".strongs-entry-bible-verse-text-greek-companion")).toBeNull();
+    expect(within(studyPane).queryByRole("tab", { name: "Thayer" })).not.toBeInTheDocument();
     expect(within(studyPane).queryByRole("tab", { name: "BDAG" })).not.toBeInTheDocument();
     expect(within(studyPane).queryByRole("tab", { name: "Outside Bible" })).not.toBeInTheDocument();
   });
@@ -215,6 +233,7 @@ describe("ReaderStrongsPanel", () => {
     expect(within(studyPane).getByText("Genitive")).toBeInTheDocument();
     expect(within(studyPane).getByText("Example: λογου = of the word")).toBeInTheDocument();
     expect((await within(studyPane).findAllByText("ἀρχῆς")).length).toBeGreaterThan(0);
+    expect(within(studyPane).getByRole("tab", { name: "Thayer" })).toBeInTheDocument();
 
     const selectedFormRow = within(studyPane)
       .getAllByText("ἀρχῆς")
@@ -230,6 +249,21 @@ describe("ReaderStrongsPanel", () => {
     await waitFor(() =>
       expect(studyPane.querySelectorAll(".strongs-entry-bible-verse .strongs-token-lemma").length).toBeGreaterThan(0)
     );
+  });
+
+  it("renders the Thayer tab from the Greek dictionary flow", async () => {
+    renderWithReaderCustomization(<StrongsHarness />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Open Greek Dictionary Masculine" }));
+
+    const studyPane = screen.getByLabelText("Study pane");
+    fireEvent.click(await within(studyPane).findByRole("tab", { name: "Thayer" }));
+
+    expect(within(studyPane).getByRole("tab", { name: "Thayer" })).toHaveAttribute(
+      "aria-selected",
+      "true"
+    );
+    expect(within(studyPane).getByText(/of speech, a word/i)).toBeInTheDocument();
   });
 
   it("opens the Charts tab from a noun dictionary entry and renders the 2nd declension chart", async () => {
