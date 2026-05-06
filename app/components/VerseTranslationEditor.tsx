@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 
 import { useGreekGlossOverrides } from "@/app/components/GreekGlossOverridesProvider";
+import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { getGreekTokenOccurrenceKey } from "@/lib/bible/greek";
 import type { GreekToken } from "@/lib/bible/types";
 
@@ -53,6 +54,7 @@ export function VerseTranslationEditor({
   greekTokens
 }: VerseTranslationEditorProps) {
   const { getOverride } = useGreekGlossOverrides();
+  const { settings } = useReaderCustomization();
 
   const translation = useMemo(
     () =>
@@ -72,9 +74,11 @@ export function VerseTranslationEditor({
 
   return (
     <section className="verse-custom-translation is-saved">
-      <div className="verse-custom-translation-header">
-        <p className="verse-custom-translation-title">Your translation</p>
-      </div>
+      {settings.showChapterHeadings ? (
+        <div className="verse-custom-translation-header">
+          <p className="verse-custom-translation-title">Your translation</p>
+        </div>
+      ) : null}
       <p className="verse-text verse-custom-translation-copy">{translation}</p>
     </section>
   );

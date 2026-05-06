@@ -868,4 +868,36 @@ describe("VerseList", () => {
     expect(screen.getByText("Your translation")).toBeInTheDocument();
     expect(screen.getByText("book became.")).toBeInTheDocument();
   });
+
+  it("hides the my translation heading when chapter headings are turned off", async () => {
+    window.localStorage.setItem(
+      "bible-reader:customization",
+      JSON.stringify({
+        showChapterHeadings: false
+      })
+    );
+
+    renderWithReaderCustomization(
+      <VerseList
+        bookSlug="john"
+        chapterNumber={1}
+        interlinearVerseMap={translationAssemblyInterlinearVerseMap}
+        verses={translationAssemblyVerses}
+      />
+    );
+
+    fireEvent.change(await screen.findByLabelText("English gloss for βίβλος"), {
+      target: {
+        value: "book"
+      }
+    });
+    fireEvent.change(screen.getByLabelText("English gloss for ἐγένετο"), {
+      target: {
+        value: "became"
+      }
+    });
+
+    expect(screen.queryByText("Your translation")).not.toBeInTheDocument();
+    expect(screen.getByText("book became.")).toBeInTheDocument();
+  });
 });
