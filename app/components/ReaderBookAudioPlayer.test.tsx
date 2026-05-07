@@ -62,7 +62,7 @@ describe("ReaderBookAudioPlayer", () => {
     expect(window.sessionStorage.getItem(BOOK_AUDIO_AUTOPLAY_STORAGE_KEY)).toBeNull();
   });
 
-  it("lets the reader hide and show the audio player", () => {
+  it("starts minimized and lets the reader show and hide the audio player", () => {
     render(
       <ReaderBottomBarProvider>
         <ReaderBookAudioPlayer
@@ -77,8 +77,6 @@ describe("ReaderBookAudioPlayer", () => {
       </ReaderBottomBarProvider>
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "Hide audio" }));
-
     expect(screen.getByRole("button", { name: "Show audio" })).toBeInTheDocument();
     expect(screen.queryByRole("region", { name: "Book audio" })).not.toBeInTheDocument();
     expect(window.localStorage.getItem(AUDIO_PLAYER_VISIBILITY_STORAGE_KEY)).toBe("false");
@@ -88,5 +86,11 @@ describe("ReaderBookAudioPlayer", () => {
     expect(screen.getByRole("button", { name: "Hide audio" })).toBeInTheDocument();
     expect(screen.getByRole("region", { name: "Book audio" })).toBeInTheDocument();
     expect(window.localStorage.getItem(AUDIO_PLAYER_VISIBILITY_STORAGE_KEY)).toBe("true");
+
+    fireEvent.click(screen.getByRole("button", { name: "Hide audio" }));
+
+    expect(screen.getByRole("button", { name: "Show audio" })).toBeInTheDocument();
+    expect(screen.queryByRole("region", { name: "Book audio" })).not.toBeInTheDocument();
+    expect(window.localStorage.getItem(AUDIO_PLAYER_VISIBILITY_STORAGE_KEY)).toBe("false");
   });
 });

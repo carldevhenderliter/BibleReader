@@ -48,9 +48,14 @@ export function ReaderBookAudioPlayer({
       return;
     }
 
-    setIsPlayerVisible(
-      window.localStorage.getItem(AUDIO_PLAYER_VISIBILITY_STORAGE_KEY) !== "false"
-    );
+    const storedVisibility = window.localStorage.getItem(AUDIO_PLAYER_VISIBILITY_STORAGE_KEY);
+    if (storedVisibility === null) {
+      window.localStorage.setItem(AUDIO_PLAYER_VISIBILITY_STORAGE_KEY, "false");
+      setIsPlayerVisible(false);
+      return;
+    }
+
+    setIsPlayerVisible(storedVisibility === "true");
   }, []);
 
   const persistPlayerVisibility = (isVisible: boolean) => {

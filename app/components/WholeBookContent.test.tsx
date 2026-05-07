@@ -388,8 +388,6 @@ describe("WholeBookContent", () => {
 
     expect(screen.getByText("World English")).toBeInTheDocument();
     expect(screen.getAllByText(/^Jude$/).length).toBeGreaterThan(0);
-    expect(document.querySelector(".reader-toolbar-meta")).toHaveTextContent("2 chapters");
-    expect(document.querySelector(".reader-toolbar-meta")).toHaveTextContent("Continuous reading");
     expect(screen.queryByRole("heading", { name: "Jude" })).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Chapter 1" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Chapter 2" })).toBeInTheDocument();
@@ -405,6 +403,7 @@ describe("WholeBookContent", () => {
       />
     );
 
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Copy text" }));
 
     await waitFor(() => {
@@ -431,8 +430,7 @@ describe("WholeBookContent", () => {
       />
     );
 
-    expect(screen.getByRole("region", { name: "Book audio" })).toBeInTheDocument();
-    expect(screen.getByText("Galatians.mp3")).toBeInTheDocument();
+    expect(document.querySelector(".reader-audio-drawer")).toHaveClass("is-hidden");
     expect(document.querySelector(".reader-audio-player")).toHaveAttribute(
       "src",
       "/book-audio/galatians.mp3"
@@ -548,7 +546,8 @@ describe("WholeBookContent", () => {
       />
     );
 
-    fireEvent.click(screen.getByRole("tab", { name: "Compare" }));
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "Compare" }));
 
     expect(screen.getAllByText("WEB").length).toBeGreaterThan(0);
     expect(screen.getAllByText("KJV").length).toBeGreaterThan(0);
@@ -567,9 +566,9 @@ describe("WholeBookContent", () => {
       />
     );
 
-    fireEvent.click(screen.getByRole("tab", { name: "Harmony" }));
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "Harmony" }));
 
-    expect(screen.getByRole("tab", { name: "Harmony" })).toHaveAttribute("aria-selected", "true");
     expect(await screen.findByText("Chronological Harmony of the Gospels")).toBeInTheDocument();
     expect(screen.getByText("Prologue and Genealogies")).toBeInTheDocument();
   });
@@ -585,7 +584,8 @@ describe("WholeBookContent", () => {
       />
     );
 
-    fireEvent.click(screen.getByRole("tab", { name: "OT Compare" }));
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "OT Compare" }));
 
     expect(screen.getByText("OT Textual Compare")).toBeInTheDocument();
     expect(screen.getAllByLabelText("LXX Greek compare pane").length).toBeGreaterThan(0);

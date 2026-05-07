@@ -310,12 +310,14 @@ describe("FathersReaderContent", () => {
     expect(screen.getByText("Ē")).toBeInTheDocument();
     expect(screen.getByText("assembly")).toBeInTheDocument();
     expect(screen.getByText("The church.")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     expect(screen.getByRole("button", { name: "Learn Greek" })).toBeInTheDocument();
   });
 
   it("copies the visible Fathers reading text from the toolbar", async () => {
     renderFathersReader();
 
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Copy text" }));
 
     await waitFor(() => {
@@ -343,6 +345,7 @@ describe("FathersReaderContent", () => {
   it("opens a Greek sentence quiz when Learn Greek is enabled for Fathers text", async () => {
     renderFathersReader();
 
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Learn Greek" }));
     fireEvent.click(screen.getByRole("button", { name: /ἐκκλησία ἐκκλησία G1577/i }));
 
@@ -364,6 +367,7 @@ describe("FathersReaderContent", () => {
       "Knowing, my brother, your eager desire after that which is for the advantage of us all."
     );
     expect(screen.queryByRole("button", { name: /G1577/i })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     expect(screen.getByRole("button", { name: "Annotate Greek" })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Learn Greek" })).not.toBeInTheDocument();
   });
@@ -514,6 +518,7 @@ describe("FathersReaderContent", () => {
 
     renderFathersReader(englishOnlyPayload);
 
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
     fireEvent.click(screen.getByRole("button", { name: "Add Greek undertext for Kefa’s" }));
 
@@ -559,6 +564,7 @@ describe("FathersReaderContent", () => {
 
     renderFathersReader(englishOnlyPayload);
 
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
     fireEvent.click(screen.getByRole("button", { name: "Add Greek undertext for Kefa’s" }));
 
@@ -599,6 +605,7 @@ describe("FathersReaderContent", () => {
 
     renderFathersReader(englishOnlyPayload);
 
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
     expect(screen.getByRole("button", { name: "Add Greek undertext for Kefa’s" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Add Greek undertext for Letter" })).toBeInTheDocument();
@@ -629,6 +636,7 @@ describe("FathersReaderContent", () => {
 
     renderFathersReader(englishOnlyPayload);
 
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
     fireEvent.click(screen.getByRole("button", { name: "Add Greek undertext for Kefa’s" }));
 
@@ -674,6 +682,7 @@ describe("FathersReaderContent", () => {
 
     renderFathersReader(englishOnlyPayload);
 
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
     fireEvent.click(screen.getByRole("button", { name: "Add Greek undertext for Kefa’s" }));
 
@@ -714,6 +723,7 @@ describe("FathersReaderContent", () => {
 
     renderFathersReader(englishOnlyPayload);
 
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
     fireEvent.click(screen.getByRole("button", { name: "Add Greek undertext for Kefa’s" }));
 
@@ -762,6 +772,7 @@ describe("FathersReaderContent", () => {
 
     renderFathersReader(englishOnlyPayload);
 
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
     fireEvent.click(screen.getByRole("button", { name: "Add Greek undertext for Kefa’s" }));
 
@@ -818,6 +829,7 @@ describe("FathersReaderContent", () => {
 
     renderFathersReader(englishOnlyPayload);
 
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
     fireEvent.click(screen.getByRole("button", { name: "Add Greek undertext for Kefa’s" }));
 
@@ -868,6 +880,7 @@ describe("FathersReaderContent", () => {
 
     renderFathersReader(englishOnlyPayload);
 
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Annotate Greek" }));
     fireEvent.click(screen.getByRole("button", { name: "Add Greek undertext for Letter" }));
 
@@ -978,8 +991,6 @@ describe("FathersReaderContent", () => {
 
     expect(scrollIntoView).toHaveBeenCalled();
     expect(screen.getByRole("button", { name: "Menu" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute("href", "/");
-    expect(screen.getByRole("link", { name: "Library" })).toHaveAttribute("href", "/fathers");
 
     Element.prototype.scrollIntoView = originalScrollIntoView;
   });

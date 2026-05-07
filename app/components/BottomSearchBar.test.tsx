@@ -130,6 +130,15 @@ describe("BottomSearchBar", () => {
     expect(screen.getByLabelText("Bible search results")).toBeInTheDocument();
   });
 
+  it("keeps the full search bar visible on desktop", () => {
+    setDesktopMode(true);
+
+    renderSearchUi();
+
+    expect(document.querySelector(".search-bar")).not.toHaveClass("search-bar-collapsed");
+    expect(screen.getByLabelText(SEARCH_INPUT_LABEL)).toBeInTheDocument();
+  });
+
   it("renders a match-mode toggle in the mobile search tray", () => {
     renderSearchUi();
 

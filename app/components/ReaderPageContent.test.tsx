@@ -340,13 +340,10 @@ describe("ReaderPageContent", () => {
 
     expect(screen.getByText("World English")).toBeInTheDocument();
     expect(screen.getAllByText("Genesis 1").length).toBeGreaterThan(0);
-    expect(document.querySelector(".reader-toolbar-meta")).toHaveTextContent("2 verses");
-    expect(document.querySelector(".reader-toolbar-meta")).toHaveTextContent("Chapter view");
     expect(screen.queryByText(/^CONTINUOUS READING$/i)).not.toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Genesis 1" })).not.toBeInTheDocument();
     expect(screen.getByText("In the beginning, God created the heavens and the earth.")).toBeInTheDocument();
     expect(screen.getAllByText("World English").length).toBeGreaterThan(0);
-    expect(screen.getByRole("link", { name: "Home" })).toHaveAttribute("href", "/");
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     expect(screen.getByRole("link", { name: /Whole book view/i })).toHaveAttribute(
       "href",
@@ -363,6 +360,7 @@ describe("ReaderPageContent", () => {
       />
     );
 
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Copy text" }));
 
     await waitFor(() => {
@@ -389,8 +387,7 @@ describe("ReaderPageContent", () => {
       />
     );
 
-    expect(screen.getByRole("region", { name: "Book audio" })).toBeInTheDocument();
-    expect(screen.getByText("Galatians.mp3")).toBeInTheDocument();
+    expect(document.querySelector(".reader-audio-drawer")).toHaveClass("is-hidden");
     expect(document.querySelector(".reader-audio-player")).toHaveAttribute(
       "src",
       "/book-audio/galatians.mp3"
@@ -475,7 +472,6 @@ describe("ReaderPageContent", () => {
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Compare" }));
 
-    expect(screen.getByRole("tab", { name: "Compare" })).toHaveAttribute("aria-selected", "true");
     expect(screen.getByText("Parallel Compare")).toBeInTheDocument();
     expect(screen.getByLabelText("Parallel translation comparison")).toBeInTheDocument();
   });
@@ -492,7 +488,6 @@ describe("ReaderPageContent", () => {
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "Harmony" }));
 
-    expect(screen.getByRole("tab", { name: "Harmony" })).toHaveAttribute("aria-selected", "true");
     expect(await screen.findByText("Chronological Harmony of the Gospels")).toBeInTheDocument();
     expect(screen.getByText("Prologue and Genealogies")).toBeInTheDocument();
     expect(screen.getByLabelText("Harmony event")).toBeInTheDocument();
@@ -514,10 +509,6 @@ describe("ReaderPageContent", () => {
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: "OT Compare" }));
 
-    expect(screen.getByRole("tab", { name: "OT Compare" })).toHaveAttribute(
-      "aria-selected",
-      "true"
-    );
     expect(screen.getByText("OT Textual Compare")).toBeInTheDocument();
     expect(screen.getByLabelText("LXX and Masoretic compare")).toBeInTheDocument();
     expect(screen.getByLabelText("LXX Greek compare pane")).toBeInTheDocument();
@@ -536,18 +527,10 @@ describe("ReaderPageContent", () => {
 
     fireEvent.click(screen.getByRole("button", { name: /בראשית רֵאשִׁית H7225/i }));
 
-    expect(screen.getByRole("tab", { name: "OT Compare" })).toHaveAttribute(
-      "aria-selected",
-      "true"
-    );
     expect(await screen.findByText("Hebrew")).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: /ἀρχῇ ἀρχή G746/i }));
 
-    expect(screen.getByRole("tab", { name: "OT Compare" })).toHaveAttribute(
-      "aria-selected",
-      "true"
-    );
     expect(await screen.findByText("Greek Dictionary")).toBeInTheDocument();
   }, 15000);
 
@@ -1040,7 +1023,8 @@ describe("ReaderPageContent", () => {
     expect(window.localStorage.getItem(PASSAGE_NOTEBOOK_STORAGE_KEY)).toContain(
       "Created light before the sun."
     );
-    fireEvent.click(screen.getByRole("tab", { name: "Scripture" }));
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "Scripture" }));
 
     unmount();
 

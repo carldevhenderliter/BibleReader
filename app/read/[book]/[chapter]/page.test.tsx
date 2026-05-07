@@ -81,7 +81,7 @@ describe("ReaderChapterPage", () => {
 
     expect(screen.getByText("World English")).toBeInTheDocument();
     expect(screen.getAllByText("Genesis 1").length).toBeGreaterThan(0);
-    expect(document.querySelector(".reader-toolbar-meta")).toHaveTextContent("Chapter view");
+    expect(screen.queryByText("Chapter view")).not.toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Genesis 1" })).not.toBeInTheDocument();
     expect(
       screen.getByText("In the beginning, God created the heavens and the earth.")

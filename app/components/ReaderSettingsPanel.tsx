@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { ReactNode } from "react";
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
@@ -96,12 +97,14 @@ type BibleReaderSettingsPanelProps = {
   mode?: "bible";
   book: BookMeta;
   currentChapter: number;
+  readerTools?: ReactNode;
   view: ReadingView;
 };
 
 type FathersReaderSettingsPanelProps = {
   mode: "fathers";
   hasGreekReaderAid: boolean;
+  readerTools?: ReactNode;
 };
 
 type ReaderSettingsPanelProps =
@@ -115,6 +118,8 @@ export function ReaderSettingsPanel({
   const { isPanelOpen, resetSettings, setIsPanelOpen, settings, updateSettings } =
     useReaderCustomization();
   const {
+    activeReaderPane,
+    activeUtilityPane,
     createHarmony,
     getHarmonyDocuments,
     openCompare,
@@ -139,6 +144,7 @@ export function ReaderSettingsPanel({
   const hasGreekReaderAid = isFathersMode
     ? (props as FathersReaderSettingsPanelProps).hasGreekReaderAid
     : false;
+  const readerTools = props.readerTools ?? null;
   const supportsFullRenderToggle = isFathersMode || view === "book";
   const isOldTestament = book?.testament === "Old";
   const isHarmonyBook = book?.slug === GOSPEL_HARMONY_BOOK_SLUG;
@@ -340,6 +346,12 @@ export function ReaderSettingsPanel({
 
   const handleNotebookOpen = () => {
     openNotebook();
+    setIsPanelOpen(false);
+  };
+
+  const handleScriptureOpen = () => {
+    setActiveUtilityPane("search");
+    setActiveReaderPane("reading");
     setIsPanelOpen(false);
   };
 
@@ -777,7 +789,7 @@ export function ReaderSettingsPanel({
             </div>
           </div>
           <div className="reader-settings-subsection">
-            <p className="reader-settings-subsection-label">Quick controls</p>
+            <p className="reader-settings-subsection-label">Reading shortcuts</p>
             <div className="reader-settings-shortcuts">
               <div className="reader-size-controls" role="group" aria-label="Text size controls">
                 <button
@@ -857,48 +869,50 @@ export function ReaderSettingsPanel({
               ) : null}
             </div>
           </div>
+          {readerTools ? (
+            <div className="reader-settings-subsection">
+              <p className="reader-settings-subsection-label">Reader tools</p>
+              <div className="reader-settings-shortcuts">{readerTools}</div>
+            </div>
+          ) : null}
           {!isFathersMode && isReaderRoute ? (
             <div className="reader-settings-subsection">
-              <p className="reader-settings-subsection-label">Study tools</p>
+              <p className="reader-settings-subsection-label">Reading modes</p>
               <div className="reader-settings-shortcuts">
                 <button
-                  className="reader-inline-button reader-settings-link"
-                  onClick={handleNotebookOpen}
+                  className={`reader-inline-button reader-settings-link${
+                    activeReaderPane === "reading" ? " is-active" : ""
+                  }`}
+                  onClick={handleScriptureOpen}
                   type="button"
                 >
-                  Notebook
+                  Scripture
                 </button>
+                {!isHarmonyBook ? (
+                  <button
+                    className={`reader-inline-button reader-settings-link${
+                      activeReaderPane === "harmony" ? " is-active" : ""
+                    }`}
+                    onClick={handleHarmonyOpen}
+                    type="button"
+                  >
+                    Harmony
+                  </button>
+                ) : null}
                 <button
-                  className="reader-inline-button reader-settings-link"
-                  onClick={handleSermonsOpen}
-                  type="button"
-                >
-                  Sermons
-                </button>
-                <button
-                  className="reader-inline-button reader-settings-link"
-                  onClick={handleHarmonyOpen}
-                  type="button"
-                >
-                  Harmony
-                </button>
-                <button
-                  className="reader-inline-button reader-settings-link"
+                  className={`reader-inline-button reader-settings-link${
+                    activeReaderPane === "study-sets" ? " is-active" : ""
+                  }`}
                   onClick={handleStudySetsOpen}
                   type="button"
                 >
                   Study sets
                 </button>
-                <button
-                  className="reader-inline-button reader-settings-link"
-                  onClick={handleCrossReferencesOpen}
-                  type="button"
-                >
-                  Cross refs
-                </button>
                 {!isHarmonyBook ? (
                   <button
-                    className="reader-inline-button reader-settings-link"
+                    className={`reader-inline-button reader-settings-link${
+                      activeReaderPane === "compare" ? " is-active" : ""
+                    }`}
                     onClick={handleCompareOpen}
                     type="button"
                   >
@@ -907,13 +921,49 @@ export function ReaderSettingsPanel({
                 ) : null}
                 {isOldTestament && !isHarmonyBook ? (
                   <button
-                    className="reader-inline-button reader-settings-link"
+                    className={`reader-inline-button reader-settings-link${
+                      activeReaderPane === "ot-compare" ? " is-active" : ""
+                    }`}
                     onClick={handleOtCompareOpen}
                     type="button"
                   >
                     OT Compare
                   </button>
                 ) : null}
+              </div>
+            </div>
+          ) : null}
+          {!isFathersMode && isReaderRoute ? (
+            <div className="reader-settings-subsection">
+              <p className="reader-settings-subsection-label">Study pane</p>
+              <div className="reader-settings-shortcuts">
+                <button
+                  className={`reader-inline-button reader-settings-link${
+                    activeUtilityPane === "notebook" ? " is-active" : ""
+                  }`}
+                  onClick={handleNotebookOpen}
+                  type="button"
+                >
+                  Notebook
+                </button>
+                <button
+                  className={`reader-inline-button reader-settings-link${
+                    activeUtilityPane === "sermons" ? " is-active" : ""
+                  }`}
+                  onClick={handleSermonsOpen}
+                  type="button"
+                >
+                  Sermons
+                </button>
+                <button
+                  className={`reader-inline-button reader-settings-link${
+                    activeUtilityPane === "cross-references" ? " is-active" : ""
+                  }`}
+                  onClick={handleCrossReferencesOpen}
+                  type="button"
+                >
+                  Cross refs
+                </button>
               </div>
             </div>
           ) : null}

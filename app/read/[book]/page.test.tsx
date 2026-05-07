@@ -63,7 +63,7 @@ describe("BookPage", () => {
 
     expect(screen.getByText("World English")).toBeInTheDocument();
     expect(screen.getAllByText("Genesis").length).toBeGreaterThan(0);
-    expect(document.querySelector(".reader-toolbar-meta")).toHaveTextContent("Continuous reading");
+    expect(screen.queryByText("Continuous reading")).not.toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Genesis" })).not.toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Chapter 1" })).toBeInTheDocument();
     expect(mockedGetBooks).toHaveBeenCalledWith("web");

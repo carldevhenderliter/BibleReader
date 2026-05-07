@@ -428,20 +428,26 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
       </button>
     </>
   ) : null;
+  const readerSurfaceLabel =
+    activeUtilityPane === "harmony"
+      ? "Harmony workspace"
+      : activeUtilityPane === "strongs"
+        ? "Strongs"
+        : null;
 
-  const trailingActions = (
+  const readerTools = (
     <>
-      {!isFocusReading && hasGreekLearningSurface ? (
+      {hasGreekLearningSurface ? (
         <button
-          className={`reader-inline-button${isGreekLearningMode ? " is-active" : ""}`}
+          className={`reader-inline-button reader-settings-link${isGreekLearningMode ? " is-active" : ""}`}
           onClick={() => setIsGreekLearningMode(!isGreekLearningMode)}
           type="button"
         >
           {isGreekLearningMode ? "Stop Learning" : "Learn Greek"}
         </button>
       ) : null}
-      {!isFocusReading ? <ReaderCopyButton targetRef={readingSurfaceRef} /> : null}
-      {!isFocusReading ? annotationActions : null}
+      <ReaderCopyButton targetRef={readingSurfaceRef} />
+      {annotationActions}
     </>
   );
 
@@ -449,7 +455,11 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
     <ReaderCustomizationShell
       className={`reader-shell reader-customizable-shell${isFocusReading ? " is-focus-reading" : ""}`}
     >
-      <ReaderSettingsPanel hasGreekReaderAid={hasGreekReaderAid} mode="fathers" />
+      <ReaderSettingsPanel
+        hasGreekReaderAid={hasGreekReaderAid}
+        mode="fathers"
+        readerTools={!isFocusReading ? readerTools : null}
+      />
       <section className="reader-card reader-reading-card">
         <div className={`reader-topline${isToplineVisible ? "" : " is-hidden"}`}>
           <div className="reader-toolbar">
@@ -458,21 +468,7 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
                 {hasGreekReaderAid ? "Apostolic Fathers" : "Fathers Reader"}
               </p>
               <p className="reader-toolbar-title">{payload.work.title}</p>
-              <p className="reader-toolbar-meta">
-                {payload.work.author}
-                {payload.work.compositionDate ? (
-                  <>
-                    <span className="reader-meta-separator" aria-hidden="true">
-                      ·
-                    </span>
-                    {payload.work.compositionDate}
-                  </>
-                ) : null}
-                <span className="reader-meta-separator" aria-hidden="true">
-                  ·
-                </span>
-                {payload.segments.length} sections
-              </p>
+              {readerSurfaceLabel ? <p className="reader-toolbar-meta">{readerSurfaceLabel}</p> : null}
             </div>
             <div className="reader-toolbar-actions">
               <ReaderControls
@@ -481,8 +477,7 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
                 mode="fathers"
                 onSectionChange={handleSectionChange}
                 sections={sectionOptions}
-                trailingActions={trailingActions}
-                utilityMode={isFocusReading ? "menu-only" : "full"}
+                utilityMode="menu-only"
                 works={workOptions}
                 libraryHref="/fathers"
               />

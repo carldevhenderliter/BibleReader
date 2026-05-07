@@ -74,6 +74,22 @@ export function HarmonyBookReaderContent({
   const isFocusReading = settings.focusReadingMode;
   const events = useMemo(() => getGospelHarmonyTemplateEvents(), []);
   const currentEvent = events[currentChapter - 1] ?? null;
+  const readerSurfaceLabel = showNotebookInline
+    ? "Notebook"
+    : showStrongsInline
+      ? "Strongs"
+      : showSermonsInline
+        ? "Sermons"
+        : showHarmonyInline
+          ? "Harmony workspace"
+          : activeReaderPane === "study-sets"
+            ? "Study sets"
+            : null;
+  const readerTools = (
+    <>
+      <ReaderCopyButton targetRef={readingSurfaceRef} />
+    </>
+  );
   const visibleEvents = useMemo(() => {
     if (view === "book") {
       return events;
@@ -103,7 +119,12 @@ export function HarmonyBookReaderContent({
       className={`reader-shell reader-customizable-shell${isFocusReading ? " is-focus-reading" : ""}`}
     >
       <ReadingSessionSync book={book.slug} chapter={currentChapter} view={view} />
-      <ReaderSettingsPanel book={book} currentChapter={currentChapter} view={view} />
+      <ReaderSettingsPanel
+        book={book}
+        currentChapter={currentChapter}
+        readerTools={!isFocusReading ? readerTools : null}
+        view={view}
+      />
       <section className="reader-card reader-reading-card">
         <div className={`reader-topline${isToplineVisible ? "" : " is-hidden"}`}>
           <div className="reader-toolbar">
@@ -113,13 +134,7 @@ export function HarmonyBookReaderContent({
                 {book.name}
                 {view === "chapter" ? ` ${currentChapter}` : ""}
               </p>
-              <p className="reader-toolbar-meta">
-                {view === "chapter" && currentEvent ? currentEvent.title : `${events.length} events`}
-                <span className="reader-meta-separator" aria-hidden="true">
-                  ·
-                </span>
-                {view === "book" ? "Continuous reading" : "Chapter view"}
-              </p>
+              {readerSurfaceLabel ? <p className="reader-toolbar-meta">{readerSurfaceLabel}</p> : null}
             </div>
             <div className="reader-toolbar-actions">
               <ReaderControls
@@ -128,7 +143,6 @@ export function HarmonyBookReaderContent({
                 currentChapter={currentChapter}
                 trailingActions={
                   <>
-                    {!isFocusReading ? <ReaderCopyButton targetRef={readingSurfaceRef} /> : null}
                     {isSplitViewActive ? (
                       <button
                         aria-label="Hide reader pane"
@@ -143,7 +157,7 @@ export function HarmonyBookReaderContent({
                   </>
                 }
                 showBookOrderControl={!isFocusReading}
-                utilityMode={isFocusReading ? "menu-only" : "full"}
+                utilityMode="menu-only"
                 view={view}
               />
             </div>

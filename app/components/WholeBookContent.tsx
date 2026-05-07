@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
-import { ReaderContentTabs } from "@/app/components/ReaderContentTabs";
 import { ReaderComparePanel } from "@/app/components/ReaderComparePanel";
 import { ReaderBookAudioPlayer } from "@/app/components/ReaderBookAudioPlayer";
 import { useRegisterReaderBottomBarPanel } from "@/app/components/ReaderBottomBarProvider";
@@ -412,6 +411,23 @@ export function WholeBookContent({
           Boolean(interlinearByChapter?.get(chapter.chapterNumber)?.[verse.number]?.tokens?.length)
         )
       ));
+  const readerSurfaceLabel = showNotebookInline
+    ? "Notebook"
+    : showStrongsInline
+      ? "Strongs"
+      : showSermonsInline
+        ? "Sermons"
+        : showHarmonyInline
+          ? "Harmony workspace"
+          : activeReaderPane === "compare"
+            ? "Compare"
+            : activeReaderPane === "harmony"
+              ? "Harmony"
+              : activeReaderPane === "study-sets"
+                ? "Study sets"
+                : activeReaderPane === "ot-compare"
+                  ? "OT Compare"
+                  : null;
   const initialRenderedChapterNumbers = useMemo(
     () =>
       forceRenderAllChapters
@@ -489,25 +505,48 @@ export function WholeBookContent({
     }
   }, [annotationMode, hasBibleGreekAnnotationSurface]);
 
+  const readerTools = (
+    <>
+      {hasBibleGreekAnnotationSurface ? (
+        <button
+          className={`reader-inline-button reader-settings-link${annotationMode ? " is-active" : ""}`}
+          onClick={() => setAnnotationMode((current) => !current)}
+          type="button"
+        >
+          {annotationMode ? "Done annotating" : "Annotate Greek"}
+        </button>
+      ) : null}
+      {hasGreekLearningSurface ? (
+        <button
+          className={`reader-inline-button reader-settings-link${isGreekLearningMode ? " is-active" : ""}`}
+          onClick={() => setIsGreekLearningMode(!isGreekLearningMode)}
+          type="button"
+        >
+          {isGreekLearningMode ? "Stop Learning" : "Learn Greek"}
+        </button>
+      ) : null}
+      <ReaderCopyButton targetRef={readingSurfaceRef} />
+    </>
+  );
+
   return (
     <ReaderCustomizationShell
       className={`reader-shell reader-customizable-shell${isFocusReading ? " is-focus-reading" : ""}`}
     >
       <ReadingSessionSync book={book.slug} chapter={1} view="book" version={effectiveVersion} />
-      <ReaderSettingsPanel book={book} currentChapter={1} view="book" />
+      <ReaderSettingsPanel
+        book={book}
+        currentChapter={1}
+        readerTools={!isFocusReading ? readerTools : null}
+        view="book"
+      />
       <section className="reader-card reader-reading-card">
         <div className={`reader-topline${isToplineVisible ? "" : " is-hidden"}`}>
           <div className="reader-toolbar">
             <div className="reader-toolbar-copy">
               <p className="reader-toolbar-summary">{versionBadge}</p>
               <p className="reader-toolbar-title">{book.name}</p>
-              <p className="reader-toolbar-meta">
-                {book.chapterCount} chapters
-                <span className="reader-meta-separator" aria-hidden="true">
-                  ·
-                </span>
-                Continuous reading
-              </p>
+              {readerSurfaceLabel ? <p className="reader-toolbar-meta">{readerSurfaceLabel}</p> : null}
             </div>
             <div className="reader-toolbar-actions">
               <ReaderControls
@@ -517,25 +556,6 @@ export function WholeBookContent({
                 showBookOrderControl={!isFocusReading}
                 trailingActions={
                   <>
-                    {!isFocusReading && hasBibleGreekAnnotationSurface ? (
-                      <button
-                        className={`reader-inline-button${annotationMode ? " is-active" : ""}`}
-                        onClick={() => setAnnotationMode((current) => !current)}
-                        type="button"
-                      >
-                        {annotationMode ? "Done annotating" : "Annotate Greek"}
-                      </button>
-                    ) : null}
-                    {!isFocusReading && hasGreekLearningSurface ? (
-                      <button
-                        className={`reader-inline-button${isGreekLearningMode ? " is-active" : ""}`}
-                        onClick={() => setIsGreekLearningMode(!isGreekLearningMode)}
-                        type="button"
-                      >
-                        {isGreekLearningMode ? "Stop Learning" : "Learn Greek"}
-                      </button>
-                    ) : null}
-                    {!isFocusReading ? <ReaderCopyButton targetRef={readingSurfaceRef} /> : null}
                     {isSplitViewActive ? (
                       <button
                         aria-label="Hide reader pane"
@@ -549,13 +569,12 @@ export function WholeBookContent({
                     ) : null}
                   </>
                 }
-                utilityMode={isFocusReading ? "menu-only" : "full"}
+                utilityMode="menu-only"
                 view="book"
               />
             </div>
           </div>
         </div>
-        {!isFocusReading ? <ReaderContentTabs showHarmony showOtCompare={isOldTestament} /> : null}
         {activeReaderPane === "study-sets" ? (
           <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderStudySetsPanel bookSlug={book.slug} chapterNumber={1} />

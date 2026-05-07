@@ -317,7 +317,7 @@ export function ReaderControls({
                   onClick={() => setIsPanelOpen((current) => !current)}
                   type="button"
                 >
-                  {utilityMode === "menu-only" ? "Tools" : "Menu"}
+                  Menu
                 </button>
                 {utilityMode === "full" && !isBibleMode && (props as FathersReaderControlsProps).libraryHref ? (
                   <Link
