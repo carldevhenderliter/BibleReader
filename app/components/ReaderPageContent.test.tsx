@@ -642,7 +642,7 @@ describe("ReaderPageContent", () => {
     expect(screen.getByRole("button", { name: /The book G976/i })).toBeInTheDocument();
   });
 
-  it("restores a visible Greek layer when ESV interlinear is enabled from older off-state settings", () => {
+  it("lets ESV interlinear stay hidden when every Greek layer is turned off", () => {
     window.localStorage.setItem(
       "bible-reader:customization",
       JSON.stringify({
@@ -671,7 +671,12 @@ describe("ReaderPageContent", () => {
     });
 
     expect(
-      screen.getByText("Βίβλος γενέσεως Ἰησοῦ χριστοῦ υἱοῦ Δαυὶδ υἱοῦ Ἀβραάμ.")
+      screen.queryByText("Βίβλος γενέσεως Ἰησοῦ χριστοῦ υἱοῦ Δαυὶδ υἱοῦ Ἀβραάμ.")
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "The book of the genealogy of Jesus Christ, the son of David, the son of Abraham."
+      )
     ).toBeInTheDocument();
   });
 

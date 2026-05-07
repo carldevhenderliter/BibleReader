@@ -700,6 +700,42 @@ describe("WholeBookContent", () => {
     expect(screen.queryByText("Jude, a servant of Jesus Christ...")).not.toBeInTheDocument();
   });
 
+  it("lets whole-book ESV interlinear stay hidden when every Greek layer is turned off", () => {
+    window.localStorage.setItem(
+      "bible-reader:customization",
+      JSON.stringify({
+        showEsvInterlinear: true,
+        showGreekSurface: false,
+        showGreekLemma: false,
+        showGreekTransliteration: false,
+        showGreekGloss: false
+      })
+    );
+
+    renderWithReaderCustomization(
+      <>
+        <WholeBookContent
+          book={books[0]}
+          books={books}
+          chaptersByVersion={{ esv: chapters, web: chapters }}
+          esvInterlinearBook={ntInterlinearBook}
+        />
+        <SearchPane />
+        <LookupPane />
+      </>
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: {
+        value: "esv"
+      }
+    });
+
+    expect(screen.queryByText("Ἰούδας Ἰησοῦ χριστοῦ δοῦλος ἀδελφὸς δὲ Ἰακώβου.")).not.toBeInTheDocument();
+    expect(screen.getByText("Jude, a servant of Jesus Christ...")).toBeInTheDocument();
+  });
+
   it("shows selectable English gloss lines in whole-book ESV interlinear mode", async () => {
     window.localStorage.setItem(
       "bible-reader:customization",

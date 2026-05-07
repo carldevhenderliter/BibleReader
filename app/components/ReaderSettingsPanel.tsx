@@ -174,33 +174,6 @@ export function ReaderSettingsPanel({
     settings.showGreekTransliteration ||
     settings.showGreekGloss;
 
-  useEffect(() => {
-    // Older stored settings and reading/audio presets can leave every Greek layer disabled.
-    // If a reader surface with available Greek companion text is active, restore one visible layer.
-    if (
-      isFathersMode ||
-      hasVisibleGreekStudyLayer ||
-      !(
-        (version === "esv" && settings.showEsvInterlinear) ||
-        (version === "kjv" && !isOldTestament && settings.showStrongs)
-      )
-    ) {
-      return;
-    }
-
-    updateSettings({
-      showGreekSurface: true
-    });
-  }, [
-    hasVisibleGreekStudyLayer,
-    isFathersMode,
-    isOldTestament,
-    settings.showEsvInterlinear,
-    settings.showStrongs,
-    updateSettings,
-    version
-  ]);
-
   const handleVersionChange = (nextVersion: string) => {
     if (!isInstalledBundledBibleVersion(nextVersion) || nextVersion === version) {
       return;
