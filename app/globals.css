@@ -3890,10 +3890,6 @@ button.fathers-annotation-anchor:focus-visible {
   width: auto;
 }
 
-.search-shell-dock-row:has(.reader-audio-drawer.is-hidden) .search-shell-reader-panel {
-  width: auto;
-}
-
 .reader-bottom-controls-dock {
   position: fixed;
   right: max(1rem, env(safe-area-inset-right));
@@ -5769,24 +5765,6 @@ button.fathers-annotation-anchor:focus-visible {
 
   .reader-controls-actions {
     justify-content: flex-end;
-  }
-
-  .search-shell-dock-row {
-    display: flex;
-    align-items: end;
-    justify-content: center;
-    gap: 0.7rem;
-  }
-
-  .search-shell-reader-panel .reader-audio-bar {
-    padding: 0.72rem 0.85rem 0.8rem;
-    border-radius: 1.05rem;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
-  }
-
-  .search-bar {
-    padding: 0.72rem 0.82rem;
-    border-radius: 1.1rem;
   }
 
   .reader-study-set-item {

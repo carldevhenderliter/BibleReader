@@ -44,8 +44,7 @@ export function BottomSearchBar() {
   const trayId = useId();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isBarExpanded, setIsBarExpanded] = useState(false);
-  const [isDesktopDock, setIsDesktopDock] = useState(false);
-  const shouldCollapseBar = !isDesktopDock && !isBarExpanded && !isOpen && !query.trim();
+  const shouldCollapseBar = !isBarExpanded && !isOpen && !query.trim();
 
   const expandBar = () => {
     setIsBarExpanded(true);
@@ -87,24 +86,6 @@ export function BottomSearchBar() {
       inputRef.current?.focus();
     });
   }, [isBarExpanded]);
-
-  useEffect(() => {
-    if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
-      return;
-    }
-
-    const mediaQuery = window.matchMedia("(min-width: 64rem)");
-    const syncDesktopDock = () => {
-      setIsDesktopDock(mediaQuery.matches);
-    };
-
-    syncDesktopDock();
-    mediaQuery.addEventListener?.("change", syncDesktopDock);
-
-    return () => {
-      mediaQuery.removeEventListener?.("change", syncDesktopDock);
-    };
-  }, []);
 
   return (
     <>
