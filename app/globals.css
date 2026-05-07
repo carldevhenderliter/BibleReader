@@ -3880,14 +3880,28 @@ button.fathers-annotation-anchor:focus-visible {
 }
 
 .search-shell-dock-row:has(.reader-audio-drawer.is-hidden):has(.search-bar.search-bar-collapsed) {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: end;
-  justify-content: center;
 }
 
 .search-shell-dock-row:has(.reader-audio-drawer.is-hidden):has(.search-bar.search-bar-collapsed)
   .search-shell-reader-panel {
+  grid-column: 1;
+  justify-self: end;
   width: auto;
+}
+
+.search-shell-dock-row:has(.reader-audio-drawer.is-hidden):has(.search-bar.search-bar-collapsed)
+  .search-shell-reader-dock-control {
+  grid-column: 1;
+  justify-self: end;
+}
+
+.search-shell-dock-row:has(.reader-audio-drawer.is-hidden):has(.search-bar.search-bar-collapsed)
+  .search-bar.search-bar-collapsed {
+  grid-column: 2;
+  justify-self: center;
 }
 
 .reader-bottom-controls-dock {
