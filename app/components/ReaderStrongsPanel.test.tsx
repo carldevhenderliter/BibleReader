@@ -119,11 +119,17 @@ describe("ReaderStrongsPanel", () => {
       "aria-pressed",
       "true"
     );
+    expect(within(studyPane).getByRole("button", { name: "Greek" })).toHaveAttribute(
+      "aria-pressed",
+      "true"
+    );
     const matthewOccurrence = await within(studyPane).findByText(/Matthew 5:32/);
     const occurrenceCard = matthewOccurrence.closest(".strongs-entry-bible-verse");
     expect(occurrenceCard).not.toBeNull();
     expect(within(studyPane).queryByRole("button", { name: "Show all versions" })).toBeNull();
     expect((occurrenceCard as HTMLElement).textContent).toMatch(/Matthew 5:32/i);
+    expect(within(occurrenceCard as HTMLElement).getByText("WEB")).toBeInTheDocument();
+    expect(within(occurrenceCard as HTMLElement).getByText("Greek")).toBeInTheDocument();
 
     fireEvent.click(within(studyPane).getByRole("button", { name: "KJV" }));
 
@@ -133,9 +139,8 @@ describe("ReaderStrongsPanel", () => {
         "true"
       )
     );
-    await waitFor(() =>
-      expect(studyPane.querySelectorAll(".strongs-entry-bible-verse-text-greek-companion").length).toBeGreaterThan(0)
-    );
+    expect(within(occurrenceCard as HTMLElement).getByText("KJV")).toBeInTheDocument();
+    expect(within(occurrenceCard as HTMLElement).getByText("Greek")).toBeInTheDocument();
     await waitFor(() =>
       expect(studyPane.querySelectorAll(".strongs-entry-bible-verse .strongs-token-lemma").length).toBeGreaterThan(0)
     );
@@ -143,7 +148,10 @@ describe("ReaderStrongsPanel", () => {
     fireEvent.click(within(studyPane).getByRole("button", { name: "WEB" }));
 
     await waitFor(() =>
-      expect(studyPane.querySelector(".strongs-entry-bible-verse-text-greek-companion")).toBeNull()
+      expect(within(studyPane).getByRole("button", { name: "WEB" })).toHaveAttribute(
+        "aria-pressed",
+        "false"
+      )
     );
 
     fireEvent.click(within(studyPane).getByRole("tab", { name: "BDAG" }));
@@ -244,8 +252,17 @@ describe("ReaderStrongsPanel", () => {
     fireEvent.click(within(studyPane).getByRole("button", { name: "KJV" }));
 
     await waitFor(() =>
-      expect(studyPane.querySelectorAll(".strongs-entry-bible-verse-text-greek-companion").length).toBeGreaterThan(0)
+      expect(within(studyPane).getByRole("button", { name: "KJV" })).toHaveAttribute(
+        "aria-pressed",
+        "true"
+      )
     );
+    const occurrenceCard = (await within(studyPane).findByText("Genesis 1:1")).closest(
+      ".strongs-entry-bible-verse"
+    );
+    expect(occurrenceCard).not.toBeNull();
+    expect(within(occurrenceCard as HTMLElement).getByText("KJV")).toBeInTheDocument();
+    expect(within(occurrenceCard as HTMLElement).getByText("Greek")).toBeInTheDocument();
     await waitFor(() =>
       expect(studyPane.querySelectorAll(".strongs-entry-bible-verse .strongs-token-lemma").length).toBeGreaterThan(0)
     );

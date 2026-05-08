@@ -2825,6 +2825,24 @@ button.fathers-annotation-anchor:focus-visible {
   white-space: normal;
 }
 
+.strongs-entry-bible-version-list {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.strongs-entry-bible-version-row {
+  display: grid;
+  gap: 0.22rem;
+}
+
+.strongs-entry-bible-version-label {
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .strongs-entry-bible-verse-stack {
   display: grid;
   gap: 0.42rem;
