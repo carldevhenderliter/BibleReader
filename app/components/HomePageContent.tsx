@@ -10,7 +10,7 @@ import {
   getChronologicalOldTestamentBooks
 } from "@/lib/bible/book-order";
 import type { BookMeta } from "@/lib/bible/types";
-import { getBookHref } from "@/lib/bible/utils";
+import { getDefaultBookReadingHref } from "@/lib/bible/utils";
 import type { FathersWorkMeta } from "@/lib/fathers/types";
 
 type HomePageContentProps = {
@@ -51,7 +51,7 @@ export function HomePageContent({ books, fathersWorks = [] }: HomePageContentPro
               inside a modern glass-and-neon shell.
             </p>
             <div className="hero-actions">
-              <Link className="primary-link" href={getBookHref("genesis")}>
+              <Link className="primary-link" href={getDefaultBookReadingHref("genesis")}>
                 Launch Genesis
               </Link>
               <ContinueReading />
@@ -94,7 +94,7 @@ export function HomePageContent({ books, fathersWorks = [] }: HomePageContentPro
         <div className="hero-actions hero-actions-quick">
           <ContinueReading />
           <ContinueListening />
-          <Link className="secondary-link" href="/read/gospel-harmony">
+          <Link className="secondary-link" href="/read/gospel-harmony/1">
             Open Harmony
           </Link>
           <Link className="secondary-link" href="/fathers">
@@ -178,13 +178,13 @@ export function HomePageContent({ books, fathersWorks = [] }: HomePageContentPro
               <Link
                 aria-label={`Open ${book.name}`}
                 className="book-link"
-                href={getBookHref(book.slug)}
+                href={getDefaultBookReadingHref(book.slug)}
                 key={book.slug}
               >
                 <span className="book-chip">OT</span>
                 <strong>{book.name}</strong>
                 <span className="book-meta">{book.chapterCount} chapters</span>
-                <span className="book-cta">Open whole book</span>
+                <span className="book-cta">Open chapter 1</span>
               </Link>
             ))}
           </div>
@@ -227,7 +227,7 @@ export function HomePageContent({ books, fathersWorks = [] }: HomePageContentPro
               <Link
                 aria-label={`Open ${book.name}`}
                 className="book-link"
-                href={getBookHref(book.slug)}
+                href={getDefaultBookReadingHref(book.slug)}
                 key={book.slug}
               >
                 <span className="book-chip">NT</span>
@@ -238,7 +238,7 @@ export function HomePageContent({ books, fathersWorks = [] }: HomePageContentPro
                   ) : null}
                 </span>
                 <span className="book-meta">{book.chapterCount} chapters</span>
-                <span className="book-cta">Open whole book</span>
+                <span className="book-cta">Open chapter 1</span>
               </Link>
             ))}
           </div>

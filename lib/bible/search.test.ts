@@ -67,7 +67,8 @@ describe("Bible search", () => {
     expect(results[0]).toMatchObject({
       type: "book",
       bookSlug: "john",
-      label: "John"
+      label: "John",
+      href: "/read/john/1"
     });
   });
 

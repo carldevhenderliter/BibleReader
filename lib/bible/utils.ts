@@ -56,6 +56,13 @@ export function getBookHref(
   return `/read/${bookSlug}${getVersionQueryParam(version)}`;
 }
 
+export function getDefaultBookReadingHref(
+  bookSlug: string,
+  version: BibleVersion = DEFAULT_BIBLE_VERSION
+): string {
+  return getChapterHref(bookSlug, 1, version);
+}
+
 export function getBookChapterHref(
   bookSlug: string,
   chapterNumber: number,

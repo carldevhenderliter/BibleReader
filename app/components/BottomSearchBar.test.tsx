@@ -212,7 +212,7 @@ describe("BottomSearchBar", () => {
     fireEvent.click(result);
 
     await waitFor(() => {
-      expect(mockRouter.push).toHaveBeenCalledWith("/read/genesis");
+      expect(mockRouter.push).toHaveBeenCalledWith("/read/genesis/1");
     });
   }, 30000);
 

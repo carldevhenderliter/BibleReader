@@ -1,5 +1,6 @@
 import type { BookMeta } from "@/lib/bible/types";
 import {
+  getDefaultBookReadingHref,
   getBookHref,
   getBookChapterHref,
   getBookHighlightedVerseHref,
@@ -52,6 +53,7 @@ describe("bible utils", () => {
 
   it("creates chapter and book hrefs", () => {
     expect(getChapterHref("genesis", 1)).toBe("/read/genesis/1");
+    expect(getDefaultBookReadingHref("genesis")).toBe("/read/genesis/1");
     expect(getBookHref("genesis")).toBe("/read/genesis");
     expect(getBookChapterHref("genesis", 3)).toBe("/read/genesis?chapter=3");
     expect(getBookHighlightedVerseHref("genesis", 1, 2)).toBe(
@@ -61,6 +63,7 @@ describe("bible utils", () => {
       "/read/genesis?highlightChapter=1&highlightStart=2&highlightEnd=4"
     );
     expect(getChapterHref("genesis", 1, "kjv")).toBe("/read/genesis/1?version=kjv");
+    expect(getDefaultBookReadingHref("genesis", "kjv")).toBe("/read/genesis/1?version=kjv");
     expect(getBookHref("genesis", "kjv")).toBe("/read/genesis?version=kjv");
     expect(getBookChapterHref("genesis", 3, "kjv")).toBe("/read/genesis?version=kjv&chapter=3");
     expect(getBookHighlightedVerseHref("genesis", 1, 2, "kjv")).toBe(

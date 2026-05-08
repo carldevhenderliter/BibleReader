@@ -29,7 +29,7 @@ import type {
 import {
   getBookChapterHref,
   getBookHighlightedVerseHref,
-  getBookHref
+  getDefaultBookReadingHref
 } from "@/lib/bible/utils";
 
 type SearchableBook = BookMeta & {
@@ -851,7 +851,7 @@ async function searchSingleBibleQuery(
       bookSlug: entry.book.slug,
       label: entry.book.name,
       description: `${version.toUpperCase()} • ${entry.book.chapterCount} chapters`,
-      href: getBookHref(entry.book.slug, version)
+      href: getDefaultBookReadingHref(entry.book.slug, version)
     }));
 
   if (strongsNumber?.startsWith("G")) {
