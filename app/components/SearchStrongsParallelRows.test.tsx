@@ -3,8 +3,10 @@ import { useState } from "react";
 
 import { SearchStrongsParallelRows } from "@/app/components/SearchResultGroups";
 import type { StrongsParallelVerseRow } from "@/lib/bible/strongs";
+import type { GreekDictionarySelection } from "@/lib/bible/types";
+import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
 
-const rows: StrongsParallelVerseRow[] = [
+const hebrewRows: StrongsParallelVerseRow[] = [
   {
     strongsNumber: "H7225",
     bookSlug: "genesis",
@@ -68,8 +70,10 @@ const rows: StrongsParallelVerseRow[] = [
 ];
 
 function Harness({
+  onOpenGreekDictionary = jest.fn(),
   onOpenStrongs = jest.fn()
 }: {
+  onOpenGreekDictionary?: (selection: GreekDictionarySelection) => void;
   onOpenStrongs?: (strongsNumbers: string[], label?: string | null) => void;
 }) {
   const [expandedVerseRows, setExpandedVerseRows] = useState<Record<string, boolean>>({});
@@ -77,6 +81,7 @@ function Harness({
   return (
     <SearchStrongsParallelRows
       expandedVerseRows={expandedVerseRows}
+      onOpenGreekDictionary={onOpenGreekDictionary}
       onOpenStrongs={onOpenStrongs}
       onToggleVerseRow={(row) =>
         setExpandedVerseRows((current) => ({
@@ -85,8 +90,102 @@ function Harness({
             !current[`H7225:${row.bookSlug}:${row.chapterNumber}:${row.verseNumber}`]
         }))
       }
-      rows={rows}
+      rows={hebrewRows}
       strongsNumber="H7225"
+    />
+  );
+}
+
+function GreekHarness({
+  onOpenGreekDictionary = jest.fn(),
+  onOpenStrongs = jest.fn()
+}: {
+  onOpenGreekDictionary?: (selection: GreekDictionarySelection) => void;
+  onOpenStrongs?: (strongsNumbers: string[], label?: string | null) => void;
+}) {
+  const [expandedVerseRows, setExpandedVerseRows] = useState<Record<string, boolean>>({});
+  const rows: StrongsParallelVerseRow[] = [
+    {
+      strongsNumber: "G3056",
+      bookSlug: "john",
+      bookName: "John",
+      chapterNumber: 1,
+      verseNumber: 1,
+      versions: [
+        {
+          version: "web",
+          href: "/read/john/1?highlight=1",
+          entry: {
+            version: "web",
+            bookSlug: "john",
+            bookName: "John",
+            chapterNumber: 1,
+            verseNumber: 1,
+            text: "In the beginning was the Word, and the Word was with God.",
+            greekTokens: [
+              {
+                surface: "λόγος",
+                lemma: "λόγος",
+                gloss: "Word",
+                strongs: "G3056",
+                entryKey: "G3056"
+              }
+            ]
+          }
+        },
+        {
+          version: "greek",
+          href: "/read/john/1?highlight=1&version=greek",
+          entry: {
+            version: "greek",
+            bookSlug: "john",
+            bookName: "John",
+            chapterNumber: 1,
+            verseNumber: 1,
+            text: "ἐν ἀρχῇ ἦν ὁ λόγος",
+            greekTokens: [
+              {
+                surface: "λόγος",
+                lemma: "λόγος",
+                gloss: "word",
+                strongs: "G3056",
+                entryKey: "G3056",
+                morphology: "N-NSM"
+              }
+            ]
+          }
+        },
+        {
+          version: "kjv",
+          href: "/read/john/1?highlight=1&version=kjv",
+          entry: {
+            version: "kjv",
+            bookSlug: "john",
+            bookName: "John",
+            chapterNumber: 1,
+            verseNumber: 1,
+            text: "In the beginning was the Word, and the Word was with God.",
+            tokens: [{ text: "Word", strongsNumbers: ["G3056"] }]
+          }
+        }
+      ]
+    }
+  ];
+
+  return (
+    <SearchStrongsParallelRows
+      expandedVerseRows={expandedVerseRows}
+      onOpenGreekDictionary={onOpenGreekDictionary}
+      onOpenStrongs={onOpenStrongs}
+      onToggleVerseRow={(row) =>
+        setExpandedVerseRows((current) => ({
+          ...current,
+          [`G3056:${row.bookSlug}:${row.chapterNumber}:${row.verseNumber}`]:
+            !current[`G3056:${row.bookSlug}:${row.chapterNumber}:${row.verseNumber}`]
+        }))
+      }
+      rows={rows}
+      strongsNumber="G3056"
     />
   );
 }
@@ -151,6 +250,54 @@ describe("SearchStrongsParallelRows", () => {
     expect(screen.getAllByRole("region", { name: /Versions for Genesis/i })).toHaveLength(2);
     expect(within(firstExpandedVerse).queryByRole("button", { name: "Open" })).toBeNull();
     expect(within(secondExpandedVerse).getByText("KJV")).toBeInTheDocument();
+  });
+
+  it("highlights non-KJV English versions for Strong's matches", () => {
+    render(<Harness />);
+
+    const firstRow = screen.getByText("Genesis 1:1").closest("article");
+    expect(firstRow).not.toBeNull();
+
+    fireEvent.click(
+      within(firstRow as HTMLElement).getByRole("button", { name: "Show versions" })
+    );
+
+    const expandedVerse = screen.getByRole("region", { name: "Versions for Genesis 1:1" });
+    const webSection = within(expandedVerse)
+      .getByText("WEB")
+      .closest(".search-strongs-parallel-cell");
+
+    expect(webSection).not.toBeNull();
+    expect((webSection as HTMLElement).querySelector(".strongs-inline-match")).not.toBeNull();
+  });
+
+  it("highlights KJV, Greek, and English lines for Greek Strong's matches", () => {
+    renderWithReaderCustomization(<GreekHarness />);
+
+    const firstRow = screen.getByText("John 1:1").closest("article");
+    expect(firstRow).not.toBeNull();
+
+    fireEvent.click(
+      within(firstRow as HTMLElement).getByRole("button", { name: "Show versions" })
+    );
+
+    const expandedVerse = screen.getByRole("region", { name: "Versions for John 1:1" });
+    const webSection = within(expandedVerse)
+      .getByText("WEB")
+      .closest(".search-strongs-parallel-cell");
+    const greekSection = within(expandedVerse)
+      .getByText("Greek")
+      .closest(".search-strongs-parallel-cell");
+    const kjvSection = within(expandedVerse)
+      .getByText("KJV")
+      .closest(".search-strongs-parallel-cell");
+
+    expect(webSection).not.toBeNull();
+    expect(greekSection).not.toBeNull();
+    expect(kjvSection).not.toBeNull();
+    expect((webSection as HTMLElement).querySelector(".strongs-inline-match")).not.toBeNull();
+    expect((greekSection as HTMLElement).querySelector(".strongs-token-match")).not.toBeNull();
+    expect((kjvSection as HTMLElement).querySelector(".strongs-token-match")).not.toBeNull();
   });
 
   it("stops verse-row clicks from bubbling to a parent click handler", () => {

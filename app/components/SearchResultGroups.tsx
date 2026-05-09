@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 
+import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
 import { useLookup } from "@/app/components/LookupProvider";
 import { VerseTextContent } from "@/app/components/VerseTextContent";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
@@ -10,10 +11,15 @@ import {
   normalizeStrongsNumber,
   type StrongsParallelVerseRow
 } from "@/lib/bible/strongs";
+import {
+  getStrongsEnglishHighlightPhrases,
+  getStrongsGreekHighlightPhrases
+} from "@/lib/bible/strongs-highlighting";
 import type {
   BibleSearchResult,
   BibleSearchResultGroup,
   BundledBibleVersion,
+  GreekDictionarySelection,
   VerseToken
 } from "@/lib/bible/types";
 import {
@@ -264,17 +270,21 @@ function SearchTopicVerseButton({
 
 export function SearchStrongsParallelRows({
   expandedVerseRows,
+  onOpenGreekDictionary,
   onToggleVerseRow,
   rows,
   strongsNumber,
   onOpenStrongs
 }: {
   expandedVerseRows: Record<string, boolean>;
+  onOpenGreekDictionary?: (selection: GreekDictionarySelection) => void;
   onToggleVerseRow: (row: StrongsParallelVerseRow) => void;
   rows: StrongsParallelVerseRow[];
   strongsNumber: string;
   onOpenStrongs: (strongsNumbers: string[], label?: string | null) => void;
 }) {
+  const highlightMode = strongsNumber.startsWith("G") ? "greek" : "strongs";
+
   return (
     <div className="search-strongs-parallel-rows">
       {rows.map((row) => (
@@ -282,6 +292,24 @@ export function SearchStrongsParallelRows({
           const expansionKey = getStrongsVerseExpansionKey(strongsNumber, row);
           const isExpanded = expandedVerseRows[expansionKey] === true;
           const referenceLabel = `${row.bookName} ${row.chapterNumber}:${row.verseNumber}`;
+          const englishHighlightPhrases = Array.from(
+            new Set(
+              row.versions.flatMap(({ entry }) =>
+                entry ? getStrongsEnglishHighlightPhrases(strongsNumber, entry, highlightMode) : []
+              )
+            )
+          );
+          const greekHighlightPhrases = Array.from(
+            new Set(
+              row.versions.flatMap(({ entry, version }) =>
+                version === "greek" && entry
+                  ? getStrongsGreekHighlightPhrases(strongsNumber, {
+                      match: entry
+                    })
+                  : []
+              )
+            )
+          );
 
           return (
             <article
@@ -337,15 +365,34 @@ export function SearchStrongsParallelRows({
                           </span>
                         </div>
                         {entry ? (
-                          <VerseTextContent
-                            className={`verse-text${version === "kjv" ? " verse-text-rich" : ""}`}
-                            highlightedStrongsNumber={version === "kjv" ? strongsNumber : null}
-                            onOpenStrongs={(strongsNumbers) =>
-                              onOpenStrongs(strongsNumbers, strongsNumber)
-                            }
-                            showStrongs={version === "kjv"}
-                            verse={verse}
-                          />
+                          version === "greek" ? (
+                            entry.greekTokens?.length ? (
+                              <GreekVerseTextContent
+                                className="verse-text verse-text-greek"
+                                enableGreekLearning={false}
+                                highlightedEntryKey={strongsNumber}
+                                onOpenGreekDictionary={onOpenGreekDictionary}
+                                verse={verse}
+                              />
+                            ) : (
+                              <VerseTextContent
+                                className="verse-text verse-text-greek"
+                                highlightedPhrases={greekHighlightPhrases}
+                                verse={verse}
+                              />
+                            )
+                          ) : (
+                            <VerseTextContent
+                              className={`verse-text${version === "kjv" ? " verse-text-rich" : ""}`}
+                              highlightedPhrases={version === "kjv" ? [] : englishHighlightPhrases}
+                              highlightedStrongsNumber={version === "kjv" ? strongsNumber : null}
+                              onOpenStrongs={(strongsNumbers) =>
+                                onOpenStrongs(strongsNumbers, strongsNumber)
+                              }
+                              showStrongs={version === "kjv"}
+                              verse={verse}
+                            />
+                          )
                         ) : (
                           <p className="search-result-group-empty">
                             This reference is not available in {getBibleVersionLabel(version)}.
@@ -372,7 +419,8 @@ export function SearchResultGroups({
   showStrongsInSearch = false
 }: SearchResultGroupsProps) {
   const { searchVersions } = useLookup();
-  const { openCompare, openStrongs, saveReferenceToStudySet } = useReaderWorkspace();
+  const { openCompare, openGreekDictionary, openStrongs, saveReferenceToStudySet } =
+    useReaderWorkspace();
   const installedVersions = useMemo(() => getInstalledBundledBibleVersions(), []);
   const [activeResultTabOverride, setActiveResultTabOverride] = useState<SearchResultTab | null>(
     null
@@ -883,6 +931,7 @@ export function SearchResultGroups({
                           ) : (
                             <SearchStrongsParallelRows
                               expandedVerseRows={expandedStrongsVerseRows}
+                              onOpenGreekDictionary={openGreekDictionary}
                               onOpenStrongs={openStrongs}
                               onToggleVerseRow={(row) =>
                                 toggleExpandedStrongsVerseRow(result.strongsNumber, row)

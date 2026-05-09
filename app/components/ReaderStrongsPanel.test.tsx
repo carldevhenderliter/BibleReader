@@ -150,6 +150,11 @@ describe("ReaderStrongsPanel", () => {
     expect((occurrenceCard as HTMLElement).textContent).toMatch(/Matthew 5:32/i);
     expect(within(occurrenceCard as HTMLElement).getByText("WEB")).toBeInTheDocument();
     expect(within(occurrenceCard as HTMLElement).getByText("Greek")).toBeInTheDocument();
+    const webRow = within(occurrenceCard as HTMLElement)
+      .getByText("WEB")
+      .closest(".strongs-entry-bible-version-row");
+    expect(webRow).not.toBeNull();
+    expect((webRow as HTMLElement).querySelector(".strongs-inline-match")).not.toBeNull();
 
     fireEvent.click(within(studyPane).getByRole("button", { name: "KJV" }));
 
@@ -164,6 +169,11 @@ describe("ReaderStrongsPanel", () => {
     await waitFor(() =>
       expect(studyPane.querySelectorAll(".strongs-entry-bible-verse .strongs-token-lemma").length).toBeGreaterThan(0)
     );
+    const greekRow = within(occurrenceCard as HTMLElement)
+      .getByText("Greek")
+      .closest(".strongs-entry-bible-version-row");
+    expect(greekRow).not.toBeNull();
+    expect((greekRow as HTMLElement).querySelector(".strongs-token-match, .strongs-inline-match")).not.toBeNull();
 
     fireEvent.click(within(studyPane).getByRole("button", { name: "WEB" }));
 
@@ -212,6 +222,15 @@ describe("ReaderStrongsPanel", () => {
         "true"
       )
     );
+    const occurrenceCard = (await within(studyPane).findByText(/Genesis 1:1/)).closest(
+      ".strongs-entry-bible-verse"
+    );
+    expect(occurrenceCard).not.toBeNull();
+    fireEvent.click(within(studyPane).getByRole("button", { name: "WEB" }));
+    const webRow = within(occurrenceCard as HTMLElement)
+      .getByText("WEB")
+      .closest(".strongs-entry-bible-version-row");
+    expect(webRow).not.toBeNull();
     expect(studyPane.querySelector(".strongs-entry-bible-verse-text-greek-companion")).toBeNull();
     expect(within(studyPane).queryByRole("tab", { name: "Thayer" })).not.toBeInTheDocument();
     expect(within(studyPane).queryByRole("tab", { name: "BDAG" })).not.toBeInTheDocument();

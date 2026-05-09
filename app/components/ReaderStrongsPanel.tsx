@@ -21,6 +21,10 @@ import {
   type StrongsParallelVerseVersion,
   type VerseReferenceAnchor
 } from "@/lib/bible/strongs";
+import {
+  getStrongsEnglishHighlightPhrases,
+  getStrongsGreekHighlightPhrases
+} from "@/lib/bible/strongs-highlighting";
 import type {
   BibleSearchVerseEntry,
   BundledBibleVersion,
@@ -763,61 +767,13 @@ export function ReaderStrongsPanel() {
     return defaultVersion ? [defaultVersion] : [];
   }
 
-  function getEnglishHighlightPhrases(
-    entryId: string,
-    match: BibleSearchVerseEntry,
-    mode: "strongs" | "greek"
-  ) {
-    const tokenTextMatches = Array.from(
-      new Set(
-        (match.tokens ?? [])
-          .filter((token) =>
-            token.strongsNumbers?.some((strongsNumber) => normalizeStrongsNumber(strongsNumber) === entryId)
-          )
-          .map((token) => token.text.trim())
-          .filter(Boolean)
-      )
-    );
-
-    if (tokenTextMatches.length > 0) {
-      return tokenTextMatches;
-    }
-
-    if (mode === "greek") {
-      return Array.from(
-        new Set(
-          (match.greekTokens ?? [])
-            .filter((token) => {
-              const tokenEntryKey = token.entryKey ?? token.strongs ?? null;
-              return tokenEntryKey === entryId;
-            })
-            .map((token) => token.gloss?.trim() ?? "")
-            .filter(Boolean)
-        )
-      );
-    }
-
-    return [];
-  }
-
   function getGreekHighlightPhrases(entryId: string) {
     const sourceEntry =
       (greekEntry?.entryKey === entryId ? greekEntry : null) ?? greekOccurrenceEntries[entryId] ?? null;
 
-    if (!sourceEntry) {
-      return [];
-    }
-
-    return Array.from(
-      new Set(
-        [
-          sourceEntry.lemma,
-          ...sourceEntry.forms.map((form) => form.form)
-        ]
-          .map((phrase) => phrase.trim())
-          .filter(Boolean)
-      )
-    );
+    return getStrongsGreekHighlightPhrases(entryId, {
+      sourceEntry
+    });
   }
 
   function renderTextWithGreekHighlights(text: string, phrases: readonly string[]) {
@@ -1174,8 +1130,14 @@ export function ReaderStrongsPanel() {
               <p className="strongs-entry-copy">No verses match the current filters.</p>
             ) : (
               filteredOccurrences.map(({ match, index }) => {
-                const highlightPhrases = getEnglishHighlightPhrases(entryId, match, mode);
-                const greekHighlightPhrases = getGreekHighlightPhrases(entryId);
+                const highlightPhrases = getStrongsEnglishHighlightPhrases(entryId, match, mode);
+                const greekHighlightPhrases = getStrongsGreekHighlightPhrases(entryId, {
+                  sourceEntry:
+                    (greekEntry?.entryKey === entryId ? greekEntry : null) ??
+                    greekOccurrenceEntries[entryId] ??
+                    null,
+                  match
+                });
 
                 return (
                   <article
