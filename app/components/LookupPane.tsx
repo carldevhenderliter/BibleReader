@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 
 import { ReaderCrossReferencesPanel } from "@/app/components/ReaderCrossReferencesPanel";
+import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderGrammarChartsPanel } from "@/app/components/ReaderGrammarChartsPanel";
 import { ReaderHarmonyWorkspace } from "@/app/components/ReaderHarmonyWorkspace";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
@@ -13,6 +14,7 @@ import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 
 export function LookupPane() {
+  const { style } = useReaderCustomization();
   const {
     canCollapseSplitPane,
     collapseSplitPane,
@@ -56,7 +58,7 @@ export function LookupPane() {
   }
 
   return (
-    <aside aria-label="Study pane" className="app-side-pane study-pane">
+    <aside aria-label="Study pane" className="app-side-pane study-pane" style={style}>
       <div className="lookup-pane-header">
         <div className="lookup-pane-header-main">
           <p className="search-tray-kicker">Study Tools</p>

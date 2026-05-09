@@ -96,6 +96,7 @@ export type ReaderCustomizationSettings = {
   showFathersSentenceLines: boolean;
   disableLazyLoading: boolean;
   bodyTextSize: number;
+  strongsVerseTextSize: number;
   greekTextSize: number;
   hebrewTextSize: number;
   companionVerseTextSize: number;

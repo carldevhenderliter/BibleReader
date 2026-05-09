@@ -197,6 +197,12 @@ export function ReaderSettingsPanel({
     });
   };
 
+  const handleStrongsVerseTextSizeShift = (delta: number) => {
+    updateSettings({
+      strongsVerseTextSize: Number((settings.strongsVerseTextSize + delta).toFixed(2))
+    });
+  };
+
   const updateNumericSetting = <K extends keyof ReaderCustomizationSettings>(
     key: K,
     nextValue: ReaderCustomizationSettings[K]
@@ -810,6 +816,31 @@ export function ReaderSettingsPanel({
                   A+
                 </button>
               </div>
+              <div
+                className="reader-size-controls"
+                role="group"
+                aria-label="Strong's verse size controls"
+              >
+                <button
+                  aria-label="Decrease Strong's verse size"
+                  className="reader-inline-button"
+                  onClick={() => handleStrongsVerseTextSizeShift(-0.04)}
+                  type="button"
+                >
+                  S-
+                </button>
+                <span className="reader-controls-status">
+                  Strongs {settings.strongsVerseTextSize.toFixed(2)}rem
+                </span>
+                <button
+                  aria-label="Increase Strong's verse size"
+                  className="reader-inline-button"
+                  onClick={() => handleStrongsVerseTextSizeShift(0.04)}
+                  type="button"
+                >
+                  S+
+                </button>
+              </div>
               {!isFathersMode ? (
                 <>
                   <button
@@ -989,6 +1020,16 @@ export function ReaderSettingsPanel({
                 step={0.01}
                 suffix="rem"
                 value={settings.bodyTextSize}
+              />
+              <NumericField
+                inputId="reader-menu-strongs-verse-text-size"
+                label="Strong's verse size"
+                max={3.25}
+                min={0.72}
+                onChange={(value) => updateNumericSetting("strongsVerseTextSize", value)}
+                step={0.01}
+                suffix="rem"
+                value={settings.strongsVerseTextSize}
               />
               <NumericField
                 disabled={!supportsGreekReading}

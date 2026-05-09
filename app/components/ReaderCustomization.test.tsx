@@ -92,6 +92,23 @@ describe("Reader customization", () => {
     expect(stored).not.toContain('"textSize"');
   });
 
+  it("persists the top-level Strong's verse size control", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={chaptersByVersion}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "Increase Strong's verse size" }));
+
+    const stored = window.localStorage.getItem(READER_CUSTOMIZATION_STORAGE_KEY) ?? "";
+
+    expect(stored).toContain('"strongsVerseTextSize":1.06');
+  });
+
   it("opens advanced settings and persists unrestricted layout spacing values", () => {
     renderWithReaderCustomization(
       <ReaderPageContent
@@ -164,6 +181,11 @@ describe("Reader customization", () => {
         value: "1.34"
       }
     });
+    fireEvent.change(screen.getByLabelText("Strong's verse size"), {
+      target: {
+        value: "1.28"
+      }
+    });
     fireEvent.change(screen.getByLabelText("Hebrew text size"), {
       target: {
         value: "1.92"
@@ -179,6 +201,7 @@ describe("Reader customization", () => {
     const stored = window.localStorage.getItem(READER_CUSTOMIZATION_STORAGE_KEY) ?? "";
 
     expect(stored).toContain('"bodyTextSize":1.34');
+    expect(stored).toContain('"strongsVerseTextSize":1.28');
     expect(stored).toContain('"hebrewTextSize":1.92');
     expect(stored).toContain('"firstLineIndent":1.15');
     expect(stored).toContain('"companionVerseFont":"literary"');
@@ -197,6 +220,7 @@ describe("Reader customization", () => {
         uiFont: "technical",
         showStrongs: false,
         bodyTextSize: 1.18,
+        strongsVerseTextSize: 1.31,
         greekTextSize: 1.94,
         hebrewTextSize: 1.72,
         companionVerseTextSize: 1.02,

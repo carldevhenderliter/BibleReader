@@ -2,6 +2,7 @@ import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 
 import { LookupPane } from "@/app/components/LookupPane";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
+import { READER_CUSTOMIZATION_STORAGE_KEY } from "@/lib/reader-customization";
 import { setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
 
@@ -77,6 +78,7 @@ function StrongsHarness() {
 describe("ReaderStrongsPanel", () => {
   beforeEach(() => {
     setMockPathname("/read/genesis/1");
+    window.localStorage.clear();
     Object.defineProperty(window, "matchMedia", {
       writable: true,
       value: jest.fn().mockImplementation(() => ({
@@ -90,6 +92,24 @@ describe("ReaderStrongsPanel", () => {
         dispatchEvent: jest.fn()
       }))
     });
+  });
+
+  it("applies the dedicated Strong's verse text size setting to the study pane", async () => {
+    window.localStorage.setItem(
+      READER_CUSTOMIZATION_STORAGE_KEY,
+      JSON.stringify({
+        strongsVerseTextSize: 1.44
+      })
+    );
+
+    renderWithReaderCustomization(<StrongsHarness />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Open Greek" }));
+
+    const studyPane = screen.getByLabelText("Study pane");
+    await within(studyPane).findByRole("heading", { name: "G3056" });
+
+    expect(studyPane).toHaveStyle("--reader-strongs-verse-text-size: 1.44rem");
   });
 
   it("renders tabbed Greek Strongs study sections", async () => {
