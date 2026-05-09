@@ -77,6 +77,7 @@ describe("reader customization", () => {
         disableLazyLoading: false,
         bodyTextSize: 3.25,
         strongsVerseTextSize: 1.02,
+        thayerTextSize: 0.98,
         greekTextSize: 4,
         hebrewTextSize: 4,
       companionVerseTextSize: 3,
@@ -126,6 +127,7 @@ describe("reader customization", () => {
       disableLazyLoading: false,
       bodyTextSize: 1.2,
       strongsVerseTextSize: 1.18,
+      thayerTextSize: 1.11,
       greekTextSize: 1.8,
       hebrewTextSize: 1.7,
       companionVerseTextSize: 1.05,
@@ -147,6 +149,7 @@ describe("reader customization", () => {
 
     expect(variables["--reader-body-text-size"]).toBe("1.2rem");
     expect(variables["--reader-strongs-verse-text-size"]).toBe("1.18rem");
+    expect(variables["--reader-thayer-text-size"]).toBe("1.11rem");
     expect(variables["--reader-greek-text-size"]).toBe("1.8rem");
     expect(variables["--reader-hebrew-text-size"]).toBe("1.7rem");
     expect(variables["--reader-companion-text-size"]).toBe("1.05rem");
@@ -188,6 +191,7 @@ describe("reader customization", () => {
       showEsvGreekOnly: false,
       bodyTextSize: 1.1,
       strongsVerseTextSize: 1.02,
+      thayerTextSize: 0.98,
       greekTextSize: 2.05,
       hebrewTextSize: 2.05,
       companionVerseTextSize: 1.06,

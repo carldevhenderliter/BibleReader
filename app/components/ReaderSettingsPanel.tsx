@@ -203,6 +203,12 @@ export function ReaderSettingsPanel({
     });
   };
 
+  const handleThayerTextSizeShift = (delta: number) => {
+    updateSettings({
+      thayerTextSize: Number((settings.thayerTextSize + delta).toFixed(2))
+    });
+  };
+
   const updateNumericSetting = <K extends keyof ReaderCustomizationSettings>(
     key: K,
     nextValue: ReaderCustomizationSettings[K]
@@ -841,6 +847,31 @@ export function ReaderSettingsPanel({
                   S+
                 </button>
               </div>
+              <div
+                className="reader-size-controls"
+                role="group"
+                aria-label="Thayer text size controls"
+              >
+                <button
+                  aria-label="Decrease Thayer text size"
+                  className="reader-inline-button"
+                  onClick={() => handleThayerTextSizeShift(-0.04)}
+                  type="button"
+                >
+                  T-
+                </button>
+                <span className="reader-controls-status">
+                  Thayer {settings.thayerTextSize.toFixed(2)}rem
+                </span>
+                <button
+                  aria-label="Increase Thayer text size"
+                  className="reader-inline-button"
+                  onClick={() => handleThayerTextSizeShift(0.04)}
+                  type="button"
+                >
+                  T+
+                </button>
+              </div>
               {!isFathersMode ? (
                 <>
                   <button
@@ -1030,6 +1061,16 @@ export function ReaderSettingsPanel({
                 step={0.01}
                 suffix="rem"
                 value={settings.strongsVerseTextSize}
+              />
+              <NumericField
+                inputId="reader-menu-thayer-text-size"
+                label="Thayer text size"
+                max={3.25}
+                min={0.72}
+                onChange={(value) => updateNumericSetting("thayerTextSize", value)}
+                step={0.01}
+                suffix="rem"
+                value={settings.thayerTextSize}
               />
               <NumericField
                 disabled={!supportsGreekReading}

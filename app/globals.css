@@ -3030,6 +3030,7 @@ button.fathers-annotation-anchor:focus-visible {
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 0.95rem;
   background: rgba(255, 255, 255, 0.03);
+  font-size: var(--reader-thayer-text-size, var(--reader-body-text-size));
 }
 
 .strongs-entry-thayer-chip-list {

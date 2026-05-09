@@ -109,6 +109,23 @@ describe("Reader customization", () => {
     expect(stored).toContain('"strongsVerseTextSize":1.06');
   });
 
+  it("persists the top-level Thayer text size control", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={chaptersByVersion}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "Increase Thayer text size" }));
+
+    const stored = window.localStorage.getItem(READER_CUSTOMIZATION_STORAGE_KEY) ?? "";
+
+    expect(stored).toContain('"thayerTextSize":1.02');
+  });
+
   it("opens advanced settings and persists unrestricted layout spacing values", () => {
     renderWithReaderCustomization(
       <ReaderPageContent
@@ -186,6 +203,11 @@ describe("Reader customization", () => {
         value: "1.28"
       }
     });
+    fireEvent.change(screen.getByLabelText("Thayer text size"), {
+      target: {
+        value: "1.16"
+      }
+    });
     fireEvent.change(screen.getByLabelText("Hebrew text size"), {
       target: {
         value: "1.92"
@@ -202,6 +224,7 @@ describe("Reader customization", () => {
 
     expect(stored).toContain('"bodyTextSize":1.34');
     expect(stored).toContain('"strongsVerseTextSize":1.28');
+    expect(stored).toContain('"thayerTextSize":1.16');
     expect(stored).toContain('"hebrewTextSize":1.92');
     expect(stored).toContain('"firstLineIndent":1.15');
     expect(stored).toContain('"companionVerseFont":"literary"');

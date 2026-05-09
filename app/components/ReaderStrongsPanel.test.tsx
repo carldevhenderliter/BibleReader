@@ -112,6 +112,26 @@ describe("ReaderStrongsPanel", () => {
     expect(studyPane).toHaveStyle("--reader-strongs-verse-text-size: 1.44rem");
   });
 
+  it("applies the dedicated Thayer text size setting to the Thayer section", async () => {
+    window.localStorage.setItem(
+      READER_CUSTOMIZATION_STORAGE_KEY,
+      JSON.stringify({
+        thayerTextSize: 1.26
+      })
+    );
+
+    renderWithReaderCustomization(<StrongsHarness />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Open Greek" }));
+
+    const studyPane = screen.getByLabelText("Study pane");
+    fireEvent.click(await within(studyPane).findByRole("tab", { name: "Thayer" }));
+
+    expect(await within(studyPane).findByText("Root Word")).toBeInTheDocument();
+
+    expect(studyPane).toHaveStyle("--reader-thayer-text-size: 1.26rem");
+  });
+
   it("renders tabbed Greek Strongs study sections", async () => {
     renderWithReaderCustomization(<StrongsHarness />);
 

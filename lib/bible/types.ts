@@ -97,6 +97,7 @@ export type ReaderCustomizationSettings = {
   disableLazyLoading: boolean;
   bodyTextSize: number;
   strongsVerseTextSize: number;
+  thayerTextSize: number;
   greekTextSize: number;
   hebrewTextSize: number;
   companionVerseTextSize: number;

@@ -158,6 +158,7 @@ export const DEFAULT_READER_CUSTOMIZATION: ReaderCustomizationSettings = {
   disableLazyLoading: false,
   bodyTextSize: 1.08,
   strongsVerseTextSize: 1.02,
+  thayerTextSize: 0.98,
   greekTextSize: 1.55,
   hebrewTextSize: 1.55,
   companionVerseTextSize: 1.04,
@@ -179,6 +180,7 @@ export const DEFAULT_READER_CUSTOMIZATION: ReaderCustomizationSettings = {
 
 const BODY_TEXT_SIZE_RANGE = { min: 0.8, max: 3.25 };
 const STRONGS_TEXT_SIZE_RANGE = { min: 0.72, max: 3.25 };
+const THAYER_TEXT_SIZE_RANGE = { min: 0.72, max: 3.25 };
 const SCRIPT_TEXT_SIZE_RANGE = { min: 0.9, max: 4 };
 const COMPANION_TEXT_SIZE_RANGE = { min: 0.72, max: 3 };
 const CUSTOM_TEXT_SIZE_RANGE = { min: 0.72, max: 3.25 };
@@ -280,6 +282,12 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
     STRONGS_TEXT_SIZE_RANGE.min,
     STRONGS_TEXT_SIZE_RANGE.max,
     DEFAULT_READER_CUSTOMIZATION.strongsVerseTextSize
+  );
+  const normalizedThayerTextSize = clampNumber(
+    candidate.thayerTextSize,
+    THAYER_TEXT_SIZE_RANGE.min,
+    THAYER_TEXT_SIZE_RANGE.max,
+    DEFAULT_READER_CUSTOMIZATION.thayerTextSize
   );
   const normalizedGreekTextSize = clampNumber(
     candidate.greekTextSize ?? candidate.greekFontScale,
@@ -418,6 +426,7 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
         : DEFAULT_READER_CUSTOMIZATION.disableLazyLoading,
     bodyTextSize: normalizedBodyTextSize,
     strongsVerseTextSize: normalizedStrongsVerseTextSize,
+    thayerTextSize: normalizedThayerTextSize,
     greekTextSize: normalizedGreekTextSize,
     hebrewTextSize: normalizedHebrewTextSize,
     companionVerseTextSize: clampNumber(
@@ -555,6 +564,7 @@ export function getReaderCustomizationVariables(
     "--reader-custom-font": getBodyFontValue(settings.customVerseFont),
     "--reader-body-text-size": `${settings.bodyTextSize}rem`,
     "--reader-strongs-verse-text-size": `${settings.strongsVerseTextSize}rem`,
+    "--reader-thayer-text-size": `${settings.thayerTextSize}rem`,
     "--reader-greek-text-size": `${settings.greekTextSize}rem`,
     "--reader-hebrew-text-size": `${settings.hebrewTextSize}rem`,
     "--reader-companion-text-size": `${settings.companionVerseTextSize}rem`,
