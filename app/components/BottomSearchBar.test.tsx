@@ -460,6 +460,19 @@ describe("BottomSearchBar", () => {
     expect(await screen.findByRole("button", { name: /Verse Matthew 1:1/i })).toBeInTheDocument();
   });
 
+  it("defaults plain topical word searches to the Verses tab when verse hits exist", async () => {
+    renderSearchUi();
+
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
+      target: { value: "parable" }
+    });
+
+    await waitForSearchToFinish();
+
+    expect(screen.getByRole("tab", { name: "Verses" })).toHaveAttribute("aria-selected", "true");
+    expect(await screen.findByRole("button", { name: /Verse Matthew 13:3/i })).toBeInTheDocument();
+  });
+
   it("shows starter topic suggestions for a bare Topic query on mobile", async () => {
     renderSearchUi();
 

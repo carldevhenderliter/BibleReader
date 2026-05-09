@@ -98,6 +98,21 @@ function parseStrongsQuery(query: string) {
   return match ? normalizeStrongsNumber(`${match[1]}${match[2]}`) : null;
 }
 
+function isExplicitDefinitionQuery(query: string) {
+  const trimmedQuery = query.trim();
+
+  if (!trimmedQuery) {
+    return false;
+  }
+
+  return (
+    parseStrongsQuery(trimmedQuery) !== null ||
+    /^topic\s*:/i.test(trimmedQuery) ||
+    /^greek\s*:/i.test(trimmedQuery) ||
+    /\p{Script=Greek}/u.test(trimmedQuery)
+  );
+}
+
 function tokenMatchesQuery(tokenText: string, queryWords: string[]) {
   const normalizedToken = normalizeQueryValue(tokenText);
 
@@ -111,9 +126,22 @@ function getSearchResultTabForResult(result: BibleSearchResult): SearchResultTab
 }
 
 function getDefaultSearchResultTab(groups: BibleSearchResultGroup[]): SearchResultTab {
-  return groups.some((group) =>
+  const hasDefinitions = groups.some((group) =>
     group.results.some((result) => getSearchResultTabForResult(result) === "definitions")
-  )
+  );
+  const hasVerses = groups.some((group) =>
+    group.results.some((result) => getSearchResultTabForResult(result) === "verses")
+  );
+
+  if (!hasDefinitions) {
+    return "verses";
+  }
+
+  if (!hasVerses) {
+    return "definitions";
+  }
+
+  return groups.every((group) => isExplicitDefinitionQuery(group.query))
     ? "definitions"
     : "verses";
 }
