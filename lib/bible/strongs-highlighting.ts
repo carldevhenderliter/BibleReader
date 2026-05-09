@@ -3,6 +3,86 @@ import type { BibleSearchVerseEntry, GreekLemmaEntry, GreekToken } from "@/lib/b
 
 type StrongsHighlightMode = "strongs" | "greek";
 
+function normalizeEnglishPhrase(phrase: string) {
+  return phrase.replace(/\s+/g, " ").trim();
+}
+
+function splitGlossCandidates(gloss: string) {
+  return gloss
+    .split(/\s*(?:,|;|\/|\bor\b)\s*/i)
+    .map((part) => normalizeEnglishPhrase(part))
+    .filter(Boolean);
+}
+
+function pluralizeEnglishWord(word: string) {
+  if (/[^a-z]/i.test(word)) {
+    return word;
+  }
+
+  if (/[bcdfghjklmnpqrstvwxyz]y$/i.test(word)) {
+    return `${word.slice(0, -1)}ies`;
+  }
+
+  if (/(s|x|z|ch|sh)$/i.test(word)) {
+    return `${word}es`;
+  }
+
+  return `${word}s`;
+}
+
+function singularizeEnglishWord(word: string) {
+  if (/[^a-z]/i.test(word)) {
+    return word;
+  }
+
+  if (/[bcdfghjklmnpqrstvwxyz]ies$/i.test(word)) {
+    return `${word.slice(0, -3)}y`;
+  }
+
+  if (/(s|x|z|ch|sh)es$/i.test(word)) {
+    return word.slice(0, -2);
+  }
+
+  if (/s$/i.test(word) && !/ss$/i.test(word)) {
+    return word.slice(0, -1);
+  }
+
+  return word;
+}
+
+function expandEnglishPhraseVariants(phrase: string) {
+  const normalized = normalizeEnglishPhrase(phrase);
+
+  if (!normalized) {
+    return [];
+  }
+
+  const variants = new Set<string>([normalized]);
+  const stripped = normalized.replace(/^(?:the|a|an|this|that|these|those)\s+/i, "").trim();
+
+  if (stripped) {
+    variants.add(stripped);
+  }
+
+  for (const candidate of [normalized, stripped].filter(Boolean)) {
+    const match = candidate.match(/^(.*\b)?([A-Za-z]+)$/);
+
+    if (!match) {
+      continue;
+    }
+
+    const prefix = match[1] ?? "";
+    const lastWord = match[2];
+    const plural = pluralizeEnglishWord(lastWord);
+    const singular = singularizeEnglishWord(lastWord);
+
+    variants.add(`${prefix}${plural}`.trim());
+    variants.add(`${prefix}${singular}`.trim());
+  }
+
+  return Array.from(variants).filter(Boolean);
+}
+
 function matchesGreekTokenEntry(token: GreekToken, entryId: string) {
   const tokenEntryKey = token.entryKey ?? token.strongs ?? null;
 
@@ -39,7 +119,11 @@ export function getStrongsEnglishHighlightPhrases(
       new Set(
         (match.greekTokens ?? [])
           .filter((token) => matchesGreekTokenEntry(token, entryId))
-          .flatMap((token) => [token.gloss?.trim() ?? "", token.lemma.trim()])
+          .flatMap((token) =>
+            token.gloss
+              ? splitGlossCandidates(token.gloss).flatMap((phrase) => expandEnglishPhraseVariants(phrase))
+              : []
+          )
           .filter(Boolean)
       )
     );
