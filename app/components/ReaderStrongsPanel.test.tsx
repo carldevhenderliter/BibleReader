@@ -202,7 +202,15 @@ describe("ReaderStrongsPanel", () => {
       "aria-selected",
       "true"
     );
-    expect(within(studyPane).getByText(/of speech, a word/i)).toBeInTheDocument();
+    expect(within(studyPane).getByText("Root Word")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Closest Definition to the Origin")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Core Meanings")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Extended Meanings")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Full Thayer")).toBeInTheDocument();
+    expect(within(studyPane).getByText(/G3004 · λέγω/i)).toBeInTheDocument();
+    expect(within(studyPane).getAllByText(/say, speak, call, tell, misc/i).length).toBeGreaterThan(0);
+    expect(within(studyPane).getByText("of speech")).toBeInTheDocument();
+    expect(within(studyPane).getByText("a word")).toBeInTheDocument();
     expect(within(studyPane).queryByText("BDAG Summary")).not.toBeInTheDocument();
   });
 

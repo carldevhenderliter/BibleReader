@@ -25,6 +25,7 @@ import {
   getStrongsEnglishHighlightPhrases,
   getStrongsGreekHighlightPhrases
 } from "@/lib/bible/strongs-highlighting";
+import { formatThayerSection } from "@/lib/bible/thayer";
 import type {
   BibleSearchVerseEntry,
   BundledBibleVersion,
@@ -173,11 +174,75 @@ function renderThayerSection(entry: StrongsEntry | null) {
     return <p className="strongs-entry-copy">No Thayer definition is available for this lemma.</p>;
   }
 
+  const section = formatThayerSection(entry);
+
+  if (!section) {
+    return <p className="strongs-entry-copy">No Thayer definition is available for this lemma.</p>;
+  }
+
   return (
-    <>
+    <div className="strongs-entry-thayer-layout">
       <p className="strongs-entry-section-label">Thayer</p>
-      <p className="strongs-entry-copy">{entry.outlineUsage}</p>
-    </>
+      {section.rootWord ? (
+        <section className="strongs-entry-thayer-card">
+          <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
+            Root Word
+          </p>
+          {section.rootWord.strongsId || section.rootWord.lemma ? (
+            <p className="strongs-entry-meta">
+              {[section.rootWord.strongsId, section.rootWord.lemma].filter(Boolean).join(" · ")}
+            </p>
+          ) : null}
+          <p className="strongs-entry-copy">
+            {section.rootWord.gloss ?? section.rootWord.raw}
+          </p>
+        </section>
+      ) : null}
+      {section.closestDefinition ? (
+        <section className="strongs-entry-thayer-card">
+          <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
+            Closest Definition to the Origin
+          </p>
+          <p className="strongs-entry-copy">{section.closestDefinition}</p>
+        </section>
+      ) : null}
+      {section.coreMeanings.length > 0 ? (
+        <section className="strongs-entry-thayer-card">
+          <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
+            Core Meanings
+          </p>
+          <div className="strongs-entry-thayer-chip-list">
+            {section.coreMeanings.map((meaning) => (
+              <span className="strongs-entry-thayer-chip" key={`core:${meaning}`}>
+                {meaning}
+              </span>
+            ))}
+          </div>
+        </section>
+      ) : null}
+      {section.extendedMeanings.length > 0 ? (
+        <section className="strongs-entry-thayer-card">
+          <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
+            Extended Meanings
+          </p>
+          <div className="strongs-entry-thayer-chip-list">
+            {section.extendedMeanings.map((meaning) => (
+              <span className="strongs-entry-thayer-chip" key={`extended:${meaning}`}>
+                {meaning}
+              </span>
+            ))}
+          </div>
+        </section>
+      ) : null}
+      <section className="strongs-entry-thayer-card">
+        <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
+          Full Thayer
+        </p>
+        <p className="strongs-entry-copy strongs-entry-copy-bdag strongs-entry-copy-bdag-original">
+          {section.fullThayer}
+        </p>
+      </section>
+    </div>
   );
 }
 

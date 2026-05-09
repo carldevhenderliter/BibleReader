@@ -3018,6 +3018,39 @@ button.fathers-annotation-anchor:focus-visible {
   font-size: 1.18rem;
 }
 
+.strongs-entry-thayer-layout {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.strongs-entry-thayer-card {
+  display: grid;
+  gap: 0.45rem;
+  padding: 0.8rem 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.95rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.strongs-entry-thayer-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.strongs-entry-thayer-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.38rem 0.62rem;
+  border: 1px solid rgba(var(--reader-accent-rgb), 0.2);
+  border-radius: 999px;
+  background: rgba(var(--reader-accent-rgb), 0.08);
+  color: rgba(237, 244, 255, 0.94);
+  font-size: 0.79rem;
+  line-height: 1.25;
+}
+
 .reader-grammar-chart-subtitle {
   margin: 0;
   color: rgba(235, 241, 251, 0.95);
