@@ -1,13 +1,71 @@
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
+
 import { GreekGrammarDetailsContent } from "@/app/components/GreekGrammarCard";
+import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
+import { getGreekVerseOccurrences } from "@/lib/bible/greek";
+import type { BibleSearchVerseEntry } from "@/lib/bible/types";
+
+const MAX_EXACT_FORM_VERSES = 25;
+
+type ExactFormVerseState = {
+  status: "idle" | "loading" | "loaded";
+  matches: BibleSearchVerseEntry[];
+};
 
 export function ReaderGreekGrammarPanel() {
   const {
     activeGreekGrammarSelection,
     openGreekDictionaryInCurrentPane
   } = useReaderWorkspace();
+  const [exactFormVerses, setExactFormVerses] = useState<ExactFormVerseState>({
+    status: "idle",
+    matches: []
+  });
+
+  const exactFormLookupKey = activeGreekGrammarSelection?.selectedForm
+    ? `${activeGreekGrammarSelection.entryKey}:${activeGreekGrammarSelection.selectedForm}`
+    : null;
+
+  useEffect(() => {
+    if (!activeGreekGrammarSelection?.selectedForm) {
+      setExactFormVerses({
+        status: "idle",
+        matches: []
+      });
+      return;
+    }
+
+    let isCancelled = false;
+    const { entryKey, selectedForm } = activeGreekGrammarSelection;
+
+    setExactFormVerses({
+      status: "loading",
+      matches: []
+    });
+
+    void getGreekVerseOccurrences(entryKey, selectedForm).then((matches) => {
+      if (isCancelled) {
+        return;
+      }
+
+      setExactFormVerses({
+        status: "loaded",
+        matches
+      });
+    });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [activeGreekGrammarSelection?.entryKey, exactFormLookupKey, activeGreekGrammarSelection?.selectedForm]);
+
+  const visibleExactFormVerses = useMemo(
+    () => exactFormVerses.matches.slice(0, MAX_EXACT_FORM_VERSES),
+    [exactFormVerses.matches]
+  );
 
   if (!activeGreekGrammarSelection) {
     return (
@@ -84,6 +142,55 @@ export function ReaderGreekGrammarPanel() {
             Open lemma in Strongs
           </button>
         </div>
+        {activeGreekGrammarSelection.selectedForm ? (
+          <section
+            aria-labelledby="greek-grammar-exact-form-verses-heading"
+            className="greek-grammar-panel-section"
+          >
+            <p
+              className="strongs-entry-section-label"
+              id="greek-grammar-exact-form-verses-heading"
+            >
+              Bible Verses With This Form
+            </p>
+            {exactFormVerses.status === "loading" ? (
+              <p className="strongs-entry-meta">Loading Bible verses with this form…</p>
+            ) : null}
+            {exactFormVerses.status === "loaded" && exactFormVerses.matches.length === 0 ? (
+              <p className="strongs-entry-copy">No Bible verses found with this exact form.</p>
+            ) : null}
+            {exactFormVerses.status === "loaded" && exactFormVerses.matches.length > MAX_EXACT_FORM_VERSES ? (
+              <p className="strongs-entry-meta">
+                Showing first {MAX_EXACT_FORM_VERSES} of {exactFormVerses.matches.length}
+              </p>
+            ) : null}
+            {visibleExactFormVerses.length > 0 ? (
+              <div className="strongs-entry-bible-verses">
+                {visibleExactFormVerses.map((match) => (
+                  <article
+                    className="strongs-entry-bible-verse"
+                    key={`${activeGreekGrammarSelection.entryKey}:${match.bookSlug}:${match.chapterNumber}:${match.verseNumber}`}
+                  >
+                    <p className="strongs-entry-meta">
+                      {match.bookName} {match.chapterNumber}:{match.verseNumber}
+                    </p>
+                    <GreekVerseTextContent
+                      className="strongs-entry-copy strongs-entry-bible-verse-text verse-text-greek"
+                      enableGreekLearning={false}
+                      highlightedEntryKey={activeGreekGrammarSelection.entryKey}
+                      onOpenGreekDictionary={openGreekDictionaryInCurrentPane}
+                      verse={{
+                        number: match.verseNumber,
+                        text: match.text,
+                        greekTokens: match.greekTokens
+                      }}
+                    />
+                  </article>
+                ))}
+              </div>
+            ) : null}
+          </section>
+        ) : null}
         <div className="greek-grammar-panel-section">
           <p className="strongs-entry-section-label">Grammar</p>
           <div className="greek-grammar-panel-expanded">

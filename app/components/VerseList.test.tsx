@@ -750,6 +750,15 @@ describe("VerseList", () => {
     expect(await within(studyPane).findByText("Full morphology")).toBeInTheDocument();
     expect(within(studyPane).getByText("Linked phrase")).toBeInTheDocument();
     expect((await within(studyPane).findAllByText("τόν λόγον")).length).toBeGreaterThan(0);
+    const exactFormSection = (await within(studyPane).findByText("Bible Verses With This Form")).closest(
+      ".greek-grammar-panel-section"
+    );
+    expect(exactFormSection).not.toBeNull();
+    expect(await within(exactFormSection as HTMLElement).findByText("Matthew 1:1")).toBeInTheDocument();
+    expect(
+      within(exactFormSection as HTMLElement).getByRole("button", { name: "τόν" })
+    ).toBeInTheDocument();
+    expect(within(studyPane).queryByText("Inflected Forms")).not.toBeInTheDocument();
 
     fireEvent.click(within(studyPane).getByRole("button", { name: "ὁ" }));
 
