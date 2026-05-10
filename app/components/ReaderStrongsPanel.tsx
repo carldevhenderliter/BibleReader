@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 
+import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
 import { VerseTextContent } from "@/app/components/VerseTextContent";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { formatBdagArticle } from "@/lib/bible/bdag";
@@ -1011,12 +1012,26 @@ export function ReaderStrongsPanel() {
           })}
         </p>
         {greekVerse ? (
-          <p
-            className="strongs-entry-copy strongs-entry-bible-verse-text strongs-entry-bible-verse-text-greek-companion verse-text-greek"
-            lang="el"
-          >
-            {renderTextWithGreekHighlights(greekVerse.text, getGreekHighlightPhrases(entryId))}
-          </p>
+          greekVerse.greekTokens?.length ? (
+            <GreekVerseTextContent
+              className="strongs-entry-copy strongs-entry-bible-verse-text strongs-entry-bible-verse-text-greek-companion verse-text-greek"
+              enableGreekLearning={false}
+              highlightedEntryKey={entryId}
+              onOpenGreekDictionary={openGreekDictionary}
+              verse={{
+                number: greekVerse.verseNumber,
+                text: greekVerse.text,
+                greekTokens: greekVerse.greekTokens
+              }}
+            />
+          ) : (
+            <p
+              className="strongs-entry-copy strongs-entry-bible-verse-text strongs-entry-bible-verse-text-greek-companion verse-text-greek"
+              lang="el"
+            >
+              {renderTextWithGreekHighlights(greekVerse.text, getGreekHighlightPhrases(entryId))}
+            </p>
+          )
         ) : null}
       </div>
     );
@@ -1301,14 +1316,28 @@ export function ReaderStrongsPanel() {
                                     : null
                                 )
                               ) : selectedVersion === "greek" ? (
-                                <VerseTextContent
-                                  className="strongs-entry-copy strongs-entry-bible-verse-text verse-text-greek"
-                                  highlightedPhrases={greekHighlightPhrases}
-                                  verse={{
-                                    number: versionMatch.verseNumber,
-                                    text: versionMatch.text
-                                  }}
-                                />
+                                versionMatch.greekTokens?.length ? (
+                                  <GreekVerseTextContent
+                                    className="strongs-entry-copy strongs-entry-bible-verse-text verse-text-greek"
+                                    enableGreekLearning={false}
+                                    highlightedEntryKey={entryId}
+                                    onOpenGreekDictionary={openGreekDictionary}
+                                    verse={{
+                                      number: versionMatch.verseNumber,
+                                      text: versionMatch.text,
+                                      greekTokens: versionMatch.greekTokens
+                                    }}
+                                  />
+                                ) : (
+                                  <VerseTextContent
+                                    className="strongs-entry-copy strongs-entry-bible-verse-text verse-text-greek"
+                                    highlightedPhrases={greekHighlightPhrases}
+                                    verse={{
+                                      number: versionMatch.verseNumber,
+                                      text: versionMatch.text
+                                    }}
+                                  />
+                                )
                               ) : (
                                 <VerseTextContent
                                   className="strongs-entry-copy strongs-entry-bible-verse-text"
@@ -1465,39 +1494,6 @@ export function ReaderStrongsPanel() {
             </button>
           ) : null}
         </div>
-        <section className="greek-dictionary-forms">
-          <p className="strongs-entry-section-label">Inflected Forms</p>
-          <div className="greek-dictionary-form-list">
-            {entry.forms.map((form, index) => (
-              <article
-                className="greek-dictionary-form-row"
-                key={`${entry.entryKey}:${form.form}:${form.morphology}:${index}`}
-              >
-                  <p className="greek-dictionary-form-line">
-                    <span className="greek-dictionary-form-text">{form.form}</span>
-                    <span className="greek-dictionary-form-separator">—</span>
-                    <span className="greek-dictionary-form-code">{form.morphology}</span>
-                    {form.decodedMorphology ? (
-                      <>
-                        <span className="greek-dictionary-form-separator">—</span>
-                        <span className="greek-dictionary-form-decoded">
-                          {form.decodedMorphology}
-                        </span>
-                      </>
-                    ) : null}
-                    {form.definition ? (
-                      <>
-                        <span className="greek-dictionary-form-separator">—</span>
-                        <span className="greek-dictionary-form-definition">
-                          {form.definition}
-                        </span>
-                      </>
-                    ) : null}
-                  </p>
-                </article>
-            ))}
-          </div>
-        </section>
         {activeTab === "bible" ? (
           <div className="strongs-entry-tab-panel">
             {renderBibleOccurrences(

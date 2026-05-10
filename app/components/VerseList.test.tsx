@@ -1259,7 +1259,7 @@ describe("VerseList", () => {
     const studyPane = screen.getByLabelText("Study pane");
     expect(await within(studyPane).findByRole("heading", { name: "ἀρχή" })).toBeInTheDocument();
     expect(within(studyPane).queryByText("Selected Form")).not.toBeInTheDocument();
-    expect((await within(studyPane).findAllByText("ἀρχῆς")).length).toBeGreaterThan(0);
+    expect(within(studyPane).queryByText("Inflected Forms")).not.toBeInTheDocument();
     expect(within(studyPane).getByRole("button", { name: "Open charts" })).toBeInTheDocument();
   });
 
@@ -1323,7 +1323,7 @@ describe("VerseList", () => {
     const studyPane = screen.getByLabelText("Study pane");
     expect(await within(studyPane).findByRole("heading", { name: "γίνομαι" })).toBeInTheDocument();
     expect(within(studyPane).queryByText("Selected Form")).not.toBeInTheDocument();
-    expect((await within(studyPane).findAllByText("ἐγένετο")).length).toBeGreaterThan(0);
+    expect(within(studyPane).queryByText("Inflected Forms")).not.toBeInTheDocument();
     expect(within(studyPane).getByRole("button", { name: "Open charts" })).toBeInTheDocument();
   });
 
