@@ -1054,116 +1054,129 @@ export function ReaderStrongsPanel() {
       <div className="strongs-entry-bible-section">
         <div className="strongs-entry-bible-toolbar">
           <p className="strongs-entry-section-label">Verses In Bible</p>
-          <div
-            aria-label={`Display versions for ${entryId}`}
-            className="strongs-entry-bible-version-selector"
-            role="group"
-          >
-            {availableVersions.map((version) => (
-              <button
-                aria-pressed={selectedVersions.includes(version)}
-                className={`reader-inline-button strongs-entry-bible-version-button${
-                  selectedVersions.includes(version) ? " is-active" : ""
-                }`}
-                key={`${entryId}:${version}`}
-                onClick={() => toggleSelectedVersion(version)}
-                type="button"
-              >
-                {getBibleVersionLabel(version)}
-              </button>
-            ))}
+          <div className="strongs-entry-bible-filter-group">
+            <p className="strongs-entry-section-label strongs-entry-section-label-subtle">Versions</p>
+            <div
+              aria-label={`Display versions for ${entryId}`}
+              className="strongs-entry-bible-version-selector"
+              role="group"
+            >
+              {availableVersions.map((version) => (
+                <button
+                  aria-pressed={selectedVersions.includes(version)}
+                  className={`reader-inline-button strongs-entry-bible-version-button${
+                    selectedVersions.includes(version) ? " is-active" : ""
+                  }`}
+                  key={`${entryId}:${version}`}
+                  onClick={() => toggleSelectedVersion(version)}
+                  type="button"
+                >
+                  {getBibleVersionLabel(version)}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
         {hasOccurrences ? (
           <>
-            <div
-              aria-label={`Testament filter for ${entryId}`}
-              className="strongs-entry-bible-version-selector"
-              role="group"
-            >
-              <button
-                aria-pressed={testamentFilter === "all"}
-                className={`reader-inline-button strongs-entry-bible-version-button${
-                  testamentFilter === "all" ? " is-active" : ""
-                }`}
-                onClick={() =>
-                  setBibleOccurrenceTestamentFilters((current) => ({
-                    ...current,
-                    [entryId]: "all"
-                  }))
-                }
-                type="button"
-              >
-                All Books
-              </button>
-              <button
-                aria-pressed={testamentFilter === "old"}
-                className={`reader-inline-button strongs-entry-bible-version-button${
-                  testamentFilter === "old" ? " is-active" : ""
-                }`}
-                onClick={() =>
-                  setBibleOccurrenceTestamentFilters((current) => ({
-                    ...current,
-                    [entryId]: "old"
-                  }))
-                }
-                type="button"
-              >
-                Old Testament
-              </button>
-              <button
-                aria-pressed={testamentFilter === "new"}
-                className={`reader-inline-button strongs-entry-bible-version-button${
-                  testamentFilter === "new" ? " is-active" : ""
-                }`}
-                onClick={() =>
-                  setBibleOccurrenceTestamentFilters((current) => ({
-                    ...current,
-                    [entryId]: "new"
-                  }))
-                }
-                type="button"
-              >
-                New Testament
-              </button>
-            </div>
-            {visibleFilterBooks.length > 0 ? (
+            <div className="strongs-entry-bible-filter-group">
+              <p className="strongs-entry-section-label strongs-entry-section-label-subtle">Scope</p>
               <div
-                aria-label={`Book filter for ${entryId}`}
-                className="strongs-entry-bible-book-filter"
+                aria-label={`Testament filter for ${entryId}`}
+                className="strongs-entry-bible-version-selector strongs-entry-bible-version-selector-compact"
                 role="group"
               >
-                {visibleFilterBooks.map((book) => {
-                  const isSelected = selectedBooks.includes(book.slug);
+                <button
+                  aria-label="All Books"
+                  aria-pressed={testamentFilter === "all"}
+                  className={`reader-inline-button strongs-entry-bible-version-button${
+                    testamentFilter === "all" ? " is-active" : ""
+                  }`}
+                  onClick={() =>
+                    setBibleOccurrenceTestamentFilters((current) => ({
+                      ...current,
+                      [entryId]: "all"
+                    }))
+                  }
+                  type="button"
+                >
+                  All
+                </button>
+                <button
+                  aria-label="Old Testament"
+                  aria-pressed={testamentFilter === "old"}
+                  className={`reader-inline-button strongs-entry-bible-version-button${
+                    testamentFilter === "old" ? " is-active" : ""
+                  }`}
+                  onClick={() =>
+                    setBibleOccurrenceTestamentFilters((current) => ({
+                      ...current,
+                      [entryId]: "old"
+                    }))
+                  }
+                  type="button"
+                >
+                  OT
+                </button>
+                <button
+                  aria-label="New Testament"
+                  aria-pressed={testamentFilter === "new"}
+                  className={`reader-inline-button strongs-entry-bible-version-button${
+                    testamentFilter === "new" ? " is-active" : ""
+                  }`}
+                  onClick={() =>
+                    setBibleOccurrenceTestamentFilters((current) => ({
+                      ...current,
+                      [entryId]: "new"
+                    }))
+                  }
+                  type="button"
+                >
+                  NT
+                </button>
+              </div>
+            </div>
+            {visibleFilterBooks.length > 0 ? (
+              <div className="strongs-entry-bible-filter-group">
+                <p className="strongs-entry-section-label strongs-entry-section-label-subtle">Books</p>
+                <div
+                  aria-label={`Book filter for ${entryId}`}
+                  className="strongs-entry-bible-book-filter"
+                  role="group"
+                >
+                  {visibleFilterBooks.map((book) => {
+                    const isSelected = selectedBooks.includes(book.slug);
 
-                  return (
-                    <button
-                      aria-pressed={isSelected}
-                      className={`strongs-entry-bible-book-chip${isSelected ? " is-active" : ""}`}
-                      key={`${entryId}:${book.slug}`}
-                      onClick={() =>
-                        setSelectedBibleOccurrenceBooks((current) => {
-                          const currentSelection =
-                            current[entryId] ?? occurrenceBooks.map((occurrenceBook) => occurrenceBook.slug);
-                          const nextSelection = currentSelection.includes(book.slug)
-                            ? currentSelection.filter((slug) => slug !== book.slug)
-                            : [...currentSelection, book.slug];
+                    return (
+                      <button
+                        aria-pressed={isSelected}
+                        className={`strongs-entry-bible-book-chip${isSelected ? " is-active" : ""}`}
+                        key={`${entryId}:${book.slug}`}
+                        onClick={() =>
+                          setSelectedBibleOccurrenceBooks((current) => {
+                            const currentSelection =
+                              current[entryId] ??
+                              occurrenceBooks.map((occurrenceBook) => occurrenceBook.slug);
+                            const nextSelection = currentSelection.includes(book.slug)
+                              ? currentSelection.filter((slug) => slug !== book.slug)
+                              : [...currentSelection, book.slug];
 
-                          return {
-                            ...current,
-                            [entryId]: nextSelection
-                          };
-                        })
-                      }
-                      type="button"
-                    >
-                      <span className="strongs-entry-bible-book-chip-kicker">
-                        {book.testament === "Old" ? "OT" : "NT"}
-                      </span>
-                      <span>{book.name}</span>
-                    </button>
-                  );
-                })}
+                            return {
+                              ...current,
+                              [entryId]: nextSelection
+                            };
+                          })
+                        }
+                        type="button"
+                      >
+                        <span className="strongs-entry-bible-book-chip-kicker">
+                          {book.testament === "Old" ? "OT" : "NT"}
+                        </span>
+                        <span>{book.name}</span>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             ) : null}
           </>
