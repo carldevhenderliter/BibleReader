@@ -701,6 +701,7 @@ describe("ReaderStrongsPanel", () => {
       .closest(".strongs-entry-bible-version-row");
     expect(greekRow).not.toBeNull();
     expect((greekRow as HTMLElement).querySelector(".strongs-token-match, .strongs-inline-match")).not.toBeNull();
+    expect((greekRow as HTMLElement).querySelector(".verse-greek-inline-token")).toBeNull();
 
     fireEvent.click(within(studyPane).getByRole("button", { name: "WEB" }));
 
@@ -877,6 +878,9 @@ describe("ReaderStrongsPanel", () => {
     await waitFor(() =>
       expect(studyPane.querySelectorAll(".strongs-entry-bible-verse .strongs-token-lemma").length).toBeGreaterThan(0)
     );
+    expect(
+      (occurrenceCard as HTMLElement).querySelector(".strongs-entry-bible-version-row .verse-greek-inline-token")
+    ).toBeNull();
   });
 
   it("renders the Thayer tab from the Greek dictionary flow", async () => {
