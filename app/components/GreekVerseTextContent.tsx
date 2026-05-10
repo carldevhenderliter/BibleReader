@@ -64,7 +64,7 @@ export function GreekVerseTextContent({
   greekLearningScopeKey,
   onOpenGreekDictionary
 }: GreekVerseTextContentProps) {
-  const { isGreekLearningMode } = useReaderWorkspace();
+  const { isGreekLearningMode, openGreekGrammarDetails } = useReaderWorkspace();
   const greekLearningSelections = useMemo(
     () =>
       createGreekLearningQuizSelections(
@@ -132,24 +132,6 @@ export function GreekVerseTextContent({
               `greek:${verse.number}:${index}`;
             const partOfSpeechLabel = getPartOfSpeechLabel(token);
             const grammarInfo = grammarInfos[index] ?? null;
-            const dictionarySelection =
-              entryKey
-                ? {
-                    entryKey,
-                    strongs: token.strongs ?? null,
-                    lemma: token.lemma,
-                    label: token.lemma,
-                    occurrenceKey,
-                    selectedForm: token.surface,
-                    selectedFormMorphology: token.morphology ?? null,
-                    selectedFormDecodedMorphology: token.decodedMorphology ?? null,
-                    matchedQuery: token.surface,
-                    transliteration:
-                      token.transliteration ?? transliterateGreekSurface(token.surface),
-                    gloss: token.gloss ?? null
-                  }
-                : null;
-
             return (
               <span
                 className="verse-greek-token-wrap verse-compare-token-wrap"
@@ -168,7 +150,7 @@ export function GreekVerseTextContent({
                       return;
                     }
 
-                    onOpenGreekDictionary({
+                    const selection = {
                       entryKey,
                       strongs: token.strongs ?? null,
                       lemma: token.lemma,
@@ -181,7 +163,14 @@ export function GreekVerseTextContent({
                       transliteration:
                         token.transliteration ?? transliterateGreekSurface(token.surface),
                       gloss: token.gloss ?? null
-                    });
+                    };
+
+                    if (showGrammarCards && grammarInfo) {
+                      openGreekGrammarDetails({ ...selection, grammar: grammarInfo });
+                      return;
+                    }
+
+                    onOpenGreekDictionary(selection);
                   }}
                   type="button"
                 >
@@ -252,13 +241,7 @@ export function GreekVerseTextContent({
                   </div>
                 ) : null}
                 {showGrammarCards && grammarInfo ? (
-                  <GreekGrammarCard
-                    grammar={grammarInfo}
-                    selection={dictionarySelection ?? {
-                      entryKey: token.lemma,
-                      lemma: token.lemma
-                    }}
-                  />
+                  <GreekGrammarCard grammar={grammarInfo} />
                 ) : null}
               </span>
             );
@@ -301,24 +284,6 @@ export function GreekVerseTextContent({
           `greek:${verse.number}:${index}`;
         const partOfSpeechLabel = getPartOfSpeechLabel(token);
         const grammarInfo = grammarInfos[index] ?? null;
-        const dictionarySelection =
-          entryKey
-            ? {
-                entryKey,
-                strongs: token.strongs ?? null,
-                lemma: token.lemma,
-                label: token.lemma,
-                occurrenceKey,
-                selectedForm: token.surface,
-                selectedFormMorphology: token.morphology ?? null,
-                selectedFormDecodedMorphology: token.decodedMorphology ?? null,
-                matchedQuery: token.surface,
-                transliteration:
-                  token.transliteration ?? transliterateGreekSurface(token.surface),
-                gloss: token.gloss ?? null
-              }
-            : null;
-
         return (
           <span className="verse-greek-inline-wrap" key={`${verse.number}:${index}:${token.surface}`}>
             <span className="verse-greek-inline-head">
@@ -330,8 +295,8 @@ export function GreekVerseTextContent({
                       ? " strongs-token-match"
                       : ""
                   }`}
-                  onClick={() =>
-                    onOpenGreekDictionary({
+                  onClick={() => {
+                    const selection = {
                       entryKey,
                       strongs: token.strongs ?? null,
                       lemma: token.lemma,
@@ -344,8 +309,15 @@ export function GreekVerseTextContent({
                       transliteration:
                         token.transliteration ?? transliterateGreekSurface(token.surface),
                       gloss: token.gloss ?? null
-                    })
-                  }
+                    };
+
+                    if (showGrammarCards && grammarInfo) {
+                      openGreekGrammarDetails({ ...selection, grammar: grammarInfo });
+                      return;
+                    }
+
+                    onOpenGreekDictionary(selection);
+                  }}
                   type="button"
                 >
                   {token.surface}
@@ -404,13 +376,7 @@ export function GreekVerseTextContent({
               <span className="verse-greek-inline-part-of-speech">{partOfSpeechLabel}</span>
             ) : null}
             {showGrammarCards && grammarInfo ? (
-              <GreekGrammarCard
-                grammar={grammarInfo}
-                selection={dictionarySelection ?? {
-                  entryKey: token.lemma,
-                  lemma: token.lemma
-                }}
-              />
+              <GreekGrammarCard grammar={grammarInfo} />
             ) : null}
           </span>
         );

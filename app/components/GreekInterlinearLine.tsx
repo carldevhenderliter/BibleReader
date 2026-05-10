@@ -43,7 +43,7 @@ export function GreekInterlinearLine({
   showGrammarCards = false,
   showExpandedGrammarDetails = false
 }: GreekInterlinearLineProps) {
-  const { isGreekLearningMode } = useReaderWorkspace();
+  const { isGreekLearningMode, openGreekGrammarDetails } = useReaderWorkspace();
   const { clearOverride, getOverride, saveOverride } = useGreekGlossOverrides();
   const [entriesByKey, setEntriesByKey] = useState<Record<string, GreekLemmaEntry>>({});
   const greekLearningSelections = useMemo(
@@ -206,7 +206,17 @@ export function GreekInterlinearLine({
               <button
                 aria-label={`${token.surface} ${token.lemma} ${token.strongs ?? ""}`.trim()}
                 className="verse-greek-token"
-                onClick={() => onOpenGreekDictionary(tokenWithOccurrenceKey)}
+                onClick={() => {
+                  if (showGrammarCards && grammarInfo) {
+                    openGreekGrammarDetails({
+                      ...dictionarySelection,
+                      grammar: grammarInfo
+                    });
+                    return;
+                  }
+
+                  onOpenGreekDictionary(tokenWithOccurrenceKey);
+                }}
                 type="button"
               >
                 {showSurface ? (
@@ -242,10 +252,7 @@ export function GreekInterlinearLine({
                 <span className="verse-greek-gloss-readonly">{savedGloss}</span>
               ) : null}
               {showGrammarCards && grammarInfo ? (
-                <GreekGrammarCard
-                  grammar={grammarInfo}
-                  selection={dictionarySelection}
-                />
+                <GreekGrammarCard grammar={grammarInfo} />
               ) : null}
               {isGreekLearningMode && isSentenceQuizActive ? (
                 <div

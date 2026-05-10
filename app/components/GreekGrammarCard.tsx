@@ -1,24 +1,11 @@
 "use client";
 
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
-import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
-import type { GreekDictionarySelection, GreekGrammarInfo } from "@/lib/bible/types";
+import type { GreekGrammarInfo } from "@/lib/bible/types";
 
 type GreekGrammarCardProps = {
   grammar: GreekGrammarInfo;
-  selection: GreekDictionarySelection;
 };
-
-function hasExpandedContent(grammar: GreekGrammarInfo) {
-  return (
-    Boolean(grammar.expandedInfo.fullMorphology) ||
-    grammar.expandedInfo.functionHints.length > 0 ||
-    Boolean(grammar.expandedInfo.paradigmPattern) ||
-    grammar.expandedInfo.exampleForms.length > 0 ||
-    Boolean(grammar.expandedInfo.linkedPhrase) ||
-    grammar.expandedInfo.details.length > 0
-  );
-}
 
 export function GreekGrammarDetailsContent({
   grammar
@@ -112,10 +99,8 @@ export function GreekGrammarDetailsContent({
   );
 }
 
-export function GreekGrammarCard({ grammar, selection }: GreekGrammarCardProps) {
+export function GreekGrammarCard({ grammar }: GreekGrammarCardProps) {
   const { settings } = useReaderCustomization();
-  const { openGreekGrammarDetails } = useReaderWorkspace();
-  const canExpand = hasExpandedContent(grammar);
   const showPartOfSpeech = settings.showGreekGrammarPartOfSpeech && Boolean(grammar.quickInfo.partOfSpeech);
   const showLemma = settings.showGreekGrammarLemma;
   const showGloss = settings.showGreekGrammarGloss && Boolean(grammar.quickInfo.gloss);
@@ -150,16 +135,6 @@ export function GreekGrammarCard({ grammar, selection }: GreekGrammarCardProps) 
             </p>
           ) : null}
         </div>
-      ) : null}
-      {canExpand ? (
-        <button
-          aria-label={`Open grammar details for ${selection.selectedForm ?? selection.lemma}`}
-          className="greek-grammar-card-toggle"
-          onClick={() => openGreekGrammarDetails({ ...selection, grammar })}
-          type="button"
-        >
-          More
-        </button>
       ) : null}
     </div>
   );

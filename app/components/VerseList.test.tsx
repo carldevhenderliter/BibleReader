@@ -307,7 +307,7 @@ describe("VerseList", () => {
     expect((await screen.findAllByText("Lemma")).length).toBeGreaterThan(0);
     expect((await screen.findAllByText("Accusative Singular Masculine")).length).toBeGreaterThan(0);
 
-    fireEvent.click(screen.getAllByRole("button", { name: /open grammar details for τόν/i })[0]);
+    fireEvent.click(screen.getAllByRole("button", { name: /τόν ὁ G3588/i })[0]);
 
     await waitFor(() => {
       expect(screen.getByRole("tab", { name: "Grammar" })).toHaveAttribute("aria-selected", "true");
@@ -427,7 +427,7 @@ describe("VerseList", () => {
     expect(within(studyPane).getByText("Example: λογου = of the word")).toBeInTheDocument();
   });
 
-  it("keeps Greek word clicks opening the study pane when grammar cards are enabled", async () => {
+  it("opens the grammar pane from Greek word clicks when grammar cards are enabled", async () => {
     renderWithReaderCustomization(
       <>
         <VerseList
@@ -444,7 +444,11 @@ describe("VerseList", () => {
     fireEvent.click(await screen.findByRole("button", { name: /ἀρχῆς ἀρχή G746/i }));
 
     const studyPane = screen.getByLabelText("Study pane");
-    expect(await within(studyPane).findByRole("heading", { name: "ἀρχή" })).toBeInTheDocument();
+    expect(await within(studyPane).findByRole("tab", { name: "Grammar" })).toHaveAttribute(
+      "aria-selected",
+      "true"
+    );
+    expect(await within(studyPane).findByRole("button", { name: "ἀρχή" })).toBeInTheDocument();
   });
 
   it("shows transliteration and gloss lines for the standalone Greek version", async () => {
@@ -483,7 +487,7 @@ describe("VerseList", () => {
     expect(screen.getByLabelText("English gloss for ἀρχῇ")).toHaveValue("");
   });
 
-  it("shows a More button for standalone Greek grammar cards", async () => {
+  it("does not render a More button for standalone Greek grammar cards", async () => {
     window.localStorage.setItem(READER_VERSION_STORAGE_KEY, "greek");
 
     renderWithReaderCustomization(
@@ -512,10 +516,10 @@ describe("VerseList", () => {
       />
     );
 
+    expect((await screen.findAllByText("Gloss")).length).toBeGreaterThan(0);
     expect(
-      (await screen.findAllByRole("button", { name: /open grammar details for ἐγένετο/i }))
-        .length
-    ).toBeGreaterThan(0);
+      screen.queryByRole("button", { name: /open grammar details for ἐγένετο/i })
+    ).not.toBeInTheDocument();
   });
 
   it("shows only the selected grammar quick fields under Greek words", async () => {
