@@ -149,6 +149,7 @@ export const DEFAULT_READER_CUSTOMIZATION: ReaderCustomizationSettings = {
   showCompanionVerseTranslation: true,
   showSecondaryVerseTranslation: false,
   secondaryVerseTranslationVersion: "web",
+  secondaryVerseTranslationVersions: [],
   showAnnotatedGreekUndertext: true,
   showGreekSurface: true,
   showGreekLemma: true,
@@ -258,6 +259,18 @@ function isBundledBibleVersionOption(value: unknown): value is ReaderCustomizati
     value === "esv" ||
     value === "greek" ||
     value === "tr"
+  );
+}
+
+function normalizeBundledBibleVersionOptions(
+  value: unknown
+): ReaderCustomizationSettings["secondaryVerseTranslationVersions"] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return Array.from(
+    new Set(value.filter(isBundledBibleVersionOption))
   );
 }
 
@@ -401,6 +414,12 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
     )
       ? candidate.secondaryVerseTranslationVersion
       : DEFAULT_READER_CUSTOMIZATION.secondaryVerseTranslationVersion,
+    secondaryVerseTranslationVersions:
+      normalizeBundledBibleVersionOptions(candidate.secondaryVerseTranslationVersions).length > 0
+        ? normalizeBundledBibleVersionOptions(candidate.secondaryVerseTranslationVersions)
+        : isBundledBibleVersionOption(candidate.secondaryVerseTranslationVersion)
+          ? [candidate.secondaryVerseTranslationVersion]
+          : DEFAULT_READER_CUSTOMIZATION.secondaryVerseTranslationVersions,
     showAnnotatedGreekUndertext:
       typeof candidate.showAnnotatedGreekUndertext === "boolean"
         ? candidate.showAnnotatedGreekUndertext

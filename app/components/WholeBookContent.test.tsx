@@ -946,7 +946,7 @@ describe("WholeBookContent", () => {
       JSON.stringify({
         ...DEFAULT_READER_CUSTOMIZATION,
         showSecondaryVerseTranslation: true,
-        secondaryVerseTranslationVersion: "kjv"
+        secondaryVerseTranslationVersions: ["kjv", "nlt"]
       })
     );
 
@@ -954,13 +954,17 @@ describe("WholeBookContent", () => {
       <WholeBookContent
         book={books[0]}
         books={books}
-        chaptersByVersion={{ web: chapters, kjv: kjvChapters }}
+        chaptersByVersion={{ web: chapters, kjv: kjvChapters, nlt: nltChapters }}
       />
     );
 
     expect(screen.getByText("Jude, a servant of Jesus Christ...")).toBeInTheDocument();
     expect(screen.getByText("Jude, the servant of Jesus Christ...")).toBeInTheDocument();
+    expect(
+      screen.getByText("This letter is from Jude, a slave of Jesus Christ...")
+    ).toBeInTheDocument();
     expect(screen.getAllByText("KJV").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("NLT").length).toBeGreaterThan(0);
   });
 
   it("highlights and scrolls to the requested verse in whole-book view", () => {

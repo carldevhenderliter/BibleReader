@@ -1,4 +1,4 @@
-import { fireEvent, screen } from "@testing-library/react";
+import { fireEvent, screen, within } from "@testing-library/react";
 
 import { ReaderPageContent } from "@/app/components/ReaderPageContent";
 import type { BookMeta, Chapter } from "@/lib/bible/types";
@@ -137,16 +137,17 @@ describe("Reader customization", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
     fireEvent.click(screen.getByRole("button", { name: /Under-verse version/i }));
-    fireEvent.change(screen.getByLabelText("Under-verse version"), {
-      target: {
-        value: "kjv"
-      }
-    });
+    fireEvent.click(
+      within(screen.getByRole("group", { name: "Under-verse versions" })).getByRole(
+        "button",
+        { name: "KJV" }
+      )
+    );
 
     const stored = window.localStorage.getItem(READER_CUSTOMIZATION_STORAGE_KEY) ?? "";
 
     expect(stored).toContain('"showSecondaryVerseTranslation":true');
-    expect(stored).toContain('"secondaryVerseTranslationVersion":"kjv"');
+    expect(stored).toContain('"secondaryVerseTranslationVersions":["esv","kjv"]');
   });
 
   it("opens advanced settings and persists unrestricted layout spacing values", () => {

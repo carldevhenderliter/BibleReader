@@ -1781,6 +1781,10 @@ button.fathers-annotation-anchor:focus-visible {
   text-transform: uppercase;
 }
 
+.verse-text-secondary-translation {
+  color: rgba(214, 229, 246, 0.88);
+}
+
 .verse-greek-inline-wrap {
   display: inline-flex;
   flex-direction: column;

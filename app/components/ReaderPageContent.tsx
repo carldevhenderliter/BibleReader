@@ -43,7 +43,7 @@ import type {
   EsvInterlinearDisplayChapter
 } from "@/lib/bible/types";
 import { getChapterHref } from "@/lib/bible/utils";
-import { getAlternateBundledVersion, getBibleVersionBadge } from "@/lib/bible/version";
+import { getAlternateBundledVersions, getBibleVersionBadge } from "@/lib/bible/version";
 
 function parsePositiveNumber(value: string | null) {
   if (!value || !/^\d+$/.test(value)) {
@@ -114,18 +114,22 @@ export function ReaderPageContent({
   const availableSecondaryVersions = Object.entries(chaptersByVersion)
     .filter(([, candidateChapter]) => Boolean(candidateChapter))
     .map(([candidateVersion]) => candidateVersion as BundledBibleVersion);
-  const secondaryVerseVersion = settings.showSecondaryVerseTranslation
-    ? getAlternateBundledVersion(
+  const secondaryVerseVersions = settings.showSecondaryVerseTranslation
+    ? getAlternateBundledVersions(
         effectiveVersion,
-        settings.secondaryVerseTranslationVersion,
-        availableSecondaryVersions
+        settings.secondaryVerseTranslationVersions,
+        availableSecondaryVersions,
+        settings.secondaryVerseTranslationVersion
       )
-    : null;
-  const secondaryChapter =
-    secondaryVerseVersion ? chaptersByVersion[secondaryVerseVersion] ?? null : null;
-  const secondaryVersesByNumber = secondaryChapter
-    ? Object.fromEntries(secondaryChapter.verses.map((verse) => [verse.number, verse]))
-    : undefined;
+    : [];
+  const secondaryVersesByVersion = Object.fromEntries(
+    secondaryVerseVersions.map((secondaryVerseVersion) => [
+      secondaryVerseVersion,
+      Object.fromEntries(
+        (chaptersByVersion[secondaryVerseVersion]?.verses ?? []).map((verse) => [verse.number, verse])
+      )
+    ])
+  ) as Partial<Record<BundledBibleVersion, Record<number, Chapter["verses"][number]>>>;
   const interlinearVerseMap = showEsvInterlinear || showKjvGreekCompanion
     ? Object.fromEntries(
         esvInterlinearChapter.verses.map((verse) => [verse.number, verse])
@@ -447,8 +451,8 @@ export function ReaderPageContent({
               showGreekLemma={settings.showGreekLemma}
               showGreekSurface={settings.showGreekSurface}
               showGreekTransliteration={settings.showGreekTransliteration}
-              secondaryVerseVersion={secondaryVerseVersion}
-              secondaryVersesByNumber={secondaryVersesByNumber}
+              secondaryVerseVersions={secondaryVerseVersions}
+              secondaryVersesByVersion={secondaryVersesByVersion}
               showStrongs={showStrongs}
               showVerseStrongs={showVerseStrongs}
               showVerseNumbers={settings.showVerseNumbers}

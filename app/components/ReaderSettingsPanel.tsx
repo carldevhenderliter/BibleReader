@@ -27,7 +27,8 @@ import {
 import { getViewToggleHref } from "@/lib/bible/utils";
 import { GOSPEL_HARMONY_BOOK_SLUG } from "@/lib/gospel-harmony";
 import {
-  getAlternateBundledVersion,
+  getAlternateBundledVersions,
+  getBibleVersionLabel,
   getBibleVersionOptions,
   isInstalledBundledBibleVersion
 } from "@/lib/bible/version";
@@ -44,6 +45,21 @@ const TEXT_ALIGNMENT_OPTIONS = [
     description: "Creates a denser page-like reading block."
   }
 ] as const;
+
+function getNextSelectedVersions(
+  selectedVersions: readonly BundledBibleVersion[],
+  toggledVersion: BundledBibleVersion
+) {
+  if (selectedVersions.includes(toggledVersion)) {
+    if (selectedVersions.length === 1) {
+      return [...selectedVersions];
+    }
+
+    return selectedVersions.filter((version) => version !== toggledVersion);
+  }
+
+  return [...selectedVersions, toggledVersion];
+}
 
 type NumericFieldProps = {
   label: string;
@@ -192,12 +208,13 @@ export function ReaderSettingsPanel({
           (option): option is BundledBibleVersion =>
             option !== version && isInstalledBundledBibleVersion(option)
         );
-  const selectedSecondaryVersion = isFathersMode
-    ? null
-    : getAlternateBundledVersion(
+  const selectedSecondaryVersions = isFathersMode
+    ? []
+    : getAlternateBundledVersions(
         version,
-        settings.secondaryVerseTranslationVersion,
-        availableSecondaryVersions
+        settings.secondaryVerseTranslationVersions,
+        availableSecondaryVersions,
+        settings.secondaryVerseTranslationVersion
       );
 
   const handleVersionChange = (nextVersion: string) => {
@@ -254,6 +271,7 @@ export function ReaderSettingsPanel({
         showVerseText: true,
         showCompanionVerseTranslation: isStandaloneGreekVersion,
         showSecondaryVerseTranslation: false,
+        secondaryVerseTranslationVersions: [],
         showAnnotatedGreekUndertext: false,
         showGreekSurface: false,
         showGreekLemma: false,
@@ -278,6 +296,7 @@ export function ReaderSettingsPanel({
         showVerseText: true,
         showCompanionVerseTranslation: !isFathersMode,
         showSecondaryVerseTranslation: false,
+        secondaryVerseTranslationVersions: [],
         showAnnotatedGreekUndertext: true,
         showGreekSurface: true,
         showGreekLemma: true,
@@ -299,6 +318,7 @@ export function ReaderSettingsPanel({
       showVerseText: true,
       showCompanionVerseTranslation: false,
       showSecondaryVerseTranslation: false,
+      secondaryVerseTranslationVersions: [],
       showAnnotatedGreekUndertext: false,
       showGreekSurface: false,
       showGreekLemma: false,
@@ -681,7 +701,7 @@ export function ReaderSettingsPanel({
                     className={`settings-option-card${
                       settings.showSecondaryVerseTranslation ? " is-active" : ""
                     }`}
-                    disabled={!selectedSecondaryVersion}
+                    disabled={availableSecondaryVersions.length === 0}
                     key="showSecondaryVerseTranslation"
                     onClick={() => toggleLayer("showSecondaryVerseTranslation")}
                     type="button"
@@ -837,41 +857,42 @@ export function ReaderSettingsPanel({
                   </button>
                 ) : null}
             </div>
-            {!isFathersMode && selectedSecondaryVersion ? (
+            {!isFathersMode && availableSecondaryVersions.length > 0 ? (
               <div className="reader-settings-field-grid">
-                <label
-                  className="reader-settings-field"
-                  htmlFor="reader-menu-secondary-translation-version"
-                >
-                  <span>Under-verse version</span>
-                  <select
-                    aria-label="Under-verse version"
-                    id="reader-menu-secondary-translation-version"
-                    onChange={(event) =>
-                      updateSettings({
-                        secondaryVerseTranslationVersion:
-                          event.target.value as BundledBibleVersion
-                      })
-                    }
-                    value={selectedSecondaryVersion}
+                <div className="reader-settings-field">
+                  <span>Under-verse versions</span>
+                  <div
+                    aria-label="Under-verse versions"
+                    className="reader-settings-shortcuts"
+                    role="group"
                   >
                     {availableSecondaryVersions.map((candidateVersion) => {
-                      const option = versionOptions.find(
-                        (versionOption) => versionOption.id === candidateVersion
-                      );
-
-                      if (!option) {
-                        return null;
-                      }
+                      const isSelected =
+                        selectedSecondaryVersions.includes(candidateVersion);
 
                       return (
-                        <option key={option.id} value={option.id}>
-                          {option.label}
-                        </option>
+                        <button
+                          aria-pressed={isSelected}
+                          className={`reader-inline-button reader-settings-link${
+                            isSelected ? " is-active" : ""
+                          }`}
+                          key={candidateVersion}
+                          onClick={() =>
+                            updateSettings({
+                              secondaryVerseTranslationVersions: getNextSelectedVersions(
+                                selectedSecondaryVersions,
+                                candidateVersion
+                              )
+                            })
+                          }
+                          type="button"
+                        >
+                          {getBibleVersionLabel(candidateVersion)}
+                        </button>
                       );
                     })}
-                  </select>
-                </label>
+                  </div>
+                </div>
               </div>
             ) : null}
           </div>

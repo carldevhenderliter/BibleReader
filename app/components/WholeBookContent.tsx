@@ -45,7 +45,7 @@ import type {
   Verse
 } from "@/lib/bible/types";
 import { getBookHref } from "@/lib/bible/utils";
-import { getAlternateBundledVersion, getBibleVersionBadge } from "@/lib/bible/version";
+import { getAlternateBundledVersions, getBibleVersionBadge } from "@/lib/bible/version";
 
 function parsePositiveNumber(value: string | null) {
   if (!value || !/^\d+$/.test(value)) {
@@ -90,8 +90,8 @@ type LazyBookChapterSectionProps = {
   showGreekLemma: boolean;
   showGreekSurface: boolean;
   showGreekTransliteration: boolean;
-  secondaryVerseVersion: BundledBibleVersion | null;
-  secondaryVersesByNumber?: Record<number, Verse>;
+  secondaryVerseVersions: readonly BundledBibleVersion[];
+  secondaryVersesByVersion?: Partial<Record<BundledBibleVersion, Record<number, Verse>>>;
   showStrongs: boolean;
   showVerseStrongs: boolean;
   showChapterHeadings: boolean;
@@ -118,8 +118,8 @@ function LazyBookChapterSection({
   showGreekLemma,
   showGreekSurface,
   showGreekTransliteration,
-  secondaryVerseVersion,
-  secondaryVersesByNumber,
+  secondaryVerseVersions,
+  secondaryVersesByVersion,
   showStrongs,
   showVerseStrongs,
   showChapterHeadings,
@@ -210,8 +210,8 @@ function LazyBookChapterSection({
           showGreekLemma={showGreekLemma}
           showGreekSurface={showGreekSurface}
           showGreekTransliteration={showGreekTransliteration}
-          secondaryVerseVersion={secondaryVerseVersion}
-          secondaryVersesByNumber={secondaryVersesByNumber}
+          secondaryVerseVersions={secondaryVerseVersions}
+          secondaryVersesByVersion={secondaryVersesByVersion}
           showStrongs={showStrongs}
           showVerseStrongs={showVerseStrongs}
           showVerseNumbers={showVerseNumbers}
@@ -277,27 +277,14 @@ export function WholeBookContent({
   const availableSecondaryVersions = Object.entries(chaptersByVersion)
     .filter(([, candidateChapters]) => Boolean(candidateChapters?.length))
     .map(([candidateVersion]) => candidateVersion as BundledBibleVersion);
-  const secondaryVerseVersion = settings.showSecondaryVerseTranslation
-    ? getAlternateBundledVersion(
+  const secondaryVerseVersions = settings.showSecondaryVerseTranslation
+    ? getAlternateBundledVersions(
         effectiveVersion,
-        settings.secondaryVerseTranslationVersion,
-        availableSecondaryVersions
+        settings.secondaryVerseTranslationVersions,
+        availableSecondaryVersions,
+        settings.secondaryVerseTranslationVersion
       )
-    : null;
-  const secondaryBookChapters =
-    secondaryVerseVersion ? chaptersByVersion[secondaryVerseVersion] ?? null : null;
-  const secondaryChaptersByNumber = useMemo(
-    () =>
-      Object.fromEntries(
-        (secondaryBookChapters ?? []).map((secondaryChapter) => [
-          secondaryChapter.chapterNumber,
-          Object.fromEntries(
-            secondaryChapter.verses.map((verse) => [verse.number, verse])
-          ) as Record<number, Verse>
-        ])
-      ) as Record<number, Record<number, Verse>>,
-    [secondaryBookChapters]
-  );
+    : [];
   const interlinearByChapter = showEsvInterlinear || showKjvGreekCompanion
     ? new Map(
         (esvInterlinearBook ?? []).map((chapter) => [
@@ -691,8 +678,20 @@ export function WholeBookContent({
                 showGreekLemma={settings.showGreekLemma}
                 showGreekSurface={settings.showGreekSurface}
                 showGreekTransliteration={settings.showGreekTransliteration}
-                secondaryVerseVersion={secondaryVerseVersion}
-                secondaryVersesByNumber={secondaryChaptersByNumber[chapter.chapterNumber]}
+                secondaryVerseVersions={secondaryVerseVersions}
+                secondaryVersesByVersion={Object.fromEntries(
+                  secondaryVerseVersions.map((secondaryVerseVersion) => [
+                    secondaryVerseVersion,
+                    Object.fromEntries(
+                      (
+                        chaptersByVersion[secondaryVerseVersion]?.find(
+                          (secondaryChapter) =>
+                            secondaryChapter.chapterNumber === chapter.chapterNumber
+                        )?.verses ?? []
+                      ).map((verse) => [verse.number, verse])
+                    ) as Record<number, Verse>
+                  ])
+                )}
                 showStrongs={showStrongs}
                 showVerseStrongs={showVerseStrongs}
                 showChapterHeadings={settings.showChapterHeadings}

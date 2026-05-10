@@ -92,8 +92,8 @@ type VerseListProps = {
     start: number;
     end: number;
   } | null;
-  secondaryVerseVersion?: BundledBibleVersion | null;
-  secondaryVersesByNumber?: Record<number, Verse>;
+  secondaryVerseVersions?: readonly BundledBibleVersion[];
+  secondaryVersesByVersion?: Partial<Record<BundledBibleVersion, Record<number, Verse>>>;
   showStrongs?: boolean;
   showVerseStrongs?: boolean;
   verses: Verse[];
@@ -205,8 +205,8 @@ export function VerseList({
   annotationMode = false,
   highlightedVerseNumber,
   highlightedVerseRange,
-  secondaryVerseVersion = null,
-  secondaryVersesByNumber,
+  secondaryVerseVersions = [],
+  secondaryVersesByVersion,
   showStrongs = false,
   showVerseStrongs = true,
   verses
@@ -263,11 +263,19 @@ export function VerseList({
         const verseKey = getBibleVerseAnnotationKey(bookSlug, chapterNumber, verse.number);
         const verseAnnotations = getVerseAnnotations(verseKey);
         const activeGreekTokens = activeGreekVerse?.tokens ?? verse.greekTokens ?? [];
-        const secondaryVerse = secondaryVersesByNumber?.[verse.number] ?? null;
-        const shouldShowSecondaryVerse =
-          showSecondaryVerseTranslation &&
-          secondaryVerseVersion !== null &&
-          Boolean(secondaryVerse?.text.trim());
+        const activeSecondaryVerses = showSecondaryVerseTranslation
+          ? secondaryVerseVersions
+              .map((secondaryVerseVersion) => ({
+                version: secondaryVerseVersion,
+                verse: secondaryVersesByVersion?.[secondaryVerseVersion]?.[verse.number] ?? null
+              }))
+              .filter(
+                (
+                  secondaryVerse
+                ): secondaryVerse is { version: BundledBibleVersion; verse: Verse } =>
+                  Boolean(secondaryVerse.verse?.text.trim())
+              )
+          : [];
         const esvEnglishStrongsMatches =
           version === "esv" && activeGreekVerse?.tokens?.length
             ? buildEsvEnglishStrongsMatches(verse.text, activeGreekVerse.tokens)
@@ -558,16 +566,16 @@ export function VerseList({
                       )}
                     </>
                   ) : null}
-                  {shouldShowSecondaryVerse && secondaryVerse ? (
-                    <div className="verse-secondary-version-block">
+                  {activeSecondaryVerses.map(({ version: secondaryVerseVersion, verse: secondaryVerse }) => (
+                    <div className="verse-secondary-version-block" key={`${verse.number}:${secondaryVerseVersion}`}>
                       <p className="verse-secondary-version-label">
                         {getBibleVersionLabel(secondaryVerseVersion)}
                       </p>
-                      <p className="verse-text verse-text-companion-translation">
+                      <p className="verse-text verse-text-body verse-text-secondary-translation">
                         {secondaryVerse.text}
                       </p>
                     </div>
-                  ) : null}
+                  ))}
                 </>
               ) : null}
               {activeGreekVerse && shouldShowGreekTokens ? (

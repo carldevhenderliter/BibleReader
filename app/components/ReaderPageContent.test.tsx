@@ -357,7 +357,7 @@ describe("ReaderPageContent", () => {
       READER_CUSTOMIZATION_STORAGE_KEY,
       JSON.stringify({
         showSecondaryVerseTranslation: true,
-        secondaryVerseTranslationVersion: "kjv"
+        secondaryVerseTranslationVersions: ["kjv", "esv"]
       })
     );
 
@@ -365,17 +365,21 @@ describe("ReaderPageContent", () => {
       <ReaderPageContent
         book={books[0]}
         books={books}
-        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter, esv: esvChapter }}
       />
     );
 
     expect(
-      screen.getByText("In the beginning, God created the heavens and the earth.")
-    ).toBeInTheDocument();
+      screen.getAllByText("In the beginning, God created the heavens and the earth.").length
+    ).toBeGreaterThan(1);
     expect(
       screen.getByText("In the beginning God created the heaven and the earth.")
     ).toBeInTheDocument();
+    expect(
+      screen.getAllByText("In the beginning, God created the heavens and the earth.").length
+    ).toBeGreaterThan(1);
     expect(screen.getAllByText("KJV").length).toBeGreaterThan(0);
+    expect(screen.getAllByText("ESV").length).toBeGreaterThan(0);
   });
 
   it("copies the visible chapter reading text from the toolbar", async () => {

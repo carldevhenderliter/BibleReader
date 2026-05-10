@@ -88,6 +88,7 @@ export type ReaderCustomizationSettings = {
   showCompanionVerseTranslation: boolean;
   showSecondaryVerseTranslation: boolean;
   secondaryVerseTranslationVersion: BundledBibleVersion;
+  secondaryVerseTranslationVersions: BundledBibleVersion[];
   showAnnotatedGreekUndertext: boolean;
   showGreekSurface: boolean;
   showGreekLemma: boolean;

@@ -163,6 +163,40 @@ export function getAlternateBundledVersion(
   );
 }
 
+export function getAlternateBundledVersions(
+  currentVersion: BundledBibleVersion,
+  preferredVersions: readonly BundledBibleVersion[],
+  installedVersions: readonly BundledBibleVersion[] = INSTALLED_BUNDLED_BIBLE_VERSIONS,
+  fallbackPreferredVersion: BundledBibleVersion = "web"
+): BundledBibleVersion[] {
+  const availableVersions = installedVersions.filter((version) => version !== currentVersion);
+
+  if (availableVersions.length === 0) {
+    return [];
+  }
+
+  const normalizedPreferredVersions = Array.from(
+    new Set(
+      preferredVersions.filter(
+        (version): version is BundledBibleVersion =>
+          version !== currentVersion && availableVersions.includes(version)
+      )
+    )
+  );
+
+  if (normalizedPreferredVersions.length > 0) {
+    return normalizedPreferredVersions;
+  }
+
+  const fallbackVersion = getAlternateBundledVersion(
+    currentVersion,
+    fallbackPreferredVersion,
+    installedVersions
+  );
+
+  return fallbackVersion ? [fallbackVersion] : [];
+}
+
 export function resolveBibleVersion(value: unknown): BibleVersion | null {
   if (value == null || value === "") {
     return DEFAULT_BIBLE_VERSION;
