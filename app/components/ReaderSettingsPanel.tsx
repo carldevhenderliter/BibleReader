@@ -11,6 +11,7 @@ import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import type {
   BookMeta,
+  BundledBibleVersion,
   ReaderCustomizationSettings,
   ReadingView,
   ReaderPreset,
@@ -25,7 +26,11 @@ import {
 } from "@/lib/reader-customization";
 import { getViewToggleHref } from "@/lib/bible/utils";
 import { GOSPEL_HARMONY_BOOK_SLUG } from "@/lib/gospel-harmony";
-import { getBibleVersionOptions, isInstalledBundledBibleVersion } from "@/lib/bible/version";
+import {
+  getAlternateBundledVersion,
+  getBibleVersionOptions,
+  isInstalledBundledBibleVersion
+} from "@/lib/bible/version";
 
 const TEXT_ALIGNMENT_OPTIONS = [
   {
@@ -179,6 +184,21 @@ export function ReaderSettingsPanel({
     settings.showGreekLemma ||
     settings.showGreekTransliteration ||
     settings.showGreekGloss;
+  const availableSecondaryVersions = isFathersMode
+    ? []
+    : versionOptions
+        .map((option) => option.id)
+        .filter(
+          (option): option is BundledBibleVersion =>
+            option !== version && isInstalledBundledBibleVersion(option)
+        );
+  const selectedSecondaryVersion = isFathersMode
+    ? null
+    : getAlternateBundledVersion(
+        version,
+        settings.secondaryVerseTranslationVersion,
+        availableSecondaryVersions
+      );
 
   const handleVersionChange = (nextVersion: string) => {
     if (!isInstalledBundledBibleVersion(nextVersion) || nextVersion === version) {
@@ -233,6 +253,7 @@ export function ReaderSettingsPanel({
         showChapterHeadings: false,
         showVerseText: true,
         showCompanionVerseTranslation: isStandaloneGreekVersion,
+        showSecondaryVerseTranslation: false,
         showAnnotatedGreekUndertext: false,
         showGreekSurface: false,
         showGreekLemma: false,
@@ -256,6 +277,7 @@ export function ReaderSettingsPanel({
         showChapterHeadings: true,
         showVerseText: true,
         showCompanionVerseTranslation: !isFathersMode,
+        showSecondaryVerseTranslation: false,
         showAnnotatedGreekUndertext: true,
         showGreekSurface: true,
         showGreekLemma: true,
@@ -276,6 +298,7 @@ export function ReaderSettingsPanel({
       showChapterHeadings: false,
       showVerseText: true,
       showCompanionVerseTranslation: false,
+      showSecondaryVerseTranslation: false,
       showAnnotatedGreekUndertext: false,
       showGreekSurface: false,
       showGreekLemma: false,
@@ -295,6 +318,7 @@ export function ReaderSettingsPanel({
       | "showVerseText"
       | "showChapterHeadings"
       | "showCompanionVerseTranslation"
+      | "showSecondaryVerseTranslation"
       | "showAnnotatedGreekUndertext"
       | "showVerseStrongs"
       | "showCustomVerseTranslation"
@@ -655,6 +679,20 @@ export function ReaderSettingsPanel({
                 {!isFathersMode ? (
                   <button
                     className={`settings-option-card${
+                      settings.showSecondaryVerseTranslation ? " is-active" : ""
+                    }`}
+                    disabled={!selectedSecondaryVersion}
+                    key="showSecondaryVerseTranslation"
+                    onClick={() => toggleLayer("showSecondaryVerseTranslation")}
+                    type="button"
+                  >
+                    <strong>Under-verse version</strong>
+                    <span>Show another selected Bible version directly under each verse.</span>
+                  </button>
+                ) : null}
+                {!isFathersMode ? (
+                  <button
+                    className={`settings-option-card${
                       settings.showAnnotatedGreekUndertext ? " is-active" : ""
                     }`}
                     key="showAnnotatedGreekUndertext"
@@ -799,6 +837,43 @@ export function ReaderSettingsPanel({
                   </button>
                 ) : null}
             </div>
+            {!isFathersMode && selectedSecondaryVersion ? (
+              <div className="reader-settings-field-grid">
+                <label
+                  className="reader-settings-field"
+                  htmlFor="reader-menu-secondary-translation-version"
+                >
+                  <span>Under-verse version</span>
+                  <select
+                    aria-label="Under-verse version"
+                    id="reader-menu-secondary-translation-version"
+                    onChange={(event) =>
+                      updateSettings({
+                        secondaryVerseTranslationVersion:
+                          event.target.value as BundledBibleVersion
+                      })
+                    }
+                    value={selectedSecondaryVersion}
+                  >
+                    {availableSecondaryVersions.map((candidateVersion) => {
+                      const option = versionOptions.find(
+                        (versionOption) => versionOption.id === candidateVersion
+                      );
+
+                      if (!option) {
+                        return null;
+                      }
+
+                      return (
+                        <option key={option.id} value={option.id}>
+                          {option.label}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </label>
+              </div>
+            ) : null}
           </div>
           <div className="reader-settings-subsection">
             <p className="reader-settings-subsection-label">Reading shortcuts</p>

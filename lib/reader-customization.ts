@@ -147,6 +147,8 @@ export const DEFAULT_READER_CUSTOMIZATION: ReaderCustomizationSettings = {
   showChapterHeadings: true,
   showVerseText: true,
   showCompanionVerseTranslation: true,
+  showSecondaryVerseTranslation: false,
+  secondaryVerseTranslationVersion: "web",
   showAnnotatedGreekUndertext: true,
   showGreekSurface: true,
   showGreekLemma: true,
@@ -246,6 +248,17 @@ function isTextAlignOption(value: unknown): value is TextAlignOption {
 
 function isReaderPreset(value: unknown): value is ReaderPreset {
   return value === "reading" || value === "study" || value === "audio" || value === "custom";
+}
+
+function isBundledBibleVersionOption(value: unknown): value is ReaderCustomizationSettings["secondaryVerseTranslationVersion"] {
+  return (
+    value === "web" ||
+    value === "kjv" ||
+    value === "nlt" ||
+    value === "esv" ||
+    value === "greek" ||
+    value === "tr"
+  );
 }
 
 export function normalizeReaderCustomization(value: unknown): ReaderCustomizationSettings {
@@ -379,6 +392,15 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
             !hasGranularCustomVerseTranslation
           ? false
           : DEFAULT_READER_CUSTOMIZATION.showCompanionVerseTranslation,
+    showSecondaryVerseTranslation:
+      typeof candidate.showSecondaryVerseTranslation === "boolean"
+        ? candidate.showSecondaryVerseTranslation
+        : DEFAULT_READER_CUSTOMIZATION.showSecondaryVerseTranslation,
+    secondaryVerseTranslationVersion: isBundledBibleVersionOption(
+      candidate.secondaryVerseTranslationVersion
+    )
+      ? candidate.secondaryVerseTranslationVersion
+      : DEFAULT_READER_CUSTOMIZATION.secondaryVerseTranslationVersion,
     showAnnotatedGreekUndertext:
       typeof candidate.showAnnotatedGreekUndertext === "boolean"
         ? candidate.showAnnotatedGreekUndertext

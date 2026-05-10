@@ -15,10 +15,12 @@ import {
   getBibleVerseAnnotationKey,
   tokenizeBibleEnglishText
 } from "@/lib/bible/annotations";
+import { getBibleVersionLabel } from "@/lib/bible/version";
 import {
   getGreekTokenOccurrenceKey
 } from "@/lib/bible/greek";
 import type {
+  BundledBibleVersion,
   EnglishUndertextAnnotation,
   EsvInterlinearDisplayVerse,
   GreekToken,
@@ -77,6 +79,7 @@ type VerseListProps = {
   showVerseNumbers?: boolean;
   showVerseText?: boolean;
   showCompanionVerseTranslation?: boolean;
+  showSecondaryVerseTranslation?: boolean;
   showAnnotatedGreekUndertext?: boolean;
   showCustomVerseTranslation?: boolean;
   showGreekSurface?: boolean;
@@ -89,6 +92,8 @@ type VerseListProps = {
     start: number;
     end: number;
   } | null;
+  secondaryVerseVersion?: BundledBibleVersion | null;
+  secondaryVersesByNumber?: Record<number, Verse>;
   showStrongs?: boolean;
   showVerseStrongs?: boolean;
   verses: Verse[];
@@ -190,6 +195,7 @@ export function VerseList({
   showVerseNumbers = true,
   showVerseText,
   showCompanionVerseTranslation = true,
+  showSecondaryVerseTranslation = false,
   showAnnotatedGreekUndertext = true,
   showCustomVerseTranslation = true,
   showGreekSurface = true,
@@ -199,6 +205,8 @@ export function VerseList({
   annotationMode = false,
   highlightedVerseNumber,
   highlightedVerseRange,
+  secondaryVerseVersion = null,
+  secondaryVersesByNumber,
   showStrongs = false,
   showVerseStrongs = true,
   verses
@@ -255,6 +263,11 @@ export function VerseList({
         const verseKey = getBibleVerseAnnotationKey(bookSlug, chapterNumber, verse.number);
         const verseAnnotations = getVerseAnnotations(verseKey);
         const activeGreekTokens = activeGreekVerse?.tokens ?? verse.greekTokens ?? [];
+        const secondaryVerse = secondaryVersesByNumber?.[verse.number] ?? null;
+        const shouldShowSecondaryVerse =
+          showSecondaryVerseTranslation &&
+          secondaryVerseVersion !== null &&
+          Boolean(secondaryVerse?.text.trim());
         const esvEnglishStrongsMatches =
           version === "esv" && activeGreekVerse?.tokens?.length
             ? buildEsvEnglishStrongsMatches(verse.text, activeGreekVerse.tokens)
@@ -544,6 +557,16 @@ export function VerseList({
                         </p>
                       )}
                     </>
+                  ) : null}
+                  {shouldShowSecondaryVerse && secondaryVerse ? (
+                    <div className="verse-secondary-version-block">
+                      <p className="verse-secondary-version-label">
+                        {getBibleVersionLabel(secondaryVerseVersion)}
+                      </p>
+                      <p className="verse-text verse-text-companion-translation">
+                        {secondaryVerse.text}
+                      </p>
+                    </div>
                   ) : null}
                 </>
               ) : null}

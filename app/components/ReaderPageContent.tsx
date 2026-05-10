@@ -43,7 +43,7 @@ import type {
   EsvInterlinearDisplayChapter
 } from "@/lib/bible/types";
 import { getChapterHref } from "@/lib/bible/utils";
-import { getBibleVersionBadge } from "@/lib/bible/version";
+import { getAlternateBundledVersion, getBibleVersionBadge } from "@/lib/bible/version";
 
 function parsePositiveNumber(value: string | null) {
   if (!value || !/^\d+$/.test(value)) {
@@ -111,6 +111,21 @@ export function ReaderPageContent({
     book.testament === "New" &&
     settings.showStrongs &&
     esvInterlinearChapter !== null;
+  const availableSecondaryVersions = Object.entries(chaptersByVersion)
+    .filter(([, candidateChapter]) => Boolean(candidateChapter))
+    .map(([candidateVersion]) => candidateVersion as BundledBibleVersion);
+  const secondaryVerseVersion = settings.showSecondaryVerseTranslation
+    ? getAlternateBundledVersion(
+        effectiveVersion,
+        settings.secondaryVerseTranslationVersion,
+        availableSecondaryVersions
+      )
+    : null;
+  const secondaryChapter =
+    secondaryVerseVersion ? chaptersByVersion[secondaryVerseVersion] ?? null : null;
+  const secondaryVersesByNumber = secondaryChapter
+    ? Object.fromEntries(secondaryChapter.verses.map((verse) => [verse.number, verse]))
+    : undefined;
   const interlinearVerseMap = showEsvInterlinear || showKjvGreekCompanion
     ? Object.fromEntries(
         esvInterlinearChapter.verses.map((verse) => [verse.number, verse])
@@ -426,11 +441,14 @@ export function ReaderPageContent({
               annotationMode={annotationMode}
               showAnnotatedGreekUndertext={settings.showAnnotatedGreekUndertext}
               showCompanionVerseTranslation={settings.showCompanionVerseTranslation}
+              showSecondaryVerseTranslation={settings.showSecondaryVerseTranslation}
               showCustomVerseTranslation={settings.showCustomVerseTranslation}
               showGreekGloss={settings.showGreekGloss}
               showGreekLemma={settings.showGreekLemma}
               showGreekSurface={settings.showGreekSurface}
               showGreekTransliteration={settings.showGreekTransliteration}
+              secondaryVerseVersion={secondaryVerseVersion}
+              secondaryVersesByNumber={secondaryVersesByNumber}
               showStrongs={showStrongs}
               showVerseStrongs={showVerseStrongs}
               showVerseNumbers={settings.showVerseNumbers}

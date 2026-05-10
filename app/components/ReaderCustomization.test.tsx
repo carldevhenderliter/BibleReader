@@ -126,6 +126,29 @@ describe("Reader customization", () => {
     expect(stored).toContain('"thayerTextSize":1.02');
   });
 
+  it("persists the under-verse translation toggle and selected version", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter, kjv: chapter, esv: chapter }}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: /Under-verse version/i }));
+    fireEvent.change(screen.getByLabelText("Under-verse version"), {
+      target: {
+        value: "kjv"
+      }
+    });
+
+    const stored = window.localStorage.getItem(READER_CUSTOMIZATION_STORAGE_KEY) ?? "";
+
+    expect(stored).toContain('"showSecondaryVerseTranslation":true');
+    expect(stored).toContain('"secondaryVerseTranslationVersion":"kjv"');
+  });
+
   it("opens advanced settings and persists unrestricted layout spacing values", () => {
     renderWithReaderCustomization(
       <ReaderPageContent

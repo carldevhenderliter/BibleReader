@@ -1766,6 +1766,21 @@ button.fathers-annotation-anchor:focus-visible {
   text-indent: var(--reader-first-line-indent);
 }
 
+.verse-secondary-version-block {
+  display: grid;
+  gap: 0.18rem;
+}
+
+.verse-secondary-version-label {
+  margin: 0;
+  color: rgba(186, 217, 248, 0.62);
+  font-family: var(--reader-ui-font);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .verse-greek-inline-wrap {
   display: inline-flex;
   flex-direction: column;

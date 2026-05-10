@@ -139,6 +139,30 @@ export function getBibleVersionBadge(version: BibleVersion): string {
   return BIBLE_VERSION_METADATA[version].badge;
 }
 
+export function getAlternateBundledVersion(
+  currentVersion: BundledBibleVersion,
+  preferredVersion: BundledBibleVersion,
+  installedVersions: readonly BundledBibleVersion[] = INSTALLED_BUNDLED_BIBLE_VERSIONS
+): BundledBibleVersion | null {
+  const availableVersions = installedVersions.filter((version) => version !== currentVersion);
+
+  if (availableVersions.length === 0) {
+    return null;
+  }
+
+  if (preferredVersion !== currentVersion && availableVersions.includes(preferredVersion)) {
+    return preferredVersion;
+  }
+
+  return (
+    availableVersions.find((version) => version === "web") ??
+    availableVersions.find((version) => version === "esv") ??
+    availableVersions.find((version) => version === "kjv") ??
+    availableVersions[0] ??
+    null
+  );
+}
+
 export function resolveBibleVersion(value: unknown): BibleVersion | null {
   if (value == null || value === "") {
     return DEFAULT_BIBLE_VERSION;

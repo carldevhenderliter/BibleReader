@@ -940,6 +940,29 @@ describe("WholeBookContent", () => {
     expect(screen.getByText("Jude, a servant of Jesus Christ...")).toBeInTheDocument();
   });
 
+  it("shows a selected under-verse version in whole-book view when enabled", () => {
+    window.localStorage.setItem(
+      READER_CUSTOMIZATION_STORAGE_KEY,
+      JSON.stringify({
+        ...DEFAULT_READER_CUSTOMIZATION,
+        showSecondaryVerseTranslation: true,
+        secondaryVerseTranslationVersion: "kjv"
+      })
+    );
+
+    renderWithReaderCustomization(
+      <WholeBookContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapters, kjv: kjvChapters }}
+      />
+    );
+
+    expect(screen.getByText("Jude, a servant of Jesus Christ...")).toBeInTheDocument();
+    expect(screen.getByText("Jude, the servant of Jesus Christ...")).toBeInTheDocument();
+    expect(screen.getAllByText("KJV").length).toBeGreaterThan(0);
+  });
+
   it("highlights and scrolls to the requested verse in whole-book view", () => {
     const scrollIntoView = jest.fn();
     Object.defineProperty(HTMLElement.prototype, "scrollIntoView", {

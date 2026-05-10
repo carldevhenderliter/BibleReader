@@ -5,6 +5,7 @@ import { LookupPane } from "@/app/components/LookupPane";
 import { ReaderPageContent } from "@/app/components/ReaderPageContent";
 import { SearchPane } from "@/app/components/SearchPane";
 import type { BookMeta, Chapter, EsvInterlinearDisplayChapter } from "@/lib/bible/types";
+import { READER_CUSTOMIZATION_STORAGE_KEY } from "@/lib/reader-customization";
 import { PASSAGE_NOTEBOOK_STORAGE_KEY } from "@/lib/passage-notebooks";
 import { mockRouter, setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
@@ -351,6 +352,32 @@ describe("ReaderPageContent", () => {
     );
   });
 
+  it("shows a selected under-verse version when enabled", () => {
+    window.localStorage.setItem(
+      READER_CUSTOMIZATION_STORAGE_KEY,
+      JSON.stringify({
+        showSecondaryVerseTranslation: true,
+        secondaryVerseTranslationVersion: "kjv"
+      })
+    );
+
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter, kjv: kjvChapter }}
+      />
+    );
+
+    expect(
+      screen.getByText("In the beginning, God created the heavens and the earth.")
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("In the beginning God created the heaven and the earth.")
+    ).toBeInTheDocument();
+    expect(screen.getAllByText("KJV").length).toBeGreaterThan(0);
+  });
+
   it("copies the visible chapter reading text from the toolbar", async () => {
     renderWithReaderCustomization(
       <ReaderPageContent
@@ -443,7 +470,9 @@ describe("ReaderPageContent", () => {
     );
 
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
-    expect(screen.getByRole("option", { name: "ESV" })).toBeEnabled();
+    expect(
+      within(screen.getByLabelText("Version")).getByRole("option", { name: "ESV" })
+    ).toBeEnabled();
     expect(screen.getByText("In the beginning, God created the heavens and the earth.")).toBeInTheDocument();
 
     fireEvent.change(screen.getByLabelText("Version"), {
