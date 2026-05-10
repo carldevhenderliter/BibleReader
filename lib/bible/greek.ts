@@ -1651,6 +1651,19 @@ export async function getGreekVerseOccurrences(
   const chapterCache = new Map<string, ReturnType<typeof getChapter>>();
   const exactFormMatches = await Promise.all(
     entryMatches.map(async (entry) => {
+      if (entry.greekTokens?.length) {
+        return entry.greekTokens.some((token) => {
+          const tokenEntryKey = token.entryKey ?? token.strongs ?? null;
+
+          return (
+            tokenEntryKey === entryKey &&
+            normalizeGreekFormLookupValue(token.surface) === normalizedSelectedForm
+          );
+        })
+          ? entry
+          : null;
+      }
+
       const chapterKey = `${entry.bookSlug}:${entry.chapterNumber}`;
       const chapterPromise =
         chapterCache.get(chapterKey) ??

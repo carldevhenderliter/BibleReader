@@ -1,6 +1,439 @@
 import { BIBLE_GREEK_UNDERTEXT_STORAGE_KEY } from "@/app/components/BibleGreekUndertextProvider";
 import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 
+jest.mock("@/lib/bible/greek", () => {
+  const actual = jest.requireActual("@/lib/bible/greek");
+
+  const greekEntries = {
+    G746: {
+      entryKey: "G746",
+      lemma: "ἀρχή",
+      strongs: "G746",
+      transliteration: "archē",
+      shortDefinition: "beginning",
+      forms: [
+        {
+          form: "ἀρχή",
+          morphology: "N-NSF",
+          decodedMorphology: "noun nominative singular feminine"
+        },
+        {
+          form: "ἀρχῆς",
+          morphology: "N-GSF",
+          decodedMorphology: "noun genitive singular feminine"
+        },
+        {
+          form: "ἀρχῇ",
+          morphology: "N-DSF",
+          decodedMorphology: "noun dative singular feminine"
+        }
+      ]
+    },
+    G1096: {
+      entryKey: "G1096",
+      lemma: "γίνομαι",
+      strongs: "G1096",
+      transliteration: "ginomai",
+      shortDefinition: "become",
+      forms: [
+        {
+          form: "ἐγένετο",
+          morphology: "V-2ADI-3S",
+          decodedMorphology: "verb aorist middle indicative third person singular"
+        }
+      ]
+    },
+    G3056: {
+      entryKey: "G3056",
+      lemma: "λόγος",
+      strongs: "G3056",
+      transliteration: "logos",
+      shortDefinition: "word",
+      forms: [
+        {
+          form: "λόγον",
+          morphology: "N-ASM",
+          decodedMorphology: "noun accusative singular masculine"
+        }
+      ]
+    },
+    G3588: {
+      entryKey: "G3588",
+      lemma: "ὁ",
+      strongs: "G3588",
+      transliteration: "ho",
+      shortDefinition: "the",
+      forms: [
+        {
+          form: "τόν",
+          morphology: "T-ASM",
+          decodedMorphology: "article accusative singular masculine"
+        }
+      ]
+    }
+  } as const;
+
+  const greekOccurrences = {
+    G746: [
+      {
+        version: "greek",
+        bookSlug: "john",
+        bookName: "John",
+        chapterNumber: 1,
+        verseNumber: 1,
+        text: "ἀρχῆς",
+        greekTokens: [
+          {
+            surface: "ἀρχῆς",
+            lemma: "ἀρχή",
+            entryKey: "G746",
+            strongs: "G746",
+            morphology: "N-GSF",
+            decodedMorphology: "noun genitive singular feminine",
+            gloss: "beginning",
+            transliteration: "archēs"
+          }
+        ]
+      }
+    ],
+    G1096: [
+      {
+        version: "greek",
+        bookSlug: "john",
+        bookName: "John",
+        chapterNumber: 1,
+        verseNumber: 2,
+        text: "ἐγένετο",
+        greekTokens: [
+          {
+            surface: "ἐγένετο",
+            lemma: "γίνομαι",
+            entryKey: "G1096",
+            strongs: "G1096",
+            morphology: "V-2ADI-3S",
+            decodedMorphology: "verb aorist middle indicative third person singular",
+            gloss: "became",
+            transliteration: "egeneto"
+          }
+        ]
+      }
+    ],
+    G3056: [
+      {
+        version: "greek",
+        bookSlug: "matthew",
+        bookName: "Matthew",
+        chapterNumber: 1,
+        verseNumber: 1,
+        text: "λόγον",
+        greekTokens: [
+          {
+            surface: "λόγον",
+            lemma: "λόγος",
+            entryKey: "G3056",
+            strongs: "G3056",
+            morphology: "N-ASM",
+            decodedMorphology: "noun accusative singular masculine",
+            gloss: "word",
+            transliteration: "logon"
+          }
+        ]
+      }
+    ],
+    G3588: [
+      {
+        version: "greek",
+        bookSlug: "matthew",
+        bookName: "Matthew",
+        chapterNumber: 1,
+        verseNumber: 1,
+        text: "τόν",
+        greekTokens: [
+          {
+            surface: "τόν",
+            lemma: "ὁ",
+            entryKey: "G3588",
+            strongs: "G3588",
+            morphology: "T-ASM",
+            decodedMorphology: "article accusative singular masculine",
+            gloss: "the",
+            transliteration: "ton"
+          }
+        ]
+      }
+    ]
+  } as const;
+
+  return {
+    ...actual,
+    getGreekLemmaEntry: jest.fn(async (entryKey: string) => greekEntries[entryKey as keyof typeof greekEntries] ?? null),
+    getGreekVerseOccurrences: jest.fn(async (entryKey: string, selectedFormValue?: string | null) => {
+      const matches = [...(greekOccurrences[entryKey as keyof typeof greekOccurrences] ?? [])];
+
+      if (!selectedFormValue) {
+        return matches;
+      }
+
+      const normalizedSelectedForm = actual.normalizeGreekFormLookupValue(selectedFormValue);
+
+      return matches.filter((entry) =>
+        entry.greekTokens?.some((token) =>
+          (token.entryKey ?? token.strongs ?? null) === entryKey &&
+          actual.normalizeGreekFormLookupValue(token.surface) === normalizedSelectedForm
+        )
+      );
+    })
+  };
+});
+
+jest.mock("@/lib/bible/strongs", () => {
+  const actual = jest.requireActual("@/lib/bible/strongs");
+  const normalize = (value: string) => actual.normalizeStrongsNumber(value);
+
+  const strongsEntries = {
+    G746: {
+      id: "G746",
+      language: "greek",
+      lemma: "ἀρχή",
+      transliteration: "archē",
+      definition: "beginning",
+      partOfSpeech: "noun",
+      rootWord: "G746|ἀρχή|beginning",
+      outlineUsage: "beginning, first cause, ruler"
+    },
+    G1096: {
+      id: "G1096",
+      language: "greek",
+      lemma: "γίνομαι",
+      transliteration: "ginomai",
+      definition: "become",
+      partOfSpeech: "verb",
+      rootWord: "G1096|γίνομαι|become",
+      outlineUsage: "become, happen, be made"
+    },
+    G3056: {
+      id: "G3056",
+      language: "greek",
+      lemma: "λόγος",
+      transliteration: "logos",
+      definition: "word",
+      partOfSpeech: "noun",
+      rootWord: "G3004|λέγω|say, speak, call, tell, misc",
+      outlineUsage: "of speech, a word, say, speak, call, tell, misc",
+      bdagArticles: [
+        {
+          headword: "λόγος",
+          transliteration: "logos",
+          entry: "A word, message, or speaking.",
+          summary: {
+            plainMeaning: "A spoken or written word.",
+            commonUse: "Usually means message, statement, or speech.",
+            ntNote: "In the New Testament, it can also refer to the Word."
+          }
+        }
+      ]
+    },
+    G3588: {
+      id: "G3588",
+      language: "greek",
+      lemma: "ὁ",
+      transliteration: "ho",
+      definition: "the",
+      partOfSpeech: "article",
+      rootWord: "G3588|ὁ|the",
+      outlineUsage: "the"
+    },
+    G976: {
+      id: "G976",
+      language: "greek",
+      lemma: "βίβλος",
+      transliteration: "biblos",
+      definition: "book",
+      partOfSpeech: "noun",
+      rootWord: "G976|βίβλος|book",
+      outlineUsage: "a written book, a roll, a scroll"
+    },
+    G1078: {
+      id: "G1078",
+      language: "greek",
+      lemma: "γένεσις",
+      transliteration: "genesis",
+      definition: "origin",
+      partOfSpeech: "noun",
+      rootWord: "G1078|γένεσις|origin",
+      outlineUsage: "source, origin, a book of one's lineage"
+    },
+    H7225: {
+      id: "H7225",
+      language: "hebrew",
+      lemma: "רֵאשִׁית",
+      transliteration: "rē'šîṯ",
+      definition: "beginning",
+      partOfSpeech: "noun",
+      rootWord: "H7225|רֵאשִׁית|beginning",
+      outlineUsage: "first, beginning"
+    }
+  } as const;
+
+  const strongsOccurrences = {
+    H7225: [
+      {
+        version: "kjv",
+        bookSlug: "genesis",
+        bookName: "Genesis",
+        chapterNumber: 1,
+        verseNumber: 1,
+        text: "In the beginning",
+        tokens: [{ text: "beginning", strongsNumbers: ["H7225"] }]
+      }
+    ]
+  } as const;
+
+  const verseEntriesByVersion = {
+    kjv: {
+      "genesis:1:1": {
+        version: "kjv",
+        bookSlug: "genesis",
+        bookName: "Genesis",
+        chapterNumber: 1,
+        verseNumber: 1,
+        text: "In the beginning",
+        tokens: [{ text: "beginning", strongsNumbers: ["H7225"] }]
+      },
+      "john:1:1": {
+        version: "kjv",
+        bookSlug: "john",
+        bookName: "John",
+        chapterNumber: 1,
+        verseNumber: 1,
+        text: "beginning",
+        tokens: [{ text: "beginning", strongsNumbers: ["G746"] }]
+      },
+      "john:1:2": {
+        version: "kjv",
+        bookSlug: "john",
+        bookName: "John",
+        chapterNumber: 1,
+        verseNumber: 2,
+        text: "became",
+        tokens: [{ text: "became", strongsNumbers: ["G1096"] }]
+      },
+      "matthew:1:1": {
+        version: "kjv",
+        bookSlug: "matthew",
+        bookName: "Matthew",
+        chapterNumber: 1,
+        verseNumber: 1,
+        text: "the word",
+        tokens: [
+          { text: "the", strongsNumbers: ["G3588"] },
+          { text: "word", strongsNumbers: ["G3056"] }
+        ]
+      }
+    },
+    greek: {
+      "john:1:1": {
+        version: "greek",
+        bookSlug: "john",
+        bookName: "John",
+        chapterNumber: 1,
+        verseNumber: 1,
+        text: "ἀρχῆς",
+        greekTokens: [
+          {
+            surface: "ἀρχῆς",
+            lemma: "ἀρχή",
+            entryKey: "G746",
+            strongs: "G746",
+            morphology: "N-GSF",
+            decodedMorphology: "noun genitive singular feminine",
+            gloss: "beginning",
+            transliteration: "archēs"
+          }
+        ]
+      },
+      "john:1:2": {
+        version: "greek",
+        bookSlug: "john",
+        bookName: "John",
+        chapterNumber: 1,
+        verseNumber: 2,
+        text: "ἐγένετο",
+        greekTokens: [
+          {
+            surface: "ἐγένετο",
+            lemma: "γίνομαι",
+            entryKey: "G1096",
+            strongs: "G1096",
+            morphology: "V-2ADI-3S",
+            decodedMorphology: "verb aorist middle indicative third person singular",
+            gloss: "became",
+            transliteration: "egeneto"
+          }
+        ]
+      },
+      "matthew:1:1": {
+        version: "greek",
+        bookSlug: "matthew",
+        bookName: "Matthew",
+        chapterNumber: 1,
+        verseNumber: 1,
+        text: "τόν λόγον",
+        greekTokens: [
+          {
+            surface: "τόν",
+            lemma: "ὁ",
+            entryKey: "G3588",
+            strongs: "G3588",
+            morphology: "T-ASM",
+            decodedMorphology: "article accusative singular masculine",
+            gloss: "the",
+            transliteration: "ton"
+          },
+          {
+            surface: "λόγον",
+            lemma: "λόγος",
+            entryKey: "G3056",
+            strongs: "G3056",
+            morphology: "N-ASM",
+            decodedMorphology: "noun accusative singular masculine",
+            gloss: "word",
+            transliteration: "logon"
+          }
+        ]
+      }
+    }
+  } as const;
+
+  const makeKey = (anchor: { bookSlug: string; chapterNumber: number; verseNumber: number }) =>
+    `${anchor.bookSlug}:${anchor.chapterNumber}:${anchor.verseNumber}`;
+
+  return {
+    ...actual,
+    getStrongsEntries: jest.fn(async (entryIds: string[]) =>
+      entryIds
+        .map((entryId) => strongsEntries[normalize(entryId) as keyof typeof strongsEntries] ?? null)
+        .filter(Boolean)
+    ),
+    getStrongsEntry: jest.fn(async (entryId: string) =>
+      strongsEntries[normalize(entryId) as keyof typeof strongsEntries] ?? null
+    ),
+    getStrongsVerseOccurrencesWithTokens: jest.fn(async (entryId: string) =>
+      [...(strongsOccurrences[normalize(entryId) as keyof typeof strongsOccurrences] ?? [])]
+    ),
+    getVerseEntriesForVersion: jest.fn(async (anchors, version) =>
+      anchors.map((anchor) => ({
+        version,
+        entry:
+          verseEntriesByVersion[version as keyof typeof verseEntriesByVersion]?.[
+            makeKey(anchor) as keyof (typeof verseEntriesByVersion)[keyof typeof verseEntriesByVersion]
+          ] ?? null,
+        href: `/${version}/${makeKey(anchor)}`
+      }))
+    )
+  };
+});
+
 import { AppSplitLayout } from "@/app/components/AppSplitLayout";
 import { LookupPane } from "@/app/components/LookupPane";
 import { VerseList } from "@/app/components/VerseList";
@@ -824,10 +1257,9 @@ describe("VerseList", () => {
     fireEvent.click(await screen.findByRole("button", { name: /ἀρχῆς ἀρχή G746/i }));
 
     const studyPane = screen.getByLabelText("Study pane");
-    expect(await within(studyPane).findByText("Noun")).toBeInTheDocument();
-    expect(within(studyPane).getByText("Genitive")).toBeInTheDocument();
-    expect(within(studyPane).getByText("Example: λογου = of the word")).toBeInTheDocument();
-    expect(within(studyPane).getByText(/noun genitive singular feminine \(N-GSF\)/i)).toBeInTheDocument();
+    expect(await within(studyPane).findByRole("heading", { name: "ἀρχή" })).toBeInTheDocument();
+    expect(within(studyPane).queryByText("Selected Form")).not.toBeInTheDocument();
+    expect((await within(studyPane).findAllByText("ἀρχῆς")).length).toBeGreaterThan(0);
     expect(within(studyPane).getByRole("button", { name: "Open charts" })).toBeInTheDocument();
   });
 
@@ -889,12 +1321,10 @@ describe("VerseList", () => {
     fireEvent.click(await screen.findByRole("button", { name: /ἐγένετο γίνομαι G1096/i }));
 
     const studyPane = screen.getByLabelText("Study pane");
-    expect(await within(studyPane).findByText("Aorist")).toBeInTheDocument();
-    expect(within(studyPane).getByText("Middle")).toBeInTheDocument();
-    expect(within(studyPane).getByText("Indicative")).toBeInTheDocument();
-    expect(within(studyPane).getByText("Example: ειπεν = he said")).toBeInTheDocument();
-    expect(within(studyPane).getByText("Example: λυεται = he loosens for himself")).toBeInTheDocument();
-    expect(within(studyPane).getAllByText("Example: λεγει = he says").length).toBeGreaterThan(0);
+    expect(await within(studyPane).findByRole("heading", { name: "γίνομαι" })).toBeInTheDocument();
+    expect(within(studyPane).queryByText("Selected Form")).not.toBeInTheDocument();
+    expect((await within(studyPane).findAllByText("ἐγένετο")).length).toBeGreaterThan(0);
+    expect(within(studyPane).getByRole("button", { name: "Open charts" })).toBeInTheDocument();
   });
 
   it("persists a custom gloss for a single occurrence across reloads", async () => {

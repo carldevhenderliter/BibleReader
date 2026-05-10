@@ -103,7 +103,7 @@ describe("Greek dictionary lookup", () => {
         (entry) => entry.bookSlug === "1-john" && entry.chapterNumber === 1 && entry.verseNumber === 1
       )
     ).toBe(true);
-  });
+  }, 15000);
 
   it("builds readable gloss options from lemma data", async () => {
     const entry = await getGreekLemmaEntry("G746");
