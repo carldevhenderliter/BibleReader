@@ -166,11 +166,15 @@ describe("Reader customization", () => {
       }
     });
     fireEvent.click(screen.getByRole("button", { name: /Greek grammar cards/i }));
+    fireEvent.click(screen.getByRole("button", { name: /Grammar lemma/i }));
+    fireEvent.click(screen.getByRole("button", { name: /Grammar form/i }));
     fireEvent.click(screen.getByRole("button", { name: /Expanded grammar details/i }));
 
     const stored = window.localStorage.getItem(READER_CUSTOMIZATION_STORAGE_KEY) ?? "";
 
     expect(stored).toContain('"showGreekGrammarCards":true');
+    expect(stored).toContain('"showGreekGrammarLemma":false');
+    expect(stored).toContain('"showGreekGrammarForm":false');
     expect(stored).toContain('"showExpandedGreekGrammarCards":true');
   });
 

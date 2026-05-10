@@ -97,6 +97,10 @@ export type ReaderCustomizationSettings = {
   showGreekGloss: boolean;
   showGreekGrammarCards: boolean;
   showExpandedGreekGrammarCards: boolean;
+  showGreekGrammarPartOfSpeech: boolean;
+  showGreekGrammarLemma: boolean;
+  showGreekGrammarGloss: boolean;
+  showGreekGrammarForm: boolean;
   showCustomVerseTranslation: boolean;
   showFathersSentenceLines: boolean;
   disableLazyLoading: boolean;

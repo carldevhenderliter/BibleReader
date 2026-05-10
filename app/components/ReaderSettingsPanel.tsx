@@ -355,6 +355,10 @@ export function ReaderSettingsPanel({
       | "showGreekGloss"
       | "showGreekGrammarCards"
       | "showExpandedGreekGrammarCards"
+      | "showGreekGrammarPartOfSpeech"
+      | "showGreekGrammarLemma"
+      | "showGreekGrammarGloss"
+      | "showGreekGrammarForm"
       | "showFathersSentenceLines"
   ) => {
     updateSettings({
@@ -859,6 +863,70 @@ export function ReaderSettingsPanel({
                   <span>
                     Show quick grammar cards under each Greek word, with a More section for full details.
                   </span>
+                </button>
+                <button
+                  className={`settings-option-card${
+                    settings.showGreekGrammarPartOfSpeech ? " is-active" : ""
+                  }`}
+                  disabled={
+                    !supportsGreekStudyLayers ||
+                    !greekStudyLayersEnabled ||
+                    !settings.showGreekGrammarCards
+                  }
+                  key="showGreekGrammarPartOfSpeech"
+                  onClick={() => toggleLayer("showGreekGrammarPartOfSpeech")}
+                  type="button"
+                >
+                  <strong>Grammar type</strong>
+                  <span>Show the part of speech line under each Greek word.</span>
+                </button>
+                <button
+                  className={`settings-option-card${
+                    settings.showGreekGrammarLemma ? " is-active" : ""
+                  }`}
+                  disabled={
+                    !supportsGreekStudyLayers ||
+                    !greekStudyLayersEnabled ||
+                    !settings.showGreekGrammarCards
+                  }
+                  key="showGreekGrammarLemma"
+                  onClick={() => toggleLayer("showGreekGrammarLemma")}
+                  type="button"
+                >
+                  <strong>Grammar lemma</strong>
+                  <span>Show the lemma line in the inline grammar card.</span>
+                </button>
+                <button
+                  className={`settings-option-card${
+                    settings.showGreekGrammarGloss ? " is-active" : ""
+                  }`}
+                  disabled={
+                    !supportsGreekStudyLayers ||
+                    !greekStudyLayersEnabled ||
+                    !settings.showGreekGrammarCards
+                  }
+                  key="showGreekGrammarGloss"
+                  onClick={() => toggleLayer("showGreekGrammarGloss")}
+                  type="button"
+                >
+                  <strong>Grammar gloss</strong>
+                  <span>Show the gloss line in the inline grammar card.</span>
+                </button>
+                <button
+                  className={`settings-option-card${
+                    settings.showGreekGrammarForm ? " is-active" : ""
+                  }`}
+                  disabled={
+                    !supportsGreekStudyLayers ||
+                    !greekStudyLayersEnabled ||
+                    !settings.showGreekGrammarCards
+                  }
+                  key="showGreekGrammarForm"
+                  onClick={() => toggleLayer("showGreekGrammarForm")}
+                  type="button"
+                >
+                  <strong>Grammar form</strong>
+                  <span>Show the case or tense summary line in the inline grammar card.</span>
                 </button>
                 <button
                   className={`settings-option-card${

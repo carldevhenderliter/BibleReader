@@ -1,5 +1,6 @@
 "use client";
 
+import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import type { GreekDictionarySelection, GreekGrammarInfo } from "@/lib/bible/types";
 
@@ -112,34 +113,44 @@ export function GreekGrammarDetailsContent({
 }
 
 export function GreekGrammarCard({ grammar, selection }: GreekGrammarCardProps) {
+  const { settings } = useReaderCustomization();
   const { openGreekGrammarDetails } = useReaderWorkspace();
   const canExpand = hasExpandedContent(grammar);
+  const showPartOfSpeech = settings.showGreekGrammarPartOfSpeech && Boolean(grammar.quickInfo.partOfSpeech);
+  const showLemma = settings.showGreekGrammarLemma;
+  const showGloss = settings.showGreekGrammarGloss && Boolean(grammar.quickInfo.gloss);
+  const showForm = settings.showGreekGrammarForm && Boolean(grammar.quickInfo.summary);
+  const hasQuickFields = showPartOfSpeech || showLemma || showGloss || showForm;
 
   return (
     <div className="greek-grammar-card">
-      <div className="greek-grammar-card-quick">
-        {grammar.quickInfo.partOfSpeech ? (
-          <p className="greek-grammar-card-kicker">{grammar.quickInfo.partOfSpeech}</p>
-        ) : null}
-        <p className="greek-grammar-card-line">
-          <span className="greek-grammar-card-label">Lemma</span>
-          <span className="greek-grammar-card-greek" lang="el">
-            {grammar.quickInfo.lemma}
-          </span>
-        </p>
-        {grammar.quickInfo.gloss ? (
-          <p className="greek-grammar-card-line">
-            <span className="greek-grammar-card-label">Gloss</span>
-            <span>{grammar.quickInfo.gloss}</span>
-          </p>
-        ) : null}
-        {grammar.quickInfo.summary ? (
-          <p className="greek-grammar-card-line">
-            <span className="greek-grammar-card-label">Form</span>
-            <span>{grammar.quickInfo.summary}</span>
-          </p>
-        ) : null}
-      </div>
+      {hasQuickFields ? (
+        <div className="greek-grammar-card-quick">
+          {showPartOfSpeech ? (
+            <p className="greek-grammar-card-kicker">{grammar.quickInfo.partOfSpeech}</p>
+          ) : null}
+          {showLemma ? (
+            <p className="greek-grammar-card-line">
+              <span className="greek-grammar-card-label">Lemma</span>
+              <span className="greek-grammar-card-greek" lang="el">
+                {grammar.quickInfo.lemma}
+              </span>
+            </p>
+          ) : null}
+          {showGloss ? (
+            <p className="greek-grammar-card-line">
+              <span className="greek-grammar-card-label">Gloss</span>
+              <span>{grammar.quickInfo.gloss}</span>
+            </p>
+          ) : null}
+          {showForm ? (
+            <p className="greek-grammar-card-line">
+              <span className="greek-grammar-card-label">Form</span>
+              <span>{grammar.quickInfo.summary}</span>
+            </p>
+          ) : null}
+        </div>
+      ) : null}
       {canExpand ? (
         <button
           aria-label={`Open grammar details for ${selection.selectedForm ?? selection.lemma}`}

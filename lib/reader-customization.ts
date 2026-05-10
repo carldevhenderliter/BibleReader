@@ -158,6 +158,10 @@ export const DEFAULT_READER_CUSTOMIZATION: ReaderCustomizationSettings = {
   showGreekGloss: true,
   showGreekGrammarCards: false,
   showExpandedGreekGrammarCards: false,
+  showGreekGrammarPartOfSpeech: true,
+  showGreekGrammarLemma: true,
+  showGreekGrammarGloss: true,
+  showGreekGrammarForm: true,
   showCustomVerseTranslation: true,
   showFathersSentenceLines: false,
   disableLazyLoading: false,
@@ -298,6 +302,14 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
     typeof candidate.showGreekGrammarCards === "boolean";
   const hasGranularExpandedGreekGrammarCards =
     typeof candidate.showExpandedGreekGrammarCards === "boolean";
+  const hasGranularGreekGrammarPartOfSpeech =
+    typeof candidate.showGreekGrammarPartOfSpeech === "boolean";
+  const hasGranularGreekGrammarLemma =
+    typeof candidate.showGreekGrammarLemma === "boolean";
+  const hasGranularGreekGrammarGloss =
+    typeof candidate.showGreekGrammarGloss === "boolean";
+  const hasGranularGreekGrammarForm =
+    typeof candidate.showGreekGrammarForm === "boolean";
   const hasGranularCustomVerseTranslation =
     typeof candidate.showCustomVerseTranslation === "boolean";
   const normalizedBodyFont = isBodyFontOption(candidate.bodyFont)
@@ -458,6 +470,22 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
       typeof candidate.showExpandedGreekGrammarCards === "boolean"
         ? candidate.showExpandedGreekGrammarCards
         : DEFAULT_READER_CUSTOMIZATION.showExpandedGreekGrammarCards,
+    showGreekGrammarPartOfSpeech:
+      typeof candidate.showGreekGrammarPartOfSpeech === "boolean"
+        ? candidate.showGreekGrammarPartOfSpeech
+        : DEFAULT_READER_CUSTOMIZATION.showGreekGrammarPartOfSpeech,
+    showGreekGrammarLemma:
+      typeof candidate.showGreekGrammarLemma === "boolean"
+        ? candidate.showGreekGrammarLemma
+        : DEFAULT_READER_CUSTOMIZATION.showGreekGrammarLemma,
+    showGreekGrammarGloss:
+      typeof candidate.showGreekGrammarGloss === "boolean"
+        ? candidate.showGreekGrammarGloss
+        : DEFAULT_READER_CUSTOMIZATION.showGreekGrammarGloss,
+    showGreekGrammarForm:
+      typeof candidate.showGreekGrammarForm === "boolean"
+        ? candidate.showGreekGrammarForm
+        : DEFAULT_READER_CUSTOMIZATION.showGreekGrammarForm,
     showCustomVerseTranslation:
       typeof candidate.showCustomVerseTranslation === "boolean"
         ? candidate.showCustomVerseTranslation
@@ -470,6 +498,10 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
             !hasGranularGreekGloss &&
             !hasGranularGreekGrammarCards &&
             !hasGranularExpandedGreekGrammarCards &&
+            !hasGranularGreekGrammarPartOfSpeech &&
+            !hasGranularGreekGrammarLemma &&
+            !hasGranularGreekGrammarGloss &&
+            !hasGranularGreekGrammarForm &&
             !hasGranularCustomVerseTranslation
           ? false
           : DEFAULT_READER_CUSTOMIZATION.showCustomVerseTranslation,

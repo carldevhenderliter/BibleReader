@@ -6,6 +6,7 @@ import { LookupPane } from "@/app/components/LookupPane";
 import { VerseList } from "@/app/components/VerseList";
 import { READER_VERSION_STORAGE_KEY } from "@/lib/bible/constants";
 import type { EsvInterlinearDisplayVerse, Verse } from "@/lib/bible/types";
+import { READER_CUSTOMIZATION_STORAGE_KEY } from "@/lib/reader-customization";
 import { setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
 
@@ -515,6 +516,50 @@ describe("VerseList", () => {
       (await screen.findAllByRole("button", { name: /open grammar details for ἐγένετο/i }))
         .length
     ).toBeGreaterThan(0);
+  });
+
+  it("shows only the selected grammar quick fields under Greek words", async () => {
+    window.localStorage.setItem(READER_VERSION_STORAGE_KEY, "greek");
+    window.localStorage.setItem(
+      READER_CUSTOMIZATION_STORAGE_KEY,
+      JSON.stringify({
+        showGreekGrammarCards: true,
+        showGreekGrammarPartOfSpeech: false,
+        showGreekGrammarLemma: false,
+        showGreekGrammarGloss: true,
+        showGreekGrammarForm: false
+      })
+    );
+
+    renderWithReaderCustomization(
+      <VerseList
+        bookSlug="genesis"
+        chapterNumber={1}
+        showGreekGrammarCards
+        verses={[
+          {
+            number: 1,
+            text: "became",
+            greekTokens: [
+              {
+                surface: "ἐγένετο",
+                lemma: "γίνομαι",
+                entryKey: "G1096",
+                strongs: "G1096",
+                morphology: "V-3AAI-S",
+                decodedMorphology: "verb aorist active indicative third person singular",
+                gloss: "became"
+              }
+            ]
+          }
+        ]}
+      />
+    );
+
+    expect((await screen.findAllByText("Gloss")).length).toBeGreaterThan(0);
+    expect(screen.getAllByText("became").length).toBeGreaterThan(0);
+    expect(screen.queryByText("Lemma")).not.toBeInTheDocument();
+    expect(screen.queryByText("Form")).not.toBeInTheDocument();
   });
 
   it("shows Strong's numbers beside each word in the Textus Receptus reader", async () => {
