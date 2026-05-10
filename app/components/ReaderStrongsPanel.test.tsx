@@ -206,8 +206,11 @@ describe("ReaderStrongsPanel", () => {
 
     fireEvent.click(within(studyPane).getByRole("tab", { name: "BDAG" }));
 
-    expect(await within(studyPane).findByText("BDAG Summary")).toBeInTheDocument();
-    expect(within(studyPane).getByText("Original BDAG")).toBeInTheDocument();
+    expect(await within(studyPane).findByText("Plain Meaning")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Common Use")).toBeInTheDocument();
+    expect(within(studyPane).getByText("New Testament Use")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Key Terms")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Full BDAG")).toBeInTheDocument();
   }, 30000);
 
   it("renders a separate Thayer tab for Greek Strongs entries", async () => {
@@ -231,7 +234,7 @@ describe("ReaderStrongsPanel", () => {
     expect(within(studyPane).getAllByText(/say, speak, call, tell, misc/i).length).toBeGreaterThan(0);
     expect(within(studyPane).getByText("of speech")).toBeInTheDocument();
     expect(within(studyPane).getByText("a word")).toBeInTheDocument();
-    expect(within(studyPane).queryByText("BDAG Summary")).not.toBeInTheDocument();
+    expect(within(studyPane).queryByText("Plain Meaning")).not.toBeInTheDocument();
   });
 
   it("does not render a BDAG section for Hebrew Strongs entries", async () => {

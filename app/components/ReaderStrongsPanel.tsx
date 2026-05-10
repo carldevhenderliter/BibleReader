@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
 import { VerseTextContent } from "@/app/components/VerseTextContent";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
+import { formatBdagArticle } from "@/lib/bible/bdag";
 import { getBookTestamentBySlug } from "@/lib/bible/book-order";
 import {
   getGreekLemmaEntry,
@@ -132,35 +133,73 @@ function renderBdagArticles(entry: StrongsEntry) {
   return (
     <>
       {entry.bdagArticles.map((article) => {
-        const summary = article.summary ?? { plainMeaning: article.entry };
+        const formattedArticle = formatBdagArticle(article);
 
         return (
           <section
             className="strongs-entry-bdag-article"
             key={`${entry.id}:${article.headword}:${article.transliteration}`}
           >
-            <p className="strongs-entry-meta">
-              {article.headword} ({article.transliteration})
-            </p>
-            <div className="strongs-entry-bdag-summary">
-              <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
-                BDAG Summary
-              </p>
-              <p className="strongs-entry-copy strongs-entry-copy-bdag">{summary.plainMeaning}</p>
-              {summary.commonUse ? (
-                <p className="strongs-entry-copy strongs-entry-copy-bdag">{summary.commonUse}</p>
+            <div className="strongs-entry-bdag-layout">
+              <section className="strongs-entry-bdag-card">
+                <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
+                  Headword
+                </p>
+                <p className="strongs-entry-meta">{formattedArticle.headwordLine}</p>
+              </section>
+              <section className="strongs-entry-bdag-card">
+                <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
+                  Plain Meaning
+                </p>
+                <p className="strongs-entry-copy strongs-entry-copy-bdag">
+                  {formattedArticle.plainMeaning}
+                </p>
+              </section>
+              {formattedArticle.commonUse ? (
+                <section className="strongs-entry-bdag-card">
+                  <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
+                    Common Use
+                  </p>
+                  <p className="strongs-entry-copy strongs-entry-copy-bdag">
+                    {formattedArticle.commonUse}
+                  </p>
+                </section>
               ) : null}
-              {summary.ntNote ? (
-                <p className="strongs-entry-copy strongs-entry-copy-bdag">{summary.ntNote}</p>
+              {formattedArticle.ntNote ? (
+                <section className="strongs-entry-bdag-card">
+                  <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
+                    New Testament Use
+                  </p>
+                  <p className="strongs-entry-copy strongs-entry-copy-bdag">
+                    {formattedArticle.ntNote}
+                  </p>
+                </section>
               ) : null}
-            </div>
-            <div className="strongs-entry-bdag-original">
-              <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
-                Original BDAG
-              </p>
-              <p className="strongs-entry-copy strongs-entry-copy-bdag strongs-entry-copy-bdag-original">
-                {article.entry}
-              </p>
+              {formattedArticle.keyTerms.length > 0 ? (
+                <section className="strongs-entry-bdag-card">
+                  <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
+                    Key Terms
+                  </p>
+                  <div className="strongs-entry-bdag-chip-list">
+                    {formattedArticle.keyTerms.map((term) => (
+                      <span
+                        className="strongs-entry-bdag-chip"
+                        key={`${entry.id}:${article.headword}:${term}`}
+                      >
+                        {term}
+                      </span>
+                    ))}
+                  </div>
+                </section>
+              ) : null}
+              <section className="strongs-entry-bdag-card">
+                <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
+                  Full BDAG
+                </p>
+                <p className="strongs-entry-copy strongs-entry-copy-bdag strongs-entry-copy-bdag-original">
+                  {formattedArticle.fullArticle}
+                </p>
+              </section>
             </div>
           </section>
         );
