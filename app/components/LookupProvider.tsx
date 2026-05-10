@@ -56,6 +56,9 @@ const DEFAULT_COLLAPSED_SPLIT_PANES: CollapsedSplitPanes = {
   study: false
 };
 
+const ORIGINAL_LANGUAGE_SEARCH_VERSIONS = new Set<BundledBibleVersion>(["greek", "tr"]);
+const ENGLISH_SEARCH_VERSION_PREFERENCE: readonly BundledBibleVersion[] = ["web", "esv", "kjv", "nlt"];
+
 type LookupContextValue = {
   query: string;
   queryParts: string[];
@@ -190,6 +193,42 @@ function normalizeSearchVersions(value: string | null, fallbackVersion: BundledB
   }
 }
 
+function parseStrongsLikeQuery(rawQuery: string) {
+  return rawQuery.trim().match(/^(?:strongs\s+)?([hg])\s*0*(\d+)$/i);
+}
+
+function looksLikeReferenceQuery(rawQuery: string) {
+  return /^(.+?)\s+\d+(?::\d+(?:-\d+)?)?$/i.test(rawQuery.trim());
+}
+
+function isPlainEnglishSearchQuery(rawQuery: string) {
+  const trimmedQuery = rawQuery.trim();
+
+  if (!trimmedQuery) {
+    return false;
+  }
+
+  if (
+    /^topic\s*:/i.test(trimmedQuery) ||
+    /^greek\s*:/i.test(trimmedQuery) ||
+    parseStrongsLikeQuery(trimmedQuery) ||
+    /\p{Script=Greek}/u.test(trimmedQuery) ||
+    looksLikeReferenceQuery(trimmedQuery)
+  ) {
+    return false;
+  }
+
+  return /[a-z]/i.test(trimmedQuery);
+}
+
+function getDefaultEnglishSearchVersion(installedVersions: readonly BundledBibleVersion[]) {
+  return (
+    ENGLISH_SEARCH_VERSION_PREFERENCE.find((candidate) => installedVersions.includes(candidate)) ??
+    installedVersions.find((candidate) => !ORIGINAL_LANGUAGE_SEARCH_VERSIONS.has(candidate)) ??
+    null
+  );
+}
+
 function normalizeCollapsedSplitPanes(value: string | null): CollapsedSplitPanes {
   if (!value) {
     return DEFAULT_COLLAPSED_SPLIT_PANES;
@@ -240,9 +279,28 @@ export function LookupProvider({ children }: PropsWithChildren) {
   const [viewportWidthRem, setViewportWidthRem] = useState(APP_LAYOUT_MAX_WIDTH_REM);
   const [expandedTopicsByQuery, setExpandedTopicsByQuery] = useState<Record<string, string>>({});
   const queryParts = useMemo(() => parseBibleSearchQueries(query), [query]);
+  const installedSearchVersions = useMemo(() => getInstalledBundledBibleVersions(), []);
+  const autoFallbackEnglishSearchVersion = useMemo(
+    () => getDefaultEnglishSearchVersion(installedSearchVersions),
+    [installedSearchVersions]
+  );
   const effectiveSearchVersions = useMemo(
-    () => (hasSavedSearchVersions ? searchVersions : [version]),
-    [hasSavedSearchVersions, searchVersions, version]
+    () => {
+      if (hasSavedSearchVersions) {
+        return searchVersions;
+      }
+
+      if (
+        ORIGINAL_LANGUAGE_SEARCH_VERSIONS.has(version) &&
+        isPlainEnglishSearchQuery(query) &&
+        autoFallbackEnglishSearchVersion
+      ) {
+        return [autoFallbackEnglishSearchVersion];
+      }
+
+      return [version];
+    },
+    [autoFallbackEnglishSearchVersion, hasSavedSearchVersions, query, searchVersions, version]
   );
   const queryCount = Math.max(queryParts.length, 1);
   const hasCollapsedPaneDock = collapsedSplitPanes.reader || collapsedSplitPanes.search || collapsedSplitPanes.study;

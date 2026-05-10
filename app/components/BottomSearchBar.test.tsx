@@ -19,6 +19,9 @@ function SearchHarness() {
       <button onClick={() => setVersion("kjv")} type="button">
         Use KJV
       </button>
+      <button onClick={() => setVersion("greek")} type="button">
+        Use Greek
+      </button>
       <BottomSearchBar />
     </>
   );
@@ -471,6 +474,25 @@ describe("BottomSearchBar", () => {
 
     expect(screen.getByRole("tab", { name: "Verses" })).toHaveAttribute("aria-selected", "true");
     expect(await screen.findByRole("button", { name: /Verse Matthew 13:3/i })).toBeInTheDocument();
+  });
+
+  it("falls back to an english verse search when the active version is Greek and no search versions are saved", async () => {
+    renderSearchUi(<SearchHarness />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Use Greek" }));
+    fireEvent.change(screen.getByLabelText(SEARCH_INPUT_LABEL), {
+      target: { value: "parable" }
+    });
+
+    await waitForSearchToFinish();
+
+    expect(screen.getByRole("tab", { name: "Verses" })).toHaveAttribute("aria-selected", "true");
+    expect(await screen.findByRole("button", { name: /Verse Matthew 13:3/i })).toBeInTheDocument();
+    expect(
+      within(screen.getByRole("group", { name: "Search versions" })).getByRole("button", {
+        name: "WEB"
+      })
+    ).toHaveAttribute("aria-pressed", "true");
   });
 
   it("shows starter topic suggestions for a bare Topic query on mobile", async () => {
