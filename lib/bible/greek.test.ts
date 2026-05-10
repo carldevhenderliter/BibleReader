@@ -3,6 +3,7 @@ import {
   getGreekGlossOptions,
   getGreekLemmaEntry,
   getGreekMorphologyDetails,
+  getGreekVerseOccurrences,
   getGreekTokenOccurrenceKey,
   isTypedGreekQuizAnswerCorrect,
   lookupGreekDictionary,
@@ -87,6 +88,21 @@ describe("Greek dictionary lookup", () => {
 
   it("builds stable occurrence keys for repeated Greek tokens", () => {
     expect(getGreekTokenOccurrenceKey("john", 1, 1, 3)).toBe("john:1:1:3");
+  });
+
+  it("can limit Greek verse occurrences to an exact selected form", async () => {
+    const formMatches = await getGreekVerseOccurrences("G746", "ἀρχῆς");
+
+    expect(
+      formMatches.some(
+        (entry) => entry.bookSlug === "genesis" && entry.chapterNumber === 1 && entry.verseNumber === 1
+      )
+    ).toBe(false);
+    expect(
+      formMatches.some(
+        (entry) => entry.bookSlug === "1-john" && entry.chapterNumber === 1 && entry.verseNumber === 1
+      )
+    ).toBe(true);
   });
 
   it("builds readable gloss options from lemma data", async () => {

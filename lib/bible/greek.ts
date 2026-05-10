@@ -9,6 +9,7 @@ import type {
   GreekTokenGlossOverride,
   GreekToken
 } from "@/lib/bible/types";
+import { getChapter } from "@/lib/bible/data";
 import { normalizeStrongsNumber } from "@/lib/bible/strongs";
 
 type SearchableGreekEntry = GreekLemmaEntry & {
@@ -1625,15 +1626,68 @@ export async function lookupGreekDictionary(query: string, limit = 12): Promise<
   );
 }
 
-export async function getGreekVerseOccurrences(entryKey: string) {
+export async function getGreekVerseOccurrences(
+  entryKey: string,
+  selectedFormValue?: string | null
+) {
   const verses = await loadGreekVerseIndex();
-
-  return verses.filter((entry) =>
+  const entryMatches = verses.filter((entry) =>
     (entry.greekEntryKeys ?? []).includes(entryKey) ||
     (entry.greekTokens ?? []).some((token) => {
       const tokenEntryKey = token.entryKey ?? token.strongs ?? null;
 
       return tokenEntryKey === entryKey;
     })
+  );
+
+  const normalizedSelectedForm = selectedFormValue
+    ? normalizeGreekFormLookupValue(selectedFormValue)
+    : null;
+
+  if (!normalizedSelectedForm) {
+    return entryMatches;
+  }
+
+  const chapterCache = new Map<string, ReturnType<typeof getChapter>>();
+  const exactFormMatches = await Promise.all(
+    entryMatches.map(async (entry) => {
+      const chapterKey = `${entry.bookSlug}:${entry.chapterNumber}`;
+      const chapterPromise =
+        chapterCache.get(chapterKey) ??
+        getChapter(entry.bookSlug, entry.chapterNumber, "greek");
+
+      if (!chapterCache.has(chapterKey)) {
+        chapterCache.set(chapterKey, chapterPromise);
+      }
+
+      const chapter = await chapterPromise;
+      const verse = chapter?.verses.find(
+        (candidate) => candidate.number === entry.verseNumber
+      );
+
+      if (
+        !verse?.greekTokens?.some((token) => {
+          const tokenEntryKey = token.entryKey ?? token.strongs ?? null;
+
+          return (
+            tokenEntryKey === entryKey &&
+            normalizeGreekFormLookupValue(token.surface) === normalizedSelectedForm
+          );
+        })
+      ) {
+        return null;
+      }
+
+      return {
+        ...entry,
+        text: verse.text,
+        translationText: verse.translationText,
+        greekTokens: verse.greekTokens
+      };
+    })
+  );
+
+  return exactFormMatches.filter(
+    (entry): entry is BibleSearchVerseEntry => entry !== null
   );
 }

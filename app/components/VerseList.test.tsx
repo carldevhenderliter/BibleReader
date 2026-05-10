@@ -419,12 +419,8 @@ describe("VerseList", () => {
 
     const studyPane = screen.getByLabelText("Study pane");
     expect(await within(studyPane).findByRole("heading", { name: "ἀρχή" })).toBeInTheDocument();
-    expect(await within(studyPane).findByText("Selected Form")).toBeInTheDocument();
-    expect(
-      await within(studyPane).findByText(/noun genitive singular feminine \(N-GSF\)/i)
-    ).toBeInTheDocument();
-    expect(within(studyPane).getByText("Genitive")).toBeInTheDocument();
-    expect(within(studyPane).getByText("Example: λογου = of the word")).toBeInTheDocument();
+    expect(within(studyPane).queryByText("Selected Form")).not.toBeInTheDocument();
+    expect(await within(studyPane).findByRole("button", { name: "Open charts" })).toBeInTheDocument();
   });
 
   it("opens the grammar pane from Greek word clicks when grammar cards are enabled", async () => {

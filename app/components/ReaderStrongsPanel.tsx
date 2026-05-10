@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 
 import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
 import { VerseTextContent } from "@/app/components/VerseTextContent";
@@ -9,7 +9,6 @@ import { formatBdagArticle } from "@/lib/bible/bdag";
 import { getBookTestamentBySlug } from "@/lib/bible/book-order";
 import {
   getGreekLemmaEntry,
-  getGreekMorphologyDetails,
   getGreekVerseOccurrences,
   normalizeGreekFormLookupValue
 } from "@/lib/bible/greek";
@@ -319,6 +318,7 @@ export function ReaderStrongsPanel() {
   const [outsideScripture, setOutsideScripture] = useState<
     Record<string, OutsideScriptureLookupState>
   >({});
+  const asyncLoadSessionRef = useRef(0);
   const installedVersions = useMemo(
     () => [...getInstalledBundledBibleVersions()],
     []
@@ -366,16 +366,6 @@ export function ReaderStrongsPanel() {
     activeGreekModeSelection?.selectedFormMorphology,
     selectedGreekForm
   ]);
-  const selectedGreekMorphologyDetails = useMemo(() => {
-    if (!selectedGreekFormDetails?.morphology && !selectedGreekFormDetails?.decodedMorphology) {
-      return null;
-    }
-
-    return getGreekMorphologyDetails({
-      morphology: selectedGreekFormDetails?.morphology,
-      decodedMorphology: selectedGreekFormDetails?.decodedMorphology
-    });
-  }, [selectedGreekFormDetails?.decodedMorphology, selectedGreekFormDetails?.morphology]);
   const activeGreekGrammarChartSelection = useMemo(() => {
     if (!selectedGreekFormDetails) {
       return null;
@@ -401,13 +391,21 @@ export function ReaderStrongsPanel() {
   ]);
 
   useEffect(() => {
+    return () => {
+      asyncLoadSessionRef.current += 1;
+    };
+  }, []);
+
+  useEffect(() => {
     if (!isGreekDictionaryMode) {
+      asyncLoadSessionRef.current += 1;
       setGreekEntry(null);
       setGreekStrongsEntry(null);
       return;
     }
 
     if (!activeGreekEntryKey) {
+      asyncLoadSessionRef.current += 1;
       setGreekEntry(null);
       setGreekStrongsEntry(null);
       setIsLoading(false);
@@ -415,6 +413,7 @@ export function ReaderStrongsPanel() {
     }
 
     let isCancelled = false;
+    asyncLoadSessionRef.current += 1;
     setIsLoading(true);
     setEntries([]);
     setActiveTabs({});
@@ -451,16 +450,19 @@ export function ReaderStrongsPanel() {
     };
   }, [
     activeGreekEntryKey,
+    activeGreekModeSelection?.selectedForm,
     activeGreekModeSelection?.strongs,
     isGreekDictionaryMode
   ]);
 
   useEffect(() => {
     if (isGreekDictionaryMode) {
+      asyncLoadSessionRef.current += 1;
       return;
     }
 
     if (activeStrongsNumbers.length === 0) {
+      asyncLoadSessionRef.current += 1;
       setEntries([]);
       setIsLoading(false);
       setActiveTabs({});
@@ -475,6 +477,7 @@ export function ReaderStrongsPanel() {
     }
 
     let isCancelled = false;
+    asyncLoadSessionRef.current += 1;
     setIsLoading(true);
     setActiveTabs({});
     setBibleOccurrences({});
@@ -505,6 +508,7 @@ export function ReaderStrongsPanel() {
 
   useEffect(() => {
     const activeIds = [...entries.map((entry) => entry.id), ...(greekEntry ? [greekEntry.entryKey] : [])];
+    const asyncLoadSession = asyncLoadSessionRef.current;
 
     activeIds.forEach((entryId) => {
       if (bibleOccurrences[entryId]) {
@@ -521,10 +525,20 @@ export function ReaderStrongsPanel() {
 
       const lookupPromise =
         greekEntry?.entryKey === entryId
-          ? getGreekVerseOccurrences(entryId)
+          ? getGreekVerseOccurrences(
+              entryId,
+              isGreekDictionaryMode &&
+                activeGreekModeSelection?.entryKey === entryId
+                ? activeGreekModeSelection.selectedForm ?? null
+                : null
+            )
           : getStrongsVerseOccurrencesWithTokens(entryId);
 
       void lookupPromise.then((matches) => {
+        if (asyncLoadSessionRef.current !== asyncLoadSession) {
+          return;
+        }
+
         setBibleOccurrences((current) => ({
           ...current,
           [entryId]: {
@@ -534,7 +548,14 @@ export function ReaderStrongsPanel() {
         }));
       });
     });
-  }, [bibleOccurrences, entries, greekEntry]);
+  }, [
+    activeGreekModeSelection?.entryKey,
+    activeGreekModeSelection?.selectedForm,
+    bibleOccurrences,
+    entries,
+    greekEntry,
+    isGreekDictionaryMode
+  ]);
 
   useEffect(() => {
     const greekEntryIds = entries
@@ -609,12 +630,18 @@ export function ReaderStrongsPanel() {
   }, [entries, greekEntry, installedVersions]);
 
   useEffect(() => {
+    const asyncLoadSession = asyncLoadSessionRef.current;
+
     const loadEntriesForVersion = async (
       entryId: string,
       version: BundledBibleVersion,
       anchors: readonly VerseReferenceAnchor[]
     ) => {
       const matches = await getVerseEntriesForVersion(anchors, version);
+
+      if (asyncLoadSessionRef.current !== asyncLoadSession) {
+        return;
+      }
 
       setBibleOccurrenceVersionEntries((current) => ({
         ...current,
@@ -1417,10 +1444,6 @@ export function ReaderStrongsPanel() {
   function renderGreekDictionaryCard(entry: GreekLemmaEntry) {
     const strongsKey = entry.entryKey;
     const activeTab = activeTabs[strongsKey] ?? "bible";
-    const selectedFormValue = activeGreekModeSelection?.selectedForm ?? null;
-    const normalizedSelectedForm = selectedFormValue
-      ? normalizeGreekFormLookupValue(selectedFormValue)
-      : null;
 
     return (
       <article className="strongs-entry-card greek-dictionary-card" key={entry.entryKey}>
@@ -1453,57 +1476,6 @@ export function ReaderStrongsPanel() {
             </button>
           ))}
         </div>
-        {selectedGreekFormDetails ? (
-          <section className="greek-dictionary-selected-form">
-            <p className="strongs-entry-section-label">Selected Form</p>
-            <div className="greek-dictionary-selected-form-card">
-              <p className="strongs-entry-lemma greek-dictionary-selected-form-value">
-                {selectedGreekFormDetails.form}
-              </p>
-              <p className="strongs-entry-meta">
-                {["Lemma: " + entry.lemma, entry.strongs ? `Strong’s: ${entry.strongs}` : null]
-                  .filter(Boolean)
-                  .join(" · ")}
-              </p>
-              {selectedGreekFormDetails.morphology ? (
-                <p className="strongs-entry-meta">
-                  Morphology:{" "}
-                  {selectedGreekFormDetails.decodedMorphology
-                    ? `${selectedGreekFormDetails.decodedMorphology} (${selectedGreekFormDetails.morphology})`
-                    : selectedGreekFormDetails.morphology}
-                </p>
-              ) : null}
-              {selectedGreekMorphologyDetails ? (
-                <div className="verse-greek-morphology-list">
-                  {selectedGreekMorphologyDetails.terms.map((term) => (
-                    <article
-                      className="verse-greek-morphology-item"
-                      key={`${entry.entryKey}:${selectedGreekFormDetails.form}:${term.key}`}
-                    >
-                      <p className="verse-greek-morphology-term">{term.label}</p>
-                      <p className="verse-greek-morphology-copy">{term.definition}</p>
-                      {term.example ? (
-                        <p className="verse-greek-morphology-copy">{term.example}</p>
-                      ) : null}
-                    </article>
-                  ))}
-                </div>
-              ) : null}
-              {selectedGreekFormDetails.definition ? (
-                <p className="strongs-entry-copy">{selectedGreekFormDetails.definition}</p>
-              ) : null}
-              {activeGreekGrammarChartSelection ? (
-                <button
-                  className="reader-inline-button"
-                  onClick={() => openGreekGrammarChart(activeGreekGrammarChartSelection)}
-                  type="button"
-                >
-                  Open charts
-                </button>
-              ) : null}
-            </div>
-          </section>
-        ) : null}
         <div className="greek-dictionary-definition">
           <p className="strongs-entry-section-label">Lemma Definition</p>
           <p className="strongs-entry-copy">{entry.shortDefinition}</p>
@@ -1512,20 +1484,24 @@ export function ReaderStrongsPanel() {
               {entry.longDefinition}
             </p>
           ) : null}
+          {activeGreekGrammarChartSelection ? (
+            <button
+              className="reader-inline-button"
+              onClick={() => openGreekGrammarChart(activeGreekGrammarChartSelection)}
+              type="button"
+            >
+              Open charts
+            </button>
+          ) : null}
         </div>
         <section className="greek-dictionary-forms">
           <p className="strongs-entry-section-label">Inflected Forms</p>
           <div className="greek-dictionary-form-list">
-            {entry.forms.map((form, index) => {
-              const isSelected =
-                normalizedSelectedForm !== null &&
-                normalizeGreekFormLookupValue(form.form) === normalizedSelectedForm;
-
-              return (
-                <article
-                  className={`greek-dictionary-form-row${isSelected ? " is-selected" : ""}`}
-                  key={`${entry.entryKey}:${form.form}:${form.morphology}:${index}`}
-                >
+            {entry.forms.map((form, index) => (
+              <article
+                className="greek-dictionary-form-row"
+                key={`${entry.entryKey}:${form.form}:${form.morphology}:${index}`}
+              >
                   <p className="greek-dictionary-form-line">
                     <span className="greek-dictionary-form-text">{form.form}</span>
                     <span className="greek-dictionary-form-separator">—</span>
@@ -1548,8 +1524,7 @@ export function ReaderStrongsPanel() {
                     ) : null}
                   </p>
                 </article>
-              );
-            })}
+            ))}
           </div>
         </section>
         {activeTab === "bible" ? (

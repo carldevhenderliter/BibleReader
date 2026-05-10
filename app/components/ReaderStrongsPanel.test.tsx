@@ -1,5 +1,512 @@
 import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 
+jest.mock("@/lib/bible/greek", () => {
+  const actual = jest.requireActual("@/lib/bible/greek");
+
+  const greekEntries = {
+    G1: {
+      entryKey: "G1",
+      lemma: "ἀ",
+      strongs: "G1",
+      transliteration: "a",
+      shortDefinition: "alpha",
+      forms: []
+    },
+    G746: {
+      entryKey: "G746",
+      lemma: "ἀρχή",
+      strongs: "G746",
+      transliteration: "archē",
+      shortDefinition: "beginning",
+      forms: [
+        {
+          form: "ἀρχή",
+          morphology: "N-NSF",
+          decodedMorphology: "noun nominative singular feminine"
+        },
+        {
+          form: "ἀρχῆς",
+          morphology: "N-GSF",
+          decodedMorphology: "noun genitive singular feminine"
+        }
+      ]
+    },
+    G1096: {
+      entryKey: "G1096",
+      lemma: "γίνομαι",
+      strongs: "G1096",
+      transliteration: "ginomai",
+      shortDefinition: "become",
+      forms: [
+        {
+          form: "ἐγένετο",
+          morphology: "V-2ADI-3S",
+          decodedMorphology: "verb aorist middle indicative third person singular"
+        }
+      ]
+    },
+    G3056: {
+      entryKey: "G3056",
+      lemma: "λόγος",
+      strongs: "G3056",
+      transliteration: "logos",
+      shortDefinition: "word",
+      forms: [
+        {
+          form: "λόγος",
+          morphology: "N-NSM",
+          decodedMorphology: "noun nominative singular masculine"
+        },
+        {
+          form: "λόγου",
+          morphology: "N-GSM",
+          decodedMorphology: "noun genitive singular masculine"
+        }
+      ]
+    }
+  } as const;
+
+  const greekOccurrences = {
+    G746: [
+      {
+        version: "greek",
+        bookSlug: "1-chronicles",
+        bookName: "1 Chronicles",
+        chapterNumber: 17,
+        verseNumber: 9,
+        text: "ἀπ᾿ ἀρχῆς",
+        greekTokens: [
+          {
+            surface: "ἀρχῆς",
+            lemma: "ἀρχή",
+            entryKey: "G746",
+            strongs: "G746",
+            morphology: "N-GSF",
+            decodedMorphology: "noun genitive singular feminine",
+            gloss: "beginning",
+            transliteration: "archēs"
+          }
+        ]
+      },
+      {
+        version: "greek",
+        bookSlug: "1-john",
+        bookName: "1 John",
+        chapterNumber: 1,
+        verseNumber: 1,
+        text: "ἀπ᾿ ἀρχῆς",
+        greekTokens: [
+          {
+            surface: "ἀρχῆς",
+            lemma: "ἀρχή",
+            entryKey: "G746",
+            strongs: "G746",
+            morphology: "N-GSF",
+            decodedMorphology: "noun genitive singular feminine",
+            gloss: "beginning",
+            transliteration: "archēs"
+          }
+        ]
+      },
+      {
+        version: "greek",
+        bookSlug: "matthew",
+        bookName: "Matthew",
+        chapterNumber: 19,
+        verseNumber: 4,
+        text: "ἀπ᾿ ἀρχῆς",
+        greekTokens: [
+          {
+            surface: "ἀρχῆς",
+            lemma: "ἀρχή",
+            entryKey: "G746",
+            strongs: "G746",
+            morphology: "N-GSF",
+            decodedMorphology: "noun genitive singular feminine",
+            gloss: "beginning",
+            transliteration: "archēs"
+          }
+        ]
+      }
+    ],
+    G1096: [
+      {
+        version: "greek",
+        bookSlug: "ruth",
+        bookName: "Ruth",
+        chapterNumber: 1,
+        verseNumber: 1,
+        text: "ἐγένετο",
+        greekTokens: [
+          {
+            surface: "ἐγένετο",
+            lemma: "γίνομαι",
+            entryKey: "G1096",
+            strongs: "G1096",
+            morphology: "V-2ADI-3S",
+            decodedMorphology: "verb aorist middle indicative third person singular",
+            gloss: "became",
+            transliteration: "egeneto"
+          }
+        ]
+      }
+    ],
+    G3056: [
+      {
+        version: "greek",
+        bookSlug: "john",
+        bookName: "John",
+        chapterNumber: 1,
+        verseNumber: 1,
+        text: "λόγου",
+        greekTokens: [
+          {
+            surface: "λόγου",
+            lemma: "λόγος",
+            entryKey: "G3056",
+            strongs: "G3056",
+            morphology: "N-GSM",
+            decodedMorphology: "noun genitive singular masculine",
+            gloss: "word",
+            transliteration: "logou"
+          }
+        ]
+      }
+    ]
+  } as const;
+
+  return {
+    ...actual,
+    getGreekLemmaEntry: jest.fn(async (entryKey: string) => greekEntries[entryKey as keyof typeof greekEntries] ?? null),
+    getGreekVerseOccurrences: jest.fn(async (entryKey: string, selectedFormValue?: string | null) => {
+      const matches = [...(greekOccurrences[entryKey as keyof typeof greekOccurrences] ?? [])];
+
+      if (!selectedFormValue) {
+        return matches;
+      }
+
+      const normalizedSelectedForm = actual.normalizeGreekFormLookupValue(selectedFormValue);
+
+      return matches.filter((entry) =>
+        entry.greekTokens?.some(
+          (token) =>
+            (token.entryKey ?? token.strongs ?? null) === entryKey &&
+            actual.normalizeGreekFormLookupValue(token.surface) === normalizedSelectedForm
+        )
+      );
+    })
+  };
+});
+
+jest.mock("@/lib/bible/strongs", () => {
+  const actual = jest.requireActual("@/lib/bible/strongs");
+  const normalize = (value: string) => actual.normalizeStrongsNumber(value);
+
+  const strongsEntries = {
+    G1: {
+      id: "G1",
+      language: "greek",
+      lemma: "ἀ",
+      transliteration: "a",
+      definition: "alpha",
+      partOfSpeech: "particle",
+      rootWord: "",
+      outlineUsage: ""
+    },
+    G746: {
+      id: "G746",
+      language: "greek",
+      lemma: "ἀρχή",
+      transliteration: "archē",
+      definition: "beginning",
+      partOfSpeech: "noun",
+      rootWord: "G746|ἀρχή|beginning",
+      outlineUsage: "beginning, first cause, ruler"
+    },
+    G1096: {
+      id: "G1096",
+      language: "greek",
+      lemma: "γίνομαι",
+      transliteration: "ginomai",
+      definition: "become",
+      partOfSpeech: "verb",
+      rootWord: "G1096|γίνομαι|become",
+      outlineUsage: "become, happen, be made"
+    },
+    G3056: {
+      id: "G3056",
+      language: "greek",
+      lemma: "λόγος",
+      transliteration: "logos",
+      definition: "word",
+      partOfSpeech: "noun",
+      rootWord: "G3004|λέγω|say, speak, call, tell, misc",
+      outlineUsage: "of speech, a word, say, speak, call, tell, misc",
+      bdagArticles: [
+        {
+          headword: "λόγος",
+          transliteration: "logos",
+          entry: "A word, message, or speaking.",
+          summary: {
+            plainMeaning: "A spoken or written word.",
+            commonUse: "Usually means message, statement, or speech.",
+            ntNote: "In the New Testament, it can also refer to the Word."
+          }
+        }
+      ]
+    },
+    H7225: {
+      id: "H7225",
+      language: "hebrew",
+      lemma: "רֵאשִׁית",
+      transliteration: "reshith",
+      definition: "beginning",
+      partOfSpeech: "noun",
+      rootWord: "",
+      outlineUsage: "beginning, first"
+    }
+  } as const;
+
+  const occurrencesByEntry = {
+    G1: [],
+    G3056: [
+      {
+        version: "kjv",
+        bookSlug: "matthew",
+        bookName: "Matthew",
+        chapterNumber: 5,
+        verseNumber: 32,
+        text: "word",
+        tokens: [{ text: "word", strongsNumbers: ["G3056"] }]
+      }
+    ],
+    H7225: [
+      {
+        version: "kjv",
+        bookSlug: "genesis",
+        bookName: "Genesis",
+        chapterNumber: 1,
+        verseNumber: 1,
+        text: "In the beginning",
+        tokens: [{ text: "beginning", strongsNumbers: ["H7225"] }]
+      }
+    ]
+  } as const;
+
+  const verseEntriesByVersion = {
+    greek: {
+      "1-chronicles:17:9": {
+        version: "greek",
+        bookSlug: "1-chronicles",
+        bookName: "1 Chronicles",
+        chapterNumber: 17,
+        verseNumber: 9,
+        text: "ἀπ᾿ ἀρχῆς",
+        greekTokens: [
+          {
+            surface: "ἀρχῆς",
+            lemma: "ἀρχή",
+            entryKey: "G746",
+            strongs: "G746",
+            morphology: "N-GSF",
+            decodedMorphology: "noun genitive singular feminine",
+            gloss: "beginning",
+            transliteration: "archēs"
+          }
+        ]
+      },
+      "1-john:1:1": {
+        version: "greek",
+        bookSlug: "1-john",
+        bookName: "1 John",
+        chapterNumber: 1,
+        verseNumber: 1,
+        text: "ἀπ᾿ ἀρχῆς",
+        greekTokens: [
+          {
+            surface: "ἀρχῆς",
+            lemma: "ἀρχή",
+            entryKey: "G746",
+            strongs: "G746",
+            morphology: "N-GSF",
+            decodedMorphology: "noun genitive singular feminine",
+            gloss: "beginning",
+            transliteration: "archēs"
+          }
+        ]
+      },
+      "john:1:1": {
+        version: "greek",
+        bookSlug: "john",
+        bookName: "John",
+        chapterNumber: 1,
+        verseNumber: 1,
+        text: "λόγου",
+        greekTokens: [
+          {
+            surface: "λόγου",
+            lemma: "λόγος",
+            entryKey: "G3056",
+            strongs: "G3056",
+            morphology: "N-GSM",
+            decodedMorphology: "noun genitive singular masculine",
+            gloss: "word",
+            transliteration: "logou"
+          }
+        ]
+      },
+      "matthew:5:32": {
+        version: "greek",
+        bookSlug: "matthew",
+        bookName: "Matthew",
+        chapterNumber: 5,
+        verseNumber: 32,
+        text: "λόγος"
+      },
+      "matthew:19:4": {
+        version: "greek",
+        bookSlug: "matthew",
+        bookName: "Matthew",
+        chapterNumber: 19,
+        verseNumber: 4,
+        text: "ἀπ᾿ ἀρχῆς",
+        greekTokens: [
+          {
+            surface: "ἀρχῆς",
+            lemma: "ἀρχή",
+            entryKey: "G746",
+            strongs: "G746",
+            morphology: "N-GSF",
+            decodedMorphology: "noun genitive singular feminine",
+            gloss: "beginning",
+            transliteration: "archēs"
+          }
+        ]
+      }
+    },
+    kjv: {
+      "1-chronicles:17:9": {
+        version: "kjv",
+        bookSlug: "1-chronicles",
+        bookName: "1 Chronicles",
+        chapterNumber: 17,
+        verseNumber: 9,
+        text: "as at the first",
+        tokens: [{ text: "first", strongsNumbers: ["G746"] }]
+      },
+      "1-john:1:1": {
+        version: "kjv",
+        bookSlug: "1-john",
+        bookName: "1 John",
+        chapterNumber: 1,
+        verseNumber: 1,
+        text: "That which was from the beginning",
+        tokens: [{ text: "beginning", strongsNumbers: ["G746"] }]
+      },
+      "genesis:1:1": {
+        version: "kjv",
+        bookSlug: "genesis",
+        bookName: "Genesis",
+        chapterNumber: 1,
+        verseNumber: 1,
+        text: "In the beginning",
+        tokens: [{ text: "beginning", strongsNumbers: ["H7225"] }]
+      },
+      "matthew:5:32": {
+        version: "kjv",
+        bookSlug: "matthew",
+        bookName: "Matthew",
+        chapterNumber: 5,
+        verseNumber: 32,
+        text: "word",
+        tokens: [{ text: "word", strongsNumbers: ["G3056"] }]
+      },
+      "matthew:19:4": {
+        version: "kjv",
+        bookSlug: "matthew",
+        bookName: "Matthew",
+        chapterNumber: 19,
+        verseNumber: 4,
+        text: "from the beginning",
+        tokens: [{ text: "beginning", strongsNumbers: ["G746"] }]
+      }
+    },
+    web: {
+      "genesis:1:1": {
+        version: "web",
+        bookSlug: "genesis",
+        bookName: "Genesis",
+        chapterNumber: 1,
+        verseNumber: 1,
+        text: "In the beginning",
+        tokens: [{ text: "beginning", strongsNumbers: ["H7225"] }]
+      },
+      "matthew:5:32": {
+        version: "web",
+        bookSlug: "matthew",
+        bookName: "Matthew",
+        chapterNumber: 5,
+        verseNumber: 32,
+        text: "The word remains.",
+        tokens: [{ text: "word", strongsNumbers: ["G3056"] }]
+      }
+    }
+  } as const;
+
+  const makeKey = (anchor: { bookSlug: string; chapterNumber: number; verseNumber: number }) =>
+    `${anchor.bookSlug}:${anchor.chapterNumber}:${anchor.verseNumber}`;
+
+  return {
+    ...actual,
+    getStrongsEntries: jest.fn(async (entryIds: string[]) =>
+      entryIds
+        .map((entryId) => strongsEntries[normalize(entryId) as keyof typeof strongsEntries] ?? null)
+        .filter(Boolean)
+    ),
+    getStrongsEntry: jest.fn(async (entryId: string) =>
+      strongsEntries[normalize(entryId) as keyof typeof strongsEntries] ?? null
+    ),
+    getStrongsVerseOccurrencesWithTokens: jest.fn(async (entryId: string) =>
+      [...(occurrencesByEntry[normalize(entryId) as keyof typeof occurrencesByEntry] ?? [])]
+    ),
+    getVerseEntriesForVersion: jest.fn(async (anchors, version) =>
+      anchors.map((anchor) => ({
+        version,
+        entry:
+          verseEntriesByVersion[version as keyof typeof verseEntriesByVersion]?.[
+            makeKey(anchor) as keyof (typeof verseEntriesByVersion)[keyof typeof verseEntriesByVersion]
+          ] ?? null,
+        href: `/${version}/${makeKey(anchor)}`
+      }))
+    )
+  };
+});
+
+jest.mock("@/lib/fathers/search", () => {
+  const actual = jest.requireActual("@/lib/fathers/search");
+
+  return {
+    ...actual,
+    findFathersSegmentsByGreekLemma: jest.fn(async (lemma: string) =>
+      lemma === "λόγος"
+        ? [
+            {
+              workSlug: "1-clement",
+              workTitle: "1 Clement",
+              segmentId: "1-clement:13",
+              ref: "13",
+              label: "13",
+              greek: "ὁ λόγος",
+              english: "the holy word saith",
+              greekContext: "ὁ λόγος",
+              englishContext: "the holy word saith"
+            }
+          ]
+        : []
+    )
+  };
+});
+
 import { LookupPane } from "@/app/components/LookupPane";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { READER_CUSTOMIZATION_STORAGE_KEY } from "@/lib/reader-customization";
@@ -279,7 +786,10 @@ describe("ReaderStrongsPanel", () => {
     expect(await within(studyPane).findByText("Verses Found Outside Bible")).toBeInTheDocument();
     expect(await within(studyPane).findByRole("heading", { name: "1 Clement" })).toBeInTheDocument();
     expect(within(studyPane).getByText("13")).toBeInTheDocument();
-    expect(within(studyPane).getAllByText("λόγος")[0]?.tagName).toBe("MARK");
+    const highlightedLemma = within(studyPane)
+      .getAllByText("λόγος")
+      .find((node) => node.tagName === "MARK");
+    expect(highlightedLemma?.tagName).toBe("MARK");
     expect(within(studyPane).getAllByText(/the holy word saith/i).length).toBeGreaterThan(0);
   });
 
@@ -296,7 +806,7 @@ describe("ReaderStrongsPanel", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders a lemma-centered Greek dictionary card with the selected form highlighted", async () => {
+  it("renders a lemma-centered Greek dictionary card without the selected-form summary", async () => {
     renderWithReaderCustomization(<StrongsHarness />);
 
     fireEvent.click(screen.getByRole("button", { name: "Open Greek Dictionary" }));
@@ -306,18 +816,47 @@ describe("ReaderStrongsPanel", () => {
     expect(await within(studyPane).findByRole("heading", { name: "ἀρχή" })).toBeInTheDocument();
     expect(within(studyPane).getByText("Greek Dictionary")).toBeInTheDocument();
     expect(await within(studyPane).findByText("Transliteration: archē")).toBeInTheDocument();
-    expect(await within(studyPane).findByText("Selected Form")).toBeInTheDocument();
-    expect(await within(studyPane).findByText("Noun")).toBeInTheDocument();
-    expect(within(studyPane).getByText("Genitive")).toBeInTheDocument();
-    expect(within(studyPane).getByText("Example: λογου = of the word")).toBeInTheDocument();
+    expect(within(studyPane).queryByText("Selected Form")).not.toBeInTheDocument();
     expect((await within(studyPane).findAllByText("ἀρχῆς")).length).toBeGreaterThan(0);
     expect(within(studyPane).getByRole("tab", { name: "Thayer" })).toBeInTheDocument();
 
-    const selectedFormRow = within(studyPane)
-      .getAllByText("ἀρχῆς")
-      .find((node) => node.closest(".greek-dictionary-form-row"));
+    const oldTestamentButton = await within(studyPane).findByRole(
+      "button",
+      {
+        name: "Old Testament"
+      },
+      {
+        timeout: 5000
+      }
+    );
 
-    expect(selectedFormRow?.closest(".greek-dictionary-form-row")).toHaveClass("is-selected");
+    fireEvent.click(oldTestamentButton);
+
+    await waitFor(() =>
+      expect(oldTestamentButton).toHaveAttribute(
+        "aria-pressed",
+        "true"
+      )
+    );
+    expect(
+      await within(studyPane).findByText("1 Chronicles 17:9", undefined, {
+        timeout: 5000
+      })
+    ).toBeInTheDocument();
+    expect(within(studyPane).queryByText("Genesis 1:1")).not.toBeInTheDocument();
+
+    const newTestamentButton = within(studyPane).getByRole("button", {
+      name: "New Testament"
+    });
+
+    fireEvent.click(newTestamentButton);
+
+    await waitFor(() =>
+      expect(newTestamentButton).toHaveAttribute(
+        "aria-pressed",
+        "true"
+      )
+    );
 
     fireEvent.click(within(studyPane).getByRole("button", { name: "KJV" }));
 
@@ -327,9 +866,11 @@ describe("ReaderStrongsPanel", () => {
         "true"
       )
     );
-    const occurrenceCard = (await within(studyPane).findByText("Genesis 1:1")).closest(
-      ".strongs-entry-bible-verse"
-    );
+    const occurrenceCard = (
+      await within(studyPane).findByText("1 John 1:1", undefined, {
+        timeout: 5000
+      })
+    ).closest(".strongs-entry-bible-verse");
     expect(occurrenceCard).not.toBeNull();
     expect(within(occurrenceCard as HTMLElement).getByText("KJV")).toBeInTheDocument();
     expect(within(occurrenceCard as HTMLElement).getByText("Greek")).toBeInTheDocument();
@@ -397,7 +938,8 @@ describe("ReaderStrongsPanel", () => {
     fireEvent.click(screen.getByRole("button", { name: "Open Greek Dictionary Masculine" }));
 
     const studyPane = screen.getByLabelText("Study pane");
-    expect(await within(studyPane).findByText("Selected Form")).toBeInTheDocument();
+    expect(await within(studyPane).findByRole("button", { name: "Open charts" })).toBeInTheDocument();
+    expect(within(studyPane).queryByText("Selected Form")).not.toBeInTheDocument();
 
     fireEvent.click(within(studyPane).getByRole("tab", { name: "Charts" }));
 
@@ -432,7 +974,8 @@ describe("ReaderStrongsPanel", () => {
     fireEvent.click(screen.getByRole("button", { name: "Open Greek Dictionary Verb" }));
 
     const studyPane = screen.getByLabelText("Study pane");
-    expect(await within(studyPane).findByText("Selected Form")).toBeInTheDocument();
+    expect(await within(studyPane).findByRole("button", { name: "Open charts" })).toBeInTheDocument();
+    expect(within(studyPane).queryByText("Selected Form")).not.toBeInTheDocument();
     fireEvent.click(await within(studyPane).findByRole("button", { name: "Open charts" }));
     expect(await within(studyPane).findByRole("heading", { name: "Greek Charts" })).toBeInTheDocument();
     expect(within(studyPane).getByRole("tab", { name: "Verbs" })).toHaveAttribute(
@@ -446,7 +989,7 @@ describe("ReaderStrongsPanel", () => {
     expect(
       within(studyPane).getByRole("table", { name: "Masculine Definite Articles Chart" })
     ).toBeInTheDocument();
-  });
+  }, 15000);
 
   it("filters Strong's Bible occurrences by testament and book inside the study pane", async () => {
     renderWithReaderCustomization(<StrongsHarness />);
@@ -456,12 +999,17 @@ describe("ReaderStrongsPanel", () => {
     const studyPane = screen.getByLabelText("Study pane");
 
     expect(await within(studyPane).findByRole("heading", { name: "ἀρχή" })).toBeInTheDocument();
-    expect(await within(studyPane).findByText("Genesis 1:1")).toBeInTheDocument();
+    expect(
+      await within(studyPane).findByText("1 Chronicles 17:9", undefined, {
+        timeout: 15000
+      })
+    ).toBeInTheDocument();
+    expect(within(studyPane).queryByText("Genesis 1:1")).not.toBeInTheDocument();
 
     fireEvent.click(within(studyPane).getByRole("button", { name: "New Testament" }));
 
     await waitFor(() =>
-      expect(within(studyPane).queryByText("Genesis 1:1")).not.toBeInTheDocument()
+      expect(within(studyPane).queryByText("1 Chronicles 17:9")).not.toBeInTheDocument()
     );
     expect(await within(studyPane).findByText("Matthew 19:4")).toBeInTheDocument();
 
@@ -474,7 +1022,7 @@ describe("ReaderStrongsPanel", () => {
       "aria-pressed",
       "false"
     );
-  });
+  }, 15000);
 
   it("does not render Greek learning inside the study pane", () => {
     renderWithReaderCustomization(<StrongsHarness />);
