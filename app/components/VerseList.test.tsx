@@ -750,6 +750,10 @@ describe("VerseList", () => {
     expect(await within(studyPane).findByText("Full morphology")).toBeInTheDocument();
     expect(within(studyPane).getByText("Linked phrase")).toBeInTheDocument();
     expect((await within(studyPane).findAllByText("τόν λόγον")).length).toBeGreaterThan(0);
+    const sectionLabels = Array.from(
+      studyPane.querySelectorAll(".strongs-entry-section-label")
+    ).map((label) => label.textContent);
+    expect(sectionLabels.indexOf("Grammar")).toBeLessThan(sectionLabels.indexOf("Selected Form"));
     const exactFormSection = (await within(studyPane).findByText("Bible Verses With This Form")).closest(
       ".greek-grammar-panel-section"
     );

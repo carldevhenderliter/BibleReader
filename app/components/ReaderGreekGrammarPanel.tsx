@@ -100,6 +100,12 @@ export function ReaderGreekGrammarPanel() {
             Transliteration: {activeGreekGrammarSelection.transliteration}
           </p>
         ) : null}
+        <div className="greek-grammar-panel-section">
+          <p className="strongs-entry-section-label">Grammar</p>
+          <div className="greek-grammar-panel-expanded">
+            <GreekGrammarDetailsContent grammar={grammar} />
+          </div>
+        </div>
         <div className="greek-dictionary-selected-form-card greek-grammar-panel-card">
           <p className="strongs-entry-section-label">Selected Form</p>
           {activeGreekGrammarSelection.selectedForm ? (
@@ -191,12 +197,6 @@ export function ReaderGreekGrammarPanel() {
             ) : null}
           </section>
         ) : null}
-        <div className="greek-grammar-panel-section">
-          <p className="strongs-entry-section-label">Grammar</p>
-          <div className="greek-grammar-panel-expanded">
-            <GreekGrammarDetailsContent grammar={grammar} />
-          </div>
-        </div>
       </article>
     </div>
   );
