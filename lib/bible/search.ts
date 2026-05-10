@@ -7,6 +7,7 @@ import {
 } from "@/lib/bible/greek";
 import {
   getStrongsEntry,
+  searchEnglishStrongsEntries,
   normalizeStrongsNumber
 } from "@/lib/bible/strongs";
 import type {
@@ -69,6 +70,7 @@ const MAX_VERSE_RESULTS = 24;
 const MAX_MULTI_QUERY_PARTS = 5;
 const MAX_TOPIC_SUGGESTIONS = 8;
 const MAX_GREEK_LEMMA_RESULTS = 8;
+const MAX_ENGLISH_STRONGS_RESULTS = 12;
 
 const verseIndexLoaders: Record<BundledBibleVersion, () => Promise<unknown>> = {
   web: () => import("@/data/bible/search/web.json"),
@@ -669,6 +671,50 @@ async function getGreekLookupResults(
   ]);
 }
 
+async function getEnglishStrongsLookupResults(
+  rawQuery: string,
+  booksBySlug: Map<string, SearchableBook>,
+  scope: SearchScope,
+  matchMode: SearchMatchMode
+): Promise<BibleSearchResult[]> {
+  const [entries, strongsVerseIndex, kjvVerseIndex] = await Promise.all([
+    searchEnglishStrongsEntries(rawQuery, MAX_ENGLISH_STRONGS_RESULTS, matchMode),
+    loadStrongsVerseIndex(),
+    loadVerseIndex("kjv")
+  ]);
+
+  if (entries.length === 0) {
+    return [];
+  }
+
+  let remainingVerseSlots = MAX_VERSE_RESULTS;
+  const strongsVerseResults: BibleSearchResult[] = [];
+
+  for (const entry of entries) {
+    if (remainingVerseSlots <= 0) {
+      break;
+    }
+
+    const scopedMatches = getScopedStrongsVerseMatches(entry.id, strongsVerseIndex, booksBySlug, scope);
+    const verseResults = getStrongsVerseResults(
+      entry.id,
+      scopedMatches.slice(0, remainingVerseSlots),
+      kjvVerseIndex
+    );
+
+    strongsVerseResults.push(...verseResults);
+    remainingVerseSlots -= verseResults.length;
+  }
+
+  const strongsResults = entries.map<BibleSearchResult>((entry) => {
+    const scopedMatches = getScopedStrongsVerseMatches(entry.id, strongsVerseIndex, booksBySlug, scope);
+
+    return getStrongsResult(entry, scopedMatches.length);
+  });
+
+  return dedupeSearchResults([...strongsResults, ...strongsVerseResults]);
+}
+
 async function searchSingleBibleQuery(
   rawQuery: string,
   version: BundledBibleVersion = DEFAULT_BIBLE_VERSION,
@@ -885,9 +931,20 @@ async function searchSingleBibleQuery(
   const greekResults = shouldRunGreekLookup
     ? await getGreekLookupResults(greekLookupQuery?.rawFilter ?? rawQuery, booksBySlug, scope)
     : [];
+  const englishStrongsResults =
+    !strongsNumber &&
+    !topicQuery &&
+    normalizedVerseQuery.length >= MIN_VERSE_QUERY_LENGTH
+      ? await getEnglishStrongsLookupResults(rawQuery, booksBySlug, scope, matchMode)
+      : [];
 
   if (normalizedVerseQuery.length < MIN_VERSE_QUERY_LENGTH) {
-    return dedupeSearchResults([...directReferenceResults, ...bookResults, ...greekResults]);
+    return dedupeSearchResults([
+      ...directReferenceResults,
+      ...bookResults,
+      ...greekResults,
+      ...englishStrongsResults
+    ]);
   }
 
   const verseIndex = await loadVerseIndex(version);
@@ -907,7 +964,8 @@ async function searchSingleBibleQuery(
     ...directReferenceResults,
     ...bookResults,
     ...greekResults,
-    ...verseResults
+    ...verseResults,
+    ...englishStrongsResults
   ]);
 }
 

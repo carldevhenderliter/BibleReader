@@ -4,6 +4,7 @@ import {
   getStrongsVerseOccurrences,
   normalizeGreekWordLookupValue,
   normalizeStrongsNumber,
+  searchEnglishStrongsEntries,
   searchGreekStrongsEntries
 } from "@/lib/bible/strongs";
 
@@ -51,6 +52,17 @@ describe("strongs lexicon", () => {
     );
     await expect(searchGreekStrongsEntries("agape")).resolves.toEqual(
       expect.arrayContaining([expect.objectContaining({ id: "G26", lemma: "ἀγάπη" })])
+    );
+  });
+
+  it("finds Strong's entries by regular english words across Hebrew and Greek", async () => {
+    const results = await searchEnglishStrongsEntries("beginning");
+
+    expect(results).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ id: "H7225", language: "hebrew" }),
+        expect.objectContaining({ id: "G746", language: "greek" })
+      ])
     );
   });
 

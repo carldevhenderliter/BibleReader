@@ -295,6 +295,33 @@ describe("Bible search", () => {
     ).toBe(true);
   });
 
+  it("surfaces original-language Strong's verses for regular english searches", async () => {
+    const results = await searchBible("beginning", "greek");
+
+    expect(
+      results.some(
+        (result) =>
+          result.type === "strongs" &&
+          result.strongsNumber === "H7225"
+      )
+    ).toBe(true);
+    expect(
+      results.some(
+        (result) =>
+          result.type === "strongs" &&
+          result.strongsNumber === "G746"
+      )
+    ).toBe(true);
+    expect(
+      results.some(
+        (result) =>
+          result.type === "verse" &&
+          result.version === "kjv" &&
+          result.description.startsWith("KJV Strongs ")
+      )
+    ).toBe(true);
+  });
+
   it("returns starter topic suggestions for a bare Topic query", async () => {
     const results = await searchBible("Topic:", "web");
 
