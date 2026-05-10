@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-import type { GreekGrammarInfo } from "@/lib/bible/types";
+import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
+import type { GreekDictionarySelection, GreekGrammarInfo } from "@/lib/bible/types";
 
 type GreekGrammarCardProps = {
   grammar: GreekGrammarInfo;
-  defaultExpanded?: boolean;
+  selection: GreekDictionarySelection;
 };
 
 function hasExpandedContent(grammar: GreekGrammarInfo) {
@@ -20,18 +19,101 @@ function hasExpandedContent(grammar: GreekGrammarInfo) {
   );
 }
 
-export function GreekGrammarCard({
-  grammar,
-  defaultExpanded = false
-}: GreekGrammarCardProps) {
-  const [isExpanded, setIsExpanded] = useState(defaultExpanded);
-  const canExpand = hasExpandedContent(grammar);
+export function GreekGrammarDetailsContent({
+  grammar
+}: {
+  grammar: GreekGrammarInfo;
+}) {
+  return (
+    <div className="greek-grammar-card-expanded">
+      {grammar.expandedInfo.fullMorphology ? (
+        <div className="greek-grammar-card-section">
+          <p className="greek-grammar-card-section-label">Full morphology</p>
+          <p className="greek-grammar-card-copy">{grammar.expandedInfo.fullMorphology}</p>
+        </div>
+      ) : null}
+      {grammar.expandedInfo.functionHints.length > 0 ? (
+        <div className="greek-grammar-card-section">
+          <p className="greek-grammar-card-section-label">Function hints</p>
+          <div className="greek-grammar-card-list">
+            {grammar.expandedInfo.functionHints.map((hint) => (
+              <p className="greek-grammar-card-copy" key={hint}>
+                {hint}
+              </p>
+            ))}
+          </div>
+        </div>
+      ) : null}
+      {grammar.expandedInfo.paradigmPattern ? (
+        <div className="greek-grammar-card-section">
+          <p className="greek-grammar-card-section-label">Paradigm pattern</p>
+          <p className="greek-grammar-card-copy">{grammar.expandedInfo.paradigmPattern}</p>
+        </div>
+      ) : null}
+      {grammar.expandedInfo.exampleForms.length > 0 ? (
+        <div className="greek-grammar-card-section">
+          <p className="greek-grammar-card-section-label">Example forms</p>
+          <p className="greek-grammar-card-copy">
+            {grammar.expandedInfo.exampleForms.join(" · ")}
+          </p>
+        </div>
+      ) : null}
+      {grammar.expandedInfo.linkedPhrase ? (
+        <div className="greek-grammar-card-section greek-grammar-card-phrase">
+          <p className="greek-grammar-card-section-label">Linked phrase</p>
+          <p className="greek-grammar-card-greek" lang="el">
+            {grammar.expandedInfo.linkedPhrase.combined}
+          </p>
+          <p className="greek-grammar-card-copy">
+            {[
+              grammar.expandedInfo.linkedPhrase.sharedGender,
+              grammar.expandedInfo.linkedPhrase.sharedNumber,
+              grammar.expandedInfo.linkedPhrase.sharedCase
+            ]
+              .filter(Boolean)
+              .join(" ")}
+          </p>
+          {grammar.expandedInfo.linkedPhrase.functionHint ? (
+            <p className="greek-grammar-card-copy">
+              {grammar.expandedInfo.linkedPhrase.functionHint}
+            </p>
+          ) : null}
+          {grammar.expandedInfo.linkedPhrase.example ? (
+            <p className="greek-grammar-card-copy">
+              Example:{" "}
+              <span className="greek-grammar-card-greek" lang="el">
+                {grammar.expandedInfo.linkedPhrase.example}
+              </span>
+            </p>
+          ) : null}
+        </div>
+      ) : null}
+      {grammar.expandedInfo.details.length > 0 ? (
+        <div className="greek-grammar-card-section">
+          <p className="greek-grammar-card-section-label">Grammar details</p>
+          <div className="greek-grammar-card-details">
+            {grammar.expandedInfo.details.map((detail) => (
+              <article
+                className="greek-grammar-card-detail"
+                key={`${detail.group ?? ""}:${detail.label}`}
+              >
+                <p className="greek-grammar-card-detail-label">{detail.label}</p>
+                <p className="greek-grammar-card-copy">{detail.definition}</p>
+                {detail.example ? (
+                  <p className="greek-grammar-card-copy">{detail.example}</p>
+                ) : null}
+              </article>
+            ))}
+          </div>
+        </div>
+      ) : null}
+    </div>
+  );
+}
 
-  useEffect(() => {
-    if (defaultExpanded) {
-      setIsExpanded(true);
-    }
-  }, [defaultExpanded]);
+export function GreekGrammarCard({ grammar, selection }: GreekGrammarCardProps) {
+  const { openGreekGrammarDetails } = useReaderWorkspace();
+  const canExpand = hasExpandedContent(grammar);
 
   return (
     <div className="greek-grammar-card">
@@ -60,95 +142,13 @@ export function GreekGrammarCard({
       </div>
       {canExpand ? (
         <button
-          aria-expanded={isExpanded}
+          aria-label={`Open grammar details for ${selection.selectedForm ?? selection.lemma}`}
           className="greek-grammar-card-toggle"
-          onClick={() => setIsExpanded((current) => !current)}
+          onClick={() => openGreekGrammarDetails({ ...selection, grammar })}
           type="button"
         >
-          {isExpanded ? "Less" : "More"}
+          More
         </button>
-      ) : null}
-      {isExpanded ? (
-        <div className="greek-grammar-card-expanded">
-          {grammar.expandedInfo.fullMorphology ? (
-            <div className="greek-grammar-card-section">
-              <p className="greek-grammar-card-section-label">Full morphology</p>
-              <p className="greek-grammar-card-copy">{grammar.expandedInfo.fullMorphology}</p>
-            </div>
-          ) : null}
-          {grammar.expandedInfo.functionHints.length > 0 ? (
-            <div className="greek-grammar-card-section">
-              <p className="greek-grammar-card-section-label">Function hints</p>
-              <div className="greek-grammar-card-list">
-                {grammar.expandedInfo.functionHints.map((hint) => (
-                  <p className="greek-grammar-card-copy" key={hint}>
-                    {hint}
-                  </p>
-                ))}
-              </div>
-            </div>
-          ) : null}
-          {grammar.expandedInfo.paradigmPattern ? (
-            <div className="greek-grammar-card-section">
-              <p className="greek-grammar-card-section-label">Paradigm pattern</p>
-              <p className="greek-grammar-card-copy">{grammar.expandedInfo.paradigmPattern}</p>
-            </div>
-          ) : null}
-          {grammar.expandedInfo.exampleForms.length > 0 ? (
-            <div className="greek-grammar-card-section">
-              <p className="greek-grammar-card-section-label">Example forms</p>
-              <p className="greek-grammar-card-copy">
-                {grammar.expandedInfo.exampleForms.join(" · ")}
-              </p>
-            </div>
-          ) : null}
-          {grammar.expandedInfo.linkedPhrase ? (
-            <div className="greek-grammar-card-section greek-grammar-card-phrase">
-              <p className="greek-grammar-card-section-label">Linked phrase</p>
-              <p className="greek-grammar-card-greek" lang="el">
-                {grammar.expandedInfo.linkedPhrase.combined}
-              </p>
-              <p className="greek-grammar-card-copy">
-                {[
-                  grammar.expandedInfo.linkedPhrase.sharedGender,
-                  grammar.expandedInfo.linkedPhrase.sharedNumber,
-                  grammar.expandedInfo.linkedPhrase.sharedCase
-                ]
-                  .filter(Boolean)
-                  .join(" ")}
-              </p>
-              {grammar.expandedInfo.linkedPhrase.functionHint ? (
-                <p className="greek-grammar-card-copy">
-                  {grammar.expandedInfo.linkedPhrase.functionHint}
-                </p>
-              ) : null}
-              {grammar.expandedInfo.linkedPhrase.example ? (
-                <p className="greek-grammar-card-copy">
-                  Example:{" "}
-                  <span className="greek-grammar-card-greek" lang="el">
-                    {grammar.expandedInfo.linkedPhrase.example}
-                  </span>
-                </p>
-              ) : null}
-            </div>
-          ) : null}
-          {grammar.expandedInfo.details.length > 0 ? (
-            <div className="greek-grammar-card-section">
-              <p className="greek-grammar-card-section-label">Grammar details</p>
-              <div className="greek-grammar-card-details">
-                {grammar.expandedInfo.details.map((detail) => (
-                  <article className="greek-grammar-card-detail" key={`${detail.group ?? ""}:${detail.label}`}>
-                    <p className="greek-grammar-card-detail-label">{detail.label}</p>
-                    <p className="greek-grammar-card-copy">{detail.definition}</p>
-                    {detail.example ? (
-                      <p className="greek-grammar-card-copy">{detail.example}</p>
-                    ) : null}
-                  </article>
-                ))}
-              </div>
-            </div>
-          ) : null}
-        </div>
       ) : null}
     </div>
   );

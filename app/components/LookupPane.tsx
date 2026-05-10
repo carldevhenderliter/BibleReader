@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { ReaderCrossReferencesPanel } from "@/app/components/ReaderCrossReferencesPanel";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderGrammarChartsPanel } from "@/app/components/ReaderGrammarChartsPanel";
+import { ReaderGreekGrammarPanel } from "@/app/components/ReaderGreekGrammarPanel";
 import { ReaderHarmonyWorkspace } from "@/app/components/ReaderHarmonyWorkspace";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
 import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
@@ -97,6 +98,15 @@ export function LookupPane() {
             Cross References
           </button>
           <button
+            aria-selected={activeUtilityPane === "grammar"}
+            className={`lookup-pane-tab${activeUtilityPane === "grammar" ? " is-active" : ""}`}
+            onClick={() => setActiveUtilityPane("grammar")}
+            role="tab"
+            type="button"
+          >
+            Grammar
+          </button>
+          <button
             aria-selected={activeUtilityPane === "charts"}
             className={`lookup-pane-tab${activeUtilityPane === "charts" ? " is-active" : ""}`}
             onClick={() => setActiveUtilityPane("charts")}
@@ -136,6 +146,8 @@ export function LookupPane() {
         <div className="lookup-pane-study-body">
           {activeUtilityPane === "notebook" ? (
             <ReaderNotebookEditor />
+          ) : activeUtilityPane === "grammar" ? (
+            <ReaderGreekGrammarPanel />
           ) : activeUtilityPane === "charts" ? (
             <ReaderGrammarChartsPanel />
           ) : activeUtilityPane === "strongs" ? (

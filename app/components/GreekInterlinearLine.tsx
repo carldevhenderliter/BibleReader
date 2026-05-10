@@ -183,6 +183,19 @@ export function GreekInterlinearLine({
           const partOfSpeechLabel = getPartOfSpeechLabel(token);
           const savedGloss = override?.selectedGloss?.trim() ?? "";
           const grammarInfo = grammarInfos[tokenIndex] ?? null;
+          const dictionarySelection = {
+            entryKey: token.entryKey ?? token.strongs ?? token.lemma,
+            strongs: token.strongs ?? null,
+            lemma: token.lemma,
+            label: token.lemma,
+            occurrenceKey,
+            selectedForm: token.surface,
+            selectedFormMorphology: token.morphology ?? null,
+            selectedFormDecodedMorphology: token.decodedMorphology ?? null,
+            matchedQuery: token.surface,
+            transliteration: token.transliteration ?? transliterateGreekSurface(token.surface),
+            gloss: token.gloss ?? null
+          };
 
           return (
           <span
@@ -230,8 +243,8 @@ export function GreekInterlinearLine({
               ) : null}
               {showGrammarCards && grammarInfo ? (
                 <GreekGrammarCard
-                  defaultExpanded={showExpandedGrammarDetails}
                   grammar={grammarInfo}
+                  selection={dictionarySelection}
                 />
               ) : null}
               {isGreekLearningMode && isSentenceQuizActive ? (

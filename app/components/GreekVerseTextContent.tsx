@@ -132,6 +132,23 @@ export function GreekVerseTextContent({
               `greek:${verse.number}:${index}`;
             const partOfSpeechLabel = getPartOfSpeechLabel(token);
             const grammarInfo = grammarInfos[index] ?? null;
+            const dictionarySelection =
+              entryKey
+                ? {
+                    entryKey,
+                    strongs: token.strongs ?? null,
+                    lemma: token.lemma,
+                    label: token.lemma,
+                    occurrenceKey,
+                    selectedForm: token.surface,
+                    selectedFormMorphology: token.morphology ?? null,
+                    selectedFormDecodedMorphology: token.decodedMorphology ?? null,
+                    matchedQuery: token.surface,
+                    transliteration:
+                      token.transliteration ?? transliterateGreekSurface(token.surface),
+                    gloss: token.gloss ?? null
+                  }
+                : null;
 
             return (
               <span
@@ -236,8 +253,11 @@ export function GreekVerseTextContent({
                 ) : null}
                 {showGrammarCards && grammarInfo ? (
                   <GreekGrammarCard
-                    defaultExpanded={showExpandedGrammarDetails}
                     grammar={grammarInfo}
+                    selection={dictionarySelection ?? {
+                      entryKey: token.lemma,
+                      lemma: token.lemma
+                    }}
                   />
                 ) : null}
               </span>
@@ -281,6 +301,23 @@ export function GreekVerseTextContent({
           `greek:${verse.number}:${index}`;
         const partOfSpeechLabel = getPartOfSpeechLabel(token);
         const grammarInfo = grammarInfos[index] ?? null;
+        const dictionarySelection =
+          entryKey
+            ? {
+                entryKey,
+                strongs: token.strongs ?? null,
+                lemma: token.lemma,
+                label: token.lemma,
+                occurrenceKey,
+                selectedForm: token.surface,
+                selectedFormMorphology: token.morphology ?? null,
+                selectedFormDecodedMorphology: token.decodedMorphology ?? null,
+                matchedQuery: token.surface,
+                transliteration:
+                  token.transliteration ?? transliterateGreekSurface(token.surface),
+                gloss: token.gloss ?? null
+              }
+            : null;
 
         return (
           <span className="verse-greek-inline-wrap" key={`${verse.number}:${index}:${token.surface}`}>
@@ -368,8 +405,11 @@ export function GreekVerseTextContent({
             ) : null}
             {showGrammarCards && grammarInfo ? (
               <GreekGrammarCard
-                defaultExpanded={showExpandedGrammarDetails}
                 grammar={grammarInfo}
+                selection={dictionarySelection ?? {
+                  entryKey: token.lemma,
+                  lemma: token.lemma
+                }}
               />
             ) : null}
           </span>

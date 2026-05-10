@@ -2344,6 +2344,31 @@ button.fathers-annotation-anchor:focus-visible {
   font-weight: 700;
 }
 
+.greek-grammar-panel-lemma {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.greek-grammar-panel-lemma:hover,
+.greek-grammar-panel-lemma:focus-visible {
+  color: rgba(var(--reader-accent-rgb), 1);
+  outline: none;
+}
+
+.greek-grammar-panel-card,
+.greek-grammar-panel-expanded {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.greek-grammar-panel-expanded .greek-grammar-card {
+  width: 100%;
+  margin-top: 0;
+}
+
 .verse-greek-morphology-picker,
 .verse-greek-gloss-picker {
   position: absolute;

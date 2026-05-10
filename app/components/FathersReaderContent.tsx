@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { FathersEnglishUndertextContent } from "@/app/components/FathersEnglishUndertextContent";
+import { ReaderGreekGrammarPanel } from "@/app/components/ReaderGreekGrammarPanel";
 import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
 import { ReaderBookAudioPlayer } from "@/app/components/ReaderBookAudioPlayer";
 import { useRegisterReaderBottomBarPanel } from "@/app/components/ReaderBottomBarProvider";
@@ -431,6 +432,8 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
   const readerSurfaceLabel =
     activeUtilityPane === "harmony"
       ? "Harmony workspace"
+      : activeUtilityPane === "grammar"
+        ? "Grammar"
       : activeUtilityPane === "strongs"
         ? "Strongs"
         : null;
@@ -602,6 +605,10 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
         {!isSplitViewActive && activeUtilityPane === "strongs" ? (
           <div className="reading-surface reader-notebook-surface">
             <ReaderStrongsPanel />
+          </div>
+        ) : !isSplitViewActive && activeUtilityPane === "grammar" ? (
+          <div className="reading-surface reader-notebook-surface">
+            <ReaderGreekGrammarPanel />
           </div>
         ) : !isSplitViewActive && activeUtilityPane === "harmony" ? (
           <div className="reading-surface reader-notebook-surface">

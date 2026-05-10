@@ -12,6 +12,7 @@ import { ReaderControls } from "@/app/components/ReaderControls";
 import { ReaderCopyButton } from "@/app/components/ReaderCopyButton";
 import { ReaderHarmonyPanel } from "@/app/components/ReaderHarmonyPanel";
 import { ReaderHarmonyWorkspace } from "@/app/components/ReaderHarmonyWorkspace";
+import { ReaderGreekGrammarPanel } from "@/app/components/ReaderGreekGrammarPanel";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
 import { ReaderOtComparePanel } from "@/app/components/ReaderOtComparePanel";
 import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
@@ -211,6 +212,7 @@ export function ReaderPageContent({
   );
   const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
   const showNotebookInline = !isSplitViewActive && activeUtilityPane === "notebook";
+  const showGrammarInline = !isSplitViewActive && activeUtilityPane === "grammar";
   const showStrongsInline = !isSplitViewActive && activeUtilityPane === "strongs";
   const showSermonsInline = !isSplitViewActive && activeUtilityPane === "sermons";
   const showHarmonyInline = !isSplitViewActive && activeUtilityPane === "harmony";
@@ -249,6 +251,8 @@ export function ReaderPageContent({
       chapter.verses.some((verse) => Boolean(interlinearVerseMap?.[verse.number]?.tokens?.length)));
   const readerSurfaceLabel = showNotebookInline
     ? "Notebook"
+    : showGrammarInline
+      ? "Grammar"
     : showStrongsInline
       ? "Strongs"
       : showSermonsInline
@@ -415,11 +419,19 @@ export function ReaderPageContent({
               <div className="reader-ot-compare-study-panel">
                 <ReaderStrongsPanel />
               </div>
+            ) : !isSplitViewActive && activeUtilityPane === "grammar" ? (
+              <div className="reader-ot-compare-study-panel">
+                <ReaderGreekGrammarPanel />
+              </div>
             ) : null}
           </div>
         ) : showNotebookInline ? (
           <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
             <ReaderNotebookEditor />
+          </div>
+        ) : showGrammarInline ? (
+          <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>
+            <ReaderGreekGrammarPanel />
           </div>
         ) : showStrongsInline ? (
           <div className="reading-surface reader-notebook-surface" ref={readingSurfaceRef}>

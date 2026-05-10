@@ -1,6 +1,7 @@
 import { BIBLE_GREEK_UNDERTEXT_STORAGE_KEY } from "@/app/components/BibleGreekUndertextProvider";
 import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 
+import { AppSplitLayout } from "@/app/components/AppSplitLayout";
 import { LookupPane } from "@/app/components/LookupPane";
 import { VerseList } from "@/app/components/VerseList";
 import { READER_VERSION_STORAGE_KEY } from "@/lib/bible/constants";
@@ -285,30 +286,42 @@ describe("VerseList", () => {
     expect(await screen.findByText("Verb")).toBeInTheDocument();
   });
 
-  it("renders inline Greek grammar cards with expandable details and linked phrases", async () => {
+  it("opens Greek grammar details in the study pane and lets the lemma hand off to Strongs", async () => {
     window.localStorage.setItem(READER_VERSION_STORAGE_KEY, "esv");
     window.history.replaceState({}, "", "http://localhost/read/matthew/1?version=esv");
 
     renderWithReaderCustomization(
-      <VerseList
-        bookSlug="matthew"
-        chapterNumber={1}
-        interlinearVerseMap={grammarPhraseInterlinearVerseMap}
-        showExpandedGreekGrammarCards={false}
-        showGreekGrammarCards
-        verses={grammarPhraseVerses}
-      />
+      <AppSplitLayout>
+        <VerseList
+          bookSlug="matthew"
+          chapterNumber={1}
+          interlinearVerseMap={grammarPhraseInterlinearVerseMap}
+          showExpandedGreekGrammarCards={false}
+          showGreekGrammarCards
+          verses={grammarPhraseVerses}
+        />
+      </AppSplitLayout>
     );
 
     expect((await screen.findAllByText("Lemma")).length).toBeGreaterThan(0);
     expect((await screen.findAllByText("Accusative Singular Masculine")).length).toBeGreaterThan(0);
 
-    fireEvent.click(screen.getAllByRole("button", { name: "More" })[0]);
+    fireEvent.click(screen.getAllByRole("button", { name: /open grammar details for τόν/i })[0]);
 
-    expect(await screen.findByText("Full morphology")).toBeInTheDocument();
-    expect(screen.getByText("Linked phrase")).toBeInTheDocument();
-    expect((await screen.findAllByText("τόν λόγον")).length).toBeGreaterThan(0);
-    expect((await screen.findAllByText(/direct object/i)).length).toBeGreaterThan(0);
+    await waitFor(() => {
+      expect(screen.getByRole("tab", { name: "Grammar" })).toHaveAttribute("aria-selected", "true");
+    });
+
+    const studyPane = screen.getByLabelText("Study pane");
+    expect(await within(studyPane).findByText("Full morphology")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Linked phrase")).toBeInTheDocument();
+    expect((await within(studyPane).findAllByText("τόν λόγον")).length).toBeGreaterThan(0);
+
+    fireEvent.click(within(studyPane).getByRole("button", { name: "ὁ" }));
+
+    await waitFor(() => {
+      expect(screen.getByRole("tab", { name: "Strongs" })).toHaveAttribute("aria-selected", "true");
+    });
   });
 
   it("opens Strongs details in the study pane from a tagged token", async () => {
@@ -469,14 +482,13 @@ describe("VerseList", () => {
     expect(screen.getByLabelText("English gloss for ἀρχῇ")).toHaveValue("");
   });
 
-  it("can open standalone Greek grammar cards expanded by default", async () => {
+  it("shows a More button for standalone Greek grammar cards", async () => {
     window.localStorage.setItem(READER_VERSION_STORAGE_KEY, "greek");
 
     renderWithReaderCustomization(
       <VerseList
         bookSlug="genesis"
         chapterNumber={1}
-        showExpandedGreekGrammarCards
         showGreekGrammarCards
         verses={[
           {
@@ -499,10 +511,9 @@ describe("VerseList", () => {
       />
     );
 
-    expect((await screen.findAllByText("Full morphology")).length).toBeGreaterThan(0);
-    expect((await screen.findAllByText("Paradigm pattern")).length).toBeGreaterThan(0);
     expect(
-      (await screen.findAllByText(/Aorist Active Indicative Third Person Singular/i)).length
+      (await screen.findAllByRole("button", { name: /open grammar details for ἐγένετο/i }))
+        .length
     ).toBeGreaterThan(0);
   });
 

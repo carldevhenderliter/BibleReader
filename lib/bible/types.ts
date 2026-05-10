@@ -604,6 +604,10 @@ export type GreekGrammarInfo = {
   expandedInfo: GreekGrammarExpandedInfo;
 };
 
+export type GreekGrammarPaneSelection = GreekDictionarySelection & {
+  grammar: GreekGrammarInfo;
+};
+
 export type HebrewToken = {
   surface: string;
   lemma: string;
