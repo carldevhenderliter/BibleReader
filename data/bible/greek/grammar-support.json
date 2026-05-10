@@ -1,0 +1,53 @@
+{
+  "caseFunctionHints": {
+    "nominative": "Usually marks the subject or names the topic of the clause.",
+    "genitive": "Often shows possession, source, relationship, or description.",
+    "dative": "Usually marks the indirect object, means, location, association, or advantage.",
+    "accusative": "Usually functions as the direct object or marks extent and direction.",
+    "vocative": "Used for direct address."
+  },
+  "declensionLabels": {
+    "first-declension": "1st declension",
+    "second-declension": "2nd declension",
+    "third-declension": "3rd declension",
+    "definite-article": "Definite article"
+  },
+  "verbAspectHints": {
+    "present": "Imperfective aspect: action viewed as ongoing, repeated, or in progress.",
+    "imperfect": "Imperfective aspect in past time: action viewed as unfolding or repeated.",
+    "future": "Future action or state.",
+    "aorist": "Perfective aspect: action viewed as a whole event.",
+    "perfect": "Stative/resultative aspect: completed action with continuing results.",
+    "pluperfect": "Past stative/resultative aspect: a completed action with prior results."
+  },
+  "paradigmPatterns": {
+    "article:definite": "ὁ, τοῦ, τῷ, τόν ... / οἱ, τῶν, τοῖς, τούς",
+    "declension:first-declension": "-η / -α, -ης / -ας, -ῃ / -ᾳ, -ην / -αν",
+    "declension:second-declension": "-ος / -ον, -ου, -ῳ, -ον ... / -οι / -α, -ων, -οις, -ους",
+    "declension:third-declension": "Variable stem patterns with consonant or vowel stem changes",
+    "verb:present:active:indicative": "-ω, -εις, -ει, -ομεν, -ετε, -ουσι(ν)",
+    "verb:present:middle:indicative": "-ομαι, -ῃ, -εται, -ομεθα, -εσθε, -ονται",
+    "verb:aorist:active:indicative": "-σα, -σας, -σε(ν), -σαμεν, -σατε, -σαν",
+    "verb:aorist:middle:indicative": "-σάμην, -σω, -σατο, -σάμεθα, -σασθε, -σαντο",
+    "verb:aorist:passive:indicative": "-θην, -θης, -θη, -θημεν, -θητε, -θησαν",
+    "verb:future:active:indicative": "-σω, -σεις, -σει, -σομεν, -σετε, -σουσι(ν)",
+    "verb:perfect:active:indicative": "-κα, -κας, -κε(ν), -καμεν, -κατε, -κασι(ν)"
+  },
+  "exampleForms": {
+    "article:definite": ["ὁ λόγος", "τοῦ λόγου", "τόν λόγον"],
+    "declension:first-declension": ["ἡμέρα", "ἡμέρας", "ἡμέρᾳ"],
+    "declension:second-declension": ["λόγος", "λόγου", "λόγῳ", "λόγον"],
+    "declension:third-declension": ["σῶμα", "σώματος", "σώματι"],
+    "verb:present:active:indicative": ["λύω", "λύεις", "λύει"],
+    "verb:present:middle:indicative": ["λύομαι", "λύῃ", "λύεται"],
+    "verb:aorist:active:indicative": ["ἔλυσα", "ἔλυσας", "ἔλυσε(ν)"],
+    "verb:aorist:middle:indicative": ["ἐλυσάμην", "ἐλύσω", "ἐλύσατο"],
+    "verb:aorist:passive:indicative": ["ἐλύθην", "ἐλύθης", "ἐλύθη"],
+    "verb:future:active:indicative": ["λύσω", "λύσεις", "λύσει"],
+    "verb:perfect:active:indicative": ["λέλυκα", "λέλυκας", "λέλυκε(ν)"]
+  },
+  "linkedPhraseExamples": {
+    "article-noun": "τόν λόγον",
+    "article-noun-adjective": "ὁ καλὸς λόγος"
+  }
+}

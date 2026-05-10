@@ -95,6 +95,8 @@ export type ReaderCustomizationSettings = {
   showGreekTransliteration: boolean;
   showGreekMorphology: boolean;
   showGreekGloss: boolean;
+  showGreekGrammarCards: boolean;
+  showExpandedGreekGrammarCards: boolean;
   showCustomVerseTranslation: boolean;
   showFathersSentenceLines: boolean;
   disableLazyLoading: boolean;
@@ -543,6 +545,63 @@ export type GreekToken = {
   transliteration?: string;
   gloss?: string;
   trailingPunctuation?: string;
+};
+
+export type GreekGrammarLinkedPhraseKind = "article-noun" | "article-noun-adjective";
+
+export type GreekGrammarLinkedPhrase = {
+  kind: GreekGrammarLinkedPhraseKind;
+  combined: string;
+  members: string[];
+  sharedGender?: string | null;
+  sharedNumber?: string | null;
+  sharedCase?: string | null;
+  functionHint?: string | null;
+  example?: string | null;
+};
+
+export type GreekGrammarDetailItem = {
+  label: string;
+  definition: string;
+  example?: string;
+  group?: string;
+};
+
+export type GreekGrammarQuickInfo = {
+  partOfSpeech?: string | null;
+  lemma: string;
+  meaning?: string | null;
+  gloss?: string | null;
+  summary?: string | null;
+};
+
+export type GreekGrammarExpandedInfo = {
+  morphologyLabel?: string | null;
+  fullMorphology?: string | null;
+  functionHints: string[];
+  paradigmPattern?: string | null;
+  exampleForms: string[];
+  linkedPhrase?: GreekGrammarLinkedPhrase | null;
+  details: GreekGrammarDetailItem[];
+};
+
+export type GreekGrammarInfo = {
+  word: string;
+  lemma: string;
+  type?: string | null;
+  meaning?: string | null;
+  gloss?: string | null;
+  gender?: string | null;
+  number?: string | null;
+  case?: string | null;
+  declension?: string | null;
+  tense?: string | null;
+  voice?: string | null;
+  mood?: string | null;
+  person?: string | null;
+  aspect?: string | null;
+  quickInfo: GreekGrammarQuickInfo;
+  expandedInfo: GreekGrammarExpandedInfo;
 };
 
 export type HebrewToken = {

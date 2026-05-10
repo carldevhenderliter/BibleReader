@@ -555,7 +555,9 @@ export function FathersReaderContent({ payload, works }: FathersReaderContentPro
 
                     openGreekDictionary(selection);
                   }}
+                  showExpandedGrammarDetails={settings.showExpandedGreekGrammarCards}
                   showGloss={settings.showGreekGloss}
+                  showGrammarCards={settings.showGreekGrammarCards}
                   showLemma={settings.showGreekLemma}
                   showSurface={settings.showGreekSurface}
                   showTransliteration={settings.showGreekTransliteration}

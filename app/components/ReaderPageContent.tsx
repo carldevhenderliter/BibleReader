@@ -448,9 +448,11 @@ export function ReaderPageContent({
               showSecondaryVerseTranslation={settings.showSecondaryVerseTranslation}
               showCustomVerseTranslation={settings.showCustomVerseTranslation}
               showGreekGloss={settings.showGreekGloss}
+              showGreekGrammarCards={settings.showGreekGrammarCards}
               showGreekLemma={settings.showGreekLemma}
               showGreekSurface={settings.showGreekSurface}
               showGreekTransliteration={settings.showGreekTransliteration}
+              showExpandedGreekGrammarCards={settings.showExpandedGreekGrammarCards}
               secondaryVerseVersions={secondaryVerseVersions}
               secondaryVersesByVersion={secondaryVersesByVersion}
               showStrongs={showStrongs}

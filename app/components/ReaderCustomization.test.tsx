@@ -150,6 +150,30 @@ describe("Reader customization", () => {
     expect(stored).toContain('"secondaryVerseTranslationVersions":["esv","kjv"]');
   });
 
+  it("persists the Greek grammar card toggles", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={ntBooks[0]}
+        books={ntBooks}
+        chaptersByVersion={{ greek: esvChapter, esv: esvChapter, web: esvChapter }}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: {
+        value: "greek"
+      }
+    });
+    fireEvent.click(screen.getByRole("button", { name: /Greek grammar cards/i }));
+    fireEvent.click(screen.getByRole("button", { name: /Expanded grammar details/i }));
+
+    const stored = window.localStorage.getItem(READER_CUSTOMIZATION_STORAGE_KEY) ?? "";
+
+    expect(stored).toContain('"showGreekGrammarCards":true');
+    expect(stored).toContain('"showExpandedGreekGrammarCards":true');
+  });
+
   it("opens advanced settings and persists unrestricted layout spacing values", () => {
     renderWithReaderCustomization(
       <ReaderPageContent

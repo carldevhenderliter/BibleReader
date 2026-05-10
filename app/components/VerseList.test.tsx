@@ -124,6 +124,39 @@ const translationAssemblyInterlinearVerseMap: Record<number, EsvInterlinearDispl
   }
 };
 
+const grammarPhraseVerses: Verse[] = [
+  {
+    number: 1,
+    text: "the word"
+  }
+];
+
+const grammarPhraseInterlinearVerseMap: Record<number, EsvInterlinearDisplayVerse> = {
+  1: {
+    number: 1,
+    baseGreek: "τόν λόγον",
+    greek: "τόν λόγον",
+    tokens: [
+      {
+        surface: "τόν",
+        lemma: "ὁ",
+        strongs: "G3588",
+        morphology: "T-ASM",
+        decodedMorphology: "article accusative singular masculine",
+        gloss: "the"
+      },
+      {
+        surface: "λόγον",
+        lemma: "λόγος",
+        strongs: "G3056",
+        morphology: "N-ASM",
+        decodedMorphology: "noun accusative singular masculine",
+        gloss: "word"
+      }
+    ]
+  }
+};
+
 describe("VerseList", () => {
   beforeEach(() => {
     window.localStorage.clear();
@@ -252,6 +285,32 @@ describe("VerseList", () => {
     expect(await screen.findByText("Verb")).toBeInTheDocument();
   });
 
+  it("renders inline Greek grammar cards with expandable details and linked phrases", async () => {
+    window.localStorage.setItem(READER_VERSION_STORAGE_KEY, "esv");
+    window.history.replaceState({}, "", "http://localhost/read/matthew/1?version=esv");
+
+    renderWithReaderCustomization(
+      <VerseList
+        bookSlug="matthew"
+        chapterNumber={1}
+        interlinearVerseMap={grammarPhraseInterlinearVerseMap}
+        showExpandedGreekGrammarCards={false}
+        showGreekGrammarCards
+        verses={grammarPhraseVerses}
+      />
+    );
+
+    expect((await screen.findAllByText("Lemma")).length).toBeGreaterThan(0);
+    expect((await screen.findAllByText("Accusative Singular Masculine")).length).toBeGreaterThan(0);
+
+    fireEvent.click(screen.getAllByRole("button", { name: "More" })[0]);
+
+    expect(await screen.findByText("Full morphology")).toBeInTheDocument();
+    expect(screen.getByText("Linked phrase")).toBeInTheDocument();
+    expect((await screen.findAllByText("τόν λόγον")).length).toBeGreaterThan(0);
+    expect((await screen.findAllByText(/direct object/i)).length).toBeGreaterThan(0);
+  });
+
   it("opens Strongs details in the study pane from a tagged token", async () => {
     renderWithReaderCustomization(
       <>
@@ -354,6 +413,26 @@ describe("VerseList", () => {
     expect(within(studyPane).getByText("Example: λογου = of the word")).toBeInTheDocument();
   });
 
+  it("keeps Greek word clicks opening the study pane when grammar cards are enabled", async () => {
+    renderWithReaderCustomization(
+      <>
+        <VerseList
+          bookSlug="john"
+          chapterNumber={1}
+          interlinearVerseMap={interlinearVerseMap}
+          showGreekGrammarCards
+          verses={verses}
+        />
+        <LookupPane />
+      </>
+    );
+
+    fireEvent.click(await screen.findByRole("button", { name: /ἀρχῆς ἀρχή G746/i }));
+
+    const studyPane = screen.getByLabelText("Study pane");
+    expect(await within(studyPane).findByRole("heading", { name: "ἀρχή" })).toBeInTheDocument();
+  });
+
   it("shows transliteration and gloss lines for the standalone Greek version", async () => {
     window.localStorage.setItem(READER_VERSION_STORAGE_KEY, "greek");
 
@@ -388,6 +467,43 @@ describe("VerseList", () => {
     expect((await screen.findAllByText("Noun")).length).toBeGreaterThan(0);
     expect(await screen.findByLabelText("English gloss for ἀρχῇ")).toBeInTheDocument();
     expect(screen.getByLabelText("English gloss for ἀρχῇ")).toHaveValue("");
+  });
+
+  it("can open standalone Greek grammar cards expanded by default", async () => {
+    window.localStorage.setItem(READER_VERSION_STORAGE_KEY, "greek");
+
+    renderWithReaderCustomization(
+      <VerseList
+        bookSlug="genesis"
+        chapterNumber={1}
+        showExpandedGreekGrammarCards
+        showGreekGrammarCards
+        verses={[
+          {
+            number: 1,
+            text: "ἐγένετο",
+            translationText: "became",
+            greekTokens: [
+              {
+                surface: "ἐγένετο",
+                lemma: "γίνομαι",
+                entryKey: "G1096",
+                strongs: "G1096",
+                morphology: "V-3AAI-S",
+                decodedMorphology: "verb aorist active indicative third person singular",
+                gloss: "became"
+              }
+            ]
+          }
+        ]}
+      />
+    );
+
+    expect((await screen.findAllByText("Full morphology")).length).toBeGreaterThan(0);
+    expect((await screen.findAllByText("Paradigm pattern")).length).toBeGreaterThan(0);
+    expect(
+      (await screen.findAllByText(/Aorist Active Indicative Third Person Singular/i)).length
+    ).toBeGreaterThan(0);
   });
 
   it("shows Strong's numbers beside each word in the Textus Receptus reader", async () => {

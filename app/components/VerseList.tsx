@@ -86,6 +86,8 @@ type VerseListProps = {
   showGreekLemma?: boolean;
   showGreekTransliteration?: boolean;
   showGreekGloss?: boolean;
+  showGreekGrammarCards?: boolean;
+  showExpandedGreekGrammarCards?: boolean;
   annotationMode?: boolean;
   highlightedVerseNumber?: number | null;
   highlightedVerseRange?: {
@@ -202,6 +204,8 @@ export function VerseList({
   showGreekLemma = true,
   showGreekTransliteration = true,
   showGreekGloss = true,
+  showGreekGrammarCards = false,
+  showExpandedGreekGrammarCards = false,
   annotationMode = false,
   highlightedVerseNumber,
   highlightedVerseRange,
@@ -224,7 +228,11 @@ export function VerseList({
   const activeHighlightedVerseRange = highlightedVerseRange ?? null;
   const shouldShowVerseText = showVerseText ?? !showInterlinearOnly;
   const shouldShowGreekTokens =
-    showGreekSurface || showGreekLemma || showGreekTransliteration || showGreekGloss;
+    showGreekSurface ||
+    showGreekLemma ||
+    showGreekTransliteration ||
+    showGreekGloss ||
+    showGreekGrammarCards;
 
   useEffect(() => {
     const scrollTargetVerseNumber =
@@ -403,6 +411,8 @@ export function VerseList({
 
                           openGreekDictionary(selection);
                         }}
+                        showExpandedGrammarDetails={showExpandedGreekGrammarCards}
+                        showGrammarCards={showGreekGrammarCards}
                         showStrongsNumbers={version === "tr" && showVerseStrongs}
                         verse={verse}
                       />
@@ -600,7 +610,9 @@ export function VerseList({
                   chapterNumber={chapterNumber}
                   greekLearningScopeKey={greekLearningScopeKey}
                   onOpenGreekDictionary={handleGreekTokenSelection}
+                  showExpandedGrammarDetails={showExpandedGreekGrammarCards}
                   showGloss={showGreekGloss}
+                  showGrammarCards={showGreekGrammarCards}
                   showLemma={showGreekLemma}
                   showSurface={showGreekSurface}
                   showTransliteration={showGreekTransliteration}

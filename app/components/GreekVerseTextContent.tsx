@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 
+import { GreekGrammarCard } from "@/app/components/GreekGrammarCard";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { useGreekSentenceQuiz } from "@/app/components/useGreekSentenceQuiz";
 import {
@@ -9,6 +10,7 @@ import {
   getGreekMorphologyDetails,
   transliterateGreekSurface
 } from "@/lib/bible/greek";
+import { buildGreekGrammarInfos } from "@/lib/bible/greek-grammar";
 import type { GreekToken, Verse } from "@/lib/bible/types";
 
 type GreekVerseTextContentProps = {
@@ -20,6 +22,8 @@ type GreekVerseTextContentProps = {
   showTransliteration?: boolean;
   showLemma?: boolean;
   showGloss?: boolean;
+  showGrammarCards?: boolean;
+  showExpandedGrammarDetails?: boolean;
   enableGreekLearning?: boolean;
   highlightedEntryKey?: string | null;
   getOccurrenceKey?: (token: GreekToken, index: number) => string;
@@ -52,6 +56,8 @@ export function GreekVerseTextContent({
   showTransliteration = true,
   showLemma = true,
   showGloss = true,
+  showGrammarCards = false,
+  showExpandedGrammarDetails = false,
   enableGreekLearning = true,
   highlightedEntryKey = null,
   getOccurrenceKey,
@@ -84,6 +90,10 @@ export function GreekVerseTextContent({
     setAnswer,
     wrongCount
   } = useGreekSentenceQuiz(greekLearningSelections, activeGreekLearningScopeKey);
+  const grammarInfos = useMemo(
+    () => buildGreekGrammarInfos(verse?.greekTokens ?? []),
+    [verse?.greekTokens]
+  );
 
   function getPartOfSpeechLabel(token: GreekToken) {
     return (
@@ -121,6 +131,7 @@ export function GreekVerseTextContent({
               token.occurrenceKey ??
               `greek:${verse.number}:${index}`;
             const partOfSpeechLabel = getPartOfSpeechLabel(token);
+            const grammarInfo = grammarInfos[index] ?? null;
 
             return (
               <span
@@ -223,6 +234,12 @@ export function GreekVerseTextContent({
                     ) : null}
                   </div>
                 ) : null}
+                {showGrammarCards && grammarInfo ? (
+                  <GreekGrammarCard
+                    defaultExpanded={showExpandedGrammarDetails}
+                    grammar={grammarInfo}
+                  />
+                ) : null}
               </span>
             );
           })}
@@ -263,6 +280,7 @@ export function GreekVerseTextContent({
           token.occurrenceKey ??
           `greek:${verse.number}:${index}`;
         const partOfSpeechLabel = getPartOfSpeechLabel(token);
+        const grammarInfo = grammarInfos[index] ?? null;
 
         return (
           <span className="verse-greek-inline-wrap" key={`${verse.number}:${index}:${token.surface}`}>
@@ -347,6 +365,12 @@ export function GreekVerseTextContent({
             ) : null}
             {partOfSpeechLabel ? (
               <span className="verse-greek-inline-part-of-speech">{partOfSpeechLabel}</span>
+            ) : null}
+            {showGrammarCards && grammarInfo ? (
+              <GreekGrammarCard
+                defaultExpanded={showExpandedGrammarDetails}
+                grammar={grammarInfo}
+              />
             ) : null}
           </span>
         );

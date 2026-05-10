@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
 import { HebrewVerseTextContent } from "@/app/components/HebrewVerseTextContent";
+import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import type { BookMeta, Chapter, ReadingView, Verse } from "@/lib/bible/types";
 import { formatBookLabel } from "@/lib/study-workspace";
@@ -57,6 +58,7 @@ function LazyOtCompareSection({
   initialRender,
   isFocused
 }: LazyOtCompareSectionProps) {
+  const { settings } = useReaderCustomization();
   const { activeStudyVerseNumber, openGreekDictionaryInCurrentPane, openStrongsInCurrentPane } =
     useReaderWorkspace();
   const [shouldRenderSection, setShouldRenderSection] = useState(initialRender);
@@ -167,6 +169,8 @@ function LazyOtCompareSection({
                           className="verse-text verse-text-greek reader-compare-text"
                           displayMode="stacked"
                           onOpenGreekDictionary={openGreekDictionaryInCurrentPane}
+                          showExpandedGrammarDetails={settings.showExpandedGreekGrammarCards}
+                          showGrammarCards={settings.showGreekGrammarCards}
                           verse={row.greekVerse}
                         />
                       </div>

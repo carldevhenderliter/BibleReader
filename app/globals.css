@@ -2243,6 +2243,107 @@ button.fathers-annotation-anchor:focus-visible {
   outline: none;
 }
 
+.greek-grammar-card {
+  display: grid;
+  gap: 0.36rem;
+  width: min(18rem, calc(100vw - 2.5rem));
+  margin-top: 0.34rem;
+  padding: 0.58rem 0.64rem;
+  border: 1px solid rgba(var(--reader-accent-rgb), 0.16);
+  border-radius: 0.82rem;
+  background: rgba(7, 14, 25, 0.88);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+  color: rgba(238, 244, 255, 0.92);
+  font-family: var(--reader-ui-font);
+  font-size: 0.75rem;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.greek-grammar-card-quick,
+.greek-grammar-card-expanded,
+.greek-grammar-card-section,
+.greek-grammar-card-list,
+.greek-grammar-card-details {
+  display: grid;
+  gap: 0.28rem;
+}
+
+.greek-grammar-card-kicker,
+.greek-grammar-card-line,
+.greek-grammar-card-copy,
+.greek-grammar-card-section-label,
+.greek-grammar-card-detail-label {
+  margin: 0;
+}
+
+.greek-grammar-card-kicker,
+.greek-grammar-card-section-label {
+  color: rgba(186, 217, 248, 0.66);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.greek-grammar-card-line {
+  display: grid;
+  gap: 0.12rem;
+}
+
+.greek-grammar-card-label {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.greek-grammar-card-greek {
+  color: rgba(244, 248, 255, 0.98);
+  font-family: var(--reader-greek-font);
+  font-size: 0.88rem;
+}
+
+.greek-grammar-card-toggle {
+  justify-self: start;
+  min-height: 1.8rem;
+  padding: 0.34rem 0.58rem;
+  border: 1px solid rgba(var(--reader-accent-rgb), 0.24);
+  border-radius: 999px;
+  background: rgba(var(--reader-accent-rgb), 0.08);
+  color: rgba(242, 247, 255, 0.94);
+  font-family: var(--reader-ui-font);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.greek-grammar-card-toggle:hover,
+.greek-grammar-card-toggle:focus-visible {
+  border-color: rgba(var(--reader-accent-rgb), 0.4);
+  background: rgba(var(--reader-accent-rgb), 0.14);
+  outline: none;
+}
+
+.greek-grammar-card-copy {
+  color: rgba(228, 236, 248, 0.86);
+}
+
+.greek-grammar-card-phrase,
+.greek-grammar-card-detail {
+  padding: 0.48rem 0.52rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.68rem;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.greek-grammar-card-detail-label {
+  color: rgba(244, 248, 255, 0.95);
+  font-weight: 700;
+}
+
 .verse-greek-morphology-picker,
 .verse-greek-gloss-picker {
   position: absolute;

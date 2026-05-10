@@ -87,9 +87,11 @@ type LazyBookChapterSectionProps = {
   showAnnotatedGreekUndertext: boolean;
   showCustomVerseTranslation: boolean;
   showGreekGloss: boolean;
+  showGreekGrammarCards: boolean;
   showGreekLemma: boolean;
   showGreekSurface: boolean;
   showGreekTransliteration: boolean;
+  showExpandedGreekGrammarCards: boolean;
   secondaryVerseVersions: readonly BundledBibleVersion[];
   secondaryVersesByVersion?: Partial<Record<BundledBibleVersion, Record<number, Verse>>>;
   showStrongs: boolean;
@@ -115,9 +117,11 @@ function LazyBookChapterSection({
   showAnnotatedGreekUndertext,
   showCustomVerseTranslation,
   showGreekGloss,
+  showGreekGrammarCards,
   showGreekLemma,
   showGreekSurface,
   showGreekTransliteration,
+  showExpandedGreekGrammarCards,
   secondaryVerseVersions,
   secondaryVersesByVersion,
   showStrongs,
@@ -207,9 +211,11 @@ function LazyBookChapterSection({
           showSecondaryVerseTranslation={showSecondaryVerseTranslation}
           showCustomVerseTranslation={showCustomVerseTranslation}
           showGreekGloss={showGreekGloss}
+          showGreekGrammarCards={showGreekGrammarCards}
           showGreekLemma={showGreekLemma}
           showGreekSurface={showGreekSurface}
           showGreekTransliteration={showGreekTransliteration}
+          showExpandedGreekGrammarCards={showExpandedGreekGrammarCards}
           secondaryVerseVersions={secondaryVerseVersions}
           secondaryVersesByVersion={secondaryVersesByVersion}
           showStrongs={showStrongs}
@@ -675,9 +681,11 @@ export function WholeBookContent({
                 showAnnotatedGreekUndertext={settings.showAnnotatedGreekUndertext}
                 showCustomVerseTranslation={settings.showCustomVerseTranslation}
                 showGreekGloss={settings.showGreekGloss}
+                showGreekGrammarCards={settings.showGreekGrammarCards}
                 showGreekLemma={settings.showGreekLemma}
                 showGreekSurface={settings.showGreekSurface}
                 showGreekTransliteration={settings.showGreekTransliteration}
+                showExpandedGreekGrammarCards={settings.showExpandedGreekGrammarCards}
                 secondaryVerseVersions={secondaryVerseVersions}
                 secondaryVersesByVersion={Object.fromEntries(
                   secondaryVerseVersions.map((secondaryVerseVersion) => [

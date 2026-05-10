@@ -199,7 +199,8 @@ export function ReaderSettingsPanel({
     settings.showGreekSurface ||
     settings.showGreekLemma ||
     settings.showGreekTransliteration ||
-    settings.showGreekGloss;
+    settings.showGreekGloss ||
+    settings.showGreekGrammarCards;
   const availableSecondaryVersions = isFathersMode
     ? []
     : versionOptions
@@ -277,6 +278,8 @@ export function ReaderSettingsPanel({
         showGreekLemma: false,
         showGreekTransliteration: false,
         showGreekGloss: false,
+        showGreekGrammarCards: false,
+        showExpandedGreekGrammarCards: false,
         showCustomVerseTranslation: false,
         showFathersSentenceLines: false,
         disableLazyLoading: false,
@@ -302,6 +305,8 @@ export function ReaderSettingsPanel({
         showGreekLemma: true,
         showGreekTransliteration: true,
         showGreekGloss: true,
+        showGreekGrammarCards: false,
+        showExpandedGreekGrammarCards: false,
         showCustomVerseTranslation: true,
         showFathersSentenceLines: false,
         disableLazyLoading: false
@@ -324,6 +329,8 @@ export function ReaderSettingsPanel({
       showGreekLemma: false,
       showGreekTransliteration: false,
       showGreekGloss: false,
+      showGreekGrammarCards: false,
+      showExpandedGreekGrammarCards: false,
       showCustomVerseTranslation: false,
       showFathersSentenceLines: false,
       disableLazyLoading: false,
@@ -346,6 +353,8 @@ export function ReaderSettingsPanel({
       | "showGreekLemma"
       | "showGreekTransliteration"
       | "showGreekGloss"
+      | "showGreekGrammarCards"
+      | "showExpandedGreekGrammarCards"
       | "showFathersSentenceLines"
   ) => {
     updateSettings({
@@ -364,7 +373,9 @@ export function ReaderSettingsPanel({
         showGreekSurface: true,
         showGreekLemma: false,
         showGreekTransliteration: false,
-        showGreekGloss: false
+        showGreekGloss: false,
+        showGreekGrammarCards: false,
+        showExpandedGreekGrammarCards: false
       });
       return;
     }
@@ -380,7 +391,9 @@ export function ReaderSettingsPanel({
         showGreekSurface: false,
         showGreekLemma: false,
         showGreekTransliteration: false,
-        showGreekGloss: false
+        showGreekGloss: false,
+        showGreekGrammarCards: false,
+        showExpandedGreekGrammarCards: false
       });
       return;
     }
@@ -396,6 +409,8 @@ export function ReaderSettingsPanel({
       showGreekLemma: false,
       showGreekTransliteration: false,
       showGreekGloss: false,
+      showGreekGrammarCards: false,
+      showExpandedGreekGrammarCards: false,
       showCustomVerseTranslation: false
     });
   };
@@ -823,6 +838,43 @@ export function ReaderSettingsPanel({
                   <span>
                     Keep saved glosses visible. Turn this on when you want to edit the glosses inline.
                   </span>
+                </button>
+                <button
+                  className={`settings-option-card${
+                    settings.showGreekGrammarCards ? " is-active" : ""
+                  }`}
+                  disabled={!supportsGreekStudyLayers || !greekStudyLayersEnabled}
+                  key="showGreekGrammarCards"
+                  onClick={() =>
+                    updateSettings({
+                      showGreekGrammarCards: !settings.showGreekGrammarCards,
+                      ...(!settings.showGreekGrammarCards && !settings.showGreekSurface
+                        ? { showGreekSurface: true }
+                        : {})
+                    })
+                  }
+                  type="button"
+                >
+                  <strong>Greek grammar cards</strong>
+                  <span>
+                    Show quick grammar cards under each Greek word, with a More section for full details.
+                  </span>
+                </button>
+                <button
+                  className={`settings-option-card${
+                    settings.showExpandedGreekGrammarCards ? " is-active" : ""
+                  }`}
+                  disabled={
+                    !supportsGreekStudyLayers ||
+                    !greekStudyLayersEnabled ||
+                    !settings.showGreekGrammarCards
+                  }
+                  key="showExpandedGreekGrammarCards"
+                  onClick={() => toggleLayer("showExpandedGreekGrammarCards")}
+                  type="button"
+                >
+                  <strong>Expanded grammar details</strong>
+                  <span>Open each grammar card with morphology, hints, and linked phrases already expanded.</span>
                 </button>
                 {isFathersMode ? (
                   <button

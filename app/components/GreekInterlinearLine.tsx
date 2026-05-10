@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 
+import { GreekGrammarCard } from "@/app/components/GreekGrammarCard";
 import { useGreekGlossOverrides } from "@/app/components/GreekGlossOverridesProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { useGreekSentenceQuiz } from "@/app/components/useGreekSentenceQuiz";
@@ -12,6 +13,7 @@ import {
   getGreekTokenOccurrenceKey,
   transliterateGreekSurface
 } from "@/lib/bible/greek";
+import { buildGreekGrammarInfos } from "@/lib/bible/greek-grammar";
 import type { EsvInterlinearDisplayVerse, GreekLemmaEntry, GreekToken } from "@/lib/bible/types";
 
 type GreekInterlinearLineProps = {
@@ -24,6 +26,8 @@ type GreekInterlinearLineProps = {
   showLemma?: boolean;
   showTransliteration?: boolean;
   showGloss?: boolean;
+  showGrammarCards?: boolean;
+  showExpandedGrammarDetails?: boolean;
 };
 
 export function GreekInterlinearLine({
@@ -35,7 +39,9 @@ export function GreekInterlinearLine({
   showSurface = true,
   showLemma = true,
   showTransliteration = true,
-  showGloss = true
+  showGloss = true,
+  showGrammarCards = false,
+  showExpandedGrammarDetails = false
 }: GreekInterlinearLineProps) {
   const { isGreekLearningMode } = useReaderWorkspace();
   const { clearOverride, getOverride, saveOverride } = useGreekGlossOverrides();
@@ -64,6 +70,7 @@ export function GreekInterlinearLine({
     setAnswer,
     wrongCount
   } = useGreekSentenceQuiz(greekLearningSelections, activeGreekLearningScopeKey);
+  const grammarInfos = useMemo(() => buildGreekGrammarInfos(verse.tokens ?? []), [verse.tokens]);
 
   const tokenEntries = useMemo(
     () =>
@@ -175,6 +182,7 @@ export function GreekInterlinearLine({
         }) => {
           const partOfSpeechLabel = getPartOfSpeechLabel(token);
           const savedGloss = override?.selectedGloss?.trim() ?? "";
+          const grammarInfo = grammarInfos[tokenIndex] ?? null;
 
           return (
           <span
@@ -219,6 +227,12 @@ export function GreekInterlinearLine({
                 />
               ) : savedGloss ? (
                 <span className="verse-greek-gloss-readonly">{savedGloss}</span>
+              ) : null}
+              {showGrammarCards && grammarInfo ? (
+                <GreekGrammarCard
+                  defaultExpanded={showExpandedGrammarDetails}
+                  grammar={grammarInfo}
+                />
               ) : null}
               {isGreekLearningMode && isSentenceQuizActive ? (
                 <div
