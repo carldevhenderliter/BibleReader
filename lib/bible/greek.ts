@@ -1,5 +1,6 @@
 import type {
   BibleSearchVerseEntry,
+  BookPayload,
   GreekLearningQuiz,
   GreekLearningQuizSelection,
   GreekGlossOption,
@@ -9,7 +10,6 @@ import type {
   GreekTokenGlossOverride,
   GreekToken
 } from "@/lib/bible/types";
-import { getChapter } from "@/lib/bible/data";
 import { normalizeStrongsNumber } from "@/lib/bible/strongs";
 
 type SearchableGreekEntry = GreekLemmaEntry & {
@@ -378,6 +378,7 @@ let lemmaIndexPromise: Promise<Record<string, string[]>> | null = null;
 let formIndexPromise: Promise<Record<string, GreekFormIndexValue>> | null = null;
 let searchableGreekEntriesPromise: Promise<SearchableGreekEntry[]> | null = null;
 let greekVerseIndexPromise: Promise<BibleSearchVerseEntry[]> | null = null;
+const greekBookPayloadPromises = new Map<string, Promise<BookPayload | null>>();
 let fathersGreekLexiconPromise: Promise<Record<string, GreekLemmaEntry>> | null = null;
 let fathersGreekLemmaIndexPromise: Promise<Record<string, string[]>> | null = null;
 let fathersGreekFormIndexPromise: Promise<Record<string, GreekFormIndexValue>> | null = null;
@@ -707,6 +708,21 @@ async function loadGreekVerseIndex() {
   }
 
   return greekVerseIndexPromise;
+}
+
+async function loadGreekBookPayload(bookSlug: string) {
+  const cachedPayload = greekBookPayloadPromises.get(bookSlug);
+
+  if (cachedPayload) {
+    return cachedPayload;
+  }
+
+  const payloadPromise = import(`@/data/bible/versions/greek/books/${bookSlug}.json`).then(
+    (module) => (module.default ?? null) as BookPayload | null
+  );
+
+  greekBookPayloadPromises.set(bookSlug, payloadPromise);
+  return payloadPromise;
 }
 
 function findSelectedForm(entry: GreekLemmaEntry, selectedFormValue: string | undefined) {
@@ -1648,7 +1664,7 @@ export async function getGreekVerseOccurrences(
     return entryMatches;
   }
 
-  const chapterCache = new Map<string, ReturnType<typeof getChapter>>();
+  const bookPayloadCache = new Map<string, ReturnType<typeof loadGreekBookPayload>>();
   const exactFormMatches = await Promise.all(
     entryMatches.map(async (entry) => {
       if (entry.greekTokens?.length) {
@@ -1664,16 +1680,18 @@ export async function getGreekVerseOccurrences(
           : null;
       }
 
-      const chapterKey = `${entry.bookSlug}:${entry.chapterNumber}`;
-      const chapterPromise =
-        chapterCache.get(chapterKey) ??
-        getChapter(entry.bookSlug, entry.chapterNumber, "greek");
+      const bookPayloadPromise =
+        bookPayloadCache.get(entry.bookSlug) ??
+        loadGreekBookPayload(entry.bookSlug);
 
-      if (!chapterCache.has(chapterKey)) {
-        chapterCache.set(chapterKey, chapterPromise);
+      if (!bookPayloadCache.has(entry.bookSlug)) {
+        bookPayloadCache.set(entry.bookSlug, bookPayloadPromise);
       }
 
-      const chapter = await chapterPromise;
+      const bookPayload = await bookPayloadPromise;
+      const chapter = bookPayload?.chapters.find(
+        (candidate) => candidate.chapterNumber === entry.chapterNumber
+      );
       const verse = chapter?.verses.find(
         (candidate) => candidate.number === entry.verseNumber
       );
