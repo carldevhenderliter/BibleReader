@@ -959,7 +959,7 @@ describe("WholeBookContent", () => {
     );
 
     expect(screen.getByText("Jude, a servant of Jesus Christ...")).toBeInTheDocument();
-    expect(screen.getByText("Jude, the servant of Jesus Christ...")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /Jesus G2424/i })).toBeInTheDocument();
     expect(
       screen.getByText("This letter is from Jude, a slave of Jesus Christ...")
     ).toBeInTheDocument();

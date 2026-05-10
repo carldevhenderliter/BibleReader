@@ -571,9 +571,25 @@ export function VerseList({
                       <p className="verse-secondary-version-label">
                         {getBibleVersionLabel(secondaryVerseVersion)}
                       </p>
-                      <p className="verse-text verse-text-body verse-text-secondary-translation">
-                        {secondaryVerse.text}
-                      </p>
+                      {secondaryVerseVersion === "kjv" && secondaryVerse.tokens?.length ? (
+                        <VerseTextContent
+                          className="verse-text verse-text-body verse-text-rich verse-text-secondary-translation"
+                          onOpenStrongs={(strongsNumbers) =>
+                            openStrongs(strongsNumbers, strongsNumbers.join(" "))
+                          }
+                          showOriginalLanguageGloss={showGreekGloss}
+                          showOriginalLanguageLemma={showGreekLemma}
+                          showOriginalLanguageSourceLine={showGreekSurface}
+                          showOriginalLanguageSurface={showGreekSurface}
+                          showOriginalLanguageTransliteration={showGreekTransliteration}
+                          showStrongs
+                          verse={secondaryVerse}
+                        />
+                      ) : (
+                        <p className="verse-text verse-text-body verse-text-secondary-translation">
+                          {secondaryVerse.text}
+                        </p>
+                      )}
                     </div>
                   ))}
                 </>

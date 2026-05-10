@@ -373,11 +373,11 @@ describe("ReaderPageContent", () => {
       screen.getAllByText("In the beginning, God created the heavens and the earth.").length
     ).toBeGreaterThan(1);
     expect(
-      screen.getByText("In the beginning God created the heaven and the earth.")
-    ).toBeInTheDocument();
-    expect(
       screen.getAllByText("In the beginning, God created the heavens and the earth.").length
     ).toBeGreaterThan(1);
+    expect(
+      screen.getByRole("button", { name: /beginning G746/i })
+    ).toBeInTheDocument();
     expect(screen.getAllByText("KJV").length).toBeGreaterThan(0);
     expect(screen.getAllByText("ESV").length).toBeGreaterThan(0);
   });
