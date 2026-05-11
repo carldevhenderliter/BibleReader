@@ -10,6 +10,8 @@ import type { BibleSearchVerseEntry } from "@/lib/bible/types";
 
 const MAX_EXACT_FORM_VERSES = 25;
 
+type GreekGrammarPanelTab = "grammar" | "verses";
+
 type ExactFormVerseState = {
   status: "idle" | "loading" | "loaded";
   matches: BibleSearchVerseEntry[];
@@ -24,6 +26,7 @@ export function ReaderGreekGrammarPanel() {
     status: "idle",
     matches: []
   });
+  const [activeTab, setActiveTab] = useState<GreekGrammarPanelTab>("grammar");
 
   const exactFormLookupKey = activeGreekGrammarSelection?.selectedForm
     ? `${activeGreekGrammarSelection.entryKey}:${activeGreekGrammarSelection.selectedForm}`
@@ -78,6 +81,7 @@ export function ReaderGreekGrammarPanel() {
   }
 
   const { grammar } = activeGreekGrammarSelection;
+  const canShowVersesTab = Boolean(activeGreekGrammarSelection.selectedForm);
 
   return (
     <div className="reader-strongs-panel">
@@ -100,55 +104,85 @@ export function ReaderGreekGrammarPanel() {
             Transliteration: {activeGreekGrammarSelection.transliteration}
           </p>
         ) : null}
-        <div className="greek-grammar-panel-section">
-          <p className="strongs-entry-section-label">Grammar</p>
-          <div className="greek-grammar-panel-expanded">
-            <GreekGrammarDetailsContent grammar={grammar} />
-          </div>
-        </div>
-        <div className="greek-dictionary-selected-form-card greek-grammar-panel-card">
-          <p className="strongs-entry-section-label">Selected Form</p>
-          {activeGreekGrammarSelection.selectedForm ? (
-            <p
-              className="strongs-entry-lemma greek-dictionary-selected-form-value"
-              lang="el"
-            >
-              {activeGreekGrammarSelection.selectedForm}
-            </p>
-          ) : null}
-          <p className="strongs-entry-meta">
-            {[
-              `Lemma: ${activeGreekGrammarSelection.lemma}`,
-              activeGreekGrammarSelection.strongs
-                ? `Strong’s: ${activeGreekGrammarSelection.strongs}`
-                : null
-            ]
-              .filter(Boolean)
-              .join(" · ")}
-          </p>
-          {grammar.quickInfo.partOfSpeech ? (
-            <p className="strongs-entry-meta">Part of speech: {grammar.quickInfo.partOfSpeech}</p>
-          ) : null}
-          {activeGreekGrammarSelection.selectedFormDecodedMorphology ? (
-            <p className="strongs-entry-meta">
-              Morphology: {activeGreekGrammarSelection.selectedFormDecodedMorphology}
-              {activeGreekGrammarSelection.selectedFormMorphology
-                ? ` (${activeGreekGrammarSelection.selectedFormMorphology})`
-                : ""}
-            </p>
-          ) : null}
-          {grammar.quickInfo.gloss ? (
-            <p className="strongs-entry-copy">{grammar.quickInfo.gloss}</p>
-          ) : null}
+        <div
+          aria-label={`${activeGreekGrammarSelection.lemma} grammar views`}
+          className="strongs-entry-tabs"
+          role="tablist"
+        >
           <button
-            className="reader-inline-button"
-            onClick={() => openGreekDictionaryInCurrentPane(activeGreekGrammarSelection)}
+            aria-selected={activeTab === "grammar"}
+            className={`lookup-pane-tab${activeTab === "grammar" ? " is-active" : ""}`}
+            onClick={() => setActiveTab("grammar")}
+            role="tab"
             type="button"
           >
-            Open lemma in Strongs
+            Details
           </button>
+          {canShowVersesTab ? (
+            <button
+              aria-selected={activeTab === "verses"}
+              className={`lookup-pane-tab${activeTab === "verses" ? " is-active" : ""}`}
+              onClick={() => setActiveTab("verses")}
+              role="tab"
+              type="button"
+            >
+              Verses
+            </button>
+          ) : null}
         </div>
-        {activeGreekGrammarSelection.selectedForm ? (
+        {activeTab === "grammar" ? (
+          <>
+            <div className="greek-grammar-panel-section">
+              <p className="strongs-entry-section-label">Grammar</p>
+              <div className="greek-grammar-panel-expanded">
+                <GreekGrammarDetailsContent grammar={grammar} />
+              </div>
+            </div>
+            <div className="greek-dictionary-selected-form-card greek-grammar-panel-card">
+              <p className="strongs-entry-section-label">Selected Form</p>
+              {activeGreekGrammarSelection.selectedForm ? (
+                <p
+                  className="strongs-entry-lemma greek-dictionary-selected-form-value"
+                  lang="el"
+                >
+                  {activeGreekGrammarSelection.selectedForm}
+                </p>
+              ) : null}
+              <p className="strongs-entry-meta">
+                {[
+                  `Lemma: ${activeGreekGrammarSelection.lemma}`,
+                  activeGreekGrammarSelection.strongs
+                    ? `Strong’s: ${activeGreekGrammarSelection.strongs}`
+                    : null
+                ]
+                  .filter(Boolean)
+                  .join(" · ")}
+              </p>
+              {grammar.quickInfo.partOfSpeech ? (
+                <p className="strongs-entry-meta">Part of speech: {grammar.quickInfo.partOfSpeech}</p>
+              ) : null}
+              {activeGreekGrammarSelection.selectedFormDecodedMorphology ? (
+                <p className="strongs-entry-meta">
+                  Morphology: {activeGreekGrammarSelection.selectedFormDecodedMorphology}
+                  {activeGreekGrammarSelection.selectedFormMorphology
+                    ? ` (${activeGreekGrammarSelection.selectedFormMorphology})`
+                    : ""}
+                </p>
+              ) : null}
+              {grammar.quickInfo.gloss ? (
+                <p className="strongs-entry-copy">{grammar.quickInfo.gloss}</p>
+              ) : null}
+              <button
+                className="reader-inline-button"
+                onClick={() => openGreekDictionaryInCurrentPane(activeGreekGrammarSelection)}
+                type="button"
+              >
+                Open lemma in Strongs
+              </button>
+            </div>
+          </>
+        ) : null}
+        {activeTab === "verses" && activeGreekGrammarSelection.selectedForm ? (
           <section
             aria-labelledby="greek-grammar-exact-form-verses-heading"
             className="greek-grammar-panel-section"

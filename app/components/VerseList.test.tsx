@@ -750,10 +750,25 @@ describe("VerseList", () => {
     expect(await within(studyPane).findByText("Full morphology")).toBeInTheDocument();
     expect(within(studyPane).getByText("Linked phrase")).toBeInTheDocument();
     expect((await within(studyPane).findAllByText("τόν λόγον")).length).toBeGreaterThan(0);
+    expect(within(studyPane).getByRole("tab", { name: "Details" })).toHaveAttribute(
+      "aria-selected",
+      "true"
+    );
+    expect(within(studyPane).getByRole("tab", { name: "Verses" })).toHaveAttribute(
+      "aria-selected",
+      "false"
+    );
     const sectionLabels = Array.from(
       studyPane.querySelectorAll(".strongs-entry-section-label")
     ).map((label) => label.textContent);
     expect(sectionLabels.indexOf("Grammar")).toBeLessThan(sectionLabels.indexOf("Selected Form"));
+    expect(within(studyPane).queryByText("Bible Verses With This Form")).not.toBeInTheDocument();
+
+    fireEvent.click(within(studyPane).getByRole("tab", { name: "Verses" }));
+    expect(within(studyPane).getByRole("tab", { name: "Verses" })).toHaveAttribute(
+      "aria-selected",
+      "true"
+    );
     const exactFormSection = (await within(studyPane).findByText("Bible Verses With This Form")).closest(
       ".greek-grammar-panel-section"
     );
