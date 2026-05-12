@@ -5,8 +5,15 @@ import { useEffect, useMemo, useState } from "react";
 import { GreekGrammarDetailsContent } from "@/app/components/GreekGrammarCard";
 import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
+import { VerseTextContent } from "@/app/components/VerseTextContent";
 import { getGreekVerseOccurrences } from "@/lib/bible/greek";
-import type { BibleSearchVerseEntry } from "@/lib/bible/types";
+import {
+  getVerseEntriesForVersion,
+  type StrongsParallelVerseVersion,
+  type VerseReferenceAnchor
+} from "@/lib/bible/strongs";
+import type { BibleSearchVerseEntry, BundledBibleVersion } from "@/lib/bible/types";
+import { getBibleVersionLabel, getInstalledBundledBibleVersions } from "@/lib/bible/version";
 
 const MAX_EXACT_FORM_VERSES = 25;
 
@@ -17,15 +24,40 @@ type ExactFormVerseState = {
   matches: BibleSearchVerseEntry[];
 };
 
+type ParallelVerseEntriesState = {
+  status: "loading" | "loaded";
+  matches: StrongsParallelVerseVersion[];
+};
+
+function getDefaultGrammarVerseVersions(availableVersions: readonly BundledBibleVersion[]) {
+  if (availableVersions.includes("greek")) {
+    return ["greek"] satisfies BundledBibleVersion[];
+  }
+
+  return availableVersions.slice(0, 1);
+}
+
 export function ReaderGreekGrammarPanel() {
   const {
     activeGreekGrammarSelection,
-    openGreekDictionaryInCurrentPane
+    openGreekDictionaryInCurrentPane,
+    openStrongsInCurrentPane
   } = useReaderWorkspace();
+  const installedVersions = useMemo(() => getInstalledBundledBibleVersions(), []);
+  const defaultVerseVersions = useMemo(
+    () => getDefaultGrammarVerseVersions(installedVersions),
+    [installedVersions]
+  );
   const [exactFormVerses, setExactFormVerses] = useState<ExactFormVerseState>({
     status: "idle",
     matches: []
   });
+  const [parallelVerseEntries, setParallelVerseEntries] = useState<
+    Partial<Record<BundledBibleVersion, ParallelVerseEntriesState>>
+  >({});
+  const [selectedVerseVersions, setSelectedVerseVersions] = useState<BundledBibleVersion[]>(
+    defaultVerseVersions
+  );
   const [activeTab, setActiveTab] = useState<GreekGrammarPanelTab>("grammar");
 
   const exactFormLookupKey = activeGreekGrammarSelection?.selectedForm
@@ -70,6 +102,88 @@ export function ReaderGreekGrammarPanel() {
     [exactFormVerses.matches]
   );
 
+  const visibleExactFormAnchors = useMemo(
+    () =>
+      visibleExactFormVerses.map(
+        (match): VerseReferenceAnchor => ({
+          bookSlug: match.bookSlug,
+          chapterNumber: match.chapterNumber,
+          verseNumber: match.verseNumber
+        })
+      ),
+    [visibleExactFormVerses]
+  );
+
+  useEffect(() => {
+    setSelectedVerseVersions(defaultVerseVersions);
+    setParallelVerseEntries({});
+  }, [defaultVerseVersions, exactFormLookupKey]);
+
+  useEffect(() => {
+    if (!activeGreekGrammarSelection?.selectedForm && activeTab === "verses") {
+      setActiveTab("grammar");
+    }
+  }, [activeGreekGrammarSelection?.selectedForm, activeTab]);
+
+  useEffect(() => {
+    const versionsToLoad = selectedVerseVersions.filter((version) => version !== "greek");
+
+    if (
+      exactFormVerses.status !== "loaded" ||
+      visibleExactFormAnchors.length === 0 ||
+      versionsToLoad.length === 0
+    ) {
+      setParallelVerseEntries({});
+      return;
+    }
+
+    let isCancelled = false;
+
+    setParallelVerseEntries(
+      Object.fromEntries(
+        versionsToLoad.map((version) => [
+          version,
+          {
+            status: "loading",
+            matches: []
+          }
+        ])
+      ) as Partial<Record<BundledBibleVersion, ParallelVerseEntriesState>>
+    );
+
+    void Promise.all(
+      versionsToLoad.map(async (version) => [
+        version,
+        await getVerseEntriesForVersion(visibleExactFormAnchors, version)
+      ] as const)
+    ).then((entriesByVersion) => {
+      if (isCancelled) {
+        return;
+      }
+
+      setParallelVerseEntries(
+        Object.fromEntries(
+          entriesByVersion.map(([version, matches]) => [
+            version,
+            {
+              status: "loaded",
+              matches
+            }
+          ])
+        ) as Partial<Record<BundledBibleVersion, ParallelVerseEntriesState>>
+      );
+    });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [
+    activeGreekGrammarSelection?.selectedForm,
+    exactFormVerses.status,
+    selectedVerseVersions,
+    visibleExactFormAnchors
+  ]);
+
   if (!activeGreekGrammarSelection) {
     return (
       <div className="lookup-panel-empty">
@@ -82,6 +196,24 @@ export function ReaderGreekGrammarPanel() {
 
   const { grammar } = activeGreekGrammarSelection;
   const canShowVersesTab = Boolean(activeGreekGrammarSelection.selectedForm);
+  const loadingVerseVersions = selectedVerseVersions.filter(
+    (version) => version !== "greek" && parallelVerseEntries[version]?.status !== "loaded"
+  );
+
+  const toggleSelectedVerseVersion = (version: BundledBibleVersion) => {
+    setSelectedVerseVersions((current) => {
+      const currentSelection = current.length > 0 ? current : defaultVerseVersions;
+      const nextSelection = currentSelection.includes(version)
+        ? currentSelection.length > 1
+          ? currentSelection.filter((selectedVersion) => selectedVersion !== version)
+          : currentSelection
+        : installedVersions.filter(
+            (candidate) => currentSelection.includes(candidate) || candidate === version
+          );
+
+      return nextSelection;
+    });
+  };
 
   return (
     <div className="reader-strongs-panel">
@@ -193,6 +325,30 @@ export function ReaderGreekGrammarPanel() {
             >
               Bible Verses With This Form
             </p>
+            <div className="strongs-entry-bible-filter-group">
+              <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
+                Versions
+              </p>
+              <div
+                aria-label="Display versions for grammar verses"
+                className="strongs-entry-bible-version-selector"
+                role="group"
+              >
+                {installedVersions.map((version) => (
+                  <button
+                    aria-pressed={selectedVerseVersions.includes(version)}
+                    className={`reader-inline-button strongs-entry-bible-version-button${
+                      selectedVerseVersions.includes(version) ? " is-active" : ""
+                    }`}
+                    key={`grammar-verses:${version}`}
+                    onClick={() => toggleSelectedVerseVersion(version)}
+                    type="button"
+                  >
+                    {getBibleVersionLabel(version)}
+                  </button>
+                ))}
+              </div>
+            </div>
             {exactFormVerses.status === "loading" ? (
               <p className="strongs-entry-meta">Loading Bible verses with this form…</p>
             ) : null}
@@ -204,9 +360,15 @@ export function ReaderGreekGrammarPanel() {
                 Showing first {MAX_EXACT_FORM_VERSES} of {exactFormVerses.matches.length}
               </p>
             ) : null}
+            {loadingVerseVersions.length > 0 ? (
+              <p className="strongs-entry-meta">
+                Loading{" "}
+                {loadingVerseVersions.map((version) => getBibleVersionLabel(version)).join(" + ")} verses…
+              </p>
+            ) : null}
             {visibleExactFormVerses.length > 0 ? (
               <div className="strongs-entry-bible-verses">
-                {visibleExactFormVerses.map((match) => (
+                {visibleExactFormVerses.map((match, index) => (
                   <article
                     className="strongs-entry-bible-verse"
                     key={`${activeGreekGrammarSelection.entryKey}:${match.bookSlug}:${match.chapterNumber}:${match.verseNumber}`}
@@ -214,17 +376,66 @@ export function ReaderGreekGrammarPanel() {
                     <p className="strongs-entry-meta">
                       {match.bookName} {match.chapterNumber}:{match.verseNumber}
                     </p>
-                    <GreekVerseTextContent
-                      className="strongs-entry-copy strongs-entry-bible-verse-text verse-text-greek"
-                      enableGreekLearning={false}
-                      highlightedEntryKey={activeGreekGrammarSelection.entryKey}
-                      onOpenGreekDictionary={openGreekDictionaryInCurrentPane}
-                      verse={{
-                        number: match.verseNumber,
-                        text: match.text,
-                        greekTokens: match.greekTokens
-                      }}
-                    />
+                    <div className="strongs-entry-bible-version-list">
+                      {selectedVerseVersions.map((selectedVersion) => {
+                        const versionState = parallelVerseEntries[selectedVersion] ?? null;
+                        const versionMatch =
+                          selectedVersion === "greek"
+                            ? match
+                            : versionState?.matches[index]?.entry ?? null;
+
+                        return (
+                          <div
+                            className="strongs-entry-bible-version-row"
+                            key={`${activeGreekGrammarSelection.entryKey}:${match.bookSlug}:${match.chapterNumber}:${match.verseNumber}:${selectedVersion}`}
+                          >
+                            <p className="strongs-entry-meta strongs-entry-bible-version-label">
+                              {getBibleVersionLabel(selectedVersion)}
+                            </p>
+                            {versionMatch ? (
+                              selectedVersion === "greek" ? (
+                                <GreekVerseTextContent
+                                  className="strongs-entry-copy strongs-entry-bible-verse-text verse-text-greek"
+                                  enableGreekLearning={false}
+                                  highlightedEntryKey={activeGreekGrammarSelection.entryKey}
+                                  onOpenGreekDictionary={openGreekDictionaryInCurrentPane}
+                                  verse={{
+                                    number: versionMatch.verseNumber,
+                                    text: versionMatch.text,
+                                    greekTokens: versionMatch.greekTokens
+                                  }}
+                                />
+                              ) : (
+                                <VerseTextContent
+                                  className="strongs-entry-copy strongs-entry-bible-verse-text"
+                                  highlightedStrongsNumber={
+                                    selectedVersion === "kjv"
+                                      ? activeGreekGrammarSelection.strongs ??
+                                        activeGreekGrammarSelection.entryKey
+                                      : null
+                                  }
+                                  onOpenStrongs={(strongsNumbers) =>
+                                    openStrongsInCurrentPane(strongsNumbers, strongsNumbers.join(" "))
+                                  }
+                                  showStrongs={selectedVersion === "kjv"}
+                                  verse={{
+                                    number: versionMatch.verseNumber,
+                                    text: versionMatch.text,
+                                    translationText: versionMatch.translationText,
+                                    tokens: versionMatch.tokens,
+                                    greekTokens: versionMatch.greekTokens
+                                  }}
+                                />
+                              )
+                            ) : !versionState || versionState.status === "loading" ? null : (
+                              <p className="strongs-entry-copy">
+                                This verse is not available in {getBibleVersionLabel(selectedVersion)}.
+                              </p>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
                   </article>
                 ))}
               </div>

@@ -773,9 +773,35 @@ describe("VerseList", () => {
       ".greek-grammar-panel-section"
     );
     expect(exactFormSection).not.toBeNull();
+    expect(within(exactFormSection as HTMLElement).getByRole("button", { name: "Greek" })).toHaveAttribute(
+      "aria-pressed",
+      "true"
+    );
+    expect(within(exactFormSection as HTMLElement).getByRole("button", { name: "KJV" })).toHaveAttribute(
+      "aria-pressed",
+      "false"
+    );
     expect(await within(exactFormSection as HTMLElement).findByText("Matthew 1:1")).toBeInTheDocument();
     expect(
       within(exactFormSection as HTMLElement).getByRole("button", { name: "τόν" })
+    ).toBeInTheDocument();
+    const occurrenceCard = within(exactFormSection as HTMLElement)
+      .getByText("Matthew 1:1")
+      .closest(".strongs-entry-bible-verse");
+    expect(occurrenceCard).not.toBeNull();
+    expect(within(occurrenceCard as HTMLElement).getByText("Greek")).toBeInTheDocument();
+
+    fireEvent.click(within(exactFormSection as HTMLElement).getByRole("button", { name: "KJV" }));
+
+    await waitFor(() =>
+      expect(within(exactFormSection as HTMLElement).getByRole("button", { name: "KJV" })).toHaveAttribute(
+        "aria-pressed",
+        "true"
+      )
+    );
+    expect(within(occurrenceCard as HTMLElement).getByText("KJV")).toBeInTheDocument();
+    expect(
+      await within(occurrenceCard as HTMLElement).findByRole("button", { name: /the G3588/i })
     ).toBeInTheDocument();
     expect(within(studyPane).queryByText("Inflected Forms")).not.toBeInTheDocument();
 
