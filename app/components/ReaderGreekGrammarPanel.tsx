@@ -7,6 +7,7 @@ import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { VerseTextContent } from "@/app/components/VerseTextContent";
 import { getGreekVerseOccurrences } from "@/lib/bible/greek";
+import { getStrongsEnglishHighlightPhrases } from "@/lib/bible/strongs-highlighting";
 import {
   getVerseEntriesForVersion,
   type StrongsParallelVerseVersion,
@@ -383,6 +384,15 @@ export function ReaderGreekGrammarPanel() {
                           selectedVersion === "greek"
                             ? match
                             : versionState?.matches[index]?.entry ?? null;
+                        const englishHighlightPhrases =
+                          versionMatch && selectedVersion !== "greek"
+                            ? getStrongsEnglishHighlightPhrases(
+                                activeGreekGrammarSelection.strongs ??
+                                  activeGreekGrammarSelection.entryKey,
+                                match,
+                                "greek"
+                              )
+                            : [];
 
                         return (
                           <div
@@ -408,6 +418,9 @@ export function ReaderGreekGrammarPanel() {
                               ) : (
                                 <VerseTextContent
                                   className="strongs-entry-copy strongs-entry-bible-verse-text"
+                                  highlightedPhrases={
+                                    selectedVersion === "kjv" ? [] : englishHighlightPhrases
+                                  }
                                   highlightedStrongsNumber={
                                     selectedVersion === "kjv"
                                       ? activeGreekGrammarSelection.strongs ??

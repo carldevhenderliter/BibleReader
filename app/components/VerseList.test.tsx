@@ -290,6 +290,16 @@ jest.mock("@/lib/bible/strongs", () => {
   } as const;
 
   const verseEntriesByVersion = {
+    web: {
+      "matthew:1:1": {
+        version: "web",
+        bookSlug: "matthew",
+        bookName: "Matthew",
+        chapterNumber: 1,
+        verseNumber: 1,
+        text: "the word"
+      }
+    },
     kjv: {
       "genesis:1:1": {
         version: "kjv",
@@ -803,6 +813,20 @@ describe("VerseList", () => {
     expect(
       await within(occurrenceCard as HTMLElement).findByRole("button", { name: /the G3588/i })
     ).toBeInTheDocument();
+
+    fireEvent.click(within(exactFormSection as HTMLElement).getByRole("button", { name: "WEB" }));
+
+    await waitFor(() =>
+      expect(within(exactFormSection as HTMLElement).getByRole("button", { name: "WEB" })).toHaveAttribute(
+        "aria-pressed",
+        "true"
+      )
+    );
+    const webRow = within(occurrenceCard as HTMLElement)
+      .getByText("WEB")
+      .closest(".strongs-entry-bible-version-row");
+    expect(webRow).not.toBeNull();
+    expect((webRow as HTMLElement).querySelector(".strongs-inline-match")).not.toBeNull();
     expect(within(studyPane).queryByText("Inflected Forms")).not.toBeInTheDocument();
 
     fireEvent.click(within(studyPane).getByRole("button", { name: "ὁ" }));
