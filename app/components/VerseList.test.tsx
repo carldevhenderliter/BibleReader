@@ -186,6 +186,51 @@ jest.mock("@/lib/bible/greek", () => {
   };
 });
 
+jest.mock("@/lib/fathers/search", () => {
+  const normalizeFathersGreekText = (value: string) =>
+    value
+      .normalize("NFD")
+      .replace(/\p{M}+/gu, "")
+      .replace(/ς/g, "σ")
+      .toLowerCase()
+      .replace(/[^\p{Script=Greek}\s]/gu, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+
+  return {
+    normalizeFathersGreekText,
+    findFathersSegmentsByGreekLemma: jest.fn(async (lemma: string) =>
+      normalizeFathersGreekText(lemma) === normalizeFathersGreekText("ὁ")
+        ? [
+            {
+              workSlug: "1-clement",
+              workTitle: "1 Clement",
+              segmentId: "1-clement:1",
+              ref: "1",
+              label: "1",
+              greek: "τόν λόγον",
+              english: "the word",
+              greekContext: "τόν λόγον",
+              englishContext: "the word",
+              greekLexicalTokens: [
+                {
+                  surface: "τόν",
+                  lemma: "ὁ",
+                  entryKey: "G3588",
+                  strongs: "G3588",
+                  morphology: "T-ASM",
+                  decodedMorphology: "article accusative singular masculine",
+                  gloss: "the",
+                  transliteration: "ton"
+                }
+              ]
+            }
+          ]
+        : []
+    )
+  };
+});
+
 jest.mock("@/lib/bible/strongs", () => {
   const actual = jest.requireActual("@/lib/bible/strongs");
   const normalize = (value: string) => actual.normalizeStrongsNumber(value);
@@ -783,6 +828,15 @@ describe("VerseList", () => {
       ".greek-grammar-panel-section"
     );
     expect(exactFormSection).not.toBeNull();
+    expect(
+      within(exactFormSection as HTMLElement).getByRole("button", { name: "New Testament" })
+    ).toHaveAttribute("aria-pressed", "true");
+    expect(
+      within(exactFormSection as HTMLElement).getByRole("button", { name: "Old Testament" })
+    ).toHaveAttribute("aria-pressed", "false");
+    expect(
+      within(exactFormSection as HTMLElement).getByRole("button", { name: "Early Fathers" })
+    ).toHaveAttribute("aria-pressed", "false");
     expect(within(exactFormSection as HTMLElement).getByRole("button", { name: "Greek" })).toHaveAttribute(
       "aria-pressed",
       "true"
@@ -828,6 +882,41 @@ describe("VerseList", () => {
     expect(webRow).not.toBeNull();
     expect((webRow as HTMLElement).querySelector(".strongs-inline-match")).not.toBeNull();
     expect(within(studyPane).queryByText("Inflected Forms")).not.toBeInTheDocument();
+
+    fireEvent.click(
+      within(exactFormSection as HTMLElement).getByRole("button", { name: "Old Testament" })
+    );
+
+    await waitFor(() =>
+      expect(
+        within(exactFormSection as HTMLElement).getByRole("button", { name: "Old Testament" })
+      ).toHaveAttribute("aria-pressed", "true")
+    );
+    expect(
+      within(exactFormSection as HTMLElement).getByText(
+        "No Old Testament Bible verses found with this exact form."
+      )
+    ).toBeInTheDocument();
+
+    fireEvent.click(
+      within(exactFormSection as HTMLElement).getByRole("button", { name: "Early Fathers" })
+    );
+
+    await waitFor(() =>
+      expect(
+        within(exactFormSection as HTMLElement).getByRole("button", { name: "Early Fathers" })
+      ).toHaveAttribute("aria-pressed", "true")
+    );
+    expect(
+      within(exactFormSection as HTMLElement).queryByRole("button", { name: "KJV" })
+    ).not.toBeInTheDocument();
+    expect(await within(exactFormSection as HTMLElement).findByText("1 Clement · 1")).toBeInTheDocument();
+    expect(within(exactFormSection as HTMLElement).getByText("the word")).toBeInTheDocument();
+    const fathersGreekLine = within(exactFormSection as HTMLElement)
+      .getByText("τόν")
+      .closest(".strongs-entry-fathers-greek");
+    expect(fathersGreekLine).not.toBeNull();
+    expect((fathersGreekLine as HTMLElement).querySelector(".strongs-inline-match")).not.toBeNull();
 
     fireEvent.click(within(studyPane).getByRole("button", { name: "ὁ" }));
 
