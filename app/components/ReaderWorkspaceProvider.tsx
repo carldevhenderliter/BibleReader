@@ -309,7 +309,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   const [activeHarmonyId, setActiveHarmonyId] = useState<string | null>(null);
   const [compareVersionOverrides, setCompareVersionOverrides] = useState<BundledBibleVersion[]>([]);
   const [utilityPaneRequestKey, setUtilityPaneRequestKey] = useState(0);
-  const isReaderRoute = pathname.startsWith("/read");
+  const isReaderRoute = pathname.startsWith("/read") || pathname.startsWith("/prototype/reader");
   const activeUtilityPane = activeUtilityPaneState;
   const installedBundledVersions = getInstalledBundledBibleVersions();
   const compareVersions = useMemo(

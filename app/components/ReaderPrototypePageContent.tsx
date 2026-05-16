@@ -3,9 +3,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { ReaderStrongsPanel } from "@/app/components/ReaderStrongsPanel";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
+import { ReaderPrototypeWordStudyPanel } from "@/app/components/ReaderPrototypeWordStudyPanel";
 import {
   BIBLE_BOOK_ORDER_STORAGE_KEY,
   getBooksForOrderMode,
@@ -389,11 +389,7 @@ export function ReaderPrototypePageContent({
           </div>
         </main>
         <aside className="reader-prototype-study-panel" aria-label="Prototype word study">
-          <div className="reader-prototype-study-heading">
-            <span aria-hidden="true">Book</span>
-            <p>Word Study</p>
-          </div>
-          <ReaderStrongsPanel />
+          <ReaderPrototypeWordStudyPanel />
         </aside>
       </div>
       <div className="reader-prototype-bottom-dock" aria-label="Prototype chapter actions">
