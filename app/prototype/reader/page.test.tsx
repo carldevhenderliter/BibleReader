@@ -8,6 +8,35 @@ import type { BookMeta, Chapter } from "@/lib/bible/types";
 import { mockRouter, setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
 
+jest.mock("@/lib/bible/search", () => ({
+  parseBibleSearchQueries: jest.fn((rawQuery: string) =>
+    rawQuery
+      .split(",")
+      .map((query) => query.trim())
+      .filter(Boolean)
+  ),
+  searchBibleGroups: jest.fn(async (rawQuery: string, versions: string[]) => [
+    {
+      id: `group:${rawQuery}`,
+      query: rawQuery,
+      results: [
+        {
+          type: "verse",
+          id: "greek:titus:1:1",
+          version: versions[0] ?? "greek",
+          bookSlug: "titus",
+          chapterNumber: 1,
+          verseNumber: 1,
+          label: "Titus 1:1",
+          description: "Paul, a servant of God.",
+          href: "/read/titus/1?version=greek",
+          preview: "Παῦλος δοῦλος θεοῦ"
+        }
+      ],
+      emptyMessage: ""
+    }
+  ])
+}));
 jest.mock("@/lib/bible/data");
 jest.mock("@/lib/bible/esv-interlinear", () => ({
   getEsvInterlinearChapter: jest.fn(async () => null)
@@ -423,7 +452,7 @@ describe("ReaderPrototypePage", () => {
     );
 
     fireEvent.click(screen.getByRole("button", { name: "Parallel" }));
-    expect(await screen.findByText("Parallel Compare")).toBeInTheDocument();
+    expect(await screen.findByText("Compare Tools")).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Read" }));
     fireEvent.click(screen.getByRole("button", { name: "Copy" }));
@@ -437,10 +466,44 @@ describe("ReaderPrototypePage", () => {
     fireEvent.click(screen.getByRole("button", { name: "Note" }));
     expect(await screen.findByText(/Choose a notebook for/i)).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "Reader settings" }));
     expect(await screen.findByText("Reader tools")).toBeInTheDocument();
     expect(screen.getByText("Reading modes")).toBeInTheDocument();
     expect(screen.getByText("Study pane")).toBeInTheDocument();
+  });
+
+  it("switches prototype left-rail modes for study, search, notes, and library", async () => {
+    renderWithReaderCustomization(
+      <ReaderPrototypePageContent
+        book={books[1]}
+        books={books}
+        chapter={greekTitusChapter}
+        chaptersByVersion={{
+          greek: greekTitusChapter,
+          web: webTitusChapter
+        }}
+        currentChapter={1}
+        installedVersions={["web", "greek"]}
+        selectedVersion="greek"
+      />
+    );
+
+    const nav = screen.getByLabelText("Prototype navigation");
+
+    fireEvent.click(within(nav).getByRole("button", { name: "Study" }));
+    expect(screen.getByText("Grammatical Breakdown")).toBeInTheDocument();
+
+    fireEvent.click(within(nav).getByRole("button", { name: "Search" }));
+    expect(screen.getByLabelText("Search")).toHaveValue("θεός");
+    expect((await screen.findAllByText("Titus 1:1")).length).toBeGreaterThan(0);
+
+    fireEvent.click(within(nav).getByRole("button", { name: "Notes" }));
+    expect(screen.getByRole("heading", { name: "Notes" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "New Note" })).toBeInTheDocument();
+
+    fireEvent.click(within(nav).getByRole("button", { name: "Library" }));
+    expect(screen.getByDisplayValue("Search your library...")).toBeInTheDocument();
+    expect(screen.getByText("Study documents")).toBeInTheDocument();
   });
 
   it("switches between prototype word-study usage tabs", async () => {
