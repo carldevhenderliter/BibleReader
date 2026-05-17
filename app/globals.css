@@ -182,7 +182,10 @@ body:has(.reader-prototype-shell) {
 body:has(.reader-prototype-shell) .ambient-orb,
 body:has(.reader-prototype-shell) .ambient-grid,
 body:has(.reader-prototype-shell) .site-header,
-body:has(.reader-prototype-shell) .search-shell {
+body:has(.reader-prototype-shell) .search-shell,
+body:has(.reader-prototype-shell) .search-pane,
+body:has(.reader-prototype-shell) .study-pane,
+body:has(.reader-prototype-shell) .app-layout-divider {
   display: none;
 }
 
@@ -913,6 +916,25 @@ body:has(.reader-prototype-shell) .app-layout-reader-pane {
   gap: 1rem;
   width: 100%;
   margin: 0 auto 1.15rem;
+  transition:
+    opacity 180ms ease,
+    transform 220ms ease;
+}
+
+.reader-prototype-topbar.is-hidden {
+  opacity: 0;
+  transform: translateY(-0.75rem);
+  pointer-events: none;
+}
+
+.reader-prototype-shell.is-focus-reading .reader-prototype-side-rail,
+.reader-prototype-shell.is-focus-reading .reader-prototype-study-panel {
+  display: none;
+}
+
+.reader-prototype-shell.is-focus-reading .reader-prototype-app-shell,
+.reader-prototype-shell.is-focus-reading .reader-prototype-layout {
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .reader-prototype-topbar h1 {

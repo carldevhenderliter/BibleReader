@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import { ReaderBookAudioPlayer } from "@/app/components/ReaderBookAudioPlayer";
+import { useRegisterReaderBottomBarPanel } from "@/app/components/ReaderBottomBarProvider";
 import { ReaderComparePanel } from "@/app/components/ReaderComparePanel";
 import { ReaderCopyButton } from "@/app/components/ReaderCopyButton";
 import { ReaderCrossReferencesPanel } from "@/app/components/ReaderCrossReferencesPanel";
@@ -14,13 +16,16 @@ import { ReaderHarmonyPanel } from "@/app/components/ReaderHarmonyPanel";
 import { ReaderHarmonyWorkspace } from "@/app/components/ReaderHarmonyWorkspace";
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
 import { ReaderOtComparePanel } from "@/app/components/ReaderOtComparePanel";
-import { ReaderPrototypeWordStudyPanel } from "@/app/components/ReaderPrototypeWordStudyPanel";
 import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
 import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
+import { ReaderStrongsPanel } from "@/app/components/ReaderStrongsPanel";
 import { ReaderStudySetsPanel } from "@/app/components/ReaderStudySetsPanel";
 import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
+import { useBookAudioSource } from "@/app/components/useBookAudioSource";
+import { useLocationSearch } from "@/app/components/useLocationSearch";
+import { useReaderToplineVisibility } from "@/app/components/useReaderToplineVisibility";
 import { VerseList } from "@/app/components/VerseList";
 import { useLookup } from "@/app/components/LookupProvider";
 import {
@@ -40,6 +45,11 @@ import type {
   NotebookDocument,
   Verse
 } from "@/lib/bible/types";
+import {
+  BOOK_AUDIO_AUTOPLAY_STORAGE_KEY,
+  getBookAudioSource,
+  getNextBookWithAudio
+} from "@/lib/bible/book-audio";
 import { getGreekTokenOccurrenceKey } from "@/lib/bible/greek";
 import { getAlternateBundledVersions, getBibleVersionBadge, getBibleVersionLabel } from "@/lib/bible/version";
 import { createPassageReference } from "@/lib/study-workspace";
@@ -58,6 +68,15 @@ type ReaderPrototypePageContentProps = {
   masoreticChapter?: Chapter | null;
   selectedVersion: BundledBibleVersion;
 };
+
+function parsePositiveNumber(value: string | null) {
+  if (!value || !/^\d+$/.test(value)) {
+    return null;
+  }
+
+  const parsedValue = Number(value);
+  return parsedValue > 0 ? parsedValue : null;
+}
 
 function getPrototypeHref(
   bookSlug: string,
@@ -784,8 +803,15 @@ export function ReaderPrototypePageContent({
   selectedVersion
 }: ReaderPrototypePageContentProps) {
   const router = useRouter();
-  const { setIsPanelOpen, settings, updateSettings } = useReaderCustomization();
+  const locationSearch = useLocationSearch();
+  const { isPanelOpen, setIsPanelOpen, settings, updateSettings } = useReaderCustomization();
   const { version, setVersion } = useReaderVersion();
+  const {
+    canCollapseSplitPane,
+    collapseSplitPane,
+    collapsedSplitPanes,
+    isSplitViewActive
+  } = useLookup();
   const {
     activeGreekSelection,
     activeReaderPane,
@@ -868,12 +894,37 @@ export function ReaderPrototypePageContent({
   const previousChapter = getPreviousChapter(books, book, currentChapter);
   const nextChapter = getNextChapter(books, book, currentChapter);
   const defaultGreekToken = useMemo(() => getDefaultGreekToken(greekChapter), [greekChapter]);
-  const activeVerseNumber = activeStudyVerseNumber ?? chapter.verses[0]?.number ?? null;
+  const searchParams = new URLSearchParams(locationSearch);
+  const urlHighlightedVerseNumber = parsePositiveNumber(searchParams.get("highlight"));
+  const urlHighlightedRangeStart = parsePositiveNumber(searchParams.get("highlightStart"));
+  const urlHighlightedRangeEnd = parsePositiveNumber(searchParams.get("highlightEnd"));
+  const activeHighlightedVerseRange =
+    urlHighlightedRangeStart !== null &&
+    urlHighlightedRangeEnd !== null &&
+    urlHighlightedRangeEnd >= urlHighlightedRangeStart
+      ? {
+          start: urlHighlightedRangeStart,
+          end: urlHighlightedRangeEnd
+        }
+      : null;
+  const activeHighlightedVerseNumber =
+    activeHighlightedVerseRange !== null ? null : urlHighlightedVerseNumber;
+  const activeVerseNumber =
+    activeStudyVerseNumber ??
+    activeHighlightedVerseRange?.start ??
+    activeHighlightedVerseNumber ??
+    chapter.verses[0]?.number ??
+    null;
   const previousVerseNumber = getNextVerseNumber(chapter, activeVerseNumber, -1);
   const nextVerseNumber = getNextVerseNumber(chapter, activeVerseNumber, 1);
   const notebooks = getNotebookDocuments();
   const passageBookmarks = getBookmarksForPassage(book.slug, chapter.chapterNumber);
   const passageHighlights = getHighlightsForPassage(book.slug, chapter.chapterNumber);
+  const bookAudioSource = useBookAudioSource(book.slug);
+  const nextAudioBook = useMemo(
+    () => getNextBookWithAudio(books, book.slug, bookOrderMode),
+    [book.slug, bookOrderMode, books]
+  );
   const hasGreekLearningSurface =
     isStandaloneGreekVersion
       ? chapter.verses.some((verse) => Boolean(verse.greekTokens?.length))
@@ -887,6 +938,72 @@ export function ReaderPrototypePageContent({
     (showEsvInterlinear &&
       chapter.verses.some((verse) => Boolean(interlinearVerseMap?.[verse.number]?.tokens?.length)));
   const isBookmarked = Boolean(getBookmark(book.slug, chapter.chapterNumber));
+  const isFocusReading = settings.focusReadingMode;
+  const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
+  const isPrototypeStudyPaneCollapsed = isSplitViewActive && collapsedSplitPanes.study;
+  const showInlineUtilityPane = isPrototypeStudyPaneCollapsed;
+  const showNotebookInline = showInlineUtilityPane && activeUtilityPane === "notebook";
+  const showGrammarInline = showInlineUtilityPane && activeUtilityPane === "grammar";
+  const showStrongsInline = showInlineUtilityPane && activeUtilityPane === "strongs";
+  const showSermonsInline = showInlineUtilityPane && activeUtilityPane === "sermons";
+  const showHarmonyInline = showInlineUtilityPane && activeUtilityPane === "harmony";
+  const handleBookAudioEnded = useCallback(() => {
+    if (!bookAudioSource) {
+      return;
+    }
+
+    const nextBook =
+      typeof window === "undefined"
+        ? nextAudioBook
+        : getNextBookWithAudio(
+            books,
+            book.slug,
+            normalizeBibleBookOrderMode(
+              window.localStorage.getItem(BIBLE_BOOK_ORDER_STORAGE_KEY)
+            )
+          );
+
+    if (!nextBook) {
+      if (typeof window !== "undefined") {
+        window.sessionStorage.removeItem(BOOK_AUDIO_AUTOPLAY_STORAGE_KEY);
+      }
+      return;
+    }
+
+    if (typeof window !== "undefined" && getBookAudioSource(nextBook.slug)) {
+      window.sessionStorage.setItem(BOOK_AUDIO_AUTOPLAY_STORAGE_KEY, nextBook.slug);
+    }
+
+    router.push(getPrototypeHref(nextBook.slug, 1, effectiveVersion));
+  }, [book.slug, bookAudioSource, books, effectiveVersion, nextAudioBook, router]);
+  const bottomBarPanel = useMemo(
+    () => (
+      <ReaderBookAudioPlayer
+        audioSource={bookAudioSource}
+        autoPlayBookSlug={book.slug}
+        nextUpLabel={nextAudioBook?.name ?? null}
+        onEnded={handleBookAudioEnded}
+        resumeSession={{
+          autoplayKey: book.slug,
+          bookSlug: book.slug,
+          bookName: book.name,
+          chapter: chapter.chapterNumber,
+          view: "chapter",
+          version: effectiveVersion,
+          href: getPrototypeHref(book.slug, chapter.chapterNumber, effectiveVersion)
+        }}
+      />
+    ),
+    [
+      book.name,
+      book.slug,
+      bookAudioSource,
+      chapter.chapterNumber,
+      effectiveVersion,
+      handleBookAudioEnded,
+      nextAudioBook?.name
+    ]
+  );
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -925,8 +1042,15 @@ export function ReaderPrototypePageContent({
   useEffect(() => {
     syncCurrentPassage(book.slug, chapter.chapterNumber, "chapter");
     syncCurrentChapterData(book.slug, chapter.chapterNumber, chaptersByVersion);
-    setActiveStudyVerseNumber(chapter.verses[0]?.number ?? null);
+    setActiveStudyVerseNumber(
+      activeHighlightedVerseRange?.start ??
+        activeHighlightedVerseNumber ??
+        chapter.verses[0]?.number ??
+        null
+    );
   }, [
+    activeHighlightedVerseNumber,
+    activeHighlightedVerseRange,
     book.slug,
     chapter.chapterNumber,
     chapter.verses,
@@ -1087,8 +1211,15 @@ export function ReaderPrototypePageContent({
   };
 
   const handlePrototypeSearchVerse = (result: PrototypeSearchVerseResult) => {
+    const nextSearchParams = new URLSearchParams({
+      version: result.version,
+      highlight: String(result.verseNumber)
+    });
+
     setActiveStudyVerseNumber(result.verseNumber);
-    router.push(getPrototypeHref(result.bookSlug, result.chapterNumber, result.version));
+    router.push(
+      `/prototype/reader/${result.bookSlug}/${result.chapterNumber}?${nextSearchParams.toString()}`
+    );
   };
 
   const handlePrototypeSearchGreek = (result: Extract<BibleSearchResult, { type: "greek-lemma" }>) => {
@@ -1131,6 +1262,7 @@ export function ReaderPrototypePageContent({
       <ReaderCopyButton targetRef={readingSurfaceRef} />
     </>
   );
+  useRegisterReaderBottomBarPanel(bottomBarPanel);
 
   const renderReaderSurface = () => {
     if (activeReaderPane === "study-sets") {
@@ -1147,14 +1279,45 @@ export function ReaderPrototypePageContent({
 
     if (activeReaderPane === "ot-compare") {
       return (
-        <ReaderOtComparePanel
-          book={book}
-          focusedChapterNumber={chapter.chapterNumber}
-          greekChapters={chaptersByVersion.greek ? [chaptersByVersion.greek] : null}
-          masoreticChapters={masoreticChapter ? [masoreticChapter] : null}
-          view="chapter"
-        />
+        <>
+          <ReaderOtComparePanel
+            book={book}
+            focusedChapterNumber={chapter.chapterNumber}
+            greekChapters={chaptersByVersion.greek ? [chaptersByVersion.greek] : null}
+            masoreticChapters={masoreticChapter ? [masoreticChapter] : null}
+            view="chapter"
+          />
+          {showStrongsInline ? (
+            <div className="reader-ot-compare-study-panel">
+              <ReaderStrongsPanel />
+            </div>
+          ) : showGrammarInline ? (
+            <div className="reader-ot-compare-study-panel">
+              <ReaderGreekGrammarPanel />
+            </div>
+          ) : null}
+        </>
       );
+    }
+
+    if (showNotebookInline) {
+      return <ReaderNotebookEditor />;
+    }
+
+    if (showGrammarInline) {
+      return <ReaderGreekGrammarPanel />;
+    }
+
+    if (showStrongsInline) {
+      return <ReaderStrongsPanel />;
+    }
+
+    if (showSermonsInline) {
+      return <ReaderSermonWorkspace />;
+    }
+
+    if (showHarmonyInline) {
+      return <ReaderHarmonyWorkspace />;
     }
 
     return (
@@ -1162,6 +1325,8 @@ export function ReaderPrototypePageContent({
         annotationMode={annotationMode}
         bookSlug={book.slug}
         chapterNumber={chapter.chapterNumber}
+        highlightedVerseNumber={activeHighlightedVerseNumber}
+        highlightedVerseRange={activeHighlightedVerseRange}
         interlinearVerseMap={interlinearVerseMap}
         key={`${effectiveVersion}:${book.slug}:${chapter.chapterNumber}`}
         secondaryVerseVersions={secondaryVerseVersions}
@@ -1206,6 +1371,10 @@ export function ReaderPrototypePageContent({
       return <ReaderGrammarChartsPanel />;
     }
 
+    if (activeUtilityPane === "strongs") {
+      return <ReaderStrongsPanel />;
+    }
+
     if (activeUtilityPane === "sermons") {
       return <ReaderSermonWorkspace />;
     }
@@ -1218,7 +1387,7 @@ export function ReaderPrototypePageContent({
       return <ReaderComparePanel book={book} chaptersByVersion={chaptersByVersion} view="chapter" />;
     }
 
-    return <ReaderPrototypeWordStudyPanel />;
+    return <ReaderStrongsPanel />;
   };
 
   const renderMainSurface = () => {
@@ -1303,7 +1472,9 @@ export function ReaderPrototypePageContent({
   };
 
   return (
-    <ReaderCustomizationShell className="reader-prototype-shell reader-customizable-shell">
+    <ReaderCustomizationShell
+      className={`reader-shell reader-prototype-shell reader-customizable-shell${isFocusReading ? " is-focus-reading" : ""}`}
+    >
       <ReadingSessionSync
         book={book.slug}
         chapter={chapter.chapterNumber}
@@ -1313,7 +1484,7 @@ export function ReaderPrototypePageContent({
       <ReaderSettingsPanel
         book={book}
         currentChapter={chapter.chapterNumber}
-        readerTools={readerTools}
+        readerTools={!isFocusReading ? readerTools : null}
         view="chapter"
       />
       <div className="reader-prototype-app-shell">
@@ -1358,7 +1529,7 @@ export function ReaderPrototypePageContent({
         </aside>
 
         <div className="reader-prototype-main-shell">
-          <div className="reader-prototype-topbar">
+          <div className={`reader-prototype-topbar${isToplineVisible ? "" : " is-hidden"}`}>
             <div>
               <p className="reader-prototype-kicker">{getBibleVersionBadge(effectiveVersion)}</p>
               <h1>{getPrototypeModeTitle(appMode, book, chapter, activeVerseNumber)}</h1>
@@ -1448,6 +1619,7 @@ export function ReaderPrototypePageContent({
             <main className="reader-prototype-reading-card" aria-label="Prototype reader">
               {renderMainSurface()}
             </main>
+            {!isPrototypeStudyPaneCollapsed ? (
             <aside className="reader-prototype-study-panel" aria-label="Prototype word study">
               {appMode === "read" || appMode === "study" || appMode === "compare" || appMode === "search" ? (
                 <div className="reader-prototype-study-tabs" aria-label="Prototype study tools">
@@ -1486,10 +1658,21 @@ export function ReaderPrototypePageContent({
                   >
                     Sermons
                   </button>
+                  {isSplitViewActive ? (
+                    <button
+                      className="reader-prototype-study-tab"
+                      disabled={!canCollapseSplitPane("study")}
+                      onClick={() => collapseSplitPane("study")}
+                      type="button"
+                    >
+                      Hide
+                    </button>
+                  ) : null}
                 </div>
               ) : null}
               <div className="reader-prototype-study-body">{renderUtilityPanel()}</div>
             </aside>
+            ) : null}
           </div>
         </div>
 

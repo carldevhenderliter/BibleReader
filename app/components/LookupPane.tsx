@@ -13,6 +13,7 @@ import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
 import { ReaderStrongsPanel } from "@/app/components/ReaderStrongsPanel";
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
+import { isReaderRoutePath } from "@/lib/reader-routes";
 
 export function LookupPane() {
   const { style } = useReaderCustomization();
@@ -25,7 +26,7 @@ export function LookupPane() {
   } = useLookup();
   const { activeUtilityPane, setActiveUtilityPane, utilityPaneRequestKey } = useReaderWorkspace();
   const pathname = usePathname();
-  const isReaderRoute = pathname.startsWith("/read");
+  const isReaderRoute = isReaderRoutePath(pathname);
   const previousUtilityPaneRequestKeyRef = useRef(utilityPaneRequestKey);
 
   useEffect(() => {

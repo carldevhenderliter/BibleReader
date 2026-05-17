@@ -3,10 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { isReaderRoutePath } from "@/lib/reader-routes";
+
 export function SiteHeader() {
   const pathname = usePathname();
 
-  if (pathname.includes("/read") || /^\/fathers\/[^/]+/u.test(pathname)) {
+  if (isReaderRoutePath(pathname) || /^\/fathers\/[^/]+/u.test(pathname)) {
     return null;
   }
 

@@ -47,6 +47,12 @@ jest.mock("@/lib/bible/masoretic", () => ({
 jest.mock("@/lib/bible/greek", () => ({
   createGreekLearningQuizSelections: jest.fn(() => []),
   getGreekMorphologyDetails: jest.fn(() => null),
+  normalizeGreekFormLookupValue: jest.fn((value: string) =>
+    value
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+  ),
   getGreekTokenOccurrenceKey: jest.fn(
     (bookSlug: string, chapterNumber: number, verseNumber: number, tokenIndex: number) =>
       `greek:${bookSlug}:${chapterNumber}:${verseNumber}:${tokenIndex}`
@@ -137,6 +143,7 @@ jest.mock("@/lib/bible/greek", () => ({
   })
 }));
 jest.mock("@/lib/bible/strongs", () => ({
+  getStrongsEntries: jest.fn(async () => []),
   getStrongsEntry: jest.fn(async (entryKey: string) => {
     const entries = {
       G2316: {
@@ -174,7 +181,57 @@ jest.mock("@/lib/bible/strongs", () => ({
     } as const;
 
     return entries[entryKey as keyof typeof entries] ?? null;
-  })
+  }),
+  getStrongsVerseOccurrencesWithTokens: jest.fn(async () => []),
+  getVerseEntriesForVersion: jest.fn(async (anchors: Array<{
+    bookSlug: string;
+    chapterNumber: number;
+    verseNumber: number;
+  }>, version: string) => {
+    const greekTokens = [
+      {
+        surface: "Παῦλος",
+        lemma: "Παῦλος",
+        strongs: "G3972",
+        entryKey: "G3972",
+        morphology: "N-NSM",
+        decodedMorphology: "noun nominative singular masculine",
+        gloss: "Paul"
+      },
+      {
+        surface: "θεοῦ",
+        lemma: "θεός",
+        strongs: "G2316",
+        entryKey: "G2316",
+        morphology: "N-GSM",
+        decodedMorphology: "noun genitive singular masculine",
+        gloss: "God"
+      },
+      {
+        surface: "λόγον",
+        lemma: "λόγος",
+        strongs: "G3056",
+        entryKey: "G3056",
+        morphology: "N-ASM",
+        decodedMorphology: "noun accusative singular masculine",
+        gloss: "word"
+      }
+    ];
+
+    return anchors.map((anchor) => ({
+      anchor,
+      entry: {
+        version,
+        bookSlug: anchor.bookSlug,
+        chapterNumber: anchor.chapterNumber,
+        verseNumber: anchor.verseNumber,
+        text: "Παῦλος δοῦλος θεοῦ λόγον",
+        translationText: "Paul, a servant of God, a word.",
+        greekTokens
+      }
+    }));
+  }),
+  normalizeStrongsNumber: jest.fn((value: string) => value.toUpperCase())
 }));
 jest.mock("@/lib/fathers/search", () => ({
   findFathersSegmentsByGreekLemma: jest.fn(async (lemma: string) =>
@@ -193,6 +250,12 @@ jest.mock("@/lib/fathers/search", () => ({
           }
         ]
       : []
+  ),
+  normalizeFathersGreekText: jest.fn((value: string) =>
+    value
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
   )
 }));
 
@@ -355,12 +418,13 @@ describe("ReaderPrototypePage", () => {
     expect(screen.getByLabelText("Prototype word study")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "θεοῦ" })).toBeInTheDocument();
     const wordStudy = screen.getByLabelText("Prototype word study");
-    expect((await within(wordStudy).findAllByText("θεοῦ")).length).toBeGreaterThan(0);
-    expect(within(wordStudy).getByText("G2316")).toBeInTheDocument();
-    expect(within(wordStudy).getByRole("tab", { name: /Dictionary/i })).toBeInTheDocument();
-    expect(within(wordStudy).getByRole("tab", { name: /NT Usage/i })).toBeInTheDocument();
-    expect(within(wordStudy).getByRole("tab", { name: /LXX Usage/i })).toBeInTheDocument();
-    expect(within(wordStudy).getByRole("tab", { name: /Early Church/i })).toBeInTheDocument();
+    expect((await within(wordStudy).findAllByText("θεός")).length).toBeGreaterThan(0);
+    expect(await within(wordStudy).findByText("G2316")).toBeInTheDocument();
+    expect(within(wordStudy).getByText("Greek Dictionary")).toBeInTheDocument();
+    expect(await within(wordStudy).findByRole("tab", { name: /Verses In Bible/i })).toBeInTheDocument();
+    expect(within(wordStudy).getByRole("tab", { name: /BDAG/i })).toBeInTheDocument();
+    expect(within(wordStudy).getByRole("tab", { name: /Outside Bible/i })).toBeInTheDocument();
+    expect(await screen.findByText("Book audio")).toBeInTheDocument();
   });
 
   it("renders a requested static prototype passage", async () => {
@@ -409,6 +473,29 @@ describe("ReaderPrototypePage", () => {
     );
   });
 
+  it("uses prototype URL highlight params in the real verse list", async () => {
+    window.history.replaceState({}, "", "/prototype/reader?version=greek&highlight=1");
+
+    renderWithReaderCustomization(
+      <ReaderPrototypePageContent
+        book={books[1]}
+        books={books}
+        chapter={greekTitusChapter}
+        chaptersByVersion={{
+          greek: greekTitusChapter,
+          web: webTitusChapter
+        }}
+        currentChapter={1}
+        installedVersions={["web", "greek"]}
+        selectedVersion="greek"
+      />
+    );
+
+    await waitFor(() => {
+      expect(document.querySelector(".verse-row.is-highlighted")).not.toBeNull();
+    });
+  });
+
   it("opens the clicked Greek word in the prototype word-study pane", async () => {
     renderWithReaderCustomization(
       <ReaderPrototypePageContent
@@ -430,7 +517,7 @@ describe("ReaderPrototypePage", () => {
 
     await waitFor(() => {
       const wordStudy = screen.getByLabelText("Prototype word study");
-      expect(within(wordStudy).getAllByText("λόγον").length).toBeGreaterThan(0);
+      expect(within(wordStudy).getAllByText("λόγος").length).toBeGreaterThan(0);
       expect(within(wordStudy).getByText("G3056")).toBeInTheDocument();
     });
   });
@@ -506,7 +593,7 @@ describe("ReaderPrototypePage", () => {
     expect(screen.getByText("Study documents")).toBeInTheDocument();
   });
 
-  it("switches between prototype word-study usage tabs", async () => {
+  it("switches between original Strong's study tabs in the prototype pane", async () => {
     renderWithReaderCustomization(
       <ReaderPrototypePageContent
         book={books[1]}
@@ -523,15 +610,16 @@ describe("ReaderPrototypePage", () => {
     );
 
     const wordStudy = screen.getByLabelText("Prototype word study");
-    expect((await within(wordStudy).findAllByText("θεοῦ")).length).toBeGreaterThan(0);
+    expect((await within(wordStudy).findAllByText("θεός")).length).toBeGreaterThan(0);
 
-    fireEvent.click(within(wordStudy).getByRole("tab", { name: /NT Usage/i }));
+    fireEvent.click(await within(wordStudy).findByRole("tab", { name: /Verses In Bible/i }));
     expect(await within(wordStudy).findByText("Titus 1:1")).toBeInTheDocument();
 
-    fireEvent.click(within(wordStudy).getByRole("tab", { name: /LXX Usage/i }));
-    expect(await within(wordStudy).findByText("No LXX usage found for this lemma.")).toBeInTheDocument();
+    fireEvent.click(within(wordStudy).getByRole("tab", { name: /BDAG/i }));
+    expect((await within(wordStudy).findAllByText(/God, a divine being/i)).length).toBeGreaterThan(0);
 
-    fireEvent.click(within(wordStudy).getByRole("tab", { name: /Early Church/i }));
-    expect(await within(wordStudy).findByText("1 Clement · 1")).toBeInTheDocument();
+    fireEvent.click(within(wordStudy).getByRole("tab", { name: /Outside Bible/i }));
+    expect(await within(wordStudy).findByText("1 Clement")).toBeInTheDocument();
+    expect(await within(wordStudy).findByText("the grace of God")).toBeInTheDocument();
   });
 });
