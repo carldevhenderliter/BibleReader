@@ -13,6 +13,7 @@ import { usePathname } from "next/navigation";
 import { DEFAULT_BIBLE_VERSION, READER_VERSION_STORAGE_KEY } from "@/lib/bible/constants";
 import type { BundledBibleVersion } from "@/lib/bible/types";
 import { isInstalledBundledBibleVersion } from "@/lib/bible/version";
+import { isReaderRoutePath } from "@/lib/reader-routes";
 
 type ReaderVersionContextValue = {
   version: BundledBibleVersion;
@@ -43,7 +44,7 @@ function syncVersionToUrl(version: BundledBibleVersion) {
 export function ReaderVersionProvider({ children }: PropsWithChildren) {
   const pathname = usePathname();
   const [version, setVersionState] = useState<BundledBibleVersion>(DEFAULT_BIBLE_VERSION);
-  const isReaderRoute = pathname.includes("/read");
+  const isReaderRoute = isReaderRoutePath(pathname);
 
   useEffect(() => {
     const storedVersion = window.localStorage.getItem(READER_VERSION_STORAGE_KEY);

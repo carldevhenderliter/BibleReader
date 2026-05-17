@@ -32,6 +32,7 @@ import {
   getBibleVersionOptions,
   isInstalledBundledBibleVersion
 } from "@/lib/bible/version";
+import { isReaderRoutePath } from "@/lib/reader-routes";
 
 const TEXT_ALIGNMENT_OPTIONS = [
   {
@@ -156,7 +157,7 @@ export function ReaderSettingsPanel({
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   const versionOptions = getBibleVersionOptions();
   const isFathersMode = mode === "fathers";
-  const isReaderRoute = pathname.startsWith("/read");
+  const isReaderRoute = isReaderRoutePath(pathname);
   const book = !isFathersMode ? (props as BibleReaderSettingsPanelProps).book : null;
   const currentChapter = !isFathersMode
     ? (props as BibleReaderSettingsPanelProps).currentChapter

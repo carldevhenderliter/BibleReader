@@ -71,6 +71,7 @@ import {
   type StudySetStorage
 } from "@/lib/study-workspace";
 import { getInstalledBundledBibleVersions } from "@/lib/bible/version";
+import { isReaderRoutePath } from "@/lib/reader-routes";
 
 type ReaderPane = "reading" | "compare" | "ot-compare" | "study-sets" | "harmony";
 type LeftReaderMode = "scripture" | "search";
@@ -309,7 +310,7 @@ export function ReaderWorkspaceProvider({ children }: PropsWithChildren) {
   const [activeHarmonyId, setActiveHarmonyId] = useState<string | null>(null);
   const [compareVersionOverrides, setCompareVersionOverrides] = useState<BundledBibleVersion[]>([]);
   const [utilityPaneRequestKey, setUtilityPaneRequestKey] = useState(0);
-  const isReaderRoute = pathname.startsWith("/read") || pathname.startsWith("/prototype/reader");
+  const isReaderRoute = isReaderRoutePath(pathname);
   const activeUtilityPane = activeUtilityPaneState;
   const installedBundledVersions = getInstalledBundledBibleVersions();
   const compareVersions = useMemo(

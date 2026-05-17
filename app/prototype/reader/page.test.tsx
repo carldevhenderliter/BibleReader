@@ -1,6 +1,7 @@
 import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 
 import ReaderPrototypePage from "@/app/prototype/reader/page";
+import ReaderPrototypeChapterPage from "@/app/prototype/reader/[book]/[chapter]/page";
 import { ReaderPrototypePageContent } from "@/app/components/ReaderPrototypePageContent";
 import * as bibleData from "@/lib/bible/data";
 import type { BookMeta, Chapter } from "@/lib/bible/types";
@@ -8,7 +9,20 @@ import { mockRouter, setMockPathname } from "@/test/mocks/next-navigation";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
 
 jest.mock("@/lib/bible/data");
+jest.mock("@/lib/bible/esv-interlinear", () => ({
+  getEsvInterlinearChapter: jest.fn(async () => null)
+}));
+jest.mock("@/lib/bible/masoretic", () => ({
+  getMasoreticChapter: jest.fn(async () => null)
+}));
 jest.mock("@/lib/bible/greek", () => ({
+  createGreekLearningQuizSelections: jest.fn(() => []),
+  getGreekMorphologyDetails: jest.fn(() => null),
+  getGreekTokenOccurrenceKey: jest.fn(
+    (bookSlug: string, chapterNumber: number, verseNumber: number, tokenIndex: number) =>
+      `greek:${bookSlug}:${chapterNumber}:${verseNumber}:${tokenIndex}`
+  ),
+  transliterateGreekSurface: jest.fn((surface: string) => surface),
   getGreekLemmaEntry: jest.fn(async (entryKey: string) => {
     const entries = {
       G2316: {
@@ -154,6 +168,7 @@ jest.mock("@/lib/fathers/search", () => ({
 }));
 
 const mockedGetBooks = jest.mocked(bibleData.getBooks);
+const mockedGetBookBySlug = jest.mocked(bibleData.getBookBySlug);
 const mockedGetChapter = jest.mocked(bibleData.getChapter);
 
 const books: BookMeta[] = [
@@ -235,12 +250,50 @@ const webTitusChapter: Chapter = {
   ]
 };
 
+const greekJohnChapter: Chapter = {
+  bookSlug: "john",
+  chapterNumber: 1,
+  verses: [
+    {
+      number: 1,
+      text: "Ἐν ἀρχῇ ἦν ὁ λόγος",
+      translationText: "In the beginning was the Word.",
+      greekTokens: [
+        {
+          surface: "λόγος",
+          lemma: "λόγος",
+          strongs: "G3056",
+          entryKey: "G3056",
+          morphology: "N-NSM",
+          decodedMorphology: "noun nominative singular masculine",
+          gloss: "word"
+        }
+      ]
+    }
+  ]
+};
+
+const webJohnChapter: Chapter = {
+  bookSlug: "john",
+  chapterNumber: 1,
+  verses: [
+    {
+      number: 1,
+      text: "In the beginning was the Word."
+    }
+  ]
+};
+
 function getChapterFixture(bookSlug: string, chapterNumber: number, version: string) {
-  if (bookSlug !== "titus" || chapterNumber !== 1) {
-    return null;
+  if (bookSlug === "titus" && chapterNumber === 1) {
+    return version === "greek" ? greekTitusChapter : webTitusChapter;
   }
 
-  return version === "greek" ? greekTitusChapter : webTitusChapter;
+  if (bookSlug === "john" && chapterNumber === 1) {
+    return version === "greek" ? greekJohnChapter : webJohnChapter;
+  }
+
+  return null;
 }
 
 describe("ReaderPrototypePage", () => {
@@ -249,9 +302,18 @@ describe("ReaderPrototypePage", () => {
     setMockPathname("/prototype/reader");
     window.history.replaceState({}, "", "/prototype/reader");
     mockedGetBooks.mockResolvedValue(books);
+    mockedGetBookBySlug.mockImplementation(async (bookSlug) =>
+      books.find((book) => book.slug === bookSlug) ?? null
+    );
     mockedGetChapter.mockImplementation(async (bookSlug, chapterNumber, version) =>
       getChapterFixture(bookSlug, chapterNumber, version)
     );
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: {
+        writeText: jest.fn(async () => undefined)
+      }
+    });
   });
 
   it("loads default Titus 1 content and renders the prototype shell", async () => {
@@ -262,7 +324,7 @@ describe("ReaderPrototypePage", () => {
     expect(screen.getByRole("heading", { name: "Titus 1" })).toBeInTheDocument();
     expect(screen.getByLabelText("Prototype reader")).toBeInTheDocument();
     expect(screen.getByLabelText("Prototype word study")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "θεοῦ G2316" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "θεοῦ" })).toBeInTheDocument();
     const wordStudy = screen.getByLabelText("Prototype word study");
     expect((await within(wordStudy).findAllByText("θεοῦ")).length).toBeGreaterThan(0);
     expect(within(wordStudy).getByText("G2316")).toBeInTheDocument();
@@ -270,6 +332,19 @@ describe("ReaderPrototypePage", () => {
     expect(within(wordStudy).getByRole("tab", { name: /NT Usage/i })).toBeInTheDocument();
     expect(within(wordStudy).getByRole("tab", { name: /LXX Usage/i })).toBeInTheDocument();
     expect(within(wordStudy).getByRole("tab", { name: /Early Church/i })).toBeInTheDocument();
+  });
+
+  it("renders a requested static prototype passage", async () => {
+    setMockPathname("/prototype/reader/john/1");
+    window.history.replaceState({}, "", "/prototype/reader/john/1?version=greek");
+    const element = await ReaderPrototypeChapterPage({
+      params: Promise.resolve({ book: "john", chapter: "1" })
+    });
+
+    renderWithReaderCustomization(element);
+
+    expect(screen.getByRole("heading", { name: "John 1" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "λόγος" })).toBeInTheDocument();
   });
 
   it("updates the prototype query URL when changing chapter controls", () => {
@@ -293,7 +368,15 @@ describe("ReaderPrototypePage", () => {
     });
 
     expect(mockRouter.push).toHaveBeenCalledWith(
-      "/prototype/reader?book=titus&chapter=2&version=greek"
+      "/prototype/reader/titus/2?version=greek"
+    );
+
+    fireEvent.change(screen.getByLabelText("Version"), {
+      target: { value: "web" }
+    });
+
+    expect(mockRouter.push).toHaveBeenCalledWith(
+      "/prototype/reader/titus/1?version=web"
     );
   });
 
@@ -314,13 +397,50 @@ describe("ReaderPrototypePage", () => {
     );
 
     const reader = screen.getByLabelText("Prototype reader");
-    fireEvent.click(within(reader).getByRole("button", { name: "λόγον G3056" }));
+    fireEvent.click(within(reader).getByRole("button", { name: "λόγον" }));
 
     await waitFor(() => {
       const wordStudy = screen.getByLabelText("Prototype word study");
       expect(within(wordStudy).getAllByText("λόγον").length).toBeGreaterThan(0);
       expect(within(wordStudy).getByText("G3056")).toBeInTheDocument();
     });
+  });
+
+  it("wires prototype bottom actions and settings to the real reader workspace", async () => {
+    renderWithReaderCustomization(
+      <ReaderPrototypePageContent
+        book={books[1]}
+        books={books}
+        chapter={greekTitusChapter}
+        chaptersByVersion={{
+          greek: greekTitusChapter,
+          web: webTitusChapter
+        }}
+        currentChapter={1}
+        installedVersions={["web", "greek"]}
+        selectedVersion="greek"
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Parallel" }));
+    expect(await screen.findByText("Parallel Compare")).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Read" }));
+    fireEvent.click(screen.getByRole("button", { name: "Copy" }));
+    await waitFor(() => {
+      expect(navigator.clipboard.writeText).toHaveBeenCalled();
+    });
+
+    fireEvent.click(screen.getByRole("button", { name: "Bookmark" }));
+    expect(screen.getByRole("button", { name: "Bookmark" })).toHaveClass("is-active");
+
+    fireEvent.click(screen.getByRole("button", { name: "Note" }));
+    expect(await screen.findByText(/Choose a notebook for/i)).toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    expect(await screen.findByText("Reader tools")).toBeInTheDocument();
+    expect(screen.getByText("Reading modes")).toBeInTheDocument();
+    expect(screen.getByText("Study pane")).toBeInTheDocument();
   });
 
   it("switches between prototype word-study usage tabs", async () => {
