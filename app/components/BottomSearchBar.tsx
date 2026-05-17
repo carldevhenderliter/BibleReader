@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderBottomBar } from "@/app/components/ReaderBottomBarProvider";
@@ -15,8 +16,19 @@ import {
   getBibleVersionLabel,
   getBibleVersionSelectionLabel
 } from "@/lib/bible/version";
+import { isPrototypeReaderRoutePath } from "@/lib/reader-routes";
 
 export function BottomSearchBar() {
+  const pathname = usePathname();
+
+  if (isPrototypeReaderRoutePath(pathname)) {
+    return null;
+  }
+
+  return <BottomSearchBarInner />;
+}
+
+function BottomSearchBarInner() {
   const { version } = useReaderVersion();
   const { style } = useSearchCustomization();
   const { bottomBarDockControl, bottomBarPanel } = useReaderBottomBar();

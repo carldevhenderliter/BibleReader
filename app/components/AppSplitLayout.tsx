@@ -2,17 +2,29 @@
 
 import type { PropsWithChildren } from "react";
 import { useMemo } from "react";
+import { usePathname } from "next/navigation";
 
 import { LookupPane } from "@/app/components/LookupPane";
 import { useReaderBottomBar } from "@/app/components/ReaderBottomBarProvider";
 import { SearchPane } from "@/app/components/SearchPane";
 import { useLookup } from "@/app/components/LookupProvider";
+import { isPrototypeReaderRoutePath } from "@/lib/reader-routes";
 
 function getRootFontSize() {
   return Number.parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
 }
 
 export function AppSplitLayout({ children }: PropsWithChildren) {
+  const pathname = usePathname();
+
+  if (isPrototypeReaderRoutePath(pathname)) {
+    return <main className="site-main app-layout-main">{children}</main>;
+  }
+
+  return <AppSplitLayoutInner>{children}</AppSplitLayoutInner>;
+}
+
+function AppSplitLayoutInner({ children }: PropsWithChildren) {
   const { bottomBarDockControl } = useReaderBottomBar();
   const {
     collapsedSplitPanes,

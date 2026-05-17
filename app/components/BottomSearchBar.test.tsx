@@ -121,6 +121,15 @@ describe("BottomSearchBar", () => {
     expect(screen.queryByLabelText("Bible search results")).not.toBeInTheDocument();
   });
 
+  it("does not render on prototype reader routes", () => {
+    setMockPathname("/prototype/reader/titus/1");
+
+    renderSearchUi(<BottomSearchBar />);
+
+    expect(screen.queryByRole("search")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Open search" })).not.toBeInTheDocument();
+  });
+
   it("starts collapsed to a search icon and expands when clicked", () => {
     renderSearchUi();
 

@@ -155,6 +155,18 @@ describe("AppSplitLayout", () => {
     expect(screen.getByRole("button", { name: "Resize search and study panes" })).toBeInTheDocument();
   });
 
+  it("does not mount original split or search menus on prototype reader routes", () => {
+    setMockPathname("/prototype/reader/titus/1");
+
+    const { container } = renderSplitLayout();
+
+    expect(screen.getByText("Reader content")).toBeInTheDocument();
+    expect(container.querySelector(".app-layout")).toBeNull();
+    expect(screen.queryByLabelText("Search pane")).not.toBeInTheDocument();
+    expect(screen.queryByLabelText("Study pane")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Open search" })).not.toBeInTheDocument();
+  });
+
   it("keeps split view active on iPad widths below the desktop breakpoint", () => {
     setDesktopMode(false);
     setNavigatorDevice({
