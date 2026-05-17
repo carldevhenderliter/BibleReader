@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { ReaderBookAudioPlayer } from "@/app/components/ReaderBookAudioPlayer";
 import { useRegisterReaderBottomBarPanel } from "@/app/components/ReaderBottomBarProvider";
 import { ReaderComparePanel } from "@/app/components/ReaderComparePanel";
-import { ReaderCopyButton } from "@/app/components/ReaderCopyButton";
 import { ReaderCrossReferencesPanel } from "@/app/components/ReaderCrossReferencesPanel";
 import { ReaderCustomizationShell } from "@/app/components/ReaderCustomizationShell";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
@@ -17,7 +16,6 @@ import { ReaderHarmonyWorkspace } from "@/app/components/ReaderHarmonyWorkspace"
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
 import { ReaderOtComparePanel } from "@/app/components/ReaderOtComparePanel";
 import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
-import { ReaderSettingsPanel } from "@/app/components/ReaderSettingsPanel";
 import { ReaderStrongsPanel } from "@/app/components/ReaderStrongsPanel";
 import { ReaderStudySetsPanel } from "@/app/components/ReaderStudySetsPanel";
 import { ReadingSessionSync } from "@/app/components/ReadingSessionSync";
@@ -43,6 +41,7 @@ import type {
   EsvInterlinearDisplayChapter,
   GreekToken,
   NotebookDocument,
+  ReaderCustomizationSettings,
   Verse
 } from "@/lib/bible/types";
 import {
@@ -54,7 +53,7 @@ import { getGreekTokenOccurrenceKey } from "@/lib/bible/greek";
 import { getAlternateBundledVersions, getBibleVersionBadge, getBibleVersionLabel } from "@/lib/bible/version";
 import { createPassageReference } from "@/lib/study-workspace";
 
-type PrototypeMode = "read" | "study" | "compare" | "notes" | "search" | "library";
+type PrototypeMode = "read" | "study" | "compare" | "notes" | "search" | "library" | "settings";
 type PrototypeSearchVerseResult = Extract<BibleSearchResult, { type: "verse" }>;
 
 type ReaderPrototypePageContentProps = {
@@ -191,6 +190,10 @@ function getPrototypeModeTitle(mode: PrototypeMode, book: BookMeta, chapter: Cha
     return "Library";
   }
 
+  if (mode === "settings") {
+    return "Settings";
+  }
+
   if (mode === "compare" && verseNumber) {
     return `${book.name} ${chapter.chapterNumber}:${verseNumber}`;
   }
@@ -201,6 +204,10 @@ function getPrototypeModeTitle(mode: PrototypeMode, book: BookMeta, chapter: Cha
 function getPrototypeModeSubtitle(mode: PrototypeMode, book: BookMeta) {
   if (mode === "library") {
     return "Your saved notes, resources, and study materials";
+  }
+
+  if (mode === "settings") {
+    return "Prototype reader controls and display layers";
   }
 
   if (mode === "search") {
@@ -791,6 +798,167 @@ function PrototypeLibrarySurface({
   );
 }
 
+type PrototypeSettingsSurfaceProps = {
+  annotationMode: boolean;
+  hasBibleGreekAnnotationSurface: boolean;
+  hasGreekLearningSurface: boolean;
+  isGreekLearningMode: boolean;
+  onResetSettings: () => void;
+  setAnnotationMode: (updater: (current: boolean) => boolean) => void;
+  setIsGreekLearningMode: (value: boolean) => void;
+  settings: ReaderCustomizationSettings;
+  updateSettings: (updates: Partial<ReaderCustomizationSettings>) => void;
+};
+
+function PrototypeSettingsSurface({
+  annotationMode,
+  hasBibleGreekAnnotationSurface,
+  hasGreekLearningSurface,
+  isGreekLearningMode,
+  onResetSettings,
+  setAnnotationMode,
+  setIsGreekLearningMode,
+  settings,
+  updateSettings
+}: PrototypeSettingsSurfaceProps) {
+  const toggleOptions: Array<{
+    id: keyof ReaderCustomizationSettings;
+    label: string;
+    description: string;
+  }> = [
+    {
+      id: "focusReadingMode",
+      label: "Focus Reading",
+      description: "Hide prototype side panels for a cleaner reading surface."
+    },
+    {
+      id: "showVerseNumbers",
+      label: "Verse Numbers",
+      description: "Show verse numbers beside the reading text."
+    },
+    {
+      id: "showVerseText",
+      label: "Verse Text",
+      description: "Show the main scripture text layer."
+    },
+    {
+      id: "showCompanionVerseTranslation",
+      label: "Companion Translation",
+      description: "Show the companion English line under Greek where available."
+    },
+    {
+      id: "showSecondaryVerseTranslation",
+      label: "Secondary Versions",
+      description: "Show configured parallel translation rows."
+    },
+    {
+      id: "showCustomVerseTranslation",
+      label: "Custom Translation",
+      description: "Show your custom translation notes in the verse list."
+    },
+    {
+      id: "showGreekGloss",
+      label: "Greek Gloss",
+      description: "Show quick glosses under Greek tokens."
+    },
+    {
+      id: "showGreekLemma",
+      label: "Greek Lemma",
+      description: "Show dictionary lemmas for Greek tokens."
+    },
+    {
+      id: "showGreekTransliteration",
+      label: "Transliteration",
+      description: "Show readable transliterations below Greek words."
+    },
+    {
+      id: "showGreekGrammarCards",
+      label: "Grammar Cards",
+      description: "Show morphology cards for Greek tokens."
+    },
+    {
+      id: "showExpandedGreekGrammarCards",
+      label: "Expanded Grammar",
+      description: "Show fuller grammar details in each verse."
+    },
+    {
+      id: "showStrongs",
+      label: "KJV Strong's",
+      description: "Show Strong's tagging for supported KJV words."
+    },
+    {
+      id: "showVerseStrongs",
+      label: "Verse Strong's",
+      description: "Show Strong's references in verse displays."
+    },
+    {
+      id: "showEsvInterlinear",
+      label: "ESV Interlinear",
+      description: "Show ESV interlinear data for New Testament passages."
+    }
+  ];
+
+  return (
+    <div className="reader-prototype-mode-surface reader-prototype-settings-mode">
+      <header className="reader-prototype-mode-header">
+        <div>
+          <p className="reader-prototype-kicker">Prototype Settings</p>
+          <h2>Reader controls</h2>
+        </div>
+        <button className="reader-prototype-filter-button" onClick={onResetSettings} type="button">
+          Reset
+        </button>
+      </header>
+      <section className="reader-prototype-settings-card">
+        <h3>Reader Tools</h3>
+        <div className="reader-prototype-settings-actions">
+          {hasBibleGreekAnnotationSurface ? (
+            <button
+              className={`reader-prototype-bottom-button${annotationMode ? " is-active" : ""}`}
+              onClick={() => setAnnotationMode((current) => !current)}
+              type="button"
+            >
+              {annotationMode ? "Done Annotating" : "Annotate Greek"}
+            </button>
+          ) : null}
+          {hasGreekLearningSurface ? (
+            <button
+              className={`reader-prototype-bottom-button${isGreekLearningMode ? " is-active" : ""}`}
+              onClick={() => setIsGreekLearningMode(!isGreekLearningMode)}
+              type="button"
+            >
+              {isGreekLearningMode ? "Stop Learning" : "Learn Greek"}
+            </button>
+          ) : null}
+        </div>
+      </section>
+      <section className="reader-prototype-settings-card">
+        <h3>Reading Layers</h3>
+        <div className="reader-prototype-settings-grid">
+          {toggleOptions.map((option) => (
+            <button
+              aria-pressed={Boolean(settings[option.id])}
+              className={`reader-prototype-settings-option${
+                settings[option.id] ? " is-active" : ""
+              }`}
+              key={option.id}
+              onClick={() =>
+                updateSettings({
+                  [option.id]: !settings[option.id]
+                } as Partial<ReaderCustomizationSettings>)
+              }
+              type="button"
+            >
+              <strong>{option.label}</strong>
+              <span>{option.description}</span>
+            </button>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
 export function ReaderPrototypePageContent({
   book,
   books,
@@ -804,7 +972,7 @@ export function ReaderPrototypePageContent({
 }: ReaderPrototypePageContentProps) {
   const router = useRouter();
   const locationSearch = useLocationSearch();
-  const { isPanelOpen, setIsPanelOpen, settings, updateSettings } = useReaderCustomization();
+  const { settings, resetSettings, updateSettings } = useReaderCustomization();
   const { version, setVersion } = useReaderVersion();
   const {
     canCollapseSplitPane,
@@ -939,7 +1107,7 @@ export function ReaderPrototypePageContent({
       chapter.verses.some((verse) => Boolean(interlinearVerseMap?.[verse.number]?.tokens?.length)));
   const isBookmarked = Boolean(getBookmark(book.slug, chapter.chapterNumber));
   const isFocusReading = settings.focusReadingMode;
-  const isToplineVisible = useReaderToplineVisibility(isPanelOpen);
+  const isToplineVisible = useReaderToplineVisibility(false);
   const isPrototypeStudyPaneCollapsed = isSplitViewActive && collapsedSplitPanes.study;
   const showInlineUtilityPane = isPrototypeStudyPaneCollapsed;
   const showNotebookInline = showInlineUtilityPane && activeUtilityPane === "notebook";
@@ -1207,6 +1375,12 @@ export function ReaderPrototypePageContent({
     if (nextMode === "library") {
       setActiveReaderPane("reading");
       setActiveUtilityPane("notebook");
+      return;
+    }
+
+    if (nextMode === "settings") {
+      setActiveReaderPane("reading");
+      setActiveUtilityPane("strongs");
     }
   };
 
@@ -1239,29 +1413,6 @@ export function ReaderPrototypePageContent({
     openStrongs(result.strongsNumber, result.label);
   };
 
-  const readerTools = (
-    <>
-      {hasBibleGreekAnnotationSurface ? (
-        <button
-          className={`reader-inline-button reader-settings-link${annotationMode ? " is-active" : ""}`}
-          onClick={() => setAnnotationMode((current) => !current)}
-          type="button"
-        >
-          {annotationMode ? "Done annotating" : "Annotate Greek"}
-        </button>
-      ) : null}
-      {hasGreekLearningSurface ? (
-        <button
-          className={`reader-inline-button reader-settings-link${isGreekLearningMode ? " is-active" : ""}`}
-          onClick={() => setIsGreekLearningMode(!isGreekLearningMode)}
-          type="button"
-        >
-          {isGreekLearningMode ? "Stop Learning" : "Learn Greek"}
-        </button>
-      ) : null}
-      <ReaderCopyButton targetRef={readingSurfaceRef} />
-    </>
-  );
   useRegisterReaderBottomBarPanel(bottomBarPanel);
 
   const renderReaderSurface = () => {
@@ -1458,6 +1609,22 @@ export function ReaderPrototypePageContent({
       );
     }
 
+    if (appMode === "settings") {
+      return (
+        <PrototypeSettingsSurface
+          annotationMode={annotationMode}
+          hasBibleGreekAnnotationSurface={hasBibleGreekAnnotationSurface}
+          hasGreekLearningSurface={hasGreekLearningSurface}
+          isGreekLearningMode={isGreekLearningMode}
+          onResetSettings={resetSettings}
+          setAnnotationMode={setAnnotationMode}
+          setIsGreekLearningMode={setIsGreekLearningMode}
+          settings={settings}
+          updateSettings={updateSettings}
+        />
+      );
+    }
+
     return (
       <>
         <div className="reader-prototype-chapter-heading">
@@ -1481,12 +1648,6 @@ export function ReaderPrototypePageContent({
         version={effectiveVersion}
         view="chapter"
       />
-      <ReaderSettingsPanel
-        book={book}
-        currentChapter={chapter.chapterNumber}
-        readerTools={!isFocusReading ? readerTools : null}
-        view="chapter"
-      />
       <div className="reader-prototype-app-shell">
         <aside className="reader-prototype-side-rail" aria-label="Prototype navigation">
           <div className="reader-prototype-brand">
@@ -1501,7 +1662,8 @@ export function ReaderPrototypePageContent({
               ["compare", "Compare"],
               ["notes", "Notes"],
               ["search", "Search"],
-              ["library", "Library"]
+              ["library", "Library"],
+              ["settings", "Settings"]
             ].map(([mode, label]) => (
               <button
                 className={`reader-prototype-nav-button${appMode === mode ? " is-active" : ""}`}
@@ -1513,14 +1675,6 @@ export function ReaderPrototypePageContent({
                 {label}
               </button>
             ))}
-            <button
-              className="reader-prototype-nav-button"
-              onClick={() => setIsPanelOpen(true)}
-              type="button"
-            >
-              <span aria-hidden="true">S</span>
-              Settings
-            </button>
           </nav>
           <div className="reader-prototype-quote-card">
             <p>Ὁ λόγος σου λυχνία τῷ ποδί μου καὶ φῶς τῇ ὁδῷ μου.</p>
@@ -1607,7 +1761,7 @@ export function ReaderPrototypePageContent({
               <button
                 aria-label="Reader settings"
                 className="reader-prototype-icon-button"
-                onClick={() => setIsPanelOpen(true)}
+                onClick={() => openMode("settings")}
                 type="button"
               >
                 ☼

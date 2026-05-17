@@ -554,9 +554,10 @@ describe("ReaderPrototypePage", () => {
     expect(await screen.findByText(/Choose a notebook for/i)).toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button", { name: "Reader settings" }));
-    expect(await screen.findByText("Reader tools")).toBeInTheDocument();
-    expect(screen.getByText("Reading modes")).toBeInTheDocument();
-    expect(screen.getByText("Study pane")).toBeInTheDocument();
+    expect(await screen.findByText("Prototype Settings")).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Reader controls" })).toBeInTheDocument();
+    expect(screen.getByText("Reading Layers")).toBeInTheDocument();
+    expect(screen.queryByText("Reading modes")).not.toBeInTheDocument();
   });
 
   it("switches prototype left-rail modes for study, search, notes, and library", async () => {
@@ -591,6 +592,9 @@ describe("ReaderPrototypePage", () => {
     fireEvent.click(within(nav).getByRole("button", { name: "Library" }));
     expect(screen.getByDisplayValue("Search your library...")).toBeInTheDocument();
     expect(screen.getByText("Study documents")).toBeInTheDocument();
+
+    fireEvent.click(within(nav).getByRole("button", { name: "Settings" }));
+    expect(screen.getByRole("heading", { name: "Reader controls" })).toBeInTheDocument();
   });
 
   it("switches between original Strong's study tabs in the prototype pane", async () => {
