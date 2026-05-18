@@ -1495,6 +1495,10 @@ body:has(.reader-prototype-shell) .app-layout-reader-pane {
   cursor: pointer;
 }
 
+.reader-prototype-bookmark-icon.is-active {
+  filter: drop-shadow(0 0 0.55rem rgba(215, 168, 79, 0.42));
+}
+
 .reader-prototype-gold-action,
 .reader-prototype-filter-button {
   min-height: 2.75rem;
@@ -1510,6 +1514,12 @@ body:has(.reader-prototype-shell) .app-layout-reader-pane {
 .reader-prototype-filter-button {
   background: rgba(255, 255, 255, 0.025);
   color: rgba(255, 236, 196, 0.94);
+}
+
+.reader-prototype-filter-button.is-active {
+  border-color: rgba(215, 168, 79, 0.52);
+  background: rgba(215, 168, 79, 0.13);
+  box-shadow: 0 0 1.5rem rgba(215, 168, 79, 0.12);
 }
 
 .reader-prototype-search-bar {
@@ -1558,6 +1568,37 @@ body:has(.reader-prototype-shell) .app-layout-reader-pane {
   margin-left: 0.5rem;
   border-radius: 0.3rem;
   background: rgba(0, 0, 0, 0.22);
+}
+
+.reader-prototype-filter-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  padding: 0.7rem;
+  border: 1px solid rgba(215, 168, 79, 0.16);
+  border-radius: 0.65rem;
+  background: rgba(5, 12, 15, 0.72);
+  color: rgba(223, 209, 181, 0.84);
+}
+
+.reader-prototype-filter-panel button,
+.reader-prototype-filter-panel span {
+  min-height: 2.1rem;
+  padding: 0.3rem 0.75rem;
+  border: 1px solid rgba(215, 168, 79, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.025);
+  color: rgba(255, 247, 230, 0.88);
+}
+
+.reader-prototype-filter-panel button {
+  cursor: pointer;
+}
+
+.reader-prototype-filter-panel button.is-active {
+  border-color: rgba(215, 168, 79, 0.5);
+  background: rgba(215, 168, 79, 0.18);
+  color: #f6c86c;
 }
 
 .reader-prototype-search-meta {
@@ -1658,11 +1699,36 @@ body:has(.reader-prototype-shell) .app-layout-reader-pane {
   color: rgba(255, 247, 230, 0.88);
 }
 
+.reader-prototype-compare-tools button {
+  cursor: pointer;
+}
+
+.reader-prototype-compare-tools button.is-active,
+.reader-prototype-compare-tools label.is-active {
+  border-color: rgba(215, 168, 79, 0.46);
+  background: rgba(215, 168, 79, 0.14);
+  color: #f6c86c;
+}
+
 .reader-prototype-compare-grid {
   display: grid;
   overflow: auto;
   border: 1px solid rgba(215, 168, 79, 0.16);
   border-radius: 0.55rem;
+}
+
+.reader-prototype-compare-grid.is-difference-mode .reader-prototype-compare-column:nth-child(even) {
+  background:
+    linear-gradient(180deg, rgba(153, 121, 255, 0.08), rgba(153, 121, 255, 0.015)),
+    rgba(4, 13, 17, 0.55);
+}
+
+.reader-prototype-compare-grid.is-compact .reader-prototype-compare-column {
+  min-height: 22rem;
+}
+
+.reader-prototype-compare-grid.is-compact .reader-prototype-compare-glosses {
+  display: none;
 }
 
 .reader-prototype-compare-column {

@@ -42,6 +42,7 @@ import type {
   GreekToken,
   NotebookDocument,
   ReaderCustomizationSettings,
+  SearchScope,
   Verse
 } from "@/lib/bible/types";
 import {
@@ -309,7 +310,9 @@ type PrototypeStudySurfaceProps = {
   chapter: Chapter;
   effectiveVersion: BundledBibleVersion;
   greekChapter: Chapter | null;
+  isBookmarked: boolean;
   onOpenCrossReferences: () => void;
+  onToggleBookmark: () => void;
   onTokenClick: (token: GreekToken, verseNumber: number, tokenIndex: number) => void;
   verseNumber: number | null;
 };
@@ -320,7 +323,9 @@ function PrototypeStudySurface({
   chapter,
   effectiveVersion,
   greekChapter,
+  isBookmarked,
   onOpenCrossReferences,
+  onToggleBookmark,
   onTokenClick,
   verseNumber
 }: PrototypeStudySurfaceProps) {
@@ -353,8 +358,14 @@ function PrototypeStudySurface({
       </div>
       <div className="reader-prototype-study-header">
         <h2>{reference}</h2>
-        <button aria-label={`Bookmark ${reference}`} className="reader-prototype-bookmark-icon" type="button">
-          ▱
+        <button
+          aria-label={`${isBookmarked ? "Remove bookmark for" : "Bookmark"} ${reference}`}
+          aria-pressed={isBookmarked}
+          className={`reader-prototype-bookmark-icon${isBookmarked ? " is-active" : ""}`}
+          onClick={onToggleBookmark}
+          type="button"
+        >
+          {isBookmarked ? "▰" : "▱"}
         </button>
       </div>
       {tab === "analysis" ? (
@@ -471,27 +482,57 @@ function PrototypeCompareSurface({
   installedVersions,
   onTokenClick
 }: PrototypeCompareSurfaceProps) {
+  const [showDifferences, setShowDifferences] = useState(false);
+  const [highlightKeyTerms, setHighlightKeyTerms] = useState(true);
+  const [syncScrolling, setSyncScrolling] = useState(true);
+  const [compactView, setCompactView] = useState(false);
   const displayVersions = ["greek", "esv", "nlt", "kjv", "web", "tr"].filter(
     (candidate): candidate is BundledBibleVersion =>
       installedVersions.includes(candidate as BundledBibleVersion) &&
       Boolean(chaptersByVersion[candidate as BundledBibleVersion])
   ).slice(0, 4);
   const activeNumber = activeVerseNumber ?? chapter.verses[0]?.number ?? 1;
+  const activeHighlightKey = highlightKeyTerms ? activeEntryKey : null;
 
   return (
     <div className="reader-prototype-mode-surface reader-prototype-compare-mode">
       <div className="reader-prototype-compare-tools">
         <p>Compare Tools</p>
-        <button type="button">Show Differences⌄</button>
-        <button type="button">Highlight Key Terms⌄</button>
-        <label>
+        <button
+          aria-pressed={showDifferences}
+          className={showDifferences ? "is-active" : ""}
+          onClick={() => setShowDifferences((current) => !current)}
+          type="button"
+        >
+          {showDifferences ? "Hide Differences" : "Show Differences"}
+        </button>
+        <button
+          aria-pressed={highlightKeyTerms}
+          className={highlightKeyTerms ? "is-active" : ""}
+          onClick={() => setHighlightKeyTerms((current) => !current)}
+          type="button"
+        >
+          {highlightKeyTerms ? "Key Terms On" : "Highlight Key Terms"}
+        </button>
+        <label className={syncScrolling ? "is-active" : ""}>
           <span>Sync Scrolling</span>
-          <input defaultChecked type="checkbox" />
+          <input
+            checked={syncScrolling}
+            onChange={(event) => setSyncScrolling(event.currentTarget.checked)}
+            type="checkbox"
+          />
         </label>
-        <button type="button">View Options⌄</button>
+        <button
+          aria-pressed={compactView}
+          className={compactView ? "is-active" : ""}
+          onClick={() => setCompactView((current) => !current)}
+          type="button"
+        >
+          {compactView ? "Expanded View" : "Compact View"}
+        </button>
       </div>
       <div
-        className="reader-prototype-compare-grid"
+        className={`reader-prototype-compare-grid${showDifferences ? " is-difference-mode" : ""}${compactView ? " is-compact" : ""}`}
         style={{ gridTemplateColumns: `repeat(${Math.max(displayVersions.length, 1)}, minmax(11rem, 1fr))` }}
       >
         {displayVersions.map((displayVersion) => {
@@ -508,7 +549,7 @@ function PrototypeCompareSurface({
               <h3>{getReferenceLabel(book.name, compareChapter?.chapterNumber ?? chapter.chapterNumber, verse?.number)}</h3>
               {isGreekVersion && verse?.greekTokens?.length ? (
                 <PrototypeGreekLine
-                  activeEntryKey={activeEntryKey}
+                  activeEntryKey={activeHighlightKey}
                   verse={verse}
                   onTokenClick={(token, tokenIndex) => onTokenClick(token, verse.number, tokenIndex)}
                 />
@@ -529,15 +570,24 @@ function PrototypeCompareSurface({
           );
         })}
       </div>
-      <p className="reader-prototype-compare-count">Showing 1 verse in parallel</p>
+      <p className="reader-prototype-compare-count">
+        Showing 1 verse in parallel
+        {showDifferences ? " with visual difference emphasis" : ""}
+        {syncScrolling ? " and synced scrolling" : ""}
+      </p>
     </div>
   );
 }
 
+type PrototypeSearchTab = "all" | "nt" | "greek" | "phrases";
+
 type PrototypeSearchSurfaceProps = {
   book: BookMeta;
   effectiveVersion: BundledBibleVersion;
+  onOpenBookResult: (result: Extract<BibleSearchResult, { type: "book" }>) => void;
+  onOpenChapterResult: (result: Extract<BibleSearchResult, { type: "chapter" }>) => void;
   onOpenGreekResult: (result: Extract<BibleSearchResult, { type: "greek-lemma" }>) => void;
+  onOpenRangeResult: (result: Extract<BibleSearchResult, { type: "range" }>) => void;
   onOpenStrongsResult: (result: Extract<BibleSearchResult, { type: "strongs" }>) => void;
   onOpenVerseResult: (result: PrototypeSearchVerseResult) => void;
 };
@@ -545,7 +595,10 @@ type PrototypeSearchSurfaceProps = {
 function PrototypeSearchSurface({
   book,
   effectiveVersion,
+  onOpenBookResult,
+  onOpenChapterResult,
   onOpenGreekResult,
+  onOpenRangeResult,
   onOpenStrongsResult,
   onOpenVerseResult
 }: PrototypeSearchSurfaceProps) {
@@ -553,11 +606,14 @@ function PrototypeSearchSurface({
     isSearching,
     query,
     resultGroups,
+    searchScope,
     searchVersions,
     setQuery,
     setSearchScope,
     setSearchVersions
   } = useLookup();
+  const [activeTab, setActiveTab] = useState<PrototypeSearchTab>("all");
+  const [showFilters, setShowFilters] = useState(false);
   const seededSearchKeyRef = useRef<string | null>(null);
 
   useEffect(() => {
@@ -594,7 +650,134 @@ function PrototypeSearchSurface({
     (result): result is PrototypeSearchVerseResult => result.type === "verse"
   );
   const greekResults = results.filter((result) => result.type === "greek-lemma");
+  const strongsResults = results.filter((result) => result.type === "strongs");
   const phraseResults = verseResults.filter((result) => result.preview.toLowerCase().includes(query.toLowerCase()));
+  const filteredResults = activeTab === "nt"
+    ? verseResults
+    : activeTab === "greek"
+      ? [...greekResults, ...strongsResults]
+      : activeTab === "phrases"
+        ? phraseResults
+        : results;
+  const scopeOptions: Array<{ label: string; value: SearchScope }> = [
+    { label: book.name, value: `book:${book.slug}` },
+    { label: "New Testament", value: "new-testament" },
+    { label: "Old Testament", value: "old-testament" },
+    { label: "All Scripture", value: "all" }
+  ];
+
+  const renderSearchResult = (result: BibleSearchResult, index: number) => {
+    if (result.type === "verse") {
+      return (
+        <button
+          className="reader-prototype-search-result"
+          key={result.id}
+          onClick={() => onOpenVerseResult(result)}
+          type="button"
+        >
+          <span className="reader-prototype-search-index">{index + 1}</span>
+          <span>
+            <strong>{result.label}</strong>
+            <span>{result.preview}</span>
+            <small>{result.description}</small>
+          </span>
+          <em>{query}</em>
+        </button>
+      );
+    }
+
+    if (result.type === "greek-lemma") {
+      return (
+        <button
+          className="reader-prototype-search-result"
+          key={result.id}
+          onClick={() => onOpenGreekResult(result)}
+          type="button"
+        >
+          <span className="reader-prototype-search-index">Γ</span>
+          <span>
+            <strong>{result.label}</strong>
+            <span>{result.preview}</span>
+            <small>{result.description}</small>
+          </span>
+        </button>
+      );
+    }
+
+    if (result.type === "strongs") {
+      return (
+        <button
+          className="reader-prototype-search-result"
+          key={result.id}
+          onClick={() => onOpenStrongsResult(result)}
+          type="button"
+        >
+          <span className="reader-prototype-search-index">S</span>
+          <span>
+            <strong>{result.label}</strong>
+            <span>{result.preview}</span>
+            <small>{result.description}</small>
+          </span>
+        </button>
+      );
+    }
+
+    if (result.type === "book") {
+      return (
+        <button
+          className="reader-prototype-search-result"
+          key={result.id}
+          onClick={() => onOpenBookResult(result)}
+          type="button"
+        >
+          <span className="reader-prototype-search-index">B</span>
+          <span>
+            <strong>{result.label}</strong>
+            <span>{result.description}</span>
+            <small>Open this book in the prototype reader.</small>
+          </span>
+        </button>
+      );
+    }
+
+    if (result.type === "chapter") {
+      return (
+        <button
+          className="reader-prototype-search-result"
+          key={result.id}
+          onClick={() => onOpenChapterResult(result)}
+          type="button"
+        >
+          <span className="reader-prototype-search-index">C</span>
+          <span>
+            <strong>{result.label}</strong>
+            <span>{result.description}</span>
+            <small>Open this chapter in the prototype reader.</small>
+          </span>
+        </button>
+      );
+    }
+
+    if (result.type === "range") {
+      return (
+        <button
+          className="reader-prototype-search-result"
+          key={result.id}
+          onClick={() => onOpenRangeResult(result)}
+          type="button"
+        >
+          <span className="reader-prototype-search-index">R</span>
+          <span>
+            <strong>{result.label}</strong>
+            <span>{result.description}</span>
+            <small>{result.verses.length} verses</small>
+          </span>
+        </button>
+      );
+    }
+
+    return null;
+  };
 
   return (
     <div className="reader-prototype-mode-surface reader-prototype-search-mode">
@@ -617,72 +800,53 @@ function PrototypeSearchSurface({
         <button className="reader-prototype-gold-action" type="submit">
           Search
         </button>
-        <button className="reader-prototype-filter-button" type="button">
+        <button
+          aria-expanded={showFilters}
+          className={`reader-prototype-filter-button${showFilters ? " is-active" : ""}`}
+          onClick={() => setShowFilters((current) => !current)}
+          type="button"
+        >
           Filters
         </button>
       </form>
+      {showFilters ? (
+        <div className="reader-prototype-filter-panel" aria-label="Prototype search scope filters">
+          {scopeOptions.map((scopeOption) => (
+            <button
+              className={searchScope === scopeOption.value ? "is-active" : ""}
+              key={scopeOption.value}
+              onClick={() => setSearchScope(scopeOption.value)}
+              type="button"
+            >
+              {scopeOption.label}
+            </button>
+          ))}
+        </div>
+      ) : null}
       <div className="reader-prototype-search-tabs" aria-label="Prototype search filters">
-        <button className="is-active" type="button">All Results <span>{results.length}</span></button>
-        <button type="button">NT Usage <span>{verseResults.length}</span></button>
-        <button type="button">Greek Words <span>{greekResults.length}</span></button>
-        <button type="button">Phrases <span>{phraseResults.length}</span></button>
+        {[
+          ["all", "All Results", results.length],
+          ["nt", "NT Usage", verseResults.length],
+          ["greek", "Greek Words", greekResults.length + strongsResults.length],
+          ["phrases", "Phrases", phraseResults.length]
+        ].map(([tabId, label, count]) => (
+          <button
+            className={activeTab === tabId ? "is-active" : ""}
+            key={tabId}
+            onClick={() => setActiveTab(tabId as PrototypeSearchTab)}
+            type="button"
+          >
+            {label} <span>{count}</span>
+          </button>
+        ))}
       </div>
       <div className="reader-prototype-search-meta">
-        <span>{isSearching ? "Searching..." : `${results.length} results in ${book.name}`}</span>
+        <span>{isSearching ? "Searching..." : `${filteredResults.length} visible of ${results.length} results`}</span>
         <span>Version: {searchVersions.map(getBibleVersionLabel).join(", ")}</span>
       </div>
       <div className="reader-prototype-search-results">
-        {verseResults.length > 0 ? (
-          verseResults.slice(0, 25).map((result, index) => (
-            <button
-              className="reader-prototype-search-result"
-              key={result.id}
-              onClick={() => onOpenVerseResult(result)}
-              type="button"
-            >
-              <span className="reader-prototype-search-index">{index + 1}</span>
-              <span>
-                <strong>{result.label}</strong>
-                <span>{result.preview}</span>
-                <small>{result.description}</small>
-              </span>
-              <em>{query}</em>
-            </button>
-          ))
-        ) : greekResults.length > 0 ? (
-          greekResults.slice(0, 25).map((result) => (
-            <button
-              className="reader-prototype-search-result"
-              key={result.id}
-              onClick={() => onOpenGreekResult(result)}
-              type="button"
-            >
-              <span className="reader-prototype-search-index">Γ</span>
-              <span>
-                <strong>{result.label}</strong>
-                <span>{result.preview}</span>
-                <small>{result.description}</small>
-              </span>
-            </button>
-          ))
-        ) : results.some((result) => result.type === "strongs") ? (
-          results
-            .filter((result): result is Extract<BibleSearchResult, { type: "strongs" }> => result.type === "strongs")
-            .slice(0, 25)
-            .map((result) => (
-              <button
-                className="reader-prototype-search-result"
-                key={result.id}
-                onClick={() => onOpenStrongsResult(result)}
-                type="button"
-              >
-                <span className="reader-prototype-search-index">S</span>
-                <span>
-                  <strong>{result.label}</strong>
-                  <span>{result.description}</span>
-                </span>
-              </button>
-            ))
+        {filteredResults.length > 0 ? (
+          filteredResults.slice(0, 25).map(renderSearchResult)
         ) : (
           <p className="reader-prototype-empty-copy">
             {isSearching ? "Searching scripture..." : "No results yet. Try a Greek word, English phrase, reference, or Strong's number."}
@@ -709,6 +873,7 @@ function PrototypeNotesSurface({
   onOpenNote
 }: PrototypeNotesSurfaceProps) {
   const reference = `${book.name} ${chapter.chapterNumber}`;
+  const [activeFilter, setActiveFilter] = useState("All");
   const displayNotes = notebooks.length > 0
     ? notebooks
     : [
@@ -720,6 +885,29 @@ function PrototypeNotesSurface({
           updatedAt: new Date().toISOString()
         }
       ];
+  const filteredNotes = displayNotes.filter((note) => {
+    if (activeFilter === "All") {
+      return true;
+    }
+
+    const haystack = `${note.title} ${note.content} ${note.references
+      .map((referenceEntry) => referenceEntry.label ?? referenceEntry.bookSlug)
+      .join(" ")}`.toLowerCase();
+
+    if (activeFilter === "Chapter Notes") {
+      return haystack.includes(reference.toLowerCase()) || haystack.includes("chapter");
+    }
+
+    if (activeFilter === "Word Studies") {
+      return haystack.includes("word") || haystack.includes("greek") || haystack.includes("strong");
+    }
+
+    if (activeFilter === "Sermon Notes") {
+      return haystack.includes("sermon");
+    }
+
+    return haystack.includes("personal");
+  });
 
   return (
     <div className="reader-prototype-mode-surface reader-prototype-notes-mode">
@@ -730,14 +918,21 @@ function PrototypeNotesSurface({
         </button>
       </header>
       <div className="reader-prototype-mode-tabs" role="tablist" aria-label="Prototype note filters">
-        {["All", "Chapter Notes", "Word Studies", "Sermon Notes", "Personal"].map((label, index) => (
-          <button className={index === 0 ? "reader-prototype-mode-tab is-active" : "reader-prototype-mode-tab"} key={label} type="button">
+        {["All", "Chapter Notes", "Word Studies", "Sermon Notes", "Personal"].map((label) => (
+          <button
+            aria-selected={activeFilter === label}
+            className={activeFilter === label ? "reader-prototype-mode-tab is-active" : "reader-prototype-mode-tab"}
+            key={label}
+            onClick={() => setActiveFilter(label)}
+            role="tab"
+            type="button"
+          >
             {label}
           </button>
         ))}
       </div>
       <div className="reader-prototype-note-list">
-        {displayNotes.map((note, index) => (
+        {filteredNotes.length > 0 ? filteredNotes.map((note, index) => (
           <button className="reader-prototype-note-card" key={note.id} onClick={onOpenNote} type="button">
             <span className="reader-prototype-note-icon">□</span>
             <span>
@@ -747,7 +942,9 @@ function PrototypeNotesSurface({
             </span>
             <time>{new Date(note.updatedAt).toLocaleDateString()}</time>
           </button>
-        ))}
+        )) : (
+          <p className="reader-prototype-empty-copy">No notes match this filter.</p>
+        )}
       </div>
     </div>
   );
@@ -771,27 +968,68 @@ function PrototypeLibrarySurface({
   onOpenStudy
 }: PrototypeLibrarySurfaceProps) {
   const reference = `${book.name} ${chapter.chapterNumber}`;
+  const [activeFilter, setActiveFilter] = useState("All");
+  const [libraryQuery, setLibraryQuery] = useState("");
+  const [showFilters, setShowFilters] = useState(false);
   const items = [
     { id: "notes", label: `${reference} - Study Notes`, type: "Notes", count: notebooks.length },
     { id: "bookmarks", label: "Bookmarked passages", type: "Bookmarks", count: bookmarksCount },
     { id: "highlights", label: "Highlighted verses", type: "Highlights", count: highlightsCount },
     { id: "documents", label: "Study documents", type: "Documents", count: notebooks.length }
   ];
+  const filteredItems = items.filter((item) => {
+    const matchesFilter = activeFilter === "All" || item.type === activeFilter;
+    const matchesQuery =
+      libraryQuery.trim().length === 0 ||
+      `${item.label} ${item.type} ${reference}`.toLowerCase().includes(libraryQuery.trim().toLowerCase());
+
+    return matchesFilter && matchesQuery;
+  });
 
   return (
     <div className="reader-prototype-mode-surface reader-prototype-library-mode">
       <div className="reader-prototype-search-bar">
-        <input readOnly value="Search your library..." />
-        <button className="reader-prototype-filter-button" type="button">Filters</button>
+        <input
+          aria-label="Search your library"
+          onChange={(event) => setLibraryQuery(event.currentTarget.value)}
+          placeholder="Search your library..."
+          value={libraryQuery}
+        />
+        <button
+          aria-expanded={showFilters}
+          className={`reader-prototype-filter-button${showFilters ? " is-active" : ""}`}
+          onClick={() => setShowFilters((current) => !current)}
+          type="button"
+        >
+          Filters
+        </button>
       </div>
+      {showFilters ? (
+        <div className="reader-prototype-filter-panel" aria-label="Prototype library summary">
+          {items.map((item) => (
+            <span key={item.id}>
+              {item.type}: {item.count}
+            </span>
+          ))}
+        </div>
+      ) : null}
       <div className="reader-prototype-search-tabs" aria-label="Prototype library filters">
-        {["All", "Notes", "Bookmarks", "Highlights", "Documents"].map((label, index) => (
-          <button className={index === 0 ? "is-active" : ""} key={label} type="button">{label}</button>
+        {["All", "Notes", "Bookmarks", "Highlights", "Documents"].map((label) => (
+          <button
+            className={activeFilter === label ? "is-active" : ""}
+            key={label}
+            onClick={() => setActiveFilter(label)}
+            type="button"
+          >
+            {label}
+          </button>
         ))}
       </div>
-      <p className="reader-prototype-search-meta">{items.reduce((total, item) => total + item.count, 0)} items in library</p>
+      <p className="reader-prototype-search-meta">
+        {filteredItems.length} visible sections · {items.reduce((total, item) => total + item.count, 0)} saved items
+      </p>
       <div className="reader-prototype-note-list">
-        {items.map((item) => (
+        {filteredItems.length > 0 ? filteredItems.map((item) => (
           <button className="reader-prototype-note-card" key={item.id} onClick={onOpenStudy} type="button">
             <span className="reader-prototype-note-icon">□</span>
             <span>
@@ -801,7 +1039,9 @@ function PrototypeLibrarySurface({
             </span>
             <time>{item.count}</time>
           </button>
-        ))}
+        )) : (
+          <p className="reader-prototype-empty-copy">No library items match this filter.</p>
+        )}
       </div>
     </div>
   );
@@ -1559,7 +1799,9 @@ export function ReaderPrototypePageContent({
           chapter={chapter}
           effectiveVersion={effectiveVersion}
           greekChapter={greekChapter}
+          isBookmarked={isBookmarked}
           onOpenCrossReferences={() => openCrossReferences(activeVerseNumber)}
+          onToggleBookmark={() => toggleBookmark(book.slug, chapter.chapterNumber)}
           onTokenClick={handleTokenClick}
           verseNumber={activeVerseNumber}
         />
@@ -1586,7 +1828,19 @@ export function ReaderPrototypePageContent({
         <PrototypeSearchSurface
           book={book}
           effectiveVersion={effectiveVersion}
+          onOpenBookResult={(result) => navigateTo(result.bookSlug, 1, result.version)}
+          onOpenChapterResult={(result) => navigateTo(result.bookSlug, result.chapterNumber, result.version)}
           onOpenGreekResult={handlePrototypeSearchGreek}
+          onOpenRangeResult={(result) => {
+            setActiveStudyVerseNumber(result.startVerseNumber);
+            router.push(
+              `/prototype/reader/${result.bookSlug}/${result.chapterNumber}?${new URLSearchParams({
+                version: result.version,
+                highlightStart: String(result.startVerseNumber),
+                highlightEnd: String(result.endVerseNumber)
+              }).toString()}`
+            );
+          }}
           onOpenStrongsResult={handlePrototypeSearchStrongs}
           onOpenVerseResult={handlePrototypeSearchVerse}
         />

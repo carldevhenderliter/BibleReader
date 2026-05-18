@@ -31,6 +31,25 @@ jest.mock("@/lib/bible/search", () => ({
           description: "Paul, a servant of God.",
           href: "/read/titus/1?version=greek",
           preview: "Παῦλος δοῦλος θεοῦ"
+        },
+        {
+          type: "greek-lemma",
+          id: "greek-lemma:G2316",
+          entryKey: "G2316",
+          strongs: "G2316",
+          lemma: "θεός",
+          transliteration: "theos",
+          label: "θεός",
+          description: "God, Divine Being",
+          preview: "θεοῦ"
+        },
+        {
+          type: "strongs",
+          id: "strongs:G2316",
+          strongsNumber: "G2316",
+          label: "G2316 θεός",
+          description: "God",
+          preview: "Greek Strong's entry"
         }
       ],
       emptyMessage: ""
@@ -540,6 +559,10 @@ describe("ReaderPrototypePage", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Parallel" }));
     expect(await screen.findByText("Compare Tools")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Show Differences" }));
+    expect(screen.getByRole("button", { name: "Hide Differences" })).toHaveClass("is-active");
+    fireEvent.click(screen.getByRole("button", { name: "Compact View" }));
+    expect(screen.getByRole("button", { name: "Expanded View" })).toHaveClass("is-active");
 
     fireEvent.click(screen.getByRole("button", { name: "Read" }));
     fireEvent.click(screen.getByRole("button", { name: "Copy" }));
@@ -580,11 +603,25 @@ describe("ReaderPrototypePage", () => {
 
     fireEvent.click(within(nav).getByRole("button", { name: "Study" }));
     expect(screen.getByText("Grammatical Breakdown")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("tab", { name: "Syntax" }));
+    expect(screen.getByRole("heading", { name: "Syntax" })).toBeInTheDocument();
+    const studyBookmarkButton = screen.getByRole("button", { name: /bookmark.*Titus 1:1/i });
+    const initialStudyBookmarkState = studyBookmarkButton.getAttribute("aria-pressed");
+    fireEvent.click(studyBookmarkButton);
+    expect(screen.getByRole("button", { name: /bookmark.*Titus 1:1/i })).toHaveAttribute(
+      "aria-pressed",
+      initialStudyBookmarkState === "true" ? "false" : "true"
+    );
 
     fireEvent.click(within(nav).getByRole("button", { name: "Search" }));
     const searchInput = screen.getByLabelText("Search");
     expect(searchInput).toHaveValue("θεός");
     expect((await screen.findAllByText("Titus 1:1")).length).toBeGreaterThan(0);
+    fireEvent.click(screen.getByRole("button", { name: "Filters" }));
+    expect(screen.getByRole("button", { name: "All Scripture" })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "All Scripture" }));
+    fireEvent.click(screen.getByRole("button", { name: /Greek Words/ }));
+    expect(await screen.findByText("G2316 θεός")).toBeInTheDocument();
     fireEvent.change(searchInput, { target: { value: "" } });
     expect(searchInput).toHaveValue("");
     fireEvent.change(searchInput, { target: { value: "λόγος" } });
@@ -593,9 +630,14 @@ describe("ReaderPrototypePage", () => {
     fireEvent.click(within(nav).getByRole("button", { name: "Notes" }));
     expect(screen.getByRole("heading", { name: "Notes" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "New Note" })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("tab", { name: "Word Studies" }));
+    expect(screen.getByRole("tab", { name: "Word Studies" })).toHaveAttribute("aria-selected", "true");
 
     fireEvent.click(within(nav).getByRole("button", { name: "Library" }));
-    expect(screen.getByDisplayValue("Search your library...")).toBeInTheDocument();
+    expect(screen.getByLabelText("Search your library")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Filters" }));
+    expect(screen.getByText("Documents: 0")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Documents" }));
     expect(screen.getByText("Study documents")).toBeInTheDocument();
 
     fireEvent.click(within(nav).getByRole("button", { name: "Settings" }));
