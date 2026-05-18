@@ -582,8 +582,13 @@ describe("ReaderPrototypePage", () => {
     expect(screen.getByText("Grammatical Breakdown")).toBeInTheDocument();
 
     fireEvent.click(within(nav).getByRole("button", { name: "Search" }));
-    expect(screen.getByLabelText("Search")).toHaveValue("θεός");
+    const searchInput = screen.getByLabelText("Search");
+    expect(searchInput).toHaveValue("θεός");
     expect((await screen.findAllByText("Titus 1:1")).length).toBeGreaterThan(0);
+    fireEvent.change(searchInput, { target: { value: "" } });
+    expect(searchInput).toHaveValue("");
+    fireEvent.change(searchInput, { target: { value: "λόγος" } });
+    expect(searchInput).toHaveValue("λόγος");
 
     fireEvent.click(within(nav).getByRole("button", { name: "Notes" }));
     expect(screen.getByRole("heading", { name: "Notes" })).toBeInTheDocument();

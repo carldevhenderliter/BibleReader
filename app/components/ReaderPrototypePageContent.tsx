@@ -558,6 +558,7 @@ function PrototypeSearchSurface({
     setSearchScope,
     setSearchVersions
   } = useLookup();
+  const seededSearchKeyRef = useRef<string | null>(null);
 
   useEffect(() => {
     if (searchVersions.length !== 1 || searchVersions[0] !== effectiveVersion) {
@@ -565,6 +566,14 @@ function PrototypeSearchSurface({
     }
 
     setSearchScope(`book:${book.slug}`);
+
+    const seedKey = `${book.slug}:${effectiveVersion}`;
+
+    if (seededSearchKeyRef.current !== seedKey) {
+      seededSearchKeyRef.current = seedKey;
+    } else {
+      return;
+    }
 
     if (!query.trim()) {
       setQuery(book.testament === "New" ? "θεός" : "God");
