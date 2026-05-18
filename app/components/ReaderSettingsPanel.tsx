@@ -6,6 +6,7 @@ import type { ReactNode } from "react";
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
+import { useMobilePreview } from "@/app/components/MobilePreviewProvider";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
@@ -139,6 +140,7 @@ export function ReaderSettingsPanel({
 }: ReaderSettingsPanelProps) {
   const { isPanelOpen, resetSettings, setIsPanelOpen, settings, updateSettings } =
     useReaderCustomization();
+  const { isMobilePreviewEnabled, setMobilePreviewEnabled } = useMobilePreview();
   const {
     activeReaderPane,
     activeUtilityPane,
@@ -649,6 +651,24 @@ export function ReaderSettingsPanel({
                     </button>
                   ) : null}
                 </div>
+              </div>
+              <div className="reader-settings-field">
+                <span>Desktop preview</span>
+                <div className="reader-settings-shortcuts">
+                  <button
+                    aria-pressed={isMobilePreviewEnabled}
+                    className={`reader-inline-button reader-settings-link${
+                      isMobilePreviewEnabled ? " is-active" : ""
+                    }`}
+                    onClick={() => setMobilePreviewEnabled((current) => !current)}
+                    type="button"
+                  >
+                    {isMobilePreviewEnabled ? "Mobile preview on" : "Mobile preview off"}
+                  </button>
+                </div>
+                <p className="reader-settings-unavailable">
+                  Forces desktop browsers to use the mobile reader flow for layout fixes.
+                </p>
               </div>
             </div>
           </div>

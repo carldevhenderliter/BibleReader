@@ -4,6 +4,7 @@ import { act, fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { FathersReaderContent } from "@/app/components/FathersReaderContent";
 import { GreekGlossOverridesProvider } from "@/app/components/GreekGlossOverridesProvider";
 import { LookupProvider } from "@/app/components/LookupProvider";
+import { MobilePreviewProvider } from "@/app/components/MobilePreviewProvider";
 import {
   ReaderBottomBarProvider,
   useReaderBottomBar
@@ -252,24 +253,26 @@ function renderFathersReader(currentPayload: FathersWorkPayload = payload) {
   mockRouter.push.mockClear();
 
   return render(
-    <ReaderVersionProvider>
-      <ReaderWorkspaceProvider>
-        <LookupProvider>
-          <VerseTranslationOverridesProvider>
-            <GreekGlossOverridesProvider>
-              <ReaderCustomizationProvider>
-                <ReaderBottomBarProvider>
-                  <SearchCustomizationProvider>
-                    <FathersReaderContent payload={currentPayload} works={works} />
-                    <ReaderBottomBarTestHost />
-                  </SearchCustomizationProvider>
-                </ReaderBottomBarProvider>
-              </ReaderCustomizationProvider>
-            </GreekGlossOverridesProvider>
-          </VerseTranslationOverridesProvider>
-        </LookupProvider>
-      </ReaderWorkspaceProvider>
-    </ReaderVersionProvider>
+    <MobilePreviewProvider>
+      <ReaderVersionProvider>
+        <ReaderWorkspaceProvider>
+          <LookupProvider>
+            <VerseTranslationOverridesProvider>
+              <GreekGlossOverridesProvider>
+                <ReaderCustomizationProvider>
+                  <ReaderBottomBarProvider>
+                    <SearchCustomizationProvider>
+                      <FathersReaderContent payload={currentPayload} works={works} />
+                      <ReaderBottomBarTestHost />
+                    </SearchCustomizationProvider>
+                  </ReaderBottomBarProvider>
+                </ReaderCustomizationProvider>
+              </GreekGlossOverridesProvider>
+            </VerseTranslationOverridesProvider>
+          </LookupProvider>
+        </ReaderWorkspaceProvider>
+      </ReaderVersionProvider>
+    </MobilePreviewProvider>
   );
 }
 

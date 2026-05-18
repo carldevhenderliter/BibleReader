@@ -5,6 +5,7 @@ import type { PropsWithChildren } from "react";
 import { GreekGlossOverridesProvider } from "@/app/components/GreekGlossOverridesProvider";
 import { BibleGreekUndertextProvider } from "@/app/components/BibleGreekUndertextProvider";
 import { LookupProvider } from "@/app/components/LookupProvider";
+import { MobilePreviewProvider } from "@/app/components/MobilePreviewProvider";
 import { ReaderBottomBarProvider } from "@/app/components/ReaderBottomBarProvider";
 import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizationProvider";
 import { VerseTranslationOverridesProvider } from "@/app/components/VerseTranslationOverridesProvider";
@@ -14,22 +15,24 @@ import { SearchCustomizationProvider } from "@/app/components/SearchCustomizatio
 
 export function AppProviders({ children }: PropsWithChildren) {
   return (
-    <ReaderVersionProvider>
-      <ReaderWorkspaceProvider>
-        <LookupProvider>
-          <VerseTranslationOverridesProvider>
-            <BibleGreekUndertextProvider>
-              <GreekGlossOverridesProvider>
-                <ReaderCustomizationProvider>
-                  <ReaderBottomBarProvider>
-                    <SearchCustomizationProvider>{children}</SearchCustomizationProvider>
-                  </ReaderBottomBarProvider>
-                </ReaderCustomizationProvider>
-              </GreekGlossOverridesProvider>
-            </BibleGreekUndertextProvider>
-          </VerseTranslationOverridesProvider>
-        </LookupProvider>
-      </ReaderWorkspaceProvider>
-    </ReaderVersionProvider>
+    <MobilePreviewProvider>
+      <ReaderVersionProvider>
+        <ReaderWorkspaceProvider>
+          <LookupProvider>
+            <VerseTranslationOverridesProvider>
+              <BibleGreekUndertextProvider>
+                <GreekGlossOverridesProvider>
+                  <ReaderCustomizationProvider>
+                    <ReaderBottomBarProvider>
+                      <SearchCustomizationProvider>{children}</SearchCustomizationProvider>
+                    </ReaderBottomBarProvider>
+                  </ReaderCustomizationProvider>
+                </GreekGlossOverridesProvider>
+              </BibleGreekUndertextProvider>
+            </VerseTranslationOverridesProvider>
+          </LookupProvider>
+        </ReaderWorkspaceProvider>
+      </ReaderVersionProvider>
+    </MobilePreviewProvider>
   );
 }

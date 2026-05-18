@@ -5,6 +5,10 @@ import { AppSplitLayout } from "@/app/components/AppSplitLayout";
 import { BottomSearchBar } from "@/app/components/BottomSearchBar";
 import { LookupProvider } from "@/app/components/LookupProvider";
 import {
+  MOBILE_PREVIEW_STORAGE_KEY,
+  MobilePreviewProvider
+} from "@/app/components/MobilePreviewProvider";
+import {
   ReaderBottomBarProvider,
   useRegisterReaderBottomBarDockControl
 } from "@/app/components/ReaderBottomBarProvider";
@@ -33,22 +37,24 @@ function getMinimumVisiblePaneWidthRem(viewportWidth = window.innerWidth) {
 
 function renderSplitLayout() {
   return render(
-    <ReaderVersionProvider>
-      <ReaderWorkspaceProvider>
-        <LookupProvider>
-          <ReaderCustomizationProvider>
-            <ReaderBottomBarProvider>
-              <SearchCustomizationProvider>
-                <AppSplitLayout>
-                  <div>Reader content</div>
-                </AppSplitLayout>
-                <BottomSearchBar />
-              </SearchCustomizationProvider>
-            </ReaderBottomBarProvider>
-          </ReaderCustomizationProvider>
-        </LookupProvider>
-      </ReaderWorkspaceProvider>
-    </ReaderVersionProvider>
+    <MobilePreviewProvider>
+      <ReaderVersionProvider>
+        <ReaderWorkspaceProvider>
+          <LookupProvider>
+            <ReaderCustomizationProvider>
+              <ReaderBottomBarProvider>
+                <SearchCustomizationProvider>
+                  <AppSplitLayout>
+                    <div>Reader content</div>
+                  </AppSplitLayout>
+                  <BottomSearchBar />
+                </SearchCustomizationProvider>
+              </ReaderBottomBarProvider>
+            </ReaderCustomizationProvider>
+          </LookupProvider>
+        </ReaderWorkspaceProvider>
+      </ReaderVersionProvider>
+    </MobilePreviewProvider>
   );
 }
 
@@ -183,6 +189,20 @@ describe("AppSplitLayout", () => {
     expect(screen.getByLabelText("Study pane")).toBeInTheDocument();
   });
 
+  it("can force the mobile layout preview on desktop", async () => {
+    window.localStorage.setItem(MOBILE_PREVIEW_STORAGE_KEY, "true");
+    setDesktopMode(true);
+
+    const { container } = renderSplitLayout();
+
+    await waitFor(() => {
+      expect(container.querySelector(".app-layout-split")).toBeNull();
+    });
+    expect(screen.queryByLabelText("Search pane")).not.toBeInTheDocument();
+    expect(screen.queryByLabelText("Study pane")).not.toBeInTheDocument();
+    expect(document.body).toHaveClass("mobile-preview-enabled");
+  });
+
   it("does not let the search pane shrink below one third of the split layout", () => {
     const { container } = renderSplitLayout();
     const divider = screen.getByRole("button", { name: "Resize reader and search panes" });
@@ -281,22 +301,24 @@ describe("AppSplitLayout", () => {
 
   it("shows the hidden audio tab in the collapsed panes dock", async () => {
     render(
-      <ReaderVersionProvider>
-        <ReaderWorkspaceProvider>
-          <LookupProvider>
-            <ReaderCustomizationProvider>
-              <ReaderBottomBarProvider>
-                <SearchCustomizationProvider>
-                  <AudioDockControlHarness />
-                  <AppSplitLayout>
-                    <div>Reader content</div>
-                  </AppSplitLayout>
-                </SearchCustomizationProvider>
-              </ReaderBottomBarProvider>
-            </ReaderCustomizationProvider>
-          </LookupProvider>
-        </ReaderWorkspaceProvider>
-      </ReaderVersionProvider>
+      <MobilePreviewProvider>
+        <ReaderVersionProvider>
+          <ReaderWorkspaceProvider>
+            <LookupProvider>
+              <ReaderCustomizationProvider>
+                <ReaderBottomBarProvider>
+                  <SearchCustomizationProvider>
+                    <AudioDockControlHarness />
+                    <AppSplitLayout>
+                      <div>Reader content</div>
+                    </AppSplitLayout>
+                  </SearchCustomizationProvider>
+                </ReaderBottomBarProvider>
+              </ReaderCustomizationProvider>
+            </LookupProvider>
+          </ReaderWorkspaceProvider>
+        </ReaderVersionProvider>
+      </MobilePreviewProvider>
     );
 
     const dock = await screen.findByLabelText("Collapsed panes dock");

@@ -11,6 +11,7 @@ import {
 } from "react";
 import { usePathname, useRouter } from "next/navigation";
 
+import { useMobilePreview } from "@/app/components/MobilePreviewProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { parseBibleSearchQueries, searchBibleGroups } from "@/lib/bible/search";
@@ -261,6 +262,7 @@ function pruneExpandedTopics(expandedTopicsByQuery: Record<string, string>, next
 export function LookupProvider({ children }: PropsWithChildren) {
   const router = useRouter();
   const pathname = usePathname();
+  const { isMobilePreviewEnabled } = useMobilePreview();
   const { version } = useReaderVersion();
   const { openGreekDictionary, openStrongs, setActiveStudyVerseNumber } = useReaderWorkspace();
   const [query, setQuery] = useState("");
@@ -575,7 +577,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
 
     const mediaQuery = window.matchMedia(SPLIT_VIEW_MEDIA_QUERY);
     const syncSplitView = () => {
-      setIsSplitViewActive(getSplitViewActive());
+      setIsSplitViewActive(isMobilePreviewEnabled ? false : getSplitViewActive());
       setViewportWidthRem(getViewportWidthRem());
     };
 
@@ -587,7 +589,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
       mediaQuery.removeEventListener("change", syncSplitView);
       window.removeEventListener("resize", syncSplitView);
     };
-  }, []);
+  }, [isMobilePreviewEnabled]);
 
   useEffect(() => {
     if (isSplitViewActive) {

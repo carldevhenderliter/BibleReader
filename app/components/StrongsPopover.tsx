@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 
+import { useMobilePreview } from "@/app/components/MobilePreviewProvider";
 import { getStrongsEntries } from "@/lib/bible/strongs";
 import type { StrongsEntry } from "@/lib/bible/types";
 
@@ -28,6 +29,7 @@ function getIsMobilePopover() {
 }
 
 export function StrongsPopover({ activeToken, onClose }: StrongsPopoverProps) {
+  const { isMobilePreviewEnabled } = useMobilePreview();
   const [entries, setEntries] = useState<StrongsEntry[]>([]);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -51,6 +53,11 @@ export function StrongsPopover({ activeToken, onClose }: StrongsPopoverProps) {
   }, [activeToken]);
 
   useEffect(() => {
+    if (isMobilePreviewEnabled) {
+      setIsMobile(true);
+      return;
+    }
+
     if (!activeToken || typeof window.matchMedia !== "function") {
       return;
     }
@@ -66,7 +73,7 @@ export function StrongsPopover({ activeToken, onClose }: StrongsPopoverProps) {
     return () => {
       mediaQuery.removeEventListener("change", syncMode);
     };
-  }, [activeToken]);
+  }, [activeToken, isMobilePreviewEnabled]);
 
   useEffect(() => {
     if (!activeToken) {

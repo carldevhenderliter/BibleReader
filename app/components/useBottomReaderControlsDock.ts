@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 
+import { useMobilePreview } from "@/app/components/MobilePreviewProvider";
+
 const BOTTOM_READER_CONTROLS_MEDIA_QUERY = "(max-width: 63.99rem)";
 
 function getShouldShowBottomReaderControls() {
@@ -13,11 +15,17 @@ function getShouldShowBottomReaderControls() {
 }
 
 export function useBottomReaderControlsDock() {
+  const { isMobilePreviewEnabled } = useMobilePreview();
   const [shouldShowBottomReaderControls, setShouldShowBottomReaderControls] = useState(
     getShouldShowBottomReaderControls
   );
 
   useEffect(() => {
+    if (isMobilePreviewEnabled) {
+      setShouldShowBottomReaderControls(true);
+      return;
+    }
+
     if (typeof window === "undefined" || typeof window.matchMedia !== "function") {
       setShouldShowBottomReaderControls(false);
       return;
@@ -34,7 +42,7 @@ export function useBottomReaderControlsDock() {
     return () => {
       mediaQuery.removeEventListener("change", handleChange);
     };
-  }, []);
+  }, [isMobilePreviewEnabled]);
 
   return shouldShowBottomReaderControls;
 }

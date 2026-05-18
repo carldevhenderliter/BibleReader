@@ -3,6 +3,7 @@ import { fireEvent, render, screen, waitFor, waitForElementToBeRemoved, within }
 import { BottomSearchBar } from "@/app/components/BottomSearchBar";
 import { LookupPane } from "@/app/components/LookupPane";
 import { LookupProvider } from "@/app/components/LookupProvider";
+import { MobilePreviewProvider } from "@/app/components/MobilePreviewProvider";
 import { ReaderBottomBarProvider } from "@/app/components/ReaderBottomBarProvider";
 import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizationProvider";
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
@@ -32,25 +33,27 @@ const SEARCH_INPUT_LABEL =
 
 function renderSearchUi(ui?: React.ReactNode) {
   return render(
-    <ReaderVersionProvider>
-      <ReaderWorkspaceProvider>
-        <LookupProvider>
-          <ReaderCustomizationProvider>
-            <ReaderBottomBarProvider>
-              <SearchCustomizationProvider>
-                {ui ?? (
-                  <>
-                    <BottomSearchBar />
-                    <SearchPane />
-                    <LookupPane />
-                  </>
-                )}
-              </SearchCustomizationProvider>
-            </ReaderBottomBarProvider>
-          </ReaderCustomizationProvider>
-        </LookupProvider>
-      </ReaderWorkspaceProvider>
-    </ReaderVersionProvider>
+    <MobilePreviewProvider>
+      <ReaderVersionProvider>
+        <ReaderWorkspaceProvider>
+          <LookupProvider>
+            <ReaderCustomizationProvider>
+              <ReaderBottomBarProvider>
+                <SearchCustomizationProvider>
+                  {ui ?? (
+                    <>
+                      <BottomSearchBar />
+                      <SearchPane />
+                      <LookupPane />
+                    </>
+                  )}
+                </SearchCustomizationProvider>
+              </ReaderBottomBarProvider>
+            </ReaderCustomizationProvider>
+          </LookupProvider>
+        </ReaderWorkspaceProvider>
+      </ReaderVersionProvider>
+    </MobilePreviewProvider>
   );
 }
 

@@ -11,6 +11,7 @@ import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizatio
 import { VerseTranslationOverridesProvider } from "@/app/components/VerseTranslationOverridesProvider";
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
 import { LookupProvider } from "@/app/components/LookupProvider";
+import { MobilePreviewProvider } from "@/app/components/MobilePreviewProvider";
 import { ReaderVersionProvider } from "@/app/components/ReaderVersionProvider";
 import { SearchCustomizationProvider } from "@/app/components/SearchCustomizationProvider";
 
@@ -26,26 +27,28 @@ function ReaderBottomBarTestHost() {
 
 function Wrapper({ children }: WrapperProps) {
   return (
-    <ReaderVersionProvider>
-      <ReaderWorkspaceProvider>
-        <LookupProvider>
-          <VerseTranslationOverridesProvider>
-            <BibleGreekUndertextProvider>
-              <GreekGlossOverridesProvider>
-                <ReaderCustomizationProvider>
-                  <ReaderBottomBarProvider>
-                    <SearchCustomizationProvider>
-                      {children}
-                      <ReaderBottomBarTestHost />
-                    </SearchCustomizationProvider>
-                  </ReaderBottomBarProvider>
-                </ReaderCustomizationProvider>
-              </GreekGlossOverridesProvider>
-            </BibleGreekUndertextProvider>
-          </VerseTranslationOverridesProvider>
-        </LookupProvider>
-      </ReaderWorkspaceProvider>
-    </ReaderVersionProvider>
+    <MobilePreviewProvider>
+      <ReaderVersionProvider>
+        <ReaderWorkspaceProvider>
+          <LookupProvider>
+            <VerseTranslationOverridesProvider>
+              <BibleGreekUndertextProvider>
+                <GreekGlossOverridesProvider>
+                  <ReaderCustomizationProvider>
+                    <ReaderBottomBarProvider>
+                      <SearchCustomizationProvider>
+                        {children}
+                        <ReaderBottomBarTestHost />
+                      </SearchCustomizationProvider>
+                    </ReaderBottomBarProvider>
+                  </ReaderCustomizationProvider>
+                </GreekGlossOverridesProvider>
+              </BibleGreekUndertextProvider>
+            </VerseTranslationOverridesProvider>
+          </LookupProvider>
+        </ReaderWorkspaceProvider>
+      </ReaderVersionProvider>
+    </MobilePreviewProvider>
   );
 }
 

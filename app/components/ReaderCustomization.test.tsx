@@ -1,6 +1,7 @@
 import { fireEvent, screen, within } from "@testing-library/react";
 
 import { ReaderPageContent } from "@/app/components/ReaderPageContent";
+import { MOBILE_PREVIEW_STORAGE_KEY } from "@/app/components/MobilePreviewProvider";
 import type { BookMeta, Chapter } from "@/lib/bible/types";
 import { READER_CUSTOMIZATION_STORAGE_KEY } from "@/lib/reader-customization";
 import { renderWithReaderCustomization } from "@/test/utils/render-with-reader-customization";
@@ -124,6 +125,26 @@ describe("Reader customization", () => {
     const stored = window.localStorage.getItem(READER_CUSTOMIZATION_STORAGE_KEY) ?? "";
 
     expect(stored).toContain('"thayerTextSize":1.02');
+  });
+
+  it("toggles the desktop mobile preview mode from the reader menu", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={chaptersByVersion}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "Mobile preview off" }));
+
+    expect(window.localStorage.getItem(MOBILE_PREVIEW_STORAGE_KEY)).toBe("true");
+    expect(document.body).toHaveClass("mobile-preview-enabled");
+    expect(screen.getByRole("button", { name: "Mobile preview on" })).toHaveAttribute(
+      "aria-pressed",
+      "true"
+    );
   });
 
   it("persists the under-verse translation toggle and selected version", () => {
