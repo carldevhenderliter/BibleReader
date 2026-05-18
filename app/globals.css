@@ -15,13 +15,13 @@
   --accent-warm: #8affc1;
   --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
   --shadow-glow: 0 0 0 1px rgba(85, 214, 255, 0.08), 0 0 28px rgba(85, 214, 255, 0.22);
-  --reader-surface: rgba(10, 18, 31, 0.96);
-  --reader-surface-strong: rgba(4, 9, 18, 0.98);
-  --reader-border: rgba(120, 157, 214, 0.2);
-  --reader-glow: 0 0 0 1px rgba(85, 214, 255, 0.08), 0 0 28px rgba(85, 214, 255, 0.22);
-  --reader-accent: #55d6ff;
-  --reader-verse-text: #ebf1fb;
-  --reader-meta-text: #8aa0bf;
+  --reader-surface: rgba(11, 16, 16, 0.96);
+  --reader-surface-strong: rgba(8, 12, 13, 0.98);
+  --reader-border: rgba(215, 168, 79, 0.22);
+  --reader-glow: 0 0 0 1px rgba(215, 168, 79, 0.08), 0 0 28px rgba(215, 168, 79, 0.18);
+  --reader-accent: #d7a84f;
+  --reader-verse-text: #f7f0e2;
+  --reader-meta-text: #daccb1;
   --reader-ui-font: "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
   --reader-body-font: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
   --reader-greek-font: "Palatino Linotype", "Times New Roman", "Georgia", serif;
@@ -45,8 +45,8 @@
   --reader-verse-number-scale: 1;
   --reader-letter-spacing: 0em;
   --reader-contrast: 1;
-  --reader-accent-rgb: 85 214 255;
-  --reader-secondary-rgb: 123 97 255;
+  --reader-accent-rgb: 215 168 79;
+  --reader-secondary-rgb: 139 167 255;
   --reader-shell-intensity: 0.14;
   --reader-background-intensity: 0.14;
   --reader-surface-depth: 1;
@@ -176,6 +176,13 @@ body:has(.reader-prototype-shell) {
   background:
     radial-gradient(circle at 16% 10%, rgba(202, 144, 53, 0.15), transparent 20rem),
     radial-gradient(circle at 86% 6%, rgba(43, 92, 115, 0.22), transparent 24rem),
+    linear-gradient(180deg, #061016 0%, #02070b 52%, #010406 100%);
+}
+
+body:has(.reader-shell):not(:has(.reader-prototype-shell)) {
+  background:
+    radial-gradient(circle at 16% 10%, rgba(202, 144, 53, 0.14), transparent 20rem),
+    radial-gradient(circle at 86% 6%, rgba(43, 92, 115, 0.18), transparent 24rem),
     linear-gradient(180deg, #061016 0%, #02070b 52%, #010406 100%);
 }
 
@@ -2227,9 +2234,9 @@ body:has(.reader-prototype-shell) .app-layout-reader-pane {
   background:
     linear-gradient(
       180deg,
-      rgba(18, 20, 24, 0.96),
-      rgba(18, 20, 24, 0.9) 72%,
-      rgba(18, 20, 24, 0)
+      rgba(6, 16, 22, 0.96),
+      rgba(5, 12, 15, 0.9) 72%,
+      rgba(5, 12, 15, 0)
     );
   backdrop-filter: blur(12px);
   will-change: transform, opacity;
@@ -2247,20 +2254,21 @@ body:has(.reader-prototype-shell) .app-layout-reader-pane {
 .reader-reading-card {
   overflow: visible;
   max-width: 100%;
-  background: linear-gradient(
-    180deg,
-    rgba(24, 27, 32, calc(0.78 + (var(--reader-surface-depth) - 0.8) * 0.06)),
-    rgba(18, 20, 24, 0.96)
-  );
-  border-color: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+  background:
+    radial-gradient(circle at 50% 110%, rgba(var(--reader-accent-rgb), 0.11), transparent 24rem),
+    linear-gradient(180deg, rgba(255, 244, 219, 0.035), rgba(255, 244, 219, 0.012)),
+    var(--reader-surface-strong);
+  border-color: rgba(var(--reader-accent-rgb), 0.22);
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.34),
+    inset 0 0 0 1px rgba(var(--reader-accent-rgb), 0.06);
 }
 
 .reader-reading-card::before {
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.06),
-    rgba(255, 255, 255, 0.015) 28%,
+    rgba(255, 244, 219, 0.05),
+    rgba(255, 244, 219, 0.015) 28%,
     transparent 58%
   );
 }
@@ -2272,11 +2280,13 @@ body:has(.reader-prototype-shell) .app-layout-reader-pane {
   max-width: 100%;
   padding: 0.68rem 0.78rem;
   margin: 0;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(var(--reader-accent-rgb), 0.2);
   border-radius: 1.1rem;
-  background: linear-gradient(180deg, rgba(33, 36, 42, 0.82), rgba(20, 23, 28, 0.9));
+  background:
+    linear-gradient(180deg, rgba(255, 244, 219, 0.045), rgba(255, 244, 219, 0.014)),
+    rgba(8, 12, 13, 0.88);
   backdrop-filter: blur(18px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.14);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
 }
 
 .reader-toolbar-actions {
@@ -2290,7 +2300,9 @@ body:has(.reader-prototype-shell) .app-layout-reader-pane {
 .reader-shell.is-focus-reading .reader-toolbar {
   gap: 0.5rem;
   padding: 0.58rem 0.72rem;
-  background: linear-gradient(180deg, rgba(24, 27, 33, 0.94), rgba(16, 18, 23, 0.97));
+  background:
+    linear-gradient(180deg, rgba(255, 244, 219, 0.04), rgba(255, 244, 219, 0.012)),
+    rgba(6, 10, 11, 0.96);
 }
 
 .reader-shell.is-focus-reading .reader-toolbar-summary,
@@ -2339,9 +2351,9 @@ body:has(.reader-prototype-shell) .app-layout-reader-pane {
   justify-content: space-between;
   gap: 1rem;
   padding: 0.85rem 1rem 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(12, 18, 30, 0.34);
+  border-top: 1px solid rgba(var(--reader-accent-rgb), 0.16);
+  border-bottom: 1px solid rgba(var(--reader-accent-rgb), 0.16);
+  background: rgba(255, 244, 219, 0.035);
 }
 
 .reader-audio-copy {
@@ -2397,14 +2409,14 @@ body:has(.reader-prototype-shell) .app-layout-reader-pane {
 }
 
 .reader-toolbar-summary {
-  color: rgba(255, 245, 235, 0.64);
+  color: rgba(var(--reader-accent-rgb), 0.78);
   font-size: 0.72rem;
   font-weight: 650;
   letter-spacing: 0.03em;
 }
 
 .reader-toolbar-title {
-  color: rgba(255, 252, 247, 0.98);
+  color: rgba(247, 240, 226, 0.98);
   font-size: clamp(1.04rem, 1.35vw, 1.22rem);
   font-weight: 650;
   line-height: 1.12;
@@ -2413,7 +2425,7 @@ body:has(.reader-prototype-shell) .app-layout-reader-pane {
 }
 
 .reader-toolbar-meta {
-  color: rgba(255, 255, 255, 0.58);
+  color: rgba(218, 204, 177, 0.68);
   font-size: 0.78rem;
   line-height: 1.35;
 }
@@ -2424,7 +2436,7 @@ body:has(.reader-prototype-shell) .app-layout-reader-pane {
 }
 
 .reader-section-label {
-  color: rgba(255, 245, 235, 0.6);
+  color: rgba(var(--reader-accent-rgb), 0.68);
   font-size: 0.82rem;
   font-weight: 600;
   letter-spacing: 0.03em;
@@ -2440,14 +2452,14 @@ body:has(.reader-prototype-shell) .app-layout-reader-pane {
   );
   line-height: 0.98;
   letter-spacing: -0.05em;
-  color: rgba(255, 252, 247, 0.98);
+  color: rgba(247, 240, 226, 0.98);
   font-weight: 650;
   text-wrap: balance;
 }
 
 .reader-meta {
   margin: 0;
-  color: rgba(255, 255, 255, 0.62);
+  color: rgba(218, 204, 177, 0.72);
   font-size: 0.98rem;
   line-height: 1.55;
 }
@@ -2508,10 +2520,10 @@ body:has(.reader-prototype-shell) .app-layout-reader-pane {
 .reader-controls-status {
   min-height: 2.65rem;
   padding: 0.58rem 0.85rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(var(--reader-accent-rgb), 0.18);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 244, 219, 0.045);
+  color: rgba(247, 240, 226, 0.94);
   box-shadow: none;
   transition:
     transform 180ms ease,
@@ -2533,8 +2545,8 @@ body:has(.reader-prototype-shell) .app-layout-reader-pane {
 .reader-inline-button:hover,
 .reader-inline-action:hover {
   transform: translateY(-1px);
-  border-color: rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(var(--reader-accent-rgb), 0.38);
+  background: rgba(var(--reader-accent-rgb), 0.1);
 }
 
 .control-group select:focus,
@@ -2548,9 +2560,9 @@ body:has(.reader-prototype-shell) .app-layout-reader-pane {
 .book-link:focus-visible,
 .pagination-link:focus-visible {
   border-color: var(--border-strong);
-  box-shadow: 0 0 0 0.22rem rgba(85, 214, 255, 0.16);
+  box-shadow: 0 0 0 0.22rem rgba(var(--reader-accent-rgb), 0.16);
   outline: none;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(var(--reader-accent-rgb), 0.1);
 }
 
 .reader-size-controls {
@@ -2565,8 +2577,8 @@ body:has(.reader-prototype-shell) .app-layout-reader-pane {
 }
 
 .reader-inline-button.is-active {
-  border-color: rgba(var(--reader-accent-rgb), 0.36);
-  background: rgba(var(--reader-accent-rgb), 0.12);
+  border-color: rgba(var(--reader-accent-rgb), 0.46);
+  background: rgba(var(--reader-accent-rgb), 0.14);
   box-shadow: 0 0 0 1px rgba(var(--reader-accent-rgb), 0.08);
 }
 
@@ -2590,7 +2602,7 @@ body:has(.reader-prototype-shell) .app-layout-reader-pane {
 
 .reader-controls-status {
   width: fit-content;
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(218, 204, 177, 0.78);
   font-size: 0.72rem;
   font-weight: 650;
   letter-spacing: 0.07em;
@@ -2609,10 +2621,13 @@ body:has(.reader-prototype-shell) .app-layout-reader-pane {
   margin: 0 auto;
   border-radius: 1.7rem;
   background:
-    linear-gradient(180deg, rgba(14, 17, 21, 0.98), rgba(10, 12, 15, 0.99)),
+    radial-gradient(circle at 50% 115%, rgba(var(--reader-accent-rgb), 0.1), transparent 22rem),
+    linear-gradient(180deg, rgba(255, 244, 219, 0.035), rgba(255, 244, 219, 0.012)),
     var(--reading-surface);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(var(--reader-accent-rgb), 0.2);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 244, 219, 0.04),
+    0 18px 54px rgba(0, 0, 0, 0.2);
   filter: contrast(var(--reader-contrast));
 }
 
@@ -3197,9 +3212,9 @@ button.fathers-annotation-anchor:focus-visible {
 .verse-row.is-highlighted {
   padding: 0.85rem 0.8rem;
   margin-inline: -0.8rem;
-  border: 1px solid rgba(var(--reader-accent-rgb), 0.3);
+  border: 1px solid rgba(var(--reader-accent-rgb), 0.34);
   border-radius: 1rem;
-  background: rgba(var(--reader-accent-rgb), 0.1);
+  background: rgba(var(--reader-accent-rgb), 0.12);
   box-shadow: 0 0 0 1px rgba(var(--reader-accent-rgb), 0.1);
 }
 
@@ -6819,6 +6834,68 @@ button.fathers-annotation-anchor:focus-visible {
 .reader-strongs-list {
   display: grid;
   gap: 0.85rem;
+}
+
+.reader-strongs-panel-mode-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.25rem;
+  border: 1px solid rgba(var(--reader-accent-rgb), 0.16);
+  border-radius: 1rem;
+  background: rgba(255, 244, 219, 0.035);
+}
+
+.reader-strongs-search-panel {
+  display: grid;
+  gap: 0.85rem;
+  min-height: 0;
+}
+
+.reader-strongs-search-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.55rem;
+}
+
+.reader-strongs-search-input {
+  min-width: 0;
+  min-height: 2.65rem;
+  padding: 0.58rem 0.85rem;
+  border: 1px solid rgba(var(--reader-accent-rgb), 0.18);
+  border-radius: 999px;
+  background: rgba(255, 244, 219, 0.045);
+  color: rgba(247, 240, 226, 0.94);
+  font: inherit;
+  outline: none;
+}
+
+.reader-strongs-search-input::placeholder {
+  color: rgba(218, 204, 177, 0.52);
+}
+
+.reader-strongs-search-input:focus {
+  border-color: rgba(var(--reader-accent-rgb), 0.42);
+  background: rgba(var(--reader-accent-rgb), 0.1);
+  box-shadow: 0 0 0 0.22rem rgba(var(--reader-accent-rgb), 0.14);
+}
+
+.reader-strongs-search-suggestion {
+  width: fit-content;
+  max-width: 100%;
+}
+
+.reader-strongs-search-workspace {
+  padding: 0.85rem;
+  border: 1px solid rgba(var(--reader-accent-rgb), 0.14);
+  border-radius: 1rem;
+  background: rgba(255, 244, 219, 0.026);
+}
+
+.reader-strongs-search-workspace .lookup-pane-header {
+  padding: 0;
 }
 
 .reader-sermon-list,

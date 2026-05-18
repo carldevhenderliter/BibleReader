@@ -26,6 +26,11 @@ type ThemePresetVariables = {
 
 export const THEME_PRESETS = [
   {
+    id: "manuscript",
+    name: "Manuscript",
+    description: "Dark parchment surfaces with warm gold accents matching the prototype reader."
+  },
+  {
     id: "neon",
     name: "Neon",
     description: "Electric cyan and violet glow with the current dark-tech feel."
@@ -132,7 +137,7 @@ export const UI_FONT_OPTIONS = [
 export const DEFAULT_READER_CUSTOMIZATION: ReaderCustomizationSettings = {
   readerPreset: "reading",
   focusReadingMode: false,
-  themePreset: "neon",
+  themePreset: "manuscript",
   bodyFont: "serif",
   greekFont: "classic",
   hebrewFont: "square",
@@ -219,6 +224,7 @@ function roundToHundredths(value: number) {
 
 function isThemePreset(value: unknown): value is ThemePreset {
   return (
+    value === "manuscript" ||
     value === "neon" ||
     value === "midnight" ||
     value === "ember" ||
@@ -677,6 +683,17 @@ export function getReaderCustomizationVariables(
 
 function getThemePresetVariables(themePreset: ThemePreset): ThemePresetVariables {
   switch (themePreset) {
+    case "manuscript":
+      return {
+        surfaceRgb: [11, 16, 16],
+        surfaceStrongRgb: [8, 12, 13],
+        borderRgb: [215, 168, 79],
+        glowRgb: [215, 168, 79],
+        accentRgb: [215, 168, 79],
+        secondaryRgb: [139, 167, 255],
+        verseTextRgb: [247, 240, 226],
+        metaTextRgb: [218, 204, 177]
+      };
     case "midnight":
       return {
         surfaceRgb: [8, 16, 29],

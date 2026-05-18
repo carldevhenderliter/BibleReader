@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
 
 import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
+import { SearchWorkspacePanel } from "@/app/components/SearchWorkspacePanel";
 import { VerseTextContent } from "@/app/components/VerseTextContent";
+import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { formatBdagArticle } from "@/lib/bible/bdag";
 import { getBookTestamentBySlug } from "@/lib/bible/book-order";
@@ -55,6 +57,7 @@ type BibleOccurrenceVersionEntriesState = {
 type OccurrenceTestamentFilter = "all" | "old" | "new";
 
 type StrongsTab = "bible" | "thayer" | "bdag" | "outside-bible";
+type StrongsPanelMode = "study" | "search";
 
 function getAvailableTabs(entry: StrongsEntry): StrongsTab[] {
   const tabs: StrongsTab[] = ["bible"];
@@ -286,6 +289,12 @@ function renderThayerSection(entry: StrongsEntry | null) {
 
 export function ReaderStrongsPanel() {
   const {
+    openSearch,
+    query,
+    searchVersions,
+    setQuery
+  } = useLookup();
+  const {
     activeGreekSelection,
     activeStrongsLabel,
     activeStrongsNumbers,
@@ -318,7 +327,9 @@ export function ReaderStrongsPanel() {
   const [outsideScripture, setOutsideScripture] = useState<
     Record<string, OutsideScriptureLookupState>
   >({});
+  const [panelMode, setPanelMode] = useState<StrongsPanelMode>("study");
   const asyncLoadSessionRef = useRef(0);
+  const searchInputId = useId();
   const installedVersions = useMemo(
     () => [...getInstalledBundledBibleVersions()],
     []
@@ -332,6 +343,15 @@ export function ReaderStrongsPanel() {
     activeStrongsLabel?.trim() ??
     activeStrongsNumbers[0] ??
     "Strongs details";
+  const suggestedSearchValue =
+    activeGreekModeSelection?.selectedForm ??
+    activeGreekModeSelection?.lemma ??
+    activeStrongsNumbers[0] ??
+    activeStrongsLabel?.trim() ??
+    "";
+  const activeStudySelectionKey = isGreekDictionaryMode
+    ? `greek:${activeGreekEntryKey ?? ""}:${activeGreekModeSelection?.selectedForm ?? ""}`
+    : `strongs:${activeStrongsNumbers.join("|")}`;
   const selectedGreekForm = useMemo(() => {
     if (!greekEntry || !activeGreekModeSelection?.selectedForm) {
       return null;
@@ -395,6 +415,12 @@ export function ReaderStrongsPanel() {
       asyncLoadSessionRef.current += 1;
     };
   }, []);
+
+  useEffect(() => {
+    if (activeStudySelectionKey !== "greek::" && activeStudySelectionKey !== "strongs:") {
+      setPanelMode("study");
+    }
+  }, [activeStudySelectionKey]);
 
   useEffect(() => {
     if (!isGreekDictionaryMode) {
@@ -1592,6 +1618,95 @@ export function ReaderStrongsPanel() {
     );
   }
 
+  function renderSearchPanel() {
+    const normalizedSuggestion = suggestedSearchValue.trim();
+    const trimmedQuery = query.trim();
+
+    return (
+      <section className="reader-strongs-search-panel" aria-label="Search inside Strong's panel">
+        <form
+          className="reader-strongs-search-form"
+          onSubmit={(event) => {
+            event.preventDefault();
+            openSearch();
+          }}
+        >
+          <label className="sr-only" htmlFor={searchInputId}>
+            Search from the Strong&apos;s panel
+          </label>
+          <input
+            className="reader-strongs-search-input"
+            id={searchInputId}
+            onChange={(event) => setQuery(event.currentTarget.value)}
+            onFocus={openSearch}
+            placeholder="Search references, Strong's, Greek words, glosses, or phrases..."
+            type="search"
+            value={query}
+          />
+          <button className="reader-inline-button" type="submit">
+            Search
+          </button>
+        </form>
+        {normalizedSuggestion && trimmedQuery !== normalizedSuggestion ? (
+          <button
+            className="reader-inline-button reader-strongs-search-suggestion"
+            onClick={() => {
+              setQuery(normalizedSuggestion);
+              openSearch();
+            }}
+            type="button"
+          >
+            Search current word: {normalizedSuggestion}
+          </button>
+        ) : null}
+        <SearchWorkspacePanel
+          className="reader-strongs-search-workspace"
+          title={`${searchVersions.map(getBibleVersionLabel).join(" + ")} search`}
+          variant="stack"
+        />
+      </section>
+    );
+  }
+
+  function renderStudyPanel() {
+    if (activeStrongsNumbers.length === 0 && !activeGreekSelection) {
+      return (
+        <p className="reader-notebook-empty">
+          Search for a Strong’s number, Greek lemma, inflected form, transliteration, or gloss,
+          or open a tagged word to study it here.
+        </p>
+      );
+    }
+
+    if (isLoading) {
+      return (
+        <p className="reader-notebook-empty">
+          {isGreekDictionaryMode ? "Loading Greek dictionary…" : "Loading Strongs details…"}
+        </p>
+      );
+    }
+
+    if (isGreekDictionaryMode) {
+      return greekEntry ? (
+        <div className="reader-strongs-list">{renderGreekDictionaryCard(greekEntry)}</div>
+      ) : (
+        <p className="reader-notebook-empty">
+          No Greek dictionary entry is available for this selection.
+        </p>
+      );
+    }
+
+    if (entries.length === 0) {
+      return (
+        <p className="reader-notebook-empty">
+          No Strongs entry details are available for this selection.
+        </p>
+      );
+    }
+
+    return <div className="reader-strongs-list">{entries.map((entry) => renderStrongsEntryCard(entry))}</div>;
+  }
+
   return (
     <div className="reader-strongs-panel">
       <div className="reader-notebook-header">
@@ -1602,31 +1717,30 @@ export function ReaderStrongsPanel() {
           <h3 className="reader-notebook-title">{activePanelTitle}</h3>
         </div>
       </div>
-
-      {activeStrongsNumbers.length === 0 && !activeGreekSelection ? (
-        <p className="reader-notebook-empty">
-          Search for a Strong’s number, Greek lemma, inflected form, transliteration, or gloss,
-          or open a tagged word to study it here.
-        </p>
-      ) : isLoading ? (
-        <p className="reader-notebook-empty">
-          {isGreekDictionaryMode ? "Loading Greek dictionary…" : "Loading Strongs details…"}
-        </p>
-      ) : isGreekDictionaryMode ? (
-        greekEntry ? (
-          <div className="reader-strongs-list">{renderGreekDictionaryCard(greekEntry)}</div>
-        ) : (
-          <p className="reader-notebook-empty">
-            No Greek dictionary entry is available for this selection.
-          </p>
-        )
-      ) : entries.length === 0 ? (
-        <p className="reader-notebook-empty">
-          No Strongs entry details are available for this selection.
-        </p>
-      ) : (
-        <div className="reader-strongs-list">{entries.map((entry) => renderStrongsEntryCard(entry))}</div>
-      )}
+      <div className="reader-strongs-panel-mode-tabs" role="tablist" aria-label="Strong's panel sections">
+        <button
+          aria-selected={panelMode === "study"}
+          className={`lookup-pane-tab${panelMode === "study" ? " is-active" : ""}`}
+          onClick={() => setPanelMode("study")}
+          role="tab"
+          type="button"
+        >
+          Word Study
+        </button>
+        <button
+          aria-selected={panelMode === "search"}
+          className={`lookup-pane-tab${panelMode === "search" ? " is-active" : ""}`}
+          onClick={() => {
+            setPanelMode("search");
+            openSearch();
+          }}
+          role="tab"
+          type="button"
+        >
+          Search
+        </button>
+      </div>
+      {panelMode === "search" ? renderSearchPanel() : renderStudyPanel()}
     </div>
   );
 }

@@ -54,7 +54,7 @@ export type ChapterLink = {
   label: string;
 };
 
-export type ThemePreset = "neon" | "midnight" | "ember" | "obsidian" | "aurora";
+export type ThemePreset = "manuscript" | "neon" | "midnight" | "ember" | "obsidian" | "aurora";
 
 export type BodyFontOption = "serif" | "literary" | "transitional" | "humanist" | "mono";
 
