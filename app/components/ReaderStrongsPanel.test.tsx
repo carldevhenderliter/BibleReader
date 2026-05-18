@@ -1,35 +1,5 @@
 import { fireEvent, screen, waitFor, within } from "@testing-library/react";
 
-jest.mock("@/lib/bible/search", () => ({
-  parseBibleSearchQueries: jest.fn((rawQuery: string) =>
-    rawQuery
-      .split(",")
-      .map((query) => query.trim())
-      .filter(Boolean)
-  ),
-  searchBibleGroups: jest.fn(async (rawQuery: string, versions: string[]) => [
-    {
-      id: `group:${rawQuery}`,
-      query: rawQuery,
-      results: [
-        {
-          type: "verse",
-          id: `${versions[0] ?? "web"}:titus:1:1`,
-          version: versions[0] ?? "web",
-          bookSlug: "titus",
-          chapterNumber: 1,
-          verseNumber: 1,
-          label: "Titus 1:1",
-          description: "Paul, a servant of God.",
-          href: "/read/titus/1",
-          preview: "Paul, a servant of God, and an apostle."
-        }
-      ],
-      emptyMessage: ""
-    }
-  ])
-}));
-
 jest.mock("@/lib/bible/greek", () => {
   const actual = jest.requireActual("@/lib/bible/greek");
 
@@ -749,24 +719,6 @@ describe("ReaderStrongsPanel", () => {
     expect(within(studyPane).getByText("Key Terms")).toBeInTheDocument();
     expect(within(studyPane).getByText("Full BDAG")).toBeInTheDocument();
   }, 30000);
-
-  it("renders Bible search inside the Strong's panel", async () => {
-    renderWithReaderCustomization(<StrongsHarness />);
-
-    fireEvent.click(screen.getByRole("button", { name: "Open Greek" }));
-
-    const studyPane = screen.getByLabelText("Study pane");
-    fireEvent.click(await within(studyPane).findByRole("tab", { name: "Search" }));
-
-    const searchInput = within(studyPane).getByLabelText(/Search from the Strong's panel/i);
-    fireEvent.change(searchInput, { target: { value: "faith" } });
-
-    expect(searchInput).toHaveValue("faith");
-    expect((await within(studyPane).findAllByText("Titus 1:1")).length).toBeGreaterThan(0);
-
-    fireEvent.click(within(studyPane).getByRole("tab", { name: "Word Study" }));
-    expect(await within(studyPane).findByRole("tab", { name: "Verses In Bible" })).toBeInTheDocument();
-  });
 
   it("renders a separate Thayer tab for Greek Strongs entries", async () => {
     renderWithReaderCustomization(<StrongsHarness />);

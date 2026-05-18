@@ -49,6 +49,9 @@ const DEFAULT_STUDY_PANE_WIDTH_REM = 18;
 
 type SplitPane = "reader" | "search" | "study";
 type CollapsedSplitPanes = Record<SplitPane, boolean>;
+type SetSearchQueryOptions = {
+  expandSearchPane?: boolean;
+};
 
 const DEFAULT_COLLAPSED_SPLIT_PANES: CollapsedSplitPanes = {
   reader: false,
@@ -62,7 +65,7 @@ const ENGLISH_SEARCH_VERSION_PREFERENCE: readonly BundledBibleVersion[] = ["web"
 type LookupContextValue = {
   query: string;
   queryParts: string[];
-  setQuery: (value: string) => void;
+  setQuery: (value: string, options?: SetSearchQueryOptions) => void;
   resultGroups: BibleSearchResultGroup[];
   matchMode: SearchMatchMode;
   setMatchMode: (value: SearchMatchMode) => void;
@@ -666,7 +669,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
     () => ({
       query,
       queryParts,
-      setQuery: (value) => {
+      setQuery: (value, options = {}) => {
         setQuery(value);
         setExpandedTopicsByQuery((current) => pruneExpandedTopics(current, value));
 
@@ -674,7 +677,11 @@ export function LookupProvider({ children }: PropsWithChildren) {
           setIsOpen(true);
         }
 
-        if (isSplitViewActive && value.trim().length > 0) {
+        if (
+          options.expandSearchPane !== false &&
+          isSplitViewActive &&
+          value.trim().length > 0
+        ) {
           expandSplitPane("search");
         }
       },

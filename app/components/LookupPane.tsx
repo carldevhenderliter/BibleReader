@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 import { usePathname } from "next/navigation";
 
 import { ReaderCrossReferencesPanel } from "@/app/components/ReaderCrossReferencesPanel";
@@ -11,8 +11,10 @@ import { ReaderHarmonyWorkspace } from "@/app/components/ReaderHarmonyWorkspace"
 import { ReaderNotebookEditor } from "@/app/components/ReaderNotebookEditor";
 import { ReaderSermonWorkspace } from "@/app/components/ReaderSermonWorkspace";
 import { ReaderStrongsPanel } from "@/app/components/ReaderStrongsPanel";
+import { SearchWorkspacePanel } from "@/app/components/SearchWorkspacePanel";
 import { useLookup } from "@/app/components/LookupProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
+import { getBibleVersionSelectionLabel } from "@/lib/bible/version";
 import { isReaderRoutePath } from "@/lib/reader-routes";
 
 export function LookupPane() {
@@ -22,12 +24,18 @@ export function LookupPane() {
     collapseSplitPane,
     collapsedSplitPanes,
     expandSplitPane,
-    isSplitViewActive
+    isSplitViewActive,
+    query,
+    searchVersions,
+    setQuery
   } = useLookup();
   const { activeUtilityPane, setActiveUtilityPane, utilityPaneRequestKey } = useReaderWorkspace();
   const pathname = usePathname();
   const isReaderRoute = isReaderRoutePath(pathname);
   const previousUtilityPaneRequestKeyRef = useRef(utilityPaneRequestKey);
+  const searchInputId = useId();
+  const shouldShowEmbeddedSearch =
+    activeUtilityPane === "search" && collapsedSplitPanes.search;
 
   useEffect(() => {
     const previousUtilityPaneRequestKey = previousUtilityPaneRequestKeyRef.current;
@@ -80,6 +88,18 @@ export function LookupPane() {
       </div>
       <div className="lookup-pane-study">
         <div className="lookup-pane-tabs" role="tablist" aria-label="Study workspace tabs">
+          <button
+            aria-selected={activeUtilityPane === "search"}
+            className={`lookup-pane-tab${activeUtilityPane === "search" ? " is-active" : ""}`}
+            onClick={() => {
+              setActiveUtilityPane("search");
+              collapseSplitPane("search");
+            }}
+            role="tab"
+            type="button"
+          >
+            Search
+          </button>
           <button
             aria-selected={activeUtilityPane === "notebook"}
             className={`lookup-pane-tab${activeUtilityPane === "notebook" ? " is-active" : ""}`}
@@ -145,7 +165,39 @@ export function LookupPane() {
           </button>
         </div>
         <div className="lookup-pane-study-body">
-          {activeUtilityPane === "notebook" ? (
+          {shouldShowEmbeddedSearch ? (
+            <section className="lookup-pane-search-panel" aria-label="Search study tools">
+              <form
+                className="lookup-pane-search-form"
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  setQuery(query, { expandSearchPane: false });
+                }}
+              >
+                <label className="sr-only" htmlFor={searchInputId}>
+                  Search from the study tools panel
+                </label>
+                <input
+                  className="lookup-pane-search-input"
+                  id={searchInputId}
+                  onChange={(event) =>
+                    setQuery(event.currentTarget.value, { expandSearchPane: false })
+                  }
+                  placeholder="Search references, Strong's, Greek words, glosses, or phrases..."
+                  type="search"
+                  value={query}
+                />
+                <button className="reader-inline-button" type="submit">
+                  Search
+                </button>
+              </form>
+              <SearchWorkspacePanel
+                className="lookup-pane-search-workspace"
+                title={`${getBibleVersionSelectionLabel(searchVersions)} search`}
+                variant="panes"
+              />
+            </section>
+          ) : activeUtilityPane === "notebook" ? (
             <ReaderNotebookEditor />
           ) : activeUtilityPane === "grammar" ? (
             <ReaderGreekGrammarPanel />
