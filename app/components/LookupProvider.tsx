@@ -60,7 +60,7 @@ const DEFAULT_COLLAPSED_SPLIT_PANES: CollapsedSplitPanes = {
   study: false
 };
 
-const ORIGINAL_LANGUAGE_SEARCH_VERSIONS = new Set<BundledBibleVersion>(["greek", "tr"]);
+const ORIGINAL_LANGUAGE_SEARCH_VERSIONS = new Set<BundledBibleVersion>(["greek", "tr", "mt"]);
 const ENGLISH_SEARCH_VERSION_PREFERENCE: readonly BundledBibleVersion[] = ["web", "esv", "kjv", "nlt"];
 
 type LookupContextValue = {

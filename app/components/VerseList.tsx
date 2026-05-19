@@ -6,6 +6,7 @@ import { useBibleGreekUndertext } from "@/app/components/BibleGreekUndertextProv
 import { FathersEnglishUndertextContent } from "@/app/components/FathersEnglishUndertextContent";
 import { GreekInterlinearLine } from "@/app/components/GreekInterlinearLine";
 import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
+import { HebrewVerseTextContent } from "@/app/components/HebrewVerseTextContent";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { VerseTranslationEditor } from "@/app/components/VerseTranslationEditor";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
@@ -217,6 +218,7 @@ export function VerseList({
 }: VerseListProps) {
   const { version } = useReaderVersion();
   const isStandaloneGreekVersion = version === "greek" || version === "tr";
+  const isStandaloneHebrewVersion = version === "mt";
   const {
     isGreekLearningMode,
     openGreekDictionary,
@@ -416,6 +418,17 @@ export function VerseList({
                         showStrongsNumbers={version === "tr" && showVerseStrongs}
                         verse={verse}
                       />
+                    ) : isStandaloneHebrewVersion && verse.hebrewTokens?.length ? (
+                      <HebrewVerseTextContent
+                        className="verse-text verse-text-hebrew"
+                        highlightedStrongsNumber={null}
+                        onOpenStrongs={(strongsNumber, label) => openStrongs(strongsNumber, label)}
+                        showGloss={showGreekGloss}
+                        showLemma={showGreekLemma}
+                        showStrongsNumbers={showVerseStrongs}
+                        showTransliteration={showGreekTransliteration}
+                        verse={verse}
+                      />
                     ) : showStrongs && verse.tokens?.length ? (
                       <VerseTextContent
                         className="verse-text verse-text-body verse-text-rich"
@@ -593,6 +606,16 @@ export function VerseList({
                           showOriginalLanguageSurface={showGreekSurface}
                           showOriginalLanguageTransliteration={showGreekTransliteration}
                           showStrongs
+                          verse={secondaryVerse}
+                        />
+                      ) : secondaryVerseVersion === "mt" && secondaryVerse.hebrewTokens?.length ? (
+                        <HebrewVerseTextContent
+                          className="verse-text verse-text-hebrew verse-text-secondary-translation"
+                          onOpenStrongs={(strongsNumber, label) => openStrongs(strongsNumber, label)}
+                          showGloss={showGreekGloss}
+                          showLemma={showGreekLemma}
+                          showStrongsNumbers={showVerseStrongs}
+                          showTransliteration={showGreekTransliteration}
                           verse={secondaryVerse}
                         />
                       ) : (

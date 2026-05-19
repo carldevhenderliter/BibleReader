@@ -15,20 +15,24 @@ describe("bible version helpers", () => {
     expect(resolveBibleVersion("nrsv")).toBeNull();
   });
 
-  it("allows installed bundled versions including ESV, Greek, and TR", () => {
+  it("allows installed bundled versions including ESV, Greek, TR, and Hebrew", () => {
     expect(resolveBibleVersion("esv")).toBe("esv");
     expect(normalizeBibleVersion("esv")).toBe("esv");
     expect(resolveBibleVersion("greek")).toBe("greek");
     expect(normalizeBibleVersion("greek")).toBe("greek");
     expect(resolveBibleVersion("tr")).toBe("tr");
     expect(normalizeBibleVersion("tr")).toBe("tr");
+    expect(resolveBibleVersion("mt")).toBe("mt");
+    expect(normalizeBibleVersion("mt")).toBe("mt");
   });
 
-  it("lists ESV, Greek, and TR as enabled options", () => {
+  it("lists ESV, Greek, TR, and Hebrew as enabled options", () => {
     const options = getBibleVersionOptions();
 
     expect(options.find((option) => option.id === "esv")?.disabled).toBe(false);
     expect(options.find((option) => option.id === "greek")?.disabled).toBe(false);
     expect(options.find((option) => option.id === "tr")?.disabled).toBe(false);
+    expect(options.find((option) => option.id === "mt")?.disabled).toBe(false);
+    expect(options.find((option) => option.id === "mt")?.label).toBe("Hebrew");
   });
 });

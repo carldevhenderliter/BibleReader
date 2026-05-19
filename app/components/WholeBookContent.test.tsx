@@ -595,7 +595,7 @@ describe("WholeBookContent", () => {
     expect(screen.getAllByRole("heading", { name: /Chapter /i }).length).toBeGreaterThan(1);
     expect(screen.getByText("archē")).toBeInTheDocument();
     expect(screen.getByText("ἀρχή")).toBeInTheDocument();
-    expect(screen.getByText("בראשית")).toBeInTheDocument();
+    expect(screen.getAllByText("בראשית").length).toBeGreaterThan(0);
   });
 
   it("shows Greek interlinear lines under ESV New Testament verses in whole-book view", () => {

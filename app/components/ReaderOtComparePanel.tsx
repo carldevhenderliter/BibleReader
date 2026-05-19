@@ -206,8 +206,8 @@ function LazyOtCompareSection({
                       <div className="reader-compare-cell reader-ot-compare-cell">
                         <HebrewVerseTextContent
                           className="verse-text verse-text-hebrew reader-compare-text"
-                          onOpenStrongs={(strongsNumbers, label) =>
-                            openStrongsInCurrentPane(strongsNumbers, label ?? strongsNumbers.join(" "))
+                          onOpenStrongs={(strongsNumber, label) =>
+                            openStrongsInCurrentPane(strongsNumber, label ?? strongsNumber)
                           }
                           verse={row.masoreticVerse}
                         />

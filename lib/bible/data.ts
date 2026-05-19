@@ -27,6 +27,7 @@ type SourceBook = BookMeta & {
 };
 
 const versionsDir = path.join(process.cwd(), "data", "bible", "versions");
+const masoreticDir = path.join(process.cwd(), "data", "bible", "mt");
 const sourceBooksPath = path.join(process.cwd(), "data", "source", "books.json");
 
 const NEW_TESTAMENT_COMPOSITION_DATES: Record<string, string> = {
@@ -91,6 +92,10 @@ const readSourceBooks = cache(async (): Promise<BookMeta[]> => {
 });
 
 function getVersionDir(version: BundledBibleVersion) {
+  if (version === "mt") {
+    return masoreticDir;
+  }
+
   return path.join(versionsDir, version);
 }
 

@@ -748,6 +748,6 @@ describe("BottomSearchBar", () => {
     const studyPane = screen.getByLabelText("Study pane");
 
     expect(within(studyPane).getByRole("heading", { name: "H7225" })).toBeInTheDocument();
-    expect(await within(studyPane).findByText("Hebrew")).toBeInTheDocument();
+    expect(studyPane.querySelector(".strongs-entry-language")).toHaveTextContent("Hebrew");
   });
 });

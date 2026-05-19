@@ -457,6 +457,27 @@ jest.mock("@/lib/bible/strongs", () => {
           }
         ]
       }
+    },
+    mt: {
+      "genesis:1:1": {
+        version: "mt",
+        bookSlug: "genesis",
+        bookName: "Genesis",
+        chapterNumber: 1,
+        verseNumber: 1,
+        text: "בראשית ברא אלהים",
+        hebrewTokens: [
+          {
+            surface: "בראשית",
+            lemma: "רֵאשִׁית",
+            strongs: "H7225",
+            morphology: "Ncfsa",
+            decodedMorphology: "feminine noun",
+            transliteration: "rē'šîṯ",
+            gloss: "beginning"
+          }
+        ]
+      }
     }
   } as const;
 
@@ -989,6 +1010,66 @@ describe("VerseList", () => {
     expect(await screen.findByText(/rē'šîṯ/i)).toBeInTheDocument();
     expect(screen.getByText(/first, beginning/i)).toBeInTheDocument();
     expect(screen.queryByText("רֵאשִׁית")).not.toBeInTheDocument();
+  });
+
+  it("renders standalone Hebrew tokens and opens Strongs from the Masoretic reader", async () => {
+    window.localStorage.setItem(READER_VERSION_STORAGE_KEY, "mt");
+    window.history.replaceState({}, "", "http://localhost/read/genesis/1?version=mt");
+
+    renderWithReaderCustomization(
+      <>
+        <VerseList
+          bookSlug="genesis"
+          chapterNumber={1}
+          showGreekGloss
+          showGreekLemma
+          showGreekTransliteration
+          showVerseStrongs
+          verses={[
+            {
+              number: 1,
+              text: "בראשית ברא אלהים",
+              hebrewTokens: [
+                {
+                  surface: "בראשית",
+                  lemma: "רֵאשִׁית",
+                  strongs: "H7225",
+                  morphology: "Ncfsa",
+                  decodedMorphology: "feminine noun",
+                  transliteration: "rē'šîṯ",
+                  gloss: "beginning"
+                },
+                {
+                  surface: "ברא",
+                  lemma: "בָּרָא",
+                  strongs: "H1254",
+                  morphology: "Vqp3ms",
+                  decodedMorphology: "verb",
+                  transliteration: "bārā'",
+                  gloss: "create"
+                }
+              ]
+            }
+          ]}
+        />
+        <LookupPane />
+      </>
+    );
+
+    const hebrewToken = await screen.findByRole("button", { name: /בראשית.*H7225/i });
+
+    expect(hebrewToken).toBeInTheDocument();
+    expect(screen.getByText(/rē'šîṯ/)).toBeInTheDocument();
+    expect(screen.getByText(/beginning/)).toBeInTheDocument();
+
+    fireEvent.click(hebrewToken);
+
+    await waitFor(() => {
+      expect(screen.getByRole("tab", { name: "Strongs" })).toHaveAttribute("aria-selected", "true");
+    });
+
+    const studyPane = screen.getByLabelText("Study pane");
+    expect(await within(studyPane).findByText("H7225")).toBeInTheDocument();
   });
 
   it("renders Greek interlinear tokens and opens the Greek dictionary from a clicked form", async () => {

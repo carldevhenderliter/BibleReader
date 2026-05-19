@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 
 import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
+import { HebrewVerseTextContent } from "@/app/components/HebrewVerseTextContent";
 import { VerseTextContent } from "@/app/components/VerseTextContent";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { formatBdagArticle } from "@/lib/bible/bdag";
@@ -867,7 +868,7 @@ export function ReaderStrongsPanel() {
       return installedVersions;
     }
 
-    return installedVersions.filter((version) => version !== "greek");
+    return installedVersions.filter((version) => version !== "greek" && version !== "tr");
   }
 
   function getDefaultBibleOccurrenceVersion(
@@ -881,6 +882,10 @@ export function ReaderStrongsPanel() {
 
     if ((language === "greek" || language === "greek-dictionary") && versions.includes("greek")) {
       return "greek";
+    }
+
+    if (language === "hebrew" && versions.includes("mt")) {
+      return "mt";
     }
 
     if (versions.includes("kjv")) {
@@ -1332,6 +1337,31 @@ export function ReaderStrongsPanel() {
                                   <VerseTextContent
                                     className="strongs-entry-copy strongs-entry-bible-verse-text verse-text-greek"
                                     highlightedPhrases={greekHighlightPhrases}
+                                    verse={{
+                                      number: versionMatch.verseNumber,
+                                      text: versionMatch.text
+                                    }}
+                                  />
+                                )
+                              ) : selectedVersion === "mt" ? (
+                                versionMatch.hebrewTokens?.length ? (
+                                  <HebrewVerseTextContent
+                                    className="strongs-entry-copy strongs-entry-bible-verse-text verse-text-hebrew"
+                                    highlightedStrongsNumber={highlightStrongsNumber}
+                                    onOpenStrongs={(strongsNumber, label) =>
+                                      openStrongs(strongsNumber, label)
+                                    }
+                                    showStrongsNumbers
+                                    verse={{
+                                      number: versionMatch.verseNumber,
+                                      text: versionMatch.text,
+                                      hebrewTokens: versionMatch.hebrewTokens
+                                    }}
+                                  />
+                                ) : (
+                                  <VerseTextContent
+                                    className="strongs-entry-copy strongs-entry-bible-verse-text verse-text-hebrew"
+                                    highlightedPhrases={[]}
                                     verse={{
                                       number: versionMatch.verseNumber,
                                       text: versionMatch.text

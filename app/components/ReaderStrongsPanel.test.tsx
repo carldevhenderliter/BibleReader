@@ -450,6 +450,27 @@ jest.mock("@/lib/bible/strongs", () => {
         text: "The word remains.",
         tokens: [{ text: "word", strongsNumbers: ["G3056"] }]
       }
+    },
+    mt: {
+      "genesis:1:1": {
+        version: "mt",
+        bookSlug: "genesis",
+        bookName: "Genesis",
+        chapterNumber: 1,
+        verseNumber: 1,
+        text: "בראשית",
+        hebrewTokens: [
+          {
+            surface: "בראשית",
+            lemma: "רֵאשִׁית",
+            strongs: "H7225",
+            morphology: "Ncfsa",
+            decodedMorphology: "feminine noun",
+            transliteration: "rē'šîṯ",
+            gloss: "beginning"
+          }
+        ]
+      }
     }
   } as const;
 
@@ -755,7 +776,7 @@ describe("ReaderStrongsPanel", () => {
     expect(await within(studyPane).findByRole("tab", { name: "Verses In Bible" })).toBeInTheDocument();
     expect(within(studyPane).queryByRole("button", { name: "Greek" })).not.toBeInTheDocument();
     await waitFor(() =>
-      expect(within(studyPane).getByRole("button", { name: "KJV" })).toHaveAttribute(
+      expect(within(studyPane).getByRole("button", { name: "Hebrew" })).toHaveAttribute(
         "aria-pressed",
         "true"
       )

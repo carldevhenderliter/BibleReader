@@ -20,7 +20,8 @@ export const BIBLE_VERSIONS = [
   "nlt",
   "esv",
   "greek",
-  "tr"
+  "tr",
+  "mt"
 ] as const satisfies readonly BibleVersion[];
 export const BUNDLED_BIBLE_VERSIONS = [
   "web",
@@ -28,7 +29,8 @@ export const BUNDLED_BIBLE_VERSIONS = [
   "nlt",
   "esv",
   "greek",
-  "tr"
+  "tr",
+  "mt"
 ] as const satisfies readonly BundledBibleVersion[];
 
 export const BIBLE_VERSION_METADATA: Record<BibleVersion, BibleVersionMetadata> = {
@@ -72,6 +74,13 @@ export const BIBLE_VERSION_METADATA: Record<BibleVersion, BibleVersionMetadata> 
     label: "TR",
     badge: "Textus Receptus",
     description: "Bundled locally. Public-domain Greek New Testament with Strong’s-linked morphology.",
+    supportsWholeBook: true
+  },
+  mt: {
+    id: "mt",
+    label: "Hebrew",
+    badge: "Masoretic Text",
+    description: "Bundled locally. Masoretic Hebrew Old Testament with Strong’s-linked morphology.",
     supportsWholeBook: true
   }
 };

@@ -7,12 +7,13 @@ import {
 } from "@/lib/bible/data";
 
 describe("bible data", () => {
-  it("loads bundled books for WEB, KJV, ESV, and TR", async () => {
-    const [webBooks, kjvBooks, esvBooks, trBooks] = await Promise.all([
+  it("loads bundled books for WEB, KJV, ESV, TR, and Hebrew", async () => {
+    const [webBooks, kjvBooks, esvBooks, trBooks, mtBooks] = await Promise.all([
       getBooks("web"),
       getBooks("kjv"),
       getBooks("esv"),
-      getBooks("tr")
+      getBooks("tr"),
+      getBooks("mt")
     ]);
 
     expect(webBooks).toHaveLength(67);
@@ -28,6 +29,9 @@ describe("bible data", () => {
     expect(trBooks[0]?.slug).toBe("matthew");
     expect(trBooks.find((book) => book.slug === "matthew")?.compositionDate).toBe("c. 70–90 AD");
     expect(trBooks.at(-1)?.slug).toBe("gospel-harmony");
+    expect(mtBooks[0]?.slug).toBe("genesis");
+    expect(mtBooks[38]?.slug).toBe("malachi");
+    expect(mtBooks.at(-1)?.slug).toBe("gospel-harmony");
   });
 
   it("loads Genesis 1 from KJV", async () => {
@@ -85,6 +89,21 @@ describe("bible data", () => {
     expect(matthew?.verses[0]?.translationText).toContain("The book of the genealogy of Jesus Christ");
     expect(matthew?.verses[0]?.greekTokens?.[0]?.strongs).toBe("G976");
     expect(genesis).toBeNull();
+  });
+
+  it("loads Genesis 1 from bundled Hebrew and omits New Testament books", async () => {
+    const [genesis, matthew] = await Promise.all([
+      getChapter("genesis", 1, "mt"),
+      getChapter("matthew", 1, "mt")
+    ]);
+
+    expect(genesis?.chapterNumber).toBe(1);
+    expect(genesis?.verses[0]?.text).toContain("בראשית");
+    expect(genesis?.verses[0]?.hebrewTokens?.[0]).toMatchObject({
+      surface: "בראשית",
+      strongs: "H7225"
+    });
+    expect(matthew).toBeNull();
   });
 
   it("returns New Testament books in the configured chronological order", async () => {

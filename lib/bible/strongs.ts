@@ -33,7 +33,8 @@ const verseSearchLoaders: Record<BundledBibleVersion, () => Promise<unknown>> = 
   nlt: () => import("@/data/bible/search/nlt.json"),
   esv: () => import("@/data/bible/search/esv.json"),
   greek: () => import("@/data/bible/search/greek.json"),
-  tr: () => import("@/data/bible/search/tr.json")
+  tr: () => import("@/data/bible/search/tr.json"),
+  mt: () => import("@/data/bible/search/mt.json")
 };
 
 export type StrongsParallelVerseVersion = {

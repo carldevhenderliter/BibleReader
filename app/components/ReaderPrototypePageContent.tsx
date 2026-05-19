@@ -486,7 +486,7 @@ function PrototypeCompareSurface({
   const [highlightKeyTerms, setHighlightKeyTerms] = useState(true);
   const [syncScrolling, setSyncScrolling] = useState(true);
   const [compactView, setCompactView] = useState(false);
-  const displayVersions = ["greek", "esv", "nlt", "kjv", "web", "tr"].filter(
+  const displayVersions = ["greek", "mt", "esv", "nlt", "kjv", "web", "tr"].filter(
     (candidate): candidate is BundledBibleVersion =>
       installedVersions.includes(candidate as BundledBibleVersion) &&
       Boolean(chaptersByVersion[candidate as BundledBibleVersion])

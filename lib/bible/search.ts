@@ -78,7 +78,8 @@ const verseIndexLoaders: Record<BundledBibleVersion, () => Promise<unknown>> = {
   nlt: () => import("@/data/bible/search/nlt.json"),
   esv: () => import("@/data/bible/search/esv.json"),
   greek: () => import("@/data/bible/search/greek.json"),
-  tr: () => import("@/data/bible/search/tr.json")
+  tr: () => import("@/data/bible/search/tr.json"),
+  mt: () => import("@/data/bible/search/mt.json")
 };
 const topicIndexLoaders: Record<BundledBibleVersion, () => Promise<unknown>> = {
   web: () => import("@/data/bible/search/topics-web.json"),
@@ -86,7 +87,8 @@ const topicIndexLoaders: Record<BundledBibleVersion, () => Promise<unknown>> = {
   nlt: () => import("@/data/bible/search/topics-nlt.json"),
   esv: () => import("@/data/bible/search/topics-esv.json"),
   greek: () => import("@/data/bible/search/topics-web.json"),
-  tr: () => import("@/data/bible/search/topics-web.json")
+  tr: () => import("@/data/bible/search/topics-web.json"),
+  mt: () => import("@/data/bible/search/topics-web.json")
 };
 
 let booksPromise: Promise<SearchableBook[]> | null = null;

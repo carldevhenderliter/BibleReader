@@ -173,31 +173,41 @@ export function ReaderSettingsPanel({
   const isOldTestament = book?.testament === "Old";
   const isHarmonyBook = book?.slug === GOSPEL_HARMONY_BOOK_SLUG;
   const isStandaloneGreekVersion = !isFathersMode && (version === "greek" || version === "tr");
+  const isStandaloneHebrewVersion = !isFathersMode && version === "mt";
   const originalLanguageLabel = isFathersMode
     ? "Greek"
     : version === "kjv"
       ? isOldTestament
         ? "Hebrew"
         : "Greek"
-      : "Greek";
+      : isStandaloneHebrewVersion
+        ? "Hebrew"
+        : "Greek";
   const supportsGreekReading = isFathersMode
     ? hasGreekReaderAid
-    : version === "esv" || isStandaloneGreekVersion;
+    : version === "esv" || isStandaloneGreekVersion || isStandaloneHebrewVersion;
   const supportsEsvInterlinear = !isFathersMode && version === "esv";
   const supportsQuickGreekInterlinear = !isFathersMode && (version === "esv" || version === "kjv");
   const supportsGreekStudyLayers = isFathersMode
     ? hasGreekReaderAid
-    : version === "esv" || isStandaloneGreekVersion || version === "kjv";
+    : version === "esv" || isStandaloneGreekVersion || isStandaloneHebrewVersion || version === "kjv";
   const greekStudyLayersEnabled = isFathersMode
     ? hasGreekReaderAid
     : isStandaloneGreekVersion ||
+        isStandaloneHebrewVersion ||
         settings.showEsvInterlinear ||
         (version === "kjv" && settings.showStrongs);
   const supportsOriginalWordSurface = isFathersMode
     ? hasGreekReaderAid
-    : version === "esv" || isStandaloneGreekVersion || (version === "kjv" && !isOldTestament);
+    : version === "esv" ||
+      isStandaloneGreekVersion ||
+      isStandaloneHebrewVersion ||
+      (version === "kjv" && !isOldTestament);
   const supportsVerseStrongs = !isFathersMode &&
-    (version === "kjv" || version === "tr" || (version === "esv" && !isOldTestament));
+    (version === "kjv" ||
+      version === "tr" ||
+      isStandaloneHebrewVersion ||
+      (version === "esv" && !isOldTestament));
   const hasVisibleGreekStudyLayer =
     settings.showGreekSurface ||
     settings.showGreekLemma ||
@@ -387,7 +397,7 @@ export function ReaderSettingsPanel({
       return;
     }
 
-    if (isStandaloneGreekVersion) {
+    if (isStandaloneGreekVersion || isStandaloneHebrewVersion) {
       updateSettings({
         showVerseNumbers: false,
         showChapterHeadings: false,

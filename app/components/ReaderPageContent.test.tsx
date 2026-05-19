@@ -5,6 +5,7 @@ import { LookupPane } from "@/app/components/LookupPane";
 import { ReaderPageContent } from "@/app/components/ReaderPageContent";
 import { SearchPane } from "@/app/components/SearchPane";
 import type { BookMeta, Chapter, EsvInterlinearDisplayChapter } from "@/lib/bible/types";
+import { READER_VERSION_STORAGE_KEY } from "@/lib/bible/constants";
 import { READER_CUSTOMIZATION_STORAGE_KEY } from "@/lib/reader-customization";
 import { PASSAGE_NOTEBOOK_STORAGE_KEY } from "@/lib/passage-notebooks";
 import { mockRouter, setMockPathname } from "@/test/mocks/next-navigation";
@@ -352,6 +353,22 @@ describe("ReaderPageContent", () => {
     );
   });
 
+  it("renders the bundled Hebrew Old Testament when selected", async () => {
+    window.localStorage.setItem(READER_VERSION_STORAGE_KEY, "mt");
+    window.history.replaceState({}, "", "/read/genesis/1?version=mt");
+
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={{ web: chapter, mt: masoreticChapter }}
+      />
+    );
+
+    expect(await screen.findByText("Masoretic Text")).toBeInTheDocument();
+    expect(await screen.findByRole("button", { name: /בראשית.*H7225/i })).toBeInTheDocument();
+  });
+
   it("shows a selected under-verse version when enabled", () => {
     window.localStorage.setItem(
       READER_CUSTOMIZATION_STORAGE_KEY,
@@ -554,13 +571,10 @@ describe("ReaderPageContent", () => {
     expect(screen.getByText("archē")).toBeInTheDocument();
     expect(screen.getByText("ἀρχή")).toBeInTheDocument();
     expect(screen.getAllByText("beginning").length).toBeGreaterThan(0);
-    expect(screen.getByText("בראשית")).toBeInTheDocument();
-    expect(screen.getByText("re'shiyth")).toBeInTheDocument();
-    expect(screen.getByText("רֵאשִׁית")).toBeInTheDocument();
-
+    expect(screen.getAllByText("בראשית").length).toBeGreaterThan(0);
     fireEvent.click(screen.getByRole("button", { name: /בראשית רֵאשִׁית H7225/i }));
 
-    expect(await screen.findByText("Hebrew")).toBeInTheDocument();
+    expect((await screen.findAllByText("Hebrew")).length).toBeGreaterThan(0);
 
     fireEvent.click(screen.getByRole("button", { name: /ἀρχῇ ἀρχή G746/i }));
 

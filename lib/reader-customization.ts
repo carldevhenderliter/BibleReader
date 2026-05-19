@@ -270,7 +270,8 @@ function isBundledBibleVersionOption(value: unknown): value is ReaderCustomizati
     value === "nlt" ||
     value === "esv" ||
     value === "greek" ||
-    value === "tr"
+    value === "tr" ||
+    value === "mt"
   );
 }
 

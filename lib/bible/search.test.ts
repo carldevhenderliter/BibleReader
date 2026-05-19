@@ -146,6 +146,22 @@ describe("Bible search", () => {
     ).toBe(true);
   });
 
+  it("loads Hebrew verse search results from the bundled Masoretic index", async () => {
+    const results = await searchBible("בראשית", "mt");
+
+    expect(
+      results.some(
+        (result) =>
+          result.type === "verse" &&
+          result.version === "mt" &&
+          result.bookSlug === "genesis" &&
+          result.chapterNumber === 1 &&
+          result.verseNumber === 1 &&
+          result.preview.includes("בראשית")
+      )
+    ).toBe(true);
+  });
+
   it("limits search results to the old testament scope", async () => {
     const results = await searchBible("light", "web", "partial", undefined, "old-testament");
 

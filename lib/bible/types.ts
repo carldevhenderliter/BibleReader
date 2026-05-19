@@ -35,11 +35,11 @@ export type BookPayload = {
 
 export type ReadingView = "chapter" | "book";
 
-export type BibleVersion = "web" | "kjv" | "nlt" | "esv" | "greek" | "tr";
+export type BibleVersion = "web" | "kjv" | "nlt" | "esv" | "greek" | "tr" | "mt";
 
 export type BundledBibleVersion = Extract<
   BibleVersion,
-  "web" | "kjv" | "nlt" | "esv" | "greek" | "tr"
+  "web" | "kjv" | "nlt" | "esv" | "greek" | "tr" | "mt"
 >;
 
 export type ReadingLocation = {
@@ -255,6 +255,7 @@ export type BibleSearchVerseEntry = {
   translationText?: string;
   tokens?: VerseToken[];
   greekTokens?: GreekToken[];
+  hebrewTokens?: HebrewToken[];
   greekEntryKeys?: string[];
 };
 

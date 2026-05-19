@@ -3468,6 +3468,9 @@ button.fathers-annotation-anchor:focus-visible {
 }
 
 .verse-hebrew-inline-token {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.24rem;
   padding: 0;
   border: 0;
   background: transparent;
@@ -3487,12 +3490,48 @@ button.fathers-annotation-anchor:focus-visible {
   text-shadow: 0 0 0.7rem rgba(var(--reader-accent-rgb), 0.35);
 }
 
+.verse-hebrew-inline-token-text {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.24rem;
+  color: rgba(240, 247, 255, 0.98);
+}
+
+.verse-hebrew-inline-strongs {
+  color: rgba(150, 198, 255, 0.82);
+  font-family: var(--reader-ui-font);
+  font-size: max(0.62rem, calc(var(--reader-hebrew-text-size) * 0.38));
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
 .hebrew-verse-reading-aids {
   margin: 0.3rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.8rem;
   color: rgba(216, 229, 242, 0.72);
   font-family: var(--reader-body-font);
   font-size: calc(var(--reader-body-text-size) * 0.72);
   line-height: 1.45;
+}
+
+.hebrew-verse-reading-aids div {
+  min-width: max-content;
+}
+
+.hebrew-verse-reading-aids dt {
+  margin: 0 0 0.08rem;
+  color: rgba(240, 247, 255, 0.82);
+  font-family: var(--reader-hebrew-font);
+}
+
+.hebrew-verse-reading-aids dd {
+  margin: 0;
+  display: flex;
+  gap: 0.3rem;
 }
 
 .hebrew-verse-reading-aids-code {
