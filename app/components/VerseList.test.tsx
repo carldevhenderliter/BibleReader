@@ -1016,7 +1016,7 @@ describe("VerseList", () => {
     window.localStorage.setItem(READER_VERSION_STORAGE_KEY, "mt");
     window.history.replaceState({}, "", "http://localhost/read/genesis/1?version=mt");
 
-    renderWithReaderCustomization(
+    const { container } = renderWithReaderCustomization(
       <>
         <VerseList
           bookSlug="genesis"
@@ -1061,6 +1061,9 @@ describe("VerseList", () => {
     expect(hebrewToken).toBeInTheDocument();
     expect(screen.getByText(/rē'šîṯ/)).toBeInTheDocument();
     expect(screen.getByText(/beginning/)).toBeInTheDocument();
+    expect(hebrewToken).toHaveTextContent("feminine noun");
+    expect(container.querySelector(".hebrew-verse-reading-aids")).not.toBeInTheDocument();
+    expect(container.querySelectorAll(".verse-hebrew-token-wrap")).toHaveLength(2);
 
     fireEvent.click(hebrewToken);
 

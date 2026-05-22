@@ -425,6 +425,12 @@ export function VerseList({
                         onOpenStrongs={(strongsNumber, label) => openStrongs(strongsNumber, label)}
                         showGloss={showGreekGloss}
                         showLemma={showGreekLemma}
+                        showMorphology={
+                          showGreekGloss ||
+                          showGreekLemma ||
+                          showGreekTransliteration ||
+                          showVerseStrongs
+                        }
                         showStrongsNumbers={showVerseStrongs}
                         showTransliteration={showGreekTransliteration}
                         verse={verse}
@@ -614,6 +620,12 @@ export function VerseList({
                           onOpenStrongs={(strongsNumber, label) => openStrongs(strongsNumber, label)}
                           showGloss={showGreekGloss}
                           showLemma={showGreekLemma}
+                          showMorphology={
+                            showGreekGloss ||
+                            showGreekLemma ||
+                            showGreekTransliteration ||
+                            showVerseStrongs
+                          }
                           showStrongsNumbers={showVerseStrongs}
                           showTransliteration={showGreekTransliteration}
                           verse={secondaryVerse}
