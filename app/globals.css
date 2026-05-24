@@ -3595,36 +3595,44 @@ button.fathers-annotation-anchor:focus-visible {
 }
 
 .verse-hebrew-token-wrap > .greek-grammar-card,
-.verse-greek-token-wrap > .greek-grammar-card {
+.verse-greek-token-wrap .greek-grammar-card,
+.verse-greek-inline-wrap > .greek-grammar-card {
+  display: grid;
   width: min(10.5rem, calc(50vw - 1rem));
   padding: 0.54rem 0.58rem;
   gap: 0.42rem;
   border-radius: 0.82rem;
   font-size: 0.76rem;
   line-height: 1.42;
+  opacity: 1;
+  visibility: visible;
 }
 
 .verse-hebrew-token-wrap > .greek-grammar-card .greek-grammar-card-quick,
-.verse-greek-token-wrap > .greek-grammar-card .greek-grammar-card-quick {
+.verse-greek-token-wrap .greek-grammar-card .greek-grammar-card-quick,
+.verse-greek-inline-wrap > .greek-grammar-card .greek-grammar-card-quick {
   gap: 0.28rem;
 }
 
 .verse-hebrew-token-wrap > .greek-grammar-card .greek-grammar-card-kicker,
-.verse-greek-token-wrap > .greek-grammar-card .greek-grammar-card-kicker {
+.verse-greek-token-wrap .greek-grammar-card .greek-grammar-card-kicker,
+.verse-greek-inline-wrap > .greek-grammar-card .greek-grammar-card-kicker {
   padding: 0.12rem 0.38rem;
   font-size: 0.56rem;
   letter-spacing: 0.08em;
 }
 
 .verse-hebrew-token-wrap > .greek-grammar-card .greek-grammar-card-line,
-.verse-greek-token-wrap > .greek-grammar-card .greek-grammar-card-line {
+.verse-greek-token-wrap .greek-grammar-card .greek-grammar-card-line,
+.verse-greek-inline-wrap > .greek-grammar-card .greek-grammar-card-line {
   grid-template-columns: 1fr;
   gap: 0.08rem;
   padding: 0.22rem 0;
 }
 
 .verse-hebrew-token-wrap > .greek-grammar-card .greek-grammar-card-label,
-.verse-greek-token-wrap > .greek-grammar-card .greek-grammar-card-label {
+.verse-greek-token-wrap .greek-grammar-card .greek-grammar-card-label,
+.verse-greek-inline-wrap > .greek-grammar-card .greek-grammar-card-label {
   font-size: 0.56rem;
 }
 
