@@ -665,9 +665,15 @@ export function ReaderGreekGrammarPanel() {
                                     />
                                   ) : (
                                     <VerseTextContent
-                                      className="strongs-entry-copy strongs-entry-bible-verse-text"
+                                      className={`strongs-entry-copy strongs-entry-bible-verse-text${
+                                        selectedVersion === "mt" ? " verse-text-hebrew" : ""
+                                      }`}
                                       highlightedPhrases={
-                                        selectedVersion === "kjv" ? [] : englishHighlightPhrases
+                                        selectedVersion === "mt" && selectionLanguage === "hebrew"
+                                          ? [selectedOriginalForm]
+                                          : selectedVersion === "kjv"
+                                            ? []
+                                            : englishHighlightPhrases
                                       }
                                       highlightedStrongsNumber={
                                         selectedVersion === "kjv"

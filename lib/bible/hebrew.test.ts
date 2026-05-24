@@ -8,12 +8,9 @@ describe("Hebrew verse lookup", () => {
     expect(matches[0]).toMatchObject({
       bookSlug: "genesis",
       chapterNumber: 1,
-      verseNumber: 1
+      verseNumber: 1,
+      text: expect.stringContaining("בראשית")
     });
-    expect(
-      matches.every((match) =>
-        match.hebrewTokens?.some((token) => token.strongs === "H7225" && token.surface === "בראשית")
-      )
-    ).toBe(true);
+    expect(await getHebrewVerseOccurrences("H7225", "לאבראשית")).toEqual([]);
   });
 });
