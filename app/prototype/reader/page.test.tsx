@@ -76,6 +76,18 @@ jest.mock("@/lib/bible/greek", () => ({
     (bookSlug: string, chapterNumber: number, verseNumber: number, tokenIndex: number) =>
       `greek:${bookSlug}:${chapterNumber}:${verseNumber}:${tokenIndex}`
   ),
+  resolveGreekTokenGloss: jest.fn((
+    token: { gloss?: string | null },
+    entry: { shortDefinition?: string | null } | null,
+    override?: { selectedGloss?: string | null } | null,
+    lemmaPreference?: { selectedGloss?: string | null } | null
+  ) =>
+    override?.selectedGloss?.trim() ??
+    lemmaPreference?.selectedGloss?.trim() ??
+    token.gloss?.trim() ??
+    entry?.shortDefinition?.split(",")[0]?.trim() ??
+    ""
+  ),
   transliterateGreekSurface: jest.fn((surface: string) => surface),
   getGreekLemmaEntry: jest.fn(async (entryKey: string) => {
     const entries = {
