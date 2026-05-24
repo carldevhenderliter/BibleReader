@@ -13,6 +13,7 @@ import {
   resolveGreekTokenGloss,
   transliterateGreekSurface
 } from "@/lib/bible/greek";
+import type { GreekLemmaEntry } from "@/lib/bible/types";
 
 describe("Greek dictionary lookup", () => {
   it("normalizes accents, case, and final sigma for lemma lookups", () => {
@@ -214,7 +215,24 @@ describe("Greek dictionary lookup", () => {
   });
 
   it("prefers a cleaner lemma gloss when a token gloss is just a list of alternatives", async () => {
-    const entry = await getGreekLemmaEntry("G746");
+    const entry: GreekLemmaEntry = {
+      entryKey: "G746",
+      lemma: "ἀρχή",
+      strongs: "G746",
+      transliteration: "archē",
+      shortDefinition: "beginning, origin, or the person or thing that commences",
+      forms: [
+        {
+          form: "ἀρχῇ",
+          morphology: "N-DSF",
+          decodedMorphology: "noun dative singular feminine",
+          definition: "origin; beginning",
+          translationGloss: "to/for beginning",
+          translationSource: "generated",
+          translationTemplate: "case:dative"
+        }
+      ]
+    };
     const token = {
       surface: "ἀρχῇ",
       lemma: "ἀρχή",
