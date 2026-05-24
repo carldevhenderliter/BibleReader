@@ -1,11 +1,15 @@
 "use client";
 
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { useGreekGlossOverrides } from "@/app/components/GreekGlossOverridesProvider";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
-import { getGreekTokenOccurrenceKey } from "@/lib/bible/greek";
-import type { GreekToken } from "@/lib/bible/types";
+import {
+  getGreekLemmaEntry,
+  getGreekTokenOccurrenceKey,
+  resolveGreekTokenGloss
+} from "@/lib/bible/greek";
+import type { GreekLemmaEntry, GreekToken } from "@/lib/bible/types";
 
 type VerseTranslationEditorProps = {
   bookSlug: string;
@@ -19,7 +23,7 @@ function buildGlossTranslation(
   chapterNumber: number,
   verseNumber: number,
   greekTokens: GreekToken[],
-  getGloss: (occurrenceKey: string) => string
+  getGloss: (occurrenceKey: string, token: GreekToken) => string
 ) {
   let translation = "";
 
@@ -27,7 +31,7 @@ function buildGlossTranslation(
     const occurrenceKey =
       token.occurrenceKey ??
       getGreekTokenOccurrenceKey(bookSlug, chapterNumber, verseNumber, tokenIndex);
-    const gloss = getGloss(occurrenceKey);
+    const gloss = getGloss(occurrenceKey, token);
 
     if (!gloss) {
       return;
@@ -53,8 +57,44 @@ export function VerseTranslationEditor({
   verseNumber,
   greekTokens
 }: VerseTranslationEditorProps) {
-  const { getOverride } = useGreekGlossOverrides();
+  const { getLemmaDefault, getOverride } = useGreekGlossOverrides();
   const { settings } = useReaderCustomization();
+  const [entriesByKey, setEntriesByKey] = useState<Record<string, GreekLemmaEntry>>({});
+
+  useEffect(() => {
+    if (!greekTokens.length) {
+      setEntriesByKey({});
+      return;
+    }
+
+    let isCancelled = false;
+    const uniqueEntryKeys = Array.from(
+      new Set(greekTokens.map((token) => token.entryKey ?? token.strongs).filter(Boolean))
+    ).filter((entryKey): entryKey is string => typeof entryKey === "string" && entryKey.length > 0);
+
+    void Promise.all(
+      uniqueEntryKeys.map(async (entryKey) => {
+        const entry = await getGreekLemmaEntry(entryKey);
+        return entry ? ([entryKey, entry] as const) : null;
+      })
+    ).then((results) => {
+      if (isCancelled) {
+        return;
+      }
+
+      setEntriesByKey(
+        Object.fromEntries(
+          results.filter(
+            (result): result is readonly [string, GreekLemmaEntry] => result !== null
+          )
+        )
+      );
+    });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [greekTokens]);
 
   const translation = useMemo(
     () =>
@@ -63,9 +103,20 @@ export function VerseTranslationEditor({
         chapterNumber,
         verseNumber,
         greekTokens,
-        (occurrenceKey) => getOverride(occurrenceKey)?.selectedGloss?.trim() ?? ""
+        (occurrenceKey, token) => {
+          const entryKey = token.entryKey ?? token.strongs ?? null;
+          const entry = entryKey ? entriesByKey[entryKey] ?? null : null;
+          const override = getOverride(occurrenceKey);
+          const lemmaPreference = getLemmaDefault({
+            entryKey: token.entryKey,
+            strongs: token.strongs,
+            lemma: token.lemma
+          });
+
+          return resolveGreekTokenGloss(token, entry, override, lemmaPreference);
+        }
       ),
-    [bookSlug, chapterNumber, getOverride, greekTokens, verseNumber]
+    [bookSlug, chapterNumber, entriesByKey, getLemmaDefault, getOverride, greekTokens, verseNumber]
   );
 
   if (!translation) {

@@ -629,6 +629,9 @@ export type GreekInflectedForm = {
   morphology: string;
   decodedMorphology?: string;
   definition?: string;
+  translationGloss?: string;
+  translationSource?: "generated" | "override";
+  translationTemplate?: string;
 };
 
 export type GreekGlossOption = {

@@ -725,15 +725,32 @@ async function loadGreekBookPayload(bookSlug: string) {
   return payloadPromise;
 }
 
-function findSelectedForm(entry: GreekLemmaEntry, selectedFormValue: string | undefined) {
+function findSelectedForm(
+  entry: GreekLemmaEntry,
+  selectedFormValue: string | undefined,
+  selectedMorphology?: string | null
+) {
   if (!selectedFormValue) {
     return undefined;
   }
 
   const normalizedSelectedForm = normalizeGreekFormLookupValue(selectedFormValue);
-
-  return entry.forms.find(
+  const exactSelectedForm = selectedFormValue.normalize("NFC");
+  const matchingForms = entry.forms.filter(
     (form) => normalizeGreekFormLookupValue(form.form) === normalizedSelectedForm
+  );
+  const exactMatchingForms = matchingForms.filter(
+    (form) => form.form.normalize("NFC") === exactSelectedForm
+  );
+  const candidateForms = exactMatchingForms.length > 0 ? exactMatchingForms : matchingForms;
+
+  if (!selectedMorphology?.trim()) {
+    return candidateForms[0];
+  }
+
+  return (
+    candidateForms.find((form) => form.morphology === selectedMorphology.trim()) ??
+    candidateForms[0]
   );
 }
 
@@ -1151,6 +1168,159 @@ export function getGreekGlossOptions(
     .slice(0, 12);
 }
 
+function applyGreekFormTranslationTemplate(
+  template: string | undefined,
+  baseGloss: string | null | undefined
+) {
+  const gloss = sanitizeGlossCandidate(baseGloss ?? "");
+
+  if (!gloss) {
+    return "";
+  }
+
+  if (template === "case:genitive") {
+    return `of ${gloss}`;
+  }
+
+  if (template === "case:dative") {
+    return `to/for ${gloss}`;
+  }
+
+  if (template === "case:vocative") {
+    return `O ${gloss}`;
+  }
+
+  if (template === "verb:infinitive") {
+    return /^to\s+/i.test(gloss) ? gloss : `to ${gloss}`;
+  }
+
+  if (template?.startsWith("verb:finite:")) {
+    const subject = {
+      "first-singular": "I",
+      "second-singular": "you",
+      "third-singular": "he/she/it",
+      "first-plural": "we",
+      "second-plural": "you all",
+      "third-plural": "they"
+    }[template.replace("verb:finite:", "")];
+
+    return subject ? `${subject} ${gloss}` : gloss;
+  }
+
+  return gloss;
+}
+
+export function getGreekFormTranslationGloss(
+  token: Pick<GreekToken, "gloss"> &
+    Partial<Pick<GreekToken, "surface" | "morphology" | "decodedMorphology">>,
+  entry: GreekLemmaEntry | null,
+  lemmaPreference?: GreekLemmaGlossPreference | null
+) {
+  if (!entry || !token.surface?.trim()) {
+    return null;
+  }
+
+  const selectedForm = findSelectedForm(entry, token.surface, token.morphology);
+
+  if (!selectedForm) {
+    return null;
+  }
+
+  const preferredBaseGloss = getPreferredSingleWordGlossCandidate(
+    lemmaPreference?.selectedGloss,
+    {
+      preferSingleMeaning: true
+    }
+  );
+
+  if (preferredBaseGloss && selectedForm.translationTemplate) {
+    const templatedGloss = applyGreekFormTranslationTemplate(
+      selectedForm.translationTemplate,
+      preferredBaseGloss
+    );
+
+    if (templatedGloss) {
+      return templatedGloss;
+    }
+  }
+
+  return selectedForm.translationGloss?.trim() || null;
+}
+
+function getGreekTokenTranslationTemplate(
+  token: Pick<GreekToken, "morphology" | "decodedMorphology">
+) {
+  const details = getGreekMorphologyDetails(token);
+
+  if (!details) {
+    return null;
+  }
+
+  const partOfSpeech = details.terms.find((term) => term.group === "part-of-speech")?.key ?? null;
+
+  if (partOfSpeech === "verb") {
+    if (details.terms.some((term) => term.key === "infinitive")) {
+      return "verb:infinitive";
+    }
+
+    if (details.terms.some((term) => term.key === "participle")) {
+      return "base";
+    }
+
+    const person = details.terms.find((term) => term.group === "person")?.key ?? null;
+    const number = details.terms.find((term) => term.group === "number")?.key ?? null;
+
+    if (person && number) {
+      return `verb:finite:${person.replace("-person", "")}-${number}`;
+    }
+
+    return "base";
+  }
+
+  const caseValue = details.terms.find((term) => term.group === "case")?.key ?? null;
+
+  if (caseValue === "genitive") {
+    return "case:genitive";
+  }
+
+  if (caseValue === "dative") {
+    return "case:dative";
+  }
+
+  if (caseValue === "vocative") {
+    return "case:vocative";
+  }
+
+  return caseValue ? "base" : null;
+}
+
+function getGreekTokenGeneratedTranslationGloss(
+  token: Pick<GreekToken, "gloss"> &
+    Partial<Pick<GreekToken, "morphology" | "decodedMorphology">>,
+  lemmaPreference?: GreekLemmaGlossPreference | null
+) {
+  const template = getGreekTokenTranslationTemplate(token);
+
+  if (!template) {
+    return null;
+  }
+
+  const baseGloss =
+    getPreferredSingleWordGlossCandidate(lemmaPreference?.selectedGloss, {
+      preferSingleMeaning: true
+    }) ??
+    getPreferredSingleWordGlossCandidate(token.gloss, {
+      preferSingleMeaning: true
+    }) ??
+    getPreferredSingleWordGlossCandidate(token.gloss);
+
+  if (!baseGloss) {
+    return null;
+  }
+
+  return applyGreekFormTranslationTemplate(template, baseGloss) || null;
+}
+
 export function getGreekMorphologyDetails(
   token: Pick<GreekToken, "decodedMorphology" | "morphology">
 ): GreekMorphologyDetails | null {
@@ -1180,13 +1350,26 @@ export function getGreekMorphologyDetails(
 }
 
 export function resolveGreekTokenGloss(
-  token: Pick<GreekToken, "gloss">,
+  token: Pick<GreekToken, "gloss"> &
+    Partial<Pick<GreekToken, "surface" | "morphology" | "decodedMorphology">>,
   entry: GreekLemmaEntry | null,
   override?: GreekTokenGlossOverride | null,
   lemmaPreference?: GreekLemmaGlossPreference | null
 ) {
   if (override?.selectedGloss?.trim()) {
     return override.selectedGloss.trim();
+  }
+
+  const formTranslationGloss = getGreekFormTranslationGloss(token, entry, lemmaPreference);
+
+  if (formTranslationGloss) {
+    return formTranslationGloss;
+  }
+
+  const generatedTokenGloss = getGreekTokenGeneratedTranslationGloss(token, lemmaPreference);
+
+  if (generatedTokenGloss) {
+    return generatedTokenGloss;
   }
 
   if (lemmaPreference?.selectedGloss?.trim()) {
@@ -1492,7 +1675,7 @@ export async function getGreekDictionaryMatchForToken(token: GreekToken): Promis
 
   return {
     entry,
-    selectedForm: findSelectedForm(entry, token.surface),
+    selectedForm: findSelectedForm(entry, token.surface, token.morphology),
     selectedFormValue: token.surface,
     matchType: "form"
   };

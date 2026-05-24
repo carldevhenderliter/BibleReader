@@ -11,6 +11,7 @@ import {
   getGreekLemmaEntry,
   getGreekMorphologyDetails,
   getGreekTokenOccurrenceKey,
+  resolveGreekTokenGloss,
   transliterateGreekSurface
 } from "@/lib/bible/greek";
 import { buildGreekGrammarInfos } from "@/lib/bible/greek-grammar";
@@ -44,7 +45,7 @@ export function GreekInterlinearLine({
   showExpandedGrammarDetails = false
 }: GreekInterlinearLineProps) {
   const { isGreekLearningMode, openGreekGrammarDetails } = useReaderWorkspace();
-  const { clearOverride, getOverride, saveOverride } = useGreekGlossOverrides();
+  const { clearOverride, getLemmaDefault, getOverride, saveOverride } = useGreekGlossOverrides();
   const [entriesByKey, setEntriesByKey] = useState<Record<string, GreekLemmaEntry>>({});
   const greekLearningSelections = useMemo(
     () =>
@@ -178,10 +179,17 @@ export function GreekInterlinearLine({
           tokenWithOccurrenceKey,
           tokenIndex,
           occurrenceKey,
+          entry,
           override
         }) => {
           const partOfSpeechLabel = getPartOfSpeechLabel(token);
           const savedGloss = override?.selectedGloss?.trim() ?? "";
+          const lemmaPreference = getLemmaDefault({
+            entryKey: token.entryKey,
+            strongs: token.strongs,
+            lemma: token.lemma
+          });
+          const defaultGloss = resolveGreekTokenGloss(token, entry, override, lemmaPreference);
           const grammarInfo = grammarInfos[tokenIndex] ?? null;
           const dictionarySelection = {
             entryKey: token.entryKey ?? token.strongs ?? token.lemma,
@@ -245,6 +253,7 @@ export function GreekInterlinearLine({
                   onChange={(event) =>
                     handleGlossChange(occurrenceKey, token, event.currentTarget.value)
                   }
+                  placeholder={defaultGloss}
                   type="text"
                   value={override?.selectedGloss ?? ""}
                 />

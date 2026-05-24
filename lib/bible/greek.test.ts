@@ -1,5 +1,6 @@
 import {
   buildGreekLearningQuiz,
+  getGreekFormTranslationGloss,
   getGreekGlossOptions,
   getGreekLemmaEntry,
   getGreekMorphologyDetails,
@@ -36,6 +37,36 @@ describe("Greek dictionary lookup", () => {
         })
       ])
     );
+  });
+
+  it("loads generated grammar-aware translation glosses for Greek forms", async () => {
+    const entry = await getGreekLemmaEntry("G746");
+    const genitiveForm = entry?.forms.find(
+      (form) => form.form === "ἀρχῆς" && form.morphology === "N-GSF"
+    );
+    const dativeForm = entry?.forms.find(
+      (form) => form.form === "ἀρχαῖς" && form.morphology === "N-DPF"
+    );
+    const verbEntry = await getGreekLemmaEntry("G1080");
+    const infinitiveForm = verbEntry?.forms.find(
+      (form) => form.form === "γεννηθῆναι" && form.morphology === "V-APN"
+    );
+
+    expect(genitiveForm).toMatchObject({
+      translationGloss: "of beginning",
+      translationSource: "override",
+      translationTemplate: "case:genitive"
+    });
+    expect(dativeForm).toMatchObject({
+      translationGloss: "to/for beginning",
+      translationSource: "generated",
+      translationTemplate: "case:dative"
+    });
+    expect(infinitiveForm).toMatchObject({
+      translationGloss: "to be born",
+      translationSource: "generated",
+      translationTemplate: "verb:infinitive"
+    });
   });
 
   it("resolves inflected forms back to the lemma entry", async () => {
@@ -124,7 +155,7 @@ describe("Greek dictionary lookup", () => {
       gloss: "beginning"
     };
 
-    expect(resolveGreekTokenGloss(token, entry, null)).toBe("beginning");
+    expect(resolveGreekTokenGloss(token, entry, null)).toBe("of beginning");
     expect(
       resolveGreekTokenGloss(token, entry, {
         occurrenceKey: "john:1:1:1",
@@ -146,7 +177,28 @@ describe("Greek dictionary lookup", () => {
           source: "lemma-option"
         }
       )
-    ).toBe("origin");
+    ).toBe("of origin");
+  });
+
+  it("applies form translation templates to lemma gloss preferences", async () => {
+    const entry = await getGreekLemmaEntry("G746");
+
+    expect(
+      getGreekFormTranslationGloss(
+        {
+          surface: "ἀρχῆς",
+          morphology: "N-GSF",
+          gloss: "beginning"
+        },
+        entry,
+        {
+          strongs: "G746",
+          lemma: "ἀρχή",
+          selectedGloss: "origin",
+          source: "lemma-option"
+        }
+      )
+    ).toBe("of origin");
   });
 
   it("reduces multi-word default glosses to a single head word until overridden", async () => {
@@ -158,7 +210,7 @@ describe("Greek dictionary lookup", () => {
       gloss: "of the beginning"
     };
 
-    expect(resolveGreekTokenGloss(token, entry, null)).toBe("beginning");
+    expect(resolveGreekTokenGloss(token, entry, null)).toBe("of beginning");
   });
 
   it("prefers a cleaner lemma gloss when a token gloss is just a list of alternatives", async () => {
@@ -170,7 +222,7 @@ describe("Greek dictionary lookup", () => {
       gloss: "origin; beginning"
     };
 
-    expect(resolveGreekTokenGloss(token, entry, null)).toBe("beginning");
+    expect(resolveGreekTokenGloss(token, entry, null)).toBe("to/for beginning");
   });
 
   it("keeps proper names as the displayed one-word gloss", async () => {

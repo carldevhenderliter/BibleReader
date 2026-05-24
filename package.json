@@ -9,6 +9,7 @@
     "start": "next start",
     "test": "jest --config jest.config.js",
     "test:watch": "jest --config jest.config.js --watch",
+    "build:greek-form-translations": "node scripts/build-greek-form-translations.mjs",
     "import:bible": "node scripts/import-bible.mjs",
     "import:greek": "node scripts/import-greek.mjs",
     "import:tr": "node scripts/import-textus-receptus.mjs",

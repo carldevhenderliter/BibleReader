@@ -732,6 +732,46 @@ describe("VerseList", () => {
     expect(screen.queryByText("Your translation")).not.toBeInTheDocument();
   });
 
+  it("builds my translation from grammar-aware Greek form glosses", async () => {
+    renderWithReaderCustomization(
+      <VerseList
+        bookSlug="john"
+        chapterNumber={1}
+        interlinearVerseMap={{
+          1: {
+            number: 1,
+            baseGreek: "ἀρχῆς.",
+            greek: "ἀρχῆς.",
+            tokens: [
+              {
+                surface: "ἀρχῆς",
+                lemma: "ἀρχή",
+                strongs: "G746",
+                morphology: "N-GSF",
+                decodedMorphology: "noun genitive singular feminine",
+                gloss: "beginning",
+                trailingPunctuation: "."
+              }
+            ]
+          }
+        }}
+        verses={[
+          {
+            number: 1,
+            text: "Of beginning."
+          }
+        ]}
+      />
+    );
+
+    expect(await screen.findByText("Your translation")).toBeInTheDocument();
+    expect(await screen.findByText("of beginning.", {}, { timeout: 10000 })).toBeInTheDocument();
+    expect(await screen.findByLabelText("English gloss for ἀρχῆς", {}, { timeout: 10000 })).toHaveAttribute(
+      "placeholder",
+      "of beginning"
+    );
+  }, 15000);
+
   it("can hide verse text, custom verse translation, and selected Greek sub-lines independently", async () => {
     const { container } = renderWithReaderCustomization(
       <VerseList
