@@ -3473,6 +3473,8 @@ button.fathers-annotation-anchor:focus-visible {
   display: inline-block;
   flex: 0 0 auto;
   max-width: 100%;
+  direction: ltr;
+  text-align: left;
   vertical-align: top;
 }
 
@@ -3489,6 +3491,7 @@ button.fathers-annotation-anchor:focus-visible {
   border-radius: 0.72rem;
   background: rgba(32, 53, 76, 0.24);
   color: rgba(240, 247, 255, 0.98);
+  direction: ltr;
   font: inherit;
   line-height: 1.12;
   text-align: center;
@@ -3528,13 +3531,16 @@ button.fathers-annotation-anchor:focus-visible {
   justify-items: center;
   width: 100%;
   min-width: 0;
+  direction: ltr;
 }
 
 .verse-hebrew-token-surface {
   color: rgba(240, 247, 255, 0.98);
+  direction: rtl;
   font-size: max(0.96rem, calc(var(--reader-hebrew-text-size) * 0.96));
   line-height: 1.16;
   overflow-wrap: anywhere;
+  unicode-bidi: isolate;
 }
 
 .verse-hebrew-token-strongs,
@@ -3560,10 +3566,12 @@ button.fathers-annotation-anchor:focus-visible {
 
 .verse-hebrew-token-lemma {
   color: rgba(198, 215, 235, 0.72);
+  direction: rtl;
   font-family: var(--reader-hebrew-font);
   font-size: max(0.72rem, calc(var(--reader-body-text-size) * 0.76));
   line-height: 1.18;
   overflow-wrap: anywhere;
+  unicode-bidi: isolate;
 }
 
 .verse-hebrew-token-gloss {
@@ -3866,10 +3874,11 @@ button.fathers-annotation-anchor:focus-visible {
     0 14px 28px rgba(0, 0, 0, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.04);
   color: rgba(245, 249, 255, 0.96);
+  direction: ltr;
   font-family: var(--reader-ui-font);
   font-size: 0.84rem;
   line-height: 1.55;
-  text-align: start;
+  text-align: left;
 }
 
 .greek-grammar-card-quick,
@@ -3879,6 +3888,8 @@ button.fathers-annotation-anchor:focus-visible {
 .greek-grammar-card-details {
   display: grid;
   gap: 0.48rem;
+  direction: ltr;
+  text-align: left;
 }
 
 .greek-grammar-card-kicker,
@@ -3933,9 +3944,12 @@ button.fathers-annotation-anchor:focus-visible {
 }
 
 .greek-grammar-card-greek:lang(he) {
+  display: inline-block;
   font-family: var(--reader-hebrew-font);
   font-size: 1.08rem;
   direction: rtl;
+  text-align: right;
+  unicode-bidi: isolate;
 }
 
 .greek-grammar-card-toggle {

@@ -94,7 +94,7 @@ export function HebrewVerseTextContent({
     : null;
 
   return (
-    <div className={className ?? "verse-text verse-text-hebrew"} dir="rtl" lang="he">
+    <div className={className ?? "verse-text verse-text-hebrew"} dir="ltr">
       <div className="verse-text-hebrew-line">
         {verse.hebrewTokens.map((token, index) => {
           const normalizedTokenStrongs = token.strongs
