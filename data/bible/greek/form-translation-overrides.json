@@ -2,5 +2,73 @@
   "G746|αρχησ|N-GSF": {
     "translationGloss": "of beginning",
     "note": "Prefer the common reader gloss for the genitive form of ἀρχή."
+  },
+  "G2424|ιησουν|N-ASM": {
+    "translationGloss": "Jesus",
+    "note": "Imported from greek-gloss-export-2026-05-24T23-01-29-991Z.json (zechariah:3:1:3)."
+  },
+  "G5547|χριστου|N-GSM": {
+    "translationGloss": "Christ",
+    "note": "Imported from greek-gloss-export-2026-05-24T23-01-29-991Z.json (james:1:1:5)."
+  },
+  "G1722|εν|P": {
+    "translationGloss": "in",
+    "note": "Imported from greek-gloss-export-2026-05-24T23-01-29-991Z.json (john:1:1:0)."
+  },
+  "G3588|ο|RA-NSM": {
+    "translationGloss": "the",
+    "note": "Imported from greek-gloss-export-2026-05-24T23-01-29-991Z.json (john:1:1:15)."
+  },
+  "G3056|λογοσ|N-NSM": {
+    "translationGloss": "word",
+    "note": "Imported from greek-gloss-export-2026-05-24T23-01-29-991Z.json (john:1:1:16)."
+  },
+  "G2532|και|C": {
+    "translationGloss": "and",
+    "note": "Imported from greek-gloss-export-2026-05-24T23-01-29-991Z.json (james:1:1:2)."
+  },
+  "G746|αρχη|N-DSF": {
+    "translationGloss": "the beginning",
+    "note": "Imported from greek-gloss-export-2026-05-24T23-01-29-991Z.json (john:1:1:1)."
+  },
+  "G1510|ην|V-3IAI-S": {
+    "translationGloss": "was",
+    "note": "Imported from greek-gloss-export-2026-05-24T23-01-29-991Z.json (john:1:1:14)."
+  },
+  "G4314|προσ|P": {
+    "translationGloss": "with",
+    "note": "Imported from greek-gloss-export-2026-05-24T23-01-29-991Z.json (john:1:1:9)."
+  },
+  "G3588|τον|RA-ASM": {
+    "translationGloss": "the",
+    "note": "Imported from greek-gloss-export-2026-05-24T23-01-29-991Z.json (john:1:1:10)."
+  },
+  "G2316|θεον|N-ASM": {
+    "translationGloss": "God",
+    "note": "Imported from greek-gloss-export-2026-05-24T23-01-29-991Z.json (john:1:1:11)."
+  },
+  "G2316|θεοσ|N-NSM": {
+    "translationGloss": "God",
+    "note": "Imported from greek-gloss-export-2026-05-24T23-01-29-991Z.json (john:1:1:13)."
+  },
+  "G2385|ιακωβοσ|N-NSM": {
+    "translationGloss": "James",
+    "note": "Imported from greek-gloss-export-2026-05-24T23-01-29-991Z.json (james:1:1:0)."
+  },
+  "G2316|θεου|N-GSM": {
+    "translationGloss": "of God",
+    "note": "Imported from greek-gloss-export-2026-05-24T23-01-29-991Z.json (james:1:1:1)."
+  },
+  "G2962|κυριου|N-GSM": {
+    "translationGloss": "Lord",
+    "note": "Imported from greek-gloss-export-2026-05-24T23-01-29-991Z.json (james:1:1:3)."
+  },
+  "G2424|ιησου|N-GSM": {
+    "translationGloss": "Jesus",
+    "note": "Imported from greek-gloss-export-2026-05-24T23-01-29-991Z.json (james:1:1:4)."
+  },
+  "G1401|δουλοσ|N-NSM": {
+    "translationGloss": "Servant",
+    "note": "Imported from greek-gloss-export-2026-05-24T23-01-29-991Z.json (james:1:1:6)."
   }
 }
