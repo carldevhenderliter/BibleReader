@@ -5652,6 +5652,12 @@ button.fathers-annotation-anchor:focus-visible {
   text-transform: uppercase;
 }
 
+.reader-settings-status {
+  margin: 0;
+  color: var(--reader-meta-text);
+  font-size: 0.82rem;
+}
+
 .settings-option-grid {
   display: grid;
   gap: 0.5rem;

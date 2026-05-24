@@ -17,6 +17,22 @@ import type {
 
 export const GREEK_GLOSS_OVERRIDES_STORAGE_KEY = "bible-reader:greek-gloss-overrides";
 export const GREEK_GLOSS_DEFAULTS_STORAGE_KEY = "bible-reader:greek-gloss-defaults";
+export const GREEK_GLOSS_EXPORT_SCHEMA = "bible-reader.greek-gloss-export";
+export const GREEK_GLOSS_EXPORT_VERSION = 1;
+
+export type GreekGlossExportPayload = {
+  schema: typeof GREEK_GLOSS_EXPORT_SCHEMA;
+  version: typeof GREEK_GLOSS_EXPORT_VERSION;
+  exportedAt: string;
+  overrides: Record<string, GreekTokenGlossOverride>;
+  lemmaDefaults: Record<string, GreekLemmaGlossPreference>;
+};
+
+export type GreekGlossExportDownloadResult = {
+  fileName: string;
+  overrideCount: number;
+  lemmaDefaultCount: number;
+};
 
 type GreekGlossOverridesContextValue = {
   getOverride: (occurrenceKey: string) => GreekTokenGlossOverride | null;
@@ -129,6 +145,111 @@ function normalizeGreekLemmaGlossPreferenceStorage(
     };
     return normalized;
   }, {});
+}
+
+export function buildGreekGlossExportPayload(
+  overrides: Record<string, GreekTokenGlossOverride>,
+  lemmaDefaults: Record<string, GreekLemmaGlossPreference>,
+  exportedAt = new Date().toISOString()
+): GreekGlossExportPayload {
+  return {
+    schema: GREEK_GLOSS_EXPORT_SCHEMA,
+    version: GREEK_GLOSS_EXPORT_VERSION,
+    exportedAt,
+    overrides: normalizeGreekGlossOverrideStorage(overrides),
+    lemmaDefaults: normalizeGreekLemmaGlossPreferenceStorage(lemmaDefaults)
+  };
+}
+
+export function normalizeGreekGlossExportPayload(
+  value: unknown
+): GreekGlossExportPayload | null {
+  if (!value || typeof value !== "object") {
+    return null;
+  }
+
+  const candidate = value as Partial<GreekGlossExportPayload>;
+
+  if (
+    candidate.schema !== GREEK_GLOSS_EXPORT_SCHEMA ||
+    candidate.version !== GREEK_GLOSS_EXPORT_VERSION ||
+    typeof candidate.exportedAt !== "string"
+  ) {
+    return null;
+  }
+
+  return buildGreekGlossExportPayload(
+    normalizeGreekGlossOverrideStorage(candidate.overrides),
+    normalizeGreekLemmaGlossPreferenceStorage(candidate.lemmaDefaults),
+    candidate.exportedAt
+  );
+}
+
+function readGreekGlossStorage<T>(
+  storageKey: string,
+  normalize: (value: unknown) => T,
+  fallback: T
+) {
+  if (typeof window === "undefined") {
+    return fallback;
+  }
+
+  try {
+    const stored = window.localStorage.getItem(storageKey);
+
+    return stored ? normalize(JSON.parse(stored)) : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function getGreekGlossExportFileName(exportedAt: Date) {
+  const timestamp = exportedAt.toISOString().replace(/[:.]/g, "-");
+
+  return `greek-gloss-export-${timestamp}.json`;
+}
+
+export function downloadGreekGlossExportFile(
+  exportedAt = new Date()
+): GreekGlossExportDownloadResult | null {
+  if (typeof window === "undefined" || typeof document === "undefined") {
+    return null;
+  }
+
+  const overrides = readGreekGlossStorage(
+    GREEK_GLOSS_OVERRIDES_STORAGE_KEY,
+    normalizeGreekGlossOverrideStorage,
+    {}
+  );
+  const lemmaDefaults = readGreekGlossStorage(
+    GREEK_GLOSS_DEFAULTS_STORAGE_KEY,
+    normalizeGreekLemmaGlossPreferenceStorage,
+    {}
+  );
+  const payload = buildGreekGlossExportPayload(
+    overrides,
+    lemmaDefaults,
+    exportedAt.toISOString()
+  );
+  const fileName = getGreekGlossExportFileName(exportedAt);
+  const blob = new Blob([`${JSON.stringify(payload, null, 2)}\n`], {
+    type: "application/json"
+  });
+  const objectUrl = window.URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+
+  anchor.href = objectUrl;
+  anchor.download = fileName;
+  document.body.append(anchor);
+  anchor.click();
+  anchor.remove();
+  window.URL.revokeObjectURL(objectUrl);
+
+  return {
+    fileName,
+    overrideCount: Object.keys(payload.overrides).length,
+    lemmaDefaultCount: Object.keys(payload.lemmaDefaults).length
+  };
 }
 
 export function GreekGlossOverridesProvider({ children }: PropsWithChildren) {

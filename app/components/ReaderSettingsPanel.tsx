@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
+import { downloadGreekGlossExportFile } from "@/app/components/GreekGlossOverridesProvider";
 import { useMobilePreview } from "@/app/components/MobilePreviewProvider";
 import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
@@ -157,6 +158,7 @@ export function ReaderSettingsPanel({
   const { version, setVersion } = useReaderVersion();
   const pathname = usePathname();
   const closeButtonRef = useRef<HTMLButtonElement | null>(null);
+  const [greekGlossExportStatus, setGreekGlossExportStatus] = useState<string | null>(null);
   const versionOptions = getBibleVersionOptions();
   const isFathersMode = mode === "fathers";
   const isReaderRoute = isReaderRoutePath(pathname);
@@ -237,6 +239,23 @@ export function ReaderSettingsPanel({
     }
 
     setVersion(nextVersion);
+  };
+
+  const handleGreekGlossExport = () => {
+    const result = downloadGreekGlossExportFile();
+
+    if (!result) {
+      setGreekGlossExportStatus("Greek gloss export is only available in the browser.");
+      return;
+    }
+
+    const wordGlossLabel = result.overrideCount === 1 ? "word gloss" : "word glosses";
+    const lemmaDefaultLabel =
+      result.lemmaDefaultCount === 1 ? "lemma default" : "lemma defaults";
+
+    setGreekGlossExportStatus(
+      `Exported ${result.overrideCount} ${wordGlossLabel} and ${result.lemmaDefaultCount} ${lemmaDefaultLabel}.`
+    );
   };
 
   const isQuickGreekInterlinearEnabled =
@@ -874,6 +893,19 @@ export function ReaderSettingsPanel({
                     Keep saved glosses visible. Turn this on when you want to edit the glosses inline.
                   </span>
                 </button>
+                {originalLanguageLabel === "Greek" ? (
+                  <button
+                    className="settings-option-card"
+                    key="exportGreekGlosses"
+                    onClick={handleGreekGlossExport}
+                    type="button"
+                  >
+                    <strong>Export Greek glosses</strong>
+                    <span>
+                      Download your saved Greek word glosses and lemma defaults as a JSON file.
+                    </span>
+                  </button>
+                ) : null}
                 <button
                   className={`settings-option-card${
                     settings.showGreekGrammarCards ? " is-active" : ""
@@ -1008,6 +1040,11 @@ export function ReaderSettingsPanel({
                   </button>
                 ) : null}
             </div>
+            {greekGlossExportStatus ? (
+              <p className="reader-settings-status" role="status">
+                {greekGlossExportStatus}
+              </p>
+            ) : null}
             {!isFathersMode && availableSecondaryVersions.length > 0 ? (
               <div className="reader-settings-field-grid">
                 <div className="reader-settings-field">
