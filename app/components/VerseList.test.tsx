@@ -1075,6 +1075,65 @@ describe("VerseList", () => {
     expect(await within(studyPane).findByText("H7225")).toBeInTheDocument();
   });
 
+  it("opens Hebrew grammar details and exact-form verses from a Masoretic token", async () => {
+    window.localStorage.setItem(READER_VERSION_STORAGE_KEY, "mt");
+    window.history.replaceState({}, "", "http://localhost/read/genesis/1?version=mt");
+
+    renderWithReaderCustomization(
+      <>
+        <VerseList
+          bookSlug="genesis"
+          chapterNumber={1}
+          showGreekGloss
+          showGreekGrammarCards
+          showGreekLemma
+          showGreekTransliteration
+          showVerseStrongs
+          verses={[
+            {
+              number: 1,
+              text: "בראשית ברא אלהים",
+              hebrewTokens: [
+                {
+                  surface: "בראשית",
+                  lemma: "רֵאשִׁית",
+                  strongs: "H7225",
+                  morphology: "Ncfsa",
+                  decodedMorphology: "feminine noun",
+                  transliteration: "rē'šîṯ",
+                  gloss: "beginning"
+                }
+              ]
+            }
+          ]}
+        />
+        <LookupPane />
+      </>
+    );
+
+    fireEvent.click(await screen.findByRole("button", { name: /בראשית.*H7225/i }));
+
+    await waitFor(() => {
+      expect(screen.getByRole("tab", { name: "Grammar" })).toHaveAttribute("aria-selected", "true");
+    });
+
+    const studyPane = screen.getByLabelText("Study pane");
+    expect(within(studyPane).getByText("Hebrew grammar")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Full morphology")).toBeInTheDocument();
+    expect(within(studyPane).getAllByText("feminine noun").length).toBeGreaterThan(0);
+    expect(within(studyPane).getByText("Selected Form")).toBeInTheDocument();
+    expect(within(studyPane).getByText("בראשית")).toBeInTheDocument();
+
+    fireEvent.click(within(studyPane).getByRole("tab", { name: "Verses" }));
+
+    expect(await within(studyPane).findByText("Bible Verses With This Form")).toBeInTheDocument();
+    expect(within(studyPane).getByRole("button", { name: "Old Testament" })).toHaveAttribute(
+      "aria-pressed",
+      "true"
+    );
+    expect(await within(studyPane).findByText("Genesis 1:1")).toBeInTheDocument();
+  });
+
   it("renders Greek interlinear tokens and opens the Greek dictionary from a clicked form", async () => {
     renderWithReaderCustomization(
       <>

@@ -4,10 +4,12 @@ import { useEffect, useMemo, useState } from "react";
 
 import { GreekGrammarDetailsContent } from "@/app/components/GreekGrammarCard";
 import { GreekVerseTextContent } from "@/app/components/GreekVerseTextContent";
+import { HebrewVerseTextContent } from "@/app/components/HebrewVerseTextContent";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { VerseTextContent } from "@/app/components/VerseTextContent";
 import { getBookTestamentBySlug } from "@/lib/bible/book-order";
 import { getGreekVerseOccurrences, normalizeGreekFormLookupValue } from "@/lib/bible/greek";
+import { getHebrewVerseOccurrences } from "@/lib/bible/hebrew";
 import { getStrongsEnglishHighlightPhrases } from "@/lib/bible/strongs-highlighting";
 import {
   getVerseEntriesForVersion,
@@ -57,6 +59,17 @@ function getDefaultGrammarVerseVersions(availableVersions: readonly BundledBible
   return availableVersions.slice(0, 1);
 }
 
+function getDefaultGrammarVerseVersionsForLanguage(
+  language: "greek" | "hebrew",
+  availableVersions: readonly BundledBibleVersion[]
+) {
+  if (language === "hebrew" && availableVersions.includes("mt")) {
+    return ["mt"] satisfies BundledBibleVersion[];
+  }
+
+  return getDefaultGrammarVerseVersions(availableVersions);
+}
+
 function doesFathersMatchSelectedForm(
   match: FathersLemmaMatch,
   entryKey: string,
@@ -103,16 +116,25 @@ function getBibleScopeEmptyMessage(scope: GreekGrammarVerseScope) {
   return "No New Testament Bible verses found with this exact form.";
 }
 
+function getSelectionLanguage(selection: { language?: "greek" | "hebrew" | null }) {
+  return selection.language === "hebrew" ? "hebrew" : "greek";
+}
+
 export function ReaderGreekGrammarPanel() {
   const {
     activeGreekGrammarSelection,
     openGreekDictionaryInCurrentPane,
     openStrongsInCurrentPane
   } = useReaderWorkspace();
+  const selectionLanguage = activeGreekGrammarSelection
+    ? getSelectionLanguage(activeGreekGrammarSelection)
+    : "greek";
+  const sourceVerseVersion: BundledBibleVersion =
+    selectionLanguage === "hebrew" ? "mt" : "greek";
   const installedVersions = useMemo(() => getInstalledBundledBibleVersions(), []);
   const defaultVerseVersions = useMemo(
-    () => getDefaultGrammarVerseVersions(installedVersions),
-    [installedVersions]
+    () => getDefaultGrammarVerseVersionsForLanguage(selectionLanguage, installedVersions),
+    [installedVersions, selectionLanguage]
   );
   const [exactFormVerses, setExactFormVerses] = useState<ExactFormVerseState>({
     status: "idle",
@@ -147,13 +169,19 @@ export function ReaderGreekGrammarPanel() {
 
     let isCancelled = false;
     const { entryKey, selectedForm } = activeGreekGrammarSelection;
+    const activeLanguage = getSelectionLanguage(activeGreekGrammarSelection);
 
     setExactFormVerses({
       status: "loading",
       matches: []
     });
 
-    void getGreekVerseOccurrences(entryKey, selectedForm).then((matches) => {
+    const lookupPromise =
+      activeLanguage === "hebrew"
+        ? getHebrewVerseOccurrences(entryKey, selectedForm)
+        : getGreekVerseOccurrences(entryKey, selectedForm);
+
+    void lookupPromise.then((matches) => {
       if (isCancelled) {
         return;
       }
@@ -167,12 +195,25 @@ export function ReaderGreekGrammarPanel() {
     return () => {
       isCancelled = true;
     };
-  }, [activeGreekGrammarSelection?.entryKey, exactFormLookupKey, activeGreekGrammarSelection?.selectedForm]);
+  }, [
+    activeGreekGrammarSelection,
+    activeGreekGrammarSelection?.entryKey,
+    exactFormLookupKey,
+    activeGreekGrammarSelection?.selectedForm
+  ]);
 
   useEffect(() => {
     if (!activeGreekGrammarSelection?.selectedForm || selectedVerseScope !== "early-fathers") {
       setExactFormFathers({
         status: "idle",
+        matches: []
+      });
+      return;
+    }
+
+    if (getSelectionLanguage(activeGreekGrammarSelection) === "hebrew") {
+      setExactFormFathers({
+        status: "loaded",
         matches: []
       });
       return;
@@ -251,8 +292,8 @@ export function ReaderGreekGrammarPanel() {
   useEffect(() => {
     setSelectedVerseVersions(defaultVerseVersions);
     setParallelVerseEntries({});
-    setSelectedVerseScope("new-testament");
-  }, [defaultVerseVersions, exactFormLookupKey]);
+    setSelectedVerseScope(selectionLanguage === "hebrew" ? "old-testament" : "new-testament");
+  }, [defaultVerseVersions, exactFormLookupKey, selectionLanguage]);
 
   useEffect(() => {
     if (!activeGreekGrammarSelection?.selectedForm && activeTab === "verses") {
@@ -261,7 +302,7 @@ export function ReaderGreekGrammarPanel() {
   }, [activeGreekGrammarSelection?.selectedForm, activeTab]);
 
   useEffect(() => {
-    const versionsToLoad = selectedVerseVersions.filter((version) => version !== "greek");
+    const versionsToLoad = selectedVerseVersions.filter((version) => version !== sourceVerseVersion);
 
     if (
       exactFormVerses.status !== "loaded" ||
@@ -318,6 +359,7 @@ export function ReaderGreekGrammarPanel() {
     exactFormVerses.status,
     selectedVerseVersions,
     selectedVerseScope,
+    sourceVerseVersion,
     visibleExactFormAnchors
   ]);
 
@@ -325,17 +367,19 @@ export function ReaderGreekGrammarPanel() {
     return (
       <div className="lookup-panel-empty">
         <p className="search-empty-copy">
-          Open a Greek word and use More to view its grammar details here.
+          Open a Greek or Hebrew word and use grammar details here.
         </p>
       </div>
     );
   }
 
   const { grammar } = activeGreekGrammarSelection;
-  const selectedGreekForm = activeGreekGrammarSelection.selectedForm;
+  const selectedOriginalForm = activeGreekGrammarSelection.selectedForm;
+  const languageLabel = selectionLanguage === "hebrew" ? "Hebrew" : "Greek";
+  const originalLanguageCode = selectionLanguage === "hebrew" ? "he" : "el";
   const canShowVersesTab = Boolean(activeGreekGrammarSelection.selectedForm);
   const loadingVerseVersions = selectedVerseVersions.filter(
-    (version) => version !== "greek" && parallelVerseEntries[version]?.status !== "loaded"
+    (version) => version !== sourceVerseVersion && parallelVerseEntries[version]?.status !== "loaded"
   );
 
   const toggleSelectedVerseVersion = (version: BundledBibleVersion) => {
@@ -360,11 +404,18 @@ export function ReaderGreekGrammarPanel() {
           <span className="strongs-entry-number">
             {activeGreekGrammarSelection.strongs ?? activeGreekGrammarSelection.entryKey}
           </span>
-          <span className="strongs-entry-language">Greek grammar</span>
+          <span className="strongs-entry-language">{languageLabel} grammar</span>
         </div>
         <button
           className="strongs-entry-lemma greek-dictionary-lemma greek-grammar-panel-lemma"
-          onClick={() => openGreekDictionaryInCurrentPane(activeGreekGrammarSelection)}
+          onClick={() =>
+            selectionLanguage === "hebrew"
+              ? openStrongsInCurrentPane(
+                  activeGreekGrammarSelection.strongs ?? activeGreekGrammarSelection.entryKey,
+                  activeGreekGrammarSelection.label ?? activeGreekGrammarSelection.lemma
+                )
+              : openGreekDictionaryInCurrentPane(activeGreekGrammarSelection)
+          }
           type="button"
         >
           {activeGreekGrammarSelection.lemma}
@@ -405,7 +456,7 @@ export function ReaderGreekGrammarPanel() {
             <div className="greek-grammar-panel-section">
               <p className="strongs-entry-section-label">Grammar</p>
               <div className="greek-grammar-panel-expanded">
-                <GreekGrammarDetailsContent grammar={grammar} />
+                <GreekGrammarDetailsContent grammar={grammar} language={selectionLanguage} />
               </div>
             </div>
             <div className="greek-dictionary-selected-form-card greek-grammar-panel-card">
@@ -413,7 +464,7 @@ export function ReaderGreekGrammarPanel() {
               {activeGreekGrammarSelection.selectedForm ? (
                 <p
                   className="strongs-entry-lemma greek-dictionary-selected-form-value"
-                  lang="el"
+                  lang={originalLanguageCode}
                 >
                   {activeGreekGrammarSelection.selectedForm}
                 </p>
@@ -444,7 +495,14 @@ export function ReaderGreekGrammarPanel() {
               ) : null}
               <button
                 className="reader-inline-button"
-                onClick={() => openGreekDictionaryInCurrentPane(activeGreekGrammarSelection)}
+                onClick={() =>
+                  selectionLanguage === "hebrew"
+                    ? openStrongsInCurrentPane(
+                        activeGreekGrammarSelection.strongs ?? activeGreekGrammarSelection.entryKey,
+                        activeGreekGrammarSelection.label ?? activeGreekGrammarSelection.lemma
+                      )
+                    : openGreekDictionaryInCurrentPane(activeGreekGrammarSelection)
+                }
                 type="button"
               >
                 Open lemma in Strongs
@@ -452,7 +510,7 @@ export function ReaderGreekGrammarPanel() {
             </div>
           </>
         ) : null}
-        {activeTab === "verses" && selectedGreekForm ? (
+        {activeTab === "verses" && selectedOriginalForm ? (
           <section
             aria-labelledby="greek-grammar-exact-form-verses-heading"
             className="greek-grammar-panel-section"
@@ -546,17 +604,20 @@ export function ReaderGreekGrammarPanel() {
                         <div className="strongs-entry-bible-version-list">
                           {selectedVerseVersions.map((selectedVersion) => {
                             const versionState = parallelVerseEntries[selectedVersion] ?? null;
+                            const isSourceVersion = selectedVersion === sourceVerseVersion;
                             const versionMatch =
-                              selectedVersion === "greek"
+                              isSourceVersion
                                 ? match
                                 : versionState?.matches[index]?.entry ?? null;
+                            const grammarEntryKey =
+                              activeGreekGrammarSelection.strongs ??
+                              activeGreekGrammarSelection.entryKey;
                             const englishHighlightPhrases =
-                              versionMatch && selectedVersion !== "greek"
+                              versionMatch && !isSourceVersion
                                 ? getStrongsEnglishHighlightPhrases(
-                                    activeGreekGrammarSelection.strongs ??
-                                      activeGreekGrammarSelection.entryKey,
-                                    match,
-                                    "greek"
+                                    grammarEntryKey,
+                                    selectedVersion === "kjv" ? versionMatch : match,
+                                    selectionLanguage === "greek" ? "greek" : "strongs"
                                   )
                                 : [];
 
@@ -569,7 +630,8 @@ export function ReaderGreekGrammarPanel() {
                                   {getBibleVersionLabel(selectedVersion)}
                                 </p>
                                 {versionMatch ? (
-                                  selectedVersion === "greek" ? (
+                                  (selectedVersion === "greek" || selectedVersion === "tr") &&
+                                  versionMatch.greekTokens?.length ? (
                                     <GreekVerseTextContent
                                       className="strongs-entry-copy strongs-entry-bible-verse-text verse-text-greek"
                                       enableGreekLearning={false}
@@ -579,6 +641,26 @@ export function ReaderGreekGrammarPanel() {
                                         number: versionMatch.verseNumber,
                                         text: versionMatch.text,
                                         greekTokens: versionMatch.greekTokens
+                                      }}
+                                    />
+                                  ) : selectedVersion === "mt" &&
+                                    versionMatch.hebrewTokens?.length ? (
+                                    <HebrewVerseTextContent
+                                      className="strongs-entry-copy strongs-entry-bible-verse-text verse-text-hebrew"
+                                      highlightedForm={
+                                        selectionLanguage === "hebrew"
+                                          ? selectedOriginalForm
+                                          : null
+                                      }
+                                      highlightedStrongsNumber={grammarEntryKey}
+                                      onOpenStrongs={(strongsNumber, label) =>
+                                        openStrongsInCurrentPane(strongsNumber, label)
+                                      }
+                                      showStrongsNumbers
+                                      verse={{
+                                        number: versionMatch.verseNumber,
+                                        text: versionMatch.text,
+                                        hebrewTokens: versionMatch.hebrewTokens
                                       }}
                                     />
                                   ) : (
@@ -656,7 +738,7 @@ export function ReaderGreekGrammarPanel() {
                             <p className="strongs-entry-copy strongs-entry-fathers-greek">
                               {renderHighlightedFathersForm(
                                 match.greekContext,
-                                selectedGreekForm
+                                selectedOriginalForm
                               )}
                             </p>
                             <p className="strongs-entry-copy strongs-entry-fathers-english">

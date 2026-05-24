@@ -890,9 +890,9 @@ export function ReaderSettingsPanel({
                   }
                   type="button"
                 >
-                  <strong>Greek grammar cards</strong>
+                  <strong>{originalLanguageLabel} grammar cards</strong>
                   <span>
-                    Show quick grammar cards under each Greek word, with a More section for full details.
+                    Show quick grammar cards under each {originalLanguageLabel.toLowerCase()} word, with a More section for full details.
                   </span>
                 </button>
                 <button
@@ -909,7 +909,7 @@ export function ReaderSettingsPanel({
                   type="button"
                 >
                   <strong>Grammar type</strong>
-                  <span>Show the part of speech line under each Greek word.</span>
+                  <span>Show the part of speech line under each {originalLanguageLabel.toLowerCase()} word.</span>
                 </button>
                 <button
                   className={`settings-option-card${

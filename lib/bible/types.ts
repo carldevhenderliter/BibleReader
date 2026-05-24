@@ -408,6 +408,7 @@ export type BibleSearchTopicSuggestionResult = {
 };
 
 export type GreekDictionarySelection = {
+  language?: "greek" | "hebrew";
   entryKey: string;
   strongs?: string | null;
   lemma: string;

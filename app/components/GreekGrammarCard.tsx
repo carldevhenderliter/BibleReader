@@ -5,13 +5,18 @@ import type { GreekGrammarInfo } from "@/lib/bible/types";
 
 type GreekGrammarCardProps = {
   grammar: GreekGrammarInfo;
+  language?: "greek" | "hebrew";
 };
 
 export function GreekGrammarDetailsContent({
-  grammar
+  grammar,
+  language = "greek"
 }: {
   grammar: GreekGrammarInfo;
+  language?: "greek" | "hebrew";
 }) {
+  const originalLanguageCode = language === "hebrew" ? "he" : "el";
+
   return (
     <div className="greek-grammar-card-expanded">
       {grammar.expandedInfo.fullMorphology ? (
@@ -49,7 +54,7 @@ export function GreekGrammarDetailsContent({
       {grammar.expandedInfo.linkedPhrase ? (
         <div className="greek-grammar-card-section greek-grammar-card-phrase">
           <p className="greek-grammar-card-section-label">Linked phrase</p>
-          <p className="greek-grammar-card-greek" lang="el">
+          <p className="greek-grammar-card-greek" lang={originalLanguageCode}>
             {grammar.expandedInfo.linkedPhrase.combined}
           </p>
           <p className="greek-grammar-card-copy">
@@ -69,7 +74,7 @@ export function GreekGrammarDetailsContent({
           {grammar.expandedInfo.linkedPhrase.example ? (
             <p className="greek-grammar-card-copy">
               Example:{" "}
-              <span className="greek-grammar-card-greek" lang="el">
+              <span className="greek-grammar-card-greek" lang={originalLanguageCode}>
                 {grammar.expandedInfo.linkedPhrase.example}
               </span>
             </p>
@@ -99,8 +104,9 @@ export function GreekGrammarDetailsContent({
   );
 }
 
-export function GreekGrammarCard({ grammar }: GreekGrammarCardProps) {
+export function GreekGrammarCard({ grammar, language = "greek" }: GreekGrammarCardProps) {
   const { settings } = useReaderCustomization();
+  const originalLanguageCode = language === "hebrew" ? "he" : "el";
   const showPartOfSpeech = settings.showGreekGrammarPartOfSpeech && Boolean(grammar.quickInfo.partOfSpeech);
   const showLemma = settings.showGreekGrammarLemma;
   const showGloss = settings.showGreekGrammarGloss && Boolean(grammar.quickInfo.gloss);
@@ -117,7 +123,7 @@ export function GreekGrammarCard({ grammar }: GreekGrammarCardProps) {
           {showLemma ? (
             <p className="greek-grammar-card-line">
               <span className="greek-grammar-card-label">Lemma</span>
-              <span className="greek-grammar-card-greek" lang="el">
+              <span className="greek-grammar-card-greek" lang={originalLanguageCode}>
                 {grammar.quickInfo.lemma}
               </span>
             </p>

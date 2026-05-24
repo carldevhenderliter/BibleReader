@@ -1,5 +1,10 @@
 "use client";
 
+import { useMemo } from "react";
+
+import { GreekGrammarCard } from "@/app/components/GreekGrammarCard";
+import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
+import { buildHebrewGrammarInfos } from "@/lib/bible/hebrew-grammar";
 import { normalizeStrongsNumber } from "@/lib/bible/strongs";
 import type { HebrewToken, Verse } from "@/lib/bible/types";
 
@@ -11,7 +16,9 @@ type HebrewVerseTextContentProps = {
   showLemma?: boolean;
   showGloss?: boolean;
   showMorphology?: boolean;
+  showGrammarCards?: boolean;
   highlightedStrongsNumber?: string | null;
+  highlightedForm?: string | null;
   onOpenStrongs?: (strongsNumber: string, label?: string | null) => void;
 };
 
@@ -53,9 +60,17 @@ export function HebrewVerseTextContent({
   showLemma = true,
   showGloss = true,
   showMorphology = true,
+  showGrammarCards = false,
   highlightedStrongsNumber = null,
+  highlightedForm = null,
   onOpenStrongs
 }: HebrewVerseTextContentProps) {
+  const { openGreekGrammarDetails } = useReaderWorkspace();
+  const grammarInfos = useMemo(
+    () => buildHebrewGrammarInfos(verse?.hebrewTokens ?? []),
+    [verse?.hebrewTokens]
+  );
+
   if (!verse) {
     return <p className={className ?? "verse-text verse-text-hebrew"} dir="rtl" lang="he" />;
   }
@@ -71,6 +86,12 @@ export function HebrewVerseTextContent({
   const normalizedHighlight = highlightedStrongsNumber
     ? normalizeStrongsNumber(highlightedStrongsNumber)
     : null;
+  const normalizedHighlightedForm = highlightedForm
+    ? highlightedForm
+        .normalize("NFD")
+        .replace(/\p{M}+/gu, "")
+        .trim()
+    : null;
 
   return (
     <div className={className ?? "verse-text verse-text-hebrew"} dir="rtl" lang="he">
@@ -80,8 +101,12 @@ export function HebrewVerseTextContent({
             ? normalizeStrongsNumber(token.strongs)
             : null;
           const isHighlighted =
-            normalizedHighlight !== null && normalizedHighlight === normalizedTokenStrongs;
+            (normalizedHighlight !== null && normalizedHighlight === normalizedTokenStrongs) ||
+            (normalizedHighlightedForm !== null &&
+              token.surface.normalize("NFD").replace(/\p{M}+/gu, "").trim() ===
+                normalizedHighlightedForm);
           const morphology = token.decodedMorphology || token.morphology || "";
+          const grammarInfo = grammarInfos[index] ?? null;
           const hasMetadata = hasTokenMetadata({
             morphology,
             showGloss,
@@ -132,7 +157,27 @@ export function HebrewVerseTextContent({
                   className={`verse-hebrew-token${hasMetadata ? " has-metadata" : ""}${
                     isHighlighted ? " strongs-token-match" : ""
                   }`}
-                  onClick={() => onOpenStrongs(token.strongs ?? "", token.surface)}
+                  onClick={() => {
+                    if (showGrammarCards && grammarInfo) {
+                      openGreekGrammarDetails({
+                        language: "hebrew",
+                        entryKey: token.strongs ?? token.lemma,
+                        strongs: token.strongs ?? null,
+                        lemma: token.lemma,
+                        label: token.lemma || token.surface,
+                        selectedForm: token.surface,
+                        selectedFormMorphology: token.morphology ?? null,
+                        selectedFormDecodedMorphology: token.decodedMorphology ?? null,
+                        matchedQuery: token.surface,
+                        transliteration: token.transliteration ?? null,
+                        gloss: token.gloss ?? null,
+                        grammar: grammarInfo
+                      });
+                      return;
+                    }
+
+                    onOpenStrongs(token.strongs ?? "", token.surface);
+                  }}
                   type="button"
                 >
                   {tokenBody}
@@ -146,6 +191,9 @@ export function HebrewVerseTextContent({
                   {tokenBody}
                 </span>
               )}
+              {showGrammarCards && grammarInfo ? (
+                <GreekGrammarCard grammar={grammarInfo} language="hebrew" />
+              ) : null}
             </span>
           );
         })}

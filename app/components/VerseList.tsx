@@ -424,6 +424,7 @@ export function VerseList({
                         highlightedStrongsNumber={null}
                         onOpenStrongs={(strongsNumber, label) => openStrongs(strongsNumber, label)}
                         showGloss={showGreekGloss}
+                        showGrammarCards={showGreekGrammarCards}
                         showLemma={showGreekLemma}
                         showMorphology={
                           showGreekGloss ||
@@ -617,9 +618,10 @@ export function VerseList({
                       ) : secondaryVerseVersion === "mt" && secondaryVerse.hebrewTokens?.length ? (
                         <HebrewVerseTextContent
                           className="verse-text verse-text-hebrew verse-text-secondary-translation"
-                          onOpenStrongs={(strongsNumber, label) => openStrongs(strongsNumber, label)}
-                          showGloss={showGreekGloss}
-                          showLemma={showGreekLemma}
+                        onOpenStrongs={(strongsNumber, label) => openStrongs(strongsNumber, label)}
+                        showGloss={showGreekGloss}
+                        showGrammarCards={showGreekGrammarCards}
+                        showLemma={showGreekLemma}
                           showMorphology={
                             showGreekGloss ||
                             showGreekLemma ||
