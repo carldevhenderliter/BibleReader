@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 
 import { GreekGrammarCard } from "@/app/components/GreekGrammarCard";
+import { GreekTokenCopyButton } from "@/app/components/GreekTokenCopyButton";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { useGreekSentenceQuiz } from "@/app/components/useGreekSentenceQuiz";
 import {
@@ -137,6 +138,7 @@ export function GreekVerseTextContent({
                 className="verse-greek-token-wrap verse-compare-token-wrap"
                 key={`${verse.number}:${index}:${token.surface}`}
               >
+                <GreekTokenCopyButton token={token} />
                 <button
                   aria-label={`${token.surface} ${token.lemma} ${token.strongs ?? ""}`.trim()}
                   className={`verse-greek-token verse-compare-token${
@@ -286,6 +288,7 @@ export function GreekVerseTextContent({
         const grammarInfo = grammarInfos[index] ?? null;
         return (
           <span className="verse-greek-inline-wrap" key={`${verse.number}:${index}:${token.surface}`}>
+            <GreekTokenCopyButton token={token} />
             <span className="verse-greek-inline-head">
               {entryKey ? (
                 <button

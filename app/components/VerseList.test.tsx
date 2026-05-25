@@ -772,6 +772,41 @@ describe("VerseList", () => {
     );
   }, 15000);
 
+  it("copies a Greek word and form from the token copy button", async () => {
+    const writeText = jest.fn().mockResolvedValue(undefined);
+    Object.defineProperty(navigator, "clipboard", {
+      configurable: true,
+      value: {
+        writeText
+      }
+    });
+
+    renderWithReaderCustomization(
+      <VerseList
+        bookSlug="john"
+        chapterNumber={1}
+        interlinearVerseMap={interlinearVerseMap}
+        verses={verses}
+      />
+    );
+
+    fireEvent.click(await screen.findByRole("button", { name: "Copy Greek word and form for ἀρχῆς" }));
+
+    await waitFor(() => {
+      expect(writeText).toHaveBeenCalledWith(
+        [
+          "Greek word: ἀρχῆς",
+          "Lemma: ἀρχή",
+          "Strong's: G746",
+          "Form: N-GSF — noun genitive singular feminine",
+          "Transliteration: archēs",
+          "Gloss: of the beginning"
+        ].join("\n")
+      );
+    });
+    expect(await screen.findByRole("button", { name: "Copy Greek word and form for ἀρχῆς" })).toHaveTextContent("Copied");
+  });
+
   it("can hide verse text, custom verse translation, and selected Greek sub-lines independently", async () => {
     const { container } = renderWithReaderCustomization(
       <VerseList

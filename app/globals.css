@@ -3750,12 +3750,61 @@ button.fathers-annotation-anchor:focus-visible {
 .verse-greek-token-stack {
   position: relative;
   display: grid;
-  gap: 0.3rem;
+  gap: 0.24rem;
   justify-items: center;
   align-content: start;
   width: max-content;
   min-width: max(5.35rem, calc(var(--reader-greek-text-size) * 3.1));
   max-width: 100%;
+}
+
+.verse-greek-token-copy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.25rem;
+  padding: 0.14rem 0.46rem;
+  border: 1px solid rgba(var(--reader-accent-rgb), 0.24);
+  border-radius: 999px;
+  background: rgba(var(--reader-accent-rgb), 0.08);
+  color: rgba(214, 232, 250, 0.84);
+  font-family: var(--reader-ui-font);
+  font-size: max(0.58rem, calc(var(--reader-body-text-size) * 0.62));
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.verse-greek-inline-wrap > .verse-greek-token-copy {
+  margin-bottom: 0.08rem;
+}
+
+.verse-greek-token-copy:hover,
+.verse-greek-token-copy:focus-visible {
+  border-color: rgba(var(--reader-accent-rgb), 0.58);
+  background: rgba(var(--reader-accent-rgb), 0.16);
+  color: rgba(255, 255, 255, 0.94);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.verse-greek-token-copy.is-copied {
+  border-color: rgba(133, 230, 173, 0.5);
+  background: rgba(133, 230, 173, 0.14);
+  color: rgba(204, 255, 226, 0.95);
+}
+
+.verse-greek-token-copy.is-error {
+  border-color: rgba(255, 150, 150, 0.5);
+  background: rgba(255, 150, 150, 0.12);
+  color: rgba(255, 214, 214, 0.95);
 }
 
 .verse-greek-token {

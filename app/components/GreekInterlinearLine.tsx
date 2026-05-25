@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { GreekGrammarCard } from "@/app/components/GreekGrammarCard";
+import { GreekTokenCopyButton } from "@/app/components/GreekTokenCopyButton";
 import { useGreekGlossOverrides } from "@/app/components/GreekGlossOverridesProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { useGreekSentenceQuiz } from "@/app/components/useGreekSentenceQuiz";
@@ -211,6 +212,7 @@ export function GreekInterlinearLine({
             key={`${verse.number}:${tokenIndex}:${token.surface}`}
           >
             <span className="verse-greek-token-stack">
+              <GreekTokenCopyButton token={token} />
               <button
                 aria-label={`${token.surface} ${token.lemma} ${token.strongs ?? ""}`.trim()}
                 className="verse-greek-token"
