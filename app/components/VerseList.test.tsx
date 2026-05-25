@@ -794,14 +794,7 @@ describe("VerseList", () => {
 
     await waitFor(() => {
       expect(writeText).toHaveBeenCalledWith(
-        [
-          "Greek word: ἀρχῆς",
-          "Lemma: ἀρχή",
-          "Strong's: G746",
-          "Form: N-GSF — noun genitive singular feminine",
-          "Transliteration: archēs",
-          "Gloss: of the beginning"
-        ].join("\n")
+        ["ἀρχῆς", "N-GSF — noun genitive singular feminine"].join("\n")
       );
     });
     expect(await screen.findByRole("button", { name: "Copy Greek word and form for ἀρχῆς" })).toHaveTextContent("Copied");

@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { transliterateGreekSurface } from "@/lib/bible/greek";
 import type { GreekToken } from "@/lib/bible/types";
 
 async function copyPlainText(text: string) {
@@ -34,20 +33,11 @@ async function copyPlainText(text: string) {
 }
 
 export function getGreekTokenCopyText(token: GreekToken) {
-  return [
-    `Greek word: ${token.surface}`,
-    `Lemma: ${token.lemma}`,
-    token.strongs ? `Strong's: ${token.strongs}` : null,
-    token.morphology
-      ? `Form: ${token.morphology}${token.decodedMorphology ? ` — ${token.decodedMorphology}` : ""}`
-      : token.decodedMorphology
-        ? `Form: ${token.decodedMorphology}`
-        : "Form: unknown",
-    `Transliteration: ${token.transliteration ?? transliterateGreekSurface(token.surface)}`,
-    token.gloss ? `Gloss: ${token.gloss}` : null
-  ]
-    .filter((line): line is string => Boolean(line))
-    .join("\n");
+  const form = token.morphology
+    ? `${token.morphology}${token.decodedMorphology ? ` — ${token.decodedMorphology}` : ""}`
+    : token.decodedMorphology ?? "unknown form";
+
+  return [token.surface, form].join("\n");
 }
 
 type GreekTokenCopyButtonProps = {
