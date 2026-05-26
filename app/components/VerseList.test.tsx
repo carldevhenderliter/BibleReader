@@ -1613,6 +1613,23 @@ describe("VerseList", () => {
     expect(screen.getByLabelText("English gloss for ἐγένετο")).toHaveValue("");
   });
 
+  it("preserves spaces while typing a Greek gloss", async () => {
+    renderWithReaderCustomization(
+      <VerseList
+        bookSlug="john"
+        chapterNumber={1}
+        interlinearVerseMap={interlinearVerseMap}
+        verses={verses}
+      />
+    );
+
+    const firstGloss = await screen.findByLabelText("English gloss for ἀρχῆς");
+
+    fireEvent.change(firstGloss, { target: { value: "of " } });
+
+    expect(firstGloss).toHaveValue("of ");
+  });
+
   it("shows noun morphology in the Greek dictionary panel instead of inline in the reader", async () => {
     renderWithReaderCustomization(
       <>

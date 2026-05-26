@@ -211,7 +211,7 @@ export function GreekInterlinearLine({
       entryKey: token.entryKey,
       strongs: token.strongs,
       lemma: token.lemma,
-      selectedGloss: trimmedGloss,
+      selectedGloss,
       source: "custom"
     });
   }
@@ -242,8 +242,8 @@ export function GreekInterlinearLine({
             strongs: token.strongs,
             lemma: token.lemma
           });
-          const selectedGloss =
-            override?.selectedGloss?.trim() ?? lemmaPreference?.selectedGloss?.trim() ?? "";
+          const selectedGloss = override?.selectedGloss ?? lemmaPreference?.selectedGloss ?? "";
+          const hasSelectedGloss = Boolean(selectedGloss.trim());
           const isUniqueGloss = Boolean(override);
           const defaultGloss = resolveGreekTokenGloss(token, entry, override, lemmaPreference);
           const grammarInfo = grammarInfos[tokenIndex] ?? null;
@@ -306,7 +306,7 @@ export function GreekInterlinearLine({
                 <input
                   aria-label={`English gloss for ${token.surface}`}
                   className={`verse-greek-gloss-input${
-                    isUniqueGloss ? " is-overridden" : selectedGloss ? " is-lemma-default" : ""
+                    isUniqueGloss ? " is-overridden" : hasSelectedGloss ? " is-lemma-default" : ""
                   }`}
                   id={`greek-gloss:${occurrenceKey}`}
                   onChange={(event) =>
@@ -321,10 +321,10 @@ export function GreekInterlinearLine({
                   type="text"
                   value={selectedGloss}
                 />
-              ) : selectedGloss ? (
+              ) : hasSelectedGloss ? (
                 <span className="verse-greek-gloss-readonly">{selectedGloss}</span>
               ) : null}
-              {showGloss && selectedGloss ? (
+              {showGloss && hasSelectedGloss ? (
                 isUniqueGloss ? (
                   <button
                     aria-label={`Use shared gloss for ${token.surface}`}
