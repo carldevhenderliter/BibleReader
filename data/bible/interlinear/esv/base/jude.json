@@ -1447,6 +1447,13 @@
               "gloss": "this, that, or these"
             },
             {
+              "surface": "Μωϋσέως",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-GSM",
+              "decodedMorphology": "noun genitive singular masculine",
+              "gloss": "Μωϋσῆς"
+            },
+            {
               "surface": "σώματος",
               "lemma": "σῶμα",
               "strongs": "G4983",
@@ -3354,6 +3361,13 @@
               "gloss": "truly, certainly, surely, indeed"
             },
             {
+              "surface": "ἐλεᾶτε",
+              "lemma": "ἐλεάω",
+              "morphology": "V-2PAD-P",
+              "decodedMorphology": "verb present active second person plural",
+              "gloss": "ἐλεάω"
+            },
+            {
               "surface": "διακρινομένους",
               "lemma": "διακρίνω",
               "strongs": "G1252",
@@ -3432,6 +3446,13 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "but, moreover, and, etc"
+            },
+            {
+              "surface": "ἐλεᾶτε",
+              "lemma": "ἐλεάω",
+              "morphology": "V-2PAD-P",
+              "decodedMorphology": "verb present active second person plural",
+              "gloss": "ἐλεάω"
             },
             {
               "surface": "ἐν",

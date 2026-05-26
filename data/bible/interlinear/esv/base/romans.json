@@ -12184,6 +12184,13 @@
               "gloss": "this, that, or these"
             },
             {
+              "surface": "προπάτορα",
+              "lemma": "προπάτωρ",
+              "morphology": "N-ASM",
+              "decodedMorphology": "noun accusative singular masculine",
+              "gloss": "προπάτωρ"
+            },
+            {
               "surface": "ἡμῶν",
               "lemma": "ἐγώ",
               "strongs": "G1473",
@@ -17504,6 +17511,13 @@
               "morphology": "P",
               "decodedMorphology": "preposition",
               "gloss": "as far as or until"
+            },
+            {
+              "surface": "Μωϋσέως",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-GSM",
+              "decodedMorphology": "noun genitive singular masculine",
+              "gloss": "Μωϋσῆς"
             },
             {
               "surface": "καὶ",
@@ -29945,6 +29959,13 @@
               "gloss": "but, moreover, and, etc"
             },
             {
+              "surface": "ἐραυνῶν",
+              "lemma": "ἐραυνάω",
+              "morphology": "V-PAPNSM",
+              "decodedMorphology": "verb present active participle nominative singular masculine",
+              "gloss": "ἐραυνάω"
+            },
+            {
               "surface": "τὰς",
               "lemma": "ὁ",
               "strongs": "G3588",
@@ -33614,6 +33635,13 @@
               "gloss": "this, that, or these"
             },
             {
+              "surface": "Μωϋσεῖ",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-DSM",
+              "decodedMorphology": "noun dative singular masculine",
+              "gloss": "Μωϋσῆς"
+            },
+            {
               "surface": "γὰρ",
               "lemma": "γάρ",
               "strongs": "G1063",
@@ -33631,6 +33659,13 @@
               "trailingPunctuation": "·"
             },
             {
+              "surface": "Ἐλεήσω",
+              "lemma": "ἐλεάω",
+              "morphology": "V-1FAI-S",
+              "decodedMorphology": "verb future active indicative first person singular",
+              "gloss": "ἐλεάω"
+            },
+            {
               "surface": "ὃν",
               "lemma": "ὅς",
               "strongs": "G3739",
@@ -33645,6 +33680,14 @@
               "morphology": "X",
               "decodedMorphology": "particle",
               "gloss": "has no exact English equivalent or see definitions under AV"
+            },
+            {
+              "surface": "ἐλεῶ",
+              "lemma": "ἐλεάω",
+              "morphology": "V-1PAS-S",
+              "decodedMorphology": "verb present active subjunctive first person singular",
+              "gloss": "ἐλεάω",
+              "trailingPunctuation": ","
             },
             {
               "surface": "καὶ",
@@ -33772,6 +33815,13 @@
               "morphology": "RA-GSM",
               "decodedMorphology": "article genitive singular masculine",
               "gloss": "this, that, or these"
+            },
+            {
+              "surface": "ἐλεῶντος",
+              "lemma": "ἐλεάω",
+              "morphology": "V-PAPGSM",
+              "decodedMorphology": "verb present active participle genitive singular masculine",
+              "gloss": "ἐλεάω"
             },
             {
               "surface": "θεοῦ",
@@ -34059,6 +34109,14 @@
               "morphology": "V-3PAI-S",
               "decodedMorphology": "verb present active indicative third person singular",
               "gloss": "to will, have in mind, or intend"
+            },
+            {
+              "surface": "ἐλεεῖ",
+              "lemma": "ἐλεάω",
+              "morphology": "V-3PAI-S",
+              "decodedMorphology": "verb present active indicative third person singular",
+              "gloss": "ἐλεάω",
+              "trailingPunctuation": ","
             },
             {
               "surface": "ὃν",
@@ -35429,6 +35487,13 @@
               "gloss": "this, that, or these"
             },
             {
+              "surface": "ὑπόλειμμα",
+              "lemma": "ὑπόλειμμα",
+              "morphology": "N-NSN",
+              "decodedMorphology": "noun nominative singular neuter",
+              "gloss": "ὑπόλειμμα"
+            },
+            {
               "surface": "σωθήσεται",
               "lemma": "σῴζω",
               "strongs": "G4982",
@@ -36667,6 +36732,13 @@
           "number": 5,
           "baseGreek": "Μωϋσῆς γὰρ γράφει ⸂ὅτι τὴν δικαιοσύνην τὴν ἐκ ⸀τοῦ νόμου⸃ ὁ ⸀ποιήσας ἄνθρωπος ζήσεται ἐν ⸀αὐτῇ.",
           "tokens": [
+            {
+              "surface": "Μωϋσῆς",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "Μωϋσῆς"
+            },
             {
               "surface": "γὰρ",
               "lemma": "γάρ",
@@ -38680,6 +38752,13 @@
               "morphology": "A-NSM",
               "decodedMorphology": "adjective nominative singular masculine",
               "gloss": "first in time or place, in any succession of things or persons, or first in rank"
+            },
+            {
+              "surface": "Μωϋσῆς",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "Μωϋσῆς"
             },
             {
               "surface": "λέγει",
@@ -43313,6 +43392,13 @@
               "gloss": "but, moreover, and, etc"
             },
             {
+              "surface": "ἠλεήθητε",
+              "lemma": "ἐλεάω",
+              "morphology": "V-2API-P",
+              "decodedMorphology": "verb aorist passive indicative second person plural",
+              "gloss": "ἐλεάω"
+            },
+            {
               "surface": "τῇ",
               "lemma": "ὁ",
               "strongs": "G3588",
@@ -43438,6 +43524,14 @@
               "morphology": "D",
               "decodedMorphology": "adverb",
               "gloss": "at this time, the present, or now"
+            },
+            {
+              "surface": "ἐλεηθῶσιν",
+              "lemma": "ἐλεάω",
+              "morphology": "V-3APS-P",
+              "decodedMorphology": "verb aorist passive subjunctive third person plural",
+              "gloss": "ἐλεάω",
+              "trailingPunctuation": "·"
             }
           ]
         },
@@ -43532,6 +43626,14 @@
               "morphology": "A-APM",
               "decodedMorphology": "adjective accusative plural masculine",
               "gloss": "individually, each, or every"
+            },
+            {
+              "surface": "ἐλεήσῃ",
+              "lemma": "ἐλεάω",
+              "morphology": "V-3AAS-S",
+              "decodedMorphology": "verb aorist active subjunctive third person singular",
+              "gloss": "ἐλεάω",
+              "trailingPunctuation": "."
             }
           ]
         },
@@ -45304,6 +45406,13 @@
               "morphology": "RA-NSM",
               "decodedMorphology": "article nominative singular masculine",
               "gloss": "this, that, or these"
+            },
+            {
+              "surface": "ἐλεῶν",
+              "lemma": "ἐλεάω",
+              "morphology": "V-PAPNSM",
+              "decodedMorphology": "verb present active participle nominative singular masculine",
+              "gloss": "ἐλεάω"
             },
             {
               "surface": "ἐν",
@@ -54866,6 +54975,13 @@
               "gloss": "also, even, or indeed"
             },
             {
+              "surface": "κύκλῳ",
+              "lemma": "κύκλῳ",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "κύκλῳ"
+            },
+            {
               "surface": "μέχρι",
               "lemma": "μέχρις",
               "strongs": "G3360",
@@ -57603,6 +57719,13 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "Ἰουνίαν",
+              "lemma": "Ἰουνία",
+              "morphology": "N-ASF",
+              "decodedMorphology": "noun accusative singular feminine",
+              "gloss": "Ἰουνία"
             },
             {
               "surface": "τοὺς",

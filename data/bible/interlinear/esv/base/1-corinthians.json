@@ -5658,6 +5658,14 @@
               "gloss": "individually, each, or every"
             },
             {
+              "surface": "ἐραυνᾷ",
+              "lemma": "ἐραυνάω",
+              "morphology": "V-3PAI-S",
+              "decodedMorphology": "verb present active indicative third person singular",
+              "gloss": "ἐραυνάω",
+              "trailingPunctuation": ","
+            },
+            {
               "surface": "καὶ",
               "lemma": "καί",
               "strongs": "G2532",
@@ -11412,6 +11420,13 @@
           "baseGreek": "⸀δυσφημούμενοι παρακαλοῦμεν· ὡς περικαθάρματα τοῦ κόσμου ἐγενήθημεν, πάντων περίψημα ἕως ἄρτι.",
           "tokens": [
             {
+              "surface": "δυσφημούμενοι",
+              "lemma": "δυσφημέω",
+              "morphology": "V-PPPNPM",
+              "decodedMorphology": "verb present passive participle nominative plural masculine",
+              "gloss": "δυσφημέω"
+            },
+            {
               "surface": "παρακαλοῦμεν",
               "lemma": "παρακαλέω",
               "strongs": "G3870",
@@ -12869,6 +12884,13 @@
               "decodedMorphology": "conjunction",
               "gloss": "Nullg r, gar a primary particle properly, assigning a reason — and, as, because, but, even, for, indeed, no doubt, seeing, then, therefo",
               "trailingPunctuation": ","
+            },
+            {
+              "surface": "ἀπὼν",
+              "lemma": "ἄπειμι",
+              "morphology": "V-PAPNSM",
+              "decodedMorphology": "verb present active participle nominative singular masculine",
+              "gloss": "ἄπειμι"
             },
             {
               "surface": "τῷ",
@@ -14747,6 +14769,13 @@
               "decodedMorphology": "verb future active indicative first person plural",
               "gloss": "to separate, put asunder, or to pick out",
               "trailingPunctuation": ","
+            },
+            {
+              "surface": "μήτιγε",
+              "lemma": "μήτιγε",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "μήτιγε"
             },
             {
               "surface": "βιωτικά",
@@ -20579,6 +20608,13 @@
               "gloss": "as, like, or even as"
             },
             {
+              "surface": "ἠλεημένος",
+              "lemma": "ἐλεάω",
+              "morphology": "V-XPPN-S",
+              "decodedMorphology": "verb perfect passive participle nominative singular masculine",
+              "gloss": "ἐλεάω"
+            },
+            {
               "surface": "ὑπὸ",
               "lemma": "ὑπό",
               "strongs": "G5259",
@@ -22043,6 +22079,13 @@
               "gloss": "himself, herself, or themselves"
             },
             {
+              "surface": "σύμφορον",
+              "lemma": "σύμφορον",
+              "morphology": "A-ASN",
+              "decodedMorphology": "adjective accusative singular neuter",
+              "gloss": "σύμφορον"
+            },
+            {
               "surface": "λέγω",
               "lemma": "λέγω",
               "strongs": "G3004",
@@ -22130,6 +22173,13 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "εὐπάρεδρον",
+              "lemma": "εὐπάρεδρον",
+              "morphology": "A-ASN",
+              "decodedMorphology": "adjective accusative singular neuter",
+              "gloss": "εὐπάρεδρον"
             },
             {
               "surface": "τῷ",
@@ -22630,6 +22680,13 @@
               "gloss": "this, that, or these"
             },
             {
+              "surface": "γαμίζων",
+              "lemma": "γαμίζω",
+              "morphology": "V-PAPNSM",
+              "decodedMorphology": "verb present active participle nominative singular masculine",
+              "gloss": "γαμίζω"
+            },
+            {
               "surface": "τὴν",
               "lemma": "ὁ",
               "strongs": "G3588",
@@ -22693,6 +22750,13 @@
               "morphology": "D",
               "decodedMorphology": "adverb",
               "gloss": "no or not lest"
+            },
+            {
+              "surface": "γαμίζων",
+              "lemma": "γαμίζω",
+              "morphology": "V-PAPNSM",
+              "decodedMorphology": "verb present active participle nominative singular masculine",
+              "gloss": "γαμίζω"
             },
             {
               "surface": "κρεῖσσον",
@@ -26018,6 +26082,13 @@
               "gloss": "this, that, or these"
             },
             {
+              "surface": "Μωϋσέως",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-GSM",
+              "decodedMorphology": "noun genitive singular masculine",
+              "gloss": "Μωϋσῆς"
+            },
+            {
               "surface": "νόμῳ",
               "lemma": "νόμος",
               "strongs": "G3551",
@@ -26041,6 +26112,13 @@
               "morphology": "D",
               "decodedMorphology": "adverb",
               "gloss": "no, not in direct questions expecting an affirmative answer"
+            },
+            {
+              "surface": "κημώσεις",
+              "lemma": "κημόω",
+              "morphology": "V-2FAI-S",
+              "decodedMorphology": "verb future active indicative second person singular",
+              "gloss": "κημόω"
             },
             {
               "surface": "βοῦν",
@@ -26760,6 +26838,13 @@
               "morphology": "N-DSN",
               "decodedMorphology": "noun dative singular neuter",
               "gloss": "any other altar or metaph"
+            },
+            {
+              "surface": "παρεδρεύοντες",
+              "lemma": "παρεδρεύω",
+              "morphology": "V-PAPNPM",
+              "decodedMorphology": "verb present active participle nominative plural masculine",
+              "gloss": "παρεδρεύω"
             },
             {
               "surface": "τῷ",
@@ -28973,6 +29058,13 @@
               "gloss": "this, that, or these"
             },
             {
+              "surface": "Μωϋσῆν",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-ASM",
+              "decodedMorphology": "noun accusative singular masculine",
+              "gloss": "Μωϋσῆς"
+            },
+            {
               "surface": "ἐβαπτίσαντο",
               "lemma": "βαπτίζω",
               "strongs": "G907",
@@ -29996,6 +30088,13 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "but, moreover, and, etc"
+            },
+            {
+              "surface": "τυπικῶς",
+              "lemma": "τυπικῶς",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "τυπικῶς"
             },
             {
               "surface": "συνέβαινεν",
@@ -32035,6 +32134,13 @@
               "gloss": "this, these, or etc"
             },
             {
+              "surface": "ἱερόθυτόν",
+              "lemma": "ἱερόθυτος",
+              "morphology": "A-NSN",
+              "decodedMorphology": "adjective nominative singular neuter",
+              "gloss": "ἱερόθυτος"
+            },
+            {
               "surface": "ἐστιν",
               "lemma": "εἰμί",
               "strongs": "G1510",
@@ -32202,6 +32308,13 @@
               "decodedMorphology": "adjective genitive singular masculine",
               "gloss": "the other, another, other, to number, to number as opposed to some former person or thing, the other of two, to quality, another i",
               "trailingPunctuation": "·"
+            },
+            {
+              "surface": "ἱνατί",
+              "lemma": "ἱνατί",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "ἱνατί"
             },
             {
               "surface": "γὰρ",
@@ -32641,6 +32754,13 @@
               "morphology": "RP-GSM",
               "decodedMorphology": "pronoun genitive singular masculine",
               "gloss": "I, me, or myself etc"
+            },
+            {
+              "surface": "σύμφορον",
+              "lemma": "σύμφορον",
+              "morphology": "A-ASN",
+              "decodedMorphology": "adjective accusative singular neuter",
+              "gloss": "σύμφορον"
             },
             {
               "surface": "ἀλλὰ",
@@ -57950,6 +58070,21 @@
               "morphology": "N-NSN",
               "decodedMorphology": "noun nominative singular neuter",
               "gloss": "a thing set up or laid by in order to be kept, specifically, an offering resulting from a vow, which after being consecrated to a god was hung upon the walls or columns of the temple, or put in some other conspicuous place, a thing devoted to God without hope of being redeemed, and if an animal, to be slain therefore a person or thing doomed to destruction, a curse, a man accursed, devoted to the direst of woes",
+              "trailingPunctuation": "."
+            },
+            {
+              "surface": "Μαράνα",
+              "lemma": "μαράνα",
+              "morphology": "N-VSM",
+              "decodedMorphology": "noun vocative singular masculine",
+              "gloss": "μαράνα"
+            },
+            {
+              "surface": "θά",
+              "lemma": "θά",
+              "morphology": "V-2AAD-S",
+              "decodedMorphology": "verb aorist active second person singular",
+              "gloss": "θά",
               "trailingPunctuation": "."
             }
           ]

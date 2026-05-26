@@ -2221,6 +2221,13 @@
               "gloss": "to bind tie, fasten, or to bind"
             },
             {
+              "surface": "περισσοτέρως",
+              "lemma": "περισσοτέρως",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "περισσοτέρως"
+            },
+            {
               "surface": "προσέχειν",
               "lemma": "προσέχω",
               "strongs": "G4337",
@@ -2988,6 +2995,13 @@
               "gloss": "himself, herself, or themselves"
             },
             {
+              "surface": "βραχύ",
+              "lemma": "βραχύ",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "βραχύ"
+            },
+            {
               "surface": "τι",
               "lemma": "τις",
               "strongs": "G5100",
@@ -3275,6 +3289,13 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "but, moreover, and, etc"
+            },
+            {
+              "surface": "βραχύ",
+              "lemma": "βραχύ",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "βραχύ"
             },
             {
               "surface": "τι",
@@ -5012,6 +5033,13 @@
               "gloss": "also, even, or indeed"
             },
             {
+              "surface": "Μωϋσῆς",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "Μωϋσῆς"
+            },
+            {
               "surface": "ἐν",
               "lemma": "ἐν",
               "strongs": "G1722",
@@ -5089,6 +5117,13 @@
               "morphology": "P",
               "decodedMorphology": "preposition",
               "gloss": "of at, besides, or near"
+            },
+            {
+              "surface": "Μωϋσῆν",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-ASM",
+              "decodedMorphology": "noun accusative singular masculine",
+              "gloss": "Μωϋσῆς"
             },
             {
               "surface": "ἠξίωται",
@@ -5288,6 +5323,13 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "Μωϋσῆς",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "Μωϋσῆς"
             },
             {
               "surface": "μὲν",
@@ -5883,6 +5925,13 @@
               "gloss": "in, by, with etc"
             },
             {
+              "surface": "δοκιμασίᾳ",
+              "lemma": "δοκιμασία",
+              "morphology": "N-DSF",
+              "decodedMorphology": "noun dative singular feminine",
+              "gloss": "δοκιμασία"
+            },
+            {
               "surface": "καὶ",
               "lemma": "καί",
               "strongs": "G2532",
@@ -6389,6 +6438,13 @@
               "trailingPunctuation": ","
             },
             {
+              "surface": "ἄχρις",
+              "lemma": "ἄχρις",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "ἄχρις"
+            },
+            {
               "surface": "οὗ",
               "lemma": "ὅς",
               "strongs": "G3739",
@@ -6540,6 +6596,13 @@
               "decodedMorphology": "verb perfect active indicative first person plural",
               "gloss": "to become, i",
               "trailingPunctuation": ","
+            },
+            {
+              "surface": "ἐάνπερ",
+              "lemma": "ἐάνπερ",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "ἐάνπερ"
             },
             {
               "surface": "τὴν",
@@ -6861,6 +6924,14 @@
               "morphology": "P",
               "decodedMorphology": "preposition",
               "gloss": "through, of place, or of time"
+            },
+            {
+              "surface": "Μωϋσέως",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-GSM",
+              "decodedMorphology": "noun genitive singular masculine",
+              "gloss": "Μωϋσῆς",
+              "trailingPunctuation": ";"
             }
           ]
         },
@@ -10146,6 +10217,13 @@
               "trailingPunctuation": ","
             },
             {
+              "surface": "καθώσπερ",
+              "lemma": "καθώσπερ",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "καθώσπερ"
+            },
+            {
               "surface": "καὶ",
               "lemma": "καί",
               "strongs": "G2532",
@@ -11928,6 +12006,13 @@
               "gloss": "to make, with the names of things made, or to produce"
             },
             {
+              "surface": "ἐάνπερ",
+              "lemma": "ἐάνπερ",
+              "morphology": "C",
+              "decodedMorphology": "conjunction",
+              "gloss": "ἐάνπερ"
+            },
+            {
               "surface": "ἐπιτρέπῃ",
               "lemma": "ἐπιτρέπω",
               "strongs": "G2010",
@@ -13318,6 +13403,13 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "if, whether"
+            },
+            {
+              "surface": "μὴν",
+              "lemma": "μήν",
+              "morphology": "X",
+              "decodedMorphology": "particle",
+              "gloss": "μήν"
             },
             {
               "surface": "εὐλογῶν",
@@ -16169,6 +16261,13 @@
               "gloss": "no one or nothing"
             },
             {
+              "surface": "Μωϋσῆς",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "Μωϋσῆς"
+            },
+            {
               "surface": "ἐλάλησεν",
               "lemma": "λαλέω",
               "strongs": "G2980",
@@ -18674,6 +18773,13 @@
               "morphology": "V-3XPI-S",
               "decodedMorphology": "verb perfect passive indicative third person singular",
               "gloss": "to transact business, esp"
+            },
+            {
+              "surface": "Μωϋσῆς",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "Μωϋσῆς"
             },
             {
               "surface": "μέλλων",
@@ -23075,6 +23181,13 @@
               "gloss": "Nullhupŏ, hoop-o' a primary preposition under, i"
             },
             {
+              "surface": "Μωϋσέως",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-GSM",
+              "decodedMorphology": "noun genitive singular masculine",
+              "gloss": "Μωϋσῆς"
+            },
+            {
               "surface": "παντὶ",
               "lemma": "πᾶς",
               "strongs": "G3956",
@@ -25445,6 +25558,13 @@
           "number": 8,
           "baseGreek": "ἀνώτερον λέγων ὅτι ⸂Θυσίας καὶ προσφορὰς⸃ καὶ ὁλοκαυτώματα καὶ περὶ ἁμαρτίας οὐκ ἠθέλησας οὐδὲ εὐδόκησας, αἵτινες κατὰ ⸀νόμον προσφέρονται,",
           "tokens": [
+            {
+              "surface": "ἀνώτερον",
+              "lemma": "ἀνώτερος",
+              "morphology": "A-ASNC",
+              "decodedMorphology": "adjective accusative singular neuter comparative",
+              "gloss": "ἀνώτερος"
+            },
             {
               "surface": "λέγων",
               "lemma": "λέγω",
@@ -27866,6 +27986,13 @@
               "morphology": "N-ASM",
               "decodedMorphology": "noun accusative singular masculine",
               "gloss": "anything established, anything received by usage, or a custom"
+            },
+            {
+              "surface": "Μωϋσέως",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-GSM",
+              "decodedMorphology": "noun genitive singular masculine",
+              "gloss": "Μωϋσῆς"
             },
             {
               "surface": "χωρὶς",
@@ -31536,6 +31663,14 @@
               "gloss": "who, which, what, that"
             },
             {
+              "surface": "ἐξέβησαν",
+              "lemma": "ἐκβαίνω",
+              "morphology": "V-3AAI-P",
+              "decodedMorphology": "verb aorist active indicative third person plural",
+              "gloss": "ἐκβαίνω",
+              "trailingPunctuation": ","
+            },
+            {
               "surface": "εἶχον",
               "lemma": "ἔχω",
               "strongs": "G2192",
@@ -32447,6 +32582,13 @@
               "gloss": "conviction of the truth of anything, belief, or relating to God"
             },
             {
+              "surface": "Μωϋσῆς",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "Μωϋσῆς"
+            },
+            {
               "surface": "γεννηθεὶς",
               "lemma": "γεννάω",
               "strongs": "G1080",
@@ -32461,6 +32603,13 @@
               "morphology": "V-3API-S",
               "decodedMorphology": "verb aorist passive indicative third person singular",
               "gloss": "to hide, conceal, or to be hid"
+            },
+            {
+              "surface": "τρίμηνον",
+              "lemma": "τρίμηνον",
+              "morphology": "A-ASN",
+              "decodedMorphology": "adjective accusative singular neuter",
+              "gloss": "τρίμηνον"
             },
             {
               "surface": "ὑπὸ",
@@ -32604,6 +32753,13 @@
               "morphology": "N-DSF",
               "decodedMorphology": "noun dative singular feminine",
               "gloss": "conviction of the truth of anything, belief, or relating to God"
+            },
+            {
+              "surface": "Μωϋσῆς",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "Μωϋσῆς"
             },
             {
               "surface": "μέγας",
@@ -37558,6 +37714,13 @@
               "trailingPunctuation": ","
             },
             {
+              "surface": "Μωϋσῆς",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "Μωϋσῆς"
+            },
+            {
               "surface": "εἶπεν",
               "lemma": "λέγω",
               "strongs": "G3004",
@@ -38592,6 +38755,14 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "δέους",
+              "lemma": "δέος",
+              "morphology": "N-GSN",
+              "decodedMorphology": "noun genitive singular neuter",
+              "gloss": "δέος",
+              "trailingPunctuation": ","
             }
           ]
         },
@@ -39495,6 +39666,13 @@
               "morphology": "N-NSM",
               "decodedMorphology": "noun nominative singular masculine",
               "gloss": "Christ = \" anointed\", Christ was [and is, or anointed"
+            },
+            {
+              "surface": "ἐχθὲς",
+              "lemma": "ἐχθές",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "ἐχθές"
             },
             {
               "surface": "καὶ",
@@ -40949,6 +41127,13 @@
           "number": 19,
           "baseGreek": "περισσοτέρως δὲ παρακαλῶ τοῦτο ποιῆσαι ἵνα τάχιον ἀποκατασταθῶ ὑμῖν.",
           "tokens": [
+            {
+              "surface": "περισσοτέρως",
+              "lemma": "περισσοτέρως",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "περισσοτέρως"
+            },
             {
               "surface": "δὲ",
               "lemma": "δέ",

@@ -6315,6 +6315,13 @@
               "gloss": "to join closely together, to frame together, or parts of a building"
             },
             {
+              "surface": "αὔξει",
+              "lemma": "αὔξω",
+              "morphology": "V-3PAI-S",
+              "decodedMorphology": "verb present active indicative third person singular",
+              "gloss": "αὔξω"
+            },
+            {
               "surface": "εἰς",
               "lemma": "εἰς",
               "strongs": "G1519",
@@ -8940,6 +8947,13 @@
               "morphology": "V-AAN",
               "decodedMorphology": "verb aorist active infinitive",
               "gloss": "to make, with the names of things made, or to produce"
+            },
+            {
+              "surface": "ὑπερεκπερισσοῦ",
+              "lemma": "ὑπερεκπερισσοῦ",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "ὑπερεκπερισσοῦ"
             },
             {
               "surface": "ὧν",
@@ -14881,6 +14895,13 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "ἐπιφαύσει",
+              "lemma": "ἐπιφαύσκω",
+              "morphology": "V-3FAI-S",
+              "decodedMorphology": "verb future active indicative third person singular",
+              "gloss": "ἐπιφαύσκω"
             },
             {
               "surface": "σοι",

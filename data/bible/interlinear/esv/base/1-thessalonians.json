@@ -4563,6 +4563,13 @@
               "trailingPunctuation": ","
             },
             {
+              "surface": "περισσοτέρως",
+              "lemma": "περισσοτέρως",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "περισσοτέρως"
+            },
+            {
               "surface": "ἐσπουδάσαμεν",
               "lemma": "σπουδάζω",
               "strongs": "G4704",
@@ -6459,6 +6466,13 @@
               "gloss": "the day, used of the natural day, or or the interval between sunrise and sunset"
             },
             {
+              "surface": "ὑπερεκπερισσοῦ",
+              "lemma": "ὑπερεκπερισσοῦ",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "ὑπερεκπερισσοῦ"
+            },
+            {
               "surface": "δεόμενοι",
               "lemma": "δέομαι",
               "strongs": "G1189",
@@ -7790,6 +7804,13 @@
               "morphology": "D",
               "decodedMorphology": "adverb",
               "gloss": "no or not lest"
+            },
+            {
+              "surface": "ὑπερβαίνειν",
+              "lemma": "ὑπερβαίνω",
+              "morphology": "V-PAN",
+              "decodedMorphology": "verb present active infinitive",
+              "gloss": "ὑπερβαίνω"
             },
             {
               "surface": "καὶ",
@@ -11203,6 +11224,13 @@
               "gloss": "himself, herself, or themselves"
             },
             {
+              "surface": "ὑπερεκπερισσοῦ",
+              "lemma": "ὑπερεκπερισσοῦ",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "ὑπερεκπερισσοῦ"
+            },
+            {
               "surface": "ἐν",
               "lemma": "ἐν",
               "strongs": "G1722",
@@ -12308,6 +12336,13 @@
           "number": 27,
           "baseGreek": "⸀ἐνορκίζω ὑμᾶς τὸν κύριον ἀναγνωσθῆναι τὴν ἐπιστολὴν πᾶσιν ⸀τοῖς ἀδελφοῖς.",
           "tokens": [
+            {
+              "surface": "ἐνορκίζω",
+              "lemma": "ἐνορκίζω",
+              "morphology": "V-1PAI-S",
+              "decodedMorphology": "verb present active indicative first person singular",
+              "gloss": "ἐνορκίζω"
+            },
             {
               "surface": "ὑμᾶς",
               "lemma": "σύ",

@@ -1850,6 +1850,13 @@
               "gloss": "I, me, or my"
             },
             {
+              "surface": "περισσοτέρως",
+              "lemma": "περισσοτέρως",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "περισσοτέρως"
+            },
+            {
               "surface": "τολμᾶν",
               "lemma": "τολμάω",
               "strongs": "G5111",
@@ -3666,6 +3673,13 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "if"
+            },
+            {
+              "surface": "ἀπὼν",
+              "lemma": "ἄπειμι",
+              "morphology": "V-PAPNSM",
+              "decodedMorphology": "verb present active participle nominative singular masculine",
+              "gloss": "ἄπειμι"
             },
             {
               "surface": "ἀκούω",
@@ -7418,6 +7432,13 @@
               "gloss": "a god or goddess, a general name of deities or divinities, or the Godhead"
             },
             {
+              "surface": "ἠλέησεν",
+              "lemma": "ἐλεάω",
+              "morphology": "V-3AAI-S",
+              "decodedMorphology": "verb aorist active indicative third person singular",
+              "gloss": "ἐλεάω"
+            },
+            {
               "surface": "αὐτόν",
               "lemma": "αὐτός",
               "strongs": "G846",
@@ -7619,6 +7640,13 @@
               "gloss": "and I, I also, or I as well"
             },
             {
+              "surface": "ἀλυπότερος",
+              "lemma": "ἀλυπότερος",
+              "morphology": "A-NSMC",
+              "decodedMorphology": "adjective nominative singular masculine comparative",
+              "gloss": "ἀλυπότερος"
+            },
+            {
               "surface": "ὦ",
               "lemma": "εἰμί",
               "strongs": "G1510",
@@ -7809,6 +7837,13 @@
               "decodedMorphology": "verb aorist active indicative third person singular",
               "gloss": "to bring near, to join one thing to another, or to draw or come near to",
               "trailingPunctuation": ","
+            },
+            {
+              "surface": "παραβολευσάμενος",
+              "lemma": "παραβολεύομαι",
+              "morphology": "V-AMPNSM",
+              "decodedMorphology": "verb aorist middle participle nominative singular masculine",
+              "gloss": "παραβολεύομαι"
             },
             {
               "surface": "τῇ",
@@ -9294,6 +9329,13 @@
               "decodedMorphology": "pronoun genitive singular masculine",
               "gloss": "himself, herself, or themselves",
               "trailingPunctuation": ","
+            },
+            {
+              "surface": "συμμορφιζόμενος",
+              "lemma": "συμμορφίζομαι",
+              "morphology": "V-PPPNSM",
+              "decodedMorphology": "verb present passive participle nominative singular masculine",
+              "gloss": "συμμορφίζομαι"
             },
             {
               "surface": "τῷ",
@@ -12841,6 +12883,13 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "λήμψεως",
+              "lemma": "λῆμψις",
+              "morphology": "N-GSF",
+              "decodedMorphology": "noun genitive singular feminine",
+              "gloss": "λῆμψις"
             },
             {
               "surface": "εἰ",

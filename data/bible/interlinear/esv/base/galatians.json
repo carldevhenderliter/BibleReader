@@ -1877,6 +1877,13 @@
               "trailingPunctuation": ","
             },
             {
+              "surface": "περισσοτέρως",
+              "lemma": "περισσοτέρως",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "περισσοτέρως"
+            },
+            {
               "surface": "ζηλωτὴς",
               "lemma": "ζηλωτής",
               "strongs": "G2207",
@@ -5852,6 +5859,14 @@
               "morphology": "RP-ASM",
               "decodedMorphology": "pronoun accusative singular masculine",
               "gloss": "I, me, or myself etc"
+            },
+            {
+              "surface": "συνιστάνω",
+              "lemma": "συνιστάνω",
+              "morphology": "V-1PAI-S",
+              "decodedMorphology": "verb present active indicative first person singular",
+              "gloss": "συνιστάνω",
+              "trailingPunctuation": "."
             }
           ]
         },
@@ -8910,6 +8925,13 @@
               "trailingPunctuation": ","
             },
             {
+              "surface": "ἄχρις",
+              "lemma": "ἄχρις",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "ἄχρις"
+            },
+            {
               "surface": "οὗ",
               "lemma": "ὅς",
               "strongs": "G3739",
@@ -11410,6 +11432,13 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "μῆνας",
+              "lemma": "μήν",
+              "morphology": "N-APM",
+              "decodedMorphology": "noun accusative plural masculine",
+              "gloss": "μήν"
             },
             {
               "surface": "καὶ",

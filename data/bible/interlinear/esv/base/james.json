@@ -4370,6 +4370,13 @@
               "gloss": "himself, herself, or themselves"
             },
             {
+              "surface": "ἕλκουσιν",
+              "lemma": "ἕλκω",
+              "morphology": "V-3PAI-P",
+              "decodedMorphology": "verb present active indicative third person plural",
+              "gloss": "ἕλκω"
+            },
+            {
               "surface": "ὑμᾶς",
               "lemma": "σύ",
               "strongs": "G4771",
@@ -7691,6 +7698,14 @@
               "gloss": "great, of the external form or sensible appearance of things, or in particular"
             },
             {
+              "surface": "αὐχεῖ",
+              "lemma": "αὐχέω",
+              "morphology": "V-3PAI-S",
+              "decodedMorphology": "verb present active indicative third person singular",
+              "gloss": "αὐχέω",
+              "trailingPunctuation": "."
+            },
+            {
               "surface": "Ἰδοὺ",
               "lemma": "ἰδού",
               "strongs": "G2400",
@@ -10282,6 +10297,13 @@
               "gloss": "who, which, what, that"
             },
             {
+              "surface": "κατῴκισεν",
+              "lemma": "κατοικίζω",
+              "morphology": "V-3AAI-S",
+              "decodedMorphology": "verb aorist active indicative third person singular",
+              "gloss": "κατοικίζω"
+            },
+            {
               "surface": "ἐν",
               "lemma": "ἐν",
               "strongs": "G1722",
@@ -10726,6 +10748,13 @@
               "morphology": "N-ASN",
               "decodedMorphology": "noun accusative singular neuter",
               "gloss": "Grief — mourning, sorrow"
+            },
+            {
+              "surface": "μετατραπήτω",
+              "lemma": "μετατρέπω",
+              "morphology": "V-3APD-S",
+              "decodedMorphology": "verb aorist passive third person singular",
+              "gloss": "μετατρέπω"
             },
             {
               "surface": "καὶ",
@@ -12371,6 +12400,13 @@
               "gloss": "this, that, or these"
             },
             {
+              "surface": "ἀφυστερημένος",
+              "lemma": "ἀφυστερέω",
+              "morphology": "V-XPPN-S",
+              "decodedMorphology": "verb perfect passive participle nominative singular masculine",
+              "gloss": "ἀφυστερέω"
+            },
+            {
               "surface": "ἀφ’",
               "lemma": "ἀπό",
               "strongs": "G575",
@@ -12846,6 +12882,13 @@
               "morphology": "V-3AAS-S",
               "decodedMorphology": "verb aorist active subjunctive third person singular",
               "gloss": "to take, to take with the hand, or lay hold of"
+            },
+            {
+              "surface": "πρόϊμον",
+              "lemma": "πρόϊμος",
+              "morphology": "A-ASM",
+              "decodedMorphology": "adjective accusative singular masculine",
+              "gloss": "πρόϊμος"
             },
             {
               "surface": "καὶ",
@@ -14401,6 +14444,13 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "μῆνας",
+              "lemma": "μήν",
+              "morphology": "N-APM",
+              "decodedMorphology": "noun accusative plural masculine",
+              "gloss": "μήν"
             },
             {
               "surface": "ἕξ",

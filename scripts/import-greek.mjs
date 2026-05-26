@@ -375,6 +375,15 @@ function resolveStrongsForLemma(lemma, lexemeMappings) {
   return lexemeMappings.normalizedMap.get(normalizeGreekLookupValue(exactLemma)) ?? null;
 }
 
+function makeEntryKey(lemma, strongs) {
+  if (strongs) {
+    return strongs;
+  }
+
+  const normalizedLemma = normalizeGreekFormValue(lemma);
+  return `lemma:${normalizedLemma || cleanGreekField(lemma).toLowerCase()}`;
+}
+
 async function loadJson(filePath) {
   return JSON.parse(await readFile(filePath, "utf8"));
 }
@@ -425,10 +434,7 @@ async function buildGreekArtifacts() {
       const rawSurface = parts[3] ?? "";
       const rawLemma = parts.at(-1) ?? "";
       const strongs = resolveStrongsForLemma(rawLemma, lexemeMappings);
-
-      if (!strongs) {
-        continue;
-      }
+      const entryKey = makeEntryKey(rawLemma, strongs);
 
       const { surface, trailingPunctuation } = splitSurfaceAndPunctuation(rawSurface);
 
@@ -436,17 +442,17 @@ async function buildGreekArtifacts() {
         continue;
       }
 
-      const strongsEntry = strongsLexicon[strongs] ?? null;
+      const strongsEntry = strongs ? strongsLexicon[strongs] ?? null : null;
       const compactMorphology = compressMorphologyCode(partOfSpeech, morphology);
       const decodedMorphology = decodeGreekMorphology(partOfSpeech, morphology);
-      const gloss = buildShortDefinition(strongsEntry);
+      const gloss = buildShortDefinition(strongsEntry) || cleanGreekField(rawLemma);
       const referenceKey = getReferenceKey(chapterNumber, verseNumber);
       const tokens = tokensByReference.get(referenceKey) ?? [];
 
       tokens.push({
         surface,
         lemma: cleanGreekField(rawLemma),
-        strongs,
+        ...(strongs ? { strongs } : {}),
         morphology: compactMorphology,
         decodedMorphology,
         gloss: gloss || undefined,
@@ -454,10 +460,11 @@ async function buildGreekArtifacts() {
       });
       tokensByReference.set(referenceKey, tokens);
 
-      if (!lexiconByStrongs[strongs]) {
-        lexiconByStrongs[strongs] = {
+      if (!lexiconByStrongs[entryKey]) {
+        lexiconByStrongs[entryKey] = {
+          entryKey,
           lemma: cleanGreekField(rawLemma),
-          strongs,
+          ...(strongs ? { strongs } : {}),
           transliteration: strongsEntry?.transliteration ?? "",
           pronunciation: undefined,
           shortDefinition: gloss,
@@ -466,7 +473,7 @@ async function buildGreekArtifacts() {
         };
       }
 
-      const entry = lexiconByStrongs[strongs];
+      const entry = lexiconByStrongs[entryKey];
 
       if (!entry.forms.some((form) => form.form === surface && form.morphology === compactMorphology)) {
         entry.forms.push({
@@ -481,8 +488,18 @@ async function buildGreekArtifacts() {
 
       if (normalizedLemma) {
         lemmaIndex[normalizedLemma] = Array.from(
-          new Set([...(lemmaIndex[normalizedLemma] ?? []), strongs])
+          new Set([...(lemmaIndex[normalizedLemma] ?? []), entryKey])
         );
+      }
+
+      if (strongs) {
+        const normalizedStrongs = normalizeGreekLookupValue(strongs);
+
+        if (normalizedStrongs) {
+          lemmaIndex[normalizedStrongs] = Array.from(
+            new Set([...(lemmaIndex[normalizedStrongs] ?? []), entryKey])
+          );
+        }
       }
 
       const normalizedForm = normalizeGreekFormValue(surface);
@@ -493,10 +510,11 @@ async function buildGreekArtifacts() {
             [
               ...(formIndex[normalizedForm] ?? []),
               {
-                strongs,
+                entryKey,
+                ...(strongs ? { strongs } : {}),
                 form: surface
               }
-            ].map((form) => [`${form.strongs}:${form.form}`, form])
+            ].map((form) => [`${form.entryKey}:${form.form}`, form])
           ).values()
         );
       }

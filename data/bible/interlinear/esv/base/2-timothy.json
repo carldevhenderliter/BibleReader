@@ -2643,6 +2643,13 @@
               "trailingPunctuation": ","
             },
             {
+              "surface": "βέλτιον",
+              "lemma": "βέλτιον",
+              "morphology": "A-ASNC",
+              "decodedMorphology": "adjective accusative singular neuter comparative",
+              "gloss": "βέλτιον"
+            },
+            {
               "surface": "σὺ",
               "lemma": "σύ",
               "strongs": "G4771",
@@ -6418,6 +6425,14 @@
               "gloss": "to set one' s self against, to withstand, or resist"
             },
             {
+              "surface": "Μωϋσεῖ",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-DSM",
+              "decodedMorphology": "noun dative singular masculine",
+              "gloss": "Μωϋσῆς",
+              "trailingPunctuation": ","
+            },
+            {
               "surface": "οὕτως",
               "lemma": "οὕτως",
               "strongs": "G3779",
@@ -7555,6 +7570,14 @@
               "morphology": "P",
               "decodedMorphology": "preposition",
               "gloss": "to the advantage of, at, or near"
+            },
+            {
+              "surface": "ἐλεγμόν",
+              "lemma": "ἐλεγμός",
+              "morphology": "N-ASM",
+              "decodedMorphology": "noun accusative singular masculine",
+              "gloss": "ἐλεγμός",
+              "trailingPunctuation": ","
             },
             {
               "surface": "πρὸς",

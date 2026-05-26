@@ -964,6 +964,14 @@
               "morphology": "RA-ASM",
               "decodedMorphology": "article accusative singular masculine",
               "gloss": "this, that, or these"
+            },
+            {
+              "surface": "Ἀσάφ",
+              "lemma": "Ἀσάφ",
+              "morphology": "N-ASM",
+              "decodedMorphology": "noun accusative singular masculine",
+              "gloss": "Ἀσάφ",
+              "trailingPunctuation": ","
             }
           ]
         },
@@ -971,6 +979,13 @@
           "number": 8,
           "baseGreek": "Ἀσὰφ⸃ δὲ ἐγέννησεν τὸν Ἰωσαφάτ, Ἰωσαφὰτ δὲ ἐγέννησεν τὸν Ἰωράμ, Ἰωρὰμ δὲ ἐγέννησεν τὸν Ὀζίαν,",
           "tokens": [
+            {
+              "surface": "Ἀσὰφ",
+              "lemma": "Ἀσάφ",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "Ἀσάφ"
+            },
             {
               "surface": "δὲ",
               "lemma": "δέ",
@@ -6433,6 +6448,14 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "κατωτέρω",
+              "lemma": "κατωτέρω",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "κατωτέρω",
+              "trailingPunctuation": ","
             },
             {
               "surface": "κατὰ",
@@ -12009,6 +12032,13 @@
               "gloss": "this, that, or these"
             },
             {
+              "surface": "Ναζαρὰ",
+              "lemma": "Ναζαρά",
+              "morphology": "N-ASF",
+              "decodedMorphology": "noun accusative singular feminine",
+              "gloss": "Ναζαρά"
+            },
+            {
               "surface": "ἐλθὼν",
               "lemma": "ἔρχομαι",
               "strongs": "G2064",
@@ -14538,6 +14568,14 @@
               "morphology": "RP-NPM",
               "decodedMorphology": "pronoun nominative plural masculine",
               "gloss": "himself, herself, or themselves"
+            },
+            {
+              "surface": "ἐλεηθήσονται",
+              "lemma": "ἐλεάω",
+              "morphology": "V-3FPI-P",
+              "decodedMorphology": "verb future passive indicative third person plural",
+              "gloss": "ἐλεάω",
+              "trailingPunctuation": "."
             }
           ]
         },
@@ -23743,6 +23781,14 @@
               "gloss": "this, that, or these"
             },
             {
+              "surface": "κρυφαίῳ",
+              "lemma": "κρυφαῖος",
+              "morphology": "A-DSN",
+              "decodedMorphology": "adjective dative singular neuter",
+              "gloss": "κρυφαῖος",
+              "trailingPunctuation": "·"
+            },
+            {
               "surface": "καὶ",
               "lemma": "καί",
               "strongs": "G2532",
@@ -23805,6 +23851,13 @@
               "morphology": "RA-DSN",
               "decodedMorphology": "article dative singular neuter",
               "gloss": "this, that, or these"
+            },
+            {
+              "surface": "κρυφαίῳ",
+              "lemma": "κρυφαῖος",
+              "morphology": "A-DSN",
+              "decodedMorphology": "adjective dative singular neuter",
+              "gloss": "κρυφαῖος"
             },
             {
               "surface": "ἀποδώσει",
@@ -31281,6 +31334,13 @@
               "gloss": "to assign or ascribe to, join to, or to enjoin"
             },
             {
+              "surface": "Μωϋσῆς",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "Μωϋσῆς"
+            },
+            {
               "surface": "εἰς",
               "lemma": "εἰς",
               "strongs": "G1519",
@@ -31366,6 +31426,13 @@
               "morphology": "RP-DSM",
               "decodedMorphology": "pronoun dative singular masculine",
               "gloss": "himself, herself, or themselves"
+            },
+            {
+              "surface": "ἑκατόνταρχος",
+              "lemma": "ἑκατόνταρχος",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "ἑκατόνταρχος"
             },
             {
               "surface": "παρακαλῶν",
@@ -31590,6 +31657,13 @@
               "morphology": "RA-NSM",
               "decodedMorphology": "article nominative singular masculine",
               "gloss": "this, that, or these"
+            },
+            {
+              "surface": "ἑκατόνταρχος",
+              "lemma": "ἑκατόνταρχος",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "ἑκατόνταρχος"
             },
             {
               "surface": "ἔφη",
@@ -32965,6 +33039,13 @@
           "number": 16,
           "baseGreek": "Ὀψίας δὲ γενομένης προσήνεγκαν αὐτῷ δαιμονιζομένους πολλούς· καὶ ἐξέβαλεν τὰ πνεύματα λόγῳ, καὶ πάντας τοὺς κακῶς ἔχοντας ἐθεράπευσεν·",
           "tokens": [
+            {
+              "surface": "Ὀψίας",
+              "lemma": "ὀψία",
+              "morphology": "A-GSF",
+              "decodedMorphology": "adjective genitive singular feminine",
+              "gloss": "ὀψία"
+            },
             {
               "surface": "δὲ",
               "lemma": "δέ",
@@ -36180,6 +36261,13 @@
               "trailingPunctuation": "·"
             },
             {
+              "surface": "Ἱνατί",
+              "lemma": "ἱνατί",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "ἱνατί"
+            },
+            {
               "surface": "ἐνθυμεῖσθε",
               "lemma": "ἐνθυμέομαι",
               "strongs": "G1760",
@@ -36883,6 +36971,13 @@
               "decodedMorphology": "noun accusative singular neuter",
               "gloss": "customs, toll, or toll house",
               "trailingPunctuation": ","
+            },
+            {
+              "surface": "Μαθθαῖον",
+              "lemma": "Μαθθαῖος",
+              "morphology": "N-ASM",
+              "decodedMorphology": "noun accusative singular masculine",
+              "gloss": "Μαθθαῖος"
             },
             {
               "surface": "λεγόμενον",
@@ -39731,6 +39826,13 @@
               "trailingPunctuation": "·"
             },
             {
+              "surface": "Ἐλέησον",
+              "lemma": "ἐλεάω",
+              "morphology": "V-2AAD-S",
+              "decodedMorphology": "verb aorist active second person singular",
+              "gloss": "ἐλεάω"
+            },
+            {
               "surface": "ἡμᾶς",
               "lemma": "ἐγώ",
               "strongs": "G1473",
@@ -41653,6 +41755,13 @@
               "gloss": "also, even, or indeed"
             },
             {
+              "surface": "Μαθθαῖος",
+              "lemma": "Μαθθαῖος",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "Μαθθαῖος"
+            },
+            {
               "surface": "ὁ",
               "lemma": "ὁ",
               "strongs": "G3588",
@@ -41739,6 +41848,13 @@
               "morphology": "RA-NSM",
               "decodedMorphology": "article nominative singular masculine",
               "gloss": "this, that, or these"
+            },
+            {
+              "surface": "Καναναῖος",
+              "lemma": "Καναναῖος",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "Καναναῖος"
             },
             {
               "surface": "καὶ",
@@ -62934,6 +63050,13 @@
               "gloss": "also, even, or indeed"
             },
             {
+              "surface": "ἐπέσπειρεν",
+              "lemma": "ἐπισπείρω",
+              "morphology": "V-3AAI-S",
+              "decodedMorphology": "verb aorist active indicative third person singular",
+              "gloss": "ἐπισπείρω"
+            },
+            {
               "surface": "ζιζάνια",
               "lemma": "ζιζάνιον",
               "strongs": "G2215",
@@ -66738,6 +66861,14 @@
               "gloss": "into, unto, to, towards, for, among"
             },
             {
+              "surface": "ἄγγη",
+              "lemma": "ἄγγος",
+              "morphology": "N-APN",
+              "decodedMorphology": "noun accusative plural neuter",
+              "gloss": "ἄγγος",
+              "trailingPunctuation": ","
+            },
+            {
               "surface": "τὰ",
               "lemma": "ὁ",
               "strongs": "G3588",
@@ -70046,6 +70177,13 @@
           "baseGreek": "ὀψίας δὲ γενομένης προσῆλθον αὐτῷ οἱ ⸀μαθηταὶ λέγοντες· Ἔρημός ἐστιν ὁ τόπος καὶ ἡ ὥρα ἤδη παρῆλθεν· ἀπόλυσον τοὺς ὄχλους, ἵνα ἀπελθόντες εἰς τὰς κώμας ἀγοράσωσιν ἑαυτοῖς βρώματα.",
           "tokens": [
             {
+              "surface": "ὀψίας",
+              "lemma": "ὀψία",
+              "morphology": "A-GSF",
+              "decodedMorphology": "adjective genitive singular feminine",
+              "gloss": "ὀψία"
+            },
+            {
               "surface": "δὲ",
               "lemma": "δέ",
               "strongs": "G1161",
@@ -71306,6 +71444,13 @@
               "trailingPunctuation": "."
             },
             {
+              "surface": "ὀψίας",
+              "lemma": "ὀψία",
+              "morphology": "A-GSF",
+              "decodedMorphology": "adjective genitive singular feminine",
+              "gloss": "ὀψία"
+            },
+            {
               "surface": "δὲ",
               "lemma": "δέ",
               "strongs": "G1161",
@@ -71383,6 +71528,13 @@
               "morphology": "D",
               "decodedMorphology": "adverb",
               "gloss": "now or already"
+            },
+            {
+              "surface": "σταδίους",
+              "lemma": "στάδιος",
+              "morphology": "N-APM",
+              "decodedMorphology": "noun accusative plural masculine",
+              "gloss": "στάδιος"
             },
             {
               "surface": "πολλοὺς",
@@ -75595,6 +75747,13 @@
               "trailingPunctuation": "·"
             },
             {
+              "surface": "Ἐλέησόν",
+              "lemma": "ἐλεάω",
+              "morphology": "V-2AAD-S",
+              "decodedMorphology": "verb aorist active second person singular",
+              "gloss": "ἐλεάω"
+            },
+            {
               "surface": "με",
               "lemma": "ἐγώ",
               "strongs": "G1473",
@@ -76288,6 +76447,13 @@
               "morphology": "RA-GPN",
               "decodedMorphology": "article genitive plural neuter",
               "gloss": "this, that, or these"
+            },
+            {
+              "surface": "ψιχίων",
+              "lemma": "ψίξ",
+              "morphology": "N-GPN",
+              "decodedMorphology": "noun genitive plural neuter",
+              "gloss": "ψίξ"
             },
             {
               "surface": "τῶν",
@@ -78186,6 +78352,14 @@
               "morphology": "N-APN",
               "decodedMorphology": "noun accusative plural neuter",
               "gloss": "boundaries, for a region, or district"
+            },
+            {
+              "surface": "Μαγαδάν",
+              "lemma": "Μαγαδάν",
+              "morphology": "N-GSF",
+              "decodedMorphology": "noun genitive singular feminine",
+              "gloss": "Μαγαδάν",
+              "trailingPunctuation": "."
             }
           ]
         }
@@ -78366,6 +78540,13 @@
               "decodedMorphology": "pronoun dative plural masculine",
               "gloss": "himself, herself, or themselves",
               "trailingPunctuation": "·"
+            },
+            {
+              "surface": "Ὀψίας",
+              "lemma": "ὀψία",
+              "morphology": "A-GSF",
+              "decodedMorphology": "adjective genitive singular feminine",
+              "gloss": "ὀψία"
             },
             {
               "surface": "γενομένης",
@@ -80357,6 +80538,14 @@
               "morphology": "N-VSM",
               "decodedMorphology": "noun vocative singular masculine",
               "gloss": "Peter = \" a rock or stone\", Peter was one of the apostles, or Simon called Zelotes or the Kanaites"
+            },
+            {
+              "surface": "Βαριωνᾶ",
+              "lemma": "Βαριωνᾶ",
+              "morphology": "N-VSM",
+              "decodedMorphology": "noun vocative singular masculine",
+              "gloss": "Βαριωνᾶ",
+              "trailingPunctuation": ","
             },
             {
               "surface": "ὅτι",
@@ -83042,6 +83231,13 @@
               "gloss": "himself, herself, or themselves"
             },
             {
+              "surface": "Μωϋσῆς",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "Μωϋσῆς"
+            },
+            {
               "surface": "καὶ",
               "lemma": "καί",
               "strongs": "G2532",
@@ -83268,6 +83464,13 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "Μωϋσεῖ",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-DSM",
+              "decodedMorphology": "noun dative singular masculine",
+              "gloss": "Μωϋσῆς"
             },
             {
               "surface": "μίαν",
@@ -84694,6 +84897,13 @@
               "trailingPunctuation": ","
             },
             {
+              "surface": "ἐλέησόν",
+              "lemma": "ἐλεάω",
+              "morphology": "V-2AAD-S",
+              "decodedMorphology": "verb aorist active second person singular",
+              "gloss": "ἐλεάω"
+            },
+            {
               "surface": "μου",
               "lemma": "ἐγώ",
               "strongs": "G1473",
@@ -85492,6 +85702,13 @@
               "gloss": "this, that, or these"
             },
             {
+              "surface": "ὀλιγοπιστίαν",
+              "lemma": "ὀλιγοπιστία",
+              "morphology": "N-ASF",
+              "decodedMorphology": "noun accusative singular feminine",
+              "gloss": "ὀλιγοπιστία"
+            },
+            {
               "surface": "ὑμῶν",
               "lemma": "σύ",
               "strongs": "G4771",
@@ -85622,6 +85839,13 @@
               "morphology": "V-2AAD-S",
               "decodedMorphology": "verb aorist active second person singular",
               "gloss": "to pass over from one place to another, to remove, or depart"
+            },
+            {
+              "surface": "ἔνθεν",
+              "lemma": "ἔνθεν",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "ἔνθεν"
             },
             {
               "surface": "ἐκεῖ",
@@ -92068,6 +92292,13 @@
               "gloss": "Personal pron"
             },
             {
+              "surface": "ἐλεῆσαι",
+              "lemma": "ἐλεάω",
+              "morphology": "V-AAN",
+              "decodedMorphology": "verb aorist active infinitive",
+              "gloss": "ἐλεάω"
+            },
+            {
               "surface": "τὸν",
               "lemma": "ὁ",
               "strongs": "G3588",
@@ -92115,6 +92346,14 @@
               "morphology": "RP-AS",
               "decodedMorphology": "pronoun accusative singular",
               "gloss": "Personal pron"
+            },
+            {
+              "surface": "ἠλέησα",
+              "lemma": "ἐλεάω",
+              "morphology": "V-1AAI-S",
+              "decodedMorphology": "verb aorist active indicative first person singular",
+              "gloss": "ἐλεάω",
+              "trailingPunctuation": ";"
             }
           ]
         },
@@ -92999,6 +93238,13 @@
               "trailingPunctuation": "·"
             },
             {
+              "surface": "Ἕνεκα",
+              "lemma": "ἕνεκα",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "ἕνεκα"
+            },
+            {
               "surface": "τούτου",
               "lemma": "οὗτος",
               "strongs": "G3778",
@@ -93328,6 +93574,13 @@
               "gloss": "then, therefore, or accordingly"
             },
             {
+              "surface": "Μωϋσῆς",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "Μωϋσῆς"
+            },
+            {
               "surface": "ἐνετείλατο",
               "lemma": "ἐντέλλομαι",
               "strongs": "G1781",
@@ -93413,6 +93666,13 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "that, because, or since"
+            },
+            {
+              "surface": "Μωϋσῆς",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "Μωϋσῆς"
             },
             {
               "surface": "πρὸς",
@@ -97856,6 +98116,13 @@
           "baseGreek": "ὀψίας δὲ γενομένης λέγει ὁ κύριος τοῦ ἀμπελῶνος τῷ ἐπιτρόπῳ αὐτοῦ· Κάλεσον τοὺς ἐργάτας καὶ ἀπόδος ⸀αὐτοῖς τὸν μισθὸν ἀρξάμενος ἀπὸ τῶν ἐσχάτων ἕως τῶν πρώτων.",
           "tokens": [
             {
+              "surface": "ὀψίας",
+              "lemma": "ὀψία",
+              "morphology": "A-GSF",
+              "decodedMorphology": "adjective genitive singular feminine",
+              "gloss": "ὀψία"
+            },
+            {
               "surface": "δὲ",
               "lemma": "δέ",
               "strongs": "G1161",
@@ -101054,6 +101321,13 @@
               "trailingPunctuation": ","
             },
             {
+              "surface": "ἐλέησον",
+              "lemma": "ἐλεάω",
+              "morphology": "V-2AAD-S",
+              "decodedMorphology": "verb aorist active second person singular",
+              "gloss": "ἐλεάω"
+            },
+            {
               "surface": "ἡμᾶς",
               "lemma": "ἐγώ",
               "strongs": "G1473",
@@ -101191,6 +101465,13 @@
               "decodedMorphology": "noun vocative singular masculine",
               "gloss": "he to whom a person or thing belongs, about which he has power of deciding, or master",
               "trailingPunctuation": ","
+            },
+            {
+              "surface": "ἐλέησον",
+              "lemma": "ἐλεάω",
+              "morphology": "V-2AAD-S",
+              "decodedMorphology": "verb aorist active second person singular",
+              "gloss": "ἐλεάω"
             },
             {
               "surface": "ἡμᾶς",
@@ -103104,6 +103385,13 @@
               "morphology": "P",
               "decodedMorphology": "preposition",
               "gloss": "of separation, of local separation, or of fleeing"
+            },
+            {
+              "surface": "Ναζαρὲθ",
+              "lemma": "Ναζαρέθ",
+              "morphology": "N-GSF",
+              "decodedMorphology": "noun genitive singular feminine",
+              "gloss": "Ναζαρέθ"
             },
             {
               "surface": "τῆς",
@@ -109751,6 +110039,14 @@
               "morphology": "RP-GPM",
               "decodedMorphology": "pronoun genitive plural masculine",
               "gloss": "himself, herself, or themselves"
+            },
+            {
+              "surface": "ἐνέπρησεν",
+              "lemma": "ἐμπίμπρημι",
+              "morphology": "V-3AAI-S",
+              "decodedMorphology": "verb aorist active indicative third person singular",
+              "gloss": "ἐμπίμπρημι",
+              "trailingPunctuation": "."
             }
           ]
         },
@@ -110160,6 +110456,13 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "ἐπλήσθη",
+              "lemma": "πίμπλημι",
+              "morphology": "V-3API-S",
+              "decodedMorphology": "verb aorist passive indicative third person singular",
+              "gloss": "πίμπλημι"
             },
             {
               "surface": "ὁ",
@@ -111849,6 +112152,13 @@
               "trailingPunctuation": ","
             },
             {
+              "surface": "Μωϋσῆς",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "Μωϋσῆς"
+            },
+            {
               "surface": "εἶπεν",
               "lemma": "λέγω",
               "strongs": "G3004",
@@ -112647,6 +112957,14 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "neither or and not"
+            },
+            {
+              "surface": "γαμίζονται",
+              "lemma": "γαμίζω",
+              "morphology": "V-3PPI-P",
+              "decodedMorphology": "verb present passive indicative third person plural",
+              "gloss": "γαμίζω",
+              "trailingPunctuation": ","
             },
             {
               "surface": "ἀλλ’",
@@ -114590,6 +114908,13 @@
               "morphology": "RA-GSF",
               "decodedMorphology": "article genitive singular feminine",
               "gloss": "this, that, or these"
+            },
+            {
+              "surface": "Μωϋσέως",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-GSM",
+              "decodedMorphology": "noun genitive singular masculine",
+              "gloss": "Μωϋσῆς"
             },
             {
               "surface": "καθέδρας",
@@ -125253,6 +125578,14 @@
               "gloss": "also, even, or indeed"
             },
             {
+              "surface": "γαμίζοντες",
+              "lemma": "γαμίζω",
+              "morphology": "V-PAPNPM",
+              "decodedMorphology": "verb present active participle nominative plural masculine",
+              "gloss": "γαμίζω",
+              "trailingPunctuation": ","
+            },
+            {
               "surface": "ἄχρι",
               "lemma": "ἄχρι",
               "strongs": "G891",
@@ -126202,6 +126535,13 @@
               "morphology": "RA-GSF",
               "decodedMorphology": "article genitive singular feminine",
               "gloss": "this, that, or these"
+            },
+            {
+              "surface": "οἰκετείας",
+              "lemma": "οἰκετεία",
+              "morphology": "N-GSF",
+              "decodedMorphology": "noun genitive singular feminine",
+              "gloss": "οἰκετεία"
             },
             {
               "surface": "αὐτοῦ",
@@ -135798,6 +136138,13 @@
           "baseGreek": "Ὀψίας δὲ γενομένης ἀνέκειτο μετὰ τῶν δώδεκα ⸀μαθητῶν",
           "tokens": [
             {
+              "surface": "Ὀψίας",
+              "lemma": "ὀψία",
+              "morphology": "A-GSF",
+              "decodedMorphology": "adjective genitive singular feminine",
+              "gloss": "ὀψία"
+            },
+            {
               "surface": "δὲ",
               "lemma": "δέ",
               "strongs": "G1161",
@@ -142586,6 +142933,13 @@
               "gloss": "chief priest, high priest, or the high priests"
             },
             {
+              "surface": "διέρρηξεν",
+              "lemma": "διαρρήγνυμι",
+              "morphology": "V-3AAI-S",
+              "decodedMorphology": "verb aorist active indicative third person singular",
+              "gloss": "διαρρήγνυμι"
+            },
+            {
               "surface": "τὰ",
               "lemma": "ὁ",
               "strongs": "G3588",
@@ -144673,6 +145027,14 @@
               "morphology": "RA-ASM",
               "decodedMorphology": "article accusative singular masculine",
               "gloss": "this, that, or these"
+            },
+            {
+              "surface": "κορβανᾶν",
+              "lemma": "κορβανᾶς",
+              "morphology": "N-ASM",
+              "decodedMorphology": "noun accusative singular masculine",
+              "gloss": "κορβανᾶς",
+              "trailingPunctuation": ","
             },
             {
               "surface": "ἐπεὶ",
@@ -149810,6 +150172,13 @@
               "trailingPunctuation": ","
             },
             {
+              "surface": "ἱνατί",
+              "lemma": "ἱνατί",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "ἱνατί"
+            },
+            {
               "surface": "με",
               "lemma": "ἐγώ",
               "strongs": "G1473",
@@ -149998,6 +150367,13 @@
               "morphology": "N-ASM",
               "decodedMorphology": "noun accusative singular masculine",
               "gloss": "Nullsp ngos, spong' -gos perhaps of foreign origin a \"sponge\"— spunge"
+            },
+            {
+              "surface": "πλήσας",
+              "lemma": "πίμπλημι",
+              "morphology": "V-AAPNSM",
+              "decodedMorphology": "verb aorist active participle nominative singular masculine",
+              "gloss": "πίμπλημι"
             },
             {
               "surface": "τε",
@@ -150677,6 +151053,13 @@
               "gloss": "but, moreover, and, etc"
             },
             {
+              "surface": "ἑκατόνταρχος",
+              "lemma": "ἑκατόνταρχος",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "ἑκατόνταρχος"
+            },
+            {
               "surface": "καὶ",
               "lemma": "καί",
               "strongs": "G2532",
@@ -151163,6 +151546,13 @@
           "number": 57,
           "baseGreek": "Ὀψίας δὲ γενομένης ἦλθεν ἄνθρωπος πλούσιος ἀπὸ Ἁριμαθαίας, τοὔνομα Ἰωσήφ, ὃς καὶ αὐτὸς ⸀ἐμαθητεύθη τῷ Ἰησοῦ·",
           "tokens": [
+            {
+              "surface": "Ὀψίας",
+              "lemma": "ὀψία",
+              "morphology": "A-GSF",
+              "decodedMorphology": "adjective genitive singular feminine",
+              "gloss": "ὀψία"
+            },
             {
               "surface": "δὲ",
               "lemma": "δέ",
@@ -152876,6 +153266,13 @@
               "morphology": "RA-NSF",
               "decodedMorphology": "article nominative singular feminine",
               "gloss": "this, that, or these"
+            },
+            {
+              "surface": "εἰδέα",
+              "lemma": "εἰδέα",
+              "morphology": "N-NSF",
+              "decodedMorphology": "noun nominative singular feminine",
+              "gloss": "εἰδέα"
             },
             {
               "surface": "αὐτοῦ",

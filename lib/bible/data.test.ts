@@ -1,3 +1,6 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+
 import {
   getBookBySlug,
   getBooks,
@@ -5,6 +8,91 @@ import {
   getChronologicalNewTestamentBooks,
   getChronologicalOldTestamentBooks
 } from "@/lib/bible/data";
+
+const SBLGNT_FILE_BY_SLUG = {
+  matthew: "61-Mt-morphgnt.txt",
+  mark: "62-Mk-morphgnt.txt",
+  luke: "63-Lk-morphgnt.txt",
+  john: "64-Jn-morphgnt.txt",
+  acts: "65-Ac-morphgnt.txt",
+  romans: "66-Ro-morphgnt.txt",
+  "1-corinthians": "67-1Co-morphgnt.txt",
+  "2-corinthians": "68-2Co-morphgnt.txt",
+  galatians: "69-Ga-morphgnt.txt",
+  ephesians: "70-Eph-morphgnt.txt",
+  philippians: "71-Php-morphgnt.txt",
+  colossians: "72-Col-morphgnt.txt",
+  "1-thessalonians": "73-1Th-morphgnt.txt",
+  "2-thessalonians": "74-2Th-morphgnt.txt",
+  "1-timothy": "75-1Ti-morphgnt.txt",
+  "2-timothy": "76-2Ti-morphgnt.txt",
+  titus: "77-Tit-morphgnt.txt",
+  philemon: "78-Phm-morphgnt.txt",
+  hebrews: "79-Heb-morphgnt.txt",
+  james: "80-Jas-morphgnt.txt",
+  "1-peter": "81-1Pe-morphgnt.txt",
+  "2-peter": "82-2Pe-morphgnt.txt",
+  "1-john": "83-1Jn-morphgnt.txt",
+  "2-john": "84-2Jn-morphgnt.txt",
+  "3-john": "85-3Jn-morphgnt.txt",
+  jude: "86-Jud-morphgnt.txt",
+  revelation: "87-Re-morphgnt.txt"
+} as const;
+
+const SBLGNT_CRITICAL_MARKS_PATTERN = /[⸀-⸟]/gu;
+const SBLGNT_SURFACE_PUNCTUATION_PATTERN = /([,.;·;.!?]+)$/u;
+
+type GreekInterlinearPayload = {
+  chapters: Array<{
+    chapterNumber: number;
+    verses: Array<{
+      number: number;
+      tokens?: Array<{ surface?: string }>;
+    }>;
+  }>;
+};
+
+function cleanSblgntField(value: string) {
+  return value.normalize("NFC").replace(SBLGNT_CRITICAL_MARKS_PATTERN, "").replace(/[()]/g, "").trim();
+}
+
+function getSblgntSurface(value: string) {
+  const cleaned = cleanSblgntField(value);
+  const match = cleaned.match(SBLGNT_SURFACE_PUNCTUATION_PATTERN);
+
+  return match ? cleaned.slice(0, -match[1].length).trimEnd() : cleaned;
+}
+
+async function readSblgntSourceSurfaces(fileName: string) {
+  const file = await readFile(path.join(process.cwd(), "data", "source", "sblgnt", fileName), "utf8");
+  const surfacesByReference = new Map<string, string[]>();
+
+  for (const rawLine of file.split(/\r?\n/)) {
+    const line = rawLine.trim();
+
+    if (!line) {
+      continue;
+    }
+
+    const parts = line.split(/\s+/);
+    const reference = parts[0] ?? "";
+
+    if (parts.length < 7 || !/^\d{6}$/.test(reference)) {
+      continue;
+    }
+
+    const referenceKey = `${Number(reference.slice(2, 4))}:${Number(reference.slice(4, 6))}`;
+    const surface = getSblgntSurface(parts[3] ?? "");
+
+    if (!surface) {
+      continue;
+    }
+
+    surfacesByReference.set(referenceKey, [...(surfacesByReference.get(referenceKey) ?? []), surface]);
+  }
+
+  return surfacesByReference;
+}
 
 describe("bible data", () => {
   it("loads bundled books for WEB, KJV, ESV, TR, and Hebrew", async () => {
@@ -104,6 +192,40 @@ describe("bible data", () => {
       expect.objectContaining({ lemma: "Ἰωβήδ", strongs: "G5601", morphology: "N-ASM" }),
       expect.objectContaining({ lemma: "Ἰωβήδ", strongs: "G5601", morphology: "N-NSM" })
     ]);
+  });
+
+  it("keeps every SBLGNT source word in the generated Greek interlinear data", async () => {
+    const mismatches: string[] = [];
+
+    for (const [bookSlug, sourceFileName] of Object.entries(SBLGNT_FILE_BY_SLUG)) {
+      const [sourceSurfacesByReference, interlinearFile] = await Promise.all([
+        readSblgntSourceSurfaces(sourceFileName),
+        readFile(
+          path.join(process.cwd(), "data", "bible", "interlinear", "esv", "base", `${bookSlug}.json`),
+          "utf8"
+        )
+      ]);
+      const interlinearPayload = JSON.parse(interlinearFile) as GreekInterlinearPayload;
+
+      for (const chapter of interlinearPayload.chapters) {
+        for (const verse of chapter.verses) {
+          const referenceKey = `${chapter.chapterNumber}:${verse.number}`;
+          const sourceSurfaces = sourceSurfacesByReference.get(referenceKey) ?? [];
+          const generatedSurfaces = (verse.tokens ?? []).map((token) => token.surface ?? "");
+
+          if (
+            sourceSurfaces.length !== generatedSurfaces.length ||
+            sourceSurfaces.some((surface, index) => surface !== generatedSurfaces[index])
+          ) {
+            mismatches.push(
+              `${bookSlug} ${referenceKey}: source ${sourceSurfaces.length}, generated ${generatedSurfaces.length}`
+            );
+          }
+        }
+      }
+    }
+
+    expect(mismatches).toEqual([]);
   });
 
   it("loads Genesis 1 from bundled Hebrew and omits New Testament books", async () => {

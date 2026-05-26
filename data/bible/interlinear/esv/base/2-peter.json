@@ -534,6 +534,13 @@
               "gloss": "also, even, or indeed"
             },
             {
+              "surface": "μέγιστα",
+              "lemma": "μέγιστος",
+              "morphology": "A-APNS",
+              "decodedMorphology": "adjective accusative plural neuter superlative",
+              "gloss": "μέγιστος"
+            },
+            {
               "surface": "ἡμῖν",
               "lemma": "ἐγώ",
               "strongs": "G1473",
@@ -5469,6 +5476,13 @@
               "gloss": "also, even, or indeed"
             },
             {
+              "surface": "ὁμίχλαι",
+              "lemma": "ὁμίχλη",
+              "morphology": "N-NPF",
+              "decodedMorphology": "noun nominative plural feminine",
+              "gloss": "ὁμίχλη"
+            },
+            {
               "surface": "ὑπὸ",
               "lemma": "ὑπό",
               "strongs": "G5259",
@@ -5626,6 +5640,13 @@
               "morphology": "RA-APM",
               "decodedMorphology": "article accusative plural masculine",
               "gloss": "this, that, or these"
+            },
+            {
+              "surface": "ὀλίγως",
+              "lemma": "ὀλίγως",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "ὀλίγως"
             },
             {
               "surface": "ἀποφεύγοντας",
@@ -6311,6 +6332,13 @@
               "gloss": "into, unto, to, towards, for, among"
             },
             {
+              "surface": "κυλισμὸν",
+              "lemma": "κυλισμός",
+              "morphology": "N-ASM",
+              "decodedMorphology": "noun accusative singular masculine",
+              "gloss": "κυλισμός"
+            },
+            {
               "surface": "βορβόρου",
               "lemma": "βόρβορος",
               "strongs": "G1004",
@@ -6697,6 +6725,13 @@
               "morphology": "P",
               "decodedMorphology": "preposition",
               "gloss": "in, by, with etc"
+            },
+            {
+              "surface": "ἐμπαιγμονῇ",
+              "lemma": "ἐμπαιγμονή",
+              "morphology": "N-DSF",
+              "decodedMorphology": "noun dative singular feminine",
+              "gloss": "ἐμπαιγμονή"
             },
             {
               "surface": "ἐμπαῖκται",

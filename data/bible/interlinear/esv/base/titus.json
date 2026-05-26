@@ -2771,6 +2771,14 @@
               "gloss": "teaching, instruction, or that which is taught"
             },
             {
+              "surface": "ἀφθορίαν",
+              "lemma": "ἀφθορία",
+              "morphology": "N-ASF",
+              "decodedMorphology": "noun accusative singular feminine",
+              "gloss": "ἀφθορία",
+              "trailingPunctuation": ","
+            },
+            {
               "surface": "σεμνότητα",
               "lemma": "σεμνότης",
               "strongs": "G4587",

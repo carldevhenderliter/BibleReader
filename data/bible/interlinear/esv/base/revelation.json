@@ -8308,6 +8308,13 @@
               "gloss": "this, that, or these"
             },
             {
+              "surface": "ἐραυνῶν",
+              "lemma": "ἐραυνάω",
+              "morphology": "V-PAPNSM",
+              "decodedMorphology": "verb present active participle nominative singular masculine",
+              "gloss": "ἐραυνάω"
+            },
+            {
               "surface": "νεφροὺς",
               "lemma": "νεφρός",
               "strongs": "G3510",
@@ -13013,6 +13020,13 @@
               "trailingPunctuation": "·"
             },
             {
+              "surface": "ζήλευε",
+              "lemma": "ζηλεύω",
+              "morphology": "V-2PAD-S",
+              "decodedMorphology": "verb present active second person singular",
+              "gloss": "ζηλεύω"
+            },
+            {
               "surface": "οὖν",
               "lemma": "οὖν",
               "strongs": "G3767",
@@ -14679,6 +14693,13 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "κύκλῳ",
+              "lemma": "κύκλῳ",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "κύκλῳ"
             },
             {
               "surface": "τοῦ",
@@ -17983,6 +18004,13 @@
               "morphology": "A-GPM",
               "decodedMorphology": "adjective genitive plural masculine",
               "gloss": "many, much, or large"
+            },
+            {
+              "surface": "κύκλῳ",
+              "lemma": "κύκλῳ",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "κύκλῳ"
             },
             {
               "surface": "τοῦ",
@@ -24226,6 +24254,13 @@
               "gloss": "to cause or make to stand, to place, or put"
             },
             {
+              "surface": "κύκλῳ",
+              "lemma": "κύκλῳ",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "κύκλῳ"
+            },
+            {
               "surface": "τοῦ",
               "lemma": "ὁ",
               "strongs": "G3588",
@@ -29301,6 +29336,13 @@
               "gloss": "to test by the touchstone, to question by applying torture, or to torture"
             },
             {
+              "surface": "μῆνας",
+              "lemma": "μήν",
+              "morphology": "N-APM",
+              "decodedMorphology": "noun accusative plural masculine",
+              "gloss": "μήν"
+            },
+            {
               "surface": "πέντε",
               "lemma": "πέντε",
               "strongs": "G4002",
@@ -30240,6 +30282,13 @@
               "gloss": "a human being, whether male or female, or generically"
             },
             {
+              "surface": "μῆνας",
+              "lemma": "μήν",
+              "morphology": "N-APM",
+              "decodedMorphology": "noun accusative plural masculine",
+              "gloss": "μήν"
+            },
+            {
               "surface": "πέντε",
               "lemma": "πέντε",
               "strongs": "G4002",
@@ -30959,6 +31008,13 @@
               "gloss": "also, even, or indeed"
             },
             {
+              "surface": "μῆνα",
+              "lemma": "μήν",
+              "morphology": "N-ASM",
+              "decodedMorphology": "noun accusative singular masculine",
+              "gloss": "μήν"
+            },
+            {
               "surface": "καὶ",
               "lemma": "καί",
               "strongs": "G2532",
@@ -31077,6 +31133,20 @@
               "morphology": "RA-GSN",
               "decodedMorphology": "article genitive singular neuter",
               "gloss": "this, that, or these"
+            },
+            {
+              "surface": "ἱππικοῦ",
+              "lemma": "ἱππικόν",
+              "morphology": "A-GSN",
+              "decodedMorphology": "adjective genitive singular neuter",
+              "gloss": "ἱππικόν"
+            },
+            {
+              "surface": "δισμυριάδες",
+              "lemma": "δισμυριάς",
+              "morphology": "N-NPF",
+              "decodedMorphology": "noun nominative plural feminine",
+              "gloss": "δισμυριάς"
             },
             {
               "surface": "μυριάδων",
@@ -32372,6 +32442,13 @@
               "morphology": "RA-GPN",
               "decodedMorphology": "article genitive plural neuter",
               "gloss": "this, that, or these"
+            },
+            {
+              "surface": "φαρμάκων",
+              "lemma": "φάρμακον",
+              "morphology": "N-GPN",
+              "decodedMorphology": "noun genitive plural neuter",
+              "gloss": "φάρμακον"
             },
             {
               "surface": "αὐτῶν",
@@ -35284,6 +35361,13 @@
               "morphology": "V-3FAI-P",
               "decodedMorphology": "verb future active indicative third person plural",
               "gloss": "to tread, to trample, or crush with the feet"
+            },
+            {
+              "surface": "μῆνας",
+              "lemma": "μήν",
+              "morphology": "N-APM",
+              "decodedMorphology": "noun accusative plural masculine",
+              "gloss": "μήν"
             },
             {
               "surface": "τεσσεράκοντα",
@@ -41067,6 +41151,13 @@
               "gloss": "this, that, or these"
             },
             {
+              "surface": "κατήγωρ",
+              "lemma": "κατήγωρ",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "κατήγωρ"
+            },
+            {
               "surface": "τῶν",
               "lemma": "ὁ",
               "strongs": "G3588",
@@ -43755,6 +43846,13 @@
               "morphology": "V-AAN",
               "decodedMorphology": "verb aorist active infinitive",
               "gloss": "to make, with the names of things made, or to produce"
+            },
+            {
+              "surface": "μῆνας",
+              "lemma": "μήν",
+              "morphology": "N-APM",
+              "decodedMorphology": "noun accusative plural masculine",
+              "gloss": "μήν"
             },
             {
               "surface": "τεσσεράκοντα",
@@ -50972,6 +51070,13 @@
               "gloss": "of separation, of local separation, or of fleeing"
             },
             {
+              "surface": "σταδίων",
+              "lemma": "στάδιος",
+              "morphology": "N-GPM",
+              "decodedMorphology": "noun genitive plural masculine",
+              "gloss": "στάδιος"
+            },
+            {
               "surface": "χιλίων",
               "lemma": "χίλιοι",
               "strongs": "G5507",
@@ -51529,6 +51634,13 @@
               "morphology": "N-ASF",
               "decodedMorphology": "noun accusative singular feminine",
               "gloss": "a song, lay, or ode"
+            },
+            {
+              "surface": "Μωϋσέως",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-GSM",
+              "decodedMorphology": "noun genitive singular masculine",
+              "gloss": "Μωϋσῆς"
             },
             {
               "surface": "τοῦ",
@@ -62865,6 +62977,13 @@
               "gloss": "also, even, or indeed"
             },
             {
+              "surface": "σιρικοῦ",
+              "lemma": "σιρικός",
+              "morphology": "A-GSN",
+              "decodedMorphology": "adjective genitive singular neuter",
+              "gloss": "σιρικός"
+            },
+            {
               "surface": "καὶ",
               "lemma": "καί",
               "strongs": "G2532",
@@ -63070,6 +63189,13 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "ἄμωμον",
+              "lemma": "ἄμωμον",
+              "morphology": "N-ASN",
+              "decodedMorphology": "noun accusative singular neuter",
+              "gloss": "ἄμωμον"
             },
             {
               "surface": "καὶ",
@@ -64769,6 +64895,13 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "as, like, or even as"
+            },
+            {
+              "surface": "μύλινον",
+              "lemma": "μύλινος",
+              "morphology": "A-ASM",
+              "decodedMorphology": "adjective accusative singular masculine",
+              "gloss": "μύλινος"
             },
             {
               "surface": "μέγαν",
@@ -71939,6 +72072,13 @@
               "gloss": "also, even, or indeed"
             },
             {
+              "surface": "ἐκύκλευσαν",
+              "lemma": "κυκλεύω",
+              "morphology": "V-3AAI-P",
+              "decodedMorphology": "verb aorist active indicative third person plural",
+              "gloss": "κυκλεύω"
+            },
+            {
               "surface": "τὴν",
               "lemma": "ὁ",
               "strongs": "G3588",
@@ -76575,6 +76715,13 @@
               "gloss": "upon, at, or before"
             },
             {
+              "surface": "σταδίους",
+              "lemma": "στάδιος",
+              "morphology": "N-APM",
+              "decodedMorphology": "noun accusative plural masculine",
+              "gloss": "στάδιος"
+            },
+            {
               "surface": "δώδεκα",
               "lemma": "δώδεκα",
               "strongs": "G1427",
@@ -78800,6 +78947,13 @@
               "morphology": "P",
               "decodedMorphology": "preposition",
               "gloss": "down from, through out, or according to"
+            },
+            {
+              "surface": "μῆνα",
+              "lemma": "μήν",
+              "morphology": "N-ASM",
+              "decodedMorphology": "noun accusative singular masculine",
+              "gloss": "μήν"
             },
             {
               "surface": "ἕκαστον",

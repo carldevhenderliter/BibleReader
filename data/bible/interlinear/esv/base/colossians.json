@@ -5123,6 +5123,14 @@
               "gloss": "flesh the soft substance of the living body, the body, or the body of a man"
             },
             {
+              "surface": "ἄπειμι",
+              "lemma": "ἄπειμι",
+              "morphology": "V-1PAI-S",
+              "decodedMorphology": "verb present active indicative first person singular",
+              "gloss": "ἄπειμι",
+              "trailingPunctuation": ","
+            },
+            {
               "surface": "ἀλλὰ",
               "lemma": "ἀλλά",
               "strongs": "G235",
@@ -7289,6 +7297,13 @@
               "morphology": "V-PPPNSN",
               "decodedMorphology": "verb present passive participle nominative singular neuter",
               "gloss": "to cause to coalesce, to join together, or put together"
+            },
+            {
+              "surface": "αὔξει",
+              "lemma": "αὔξω",
+              "morphology": "V-3PAI-S",
+              "decodedMorphology": "verb present active indicative third person singular",
+              "gloss": "αὔξω"
             },
             {
               "surface": "τὴν",

@@ -2199,6 +2199,13 @@
               "trailingPunctuation": ","
             },
             {
+              "surface": "περισσοτέρως",
+              "lemma": "περισσοτέρως",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "περισσοτέρως"
+            },
+            {
               "surface": "δὲ",
               "lemma": "δέ",
               "strongs": "G1161",
@@ -4724,6 +4731,13 @@
               "morphology": "V-1PAI-S",
               "decodedMorphology": "verb present active indicative first person singular",
               "gloss": "to have, i"
+            },
+            {
+              "surface": "περισσοτέρως",
+              "lemma": "περισσοτέρως",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "περισσοτέρως"
             },
             {
               "surface": "εἰς",
@@ -7564,6 +7578,13 @@
               "gloss": "the face, the front of the human head, or countenance"
             },
             {
+              "surface": "Μωϋσέως",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-GSM",
+              "decodedMorphology": "noun genitive singular masculine",
+              "gloss": "Μωϋσῆς"
+            },
+            {
               "surface": "διὰ",
               "lemma": "διά",
               "strongs": "G1223",
@@ -7929,6 +7950,13 @@
               "gloss": "a part, a part due or assigned to one, lot, destiny, one of the constituent parts of a whole, in part, partly, in a measure, to some degree, as respects a part, severally, individually, any particular, in regard to this, in this respect"
             },
             {
+              "surface": "εἵνεκεν",
+              "lemma": "εἵνεκεν",
+              "morphology": "P",
+              "decodedMorphology": "preposition",
+              "gloss": "εἵνεκεν"
+            },
+            {
               "surface": "τῆς",
               "lemma": "ὁ",
               "strongs": "G3588",
@@ -8149,6 +8177,13 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "according as, just as, or even as"
+            },
+            {
+              "surface": "Μωϋσῆς",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "Μωϋσῆς"
             },
             {
               "surface": "ἐτίθει",
@@ -8562,6 +8597,13 @@
               "morphology": "V-3PPS-S",
               "decodedMorphology": "verb present passive subjunctive third person singular",
               "gloss": "to distinguish between, to recognise, or to know accurately"
+            },
+            {
+              "surface": "Μωϋσῆς",
+              "lemma": "Μωϋσῆς",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "Μωϋσῆς"
             },
             {
               "surface": "κάλυμμα",
@@ -9036,6 +9078,14 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "according as, just as, or even as"
+            },
+            {
+              "surface": "ἠλεήθημεν",
+              "lemma": "ἐλεάω",
+              "morphology": "V-1API-P",
+              "decodedMorphology": "verb aorist passive indicative first person plural",
+              "gloss": "ἐλεάω",
+              "trailingPunctuation": ","
             },
             {
               "surface": "οὐκ",
@@ -19028,6 +19078,13 @@
               "gloss": "I, me, or my"
             },
             {
+              "surface": "περισσοτέρως",
+              "lemma": "περισσοτέρως",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "περισσοτέρως"
+            },
+            {
               "surface": "μᾶλλον",
               "lemma": "μᾶλλον",
               "strongs": "G3123",
@@ -19396,6 +19453,13 @@
               "morphology": "RP-GSM",
               "decodedMorphology": "pronoun genitive singular masculine",
               "gloss": "himself, herself, or themselves"
+            },
+            {
+              "surface": "περισσοτέρως",
+              "lemma": "περισσοτέρως",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "περισσοτέρως"
             },
             {
               "surface": "εἰς",
@@ -25600,6 +25664,13 @@
               "trailingPunctuation": ","
             },
             {
+              "surface": "ἀπὼν",
+              "lemma": "ἄπειμι",
+              "morphology": "V-PAPNSM",
+              "decodedMorphology": "verb present active participle nominative singular masculine",
+              "gloss": "ἄπειμι"
+            },
+            {
               "surface": "δὲ",
               "lemma": "δέ",
               "strongs": "G1161",
@@ -26977,6 +27048,14 @@
               "gloss": "a letter or epistle"
             },
             {
+              "surface": "ἀπόντες",
+              "lemma": "ἄπειμι",
+              "morphology": "V-PAPNPM",
+              "decodedMorphology": "verb present active participle nominative plural masculine",
+              "gloss": "ἄπειμι",
+              "trailingPunctuation": ","
+            },
+            {
               "surface": "τοιοῦτοι",
               "lemma": "τοιοῦτος",
               "strongs": "G5108",
@@ -28323,6 +28402,13 @@
               "gloss": "To seduce wholly — beguile, deceive"
             },
             {
+              "surface": "Εὕαν",
+              "lemma": "Εὕα",
+              "morphology": "N-ASF",
+              "decodedMorphology": "noun accusative singular feminine",
+              "gloss": "Εὕα"
+            },
+            {
               "surface": "ἐν",
               "lemma": "ἐν",
               "strongs": "G1722",
@@ -28730,6 +28816,13 @@
               "morphology": "RA-GPM",
               "decodedMorphology": "article genitive plural masculine",
               "gloss": "this, that, or these"
+            },
+            {
+              "surface": "ὑπερλίαν",
+              "lemma": "ὑπερλίαν",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "ὑπερλίαν"
             },
             {
               "surface": "ἀποστόλων",
@@ -31042,6 +31135,14 @@
               "gloss": "a beating, a beating of the breast with grief, or sorrow"
             },
             {
+              "surface": "περισσοτέρως",
+              "lemma": "περισσοτέρως",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "περισσοτέρως",
+              "trailingPunctuation": ","
+            },
+            {
               "surface": "ἐν",
               "lemma": "ἐν",
               "strongs": "G1722",
@@ -31056,6 +31157,14 @@
               "morphology": "N-DPF",
               "decodedMorphology": "noun dative plural feminine",
               "gloss": "guard, watch, or a watching"
+            },
+            {
+              "surface": "περισσοτέρως",
+              "lemma": "περισσοτέρως",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "περισσοτέρως",
+              "trailingPunctuation": ","
             },
             {
               "surface": "ἐν",
@@ -31650,6 +31759,13 @@
               "morphology": "RA-NSF",
               "decodedMorphology": "article nominative singular feminine",
               "gloss": "this, that, or these"
+            },
+            {
+              "surface": "ἐπίστασίς",
+              "lemma": "ἐπίστασις",
+              "morphology": "N-NSF",
+              "decodedMorphology": "noun nominative singular feminine",
+              "gloss": "ἐπίστασις"
             },
             {
               "surface": "μοι",
@@ -34025,6 +34141,13 @@
               "gloss": "this, that, or these"
             },
             {
+              "surface": "ὑπερλίαν",
+              "lemma": "ὑπερλίαν",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "ὑπερλίαν"
+            },
+            {
               "surface": "ἀποστόλων",
               "lemma": "ἀπόστολος",
               "strongs": "G652",
@@ -34743,6 +34866,13 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "if, whether"
+            },
+            {
+              "surface": "περισσοτέρως",
+              "lemma": "περισσοτέρως",
+              "morphology": "D",
+              "decodedMorphology": "adverb",
+              "gloss": "περισσοτέρως"
             },
             {
               "surface": "ὑμᾶς",
@@ -35929,6 +36059,13 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "also, even, or indeed"
+            },
+            {
+              "surface": "ἀπὼν",
+              "lemma": "ἄπειμι",
+              "morphology": "V-PAPNSM",
+              "decodedMorphology": "verb present active participle nominative singular masculine",
+              "gloss": "ἄπειμι"
             },
             {
               "surface": "νῦν",
@@ -37142,6 +37279,13 @@
               "morphology": "RD-APN",
               "decodedMorphology": "demonstrative pronoun accusative plural neuter",
               "gloss": "this, these, or etc"
+            },
+            {
+              "surface": "ἀπὼν",
+              "lemma": "ἄπειμι",
+              "morphology": "V-PAPNSM",
+              "decodedMorphology": "verb present active participle nominative singular masculine",
+              "gloss": "ἄπειμι"
             },
             {
               "surface": "γράφω",

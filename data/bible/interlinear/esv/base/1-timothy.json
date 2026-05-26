@@ -457,6 +457,13 @@
               "gloss": "whoever, whatever, or who"
             },
             {
+              "surface": "ἐκζητήσεις",
+              "lemma": "ἐκζήτησις",
+              "morphology": "N-APF",
+              "decodedMorphology": "noun accusative plural feminine",
+              "gloss": "ἐκζήτησις"
+            },
+            {
               "surface": "παρέχουσι",
               "lemma": "παρέχω",
               "strongs": "G3930",
@@ -1068,6 +1075,14 @@
               "gloss": "also, even, or indeed"
             },
             {
+              "surface": "μητρολῴαις",
+              "lemma": "μητρολῴας",
+              "morphology": "N-DPM",
+              "decodedMorphology": "noun dative plural masculine",
+              "gloss": "μητρολῴας",
+              "trailingPunctuation": ","
+            },
+            {
               "surface": "ἀνδροφόνοις",
               "lemma": "ἀνδροφόνος",
               "strongs": "G409",
@@ -1507,6 +1522,14 @@
               "gloss": "but, nevertheless, or notwithstanding"
             },
             {
+              "surface": "ἠλεήθην",
+              "lemma": "ἐλεάω",
+              "morphology": "V-1API-S",
+              "decodedMorphology": "verb aorist passive indicative first person singular",
+              "gloss": "ἐλεάω",
+              "trailingPunctuation": ","
+            },
+            {
               "surface": "ὅτι",
               "lemma": "ὅτι",
               "strongs": "G3754",
@@ -1870,6 +1893,14 @@
               "morphology": "RD-ASN",
               "decodedMorphology": "demonstrative pronoun accusative singular neuter",
               "gloss": "this, these, or etc"
+            },
+            {
+              "surface": "ἠλεήθην",
+              "lemma": "ἐλεάω",
+              "morphology": "V-1API-S",
+              "decodedMorphology": "verb aorist passive indicative first person singular",
+              "gloss": "ἐλεάω",
+              "trailingPunctuation": ","
             },
             {
               "surface": "ἵνα",
@@ -3939,6 +3970,14 @@
               "morphology": "D",
               "decodedMorphology": "adverb",
               "gloss": "then, next, or after that"
+            },
+            {
+              "surface": "Εὕα",
+              "lemma": "Εὕα",
+              "morphology": "N-NSF",
+              "decodedMorphology": "noun nominative singular feminine",
+              "gloss": "Εὕα",
+              "trailingPunctuation": "·"
             }
           ]
         },
@@ -4294,6 +4333,13 @@
               "morphology": "N-ASM",
               "decodedMorphology": "noun accusative singular masculine",
               "gloss": "an overseer, any curator, or guardian or superintendent"
+            },
+            {
+              "surface": "ἀνεπίλημπτον",
+              "lemma": "ἀνεπίλημπτος",
+              "morphology": "A-ASM",
+              "decodedMorphology": "adjective accusative singular masculine",
+              "gloss": "ἀνεπίλημπτος"
             },
             {
               "surface": "εἶναι",
@@ -6146,6 +6192,13 @@
               "trailingPunctuation": ","
             },
             {
+              "surface": "κεκαυστηριασμένων",
+              "lemma": "καυστηριάζω",
+              "morphology": "V-XPPG-P",
+              "decodedMorphology": "verb perfect passive participle genitive plural masculine",
+              "gloss": "καυστηριάζω"
+            },
+            {
               "surface": "τὴν",
               "lemma": "ὁ",
               "strongs": "G3588",
@@ -6248,6 +6301,13 @@
               "morphology": "P",
               "decodedMorphology": "preposition",
               "gloss": "into, unto, to, towards, for, among"
+            },
+            {
+              "surface": "μετάλημψιν",
+              "lemma": "μετάλημψις",
+              "morphology": "N-ASF",
+              "decodedMorphology": "noun accusative singular feminine",
+              "gloss": "μετάλημψις"
             },
             {
               "surface": "μετὰ",
@@ -8512,6 +8572,13 @@
               "gloss": "that, in order that, or so that"
             },
             {
+              "surface": "ἀνεπίλημπτοι",
+              "lemma": "ἀνεπίλημπτος",
+              "morphology": "A-NPM",
+              "decodedMorphology": "adjective nominative plural masculine",
+              "gloss": "ἀνεπίλημπτος"
+            },
+            {
               "surface": "ὦσιν",
               "lemma": "εἰμί",
               "strongs": "G1510",
@@ -10189,6 +10256,14 @@
               "morphology": "P",
               "decodedMorphology": "preposition",
               "gloss": "down from, through out, or according to"
+            },
+            {
+              "surface": "πρόσκλισιν",
+              "lemma": "πρόσκλισις",
+              "morphology": "N-ASF",
+              "decodedMorphology": "noun accusative singular feminine",
+              "gloss": "πρόσκλισις",
+              "trailingPunctuation": "."
             }
           ]
         },
@@ -11359,6 +11434,13 @@
           "baseGreek": "διαπαρατριβαὶ διεφθαρμένων ἀνθρώπων τὸν νοῦν καὶ ἀπεστερημένων τῆς ἀληθείας, νομιζόντων πορισμὸν εἶναι τὴν ⸀εὐσέβειαν.",
           "tokens": [
             {
+              "surface": "διαπαρατριβαὶ",
+              "lemma": "διαπαρατριβή",
+              "morphology": "N-NPF",
+              "decodedMorphology": "noun nominative plural feminine",
+              "gloss": "διαπαρατριβή"
+            },
+            {
               "surface": "διεφθαρμένων",
               "lemma": "διαφθείρω",
               "strongs": "G1311",
@@ -12170,6 +12252,14 @@
               "decodedMorphology": "noun accusative singular feminine",
               "gloss": "steadfastness, constancy, or endurance",
               "trailingPunctuation": ","
+            },
+            {
+              "surface": "πραϋπαθίαν",
+              "lemma": "πραϋπαθία",
+              "morphology": "N-ASF",
+              "decodedMorphology": "noun accusative singular feminine",
+              "gloss": "πραϋπαθία",
+              "trailingPunctuation": "."
             }
           ]
         },
@@ -12560,6 +12650,13 @@
               "morphology": "A-ASF",
               "decodedMorphology": "adjective accusative singular feminine",
               "gloss": "spotless, metaph, or free from censure"
+            },
+            {
+              "surface": "ἀνεπίλημπτον",
+              "lemma": "ἀνεπίλημπτος",
+              "morphology": "A-ASF",
+              "decodedMorphology": "adjective accusative singular feminine",
+              "gloss": "ἀνεπίλημπτος"
             },
             {
               "surface": "μέχρι",

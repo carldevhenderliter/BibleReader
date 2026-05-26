@@ -496,6 +496,13 @@
               "gloss": "Personal pron"
             },
             {
+              "surface": "ἐγκαυχᾶσθαι",
+              "lemma": "ἐγκαυχάομαι",
+              "morphology": "V-PMN",
+              "decodedMorphology": "verb present middle infinitive",
+              "gloss": "ἐγκαυχάομαι"
+            },
+            {
               "surface": "ἐν",
               "lemma": "ἐν",
               "strongs": "G1722",

@@ -1279,6 +1279,13 @@
               "gloss": "also, even, or indeed"
             },
             {
+              "surface": "ἐξηραύνησαν",
+              "lemma": "ἐξεραυνάω",
+              "morphology": "V-3AAI-P",
+              "decodedMorphology": "verb aorist active indicative third person plural",
+              "gloss": "ἐξεραυνάω"
+            },
+            {
               "surface": "προφῆται",
               "lemma": "προφήτης",
               "strongs": "G4396",
@@ -1349,6 +1356,13 @@
           "number": 11,
           "baseGreek": "ἐραυνῶντες εἰς τίνα ἢ ποῖον καιρὸν ἐδήλου τὸ ἐν αὐτοῖς πνεῦμα Χριστοῦ προμαρτυρόμενον τὰ εἰς Χριστὸν παθήματα καὶ τὰς μετὰ ταῦτα δόξας·",
           "tokens": [
+            {
+              "surface": "ἐραυνῶντες",
+              "lemma": "ἐραυνάω",
+              "morphology": "V-PAPNPM",
+              "decodedMorphology": "verb present active participle nominative plural masculine",
+              "gloss": "ἐραυνάω"
+            },
             {
               "surface": "εἰς",
               "lemma": "εἰς",
@@ -4734,6 +4748,13 @@
               "gloss": "no, not in direct questions expecting an affirmative answer"
             },
             {
+              "surface": "ἠλεημένοι",
+              "lemma": "ἐλεάω",
+              "morphology": "V-XPPN-P",
+              "decodedMorphology": "verb perfect passive participle nominative plural masculine",
+              "gloss": "ἐλεάω"
+            },
+            {
               "surface": "νῦν",
               "lemma": "νῦν",
               "strongs": "G3568",
@@ -4748,6 +4769,14 @@
               "morphology": "C",
               "decodedMorphology": "conjunction",
               "gloss": "but, moreover, and, etc"
+            },
+            {
+              "surface": "ἐλεηθέντες",
+              "lemma": "ἐλεάω",
+              "morphology": "V-APPNPM",
+              "decodedMorphology": "verb aorist passive participle nominative plural masculine",
+              "gloss": "ἐλεάω",
+              "trailingPunctuation": "."
             }
           ]
         },
@@ -7816,6 +7845,14 @@
               "morphology": "A-NPM",
               "decodedMorphology": "adjective nominative plural masculine",
               "gloss": "having strong bowels, compassionate, or tender hearted",
+              "trailingPunctuation": ","
+            },
+            {
+              "surface": "ταπεινόφρονες",
+              "lemma": "ταπεινόφρων",
+              "morphology": "A-NPM",
+              "decodedMorphology": "adjective nominative plural masculine",
+              "gloss": "ταπεινόφρων",
               "trailingPunctuation": ","
             }
           ]
