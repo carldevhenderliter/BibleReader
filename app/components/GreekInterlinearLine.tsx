@@ -46,7 +46,14 @@ export function GreekInterlinearLine({
   showExpandedGrammarDetails = false
 }: GreekInterlinearLineProps) {
   const { isGreekLearningMode, openGreekGrammarDetails } = useReaderWorkspace();
-  const { clearOverride, getLemmaDefault, getOverride, saveOverride } = useGreekGlossOverrides();
+  const {
+    clearLemmaDefault,
+    clearOverride,
+    getLemmaDefault,
+    getOverride,
+    saveLemmaDefault,
+    saveOverride
+  } = useGreekGlossOverrides();
   const [entriesByKey, setEntriesByKey] = useState<Record<string, GreekLemmaEntry>>({});
   const greekLearningSelections = useMemo(
     () =>
@@ -147,9 +154,34 @@ export function GreekInterlinearLine({
     );
   }
 
-  function handleGlossChange(occurrenceKey: string, token: GreekToken, nextGloss: string) {
+  function handleGlossChange(
+    occurrenceKey: string,
+    token: GreekToken,
+    nextGloss: string,
+    hasUniqueOverride: boolean
+  ) {
     if (!nextGloss.trim()) {
-      clearOverride(occurrenceKey);
+      if (hasUniqueOverride) {
+        clearOverride(occurrenceKey);
+        return;
+      }
+
+      clearLemmaDefault({
+        entryKey: token.entryKey,
+        strongs: token.strongs,
+        lemma: token.lemma
+      });
+      return;
+    }
+
+    if (!hasUniqueOverride) {
+      saveLemmaDefault({
+        entryKey: token.entryKey,
+        strongs: token.strongs,
+        lemma: token.lemma,
+        selectedGloss: nextGloss,
+        source: "custom"
+      });
       return;
     }
 
@@ -159,6 +191,27 @@ export function GreekInterlinearLine({
       strongs: token.strongs,
       lemma: token.lemma,
       selectedGloss: nextGloss,
+      source: "custom"
+    });
+  }
+
+  function handleMakeGlossUnique(
+    occurrenceKey: string,
+    token: GreekToken,
+    selectedGloss: string
+  ) {
+    const trimmedGloss = selectedGloss.trim();
+
+    if (!trimmedGloss) {
+      return;
+    }
+
+    saveOverride({
+      occurrenceKey,
+      entryKey: token.entryKey,
+      strongs: token.strongs,
+      lemma: token.lemma,
+      selectedGloss: trimmedGloss,
       source: "custom"
     });
   }
@@ -184,12 +237,14 @@ export function GreekInterlinearLine({
           override
         }) => {
           const partOfSpeechLabel = getPartOfSpeechLabel(token);
-          const savedGloss = override?.selectedGloss?.trim() ?? "";
           const lemmaPreference = getLemmaDefault({
             entryKey: token.entryKey,
             strongs: token.strongs,
             lemma: token.lemma
           });
+          const selectedGloss =
+            override?.selectedGloss?.trim() ?? lemmaPreference?.selectedGloss?.trim() ?? "";
+          const isUniqueGloss = Boolean(override);
           const defaultGloss = resolveGreekTokenGloss(token, entry, override, lemmaPreference);
           const grammarInfo = grammarInfos[tokenIndex] ?? null;
           const dictionarySelection = {
@@ -250,17 +305,45 @@ export function GreekInterlinearLine({
               {showGloss ? (
                 <input
                   aria-label={`English gloss for ${token.surface}`}
-                  className={`verse-greek-gloss-input${override ? " is-overridden" : ""}`}
+                  className={`verse-greek-gloss-input${
+                    isUniqueGloss ? " is-overridden" : selectedGloss ? " is-lemma-default" : ""
+                  }`}
                   id={`greek-gloss:${occurrenceKey}`}
                   onChange={(event) =>
-                    handleGlossChange(occurrenceKey, token, event.currentTarget.value)
+                    handleGlossChange(
+                      occurrenceKey,
+                      token,
+                      event.currentTarget.value,
+                      isUniqueGloss
+                    )
                   }
                   placeholder={defaultGloss}
                   type="text"
-                  value={override?.selectedGloss ?? ""}
+                  value={selectedGloss}
                 />
-              ) : savedGloss ? (
-                <span className="verse-greek-gloss-readonly">{savedGloss}</span>
+              ) : selectedGloss ? (
+                <span className="verse-greek-gloss-readonly">{selectedGloss}</span>
+              ) : null}
+              {showGloss && selectedGloss ? (
+                isUniqueGloss ? (
+                  <button
+                    aria-label={`Use shared gloss for ${token.surface}`}
+                    className="verse-greek-gloss-scope-button"
+                    onClick={() => clearOverride(occurrenceKey)}
+                    type="button"
+                  >
+                    Use shared
+                  </button>
+                ) : (
+                  <button
+                    aria-label={`Make gloss unique for ${token.surface}`}
+                    className="verse-greek-gloss-scope-button"
+                    onClick={() => handleMakeGlossUnique(occurrenceKey, token, selectedGloss)}
+                    type="button"
+                  >
+                    Make unique
+                  </button>
+                )
               ) : null}
               {showGrammarCards && grammarInfo ? (
                 <GreekGrammarCard grammar={grammarInfo} />

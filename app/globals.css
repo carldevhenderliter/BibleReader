@@ -3969,10 +3969,33 @@ button.fathers-annotation-anchor:focus-visible {
 .verse-greek-gloss.is-lemma-default,
 .verse-greek-gloss-input:hover,
 .verse-greek-gloss-input:focus-visible,
-.verse-greek-gloss-input.is-overridden {
+.verse-greek-gloss-input.is-overridden,
+.verse-greek-gloss-input.is-lemma-default {
   border-color: rgba(var(--reader-accent-rgb), 0.42);
   background: rgba(var(--reader-accent-rgb), 0.1);
   color: rgba(244, 249, 255, 0.96);
+  outline: none;
+}
+
+.verse-greek-gloss-scope-button {
+  display: inline-flex;
+  justify-content: center;
+  width: 100%;
+  padding: 0.12rem 0.36rem;
+  border: 1px solid rgba(var(--reader-accent-rgb), 0.22);
+  border-radius: 999px;
+  background: rgba(var(--reader-accent-rgb), 0.06);
+  color: rgba(210, 228, 248, 0.76);
+  font-size: 0.62rem;
+  line-height: 1.15;
+  cursor: pointer;
+}
+
+.verse-greek-gloss-scope-button:hover,
+.verse-greek-gloss-scope-button:focus-visible {
+  border-color: rgba(var(--reader-accent-rgb), 0.48);
+  background: rgba(var(--reader-accent-rgb), 0.14);
+  color: rgba(246, 250, 255, 0.96);
   outline: none;
 }
 

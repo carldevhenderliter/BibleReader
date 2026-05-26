@@ -1705,7 +1705,7 @@ describe("VerseList", () => {
     expect(within(studyPane).getByRole("button", { name: "Open charts" })).toBeInTheDocument();
   });
 
-  it("persists a custom gloss for a single occurrence across reloads", async () => {
+  it("persists a typed gloss as the shared word default across reloads", async () => {
     const { unmount } = renderWithReaderCustomization(
       <VerseList
         bookSlug="john"
@@ -1770,7 +1770,7 @@ describe("VerseList", () => {
     expect(screen.getAllByText("origin").length).toBeGreaterThan(0);
   });
 
-  it("keeps repeated lemma occurrences independent unless I type each gloss", async () => {
+  it("applies a typed gloss to repeated word occurrences unless I make one unique", async () => {
     const { unmount } = renderWithReaderCustomization(
       <VerseList
         bookSlug="john"
@@ -1786,7 +1786,9 @@ describe("VerseList", () => {
     fireEvent.change(firstGloss, { target: { value: "origin" } });
 
     expect(firstGloss).toHaveValue("origin");
-    expect(secondGloss).toHaveValue("");
+    expect(secondGloss).toHaveValue("origin");
+
+    fireEvent.click(screen.getByRole("button", { name: "Make gloss unique for ἀρχῇ" }));
 
     fireEvent.change(secondGloss, { target: { value: "beginning" } });
 
@@ -1808,6 +1810,10 @@ describe("VerseList", () => {
       expect(screen.getByLabelText("English gloss for ἀρχῆς")).toHaveValue("origin");
       expect(screen.getByLabelText("English gloss for ἀρχῇ")).toHaveValue("beginning");
     });
+
+    fireEvent.click(screen.getByRole("button", { name: "Use shared gloss for ἀρχῇ" }));
+
+    expect(screen.getByLabelText("English gloss for ἀρχῇ")).toHaveValue("origin");
   });
 
   it("builds and reloads my translation from the typed glosses", async () => {
