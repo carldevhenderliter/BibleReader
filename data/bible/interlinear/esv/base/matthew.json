@@ -572,6 +572,14 @@
               "gloss": "this, that, or these"
             },
             {
+              "surface": "Βόες",
+              "lemma": "Βόες",
+              "strongs": "G1003",
+              "morphology": "N-ASM",
+              "decodedMorphology": "noun accusative singular masculine",
+              "gloss": "Boaz = \" in him is strength\", a kinsman of Ruth, or afterwards her second husband"
+            },
+            {
               "surface": "ἐκ",
               "lemma": "ἐκ",
               "strongs": "G1537",
@@ -595,6 +603,14 @@
               "decodedMorphology": "noun genitive singular feminine",
               "gloss": "Rahab = \" wide\" or a harlot of Jericho",
               "trailingPunctuation": ","
+            },
+            {
+              "surface": "Βόες",
+              "lemma": "Βόες",
+              "strongs": "G1003",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "Boaz = \" in him is strength\", a kinsman of Ruth, or afterwards her second husband"
             },
             {
               "surface": "δὲ",
@@ -621,6 +637,14 @@
               "gloss": "this, that, or these"
             },
             {
+              "surface": "Ἰωβὴδ",
+              "lemma": "Ἰωβήδ",
+              "strongs": "G5601",
+              "morphology": "N-ASM",
+              "decodedMorphology": "noun accusative singular masculine",
+              "gloss": "Obed = \" serving\", the grandfather of king David"
+            },
+            {
               "surface": "ἐκ",
               "lemma": "ἐκ",
               "strongs": "G1537",
@@ -644,6 +668,14 @@
               "decodedMorphology": "noun genitive singular feminine",
               "gloss": "Ruth = \" a female friend\" or the ancestor of David and of Christ",
               "trailingPunctuation": ","
+            },
+            {
+              "surface": "Ἰωβὴδ",
+              "lemma": "Ἰωβήδ",
+              "strongs": "G5601",
+              "morphology": "N-NSM",
+              "decodedMorphology": "noun nominative singular masculine",
+              "gloss": "Obed = \" serving\", the grandfather of king David"
             },
             {
               "surface": "δὲ",

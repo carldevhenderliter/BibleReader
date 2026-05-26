@@ -91,6 +91,21 @@ describe("bible data", () => {
     expect(genesis).toBeNull();
   });
 
+  it("keeps SBLGNT proper-name tokens with critical marks in Matthew 1:5", async () => {
+    const chapter = await getChapter("matthew", 1, "greek");
+    const verse = chapter?.verses.find((entry) => entry.number === 5);
+    const tokens = verse?.greekTokens ?? [];
+
+    expect(tokens.filter((token) => token.surface === "Βόες")).toEqual([
+      expect.objectContaining({ lemma: "Βόες", strongs: "G1003", morphology: "N-ASM" }),
+      expect.objectContaining({ lemma: "Βόες", strongs: "G1003", morphology: "N-NSM" })
+    ]);
+    expect(tokens.filter((token) => token.surface === "Ἰωβὴδ")).toEqual([
+      expect.objectContaining({ lemma: "Ἰωβήδ", strongs: "G5601", morphology: "N-ASM" }),
+      expect.objectContaining({ lemma: "Ἰωβήδ", strongs: "G5601", morphology: "N-NSM" })
+    ]);
+  });
+
   it("loads Genesis 1 from bundled Hebrew and omits New Testament books", async () => {
     const [genesis, matthew] = await Promise.all([
       getChapter("genesis", 1, "mt"),
