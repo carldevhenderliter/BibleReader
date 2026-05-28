@@ -653,6 +653,14 @@ export type GreekLemmaEntry = {
   sources?: string[];
 };
 
+export type LiddellScottEntry = {
+  headword: string;
+  summary: string;
+  entry: string;
+  greekVariants: string[];
+  transliterations: string[];
+};
+
 export type GreekTokenGlossOverride = {
   occurrenceKey: string;
   entryKey?: string;

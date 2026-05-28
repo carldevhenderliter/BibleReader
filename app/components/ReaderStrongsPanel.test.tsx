@@ -175,9 +175,29 @@ jest.mock("@/lib/bible/greek", () => {
     ]
   } as const;
 
+  const liddellScottEntries = {
+    G746: {
+      headword: "ἀρχή",
+      summary: "Beginning, origin, or first place.",
+      entry: "ἀρχή, ἡ, beginning, origin, first principle, rule.",
+      greekVariants: ["ἀρχή", "ἀρχη", "αρχη"],
+      transliterations: ["arche", "arkhe"]
+    },
+    G3056: {
+      headword: "λόγος",
+      summary: "Word, account, discourse, or reason.",
+      entry: "λόγος, ὁ, word, account, reckoning, discourse, reason.",
+      greekVariants: ["λόγος", "λογος"],
+      transliterations: ["logos"]
+    }
+  } as const;
+
   return {
     ...actual,
     getGreekLemmaEntry: jest.fn(async (entryKey: string) => greekEntries[entryKey as keyof typeof greekEntries] ?? null),
+    getGreekLiddellScottEntry: jest.fn(
+      async (entryKey: string) => liddellScottEntries[entryKey as keyof typeof liddellScottEntries] ?? null
+    ),
     getGreekVerseOccurrences: jest.fn(async (entryKey: string, selectedFormValue?: string | null) => {
       const matches = [...(greekOccurrences[entryKey as keyof typeof greekOccurrences] ?? [])];
 
@@ -913,6 +933,23 @@ describe("ReaderStrongsPanel", () => {
       "true"
     );
     expect(within(studyPane).getByText(/of speech, a word/i)).toBeInTheDocument();
+  });
+
+  it("renders the Liddell-Scott tab from the Greek dictionary flow", async () => {
+    renderWithReaderCustomization(<StrongsHarness />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Open Greek Dictionary" }));
+
+    const studyPane = screen.getByLabelText("Study pane");
+    fireEvent.click(await within(studyPane).findByRole("tab", { name: "Liddell-Scott" }));
+
+    expect(within(studyPane).getByRole("tab", { name: "Liddell-Scott" })).toHaveAttribute(
+      "aria-selected",
+      "true"
+    );
+    expect(await within(studyPane).findByText("Full Liddell-Scott")).toBeInTheDocument();
+    expect(within(studyPane).getByText(/beginning, origin, first principle/i)).toBeInTheDocument();
+    expect(within(studyPane).getByText("Transliteration")).toBeInTheDocument();
   });
 
   it("opens the Charts tab from a noun dictionary entry and renders the 2nd declension chart", async () => {

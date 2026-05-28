@@ -7,6 +7,7 @@ import type {
   GreekInflectedForm,
   GreekLemmaGlossPreference,
   GreekLemmaEntry,
+  LiddellScottEntry,
   GreekTokenGlossOverride,
   GreekToken
 } from "@/lib/bible/types";
@@ -374,6 +375,7 @@ type GreekFormIndexValue = Array<{
 }>;
 
 let greekLexiconPromise: Promise<Record<string, GreekLemmaEntry>> | null = null;
+let greekLiddellScottPromise: Promise<Record<string, LiddellScottEntry>> | null = null;
 let lemmaIndexPromise: Promise<Record<string, string[]>> | null = null;
 let formIndexPromise: Promise<Record<string, GreekFormIndexValue>> | null = null;
 let searchableGreekEntriesPromise: Promise<SearchableGreekEntry[]> | null = null;
@@ -588,6 +590,16 @@ async function loadGreekLexicon() {
   }
 
   return greekLexiconPromise;
+}
+
+async function loadGreekLiddellScottDictionary() {
+  if (!greekLiddellScottPromise) {
+    greekLiddellScottPromise = import("@/data/bible/greek/liddell-scott.json").then(
+      (module) => (module.default ?? {}) as Record<string, LiddellScottEntry>
+    );
+  }
+
+  return greekLiddellScottPromise;
 }
 
 async function loadFathersGreekLexicon() {
@@ -1658,6 +1670,13 @@ export async function getGreekLemmaEntry(strongsNumber: string) {
   const normalizedKey = strongsNumber.trim();
 
   return lexicon[normalizedKey] ?? lexicon[normalizeStrongsNumber(normalizedKey)] ?? null;
+}
+
+export async function getGreekLiddellScottEntry(entryKey: string) {
+  const dictionary = await loadGreekLiddellScottDictionary();
+  const normalizedKey = entryKey.trim();
+
+  return dictionary[normalizedKey] ?? dictionary[normalizeStrongsNumber(normalizedKey)] ?? null;
 }
 
 export async function getGreekDictionaryMatchForToken(token: GreekToken): Promise<GreekDictionaryMatch | null> {

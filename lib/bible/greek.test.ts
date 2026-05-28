@@ -1,6 +1,7 @@
 import {
   buildGreekLearningQuiz,
   getGreekFormTranslationGloss,
+  getGreekLiddellScottEntry,
   getGreekGlossOptions,
   getGreekLemmaEntry,
   getGreekMorphologyDetails,
@@ -38,6 +39,16 @@ describe("Greek dictionary lookup", () => {
         })
       ])
     );
+  });
+
+  it("loads Liddell-Scott entries for supported Greek lemmas", async () => {
+    const entry = await getGreekLiddellScottEntry("G746");
+
+    expect(entry).toMatchObject({
+      headword: "ἀρχή"
+    });
+    expect(entry?.entry).toMatch(/beginning, origin/i);
+    expect(entry?.transliterations).toEqual(expect.arrayContaining(["arche"]));
   });
 
   it("loads generated grammar-aware translation glosses for Greek forms", async () => {

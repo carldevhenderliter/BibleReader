@@ -13,6 +13,7 @@
     "import:greek-gloss-export": "node scripts/import-greek-gloss-export.mjs",
     "import:bible": "node scripts/import-bible.mjs",
     "import:greek": "node scripts/import-greek.mjs",
+    "import:lsj": "node scripts/import-liddell-scott.mjs",
     "import:tr": "node scripts/import-textus-receptus.mjs",
     "import:fathers": "node scripts/import-fathers.mjs",
     "import:fathers:greek": "node scripts/enrich-fathers-greek.mjs",

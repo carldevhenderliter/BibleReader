@@ -9,6 +9,7 @@ import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { formatBdagArticle } from "@/lib/bible/bdag";
 import { getBookTestamentBySlug } from "@/lib/bible/book-order";
 import {
+  getGreekLiddellScottEntry,
   getGreekLemmaEntry,
   getGreekVerseOccurrences,
   normalizeGreekFormLookupValue
@@ -32,6 +33,7 @@ import type {
   BundledBibleVersion,
   GreekInflectedForm,
   GreekLemmaEntry,
+  LiddellScottEntry,
   StrongsEntry
 } from "@/lib/bible/types";
 import { getBibleVersionLabel, getInstalledBundledBibleVersions } from "@/lib/bible/version";
@@ -53,12 +55,21 @@ type BibleOccurrenceVersionEntriesState = {
   matches: StrongsParallelVerseVersion[];
 };
 
+type LiddellScottLookupState = {
+  status: "loading" | "loaded";
+  entry: LiddellScottEntry | null;
+};
+
 type OccurrenceTestamentFilter = "all" | "old" | "new";
 
-type StrongsTab = "bible" | "thayer" | "bdag" | "outside-bible";
+type StrongsTab = "bible" | "lsj" | "thayer" | "bdag" | "outside-bible";
 
 function getAvailableTabs(entry: StrongsEntry): StrongsTab[] {
   const tabs: StrongsTab[] = ["bible"];
+
+  if (entry.language === "greek") {
+    tabs.push("lsj");
+  }
 
   if (entry.language === "greek" && entry.outlineUsage?.trim()) {
     tabs.push("thayer");
@@ -76,7 +87,7 @@ function getAvailableTabs(entry: StrongsEntry): StrongsTab[] {
 }
 
 function getGreekAvailableTabs(entry: StrongsEntry | null): StrongsTab[] {
-  const tabs: StrongsTab[] = ["bible"];
+  const tabs: StrongsTab[] = ["bible", "lsj"];
 
   if (entry?.outlineUsage?.trim()) {
     tabs.push("thayer");
@@ -93,6 +104,10 @@ function getGreekAvailableTabs(entry: StrongsEntry | null): StrongsTab[] {
 function getTabLabel(tab: StrongsTab) {
   if (tab === "bible") {
     return "Verses In Bible";
+  }
+
+  if (tab === "lsj") {
+    return "Liddell-Scott";
   }
 
   if (tab === "thayer") {
@@ -285,6 +300,47 @@ function renderThayerSection(entry: StrongsEntry | null) {
   );
 }
 
+function renderLiddellScottEntry(entry: LiddellScottEntry) {
+  return (
+    <div className="strongs-entry-thayer-layout">
+      <section className="strongs-entry-thayer-card">
+        <p className="strongs-entry-section-label strongs-entry-section-label-subtle">Headword</p>
+        <p className="strongs-entry-meta">{entry.headword}</p>
+      </section>
+      {entry.transliterations.length > 0 ? (
+        <section className="strongs-entry-thayer-card">
+          <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
+            Transliteration
+          </p>
+          <p className="strongs-entry-copy">{entry.transliterations.join(" · ")}</p>
+        </section>
+      ) : null}
+      {entry.greekVariants.length > 1 ? (
+        <section className="strongs-entry-thayer-card">
+          <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
+            Greek Variants
+          </p>
+          <p className="strongs-entry-copy">{entry.greekVariants.join(" · ")}</p>
+        </section>
+      ) : null}
+      {entry.summary ? (
+        <section className="strongs-entry-thayer-card">
+          <p className="strongs-entry-section-label strongs-entry-section-label-subtle">Summary</p>
+          <p className="strongs-entry-copy">{entry.summary}</p>
+        </section>
+      ) : null}
+      <section className="strongs-entry-thayer-card">
+        <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
+          Full Liddell-Scott
+        </p>
+        <p className="strongs-entry-copy strongs-entry-copy-bdag strongs-entry-copy-bdag-original">
+          {entry.entry}
+        </p>
+      </section>
+    </div>
+  );
+}
+
 export function ReaderStrongsPanel() {
   const {
     activeGreekSelection,
@@ -311,6 +367,9 @@ export function ReaderStrongsPanel() {
   >({});
   const [selectedBibleOccurrenceBooks, setSelectedBibleOccurrenceBooks] = useState<
     Record<string, string[]>
+  >({});
+  const [liddellScottLookup, setLiddellScottLookup] = useState<
+    Record<string, LiddellScottLookupState>
   >({});
   const [bibleOccurrenceVersionEntries, setBibleOccurrenceVersionEntries] = useState<
     Record<string, Partial<Record<BundledBibleVersion, BibleOccurrenceVersionEntriesState>>>
@@ -422,6 +481,7 @@ export function ReaderStrongsPanel() {
     setSelectedBibleOccurrenceVersions({});
     setBibleOccurrenceTestamentFilters({});
     setSelectedBibleOccurrenceBooks({});
+    setLiddellScottLookup({});
     setBibleOccurrenceVersionEntries({});
     setOutsideScripture({});
 
@@ -471,6 +531,7 @@ export function ReaderStrongsPanel() {
       setSelectedBibleOccurrenceVersions({});
       setBibleOccurrenceTestamentFilters({});
       setSelectedBibleOccurrenceBooks({});
+      setLiddellScottLookup({});
       setBibleOccurrenceVersionEntries({});
       setGreekOccurrenceEntries({});
       setOutsideScripture({});
@@ -485,6 +546,7 @@ export function ReaderStrongsPanel() {
     setSelectedBibleOccurrenceVersions({});
     setBibleOccurrenceTestamentFilters({});
     setSelectedBibleOccurrenceBooks({});
+    setLiddellScottLookup({});
     setBibleOccurrenceVersionEntries({});
     setGreekOccurrenceEntries({});
     setOutsideScripture({});
@@ -852,11 +914,41 @@ export function ReaderStrongsPanel() {
     }));
   }
 
+  async function handleFindLiddellScott(entryKey: string) {
+    const asyncLoadSession = asyncLoadSessionRef.current;
+
+    setLiddellScottLookup((current) => ({
+      ...current,
+      [entryKey]: {
+        status: "loading",
+        entry: current[entryKey]?.entry ?? null
+      }
+    }));
+
+    const entry = await getGreekLiddellScottEntry(entryKey);
+
+    if (asyncLoadSessionRef.current !== asyncLoadSession) {
+      return;
+    }
+
+    setLiddellScottLookup((current) => ({
+      ...current,
+      [entryKey]: {
+        status: "loaded",
+        entry
+      }
+    }));
+  }
+
   function handleSelectTab(strongsKey: string, tab: StrongsTab, greekLemma?: string) {
     setActiveTabs((current) => ({
       ...current,
       [strongsKey]: tab
     }));
+
+    if (tab === "lsj" && !liddellScottLookup[strongsKey]) {
+      void handleFindLiddellScott(strongsKey);
+    }
 
     if (tab === "outside-bible" && greekLemma && !outsideScripture[strongsKey]) {
       void handleFindOutsideScripture(greekLemma, strongsKey);
@@ -1471,6 +1563,24 @@ export function ReaderStrongsPanel() {
     return <p className="strongs-entry-meta">Select this tab to search the Apostolic Fathers.</p>;
   }
 
+  function renderLiddellScottSection(entryKey: string) {
+    const state = liddellScottLookup[entryKey];
+
+    if (state?.status === "loading") {
+      return <p className="strongs-entry-meta">Loading Liddell-Scott…</p>;
+    }
+
+    if (state?.status === "loaded" && state.entry) {
+      return renderLiddellScottEntry(state.entry);
+    }
+
+    if (state?.status === "loaded") {
+      return <p className="strongs-entry-copy">No Liddell-Scott entry is available for this lemma.</p>;
+    }
+
+    return <p className="strongs-entry-meta">Select this tab to load the Liddell-Scott lexicon.</p>;
+  }
+
   function renderGreekDictionaryCard(entry: GreekLemmaEntry) {
     const strongsKey = entry.entryKey;
     const activeTab = activeTabs[strongsKey] ?? "bible";
@@ -1532,6 +1642,12 @@ export function ReaderStrongsPanel() {
               "greek-dictionary",
               entry.strongs ?? greekStrongsEntry?.id ?? null
             )}
+          </div>
+        ) : null}
+        {activeTab === "lsj" ? (
+          <div className="strongs-entry-tab-panel">
+            <p className="strongs-entry-section-label">Liddell-Scott</p>
+            {renderLiddellScottSection(entry.entryKey)}
           </div>
         ) : null}
         {activeTab === "thayer" ? (
@@ -1599,6 +1715,12 @@ export function ReaderStrongsPanel() {
         {activeTab === "bible" ? (
           <div className="strongs-entry-tab-panel">
             {renderBibleOccurrences(entry.id, "strongs", entry.language, entry.id)}
+          </div>
+        ) : null}
+        {activeTab === "lsj" && entry.language === "greek" ? (
+          <div className="strongs-entry-tab-panel">
+            <p className="strongs-entry-section-label">Liddell-Scott</p>
+            {renderLiddellScottSection(entry.id)}
           </div>
         ) : null}
         {activeTab === "thayer" ? (
