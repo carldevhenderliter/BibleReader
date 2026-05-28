@@ -121,6 +121,87 @@ function getTabLabel(tab: StrongsTab) {
   return "Outside Bible";
 }
 
+function sanitizeBasicDefinitionPhrase(value: string) {
+  return value
+    .replace(/\([^)]{0,160}\)/g, " ")
+    .replace(/[“”"]/g, "")
+    .replace(/\s+/g, " ")
+    .replace(/^(?:or|and)\s+/i, "")
+    .replace(/^[-,:;.\s]+/g, "")
+    .replace(/[-,:;.\s]+$/g, "")
+    .trim();
+}
+
+function isReadableBasicDefinitionPhrase(value: string) {
+  const normalized = value.toLowerCase();
+  const wordCount = Array.from(value.matchAll(/\b[\p{L}]+(?:[’'][\p{L}]+)?\b/gu)).length;
+
+  return (
+    normalized.length >= 2 &&
+    value.length <= 48 &&
+    wordCount > 0 &&
+    wordCount <= 6 &&
+    !/\d/.test(value) &&
+    !/null/i.test(value) &&
+    !/\b(?:common|corresponding|derived|epic|found|periods|prose|reckoning|handled|public|treasury|title|branch|various|verbal)\b/i.test(
+      normalized
+    ) &&
+    !/^[A-Z][a-z]{0,4}$/.test(value)
+  );
+}
+
+function splitBasicDefinitionPhrases(value?: string | null) {
+  if (!value?.trim()) {
+    return [];
+  }
+
+  return value
+    .replace(/[\u2014\u2013]/g, ",")
+    .split(/[;,/]|\bor\b/gi)
+    .map((part) => sanitizeBasicDefinitionPhrase(part))
+    .filter((part) => isReadableBasicDefinitionPhrase(part));
+}
+
+function splitLiddellScottFallbackPhrases(value?: string | null) {
+  if (!value?.trim()) {
+    return [];
+  }
+
+  return value
+    .replace(/\([^)]{0,160}\)/g, " ")
+    .replace(/[\p{Script=Greek}]+/gu, " ")
+    .replace(/\b[A-Z][A-Za-z]*\.[A-Za-z0-9.:-]+/g, " ")
+    .replace(/\b(?:cf|opp|v|exc|usu|sts|freq|esp|al|etc|infr|supr|metaph)\.?\b/gi, " ")
+    .split(/[;:,.]/)
+    .map((part) => sanitizeBasicDefinitionPhrase(part))
+    .filter((part) => isReadableBasicDefinitionPhrase(part));
+}
+
+function getLiddellScottBasicDefinitions(
+  entry: LiddellScottEntry,
+  greekEntry?: GreekLemmaEntry | null,
+  strongsEntry?: StrongsEntry | null
+) {
+  const seen = new Set<string>();
+
+  return [
+    ...splitBasicDefinitionPhrases(greekEntry?.shortDefinition),
+    ...splitBasicDefinitionPhrases(greekEntry?.longDefinition),
+    ...splitBasicDefinitionPhrases(strongsEntry?.definition),
+    ...splitBasicDefinitionPhrases(strongsEntry?.outlineUsage),
+    ...splitLiddellScottFallbackPhrases(entry.summary)
+  ].filter((definition) => {
+    const normalized = definition.toLowerCase();
+
+    if (seen.has(normalized)) {
+      return false;
+    }
+
+    seen.add(normalized);
+    return true;
+  }).slice(0, 6);
+}
+
 function renderHighlightedGreekContext(context: string, lemma: string) {
   const normalizedLemma = normalizeFathersGreekText(lemma);
   const segments = context.match(/[\p{Script=Greek}]+|[^\p{Script=Greek}]+/gu) ?? [context];
@@ -300,7 +381,13 @@ function renderThayerSection(entry: StrongsEntry | null) {
   );
 }
 
-function renderLiddellScottEntry(entry: LiddellScottEntry) {
+function renderLiddellScottEntry(
+  entry: LiddellScottEntry,
+  greekEntry?: GreekLemmaEntry | null,
+  strongsEntry?: StrongsEntry | null
+) {
+  const basicDefinitions = getLiddellScottBasicDefinitions(entry, greekEntry, strongsEntry);
+
   return (
     <div className="strongs-entry-thayer-layout">
       <section className="strongs-entry-thayer-card">
@@ -315,27 +402,21 @@ function renderLiddellScottEntry(entry: LiddellScottEntry) {
           <p className="strongs-entry-copy">{entry.transliterations.join(" · ")}</p>
         </section>
       ) : null}
-      {entry.greekVariants.length > 1 ? (
-        <section className="strongs-entry-thayer-card">
-          <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
-            Greek Variants
-          </p>
-          <p className="strongs-entry-copy">{entry.greekVariants.join(" · ")}</p>
-        </section>
-      ) : null}
-      {entry.summary ? (
-        <section className="strongs-entry-thayer-card">
-          <p className="strongs-entry-section-label strongs-entry-section-label-subtle">Summary</p>
-          <p className="strongs-entry-copy">{entry.summary}</p>
-        </section>
-      ) : null}
       <section className="strongs-entry-thayer-card">
         <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
-          Full Liddell-Scott
+          Basic Definitions
         </p>
-        <p className="strongs-entry-copy strongs-entry-copy-bdag strongs-entry-copy-bdag-original">
-          {entry.entry}
-        </p>
+        {basicDefinitions.length > 0 ? (
+          <div className="strongs-entry-thayer-chip-list">
+            {basicDefinitions.map((definition) => (
+              <span className="strongs-entry-thayer-chip" key={`${entry.headword}:${definition}`}>
+                {definition}
+              </span>
+            ))}
+          </div>
+        ) : (
+          <p className="strongs-entry-copy">{entry.summary}</p>
+        )}
       </section>
     </div>
   );
@@ -1563,7 +1644,11 @@ export function ReaderStrongsPanel() {
     return <p className="strongs-entry-meta">Select this tab to search the Apostolic Fathers.</p>;
   }
 
-  function renderLiddellScottSection(entryKey: string) {
+  function renderLiddellScottSection(
+    entryKey: string,
+    sourceGreekEntry?: GreekLemmaEntry | null,
+    sourceStrongsEntry?: StrongsEntry | null
+  ) {
     const state = liddellScottLookup[entryKey];
 
     if (state?.status === "loading") {
@@ -1571,7 +1656,7 @@ export function ReaderStrongsPanel() {
     }
 
     if (state?.status === "loaded" && state.entry) {
-      return renderLiddellScottEntry(state.entry);
+      return renderLiddellScottEntry(state.entry, sourceGreekEntry, sourceStrongsEntry);
     }
 
     if (state?.status === "loaded") {
@@ -1647,7 +1732,7 @@ export function ReaderStrongsPanel() {
         {activeTab === "lsj" ? (
           <div className="strongs-entry-tab-panel">
             <p className="strongs-entry-section-label">Liddell-Scott</p>
-            {renderLiddellScottSection(entry.entryKey)}
+            {renderLiddellScottSection(entry.entryKey, entry, greekStrongsEntry)}
           </div>
         ) : null}
         {activeTab === "thayer" ? (
@@ -1720,7 +1805,7 @@ export function ReaderStrongsPanel() {
         {activeTab === "lsj" && entry.language === "greek" ? (
           <div className="strongs-entry-tab-panel">
             <p className="strongs-entry-section-label">Liddell-Scott</p>
-            {renderLiddellScottSection(entry.id)}
+            {renderLiddellScottSection(entry.id, greekOccurrenceEntries[entry.id] ?? null, entry)}
           </div>
         ) : null}
         {activeTab === "thayer" ? (

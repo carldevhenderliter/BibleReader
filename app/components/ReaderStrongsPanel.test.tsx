@@ -947,9 +947,12 @@ describe("ReaderStrongsPanel", () => {
       "aria-selected",
       "true"
     );
-    expect(await within(studyPane).findByText("Full Liddell-Scott")).toBeInTheDocument();
-    expect(within(studyPane).getByText(/beginning, origin, first principle/i)).toBeInTheDocument();
+    expect(await within(studyPane).findByText("Basic Definitions")).toBeInTheDocument();
+    expect(within(studyPane).getAllByText("beginning").length).toBeGreaterThan(0);
+    expect(within(studyPane).getByText("first cause")).toBeInTheDocument();
+    expect(within(studyPane).getByText("ruler")).toBeInTheDocument();
     expect(within(studyPane).getByText("Transliteration")).toBeInTheDocument();
+    expect(within(studyPane).queryByText("Full Liddell-Scott")).not.toBeInTheDocument();
   });
 
   it("opens the Charts tab from a noun dictionary entry and renders the 2nd declension chart", async () => {
