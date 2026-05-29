@@ -418,6 +418,14 @@ function renderLiddellScottEntry(
           <p className="strongs-entry-copy">{entry.summary}</p>
         )}
       </section>
+      <section className="strongs-entry-thayer-card">
+        <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
+          Original Liddell-Scott
+        </p>
+        <p className="strongs-entry-copy strongs-entry-copy-bdag strongs-entry-copy-bdag-original">
+          {entry.entry}
+        </p>
+      </section>
     </div>
   );
 }
