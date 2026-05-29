@@ -49,6 +49,21 @@ describe("Greek dictionary lookup", () => {
     });
     expect(entry?.entry).toMatch(/beginning, origin/i);
     expect(entry?.transliterations).toEqual(expect.arrayContaining(["arche"]));
+    expect(entry?.sections.length).toBeGreaterThan(1);
+    expect(entry?.sections[0]).toMatchObject({
+      label: "Opening"
+    });
+    expect(entry?.sections.some((section) => section.label === "2")).toBe(true);
+    expect(
+      entry?.sections.some((section) =>
+        section.references.some(
+          (reference) =>
+            reference.rawCitation === "Hdt.7.51" &&
+            reference.authorName === "Herodotus" &&
+            reference.workName === "Histories"
+        )
+      )
+    ).toBe(true);
   });
 
   it("loads generated grammar-aware translation glosses for Greek forms", async () => {

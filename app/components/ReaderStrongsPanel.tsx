@@ -34,6 +34,7 @@ import type {
   GreekInflectedForm,
   GreekLemmaEntry,
   LiddellScottEntry,
+  LiddellScottReference,
   StrongsEntry
 } from "@/lib/bible/types";
 import { getBibleVersionLabel, getInstalledBundledBibleVersions } from "@/lib/bible/version";
@@ -200,6 +201,16 @@ function getLiddellScottBasicDefinitions(
     seen.add(normalized);
     return true;
   }).slice(0, 6);
+}
+
+function formatLiddellScottReference(reference: LiddellScottReference) {
+  const expandedLabel = [reference.authorName, reference.workName].filter(Boolean).join(", ");
+
+  return expandedLabel ? `${reference.rawCitation} • ${expandedLabel}` : reference.rawCitation;
+}
+
+function formatLiddellScottSectionLabel(label: string) {
+  return label === "Opening" ? "Opening" : `Section ${label}`;
 }
 
 function renderHighlightedGreekContext(context: string, lemma: string) {
@@ -422,9 +433,36 @@ function renderLiddellScottEntry(
         <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
           Original Liddell-Scott
         </p>
-        <p className="strongs-entry-copy strongs-entry-copy-bdag strongs-entry-copy-bdag-original">
-          {entry.entry}
-        </p>
+        {entry.sections.length > 0 ? (
+          <div className="strongs-entry-lsj-sections">
+            {entry.sections.map((section) => (
+              <section className="strongs-entry-lsj-section" key={section.id}>
+                <p className="strongs-entry-section-label strongs-entry-section-label-subtle">
+                  {formatLiddellScottSectionLabel(section.label)}
+                </p>
+                <p className="strongs-entry-copy strongs-entry-copy-bdag strongs-entry-copy-bdag-original">
+                  {section.text}
+                </p>
+                {section.references.length > 0 ? (
+                  <div className="strongs-entry-thayer-chip-list">
+                    {section.references.map((reference) => (
+                      <span
+                        className="strongs-entry-thayer-chip"
+                        key={`${section.id}:${reference.rawCitation}`}
+                      >
+                        {formatLiddellScottReference(reference)}
+                      </span>
+                    ))}
+                  </div>
+                ) : null}
+              </section>
+            ))}
+          </div>
+        ) : (
+          <p className="strongs-entry-copy strongs-entry-copy-bdag strongs-entry-copy-bdag-original">
+            {entry.entry}
+          </p>
+        )}
       </section>
     </div>
   );

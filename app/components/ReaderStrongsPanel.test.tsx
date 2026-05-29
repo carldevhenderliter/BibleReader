@@ -180,13 +180,64 @@ jest.mock("@/lib/bible/greek", () => {
       headword: "ἀρχή",
       summary: "Beginning, origin, or first place.",
       entry: "ἀρχή, ἡ, beginning, origin, first principle, rule.",
+      sections: [
+        {
+          id: "lsj:Opening:1",
+          label: "Opening",
+          text: "ἀρχή, ἡ, beginning, origin.",
+          references: [
+            {
+              rawCitation: "Hdt.7.51",
+              authorName: "Herodotus",
+              workName: "Histories",
+              locator: "7.51"
+            }
+          ]
+        },
+        {
+          id: "lsj:2:2",
+          label: "2",
+          text: "first principle, rule.",
+          references: [
+            {
+              rawCitation: "Pl.Lg.715e",
+              authorName: "Plato",
+              workName: "Laws",
+              locator: "715e"
+            }
+          ]
+        }
+      ],
       greekVariants: ["ἀρχή", "ἀρχη", "αρχη"],
       transliterations: ["arche", "arkhe"]
+    },
+    G1096: {
+      headword: "γίνομαι",
+      summary: "Become or come to be.",
+      entry: "γίνομαι, to become, come to be.",
+      sections: [],
+      greekVariants: ["γίνομαι", "γινομαι"],
+      transliterations: ["ginomai"]
     },
     G3056: {
       headword: "λόγος",
       summary: "Word, account, discourse, or reason.",
       entry: "λόγος, ὁ, word, account, reckoning, discourse, reason.",
+      sections: [
+        {
+          id: "lsj:I:1",
+          label: "I",
+          text: "word, account, reckoning, discourse, reason.",
+          references: [
+            {
+              rawCitation: "Od.8.81",
+              authorName: "Homer",
+              workName: "Odyssey",
+              locator: "8.81"
+            }
+          ]
+        }
+      ],
       greekVariants: ["λόγος", "λογος"],
       transliterations: ["logos"]
     }
@@ -953,7 +1004,23 @@ describe("ReaderStrongsPanel", () => {
     expect(within(studyPane).getByText("ruler")).toBeInTheDocument();
     expect(within(studyPane).getByText("Transliteration")).toBeInTheDocument();
     expect(within(studyPane).getByText("Original Liddell-Scott")).toBeInTheDocument();
-    expect(within(studyPane).getByText(/beginning, origin, first principle/i)).toBeInTheDocument();
+    expect(within(studyPane).getByText("Opening")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Section 2")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Hdt.7.51 • Herodotus, Histories")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Pl.Lg.715e • Plato, Laws")).toBeInTheDocument();
+  });
+
+  it("falls back to the raw Liddell-Scott article when no parsed sections exist", async () => {
+    renderWithReaderCustomization(<StrongsHarness />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Open Greek Dictionary Verb" }));
+
+    const studyPane = screen.getByLabelText("Study pane");
+    fireEvent.click(await within(studyPane).findByRole("tab", { name: "Liddell-Scott" }));
+
+    expect(await within(studyPane).findByText("Original Liddell-Scott")).toBeInTheDocument();
+    expect(within(studyPane).queryByText("Opening")).not.toBeInTheDocument();
+    expect(within(studyPane).getByText(/γίνομαι, to become, come to be/i)).toBeInTheDocument();
   });
 
   it("opens the Charts tab from a noun dictionary entry and renders the 2nd declension chart", async () => {

@@ -5052,6 +5052,23 @@ button.fathers-annotation-anchor:focus-visible {
   gap: 0.5rem;
 }
 
+.strongs-entry-lsj-sections {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.strongs-entry-lsj-section {
+  display: grid;
+  gap: 0.55rem;
+  padding-top: 0.1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.strongs-entry-lsj-section:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
 .strongs-entry-thayer-chip {
   display: inline-flex;
   align-items: center;

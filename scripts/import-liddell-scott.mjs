@@ -8,6 +8,123 @@ const greekLexiconPath = path.join(repoRoot, "data", "bible", "greek", "lexicon.
 const outputPath = path.join(repoRoot, "data", "bible", "greek", "liddell-scott.json");
 const defaultSourceUrl =
   "https://raw.githubusercontent.com/perseids-project/lsj-js/master/vendor/lsj.json";
+const ROMAN_SECTION_PATTERN = /(?:^|(?<=[\s;:—–]))(I|II|III|IV|V|VI|VII|VIII|IX|X)\.\s+/g;
+const NUMERIC_SECTION_PATTERN = /(?:^|(?<=[\s;:—–]))(\d{1,2})\.\s+/g;
+const LETTER_SECTION_PATTERN = /(?:^|(?<=[\s;:—–]))([a-d])\.\s+/g;
+const LSJ_CITATION_PATTERN =
+  /\b(?:[A-Z][A-Za-z]{0,10}\.){1,3}[A-Za-z0-9][A-Za-z0-9-]*(?:\.[A-Za-z0-9][A-Za-z0-9-]*)+/g;
+
+const AUTHOR_REFERENCE_MAP = {
+  A: {
+    authorName: "Aeschylus",
+    works: {
+      Ag: "Agamemnon",
+      Ch: "Libation Bearers",
+      Supp: "Suppliants"
+    }
+  },
+  Arist: {
+    authorName: "Aristotle",
+    works: {
+      APo: "Posterior Analytics",
+      Ath: "Athenian Constitution",
+      EN: "Nicomachean Ethics",
+      HA: "History of Animals",
+      Metaph: "Metaphysics",
+      Pol: "Politics"
+    }
+  },
+  Archim: {
+    authorName: "Archimedes"
+  },
+  D: {
+    authorName: "Demosthenes"
+  },
+  E: {
+    authorName: "Euripides",
+    works: {
+      Hipp: "Hippolytus"
+    }
+  },
+  Gal: {
+    authorName: "Galen"
+  },
+  Hdt: {
+    authorName: "Herodotus",
+    defaultWorkName: "Histories"
+  },
+  Heraclit: {
+    authorName: "Heraclitus"
+  },
+  Hp: {
+    authorName: "Hippocrates"
+  },
+  Il: {
+    authorName: "Homer",
+    defaultWorkName: "Iliad"
+  },
+  Lys: {
+    authorName: "Lysias"
+  },
+  Od: {
+    authorName: "Homer",
+    defaultWorkName: "Odyssey"
+  },
+  Pi: {
+    authorName: "Pindar",
+    works: {
+      N: "Nemean Odes",
+      O: "Olympian Odes",
+      P: "Pythian Odes"
+    }
+  },
+  Pl: {
+    authorName: "Plato",
+    works: {
+      Ep: "Epistles",
+      Grg: "Gorgias",
+      Lg: "Laws",
+      Men: "Meno",
+      Plt: "Statesman",
+      Prt: "Protagoras",
+      R: "Republic",
+      Tht: "Theaetetus",
+      Ti: "Timaeus"
+    }
+  },
+  Plb: {
+    authorName: "Polybius",
+    defaultWorkName: "Histories"
+  },
+  Plot: {
+    authorName: "Plotinus"
+  },
+  S: {
+    authorName: "Sophocles",
+    works: {
+      Aj: "Ajax",
+      Ant: "Antigone",
+      El: "Electra",
+      OC: "Oedipus at Colonus",
+      OT: "Oedipus Tyrannus",
+      Ph: "Philoctetes"
+    }
+  },
+  Th: {
+    authorName: "Thucydides",
+    defaultWorkName: "History of the Peloponnesian War"
+  },
+  X: {
+    authorName: "Xenophon",
+    works: {
+      Ath: "Constitution of the Athenians",
+      Cyn: "Cynegeticus"
+    }
+  },
+  Xenoph: {
+    authorName: "Xenophon"
+  }
+};
 
 function getArgValue(flag) {
   const index = process.argv.indexOf(flag);
@@ -111,6 +228,206 @@ function uniqueArticles(values) {
   });
 }
 
+function normalizeWhitespace(value) {
+  return String(value ?? "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function splitBySectionPattern(text, pattern) {
+  const matches = Array.from(text.matchAll(pattern));
+
+  if (matches.length === 0) {
+    return null;
+  }
+
+  return {
+    leadingText: text.slice(0, matches[0].index ?? 0).trim(),
+    sections: matches.map((match, index) => {
+      const start = (match.index ?? 0) + match[0].length;
+      const end = index + 1 < matches.length ? (matches[index + 1].index ?? text.length) : text.length;
+
+      return {
+        marker: match[1],
+        text: text.slice(start, end).trim()
+      };
+    })
+  };
+}
+
+function buildReference(rawCitation) {
+  const tokens = rawCitation.split(".").filter(Boolean);
+
+  if (tokens.length < 2) {
+    return {
+      rawCitation,
+      authorName: null,
+      workName: null,
+      locator: null
+    };
+  }
+
+  const authorToken = tokens[0];
+  const authorInfo = AUTHOR_REFERENCE_MAP[authorToken] ?? null;
+  const hasWorkToken = Boolean(
+    authorInfo &&
+      tokens[1] &&
+      /[A-Za-z]/.test(tokens[1]) &&
+      !/^\d/.test(tokens[1])
+  );
+  const locatorStartIndex = hasWorkToken ? 2 : 1;
+  const locatorTokens = tokens.slice(locatorStartIndex);
+  const workName =
+    hasWorkToken && authorInfo
+      ? authorInfo.works?.[tokens[1]] ?? null
+      : authorInfo?.defaultWorkName ?? null;
+
+  return {
+    rawCitation,
+    authorName: authorInfo?.authorName ?? null,
+    workName,
+    locator: locatorTokens.length > 0 ? locatorTokens.join(".") : null
+  };
+}
+
+function extractReferences(text) {
+  const seen = new Set();
+  const references = [];
+
+  for (const match of text.matchAll(LSJ_CITATION_PATTERN)) {
+    const rawCitation = match[0].replace(/[),;:.\]]+$/g, "");
+
+    if (!rawCitation || seen.has(rawCitation)) {
+      continue;
+    }
+
+    seen.add(rawCitation);
+    references.push(buildReference(rawCitation));
+  }
+
+  return references;
+}
+
+function buildSection(labelParts, text) {
+  const normalizedText = normalizeWhitespace(text);
+
+  if (!normalizedText) {
+    return [];
+  }
+
+  const label = labelParts.length > 0 ? labelParts.join(".") : "Opening";
+
+  return [
+    {
+      label,
+      text: normalizedText,
+      references: extractReferences(normalizedText)
+    }
+  ];
+}
+
+function parseSectionBody(labelParts, text, nextPatterns) {
+  const normalizedText = normalizeWhitespace(text);
+
+  if (!normalizedText) {
+    return [];
+  }
+
+  for (const { pattern, remainingPatterns } of nextPatterns) {
+    const split = splitBySectionPattern(normalizedText, pattern);
+
+    if (!split) {
+      continue;
+    }
+
+    return [
+      ...buildSection(labelParts, split.leadingText),
+      ...split.sections.flatMap((section) =>
+        parseSectionBody([...labelParts, section.marker], section.text, remainingPatterns)
+      )
+    ];
+  }
+
+  return buildSection(labelParts, normalizedText);
+}
+
+function parseTopLevelSections(text) {
+  const normalizedText = normalizeWhitespace(text);
+
+  if (!normalizedText) {
+    return [];
+  }
+
+  const romanSplit = splitBySectionPattern(normalizedText, ROMAN_SECTION_PATTERN);
+
+  if (romanSplit) {
+    return [
+      ...parseTopLevelSections(romanSplit.leadingText),
+      ...romanSplit.sections.flatMap((section) =>
+        parseSectionBody(
+          [section.marker],
+          section.text,
+          [
+            {
+              pattern: NUMERIC_SECTION_PATTERN,
+              remainingPatterns: [
+                {
+                  pattern: LETTER_SECTION_PATTERN,
+                  remainingPatterns: []
+                }
+              ]
+            },
+            {
+              pattern: LETTER_SECTION_PATTERN,
+              remainingPatterns: []
+            }
+          ]
+        )
+      )
+    ];
+  }
+
+  const numericSplit = splitBySectionPattern(normalizedText, NUMERIC_SECTION_PATTERN);
+
+  if (numericSplit) {
+    return [
+      ...buildSection([], numericSplit.leadingText),
+      ...numericSplit.sections.flatMap((section) =>
+        parseSectionBody(
+          [section.marker],
+          section.text,
+          [
+            {
+              pattern: LETTER_SECTION_PATTERN,
+              remainingPatterns: []
+            }
+          ]
+        )
+      )
+    ];
+  }
+
+  const letterSplit = splitBySectionPattern(normalizedText, LETTER_SECTION_PATTERN);
+
+  if (letterSplit) {
+    return [
+      ...buildSection([], letterSplit.leadingText),
+      ...letterSplit.sections.flatMap((section) => buildSection([section.marker], section.text))
+    ];
+  }
+
+  return [];
+}
+
+function buildSections(entry) {
+  return parseTopLevelSections(entry).map((section, index) => ({
+    id: `lsj:${section.label}:${index + 1}`,
+    label: section.label,
+    text: section.text,
+    references: section.references
+  }));
+}
+
 function buildArticle(headword, rawEntry) {
   const entry = htmlToPlainText(rawEntry?.d ?? "");
   const greekVariants = uniqueValues([headword, ...(rawEntry?.m ?? []), ...(rawEntry?.g ?? [])]);
@@ -120,6 +437,7 @@ function buildArticle(headword, rawEntry) {
     headword,
     summary: buildSummary(entry),
     entry,
+    sections: buildSections(entry),
     greekVariants,
     transliterations,
     normalizedHeadword: normalizeGreekLookupValue(headword),
@@ -223,6 +541,7 @@ async function main() {
       headword: bestArticle.headword,
       summary: bestArticle.summary,
       entry: bestArticle.entry,
+      sections: bestArticle.sections,
       greekVariants: bestArticle.greekVariants,
       transliterations: bestArticle.transliterations
     };

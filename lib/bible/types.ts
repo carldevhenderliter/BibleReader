@@ -659,6 +659,21 @@ export type LiddellScottEntry = {
   entry: string;
   greekVariants: string[];
   transliterations: string[];
+  sections: LiddellScottSection[];
+};
+
+export type LiddellScottReference = {
+  rawCitation: string;
+  authorName: string | null;
+  workName: string | null;
+  locator: string | null;
+};
+
+export type LiddellScottSection = {
+  id: string;
+  label: string;
+  text: string;
+  references: LiddellScottReference[];
 };
 
 export type GreekTokenGlossOverride = {
