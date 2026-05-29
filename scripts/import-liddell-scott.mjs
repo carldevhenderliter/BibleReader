@@ -6,6 +6,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, "..");
 const greekLexiconPath = path.join(repoRoot, "data", "bible", "greek", "lexicon.json");
 const outputPath = path.join(repoRoot, "data", "bible", "greek", "liddell-scott.json");
+const publicOutputPath = path.join(
+  repoRoot,
+  "public",
+  "data",
+  "bible",
+  "greek",
+  "liddell-scott.json"
+);
 const defaultSourceUrl =
   "https://raw.githubusercontent.com/perseids-project/lsj-js/master/vendor/lsj.json";
 const ROMAN_SECTION_PATTERN = /(?:^|(?<=[\s;:—–]))(I|II|III|IV|V|VI|VII|VIII|IX|X)\.\s+/g;
@@ -549,7 +557,12 @@ async function main() {
   }
 
   await mkdir(path.dirname(outputPath), { recursive: true });
-  await writeFile(outputPath, `${JSON.stringify(nextDictionary, null, 2)}\n`);
+  await mkdir(path.dirname(publicOutputPath), { recursive: true });
+
+  const serializedDictionary = `${JSON.stringify(nextDictionary, null, 2)}\n`;
+
+  await writeFile(outputPath, serializedDictionary);
+  await writeFile(publicOutputPath, serializedDictionary);
 
   console.log(
     `Generated ${path.relative(repoRoot, outputPath)} with ${matchedEntries} matched Greek dictionary entries.`

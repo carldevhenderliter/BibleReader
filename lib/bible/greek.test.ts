@@ -17,6 +17,10 @@ import {
 import type { GreekLemmaEntry } from "@/lib/bible/types";
 
 describe("Greek dictionary lookup", () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   it("normalizes accents, case, and final sigma for lemma lookups", () => {
     expect(normalizeGreekLookupValue("Ἀρχή")).toBe("αρχη");
     expect(normalizeGreekLookupValue("ἀρχης")).toBe("αρχησ");
@@ -42,6 +46,43 @@ describe("Greek dictionary lookup", () => {
   });
 
   it("loads Liddell-Scott entries for supported Greek lemmas", async () => {
+    const fetchMock = jest.fn().mockResolvedValue(
+      {
+        ok: true,
+        json: async () => ({
+          G746: {
+            headword: "ἀρχή",
+            summary: "Beginning, origin, or first place.",
+            entry: "ἀρχή, ἡ, beginning, origin, first principle, rule.",
+            sections: [
+              {
+                id: "lsj:Opening:1",
+                label: "Opening",
+                text: "ἀρχή, ἡ, beginning, origin.",
+                references: [
+                  {
+                    rawCitation: "Hdt.7.51",
+                    authorName: "Herodotus",
+                    workName: "Histories",
+                    locator: "7.51"
+                  }
+                ]
+              },
+              {
+                id: "lsj:2:2",
+                label: "2",
+                text: "first principle, rule.",
+                references: []
+              }
+            ],
+            greekVariants: ["ἀρχή", "ἀρχη", "αρχη"],
+            transliterations: ["arche", "arkhe"]
+          }
+        })
+      }
+    );
+    global.fetch = fetchMock as typeof fetch;
+
     const entry = await getGreekLiddellScottEntry("G746");
 
     expect(entry).toMatchObject({
@@ -64,6 +105,9 @@ describe("Greek dictionary lookup", () => {
         )
       )
     ).toBe(true);
+    expect(fetchMock).toHaveBeenCalledWith("/data/bible/greek/liddell-scott.json", {
+      cache: "force-cache"
+    });
   });
 
   it("loads generated grammar-aware translation glosses for Greek forms", async () => {

@@ -11,6 +11,7 @@ import type {
   GreekTokenGlossOverride,
   GreekToken
 } from "@/lib/bible/types";
+import { getAssetPath } from "@/lib/asset-path";
 import { normalizeStrongsNumber } from "@/lib/bible/strongs";
 
 type SearchableGreekEntry = GreekLemmaEntry & {
@@ -594,9 +595,15 @@ async function loadGreekLexicon() {
 
 async function loadGreekLiddellScottDictionary() {
   if (!greekLiddellScottPromise) {
-    greekLiddellScottPromise = import("@/data/bible/greek/liddell-scott.json").then(
-      (module) => (module.default ?? {}) as Record<string, LiddellScottEntry>
-    );
+    greekLiddellScottPromise = fetch(getAssetPath("/data/bible/greek/liddell-scott.json"), {
+      cache: "force-cache"
+    }).then(async (response) => {
+      if (!response.ok) {
+        throw new Error(`Unable to load Liddell-Scott dictionary: ${response.status}`);
+      }
+
+      return (await response.json()) as Record<string, LiddellScottEntry>;
+    });
   }
 
   return greekLiddellScottPromise;
