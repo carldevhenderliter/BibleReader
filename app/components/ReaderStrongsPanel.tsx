@@ -213,6 +213,40 @@ function formatLiddellScottSectionLabel(label: string) {
   return label === "Opening" ? "Opening" : `Section ${label}`;
 }
 
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function stripLiddellScottReferences(
+  text: string,
+  references: readonly LiddellScottReference[]
+) {
+  let stripped = text;
+
+  for (const reference of references) {
+    const citationPattern = new RegExp(`\\b${escapeRegExp(reference.rawCitation)}\\b`, "g");
+    stripped = stripped.replace(citationPattern, "");
+  }
+
+  return stripped
+    .replace(/\(\s*[,;:]?\s*\)/g, "")
+    .replace(/\[\s*[,;:]?\s*\]/g, "")
+    .replace(/\s+,/g, ",")
+    .replace(/,\s*,+/g, ", ")
+    .replace(/;\s*;+/g, "; ")
+    .replace(/:\s*:+/g, ": ")
+    .replace(/\s{2,}/g, " ")
+    .replace(/\s+([,.;:])/g, "$1")
+    .replace(/([,.;:])(?=[A-Za-zΑ-Ωα-ω])/g, "$1 ")
+    .replace(/,\s*(?=(?:etc\.|al\.))/g, " ")
+    .replace(/,\s*cf\.(?=[,;:.]|$)/g, "")
+    .replace(/\bcf\.(?=[,;:.]|$)/g, "")
+    .replace(/,\s*(?=[;:.])/g, "")
+    .replace(/;\s*(?=[;:.])/g, "")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
 function renderHighlightedGreekContext(context: string, lemma: string) {
   const normalizedLemma = normalizeFathersGreekText(lemma);
   const segments = context.match(/[\p{Script=Greek}]+|[^\p{Script=Greek}]+/gu) ?? [context];
@@ -441,7 +475,7 @@ function renderLiddellScottEntry(
                   {formatLiddellScottSectionLabel(section.label)}
                 </p>
                 <p className="strongs-entry-copy strongs-entry-copy-bdag strongs-entry-copy-bdag-original">
-                  {section.text}
+                  {stripLiddellScottReferences(section.text, section.references)}
                 </p>
                 {section.references.length > 0 ? (
                   <div className="strongs-entry-thayer-chip-list">

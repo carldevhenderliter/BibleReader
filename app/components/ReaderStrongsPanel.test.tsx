@@ -184,7 +184,7 @@ jest.mock("@/lib/bible/greek", () => {
         {
           id: "lsj:Opening:1",
           label: "Opening",
-          text: "ἀρχή, ἡ, beginning, origin.",
+          text: "ἀρχή, ἡ, beginning, origin, Hdt.7.51.",
           references: [
             {
               rawCitation: "Hdt.7.51",
@@ -197,7 +197,7 @@ jest.mock("@/lib/bible/greek", () => {
         {
           id: "lsj:2:2",
           label: "2",
-          text: "first principle, rule.",
+          text: "first principle, rule, Pl.Lg.715e.",
           references: [
             {
               rawCitation: "Pl.Lg.715e",
@@ -1006,6 +1006,8 @@ describe("ReaderStrongsPanel", () => {
     expect(within(studyPane).getByText("Original Liddell-Scott")).toBeInTheDocument();
     expect(within(studyPane).getByText("Opening")).toBeInTheDocument();
     expect(within(studyPane).getByText("Section 2")).toBeInTheDocument();
+    expect(within(studyPane).getByText("ἀρχή, ἡ, beginning, origin.")).toBeInTheDocument();
+    expect(within(studyPane).getByText("first principle, rule.")).toBeInTheDocument();
     expect(within(studyPane).getByText("Hdt.7.51 • Herodotus, Histories")).toBeInTheDocument();
     expect(within(studyPane).getByText("Pl.Lg.715e • Plato, Laws")).toBeInTheDocument();
   });
