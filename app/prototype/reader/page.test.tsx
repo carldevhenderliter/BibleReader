@@ -453,7 +453,7 @@ describe("ReaderPrototypePage", () => {
     expect(await within(wordStudy).findByText("G2316")).toBeInTheDocument();
     expect(within(wordStudy).getByText("Greek Dictionary")).toBeInTheDocument();
     expect(await within(wordStudy).findByRole("tab", { name: /Verses In Bible/i })).toBeInTheDocument();
-    expect(within(wordStudy).getByRole("tab", { name: /BDAG/i })).toBeInTheDocument();
+    expect(within(wordStudy).getByRole("tab", { name: /Dictionaries/i })).toBeInTheDocument();
     expect(within(wordStudy).getByRole("tab", { name: /Outside Bible/i })).toBeInTheDocument();
     expect(await screen.findByText("Book audio")).toBeInTheDocument();
   });
@@ -656,7 +656,7 @@ describe("ReaderPrototypePage", () => {
     expect(screen.getByRole("heading", { name: "Reader controls" })).toBeInTheDocument();
   });
 
-  it("switches between original Strong's study tabs in the prototype pane", async () => {
+  it("switches between the study tabs and dictionary disclosures in the prototype pane", async () => {
     renderWithReaderCustomization(
       <ReaderPrototypePageContent
         book={books[1]}
@@ -678,7 +678,8 @@ describe("ReaderPrototypePage", () => {
     fireEvent.click(await within(wordStudy).findByRole("tab", { name: /Verses In Bible/i }));
     expect(await within(wordStudy).findByText("Titus 1:1")).toBeInTheDocument();
 
-    fireEvent.click(within(wordStudy).getByRole("tab", { name: /BDAG/i }));
+    fireEvent.click(within(wordStudy).getByRole("tab", { name: /Dictionaries/i }));
+    fireEvent.click(within(wordStudy).getByRole("button", { name: /BDAG/i }));
     expect((await within(wordStudy).findAllByText(/God, a divine being/i)).length).toBeGreaterThan(0);
 
     fireEvent.click(within(wordStudy).getByRole("tab", { name: /Outside Bible/i }));

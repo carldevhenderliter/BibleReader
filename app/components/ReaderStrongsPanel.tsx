@@ -905,6 +905,10 @@ export function ReaderStrongsPanel() {
         );
 
         for (const selectedVersion of selectedVersions) {
+          if (selectedVersion === "greek") {
+            continue;
+          }
+
           loadTargets.set(`${greekEntry.entryKey}:${selectedVersion}`, {
             entryId: greekEntry.entryKey,
             version: selectedVersion,
@@ -937,6 +941,10 @@ export function ReaderStrongsPanel() {
         );
 
         for (const selectedVersion of selectedVersions) {
+          if (selectedVersion === "kjv") {
+            continue;
+          }
+
           loadTargets.set(`${entry.id}:${selectedVersion}`, {
             entryId: entry.id,
             version: selectedVersion,
@@ -988,11 +996,19 @@ export function ReaderStrongsPanel() {
   useEffect(() => {
     const neededStrongsNumbers = new Set<string>();
 
-    const collectNeededNumbers = (entryId: string) => {
+    const collectNeededNumbers = (entryId: string, sourceIsKjv: boolean) => {
       const selectedVersions =
         selectedBibleOccurrenceVersions[entryId] ?? getDefaultBibleOccurrenceVersions("greek-dictionary");
       const kjvState = selectedVersions.includes("kjv")
-        ? bibleOccurrenceVersionEntries[entryId]?.kjv ?? null
+        ? (
+            bibleOccurrenceVersionEntries[entryId]?.kjv ??
+            (sourceIsKjv && bibleOccurrences[entryId]?.status === "loaded"
+              ? {
+                  status: "loaded" as const,
+                  matches: bibleOccurrences[entryId]?.matches ?? []
+                }
+              : null)
+          )
         : null;
 
       if (!kjvState || kjvState.status !== "loaded") {
@@ -1000,7 +1016,9 @@ export function ReaderStrongsPanel() {
       }
 
       for (const match of kjvState.matches) {
-        for (const token of match.entry?.tokens ?? []) {
+        const tokens = "entry" in match ? (match.entry?.tokens ?? []) : (match.tokens ?? []);
+
+        for (const token of tokens) {
           for (const strongsNumber of token.strongsNumbers ?? []) {
             if (strongsNumber) {
               neededStrongsNumbers.add(normalizeStrongsNumber(strongsNumber));
@@ -1011,12 +1029,12 @@ export function ReaderStrongsPanel() {
     };
 
     if (greekEntry) {
-      collectNeededNumbers(greekEntry.entryKey);
+      collectNeededNumbers(greekEntry.entryKey, false);
     }
 
     for (const entry of entries) {
       if (entry.language === "greek") {
-        collectNeededNumbers(entry.id);
+        collectNeededNumbers(entry.id, true);
       }
     }
 
@@ -1049,6 +1067,7 @@ export function ReaderStrongsPanel() {
       isCancelled = true;
     };
   }, [
+    bibleOccurrences,
     bibleOccurrenceVersionEntries,
     entries,
     greekEntry,
@@ -1171,6 +1190,10 @@ export function ReaderStrongsPanel() {
     const defaultVersion = getDefaultBibleOccurrenceVersion(language);
 
     return defaultVersion ? [defaultVersion] : [];
+  }
+
+  function getBibleOccurrenceSourceVersion(mode: "strongs" | "greek") {
+    return mode === "greek" ? "greek" : "kjv";
   }
 
   function getGreekHighlightPhrases(entryId: string) {
@@ -1318,6 +1341,7 @@ export function ReaderStrongsPanel() {
     language: StrongsEntry["language"] | "greek-dictionary",
     highlightStrongsNumber: string | null = null
   ) {
+    const sourceVersion = getBibleOccurrenceSourceVersion(mode);
     const occurrences = bibleOccurrences[entryId];
     const availableVersions = getAvailableBibleOccurrenceVersions(language);
     const selectedVersions =
@@ -1535,6 +1559,10 @@ export function ReaderStrongsPanel() {
           </p>
         ) : null}
         {selectedVersions.some((version) => {
+          if (version === sourceVersion) {
+            return false;
+          }
+
           const versionState = versionStates[version] ?? null;
           return !versionState || versionState.status === "loading";
         }) ? (
@@ -1569,7 +1597,10 @@ export function ReaderStrongsPanel() {
                     <div className="strongs-entry-bible-version-list">
                       {selectedVersions.map((selectedVersion) => {
                         const versionState = versionStates[selectedVersion] ?? null;
-                        const versionMatch = versionState?.matches[index]?.entry ?? null;
+                        const versionMatch =
+                          selectedVersion === sourceVersion
+                            ? match
+                            : (versionState?.matches[index]?.entry ?? null);
 
                         return (
                           <div
