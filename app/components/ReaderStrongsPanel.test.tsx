@@ -724,14 +724,15 @@ describe("ReaderStrongsPanel", () => {
     fireEvent.click(screen.getByRole("button", { name: "Open Greek" }));
 
     const studyPane = screen.getByLabelText("Study pane");
-    fireEvent.click(await within(studyPane).findByRole("tab", { name: "Thayer" }));
+    fireEvent.click(await within(studyPane).findByRole("tab", { name: "Dictionaries" }));
+    fireEvent.click(within(studyPane).getByRole("button", { name: "Thayer" }));
 
     expect(await within(studyPane).findByText("Root Word")).toBeInTheDocument();
 
     expect(studyPane).toHaveStyle("--reader-thayer-text-size: 1.26rem");
   });
 
-  it("renders tabbed Greek Strongs study sections", async () => {
+  it("renders Greek Strongs study sections with dictionary disclosures", async () => {
     renderWithReaderCustomization(<StrongsHarness />);
 
     fireEvent.click(screen.getByRole("button", { name: "Open Greek" }));
@@ -739,8 +740,7 @@ describe("ReaderStrongsPanel", () => {
     const studyPane = screen.getByLabelText("Study pane");
 
     expect(await within(studyPane).findByRole("tab", { name: "Verses In Bible" })).toBeInTheDocument();
-    expect(within(studyPane).getByRole("tab", { name: "Thayer" })).toBeInTheDocument();
-    expect(within(studyPane).getByRole("tab", { name: "BDAG" })).toBeInTheDocument();
+    expect(within(studyPane).getByRole("tab", { name: "Dictionaries" })).toBeInTheDocument();
     expect(within(studyPane).getByRole("tab", { name: "Outside Bible" })).toBeInTheDocument();
     expect(within(studyPane).getByRole("heading", { name: "G3056" })).toBeInTheDocument();
     await waitFor(() =>
@@ -803,25 +803,43 @@ describe("ReaderStrongsPanel", () => {
       )
     );
 
-    fireEvent.click(within(studyPane).getByRole("tab", { name: "BDAG" }));
+    fireEvent.click(within(studyPane).getByRole("tab", { name: "Dictionaries" }));
+
+    const lsjToggle = within(studyPane).getByRole("button", { name: "Liddell-Scott" });
+    const thayerToggle = within(studyPane).getByRole("button", { name: "Thayer" });
+    const bdagToggle = within(studyPane).getByRole("button", { name: "BDAG" });
+
+    expect(lsjToggle).toHaveAttribute("aria-expanded", "false");
+    expect(thayerToggle).toHaveAttribute("aria-expanded", "false");
+    expect(bdagToggle).toHaveAttribute("aria-expanded", "false");
+
+    fireEvent.click(thayerToggle);
+
+    expect(await within(studyPane).findByText("Root Word")).toBeInTheDocument();
+    expect(thayerToggle).toHaveAttribute("aria-expanded", "true");
+
+    fireEvent.click(bdagToggle);
 
     expect(await within(studyPane).findByText("Plain Meaning")).toBeInTheDocument();
     expect(within(studyPane).getByText("Common Use")).toBeInTheDocument();
     expect(within(studyPane).getByText("New Testament Use")).toBeInTheDocument();
     expect(within(studyPane).getByText("Key Terms")).toBeInTheDocument();
     expect(within(studyPane).getByText("Full BDAG")).toBeInTheDocument();
+    expect(within(studyPane).getByText("Full Thayer")).toBeInTheDocument();
+    expect(bdagToggle).toHaveAttribute("aria-expanded", "true");
   }, 30000);
 
-  it("renders a separate Thayer tab for Greek Strongs entries", async () => {
+  it("renders the Thayer disclosure for Greek Strongs entries", async () => {
     renderWithReaderCustomization(<StrongsHarness />);
 
     fireEvent.click(screen.getByRole("button", { name: "Open Greek" }));
 
     const studyPane = screen.getByLabelText("Study pane");
-    fireEvent.click(await within(studyPane).findByRole("tab", { name: "Thayer" }));
+    fireEvent.click(await within(studyPane).findByRole("tab", { name: "Dictionaries" }));
+    fireEvent.click(within(studyPane).getByRole("button", { name: "Thayer" }));
 
-    expect(within(studyPane).getByRole("tab", { name: "Thayer" })).toHaveAttribute(
-      "aria-selected",
+    expect(within(studyPane).getByRole("button", { name: "Thayer" })).toHaveAttribute(
+      "aria-expanded",
       "true"
     );
     expect(within(studyPane).getByText("Root Word")).toBeInTheDocument();
@@ -862,8 +880,7 @@ describe("ReaderStrongsPanel", () => {
       .closest(".strongs-entry-bible-version-row");
     expect(webRow).not.toBeNull();
     expect(studyPane.querySelector(".strongs-entry-bible-verse-text-greek-companion")).toBeNull();
-    expect(within(studyPane).queryByRole("tab", { name: "Thayer" })).not.toBeInTheDocument();
-    expect(within(studyPane).queryByRole("tab", { name: "BDAG" })).not.toBeInTheDocument();
+    expect(within(studyPane).queryByRole("tab", { name: "Dictionaries" })).not.toBeInTheDocument();
     expect(within(studyPane).queryByRole("tab", { name: "Outside Bible" })).not.toBeInTheDocument();
   });
 
@@ -898,6 +915,19 @@ describe("ReaderStrongsPanel", () => {
     ).toBeInTheDocument();
   });
 
+  it("only shows available dictionary disclosures for entries without Thayer or BDAG", async () => {
+    renderWithReaderCustomization(<StrongsHarness />);
+
+    fireEvent.click(screen.getByRole("button", { name: "Open Greek Empty" }));
+
+    const studyPane = screen.getByLabelText("Study pane");
+    fireEvent.click(await within(studyPane).findByRole("tab", { name: "Dictionaries" }));
+
+    expect(within(studyPane).getByRole("button", { name: "Liddell-Scott" })).toBeInTheDocument();
+    expect(within(studyPane).queryByRole("button", { name: "Thayer" })).not.toBeInTheDocument();
+    expect(within(studyPane).queryByRole("button", { name: "BDAG" })).not.toBeInTheDocument();
+  });
+
   it("renders a lemma-centered Greek dictionary card without the selected-form summary", async () => {
     renderWithReaderCustomization(<StrongsHarness />);
 
@@ -910,7 +940,7 @@ describe("ReaderStrongsPanel", () => {
     expect(await within(studyPane).findByText("Transliteration: archē")).toBeInTheDocument();
     expect(within(studyPane).queryByText("Selected Form")).not.toBeInTheDocument();
     expect(within(studyPane).queryByText("Inflected Forms")).not.toBeInTheDocument();
-    expect(within(studyPane).getByRole("tab", { name: "Thayer" })).toBeInTheDocument();
+    expect(within(studyPane).getByRole("tab", { name: "Dictionaries" })).toBeInTheDocument();
 
     const oldTestamentButton = await within(studyPane).findByRole(
       "button",
@@ -971,31 +1001,39 @@ describe("ReaderStrongsPanel", () => {
     );
   });
 
-  it("renders the Thayer tab from the Greek dictionary flow", async () => {
+  it("renders the Thayer disclosure from the Greek dictionary flow", async () => {
     renderWithReaderCustomization(<StrongsHarness />);
 
     fireEvent.click(screen.getByRole("button", { name: "Open Greek Dictionary Masculine" }));
 
     const studyPane = screen.getByLabelText("Study pane");
-    fireEvent.click(await within(studyPane).findByRole("tab", { name: "Thayer" }));
+    fireEvent.click(await within(studyPane).findByRole("tab", { name: "Dictionaries" }));
+    fireEvent.click(within(studyPane).getByRole("button", { name: "Thayer" }));
 
-    expect(within(studyPane).getByRole("tab", { name: "Thayer" })).toHaveAttribute(
-      "aria-selected",
+    expect(within(studyPane).getByRole("button", { name: "Thayer" })).toHaveAttribute(
+      "aria-expanded",
       "true"
     );
     expect(within(studyPane).getByText(/of speech, a word/i)).toBeInTheDocument();
   });
 
-  it("renders the Liddell-Scott tab from the Greek dictionary flow", async () => {
+  it("renders the Liddell-Scott disclosure from the Greek dictionary flow", async () => {
     renderWithReaderCustomization(<StrongsHarness />);
 
     fireEvent.click(screen.getByRole("button", { name: "Open Greek Dictionary" }));
 
     const studyPane = screen.getByLabelText("Study pane");
-    fireEvent.click(await within(studyPane).findByRole("tab", { name: "Liddell-Scott" }));
+    fireEvent.click(await within(studyPane).findByRole("tab", { name: "Dictionaries" }));
+    const lsjToggle = within(studyPane).getByRole("button", { name: "Liddell-Scott" });
+    const thayerToggle = within(studyPane).getByRole("button", { name: "Thayer" });
 
-    expect(within(studyPane).getByRole("tab", { name: "Liddell-Scott" })).toHaveAttribute(
-      "aria-selected",
+    expect(lsjToggle).toHaveAttribute("aria-expanded", "false");
+    expect(thayerToggle).toHaveAttribute("aria-expanded", "false");
+
+    fireEvent.click(lsjToggle);
+
+    expect(lsjToggle).toHaveAttribute(
+      "aria-expanded",
       "true"
     );
     expect(await within(studyPane).findByText("Basic Definitions")).toBeInTheDocument();
@@ -1010,6 +1048,12 @@ describe("ReaderStrongsPanel", () => {
     expect(within(studyPane).getByText("first principle, rule.")).toBeInTheDocument();
     expect(within(studyPane).getByText("Hdt.7.51 • Herodotus, Histories")).toBeInTheDocument();
     expect(within(studyPane).getByText("Pl.Lg.715e • Plato, Laws")).toBeInTheDocument();
+
+    fireEvent.click(thayerToggle);
+
+    expect(await within(studyPane).findByText("Full Thayer")).toBeInTheDocument();
+    expect(lsjToggle).toHaveAttribute("aria-expanded", "true");
+    expect(thayerToggle).toHaveAttribute("aria-expanded", "true");
   });
 
   it("falls back to the raw Liddell-Scott article when no parsed sections exist", async () => {
@@ -1018,7 +1062,8 @@ describe("ReaderStrongsPanel", () => {
     fireEvent.click(screen.getByRole("button", { name: "Open Greek Dictionary Verb" }));
 
     const studyPane = screen.getByLabelText("Study pane");
-    fireEvent.click(await within(studyPane).findByRole("tab", { name: "Liddell-Scott" }));
+    fireEvent.click(await within(studyPane).findByRole("tab", { name: "Dictionaries" }));
+    fireEvent.click(within(studyPane).getByRole("button", { name: "Liddell-Scott" }));
 
     expect(await within(studyPane).findByText("Original Liddell-Scott")).toBeInTheDocument();
     expect(within(studyPane).queryByText("Opening")).not.toBeInTheDocument();
