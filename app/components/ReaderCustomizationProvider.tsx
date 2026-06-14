@@ -16,6 +16,7 @@ import type { ReaderCustomizationSettings } from "@/lib/bible/types";
 import {
   DEFAULT_READER_CUSTOMIZATION,
   READER_CUSTOMIZATION_STORAGE_KEY,
+  getReaderShellMaxWidthRem,
   getReaderCustomizationVariables,
   normalizeReaderCustomization
 } from "@/lib/reader-customization";
@@ -51,6 +52,17 @@ export function ReaderCustomizationProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     window.localStorage.setItem(READER_CUSTOMIZATION_STORAGE_KEY, JSON.stringify(settings));
+  }, [settings]);
+
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      "--reader-shell-max-width",
+      `${getReaderShellMaxWidthRem(settings)}rem`
+    );
+
+    return () => {
+      document.documentElement.style.removeProperty("--reader-shell-max-width");
+    };
   }, [settings]);
 
   const value = useMemo<ReaderCustomizationContextValue>(

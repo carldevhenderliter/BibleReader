@@ -38,6 +38,7 @@
   --reader-line-height: 1.95;
   --reader-first-line-indent: 0rem;
   --reader-content-width: 46rem;
+  --reader-shell-max-width: 103.25rem;
   --reader-verse-spacing: 1rem;
   --reader-paragraph-spacing: 0.2rem;
   --reader-text-align: left;
@@ -302,6 +303,10 @@ body:has(.reader-prototype-shell) .app-layout-reader-pane {
   max-width: 78rem;
   margin: 0 auto;
   padding-bottom: calc(6.75rem + env(safe-area-inset-bottom));
+}
+
+body:has(.reader-shell):not(:has(.reader-prototype-shell)) .site-main {
+  max-width: var(--reader-shell-max-width, 78rem);
 }
 
 .page-stack,
@@ -7999,7 +8004,7 @@ button.fathers-annotation-anchor:focus-visible {
   display: grid;
   gap: 0;
   align-items: start;
-  max-width: 103.25rem;
+  max-width: var(--reader-shell-max-width, 103.25rem);
   margin: 0 auto;
 }
 
@@ -8122,7 +8127,7 @@ button.fathers-annotation-anchor:focus-visible {
 .search-shell.search-shell-split {
   right: auto;
   left: 50%;
-  width: min(calc(100vw - 2.7rem), 103.25rem);
+  width: min(calc(100vw - 2.7rem), var(--reader-shell-max-width, 103.25rem));
   padding-left: calc(var(--search-shell-left-offset, 0rem) + 1rem);
   padding-right: calc(var(--search-shell-right-offset, 0rem) + 1rem);
   transform: translateX(-50%);

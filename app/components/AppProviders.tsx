@@ -18,19 +18,19 @@ export function AppProviders({ children }: PropsWithChildren) {
     <MobilePreviewProvider>
       <ReaderVersionProvider>
         <ReaderWorkspaceProvider>
-          <LookupProvider>
-            <VerseTranslationOverridesProvider>
-              <BibleGreekUndertextProvider>
-                <GreekGlossOverridesProvider>
-                  <ReaderCustomizationProvider>
+          <ReaderCustomizationProvider>
+            <LookupProvider>
+              <VerseTranslationOverridesProvider>
+                <BibleGreekUndertextProvider>
+                  <GreekGlossOverridesProvider>
                     <ReaderBottomBarProvider>
                       <SearchCustomizationProvider>{children}</SearchCustomizationProvider>
                     </ReaderBottomBarProvider>
-                  </ReaderCustomizationProvider>
-                </GreekGlossOverridesProvider>
-              </BibleGreekUndertextProvider>
-            </VerseTranslationOverridesProvider>
-          </LookupProvider>
+                  </GreekGlossOverridesProvider>
+                </BibleGreekUndertextProvider>
+              </VerseTranslationOverridesProvider>
+            </LookupProvider>
+          </ReaderCustomizationProvider>
         </ReaderWorkspaceProvider>
       </ReaderVersionProvider>
     </MobilePreviewProvider>

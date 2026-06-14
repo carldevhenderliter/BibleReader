@@ -699,6 +699,28 @@ export function ReaderSettingsPanel({
                   Forces desktop browsers to use the mobile reader flow for layout fixes.
                 </p>
               </div>
+              <div className="reader-settings-field">
+                <span>Layout width</span>
+                <div className="reader-settings-shortcuts">
+                  <button
+                    aria-pressed={settings.superwideLayout}
+                    className={`reader-inline-button reader-settings-link${
+                      settings.superwideLayout ? " is-active" : ""
+                    }`}
+                    onClick={() =>
+                      updateSettings({
+                        superwideLayout: !settings.superwideLayout
+                      })
+                    }
+                    type="button"
+                  >
+                    {settings.superwideLayout ? "Superwide on" : "Superwide off"}
+                  </button>
+                </div>
+                <p className="reader-settings-unavailable">
+                  Expands the desktop reader shell further on ultrawide displays.
+                </p>
+              </div>
             </div>
           </div>
           {isFathersMode && !hasGreekReaderAid ? (

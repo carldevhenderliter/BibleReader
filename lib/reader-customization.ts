@@ -10,6 +10,8 @@ import type {
 } from "@/lib/bible/types";
 
 export const READER_CUSTOMIZATION_STORAGE_KEY = "bible-reader:customization";
+export const DEFAULT_READER_SHELL_MAX_WIDTH_REM = 103.25;
+export const SUPERWIDE_READER_SHELL_MAX_WIDTH_REM = 160;
 
 type RgbTriplet = [number, number, number];
 
@@ -137,6 +139,7 @@ export const UI_FONT_OPTIONS = [
 export const DEFAULT_READER_CUSTOMIZATION: ReaderCustomizationSettings = {
   readerPreset: "reading",
   focusReadingMode: false,
+  superwideLayout: false,
   themePreset: "manuscript",
   bodyFont: "serif",
   greekFont: "classic",
@@ -367,6 +370,10 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
       typeof candidate.focusReadingMode === "boolean"
         ? candidate.focusReadingMode
         : DEFAULT_READER_CUSTOMIZATION.focusReadingMode,
+    superwideLayout:
+      typeof candidate.superwideLayout === "boolean"
+        ? candidate.superwideLayout
+        : DEFAULT_READER_CUSTOMIZATION.superwideLayout,
     themePreset: isThemePreset(candidate.themePreset)
       ? candidate.themePreset
       : DEFAULT_READER_CUSTOMIZATION.themePreset,
@@ -670,6 +677,7 @@ export function getReaderCustomizationVariables(
     "--reader-line-height": String(settings.lineHeight),
     "--reader-first-line-indent": `${settings.firstLineIndent}rem`,
     "--reader-content-width": `${settings.contentWidth}rem`,
+    "--reader-shell-max-width": `${getReaderShellMaxWidthRem(settings)}rem`,
     "--reader-verse-spacing": `${settings.verseSpacing}rem`,
     "--reader-paragraph-spacing": `${settings.paragraphSpacing}rem`,
     "--reader-text-align": settings.textAlign,
@@ -680,6 +688,12 @@ export function getReaderCustomizationVariables(
     "--reader-background-intensity": `${settings.backgroundIntensity}`,
     "--reader-surface-depth": String(settings.surfaceDepth)
   };
+}
+
+export function getReaderShellMaxWidthRem(settings: Pick<ReaderCustomizationSettings, "superwideLayout">) {
+  return settings.superwideLayout
+    ? SUPERWIDE_READER_SHELL_MAX_WIDTH_REM
+    : DEFAULT_READER_SHELL_MAX_WIDTH_REM;
 }
 
 function getThemePresetVariables(themePreset: ThemePreset): ThemePresetVariables {

@@ -1,5 +1,7 @@
 import {
   DEFAULT_READER_CUSTOMIZATION,
+  DEFAULT_READER_SHELL_MAX_WIDTH_REM,
+  SUPERWIDE_READER_SHELL_MAX_WIDTH_REM,
   getReaderCustomizationVariables,
   normalizeReaderCustomization
 } from "@/lib/reader-customization";
@@ -57,6 +59,7 @@ describe("reader customization", () => {
     ).toEqual({
       readerPreset: "reading",
       focusReadingMode: false,
+      superwideLayout: false,
       themePreset: "ember",
       bodyFont: "mono",
       greekFont: "modern",
@@ -117,6 +120,7 @@ describe("reader customization", () => {
     const variables = getReaderCustomizationVariables({
       readerPreset: "reading",
       focusReadingMode: false,
+      superwideLayout: true,
       themePreset: "aurora",
       bodyFont: "humanist",
       greekFont: "scholarly",
@@ -182,6 +186,7 @@ describe("reader customization", () => {
     expect(variables["--reader-line-height"]).toBe("2");
     expect(variables["--reader-first-line-indent"]).toBe("1.2rem");
     expect(variables["--reader-content-width"]).toBe("50rem");
+    expect(variables["--reader-shell-max-width"]).toBe(`${SUPERWIDE_READER_SHELL_MAX_WIDTH_REM}rem`);
     expect(variables["--reader-verse-spacing"]).toBe("1.4rem");
     expect(variables["--reader-text-align"]).toBe("justify");
     expect(variables["--reader-accent"]).toBe("#74ffd6");
@@ -224,6 +229,15 @@ describe("reader customization", () => {
       lineHeight: 2,
       contentWidth: 48
     });
+  });
+
+  it("defaults to the standard shell width unless superwide mode is enabled", () => {
+    expect(
+      getReaderCustomizationVariables({
+        ...DEFAULT_READER_CUSTOMIZATION,
+        superwideLayout: false
+      })["--reader-shell-max-width"]
+    ).toBe(`${DEFAULT_READER_SHELL_MAX_WIDTH_REM}rem`);
   });
 
   it("maps legacy Greek-only settings onto the granular visibility fields", () => {

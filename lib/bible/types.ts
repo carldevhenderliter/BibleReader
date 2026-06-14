@@ -71,6 +71,7 @@ export type ReaderPreset = "reading" | "study" | "audio" | "custom";
 export type ReaderCustomizationSettings = {
   readerPreset: ReaderPreset;
   focusReadingMode: boolean;
+  superwideLayout: boolean;
   themePreset: ThemePreset;
   bodyFont: BodyFontOption;
   greekFont: GreekFontOption;

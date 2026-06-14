@@ -16,19 +16,26 @@ import { ReaderCustomizationProvider } from "@/app/components/ReaderCustomizatio
 import { ReaderWorkspaceProvider } from "@/app/components/ReaderWorkspaceProvider";
 import { ReaderVersionProvider } from "@/app/components/ReaderVersionProvider";
 import { SearchCustomizationProvider } from "@/app/components/SearchCustomizationProvider";
+import {
+  DEFAULT_READER_SHELL_MAX_WIDTH_REM,
+  READER_CUSTOMIZATION_STORAGE_KEY,
+  SUPERWIDE_READER_SHELL_MAX_WIDTH_REM
+} from "@/lib/reader-customization";
 import { setMockPathname } from "@/test/mocks/next-navigation";
 
 const SPLIT_SEARCH_WIDTH_STORAGE_KEY = "bible-reader.split-search-width-rem";
 const SPLIT_STUDY_WIDTH_STORAGE_KEY = "bible-reader.split-study-width-rem";
 const SPLIT_COLLAPSED_PANES_STORAGE_KEY = "bible-reader.split-collapsed-panes";
-const APP_LAYOUT_MAX_WIDTH_REM = 103.25;
 const SEARCH_SHELL_VIEWPORT_MARGIN_REM = 2.7;
 const SPLIT_PANE_DIVIDER_WIDTH_REM = 0.875;
 
-function getMinimumVisiblePaneWidthRem(viewportWidth = window.innerWidth) {
+function getMinimumVisiblePaneWidthRem(
+  viewportWidth = window.innerWidth,
+  layoutMaxWidthRem = DEFAULT_READER_SHELL_MAX_WIDTH_REM
+) {
   const viewportWidthRem = viewportWidth / 16;
   const contentWidthRem = Math.min(
-    APP_LAYOUT_MAX_WIDTH_REM,
+    layoutMaxWidthRem,
     Math.max(0, viewportWidthRem - SEARCH_SHELL_VIEWPORT_MARGIN_REM)
   );
 
@@ -40,8 +47,8 @@ function renderSplitLayout() {
     <MobilePreviewProvider>
       <ReaderVersionProvider>
         <ReaderWorkspaceProvider>
-          <LookupProvider>
-            <ReaderCustomizationProvider>
+          <ReaderCustomizationProvider>
+            <LookupProvider>
               <ReaderBottomBarProvider>
                 <SearchCustomizationProvider>
                   <AppSplitLayout>
@@ -50,8 +57,8 @@ function renderSplitLayout() {
                   <BottomSearchBar />
                 </SearchCustomizationProvider>
               </ReaderBottomBarProvider>
-            </ReaderCustomizationProvider>
-          </LookupProvider>
+            </LookupProvider>
+          </ReaderCustomizationProvider>
         </ReaderWorkspaceProvider>
       </ReaderVersionProvider>
     </MobilePreviewProvider>
@@ -241,6 +248,31 @@ describe("AppSplitLayout", () => {
     );
   });
 
+  it("uses a wider split layout floor when superwide mode is enabled", () => {
+    window.localStorage.setItem(
+      READER_CUSTOMIZATION_STORAGE_KEY,
+      JSON.stringify({
+        superwideLayout: true
+      })
+    );
+
+    const { container } = renderSplitLayout();
+    const divider = screen.getByRole("button", { name: "Resize reader and search panes" });
+    const layout = container.querySelector(".app-layout");
+    const minimumPaneWidthRem = getMinimumVisiblePaneWidthRem(
+      window.innerWidth,
+      SUPERWIDE_READER_SHELL_MAX_WIDTH_REM
+    );
+
+    fireEvent.pointerDown(divider, { clientX: 1000 });
+    act(() => {
+      window.dispatchEvent(new PointerEvent("pointermove", { clientX: 200 }));
+      window.dispatchEvent(new PointerEvent("pointerup", { clientX: 200 }));
+    });
+
+    expect(getVisiblePaneWidths(layout).search).toBeCloseTo(minimumPaneWidthRem, 1);
+  });
+
   it("restores saved search and study pane widths", async () => {
     window.localStorage.setItem(SPLIT_SEARCH_WIDTH_STORAGE_KEY, "24");
     window.localStorage.setItem(SPLIT_STUDY_WIDTH_STORAGE_KEY, "22");
@@ -304,8 +336,8 @@ describe("AppSplitLayout", () => {
       <MobilePreviewProvider>
         <ReaderVersionProvider>
           <ReaderWorkspaceProvider>
-            <LookupProvider>
-              <ReaderCustomizationProvider>
+            <ReaderCustomizationProvider>
+              <LookupProvider>
                 <ReaderBottomBarProvider>
                   <SearchCustomizationProvider>
                     <AudioDockControlHarness />
@@ -314,8 +346,8 @@ describe("AppSplitLayout", () => {
                     </AppSplitLayout>
                   </SearchCustomizationProvider>
                 </ReaderBottomBarProvider>
-              </ReaderCustomizationProvider>
-            </LookupProvider>
+              </LookupProvider>
+            </ReaderCustomizationProvider>
           </ReaderWorkspaceProvider>
         </ReaderVersionProvider>
       </MobilePreviewProvider>

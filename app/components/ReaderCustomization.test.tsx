@@ -147,6 +147,27 @@ describe("Reader customization", () => {
     );
   });
 
+  it("persists the superwide layout toggle", () => {
+    renderWithReaderCustomization(
+      <ReaderPageContent
+        book={books[0]}
+        books={books}
+        chaptersByVersion={chaptersByVersion}
+      />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "Menu" }));
+    fireEvent.click(screen.getByRole("button", { name: "Superwide off" }));
+
+    const stored = window.localStorage.getItem(READER_CUSTOMIZATION_STORAGE_KEY) ?? "";
+
+    expect(stored).toContain('"superwideLayout":true');
+    expect(screen.getByRole("button", { name: "Superwide on" })).toHaveAttribute(
+      "aria-pressed",
+      "true"
+    );
+  });
+
   it("persists the under-verse translation toggle and selected version", () => {
     renderWithReaderCustomization(
       <ReaderPageContent

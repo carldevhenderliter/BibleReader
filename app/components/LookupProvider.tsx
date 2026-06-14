@@ -12,6 +12,7 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 
 import { useMobilePreview } from "@/app/components/MobilePreviewProvider";
+import { useReaderCustomization } from "@/app/components/ReaderCustomizationProvider";
 import { useReaderVersion } from "@/app/components/ReaderVersionProvider";
 import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import { parseBibleSearchQueries, searchBibleGroups } from "@/lib/bible/search";
@@ -26,6 +27,10 @@ import {
   getInstalledBundledBibleVersions,
   isInstalledBundledBibleVersion
 } from "@/lib/bible/version";
+import {
+  DEFAULT_READER_SHELL_MAX_WIDTH_REM,
+  getReaderShellMaxWidthRem
+} from "@/lib/reader-customization";
 
 const SPLIT_VIEW_MEDIA_QUERY = "(min-width: 64rem)";
 const SEARCH_MATCH_MODE_STORAGE_KEY = "bible-reader.search-match-mode";
@@ -35,7 +40,6 @@ const SEARCH_VERSIONS_STORAGE_KEY = "bible-reader.search-versions";
 const SPLIT_SEARCH_WIDTH_STORAGE_KEY = "bible-reader.split-search-width-rem";
 const SPLIT_STUDY_WIDTH_STORAGE_KEY = "bible-reader.split-study-width-rem";
 const SPLIT_COLLAPSED_PANES_STORAGE_KEY = "bible-reader.split-collapsed-panes";
-const APP_LAYOUT_MAX_WIDTH_REM = 103.25;
 const SEARCH_SHELL_VIEWPORT_MARGIN_REM = 2.7;
 const NON_READER_MAX_VIEWPORT_RATIO = 0.75;
 const MIN_SPLIT_PANE_WIDTH_RATIO = 1 / 3;
@@ -129,7 +133,9 @@ function getRootFontSize() {
 }
 
 function getViewportWidthRem() {
-  return typeof window === "undefined" ? APP_LAYOUT_MAX_WIDTH_REM : window.innerWidth / getRootFontSize();
+  return typeof window === "undefined"
+    ? DEFAULT_READER_SHELL_MAX_WIDTH_REM
+    : window.innerWidth / getRootFontSize();
 }
 
 function clampRange(value: number, minimum: number, maximum: number) {
@@ -263,6 +269,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
   const router = useRouter();
   const pathname = usePathname();
   const { isMobilePreviewEnabled } = useMobilePreview();
+  const { settings } = useReaderCustomization();
   const { version } = useReaderVersion();
   const { openGreekDictionary, openStrongs, setActiveStudyVerseNumber } = useReaderWorkspace();
   const [query, setQuery] = useState("");
@@ -281,7 +288,7 @@ export function LookupProvider({ children }: PropsWithChildren) {
   const [collapsedSplitPanes, setCollapsedSplitPanes] = useState<CollapsedSplitPanes>(
     DEFAULT_COLLAPSED_SPLIT_PANES
   );
-  const [viewportWidthRem, setViewportWidthRem] = useState(APP_LAYOUT_MAX_WIDTH_REM);
+  const [viewportWidthRem, setViewportWidthRem] = useState(DEFAULT_READER_SHELL_MAX_WIDTH_REM);
   const [expandedTopicsByQuery, setExpandedTopicsByQuery] = useState<Record<string, string>>({});
   const queryParts = useMemo(() => parseBibleSearchQueries(query), [query]);
   const installedSearchVersions = useMemo(() => getInstalledBundledBibleVersions(), []);
@@ -317,9 +324,13 @@ export function LookupProvider({ children }: PropsWithChildren) {
     (readerVisible && searchVisible ? 1 : 0) +
     (searchVisible && studyVisible ? 1 : 0) +
     (readerVisible && !searchVisible && studyVisible ? 1 : 0);
+  const layoutMaxWidthRem = useMemo(
+    () => getReaderShellMaxWidthRem(settings),
+    [settings]
+  );
   const contentWidthRem = useMemo(
-    () => Math.min(APP_LAYOUT_MAX_WIDTH_REM, Math.max(0, viewportWidthRem - SEARCH_SHELL_VIEWPORT_MARGIN_REM)),
-    [viewportWidthRem]
+    () => Math.min(layoutMaxWidthRem, Math.max(0, viewportWidthRem - SEARCH_SHELL_VIEWPORT_MARGIN_REM)),
+    [layoutMaxWidthRem, viewportWidthRem]
   );
   const availablePaneWidthRem = useMemo(
     () =>
