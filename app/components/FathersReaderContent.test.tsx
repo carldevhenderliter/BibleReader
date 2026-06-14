@@ -256,20 +256,20 @@ function renderFathersReader(currentPayload: FathersWorkPayload = payload) {
     <MobilePreviewProvider>
       <ReaderVersionProvider>
         <ReaderWorkspaceProvider>
-          <LookupProvider>
-            <VerseTranslationOverridesProvider>
-              <GreekGlossOverridesProvider>
-                <ReaderCustomizationProvider>
+          <ReaderCustomizationProvider>
+            <LookupProvider>
+              <VerseTranslationOverridesProvider>
+                <GreekGlossOverridesProvider>
                   <ReaderBottomBarProvider>
                     <SearchCustomizationProvider>
                       <FathersReaderContent payload={currentPayload} works={works} />
                       <ReaderBottomBarTestHost />
                     </SearchCustomizationProvider>
                   </ReaderBottomBarProvider>
-                </ReaderCustomizationProvider>
-              </GreekGlossOverridesProvider>
-            </VerseTranslationOverridesProvider>
-          </LookupProvider>
+                </GreekGlossOverridesProvider>
+              </VerseTranslationOverridesProvider>
+            </LookupProvider>
+          </ReaderCustomizationProvider>
         </ReaderWorkspaceProvider>
       </ReaderVersionProvider>
     </MobilePreviewProvider>
