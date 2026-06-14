@@ -36,8 +36,8 @@ function renderSearchUi(ui?: React.ReactNode) {
     <MobilePreviewProvider>
       <ReaderVersionProvider>
         <ReaderWorkspaceProvider>
-          <LookupProvider>
-            <ReaderCustomizationProvider>
+          <ReaderCustomizationProvider>
+            <LookupProvider>
               <ReaderBottomBarProvider>
                 <SearchCustomizationProvider>
                   {ui ?? (
@@ -49,8 +49,8 @@ function renderSearchUi(ui?: React.ReactNode) {
                   )}
                 </SearchCustomizationProvider>
               </ReaderBottomBarProvider>
-            </ReaderCustomizationProvider>
-          </LookupProvider>
+            </LookupProvider>
+          </ReaderCustomizationProvider>
         </ReaderWorkspaceProvider>
       </ReaderVersionProvider>
     </MobilePreviewProvider>
