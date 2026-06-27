@@ -216,6 +216,7 @@ export function ReaderSettingsPanel({
     settings.showGreekTransliteration ||
     settings.showGreekGloss ||
     settings.showGreekGrammarCards;
+  const ORIGINAL_LANGUAGE_VERSIONS: readonly BundledBibleVersion[] = ["greek", "tr", "mt"];
   const availableSecondaryVersions = isFathersMode
     ? []
     : versionOptions
@@ -223,7 +224,13 @@ export function ReaderSettingsPanel({
         .filter(
           (option): option is BundledBibleVersion =>
             option !== version && isInstalledBundledBibleVersion(option)
-        );
+        )
+        .sort((a, b) => {
+          const aIsOriginal = ORIGINAL_LANGUAGE_VERSIONS.includes(a);
+          const bIsOriginal = ORIGINAL_LANGUAGE_VERSIONS.includes(b);
+          if (aIsOriginal === bIsOriginal) return 0;
+          return aIsOriginal ? -1 : 1;
+        });
   const selectedSecondaryVersions = isFathersMode
     ? []
     : getAlternateBundledVersions(
@@ -804,32 +811,6 @@ export function ReaderSettingsPanel({
                 {!isFathersMode ? (
                   <button
                     className={`settings-option-card${
-                      settings.showAnnotatedGreekUndertext ? " is-active" : ""
-                    }`}
-                    key="showAnnotatedGreekUndertext"
-                    onClick={() => toggleLayer("showAnnotatedGreekUndertext")}
-                    type="button"
-                  >
-                    <strong>Annotated Greek</strong>
-                    <span>Show saved Greek undertext beneath the English words.</span>
-                  </button>
-                ) : null}
-                {isFathersMode ? (
-                  <button
-                    className={`settings-option-card${
-                      settings.showAnnotatedGreekUndertext ? " is-active" : ""
-                    }`}
-                    key="showAnnotatedGreekUndertext"
-                    onClick={() => toggleLayer("showAnnotatedGreekUndertext")}
-                    type="button"
-                  >
-                    <strong>Annotated Greek</strong>
-                    <span>Show saved Greek undertext beneath the English reading line.</span>
-                  </button>
-                ) : null}
-                {!isFathersMode ? (
-                  <button
-                    className={`settings-option-card${
                       settings.showCustomVerseTranslation ? " is-active" : ""
                     }`}
                     key="showCustomVerseTranslation"
@@ -863,172 +844,6 @@ export function ReaderSettingsPanel({
                     </span>
                   </button>
                 ) : null}
-                <button
-                  className={`settings-option-card${
-                    settings.showGreekSurface ? " is-active" : ""
-                  }`}
-                  disabled={!supportsOriginalWordSurface || !greekStudyLayersEnabled}
-                  key="showGreekSurface"
-                  onClick={() => toggleLayer("showGreekSurface")}
-                  type="button"
-                >
-                  <strong>{originalLanguageLabel} words</strong>
-                  <span>
-                    {version === "kjv"
-                      ? "Show the exact original word forms when full interlinear text is available."
-                      : `Show the actual ${originalLanguageLabel.toLowerCase()} word forms.`}
-                  </span>
-                </button>
-                <button
-                  className={`settings-option-card${settings.showGreekLemma ? " is-active" : ""}`}
-                  disabled={!supportsGreekStudyLayers || !greekStudyLayersEnabled}
-                  key="showGreekLemma"
-                  onClick={() => toggleLayer("showGreekLemma")}
-                  type="button"
-                >
-                  <strong>{originalLanguageLabel} lemma</strong>
-                  <span>Show the dictionary form under each word.</span>
-                </button>
-                <button
-                  className={`settings-option-card${
-                    settings.showGreekTransliteration ? " is-active" : ""
-                  }`}
-                  disabled={!supportsGreekStudyLayers || !greekStudyLayersEnabled}
-                  key="showGreekTransliteration"
-                  onClick={() => toggleLayer("showGreekTransliteration")}
-                  type="button"
-                >
-                  <strong>Transliteration</strong>
-                  <span>
-                    Show the English-letter pronunciation line for the {originalLanguageLabel.toLowerCase()} word.
-                  </span>
-                </button>
-                <button
-                  className={`settings-option-card${settings.showGreekGloss ? " is-active" : ""}`}
-                  disabled={!supportsGreekStudyLayers || !greekStudyLayersEnabled}
-                  key="showGreekGloss"
-                  onClick={() => toggleLayer("showGreekGloss")}
-                  type="button"
-                >
-                  <strong>English gloss</strong>
-                  <span>
-                    Keep saved glosses visible. Turn this on when you want to edit the glosses inline.
-                  </span>
-                </button>
-                {originalLanguageLabel === "Greek" ? (
-                  <button
-                    className="settings-option-card"
-                    key="exportGreekGlosses"
-                    onClick={handleGreekGlossExport}
-                    type="button"
-                  >
-                    <strong>Export Greek glosses</strong>
-                    <span>
-                      Download your saved Greek word glosses and lemma defaults as a JSON file.
-                    </span>
-                  </button>
-                ) : null}
-                <button
-                  className={`settings-option-card${
-                    settings.showGreekGrammarCards ? " is-active" : ""
-                  }`}
-                  disabled={!supportsGreekStudyLayers || !greekStudyLayersEnabled}
-                  key="showGreekGrammarCards"
-                  onClick={() =>
-                    updateSettings({
-                      showGreekGrammarCards: !settings.showGreekGrammarCards,
-                      ...(!settings.showGreekGrammarCards && !settings.showGreekSurface
-                        ? { showGreekSurface: true }
-                        : {})
-                    })
-                  }
-                  type="button"
-                >
-                  <strong>{originalLanguageLabel} grammar cards</strong>
-                  <span>
-                    Show quick grammar cards under each {originalLanguageLabel.toLowerCase()} word, with a More section for full details.
-                  </span>
-                </button>
-                <button
-                  className={`settings-option-card${
-                    settings.showGreekGrammarPartOfSpeech ? " is-active" : ""
-                  }`}
-                  disabled={
-                    !supportsGreekStudyLayers ||
-                    !greekStudyLayersEnabled ||
-                    !settings.showGreekGrammarCards
-                  }
-                  key="showGreekGrammarPartOfSpeech"
-                  onClick={() => toggleLayer("showGreekGrammarPartOfSpeech")}
-                  type="button"
-                >
-                  <strong>Grammar type</strong>
-                  <span>Show the part of speech line under each {originalLanguageLabel.toLowerCase()} word.</span>
-                </button>
-                <button
-                  className={`settings-option-card${
-                    settings.showGreekGrammarLemma ? " is-active" : ""
-                  }`}
-                  disabled={
-                    !supportsGreekStudyLayers ||
-                    !greekStudyLayersEnabled ||
-                    !settings.showGreekGrammarCards
-                  }
-                  key="showGreekGrammarLemma"
-                  onClick={() => toggleLayer("showGreekGrammarLemma")}
-                  type="button"
-                >
-                  <strong>Grammar lemma</strong>
-                  <span>Show the lemma line in the inline grammar card.</span>
-                </button>
-                <button
-                  className={`settings-option-card${
-                    settings.showGreekGrammarGloss ? " is-active" : ""
-                  }`}
-                  disabled={
-                    !supportsGreekStudyLayers ||
-                    !greekStudyLayersEnabled ||
-                    !settings.showGreekGrammarCards
-                  }
-                  key="showGreekGrammarGloss"
-                  onClick={() => toggleLayer("showGreekGrammarGloss")}
-                  type="button"
-                >
-                  <strong>Grammar gloss</strong>
-                  <span>Show the gloss line in the inline grammar card.</span>
-                </button>
-                <button
-                  className={`settings-option-card${
-                    settings.showGreekGrammarForm ? " is-active" : ""
-                  }`}
-                  disabled={
-                    !supportsGreekStudyLayers ||
-                    !greekStudyLayersEnabled ||
-                    !settings.showGreekGrammarCards
-                  }
-                  key="showGreekGrammarForm"
-                  onClick={() => toggleLayer("showGreekGrammarForm")}
-                  type="button"
-                >
-                  <strong>Grammar form</strong>
-                  <span>Show the case or tense summary line in the inline grammar card.</span>
-                </button>
-                <button
-                  className={`settings-option-card${
-                    settings.showExpandedGreekGrammarCards ? " is-active" : ""
-                  }`}
-                  disabled={
-                    !supportsGreekStudyLayers ||
-                    !greekStudyLayersEnabled ||
-                    !settings.showGreekGrammarCards
-                  }
-                  key="showExpandedGreekGrammarCards"
-                  onClick={() => toggleLayer("showExpandedGreekGrammarCards")}
-                  type="button"
-                >
-                  <strong>Expanded grammar details</strong>
-                  <span>Open each grammar card with morphology, hints, and linked phrases already expanded.</span>
-                </button>
                 {isFathersMode ? (
                   <button
                     className={`settings-option-card${
@@ -1062,11 +877,6 @@ export function ReaderSettingsPanel({
                   </button>
                 ) : null}
             </div>
-            {greekGlossExportStatus ? (
-              <p className="reader-settings-status" role="status">
-                {greekGlossExportStatus}
-              </p>
-            ) : null}
             {!isFathersMode && availableSecondaryVersions.length > 0 ? (
               <div className="reader-settings-field-grid">
                 <div className="reader-settings-field">
@@ -1337,6 +1147,252 @@ export function ReaderSettingsPanel({
           ) : null}
         </section>
 
+        {supportsGreekStudyLayers ? (
+          <details className="reader-settings-advanced">
+            <summary className="reader-settings-advanced-summary">Greek</summary>
+
+            <section className="reader-settings-section">
+              <div className="reader-settings-section-header">
+                <h3>{originalLanguageLabel} study layers</h3>
+                <p>Font, size, and display controls for {originalLanguageLabel.toLowerCase()} reading.</p>
+              </div>
+              <div className="reader-settings-subsection">
+                <p className="reader-settings-subsection-label">Font and size</p>
+                <div className="reader-settings-field-grid">
+                  <NumericField
+                    disabled={!supportsGreekReading}
+                    inputId="reader-menu-greek-text-size"
+                    label={`${originalLanguageLabel} text size`}
+                    max={4}
+                    min={0.9}
+                    onChange={(value) => updateNumericSetting("greekTextSize", value)}
+                    step={0.01}
+                    suffix="rem"
+                    value={settings.greekTextSize}
+                  />
+                </div>
+                <div className="settings-option-grid settings-option-grid-compact">
+                  {GREEK_FONT_OPTIONS.map((option) => (
+                    <button
+                      className={`settings-option-card${
+                        settings.greekFont === option.id ? " is-active" : ""
+                      }`}
+                      key={option.id}
+                      onClick={() => updateSettings({ greekFont: option.id })}
+                      type="button"
+                    >
+                      <strong>{option.name}</strong>
+                      <span>{option.description}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="reader-settings-subsection">
+                <p className="reader-settings-subsection-label">Display layers</p>
+                <div className="settings-option-grid settings-option-grid-compact">
+                  {!isFathersMode ? (
+                    <button
+                      className={`settings-option-card${
+                        settings.showAnnotatedGreekUndertext ? " is-active" : ""
+                      }`}
+                      key="showAnnotatedGreekUndertext"
+                      onClick={() => toggleLayer("showAnnotatedGreekUndertext")}
+                      type="button"
+                    >
+                      <strong>Annotated Greek</strong>
+                      <span>Show saved Greek undertext beneath the English words.</span>
+                    </button>
+                  ) : null}
+                  {isFathersMode ? (
+                    <button
+                      className={`settings-option-card${
+                        settings.showAnnotatedGreekUndertext ? " is-active" : ""
+                      }`}
+                      key="showAnnotatedGreekUndertext"
+                      onClick={() => toggleLayer("showAnnotatedGreekUndertext")}
+                      type="button"
+                    >
+                      <strong>Annotated Greek</strong>
+                      <span>Show saved Greek undertext beneath the English reading line.</span>
+                    </button>
+                  ) : null}
+                  <button
+                    className={`settings-option-card${
+                      settings.showGreekSurface ? " is-active" : ""
+                    }`}
+                    disabled={!supportsOriginalWordSurface || !greekStudyLayersEnabled}
+                    key="showGreekSurface"
+                    onClick={() => toggleLayer("showGreekSurface")}
+                    type="button"
+                  >
+                    <strong>{originalLanguageLabel} words</strong>
+                    <span>
+                      {version === "kjv"
+                        ? "Show the exact original word forms when full interlinear text is available."
+                        : `Show the actual ${originalLanguageLabel.toLowerCase()} word forms.`}
+                    </span>
+                  </button>
+                  <button
+                    className={`settings-option-card${settings.showGreekLemma ? " is-active" : ""}`}
+                    disabled={!supportsGreekStudyLayers || !greekStudyLayersEnabled}
+                    key="showGreekLemma"
+                    onClick={() => toggleLayer("showGreekLemma")}
+                    type="button"
+                  >
+                    <strong>{originalLanguageLabel} lemma</strong>
+                    <span>Show the dictionary form under each word.</span>
+                  </button>
+                  <button
+                    className={`settings-option-card${
+                      settings.showGreekTransliteration ? " is-active" : ""
+                    }`}
+                    disabled={!supportsGreekStudyLayers || !greekStudyLayersEnabled}
+                    key="showGreekTransliteration"
+                    onClick={() => toggleLayer("showGreekTransliteration")}
+                    type="button"
+                  >
+                    <strong>Transliteration</strong>
+                    <span>
+                      Show the English-letter pronunciation line for the {originalLanguageLabel.toLowerCase()} word.
+                    </span>
+                  </button>
+                  <button
+                    className={`settings-option-card${settings.showGreekGloss ? " is-active" : ""}`}
+                    disabled={!supportsGreekStudyLayers || !greekStudyLayersEnabled}
+                    key="showGreekGloss"
+                    onClick={() => toggleLayer("showGreekGloss")}
+                    type="button"
+                  >
+                    <strong>English gloss</strong>
+                    <span>
+                      Keep saved glosses visible. Turn this on when you want to edit the glosses inline.
+                    </span>
+                  </button>
+                  <button
+                    className={`settings-option-card${
+                      settings.showGreekGrammarCards ? " is-active" : ""
+                    }`}
+                    disabled={!supportsGreekStudyLayers || !greekStudyLayersEnabled}
+                    key="showGreekGrammarCards"
+                    onClick={() =>
+                      updateSettings({
+                        showGreekGrammarCards: !settings.showGreekGrammarCards,
+                        ...(!settings.showGreekGrammarCards && !settings.showGreekSurface
+                          ? { showGreekSurface: true }
+                          : {})
+                      })
+                    }
+                    type="button"
+                  >
+                    <strong>{originalLanguageLabel} grammar cards</strong>
+                    <span>
+                      Show quick grammar cards under each {originalLanguageLabel.toLowerCase()} word, with a More section for full details.
+                    </span>
+                  </button>
+                  <div className="reader-settings-greek-subgroup">
+                    <button
+                      className={`settings-option-card${
+                        settings.showGreekGrammarPartOfSpeech ? " is-active" : ""
+                      }`}
+                      disabled={
+                        !supportsGreekStudyLayers ||
+                        !greekStudyLayersEnabled ||
+                        !settings.showGreekGrammarCards
+                      }
+                      key="showGreekGrammarPartOfSpeech"
+                      onClick={() => toggleLayer("showGreekGrammarPartOfSpeech")}
+                      type="button"
+                    >
+                      <strong>Grammar type</strong>
+                      <span>Show the part of speech line under each {originalLanguageLabel.toLowerCase()} word.</span>
+                    </button>
+                    <button
+                      className={`settings-option-card${
+                        settings.showGreekGrammarLemma ? " is-active" : ""
+                      }`}
+                      disabled={
+                        !supportsGreekStudyLayers ||
+                        !greekStudyLayersEnabled ||
+                        !settings.showGreekGrammarCards
+                      }
+                      key="showGreekGrammarLemma"
+                      onClick={() => toggleLayer("showGreekGrammarLemma")}
+                      type="button"
+                    >
+                      <strong>Grammar lemma</strong>
+                      <span>Show the lemma line in the inline grammar card.</span>
+                    </button>
+                    <button
+                      className={`settings-option-card${
+                        settings.showGreekGrammarGloss ? " is-active" : ""
+                      }`}
+                      disabled={
+                        !supportsGreekStudyLayers ||
+                        !greekStudyLayersEnabled ||
+                        !settings.showGreekGrammarCards
+                      }
+                      key="showGreekGrammarGloss"
+                      onClick={() => toggleLayer("showGreekGrammarGloss")}
+                      type="button"
+                    >
+                      <strong>Grammar gloss</strong>
+                      <span>Show the gloss line in the inline grammar card.</span>
+                    </button>
+                    <button
+                      className={`settings-option-card${
+                        settings.showGreekGrammarForm ? " is-active" : ""
+                      }`}
+                      disabled={
+                        !supportsGreekStudyLayers ||
+                        !greekStudyLayersEnabled ||
+                        !settings.showGreekGrammarCards
+                      }
+                      key="showGreekGrammarForm"
+                      onClick={() => toggleLayer("showGreekGrammarForm")}
+                      type="button"
+                    >
+                      <strong>Grammar form</strong>
+                      <span>Show the case or tense summary line in the inline grammar card.</span>
+                    </button>
+                    <button
+                      className={`settings-option-card${
+                        settings.showExpandedGreekGrammarCards ? " is-active" : ""
+                      }`}
+                      disabled={
+                        !supportsGreekStudyLayers ||
+                        !greekStudyLayersEnabled ||
+                        !settings.showGreekGrammarCards
+                      }
+                      key="showExpandedGreekGrammarCards"
+                      onClick={() => toggleLayer("showExpandedGreekGrammarCards")}
+                      type="button"
+                    >
+                      <strong>Expanded grammar details</strong>
+                      <span>Open each grammar card with morphology, hints, and linked phrases already expanded.</span>
+                    </button>
+                  </div>
+                </div>
+                {originalLanguageLabel === "Greek" ? (
+                  <div className="reader-settings-greek-actions">
+                    <button
+                      className="reader-inline-button reader-settings-link"
+                      onClick={handleGreekGlossExport}
+                      type="button"
+                    >
+                      Export Greek glosses
+                    </button>
+                    {greekGlossExportStatus ? (
+                      <p className="reader-settings-status" role="status">
+                        {greekGlossExportStatus}
+                      </p>
+                    ) : null}
+                  </div>
+                ) : null}
+              </div>
+            </section>
+          </details>
+        ) : null}
+
         <details className="reader-settings-advanced">
           <summary className="reader-settings-advanced-summary">Customize</summary>
 
@@ -1377,17 +1433,6 @@ export function ReaderSettingsPanel({
                 step={0.01}
                 suffix="rem"
                 value={settings.thayerTextSize}
-              />
-              <NumericField
-                disabled={!supportsGreekReading}
-                inputId="reader-menu-greek-text-size"
-                label="Greek text size"
-                max={4}
-                min={0.9}
-                onChange={(value) => updateNumericSetting("greekTextSize", value)}
-                step={0.01}
-                suffix="rem"
-                value={settings.greekTextSize}
               />
               <NumericField
                 inputId="reader-menu-hebrew-text-size"
@@ -1431,24 +1476,6 @@ export function ReaderSettingsPanel({
                   }`}
                   key={option.id}
                   onClick={() => updateSettings({ bodyFont: option.id })}
-                  type="button"
-                >
-                  <strong>{option.name}</strong>
-                  <span>{option.description}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-          <div className="reader-settings-subsection">
-            <p className="reader-settings-subsection-label">Greek font</p>
-            <div className="settings-option-grid settings-option-grid-compact">
-              {GREEK_FONT_OPTIONS.map((option) => (
-                <button
-                  className={`settings-option-card${
-                    settings.greekFont === option.id ? " is-active" : ""
-                  }`}
-                  key={option.id}
-                  onClick={() => updateSettings({ greekFont: option.id })}
                   type="button"
                 >
                   <strong>{option.name}</strong>

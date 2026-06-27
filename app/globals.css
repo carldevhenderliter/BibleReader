@@ -5806,6 +5806,22 @@ button.fathers-annotation-anchor:focus-visible {
   font-size: 0.82rem;
 }
 
+.reader-settings-greek-subgroup {
+  display: grid;
+  gap: 0.5rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--reader-accent);
+  opacity: 0.85;
+}
+
+.reader-settings-greek-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
 .settings-option-grid {
   display: grid;
   gap: 0.5rem;
