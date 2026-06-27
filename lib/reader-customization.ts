@@ -36,20 +36,20 @@ export const THEME_PRESETS = [
   {
     id: "neon",
     name: "Neon",
-    description: "Electric cyan and violet on a near-black surface.",
-    preview: { surface: "#06090e", accent: "#00e6ff", text: "#eaf1fb" }
+    description: "Electric cyan and violet on a dark navy-blue surface.",
+    preview: { surface: "#080e1c", accent: "#00e6ff", text: "#eaf1fb" }
   },
   {
     id: "midnight",
     name: "Midnight",
     description: "Deep navy with cool blue-lavender accents for a restrained night reader.",
-    preview: { surface: "#04060f", accent: "#96b4f0", text: "#edf3ff" }
+    preview: { surface: "#060a1a", accent: "#96b4f0", text: "#edf3ff" }
   },
   {
     id: "ember",
     name: "Ember",
-    description: "Fiery orange glow on a warm near-black surface.",
-    preview: { surface: "#160d0e", accent: "#ffa55a", text: "#fff2eb" }
+    description: "Fiery orange glow on a dark red-brown surface.",
+    preview: { surface: "#1e0e0e", accent: "#ffa55a", text: "#fff2eb" }
   },
   {
     id: "obsidian",
@@ -60,8 +60,8 @@ export const THEME_PRESETS = [
   {
     id: "aurora",
     name: "Aurora",
-    description: "Bright teal-green energy on a deep teal-black background.",
-    preview: { surface: "#04100f", accent: "#50f0c8", text: "#eafffa" }
+    description: "Bright teal-green energy on a deep teal background.",
+    preview: { surface: "#061612", accent: "#50f0c8", text: "#eafffa" }
   },
   {
     id: "parchment",
@@ -73,13 +73,13 @@ export const THEME_PRESETS = [
     id: "crimson",
     name: "Crimson",
     description: "Deep burgundy surfaces with a rose-red accent and warm cream text.",
-    preview: { surface: "#14080c", accent: "#e66470", text: "#ffeeeb" }
+    preview: { surface: "#1c080e", accent: "#e66470", text: "#ffeeeb" }
   },
   {
     id: "forest",
     name: "Forest",
     description: "Deep forest green with a bright lime accent and soft amber highlights.",
-    preview: { surface: "#08120a", accent: "#78d264", text: "#e8f8e8" }
+    preview: { surface: "#08160a", accent: "#78d264", text: "#e8f8e8" }
   }
 ] satisfies Array<{ id: ThemePreset; name: string; description: string; preview: { surface: string; accent: string; text: string } }>;
 
@@ -683,6 +683,7 @@ export function getReaderCustomizationVariables(
     "--reader-accent": toHex(presetVariables.accentRgb),
     "--reader-accent-rgb": toRgbChannels(presetVariables.accentRgb),
     "--reader-secondary-rgb": toRgbChannels(presetVariables.secondaryRgb),
+    "--reader-surface-rgb": toRgbChannels(presetVariables.surfaceRgb),
     "--reader-shell-intensity": `${shellAlpha}`,
     "--reader-verse-text": toRgb(presetVariables.verseTextRgb, verseTextAlpha),
     "--reader-meta-text": toRgb(presetVariables.metaTextRgb, metaTextAlpha),
@@ -738,8 +739,8 @@ function getThemePresetVariables(themePreset: ThemePreset): ThemePresetVariables
       };
     case "midnight":
       return {
-        surfaceRgb: [4, 6, 15],
-        surfaceStrongRgb: [2, 3, 10],
+        surfaceRgb: [6, 10, 26],
+        surfaceStrongRgb: [3, 6, 18],
         borderRgb: [150, 180, 240],
         glowRgb: [60, 100, 180],
         accentRgb: [150, 180, 240],
@@ -749,8 +750,8 @@ function getThemePresetVariables(themePreset: ThemePreset): ThemePresetVariables
       };
     case "ember":
       return {
-        surfaceRgb: [22, 13, 14],
-        surfaceStrongRgb: [14, 7, 8],
+        surfaceRgb: [30, 14, 14],
+        surfaceStrongRgb: [20, 8, 8],
         borderRgb: [255, 165, 90],
         glowRgb: [255, 80, 30],
         accentRgb: [255, 165, 90],
@@ -771,8 +772,8 @@ function getThemePresetVariables(themePreset: ThemePreset): ThemePresetVariables
       };
     case "aurora":
       return {
-        surfaceRgb: [4, 16, 15],
-        surfaceStrongRgb: [2, 9, 9],
+        surfaceRgb: [6, 22, 18],
+        surfaceStrongRgb: [3, 14, 11],
         borderRgb: [80, 240, 200],
         glowRgb: [40, 200, 160],
         accentRgb: [80, 240, 200],
@@ -793,8 +794,8 @@ function getThemePresetVariables(themePreset: ThemePreset): ThemePresetVariables
       };
     case "crimson":
       return {
-        surfaceRgb: [20, 8, 12],
-        surfaceStrongRgb: [14, 4, 8],
+        surfaceRgb: [28, 8, 14],
+        surfaceStrongRgb: [18, 4, 9],
         borderRgb: [230, 100, 112],
         glowRgb: [190, 55, 70],
         accentRgb: [230, 100, 112],
@@ -804,8 +805,8 @@ function getThemePresetVariables(themePreset: ThemePreset): ThemePresetVariables
       };
     case "forest":
       return {
-        surfaceRgb: [8, 18, 10],
-        surfaceStrongRgb: [4, 11, 6],
+        surfaceRgb: [8, 22, 10],
+        surfaceStrongRgb: [4, 14, 6],
         borderRgb: [120, 210, 100],
         glowRgb: [60, 160, 80],
         accentRgb: [120, 210, 100],
@@ -816,8 +817,8 @@ function getThemePresetVariables(themePreset: ThemePreset): ThemePresetVariables
     case "neon":
     default:
       return {
-        surfaceRgb: [6, 9, 14],
-        surfaceStrongRgb: [3, 5, 10],
+        surfaceRgb: [8, 14, 28],
+        surfaceStrongRgb: [4, 8, 20],
         borderRgb: [0, 210, 240],
         glowRgb: [0, 180, 220],
         accentRgb: [0, 230, 255],

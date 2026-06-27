@@ -59,6 +59,11 @@ export function ReaderCustomizationProvider({ children }: PropsWithChildren) {
       "--reader-shell-max-width",
       `${getReaderShellMaxWidthRem(settings)}rem`
     );
+    const vars = getReaderCustomizationVariables(settings);
+    const el = document.documentElement;
+    Object.entries(vars).forEach(([key, value]) => {
+      el.style.setProperty(key, value);
+    });
   }, [settings]);
 
   useEffect(() => {

@@ -64,9 +64,12 @@ html {
   overflow-x: clip;
   -webkit-text-size-adjust: 100%;
   background:
-    radial-gradient(circle at 15% 20%, rgba(85, 214, 255, 0.16), transparent 22rem),
-    radial-gradient(circle at 85% 12%, rgba(123, 97, 255, 0.18), transparent 26rem),
-    linear-gradient(180deg, #0b1527 0%, #050b16 45%, #02050c 100%);
+    radial-gradient(circle at 15% 20%, rgba(var(--reader-accent-rgb), 0.14), transparent 22rem),
+    radial-gradient(circle at 85% 12%, rgba(var(--reader-secondary-rgb), 0.16), transparent 26rem),
+    linear-gradient(180deg,
+      rgba(var(--reader-surface-rgb), 1) 0%,
+      rgba(var(--reader-surface-rgb), 1) 50%,
+      #000 100%);
 }
 
 html.reader-light-theme {
