@@ -30,34 +30,58 @@ export const THEME_PRESETS = [
   {
     id: "manuscript",
     name: "Manuscript",
-    description: "Dark parchment surfaces with warm gold accents matching the prototype reader."
+    description: "Dark parchment with deep warm gold — the original reader aesthetic.",
+    preview: { surface: "#08090a", accent: "#e0b244", text: "#f7f0e2" }
   },
   {
     id: "neon",
     name: "Neon",
-    description: "Electric cyan and violet glow with the current dark-tech feel."
+    description: "Electric cyan and violet on a near-black surface.",
+    preview: { surface: "#06090e", accent: "#00e6ff", text: "#eaf1fb" }
   },
   {
     id: "midnight",
     name: "Midnight",
-    description: "Cooler, lower-glow tones for a more restrained night reader."
+    description: "Deep navy with cool blue-lavender accents for a restrained night reader.",
+    preview: { surface: "#04060f", accent: "#96b4f0", text: "#edf3ff" }
   },
   {
     id: "ember",
     name: "Ember",
-    description: "Warm reading tones with softer highlights inside the dark shell."
+    description: "Fiery orange glow on a warm near-black surface.",
+    preview: { surface: "#160d0e", accent: "#ffa55a", text: "#fff2eb" }
   },
   {
     id: "obsidian",
     name: "Obsidian",
-    description: "Minimal glow, deeper blacks, and a more restrained premium reader."
+    description: "True blacks with a pale silver-lavender accent and minimal glow.",
+    preview: { surface: "#050508", accent: "#c8cde6", text: "#f1f5ff" }
   },
   {
     id: "aurora",
     name: "Aurora",
-    description: "Cyan-green energy with brighter atmospheric gradients."
+    description: "Bright teal-green energy on a deep teal-black background.",
+    preview: { surface: "#04100f", accent: "#50f0c8", text: "#eafffa" }
+  },
+  {
+    id: "parchment",
+    name: "Parchment",
+    description: "Warm cream surface with dark sepia text — the only light theme.",
+    preview: { surface: "#f2ead8", accent: "#8c5f23", text: "#281c12" }
+  },
+  {
+    id: "crimson",
+    name: "Crimson",
+    description: "Deep burgundy surfaces with a rose-red accent and warm cream text.",
+    preview: { surface: "#14080c", accent: "#e66470", text: "#ffeeeb" }
+  },
+  {
+    id: "forest",
+    name: "Forest",
+    description: "Deep forest green with a bright lime accent and soft amber highlights.",
+    preview: { surface: "#08120a", accent: "#78d264", text: "#e8f8e8" }
   }
-] satisfies Array<{ id: ThemePreset; name: string; description: string }>;
+] satisfies Array<{ id: ThemePreset; name: string; description: string; preview: { surface: string; accent: string; text: string } }>;
 
 export const BODY_FONT_OPTIONS = [
   {
@@ -232,7 +256,10 @@ function isThemePreset(value: unknown): value is ThemePreset {
     value === "midnight" ||
     value === "ember" ||
     value === "obsidian" ||
-    value === "aurora"
+    value === "aurora" ||
+    value === "parchment" ||
+    value === "crimson" ||
+    value === "forest"
   );
 }
 
@@ -700,70 +727,103 @@ function getThemePresetVariables(themePreset: ThemePreset): ThemePresetVariables
   switch (themePreset) {
     case "manuscript":
       return {
-        surfaceRgb: [11, 16, 16],
-        surfaceStrongRgb: [8, 12, 13],
-        borderRgb: [215, 168, 79],
-        glowRgb: [215, 168, 79],
-        accentRgb: [215, 168, 79],
-        secondaryRgb: [139, 167, 255],
+        surfaceRgb: [8, 9, 10],
+        surfaceStrongRgb: [5, 6, 7],
+        borderRgb: [224, 178, 68],
+        glowRgb: [200, 150, 40],
+        accentRgb: [224, 178, 68],
+        secondaryRgb: [155, 180, 255],
         verseTextRgb: [247, 240, 226],
-        metaTextRgb: [218, 204, 177]
+        metaTextRgb: [210, 196, 168]
       };
     case "midnight":
       return {
-        surfaceRgb: [8, 16, 29],
-        surfaceStrongRgb: [5, 10, 20],
-        borderRgb: [139, 173, 219],
-        glowRgb: [76, 119, 194],
-        accentRgb: [142, 197, 255],
-        secondaryRgb: [109, 165, 233],
+        surfaceRgb: [4, 6, 15],
+        surfaceStrongRgb: [2, 3, 10],
+        borderRgb: [150, 180, 240],
+        glowRgb: [60, 100, 180],
+        accentRgb: [150, 180, 240],
+        secondaryRgb: [100, 140, 210],
         verseTextRgb: [237, 244, 255],
-        metaTextRgb: [145, 169, 200]
+        metaTextRgb: [130, 158, 200]
       };
     case "ember":
       return {
-        surfaceRgb: [24, 16, 18],
-        surfaceStrongRgb: [17, 10, 12],
-        borderRgb: [255, 172, 125],
-        glowRgb: [255, 111, 72],
-        accentRgb: [255, 176, 125],
-        secondaryRgb: [255, 162, 87],
+        surfaceRgb: [22, 13, 14],
+        surfaceStrongRgb: [14, 7, 8],
+        borderRgb: [255, 165, 90],
+        glowRgb: [255, 80, 30],
+        accentRgb: [255, 165, 90],
+        secondaryRgb: [255, 130, 60],
         verseTextRgb: [255, 242, 235],
-        metaTextRgb: [211, 166, 141]
+        metaTextRgb: [205, 158, 130]
       };
     case "obsidian":
       return {
-        surfaceRgb: [7, 9, 14],
-        surfaceStrongRgb: [2, 4, 8],
-        borderRgb: [121, 135, 164],
-        glowRgb: [94, 111, 154],
-        accentRgb: [195, 208, 255],
-        secondaryRgb: [123, 136, 178],
+        surfaceRgb: [5, 5, 8],
+        surfaceStrongRgb: [2, 2, 4],
+        borderRgb: [200, 205, 230],
+        glowRgb: [80, 85, 110],
+        accentRgb: [200, 205, 230],
+        secondaryRgb: [140, 148, 185],
         verseTextRgb: [241, 245, 255],
-        metaTextRgb: [150, 160, 188]
+        metaTextRgb: [155, 163, 195]
       };
     case "aurora":
       return {
-        surfaceRgb: [7, 20, 22],
-        surfaceStrongRgb: [4, 10, 15],
-        borderRgb: [95, 235, 218],
-        glowRgb: [74, 204, 230],
-        accentRgb: [116, 255, 214],
-        secondaryRgb: [74, 204, 230],
+        surfaceRgb: [4, 16, 15],
+        surfaceStrongRgb: [2, 9, 9],
+        borderRgb: [80, 240, 200],
+        glowRgb: [40, 200, 160],
+        accentRgb: [80, 240, 200],
+        secondaryRgb: [60, 200, 220],
         verseTextRgb: [234, 255, 250],
-        metaTextRgb: [140, 205, 196]
+        metaTextRgb: [130, 200, 188]
+      };
+    case "parchment":
+      return {
+        surfaceRgb: [242, 234, 218],
+        surfaceStrongRgb: [228, 218, 200],
+        borderRgb: [160, 130, 90],
+        glowRgb: [180, 130, 55],
+        accentRgb: [140, 95, 35],
+        secondaryRgb: [100, 70, 40],
+        verseTextRgb: [40, 28, 18],
+        metaTextRgb: [110, 85, 60]
+      };
+    case "crimson":
+      return {
+        surfaceRgb: [20, 8, 12],
+        surfaceStrongRgb: [14, 4, 8],
+        borderRgb: [230, 100, 112],
+        glowRgb: [190, 55, 70],
+        accentRgb: [230, 100, 112],
+        secondaryRgb: [180, 75, 90],
+        verseTextRgb: [255, 238, 235],
+        metaTextRgb: [205, 170, 168]
+      };
+    case "forest":
+      return {
+        surfaceRgb: [8, 18, 10],
+        surfaceStrongRgb: [4, 11, 6],
+        borderRgb: [120, 210, 100],
+        glowRgb: [60, 160, 80],
+        accentRgb: [120, 210, 100],
+        secondaryRgb: [200, 185, 80],
+        verseTextRgb: [232, 248, 232],
+        metaTextRgb: [140, 192, 140]
       };
     case "neon":
     default:
       return {
-        surfaceRgb: [10, 18, 31],
-        surfaceStrongRgb: [4, 9, 18],
-        borderRgb: [120, 157, 214],
-        glowRgb: [85, 214, 255],
-        accentRgb: [85, 214, 255],
-        secondaryRgb: [123, 97, 255],
-        verseTextRgb: [235, 241, 251],
-        metaTextRgb: [138, 160, 191]
+        surfaceRgb: [6, 9, 14],
+        surfaceStrongRgb: [3, 5, 10],
+        borderRgb: [0, 210, 240],
+        glowRgb: [0, 180, 220],
+        accentRgb: [0, 230, 255],
+        secondaryRgb: [130, 90, 255],
+        verseTextRgb: [234, 241, 251],
+        metaTextRgb: [130, 155, 190]
       };
   }
 }

@@ -189,7 +189,7 @@ describe("reader customization", () => {
     expect(variables["--reader-shell-max-width"]).toBe(`${SUPERWIDE_READER_SHELL_MAX_WIDTH_REM}rem`);
     expect(variables["--reader-verse-spacing"]).toBe("1.4rem");
     expect(variables["--reader-text-align"]).toBe("justify");
-    expect(variables["--reader-accent"]).toBe("#74ffd6");
+    expect(variables["--reader-accent"]).toBe("#50f0c8");
     expect(variables["--reader-body-font"]).toContain("Avenir Next");
     expect(variables["--reader-greek-font"]).toContain("Times New Roman");
     expect(variables["--reader-hebrew-font"]).toContain("Noto Serif Hebrew");

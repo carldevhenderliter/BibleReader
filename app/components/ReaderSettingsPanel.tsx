@@ -604,23 +604,39 @@ export function ReaderSettingsPanel({
                   </select>
                 </label>
               ) : null}
-              <label className="reader-settings-field" htmlFor="reader-menu-theme">
+              <div className="reader-settings-field">
                 <span>Theme</span>
-                <select
-                  aria-label="Theme"
-                  id="reader-menu-theme"
-                  onChange={(event) =>
-                    updateSettings({ themePreset: event.target.value as ThemePreset })
-                  }
-                  value={settings.themePreset}
-                >
+                <div className="settings-option-grid settings-option-grid-compact">
                   {THEME_PRESETS.map((preset) => (
-                    <option key={preset.id} value={preset.id}>
-                      {preset.name}
-                    </option>
+                    <button
+                      aria-pressed={settings.themePreset === preset.id}
+                      className={`settings-option-card theme-swatch-card${
+                        settings.themePreset === preset.id ? " is-active" : ""
+                      }`}
+                      key={preset.id}
+                      onClick={() => updateSettings({ themePreset: preset.id })}
+                      type="button"
+                    >
+                      <span
+                        className="theme-swatch-preview"
+                        style={{ background: preset.preview.surface }}
+                      >
+                        <span
+                          className="theme-swatch-dot"
+                          style={{ background: preset.preview.accent }}
+                        />
+                        <span
+                          className="theme-swatch-text"
+                          style={{ color: preset.preview.text }}
+                        >
+                          Aa
+                        </span>
+                      </span>
+                      <strong>{preset.name}</strong>
+                    </button>
                   ))}
-                </select>
-              </label>
+                </div>
+              </div>
             </div>
           </div>
           <div className="reader-settings-subsection">

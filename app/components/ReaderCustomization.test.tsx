@@ -78,11 +78,7 @@ describe("Reader customization", () => {
     );
 
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
-    fireEvent.change(screen.getByLabelText("Theme"), {
-      target: {
-        value: "midnight"
-      }
-    });
+    fireEvent.click(screen.getByRole("button", { name: /Midnight/i }));
     fireEvent.click(screen.getByRole("button", { name: "Increase text size" }));
 
     const stored = window.localStorage.getItem(READER_CUSTOMIZATION_STORAGE_KEY) ?? "";
@@ -368,7 +364,7 @@ describe("Reader customization", () => {
 
     fireEvent.click(screen.getByRole("button", { name: "Menu" }));
 
-    expect(screen.getByLabelText("Theme")).toHaveValue("ember");
+    expect(screen.getByRole("button", { name: /Ember/i })).toHaveAttribute("aria-pressed", "true");
 
     expect(screen.getAllByRole("button", { name: /Mono/i })[0]).toHaveClass("is-active");
     expect(screen.getAllByRole("button", { name: /Modern Sans/i })[0]).toHaveClass("is-active");

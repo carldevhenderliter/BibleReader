@@ -69,6 +69,25 @@ html {
     linear-gradient(180deg, #0b1527 0%, #050b16 45%, #02050c 100%);
 }
 
+html.reader-light-theme {
+  background: linear-gradient(160deg, #f0e6d0 0%, #e4d6bc 50%, #d6c8a8 100%);
+}
+
+html.reader-light-theme body::before {
+  background-image:
+    linear-gradient(rgba(80, 60, 30, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(80, 60, 30, 0.04) 1px, transparent 1px);
+}
+
+html.reader-light-theme .reader-reading-card {
+  background: var(--reader-surface-strong);
+  box-shadow: 0 4px 24px rgba(80, 55, 20, 0.14), inset 0 0 0 1px rgba(var(--reader-accent-rgb), 0.18);
+}
+
+html.reader-light-theme .reader-reading-card::before {
+  background: none;
+}
+
 body {
   margin: 0;
   width: 100%;
@@ -5804,6 +5823,35 @@ button.fathers-annotation-anchor:focus-visible {
   margin: 0;
   color: var(--reader-meta-text);
   font-size: 0.82rem;
+}
+
+.theme-swatch-card {
+  padding: 0.5rem 0.6rem !important;
+  gap: 0.35rem !important;
+}
+
+.theme-swatch-preview {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: 100%;
+  padding: 0.4rem 0.55rem;
+  border-radius: 0.45rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.theme-swatch-dot {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.theme-swatch-text {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1;
 }
 
 .reader-settings-greek-subgroup {

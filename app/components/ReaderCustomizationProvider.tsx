@@ -61,6 +61,14 @@ export function ReaderCustomizationProvider({ children }: PropsWithChildren) {
     );
   }, [settings]);
 
+  useEffect(() => {
+    if (settings.themePreset === "parchment") {
+      document.documentElement.classList.add("reader-light-theme");
+    } else {
+      document.documentElement.classList.remove("reader-light-theme");
+    }
+  }, [settings.themePreset]);
+
   const value = useMemo<ReaderCustomizationContextValue>(
     () => ({
       isPanelOpen,
