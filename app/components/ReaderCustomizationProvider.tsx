@@ -59,10 +59,6 @@ export function ReaderCustomizationProvider({ children }: PropsWithChildren) {
       "--reader-shell-max-width",
       `${getReaderShellMaxWidthRem(settings)}rem`
     );
-
-    return () => {
-      document.documentElement.style.removeProperty("--reader-shell-max-width");
-    };
   }, [settings]);
 
   const value = useMemo<ReaderCustomizationContextValue>(

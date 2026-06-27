@@ -306,7 +306,7 @@ body:has(.reader-prototype-shell) .app-layout-reader-pane {
 }
 
 body:has(.reader-shell):not(:has(.reader-prototype-shell)) .site-main {
-  max-width: var(--reader-shell-max-width, 78rem);
+  max-width: var(--reader-shell-max-width, 103.25rem);
 }
 
 .page-stack,

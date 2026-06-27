@@ -1122,21 +1122,21 @@ export function ReaderStrongsPanel() {
   }
 
   function handleToggleDictionarySection(entryKey: string, section: DictionarySection) {
-    const nextIsOpen = !(dictionaryDisclosures[entryKey]?.[section] ?? false);
+    const currentIsOpen = dictionaryDisclosures[entryKey]?.[section] ?? false;
 
     setDictionaryDisclosures((current) => {
-      const nextEntryState = {
-        ...(current[entryKey] ?? {}),
-        [section]: nextIsOpen
-      };
+      const nextIsOpen = !(current[entryKey]?.[section] ?? false);
 
       return {
         ...current,
-        [entryKey]: nextEntryState
+        [entryKey]: {
+          ...(current[entryKey] ?? {}),
+          [section]: nextIsOpen
+        }
       };
     });
 
-    if (section === "lsj" && nextIsOpen && !liddellScottLookup[entryKey]) {
+    if (section === "lsj" && !currentIsOpen && !liddellScottLookup[entryKey]) {
       void handleFindLiddellScott(entryKey);
     }
   }
