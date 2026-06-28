@@ -93,6 +93,8 @@ describe("reader customization", () => {
       showCustomVerseTranslation: false,
       showFathersSentenceLines: false,
         disableLazyLoading: false,
+        showGreekTokenBackground: true,
+        greekTokenColorPreset: "accent",
         bodyTextSize: 3.25,
         strongsVerseTextSize: 1.02,
         thayerTextSize: 0.98,

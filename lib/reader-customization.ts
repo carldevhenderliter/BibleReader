@@ -1,6 +1,7 @@
 import type {
   BodyFontOption,
   GreekFontOption,
+  GreekTokenColorPreset,
   HebrewFontOption,
   ReaderPreset,
   ReaderCustomizationSettings,
@@ -82,6 +83,21 @@ export const THEME_PRESETS = [
     preview: { surface: "#08160a", accent: "#78d264", text: "#e8f8e8" }
   }
 ] satisfies Array<{ id: ThemePreset; name: string; description: string; preview: { surface: string; accent: string; text: string } }>;
+
+export const GREEK_TOKEN_COLOR_PRESETS: Array<{
+  id: GreekTokenColorPreset;
+  name: string;
+  hex: string;
+  rgb: [number, number, number];
+}> = [
+  { id: "accent", name: "Theme", hex: "", rgb: [0, 0, 0] },
+  { id: "gold", name: "Gold", hex: "#e0b244", rgb: [224, 178, 68] },
+  { id: "cyan", name: "Cyan", hex: "#00d6ff", rgb: [0, 214, 255] },
+  { id: "violet", name: "Violet", hex: "#a064ff", rgb: [160, 100, 255] },
+  { id: "rose", name: "Rose", hex: "#ff5a82", rgb: [255, 90, 130] },
+  { id: "emerald", name: "Emerald", hex: "#50d28c", rgb: [80, 210, 140] },
+  { id: "amber", name: "Amber", hex: "#ffa532", rgb: [255, 165, 50] }
+];
 
 export const BODY_FONT_OPTIONS = [
   {
@@ -197,6 +213,8 @@ export const DEFAULT_READER_CUSTOMIZATION: ReaderCustomizationSettings = {
   showCustomVerseTranslation: true,
   showFathersSentenceLines: false,
   disableLazyLoading: false,
+  showGreekTokenBackground: true,
+  greekTokenColorPreset: "accent",
   bodyTextSize: 1.08,
   strongsVerseTextSize: 1.02,
   thayerTextSize: 0.98,
@@ -287,6 +305,18 @@ function isUiFontOption(value: unknown): value is UiFontOption {
 
 function isTextAlignOption(value: unknown): value is TextAlignOption {
   return value === "left" || value === "justify";
+}
+
+function isGreekTokenColorPreset(value: unknown): value is GreekTokenColorPreset {
+  return (
+    value === "accent" ||
+    value === "gold" ||
+    value === "cyan" ||
+    value === "violet" ||
+    value === "rose" ||
+    value === "emerald" ||
+    value === "amber"
+  );
 }
 
 function isReaderPreset(value: unknown): value is ReaderPreset {
@@ -554,6 +584,13 @@ export function normalizeReaderCustomization(value: unknown): ReaderCustomizatio
       typeof candidate.disableLazyLoading === "boolean"
         ? candidate.disableLazyLoading
         : DEFAULT_READER_CUSTOMIZATION.disableLazyLoading,
+    showGreekTokenBackground:
+      typeof candidate.showGreekTokenBackground === "boolean"
+        ? candidate.showGreekTokenBackground
+        : DEFAULT_READER_CUSTOMIZATION.showGreekTokenBackground,
+    greekTokenColorPreset: isGreekTokenColorPreset(candidate.greekTokenColorPreset)
+      ? candidate.greekTokenColorPreset
+      : DEFAULT_READER_CUSTOMIZATION.greekTokenColorPreset,
     bodyTextSize: normalizedBodyTextSize,
     strongsVerseTextSize: normalizedStrongsVerseTextSize,
     thayerTextSize: normalizedThayerTextSize,
@@ -684,6 +721,13 @@ export function getReaderCustomizationVariables(
     "--reader-accent-rgb": toRgbChannels(presetVariables.accentRgb),
     "--reader-secondary-rgb": toRgbChannels(presetVariables.secondaryRgb),
     "--reader-surface-rgb": toRgbChannels(presetVariables.surfaceRgb),
+    "--reader-token-rgb": toRgbChannels(
+      settings.greekTokenColorPreset === "accent"
+        ? presetVariables.accentRgb
+        : (GREEK_TOKEN_COLOR_PRESETS.find((p) => p.id === settings.greekTokenColorPreset)?.rgb ??
+            presetVariables.accentRgb)
+    ),
+    "--reader-token-bg": settings.showGreekTokenBackground ? "1" : "0",
     "--reader-shell-intensity": `${shellAlpha}`,
     "--reader-verse-text": toRgb(presetVariables.verseTextRgb, verseTextAlpha),
     "--reader-meta-text": toRgb(presetVariables.metaTextRgb, metaTextAlpha),

@@ -3840,9 +3840,9 @@ button.fathers-annotation-anchor:focus-visible {
   width: 100%;
   min-width: 100%;
   padding: 0.42rem 0.5rem 0.32rem;
-  border: 1px solid rgba(var(--reader-accent-rgb), 0.38);
+  border: 1px solid rgba(var(--reader-token-rgb), calc(0.38 * var(--reader-token-bg)));
   border-radius: 0.72rem;
-  background: rgba(var(--reader-accent-rgb), 0.16);
+  background: rgba(var(--reader-token-rgb), calc(0.16 * var(--reader-token-bg)));
   color: var(--reader-verse-text);
   font-family: var(--reader-greek-font);
   line-height: 1.1;
@@ -3855,8 +3855,8 @@ button.fathers-annotation-anchor:focus-visible {
 
 .verse-greek-token:hover,
 .verse-greek-token:focus-visible {
-  border-color: rgba(var(--reader-accent-rgb), 0.7);
-  background: rgba(var(--reader-accent-rgb), 0.26);
+  border-color: rgba(var(--reader-token-rgb), calc(0.7 * var(--reader-token-bg)));
+  background: rgba(var(--reader-token-rgb), calc(0.26 * var(--reader-token-bg)));
   outline: none;
   transform: translateY(-1px);
 }
@@ -3912,9 +3912,9 @@ button.fathers-annotation-anchor:focus-visible {
   min-width: 100%;
   max-width: none;
   padding: 0.22rem 0.44rem 0.28rem;
-  border: 1px dashed rgba(var(--reader-accent-rgb), 0.35);
+  border: 1px dashed rgba(var(--reader-token-rgb), calc(0.35 * var(--reader-token-bg)));
   border-radius: 0.56rem;
-  background: rgba(var(--reader-accent-rgb), 0.1);
+  background: rgba(var(--reader-token-rgb), calc(0.1 * var(--reader-token-bg)));
   color: var(--reader-meta-text);
   font-family: var(--reader-body-font);
   font-size: max(0.76rem, calc(var(--reader-body-text-size) * 0.84));
@@ -5855,6 +5855,44 @@ button.fathers-annotation-anchor:focus-visible {
   font-weight: 700;
   letter-spacing: 0.01em;
   line-height: 1;
+}
+
+.greek-token-color-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.greek-token-color-dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid rgba(var(--reader-accent-rgb), 0.2);
+  border-radius: 50%;
+  background: rgba(var(--reader-accent-rgb), 0.18);
+  color: var(--reader-verse-text);
+  font-family: var(--reader-ui-font);
+  font-size: 0.65rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    border-color 120ms ease,
+    transform 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.greek-token-color-dot.is-active {
+  border-color: var(--reader-accent);
+  box-shadow: 0 0 0 3px rgba(var(--reader-accent-rgb), 0.35);
+  transform: scale(1.12);
+}
+
+.greek-token-color-dot:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: scale(1.08);
 }
 
 .reader-settings-greek-subgroup {

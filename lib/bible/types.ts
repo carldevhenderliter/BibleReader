@@ -56,6 +56,8 @@ export type ChapterLink = {
 
 export type ThemePreset = "manuscript" | "neon" | "midnight" | "ember" | "obsidian" | "aurora" | "parchment" | "crimson" | "forest";
 
+export type GreekTokenColorPreset = "accent" | "gold" | "cyan" | "violet" | "rose" | "emerald" | "amber";
+
 export type BodyFontOption = "serif" | "literary" | "transitional" | "humanist" | "mono";
 
 export type GreekFontOption = "classic" | "scholarly" | "modern";
@@ -105,6 +107,8 @@ export type ReaderCustomizationSettings = {
   showCustomVerseTranslation: boolean;
   showFathersSentenceLines: boolean;
   disableLazyLoading: boolean;
+  showGreekTokenBackground: boolean;
+  greekTokenColorPreset: GreekTokenColorPreset;
   bodyTextSize: number;
   strongsVerseTextSize: number;
   thayerTextSize: number;

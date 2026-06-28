@@ -14,6 +14,7 @@ import { useReaderWorkspace } from "@/app/components/ReaderWorkspaceProvider";
 import type {
   BookMeta,
   BundledBibleVersion,
+  GreekTokenColorPreset,
   ReaderCustomizationSettings,
   ReadingView,
   ReaderPreset,
@@ -22,6 +23,7 @@ import type {
 import {
   BODY_FONT_OPTIONS,
   GREEK_FONT_OPTIONS,
+  GREEK_TOKEN_COLOR_PRESETS,
   HEBREW_FONT_OPTIONS,
   THEME_PRESETS,
   UI_FONT_OPTIONS
@@ -1388,6 +1390,37 @@ export function ReaderSettingsPanel({
                     </button>
                   </div>
                 </div>
+              <div className="reader-settings-subsection">
+                <p className="reader-settings-subsection-label">Token appearance</p>
+                <div className="settings-option-grid settings-option-grid-compact">
+                  <button
+                    className={`settings-option-card${settings.showGreekTokenBackground ? " is-active" : ""}`}
+                    onClick={() => updateSettings({ showGreekTokenBackground: !settings.showGreekTokenBackground })}
+                    type="button"
+                  >
+                    <strong>Token background</strong>
+                    <span>Show a coloured background behind each {originalLanguageLabel.toLowerCase()} word block.</span>
+                  </button>
+                </div>
+                {settings.showGreekTokenBackground ? (
+                  <div className="greek-token-color-picker">
+                    {GREEK_TOKEN_COLOR_PRESETS.map((preset) => (
+                      <button
+                        aria-label={preset.name}
+                        aria-pressed={settings.greekTokenColorPreset === preset.id}
+                        className={`greek-token-color-dot${settings.greekTokenColorPreset === preset.id ? " is-active" : ""}`}
+                        key={preset.id}
+                        onClick={() => updateSettings({ greekTokenColorPreset: preset.id as GreekTokenColorPreset })}
+                        style={preset.id !== "accent" ? { background: preset.hex } : undefined}
+                        title={preset.name}
+                        type="button"
+                      >
+                        {preset.id === "accent" ? "T" : null}
+                      </button>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
                 {originalLanguageLabel === "Greek" ? (
                   <div className="reader-settings-greek-actions">
                     <button
