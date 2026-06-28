@@ -52,6 +52,12 @@
   --reader-background-intensity: 0.14;
   --reader-surface-depth: 1;
   --app-layout-lookup-width: 20rem;
+  --reader-token-border: rgba(224, 178, 68, 0.38);
+  --reader-token-fill: rgba(224, 178, 68, 0.16);
+  --reader-token-border-hover: rgba(224, 178, 68, 0.7);
+  --reader-token-fill-hover: rgba(224, 178, 68, 0.26);
+  --reader-token-gloss-border: rgba(224, 178, 68, 0.35);
+  --reader-token-gloss-fill: rgba(224, 178, 68, 0.1);
 }
 
 * {
@@ -3840,9 +3846,9 @@ button.fathers-annotation-anchor:focus-visible {
   width: 100%;
   min-width: 100%;
   padding: 0.42rem 0.5rem 0.32rem;
-  border: 1px solid rgba(var(--reader-token-rgb), calc(0.38 * var(--reader-token-bg)));
+  border: 1px solid var(--reader-token-border);
   border-radius: 0.72rem;
-  background: rgba(var(--reader-token-rgb), calc(0.16 * var(--reader-token-bg)));
+  background: var(--reader-token-fill);
   color: var(--reader-verse-text);
   font-family: var(--reader-greek-font);
   line-height: 1.1;
@@ -3855,8 +3861,8 @@ button.fathers-annotation-anchor:focus-visible {
 
 .verse-greek-token:hover,
 .verse-greek-token:focus-visible {
-  border-color: rgba(var(--reader-token-rgb), calc(0.7 * var(--reader-token-bg)));
-  background: rgba(var(--reader-token-rgb), calc(0.26 * var(--reader-token-bg)));
+  border-color: var(--reader-token-border-hover);
+  background: var(--reader-token-fill-hover);
   outline: none;
   transform: translateY(-1px);
 }
@@ -3912,9 +3918,9 @@ button.fathers-annotation-anchor:focus-visible {
   min-width: 100%;
   max-width: none;
   padding: 0.22rem 0.44rem 0.28rem;
-  border: 1px dashed rgba(var(--reader-token-rgb), calc(0.35 * var(--reader-token-bg)));
+  border: 1px dashed var(--reader-token-gloss-border);
   border-radius: 0.56rem;
-  background: rgba(var(--reader-token-rgb), calc(0.1 * var(--reader-token-bg)));
+  background: var(--reader-token-gloss-fill);
   color: var(--reader-meta-text);
   font-family: var(--reader-body-font);
   font-size: max(0.76rem, calc(var(--reader-body-text-size) * 0.84));

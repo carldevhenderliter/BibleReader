@@ -721,13 +721,22 @@ export function getReaderCustomizationVariables(
     "--reader-accent-rgb": toRgbChannels(presetVariables.accentRgb),
     "--reader-secondary-rgb": toRgbChannels(presetVariables.secondaryRgb),
     "--reader-surface-rgb": toRgbChannels(presetVariables.surfaceRgb),
-    "--reader-token-rgb": toRgbChannels(
-      settings.greekTokenColorPreset === "accent"
-        ? presetVariables.accentRgb
-        : (GREEK_TOKEN_COLOR_PRESETS.find((p) => p.id === settings.greekTokenColorPreset)?.rgb ??
-            presetVariables.accentRgb)
-    ),
-    "--reader-token-bg": settings.showGreekTokenBackground ? "1" : "0",
+    ...(() => {
+      const tokenRgb: RgbTriplet =
+        settings.greekTokenColorPreset === "accent"
+          ? presetVariables.accentRgb
+          : (GREEK_TOKEN_COLOR_PRESETS.find((p) => p.id === settings.greekTokenColorPreset)
+              ?.rgb ?? presetVariables.accentRgb);
+      const show = settings.showGreekTokenBackground;
+      return {
+        "--reader-token-border": show ? toRgb(tokenRgb, 0.38) : "transparent",
+        "--reader-token-fill": show ? toRgb(tokenRgb, 0.16) : "transparent",
+        "--reader-token-border-hover": show ? toRgb(tokenRgb, 0.7) : "transparent",
+        "--reader-token-fill-hover": show ? toRgb(tokenRgb, 0.26) : "transparent",
+        "--reader-token-gloss-border": show ? toRgb(tokenRgb, 0.35) : "transparent",
+        "--reader-token-gloss-fill": show ? toRgb(tokenRgb, 0.1) : "transparent",
+      };
+    })(),
     "--reader-shell-intensity": `${shellAlpha}`,
     "--reader-verse-text": toRgb(presetVariables.verseTextRgb, verseTextAlpha),
     "--reader-meta-text": toRgb(presetVariables.metaTextRgb, metaTextAlpha),
