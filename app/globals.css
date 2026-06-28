@@ -3840,9 +3840,9 @@ button.fathers-annotation-anchor:focus-visible {
   width: 100%;
   min-width: 100%;
   padding: 0.42rem 0.5rem 0.32rem;
-  border: 1px solid rgba(var(--reader-accent-rgb), 0.14);
+  border: 1px solid rgba(var(--reader-accent-rgb), 0.38);
   border-radius: 0.72rem;
-  background: rgba(var(--reader-accent-rgb), 0.07);
+  background: rgba(var(--reader-accent-rgb), 0.16);
   color: var(--reader-verse-text);
   font-family: var(--reader-greek-font);
   line-height: 1.1;
@@ -3855,8 +3855,8 @@ button.fathers-annotation-anchor:focus-visible {
 
 .verse-greek-token:hover,
 .verse-greek-token:focus-visible {
-  border-color: rgba(var(--reader-accent-rgb), 0.48);
-  background: rgba(var(--reader-accent-rgb), 0.15);
+  border-color: rgba(var(--reader-accent-rgb), 0.7);
+  background: rgba(var(--reader-accent-rgb), 0.26);
   outline: none;
   transform: translateY(-1px);
 }
@@ -3897,7 +3897,7 @@ button.fathers-annotation-anchor:focus-visible {
 }
 
 .verse-greek-part-of-speech {
-  color: rgba(var(--reader-accent-rgb), 0.78);
+  color: rgba(var(--reader-accent-rgb), 1);
   font-family: var(--reader-ui-font);
   font-size: max(0.64rem, calc(var(--reader-body-text-size) * 0.68));
   font-weight: 700;
@@ -3912,9 +3912,9 @@ button.fathers-annotation-anchor:focus-visible {
   min-width: 100%;
   max-width: none;
   padding: 0.22rem 0.44rem 0.28rem;
-  border: 1px dashed rgba(var(--reader-accent-rgb), 0.18);
+  border: 1px dashed rgba(var(--reader-accent-rgb), 0.35);
   border-radius: 0.56rem;
-  background: rgba(var(--reader-accent-rgb), 0.04);
+  background: rgba(var(--reader-accent-rgb), 0.1);
   color: var(--reader-meta-text);
   font-family: var(--reader-body-font);
   font-size: max(0.76rem, calc(var(--reader-body-text-size) * 0.84));
